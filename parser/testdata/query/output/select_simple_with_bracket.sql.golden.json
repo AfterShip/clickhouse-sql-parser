@@ -1,0 +1,150 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 66,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 66,
+      "Items": [
+        {
+          "Expr": {
+            "Name": {
+              "Name": "arrayConcat",
+              "Unquoted": false,
+              "NamePos": 7,
+              "NameEnd": 18
+            },
+            "Params": {
+              "LeftParenPos": 18,
+              "RightParenPos": 41,
+              "Items": {
+                "ListPos": 19,
+                "ListEnd": 40,
+                "Items": [
+                  {
+                    "LeftBracketPos": 19,
+                    "RightBracketPos": 24,
+                    "Items": {
+                      "ListPos": 20,
+                      "ListEnd": 24,
+                      "Items": [
+                        {
+                          "NumPos": 20,
+                          "NumEnd": 21,
+                          "Literal": "1",
+                          "Base": 10
+                        },
+                        {
+                          "NumPos": 23,
+                          "NumEnd": 24,
+                          "Literal": "2",
+                          "Base": 10
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "LeftBracketPos": 27,
+                    "RightBracketPos": 32,
+                    "Items": {
+                      "ListPos": 28,
+                      "ListEnd": 32,
+                      "Items": [
+                        {
+                          "NumPos": 28,
+                          "NumEnd": 29,
+                          "Literal": "3",
+                          "Base": 10
+                        },
+                        {
+                          "NumPos": 31,
+                          "NumEnd": 32,
+                          "Literal": "4",
+                          "Base": 10
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "LeftBracketPos": 35,
+                    "RightBracketPos": 40,
+                    "Items": {
+                      "ListPos": 36,
+                      "ListEnd": 40,
+                      "Items": [
+                        {
+                          "NumPos": 36,
+                          "NumEnd": 37,
+                          "Literal": "5",
+                          "Base": 10
+                        },
+                        {
+                          "NumPos": 39,
+                          "NumEnd": 40,
+                          "Literal": "6",
+                          "Base": 10
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "AliasPos": 43,
+          "Alias": {
+            "Name": "res",
+            "Unquoted": false,
+            "NamePos": 46,
+            "NameEnd": 49
+          }
+        },
+        {
+          "Expr": {
+            "Object": {
+              "Name": "f1",
+              "Unquoted": false,
+              "NamePos": 51,
+              "NameEnd": 53
+            },
+            "Params": {
+              "LeftBracketPos": 51,
+              "RightBracketPos": 59,
+              "Items": {
+                "ListPos": 55,
+                "ListEnd": 58,
+                "Items": [
+                  {
+                    "LiteralPos": 55,
+                    "LiteralEnd": 58,
+                    "Literal": "abc"
+                  }
+                ]
+              }
+            }
+          },
+          "AliasPos": 61,
+          "Alias": {
+            "Name": "f2",
+            "Unquoted": false,
+            "NamePos": 64,
+            "NameEnd": 66
+          }
+        }
+      ]
+    },
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Settings": null
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 83,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events_local",
+        "Unquoted": false,
+        "NamePos": 17,
+        "NameEnd": 29
+      }
+    },
+    "OnCluster": {
+      "OnPos": 30,
+      "Expr": {
+        "LiteralPos": 42,
+        "LiteralEnd": 57,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "DropPos": 59,
+        "ColumnName": {
+          "Ident": {
+            "Name": "f1",
+            "Unquoted": false,
+            "NamePos": 81,
+            "NameEnd": 83
+          },
+          "DotIdent": null
+        },
+        "IfExists": true
+      }
+    ]
+  }
+]

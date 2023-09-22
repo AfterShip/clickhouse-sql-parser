@@ -1,0 +1,31 @@
+[
+  {
+    "DropPos": 0,
+    "StatementEnd": 74,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 21,
+        "NameEnd": 25
+      },
+      "Table": {
+        "Name": "table_name",
+        "Unquoted": false,
+        "NamePos": 26,
+        "NameEnd": 36
+      }
+    },
+    "IfExists": true,
+    "OnCluster": {
+      "OnPos": 37,
+      "Expr": {
+        "LiteralPos": 49,
+        "LiteralEnd": 64,
+        "Literal": "default_cluster"
+      }
+    },
+    "IsTemporary": false,
+    "NoDelay": true
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 63,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events",
+        "Unquoted": false,
+        "NamePos": 17,
+        "NameEnd": 23
+      }
+    },
+    "OnCluster": {
+      "OnPos": 24,
+      "Expr": {
+        "LiteralPos": 36,
+        "LiteralEnd": 51,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "RemovePos": 53,
+        "StatementEnd": 63
+      }
+    ]
+  }
+]

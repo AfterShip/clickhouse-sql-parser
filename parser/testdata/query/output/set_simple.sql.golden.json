@@ -1,0 +1,86 @@
+[
+  {
+    "SetPos": 0,
+    "Settings": {
+      "SettingsPos": 4,
+      "ListEnd": 140,
+      "Items": [
+        {
+          "SettingsPos": 4,
+          "Name": {
+            "Name": "max_threads",
+            "Unquoted": false,
+            "NamePos": 4,
+            "NameEnd": 15
+          },
+          "Expr": {
+            "NumPos": 18,
+            "NumEnd": 19,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 21,
+          "Name": {
+            "Name": "max_insert_threads",
+            "Unquoted": false,
+            "NamePos": 21,
+            "NameEnd": 39
+          },
+          "Expr": {
+            "NumPos": 42,
+            "NumEnd": 43,
+            "Literal": "0",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 45,
+          "Name": {
+            "Name": "max_block_size",
+            "Unquoted": false,
+            "NamePos": 45,
+            "NameEnd": 59
+          },
+          "Expr": {
+            "NumPos": 62,
+            "NumEnd": 66,
+            "Literal": "8192",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 68,
+          "Name": {
+            "Name": "min_insert_block_size_rows",
+            "Unquoted": false,
+            "NamePos": 68,
+            "NameEnd": 94
+          },
+          "Expr": {
+            "NumPos": 97,
+            "NumEnd": 101,
+            "Literal": "8192",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 103,
+          "Name": {
+            "Name": "min_insert_block_size_bytes",
+            "Unquoted": false,
+            "NamePos": 103,
+            "NameEnd": 130
+          },
+          "Expr": {
+            "NumPos": 133,
+            "NumEnd": 140,
+            "Literal": "1048576",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 43,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AttachPos": 17,
+        "Partition": {
+          "PartitionPos": 24,
+          "Expr": {
+            "LiteralPos": 35,
+            "LiteralEnd": 43,
+            "Literal": "20210114"
+          },
+          "ID": null,
+          "All": false
+        },
+        "From": null
+      }
+    ]
+  },
+  {
+    "AlterPos": 46,
+    "StatementEnd": 101,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 58,
+        "NameEnd": 62
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AttachPos": 63,
+        "Partition": {
+          "PartitionPos": 70,
+          "Expr": {
+            "LiteralPos": 81,
+            "LiteralEnd": 89,
+            "Literal": "20210114"
+          },
+          "ID": null,
+          "All": false
+        },
+        "From": {
+          "Database": null,
+          "Table": {
+            "Name": "test1",
+            "Unquoted": false,
+            "NamePos": 96,
+            "NameEnd": 101
+          }
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 103,
+    "StatementEnd": 149,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 115,
+        "NameEnd": 119
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AttachPos": 120,
+        "Partition": {
+          "PartitionPos": 127,
+          "Expr": null,
+          "ID": {
+            "LiteralPos": 141,
+            "LiteralEnd": 149,
+            "Literal": "20210114"
+          },
+          "All": false
+        },
+        "From": null
+      }
+    ]
+  }
+]

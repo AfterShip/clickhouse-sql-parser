@@ -1,0 +1,14 @@
+[
+  {
+    "DropPos": 0,
+    "StatementEnd": 36,
+    "Name": {
+      "Name": "datbase_name",
+      "Unquoted": false,
+      "NamePos": 24,
+      "NameEnd": 36
+    },
+    "IfExists": true,
+    "OnCluster": null
+  }
+]

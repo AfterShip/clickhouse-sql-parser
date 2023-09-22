@@ -1,0 +1,109 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 86,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 17,
+      "Items": [
+        {
+          "Name": "a",
+          "Unquoted": false,
+          "NamePos": 7,
+          "NameEnd": 8
+        },
+        {
+          "Name": {
+            "Name": "COUNT",
+            "Unquoted": false,
+            "NamePos": 10,
+            "NameEnd": 15
+          },
+          "Params": {
+            "LeftParenPos": 15,
+            "RightParenPos": 17,
+            "Items": {
+              "ListPos": 16,
+              "ListEnd": 17,
+              "Items": [
+                {
+                  "Name": "b",
+                  "Unquoted": false,
+                  "NamePos": 16,
+                  "NameEnd": 17
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 19,
+      "Expr": {
+        "TablePos": 24,
+        "TableEnd": 36,
+        "Alias": null,
+        "Expr": {
+          "Database": null,
+          "Table": {
+            "Name": "group_by_all",
+            "Unquoted": false,
+            "NamePos": 24,
+            "NameEnd": 36
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": {
+      "GroupByPos": 37,
+      "AggregateType": "CUBE",
+      "Expr": {
+        "LeftParenPos": 50,
+        "RightParenPos": 52,
+        "Items": {
+          "ListPos": 51,
+          "ListEnd": 52,
+          "Items": [
+            {
+              "Name": "a",
+              "Unquoted": false,
+              "NamePos": 51,
+              "NameEnd": 52
+            }
+          ]
+        },
+        "ColumnArgList": null
+      },
+      "WithCube": true,
+      "WithRollup": false,
+      "WithTotals": true
+    },
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 76,
+      "ListEnd": 86,
+      "Items": [
+        {
+          "OrderPos": 76,
+          "Expr": {
+            "Name": "a",
+            "Unquoted": false,
+            "NamePos": 85,
+            "NameEnd": 86
+          },
+          "Direction": "None"
+        }
+      ]
+    },
+    "LimitBy": null,
+    "Settings": null
+  }
+]

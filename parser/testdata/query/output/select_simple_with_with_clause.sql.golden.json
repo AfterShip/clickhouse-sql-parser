@@ -1,0 +1,237 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 124,
+    "With": {
+      "WithPos": 0,
+      "EndPos": 68,
+      "CTEs": [
+        {
+          "CTEPos": 9,
+          "Name": {
+            "Name": "cte1",
+            "Unquoted": false,
+            "NamePos": 9,
+            "NameEnd": 13
+          },
+          "SelectExpr": {
+            "SelectPos": 18,
+            "StatementEnd": 35,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 25,
+              "ListEnd": 27,
+              "Items": [
+                {
+                  "Name": "f1",
+                  "Unquoted": false,
+                  "NamePos": 25,
+                  "NameEnd": 27
+                }
+              ]
+            },
+            "From": {
+              "FromPos": 28,
+              "Expr": {
+                "TablePos": 33,
+                "TableEnd": 35,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "t1",
+                    "Unquoted": false,
+                    "NamePos": 33,
+                    "NameEnd": 35
+                  }
+                }
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Settings": null
+          },
+          "EndPos": 35,
+          "ColumnAliases": null
+        },
+        {
+          "CTEPos": 42,
+          "Name": {
+            "Name": "cte2",
+            "Unquoted": false,
+            "NamePos": 42,
+            "NameEnd": 46
+          },
+          "SelectExpr": {
+            "SelectPos": 51,
+            "StatementEnd": 68,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 58,
+              "ListEnd": 60,
+              "Items": [
+                {
+                  "Name": "f2",
+                  "Unquoted": false,
+                  "NamePos": 58,
+                  "NameEnd": 60
+                }
+              ]
+            },
+            "From": {
+              "FromPos": 61,
+              "Expr": {
+                "TablePos": 66,
+                "TableEnd": 68,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "t2",
+                    "Unquoted": false,
+                    "NamePos": 66,
+                    "NameEnd": 68
+                  }
+                }
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Settings": null
+          },
+          "EndPos": 68,
+          "ColumnAliases": null
+        }
+      ]
+    },
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 81,
+      "ListEnd": 112,
+      "Items": [
+        {
+          "Database": {
+            "Name": "cte1",
+            "Unquoted": false,
+            "NamePos": 81,
+            "NameEnd": 85
+          },
+          "Table": {
+            "Name": "f1",
+            "Unquoted": false,
+            "NamePos": 86,
+            "NameEnd": 88
+          }
+        },
+        {
+          "Database": {
+            "Name": "cte2",
+            "Unquoted": false,
+            "NamePos": 94,
+            "NameEnd": 98
+          },
+          "Table": {
+            "Name": "f2",
+            "Unquoted": false,
+            "NamePos": 99,
+            "NameEnd": 101
+          }
+        },
+        {
+          "Database": {
+            "Name": "t3",
+            "Unquoted": false,
+            "NamePos": 107,
+            "NameEnd": 109
+          },
+          "Table": {
+            "Name": "f3",
+            "Unquoted": false,
+            "NamePos": 110,
+            "NameEnd": 112
+          }
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 113,
+      "Expr": {
+        "JoinPos": 122,
+        "Left": {
+          "TablePos": 122,
+          "TableEnd": 124,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t3",
+              "Unquoted": false,
+              "NamePos": 122,
+              "NameEnd": 124
+            }
+          }
+        },
+        "Right": {
+          "JoinPos": 125,
+          "Left": {
+            "TablePos": 125,
+            "TableEnd": 129,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "cte1",
+                "Unquoted": false,
+                "NamePos": 125,
+                "NameEnd": 129
+              }
+            }
+          },
+          "Right": {
+            "TablePos": 130,
+            "TableEnd": 134,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "cte2",
+                "Unquoted": false,
+                "NamePos": 130,
+                "NameEnd": 134
+              }
+            }
+          },
+          "JoinType": "",
+          "SampleRatio": null,
+          "Constraints": null
+        },
+        "JoinType": "",
+        "SampleRatio": null,
+        "Constraints": null
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Settings": null
+  }
+]

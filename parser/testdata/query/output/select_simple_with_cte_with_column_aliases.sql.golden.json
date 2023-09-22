@@ -1,0 +1,176 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 133,
+    "With": {
+      "WithPos": 0,
+      "EndPos": 58,
+      "CTEs": [
+        {
+          "CTEPos": 9,
+          "Name": {
+            "Name": "test",
+            "Unquoted": false,
+            "NamePos": 9,
+            "NameEnd": 13
+          },
+          "SelectExpr": {
+            "SelectPos": 30,
+            "StatementEnd": 58,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 37,
+              "ListEnd": 47,
+              "Items": [
+                {
+                  "Name": "f4",
+                  "Unquoted": false,
+                  "NamePos": 37,
+                  "NameEnd": 39
+                },
+                {
+                  "Name": "f5",
+                  "Unquoted": false,
+                  "NamePos": 41,
+                  "NameEnd": 43
+                },
+                {
+                  "Name": "f6",
+                  "Unquoted": false,
+                  "NamePos": 45,
+                  "NameEnd": 47
+                }
+              ]
+            },
+            "From": {
+              "FromPos": 48,
+              "Expr": {
+                "TablePos": 53,
+                "TableEnd": 58,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "sales",
+                    "Unquoted": false,
+                    "NamePos": 53,
+                    "NameEnd": 58
+                  }
+                }
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Settings": null
+          },
+          "EndPos": 58,
+          "ColumnAliases": [
+            {
+              "Name": "f1",
+              "Unquoted": false,
+              "NamePos": 14,
+              "NameEnd": 16
+            },
+            {
+              "Name": "f2",
+              "Unquoted": false,
+              "NamePos": 18,
+              "NameEnd": 20
+            },
+            {
+              "Name": "f3",
+              "Unquoted": false,
+              "NamePos": 22,
+              "NameEnd": 24
+            }
+          ]
+        }
+      ]
+    },
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 71,
+      "ListEnd": 119,
+      "Items": [
+        {
+          "Expr": {
+            "Name": "f1",
+            "Unquoted": false,
+            "NamePos": 71,
+            "NameEnd": 73
+          },
+          "AliasPos": 74,
+          "Alias": {
+            "Name": "new_f1",
+            "Unquoted": false,
+            "NamePos": 77,
+            "NameEnd": 83
+          }
+        },
+        {
+          "Expr": {
+            "Name": "f2",
+            "Unquoted": false,
+            "NamePos": 89,
+            "NameEnd": 91
+          },
+          "AliasPos": 92,
+          "Alias": {
+            "Name": "new_f2",
+            "Unquoted": false,
+            "NamePos": 95,
+            "NameEnd": 101
+          }
+        },
+        {
+          "Expr": {
+            "Name": "f3",
+            "Unquoted": false,
+            "NamePos": 107,
+            "NameEnd": 109
+          },
+          "AliasPos": 110,
+          "Alias": {
+            "Name": "new_f3",
+            "Unquoted": false,
+            "NamePos": 113,
+            "NameEnd": 119
+          }
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 120,
+      "Expr": {
+        "TablePos": 129,
+        "TableEnd": 133,
+        "Alias": null,
+        "Expr": {
+          "Database": null,
+          "Table": {
+            "Name": "test",
+            "Unquoted": false,
+            "NamePos": 129,
+            "NameEnd": 133
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Settings": null
+  }
+]

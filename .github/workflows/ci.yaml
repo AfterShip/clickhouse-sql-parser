@@ -1,0 +1,96 @@
+
+name: CI Actions
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  workflow:
+    name: Lint/Build/Test
+
+    strategy:
+      matrix:
+        go-version: [1.18.x]
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+      - name: Configure git for private modules
+        env:
+          TOKEN: ${{ secrets.RESTRICTED_REPO_TOKEN}}
+        run: git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{matrix.go-version}}
+
+      - name: Checkout Code Base
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+
+      - name: Restore Go Module Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/go/internal/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Make Lint
+        run: |
+          export GOPATH=$HOME/go
+          export PATH=$PATH:$GOPATH/bin
+          export GOPRIVATE=github.com/AfterShip/*
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.53.3
+          go mod tidy
+          make lint
+
+      - name: Test
+        run: make test
+
+      - name: SonarQube Scan On PR
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.go.coverage.reportPaths=coverage.out
+            -Dsonar.exclusions=**/*_test.go,**/*.gen.go,**/*.py
+            -Dsonar.projectKey=${{ github.event.repository.name }}
+            -Dsonar.pullrequest.provider=github
+            -Dsonar.pullrequest.github.repository=${{ github.repository }}
+            -Dsonar.pullrequest.key=${{ github.event.number }}
+            -Dsonar.pullrequest.branch=PR
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Get branch name (merge)
+        if: ${{ github.event_name != 'pull_request' }}
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+
+      - name: SonarQube Scan On Push
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.go.coverage.reportPaths=coverage.out
+            -Dsonar.exclusions=**/*_test.go,**/*.gen.go,**/*.py
+            -Dsonar.projectKey=${{ github.event.repository.name }}
+            -Dsonar.pullrequest.provider=github
+            -Dsonar.pullrequest.github.repository=${{ github.repository }}
+            -Dsonar.branch.name=${{ env.BRANCH_NAME }}
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

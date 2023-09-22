@@ -1,0 +1,129 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 191,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 13,
+        "NameEnd": 17
+      },
+      "Table": {
+        "Name": "event_all",
+        "Unquoted": false,
+        "NamePos": 18,
+        "NameEnd": 27
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": {
+      "OnPos": 28,
+      "Expr": {
+        "LiteralPos": 40,
+        "LiteralEnd": 55,
+        "Literal": "default_cluster"
+      }
+    },
+    "TableSchema": {
+      "SchemaPos": 57,
+      "SchemaEnd": 77,
+      "Columns": null,
+      "AliasTable": {
+        "Database": {
+          "Name": "test",
+          "Unquoted": false,
+          "NamePos": 60,
+          "NameEnd": 64
+        },
+        "Table": {
+          "Name": "evnets_local",
+          "Unquoted": false,
+          "NamePos": 65,
+          "NameEnd": 77
+        }
+      },
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 78,
+      "EngineEnd": 191,
+      "Name": "Distributed",
+      "Params": {
+        "LeftParenPos": 98,
+        "RightParenPos": 160,
+        "Items": {
+          "ListPos": 104,
+          "ListEnd": 158,
+          "Items": [
+            {
+              "Name": "default_cluster",
+              "Unquoted": false,
+              "NamePos": 104,
+              "NameEnd": 119
+            },
+            {
+              "Name": "test",
+              "Unquoted": false,
+              "NamePos": 125,
+              "NameEnd": 129
+            },
+            {
+              "Name": "events_local",
+              "Unquoted": false,
+              "NamePos": 135,
+              "NameEnd": 147
+            },
+            {
+              "Name": {
+                "Name": "rand",
+                "Unquoted": false,
+                "NamePos": 153,
+                "NameEnd": 157
+              },
+              "Params": {
+                "LeftParenPos": 157,
+                "RightParenPos": 158,
+                "Items": {
+                  "ListPos": 158,
+                  "ListEnd": 158,
+                  "Items": []
+                },
+                "ColumnArgList": null
+              }
+            }
+          ]
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTLExprList": null,
+      "SettingsExprList": {
+        "SettingsPos": 162,
+        "ListEnd": 191,
+        "Items": [
+          {
+            "SettingsPos": 171,
+            "Name": {
+              "Name": "fsync_after_insert",
+              "Unquoted": false,
+              "NamePos": 171,
+              "NameEnd": 189
+            },
+            "Expr": {
+              "NumPos": 190,
+              "NumEnd": 191,
+              "Literal": "0",
+              "Base": 10
+            }
+          }
+        ]
+      },
+      "OrderByListExpr": null
+    },
+    "SubQuery": null
+  }
+]

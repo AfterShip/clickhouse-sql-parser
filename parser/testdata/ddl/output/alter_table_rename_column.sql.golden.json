@@ -1,0 +1,40 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 69,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "my_table",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 20
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "RenamePos": 21,
+        "IfExists": false,
+        "OldColumnName": {
+          "Ident": {
+            "Name": "old_column_name",
+            "Unquoted": false,
+            "NamePos": 35,
+            "NameEnd": 50
+          },
+          "DotIdent": null
+        },
+        "NewColumnName": {
+          "Ident": {
+            "Name": "new_column_name",
+            "Unquoted": false,
+            "NamePos": 54,
+            "NameEnd": 69
+          },
+          "DotIdent": null
+        }
+      }
+    ]
+  }
+]

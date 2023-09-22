@@ -1,0 +1,459 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 460,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 25,
+        "NameEnd": 29
+      },
+      "Table": {
+        "Name": "t0",
+        "Unquoted": false,
+        "NamePos": 30,
+        "NameEnd": 32
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": {
+      "OnPos": 33,
+      "Expr": {
+        "Name": "default_cluster",
+        "Unquoted": false,
+        "NamePos": 44,
+        "NameEnd": 59
+      }
+    },
+    "TableSchema": null,
+    "Engine": {
+      "EnginePos": 60,
+      "EngineEnd": 190,
+      "Name": "ReplicatedAggregatingMergeTree",
+      "Params": {
+        "LeftParenPos": 99,
+        "RightParenPos": 150,
+        "Items": {
+          "ListPos": 101,
+          "ListEnd": 149,
+          "Items": [
+            {
+              "LiteralPos": 101,
+              "LiteralEnd": 136,
+              "Literal": "/clickhouse/{layer}-{shard}/test/t0"
+            },
+            {
+              "LiteralPos": 140,
+              "LiteralEnd": 149,
+              "Literal": "{replica}"
+            }
+          ]
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": {
+        "PartitionPos": 152,
+        "Expr": {
+          "ListPos": 165,
+          "ListEnd": 176,
+          "Items": [
+            {
+              "Name": {
+                "Name": "toYYYYMM",
+                "Unquoted": false,
+                "NamePos": 165,
+                "NameEnd": 173
+              },
+              "Params": {
+                "LeftParenPos": 173,
+                "RightParenPos": 176,
+                "Items": {
+                  "ListPos": 174,
+                  "ListEnd": 176,
+                  "Items": [
+                    {
+                      "Name": "f0",
+                      "Unquoted": false,
+                      "NamePos": 174,
+                      "NameEnd": 176
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            }
+          ]
+        }
+      },
+      "SampleBy": null,
+      "TTLExprList": null,
+      "SettingsExprList": null,
+      "OrderByListExpr": {
+        "OrderPos": 178,
+        "ListEnd": 190,
+        "Items": [
+          {
+            "OrderPos": 178,
+            "Expr": {
+              "LeftParenPos": 187,
+              "RightParenPos": 190,
+              "Items": {
+                "ListPos": 188,
+                "ListEnd": 190,
+                "Items": [
+                  {
+                    "Name": "f0",
+                    "Unquoted": false,
+                    "NamePos": 188,
+                    "NameEnd": 190
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Direction": "None"
+          }
+        ]
+      }
+    },
+    "Destination": null,
+    "SubQuery": {
+      "AsPos": 201,
+      "Selects": {
+        "Items": [
+          {
+            "SelectPos": 204,
+            "StatementEnd": 460,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 211,
+              "ListEnd": 243,
+              "Items": [
+                {
+                  "Name": "f0",
+                  "Unquoted": false,
+                  "NamePos": 211,
+                  "NameEnd": 213
+                },
+                {
+                  "Name": "f1",
+                  "Unquoted": false,
+                  "NamePos": 214,
+                  "NameEnd": 216
+                },
+                {
+                  "Name": "f2",
+                  "Unquoted": false,
+                  "NamePos": 217,
+                  "NameEnd": 219
+                },
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "coalesce",
+                      "Unquoted": false,
+                      "NamePos": 220,
+                      "NameEnd": 228
+                    },
+                    "Params": {
+                      "LeftParenPos": 228,
+                      "RightParenPos": 234,
+                      "Items": {
+                        "ListPos": 229,
+                        "ListEnd": 234,
+                        "Items": [
+                          {
+                            "Name": "f0",
+                            "Unquoted": false,
+                            "NamePos": 229,
+                            "NameEnd": 231
+                          },
+                          {
+                            "Name": "f1",
+                            "Unquoted": false,
+                            "NamePos": 232,
+                            "NameEnd": 234
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "AliasPos": 236,
+                  "Alias": {
+                    "Name": "f333",
+                    "Unquoted": false,
+                    "NamePos": 239,
+                    "NameEnd": 243
+                  }
+                }
+              ]
+            },
+            "From": {
+              "FromPos": 244,
+              "Expr": {
+                "TablePos": 253,
+                "TableEnd": 447,
+                "Alias": null,
+                "Expr": {
+                  "Expr": {
+                    "Items": [
+                      {
+                        "SelectPos": 254,
+                        "StatementEnd": 433,
+                        "With": null,
+                        "Top": null,
+                        "SelectColumns": {
+                          "ListPos": 270,
+                          "ListEnd": 354,
+                          "Items": [
+                            {
+                              "Name": "f0",
+                              "Unquoted": false,
+                              "NamePos": 270,
+                              "NameEnd": 272
+                            },
+                            {
+                              "Name": "f1",
+                              "Unquoted": false,
+                              "NamePos": 273,
+                              "NameEnd": 275
+                            },
+                            {
+                              "Name": "f2",
+                              "Unquoted": false,
+                              "NamePos": 276,
+                              "NameEnd": 278
+                            },
+                            {
+                              "Expr": {
+                                "Function": {
+                                  "Name": {
+                                    "Name": "ROW_NUMBER",
+                                    "Unquoted": false,
+                                    "NamePos": 289,
+                                    "NameEnd": 299
+                                  },
+                                  "Params": {
+                                    "LeftParenPos": 299,
+                                    "RightParenPos": 300,
+                                    "Items": {
+                                      "ListPos": 300,
+                                      "ListEnd": 300,
+                                      "Items": []
+                                    },
+                                    "ColumnArgList": null
+                                  }
+                                },
+                                "OverPos": 302,
+                                "OverExpr": {
+                                  "LeftParenPos": 306,
+                                  "RightParenPos": 347,
+                                  "PartitionBy": {
+                                    "PartitionPos": 306,
+                                    "Expr": {
+                                      "ListPos": 320,
+                                      "ListEnd": 322,
+                                      "Items": [
+                                        {
+                                          "Name": "f0",
+                                          "Unquoted": false,
+                                          "NamePos": 320,
+                                          "NameEnd": 322
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "OrderBy": {
+                                    "OrderPos": 323,
+                                    "ListEnd": 346,
+                                    "Items": [
+                                      {
+                                        "OrderPos": 323,
+                                        "Expr": {
+                                          "Name": {
+                                            "Name": "coalesce",
+                                            "Unquoted": false,
+                                            "NamePos": 332,
+                                            "NameEnd": 340
+                                          },
+                                          "Params": {
+                                            "LeftParenPos": 340,
+                                            "RightParenPos": 346,
+                                            "Items": {
+                                              "ListPos": 341,
+                                              "ListEnd": 346,
+                                              "Items": [
+                                                {
+                                                  "Name": "f1",
+                                                  "Unquoted": false,
+                                                  "NamePos": 341,
+                                                  "NameEnd": 343
+                                                },
+                                                {
+                                                  "Name": "f2",
+                                                  "Unquoted": false,
+                                                  "NamePos": 344,
+                                                  "NameEnd": 346
+                                                }
+                                              ]
+                                            },
+                                            "ColumnArgList": null
+                                          }
+                                        },
+                                        "Direction": "None"
+                                      }
+                                    ]
+                                  },
+                                  "Frame": null
+                                }
+                              },
+                              "AliasPos": 349,
+                              "Alias": {
+                                "Name": "rn",
+                                "Unquoted": false,
+                                "NamePos": 352,
+                                "NameEnd": 354
+                              }
+                            }
+                          ]
+                        },
+                        "From": {
+                          "FromPos": 360,
+                          "Expr": {
+                            "TablePos": 365,
+                            "TableEnd": 371,
+                            "Alias": null,
+                            "Expr": {
+                              "Database": {
+                                "Name": "test",
+                                "Unquoted": false,
+                                "NamePos": 365,
+                                "NameEnd": 369
+                              },
+                              "Table": {
+                                "Name": "t",
+                                "Unquoted": false,
+                                "NamePos": 370,
+                                "NameEnd": 371
+                              }
+                            }
+                          }
+                        },
+                        "ArrayJoin": null,
+                        "Window": null,
+                        "Prewhere": null,
+                        "Where": {
+                          "WherePos": 377,
+                          "Expr": {
+                            "LeftExpr": {
+                              "LeftExpr": {
+                                "Name": "f3",
+                                "Unquoted": false,
+                                "NamePos": 383,
+                                "NameEnd": 385
+                              },
+                              "Operation": "IN",
+                              "RightExpr": {
+                                "LeftParenPos": 389,
+                                "RightParenPos": 410,
+                                "Items": {
+                                  "ListPos": 391,
+                                  "ListEnd": 409,
+                                  "Items": [
+                                    {
+                                      "LiteralPos": 391,
+                                      "LiteralEnd": 394,
+                                      "Literal": "foo"
+                                    },
+                                    {
+                                      "LiteralPos": 398,
+                                      "LiteralEnd": 401,
+                                      "Literal": "bar"
+                                    },
+                                    {
+                                      "LiteralPos": 405,
+                                      "LiteralEnd": 409,
+                                      "Literal": "test"
+                                    }
+                                  ]
+                                },
+                                "ColumnArgList": null
+                              },
+                              "HasNot": false
+                            },
+                            "Operation": "AND",
+                            "RightExpr": {
+                              "LeftExpr": {
+                                "Name": "env",
+                                "Unquoted": false,
+                                "NamePos": 423,
+                                "NameEnd": 426
+                              },
+                              "Operation": "=",
+                              "RightExpr": {
+                                "LiteralPos": 429,
+                                "LiteralEnd": 433,
+                                "Literal": "test"
+                              },
+                              "HasNot": false
+                            },
+                            "HasNot": false
+                          }
+                        },
+                        "GroupBy": null,
+                        "Having": null,
+                        "OrderBy": null,
+                        "LimitBy": null,
+                        "Settings": null
+                      }
+                    ]
+                  },
+                  "AliasPos": 441,
+                  "Alias": {
+                    "Name": "tmp",
+                    "Unquoted": false,
+                    "NamePos": 444,
+                    "NameEnd": 447
+                  }
+                }
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": {
+              "WherePos": 448,
+              "Expr": {
+                "LeftExpr": {
+                  "Name": "rn",
+                  "Unquoted": false,
+                  "NamePos": 454,
+                  "NameEnd": 456
+                },
+                "Operation": "=",
+                "RightExpr": {
+                  "NumPos": 459,
+                  "NumEnd": 460,
+                  "Literal": "1",
+                  "Base": 10
+                },
+                "HasNot": false
+              }
+            },
+            "GroupBy": null,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Settings": null
+          }
+        ]
+      }
+    },
+    "Populate": true
+  }
+]

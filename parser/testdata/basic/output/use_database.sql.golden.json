@@ -1,0 +1,12 @@
+[
+  {
+    "UsePos": 0,
+    "StatementEnd": 8,
+    "Database": {
+      "Name": "test",
+      "Unquoted": false,
+      "NamePos": 4,
+      "NameEnd": 8
+    }
+  }
+]

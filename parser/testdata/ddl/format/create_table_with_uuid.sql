@@ -1,0 +1,33 @@
+-- Origin SQL:
+CREATE TABLE IF NOT EXISTS test.events_local UUID '1234' ON CLUSTER 'default_cluster' (
+    f0 String,
+    f1 String,
+    f2 String,
+    f3 Datetime,
+    f4 Datetime,
+    f5 Map(String,String),
+    f6 String,
+    f7 Datetime DEFAULT now()
+) ENGINE = ReplicatedMergeTree('/clickhouse/tables/{layer}-{shard}/test/events_local', '{replica}')
+TTL f3 + INTERVAL 6 MONTH
+PARTITION BY toYYYYMMDD(f3)
+ORDER BY (f0,f1,f2);
+
+-- Format SQL:
+CREATE TABLE IF NOT EXISTS test.events_local
+UUID '1234'
+ON CLUSTER 'default_cluster'
+(
+  f0 STRING,
+  f1 STRING,
+  f2 STRING,
+  f3 DATETIME,
+  f4 DATETIME,
+  f5 Map(STRING,STRING),
+  f6 STRING,
+  f7 DATETIME DEFAULT now()
+)
+ENGINE = ReplicatedMergeTree('/clickhouse/tables/{layer}-{shard}/test/events_local', '{replica}')
+PARTITION BY toYYYYMMDD(f3)
+TTL f3 + INTERVAL 6 MONTH
+ORDER BY (f0, f1, f2);

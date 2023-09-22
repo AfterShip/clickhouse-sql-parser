@@ -1,0 +1,27 @@
+[
+  {
+    "SystemPos": 0,
+    "Expr": {
+      "FlushPos": 7,
+      "StatementEnd": 17,
+      "Logs": true,
+      "Distributed": null
+    }
+  },
+  {
+    "SystemPos": 19,
+    "Expr": {
+      "DropPos": 26,
+      "StatementEnd": 49,
+      "Type": "UNCOMPRESSED CACHE"
+    }
+  },
+  {
+    "SystemPos": 51,
+    "Expr": {
+      "DropPos": 58,
+      "StatementEnd": 79,
+      "Type": "FILESYSTEM CACHE"
+    }
+  }
+]

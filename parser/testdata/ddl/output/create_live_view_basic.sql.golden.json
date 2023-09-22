@@ -1,0 +1,124 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 101,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "my_live_view",
+        "Unquoted": false,
+        "NamePos": 17,
+        "NameEnd": 29
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "Destination": {
+      "ToPos": 46,
+      "TableIdentifier": {
+        "Database": null,
+        "Table": {
+          "Name": "my_destination",
+          "Unquoted": false,
+          "NamePos": 49,
+          "NameEnd": 63
+        }
+      }
+    },
+    "TableSchema": {
+      "SchemaPos": 63,
+      "SchemaEnd": 73,
+      "Columns": [
+        {
+          "NamePos": 64,
+          "ColumnEnd": 73,
+          "Name": {
+            "Name": "id",
+            "Unquoted": false,
+            "NamePos": 64,
+            "NameEnd": 66
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "Unquoted": false,
+              "NamePos": 67,
+              "NameEnd": 73
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "WithTimeout": {
+      "WithTimeoutPos": 30,
+      "Expr": null,
+      "Number": {
+        "NumPos": 43,
+        "NumEnd": 45,
+        "Literal": "10",
+        "Base": 10
+      }
+    },
+    "SubQuery": {
+      "AsPos": 75,
+      "Selects": {
+        "Items": [
+          {
+            "SelectPos": 78,
+            "StatementEnd": 101,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 85,
+              "ListEnd": 87,
+              "Items": [
+                {
+                  "Name": "id",
+                  "Unquoted": false,
+                  "NamePos": 85,
+                  "NameEnd": 87
+                }
+              ]
+            },
+            "From": {
+              "FromPos": 88,
+              "Expr": {
+                "TablePos": 93,
+                "TableEnd": 101,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "my_table",
+                    "Unquoted": false,
+                    "NamePos": 93,
+                    "NameEnd": 101
+                  }
+                }
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Settings": null
+          }
+        ]
+      }
+    }
+  }
+]

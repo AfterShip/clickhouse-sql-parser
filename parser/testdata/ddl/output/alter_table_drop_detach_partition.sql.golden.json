@@ -1,0 +1,57 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 120,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "app_utc_00",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 22
+      },
+      "Table": {
+        "Name": "app_message_as_notification_organization_sent_stats_i_d_local",
+        "Unquoted": false,
+        "NamePos": 23,
+        "NameEnd": 84
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "DetachPos": 85,
+        "Partition": {
+          "PartitionPos": 99,
+          "Expr": {
+            "LiteralPos": 110,
+            "LiteralEnd": 120,
+            "Literal": "2022-05-24"
+          },
+          "ID": null,
+          "All": false
+        },
+        "Settings": {
+          "SettingsPos": 122,
+          "ListEnd": 154,
+          "Items": [
+            {
+              "SettingsPos": 131,
+              "Name": {
+                "Name": "allow_drop_detached",
+                "Unquoted": false,
+                "NamePos": 131,
+                "NameEnd": 150
+              },
+              "Expr": {
+                "NumPos": 153,
+                "NumEnd": 154,
+                "Literal": "1",
+                "Base": 10
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

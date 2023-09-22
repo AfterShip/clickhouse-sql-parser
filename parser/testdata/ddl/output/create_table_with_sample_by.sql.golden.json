@@ -1,0 +1,263 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 351,
+    "Name": {
+      "Database": {
+        "Name": "default",
+        "Unquoted": false,
+        "NamePos": 13,
+        "NameEnd": 20
+      },
+      "Table": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 21,
+        "NameEnd": 25
+      }
+    },
+    "IfNotExists": false,
+    "UUID": {
+      "Value": {
+        "LiteralPos": 32,
+        "LiteralEnd": 68,
+        "Literal": "87887901-e33c-497e-8788-7901e33c997e"
+      }
+    },
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 70,
+      "SchemaEnd": 124,
+      "Columns": [
+        {
+          "NamePos": 77,
+          "ColumnEnd": 89,
+          "Name": {
+            "Name": "f0",
+            "Unquoted": true,
+            "NamePos": 77,
+            "NameEnd": 79
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "Unquoted": false,
+              "NamePos": 81,
+              "NameEnd": 89
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 96,
+          "ColumnEnd": 106,
+          "Name": {
+            "Name": "f1",
+            "Unquoted": true,
+            "NamePos": 96,
+            "NameEnd": 98
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "Unquoted": false,
+              "NamePos": 100,
+              "NameEnd": 106
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 113,
+          "ColumnEnd": 123,
+          "Name": {
+            "Name": "f3",
+            "Unquoted": true,
+            "NamePos": 113,
+            "NameEnd": 115
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "Unquoted": false,
+              "NamePos": 117,
+              "NameEnd": 123
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 126,
+      "EngineEnd": 351,
+      "Name": "ReplicatedMergeTree",
+      "Params": {
+        "LeftParenPos": 154,
+        "RightParenPos": 217,
+        "Items": {
+          "ListPos": 156,
+          "ListEnd": 216,
+          "Items": [
+            {
+              "LiteralPos": 156,
+              "LiteralEnd": 203,
+              "Literal": "/clickhouse/tables/{layer}/{shard}/default/test"
+            },
+            {
+              "LiteralPos": 207,
+              "LiteralEnd": 216,
+              "Literal": "{replica}"
+            }
+          ]
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": {
+        "PartitionPos": 219,
+        "Expr": {
+          "ListPos": 232,
+          "ListEnd": 250,
+          "Items": [
+            {
+              "Name": {
+                "Name": "toYYYYMM",
+                "Unquoted": false,
+                "NamePos": 232,
+                "NameEnd": 240
+              },
+              "Params": {
+                "LeftParenPos": 240,
+                "RightParenPos": 250,
+                "Items": {
+                  "ListPos": 241,
+                  "ListEnd": 250,
+                  "Items": [
+                    {
+                      "Name": "timestamp",
+                      "Unquoted": false,
+                      "NamePos": 241,
+                      "NameEnd": 250
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            }
+          ]
+        }
+      },
+      "SampleBy": {
+        "SamplePos": 301,
+        "Expr": {
+          "Name": "userid",
+          "Unquoted": false,
+          "NamePos": 311,
+          "NameEnd": 317
+        }
+      },
+      "TTLExprList": null,
+      "SettingsExprList": {
+        "SettingsPos": 318,
+        "ListEnd": 351,
+        "Items": [
+          {
+            "SettingsPos": 327,
+            "Name": {
+              "Name": "index_granularity",
+              "Unquoted": false,
+              "NamePos": 327,
+              "NameEnd": 344
+            },
+            "Expr": {
+              "NumPos": 347,
+              "NumEnd": 351,
+              "Literal": "8192",
+              "Base": 10
+            }
+          }
+        ]
+      },
+      "OrderByListExpr": {
+        "OrderPos": 252,
+        "ListEnd": 299,
+        "Items": [
+          {
+            "OrderPos": 252,
+            "Expr": {
+              "LeftParenPos": 261,
+              "RightParenPos": 299,
+              "Items": {
+                "ListPos": 262,
+                "ListEnd": 299,
+                "Items": [
+                  {
+                    "Name": "contractid",
+                    "Unquoted": false,
+                    "NamePos": 262,
+                    "NameEnd": 272
+                  },
+                  {
+                    "Name": {
+                      "Name": "toDate",
+                      "Unquoted": false,
+                      "NamePos": 274,
+                      "NameEnd": 280
+                    },
+                    "Params": {
+                      "LeftParenPos": 280,
+                      "RightParenPos": 290,
+                      "Items": {
+                        "ListPos": 281,
+                        "ListEnd": 290,
+                        "Items": [
+                          {
+                            "Name": "timestamp",
+                            "Unquoted": false,
+                            "NamePos": 281,
+                            "NameEnd": 290
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  {
+                    "Name": "userid",
+                    "Unquoted": false,
+                    "NamePos": 293,
+                    "NameEnd": 299
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Direction": "None"
+          }
+        ]
+      }
+    },
+    "SubQuery": null
+  }
+]

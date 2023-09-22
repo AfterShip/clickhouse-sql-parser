@@ -1,0 +1,94 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 199,
+    "Name": {
+      "Database": {
+        "Name": "cluster_name",
+        "Unquoted": false,
+        "NamePos": 26,
+        "NameEnd": 38
+      },
+      "Table": {
+        "Name": "my_view",
+        "Unquoted": false,
+        "NamePos": 39,
+        "NameEnd": 46
+      }
+    },
+    "IfNotExists": true,
+    "UUID": {
+      "Value": {
+        "LiteralPos": 61,
+        "LiteralEnd": 97,
+        "Literal": "3493e374-e2bb-481b-b493-e374e2bb981b"
+      }
+    },
+    "OnCluster": {
+      "OnPos": 107,
+      "Expr": {
+        "LiteralPos": 119,
+        "LiteralEnd": 129,
+        "Literal": "my_cluster"
+      }
+    },
+    "TableSchema": null,
+    "SubQuery": {
+      "AsPos": 131,
+      "Selects": {
+        "Items": [
+          {
+            "SelectPos": 140,
+            "StatementEnd": 199,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 151,
+              "ListEnd": 171,
+              "Items": [
+                {
+                  "Name": "column1",
+                  "Unquoted": false,
+                  "NamePos": 151,
+                  "NameEnd": 158
+                },
+                {
+                  "Name": "column2",
+                  "Unquoted": false,
+                  "NamePos": 164,
+                  "NameEnd": 171
+                }
+              ]
+            },
+            "From": {
+              "FromPos": 176,
+              "Expr": {
+                "TablePos": 185,
+                "TableEnd": 199,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "my_other_table",
+                    "Unquoted": false,
+                    "NamePos": 185,
+                    "NameEnd": 199
+                  }
+                }
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Settings": null
+          }
+        ]
+      }
+    }
+  }
+]

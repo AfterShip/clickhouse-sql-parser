@@ -1,0 +1,623 @@
+[
+  {
+    "CreatePos": 122,
+    "StatementEnd": 601,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 149,
+        "NameEnd": 153
+      },
+      "Table": {
+        "Name": "events_local",
+        "Unquoted": false,
+        "NamePos": 154,
+        "NameEnd": 166
+      }
+    },
+    "IfNotExists": true,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 167,
+      "SchemaEnd": 483,
+      "Columns": [
+        {
+          "NamePos": 173,
+          "ColumnEnd": 182,
+          "Name": {
+            "Name": "f0",
+            "Unquoted": false,
+            "NamePos": 173,
+            "NameEnd": 175
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "Unquoted": false,
+              "NamePos": 176,
+              "NameEnd": 182
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 188,
+          "ColumnEnd": 212,
+          "Name": {
+            "Name": "f1",
+            "Unquoted": false,
+            "NamePos": 188,
+            "NameEnd": 190
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "Unquoted": false,
+              "NamePos": 191,
+              "NameEnd": 197
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": {
+            "CodecPos": 198,
+            "RightParenPos": 212,
+            "Name": {
+              "Name": "ZSTD",
+              "Unquoted": false,
+              "NamePos": 204,
+              "NameEnd": 208
+            },
+            "Level": {
+              "NumPos": 208,
+              "NumEnd": 210,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 218,
+          "ColumnEnd": 232,
+          "Name": {
+            "Name": "f2",
+            "Unquoted": false,
+            "NamePos": 218,
+            "NameEnd": 220
+          },
+          "Type": {
+            "LeftParenPos": 229,
+            "RightParenPos": 232,
+            "Name": {
+              "Name": "VARCHAR",
+              "Unquoted": false,
+              "NamePos": 221,
+              "NameEnd": 228
+            },
+            "Sizes": [
+              {
+                "NumPos": 229,
+                "NumEnd": 232,
+                "Literal": "255",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 239,
+          "ColumnEnd": 250,
+          "Name": {
+            "Name": "f3",
+            "Unquoted": false,
+            "NamePos": 239,
+            "NameEnd": 241
+          },
+          "Type": {
+            "Name": {
+              "Name": "Datetime",
+              "Unquoted": false,
+              "NamePos": 242,
+              "NameEnd": 250
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 256,
+          "ColumnEnd": 267,
+          "Name": {
+            "Name": "f4",
+            "Unquoted": false,
+            "NamePos": 256,
+            "NameEnd": 258
+          },
+          "Type": {
+            "Name": {
+              "Name": "Datetime",
+              "Unquoted": false,
+              "NamePos": 259,
+              "NameEnd": 267
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 273,
+          "ColumnEnd": 293,
+          "Name": {
+            "Name": "f5",
+            "Unquoted": false,
+            "NamePos": 273,
+            "NameEnd": 275
+          },
+          "Type": {
+            "LeftParenPos": 280,
+            "RightParenPos": 293,
+            "Name": {
+              "Name": "Map",
+              "Unquoted": false,
+              "NamePos": 276,
+              "NameEnd": 279
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "Unquoted": false,
+                  "NamePos": 280,
+                  "NameEnd": 286
+                }
+              },
+              {
+                "Name": {
+                  "Name": "String",
+                  "Unquoted": false,
+                  "NamePos": 287,
+                  "NameEnd": 293
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 300,
+          "ColumnEnd": 309,
+          "Name": {
+            "Name": "f6",
+            "Unquoted": false,
+            "NamePos": 300,
+            "NameEnd": 302
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "Unquoted": false,
+              "NamePos": 303,
+              "NameEnd": 309
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 315,
+          "ColumnEnd": 450,
+          "Name": {
+            "Name": "f7",
+            "Unquoted": false,
+            "NamePos": 315,
+            "NameEnd": 317
+          },
+          "Type": {
+            "LeftParenPos": 335,
+            "RightParenPos": 450,
+            "Name": {
+              "Name": "Nested",
+              "Unquoted": false,
+              "NamePos": 318,
+              "NameEnd": 324
+            },
+            "Columns": [
+              {
+                "NamePos": 335,
+                "ColumnEnd": 345,
+                "Name": {
+                  "Name": "f70",
+                  "Unquoted": false,
+                  "NamePos": 335,
+                  "NameEnd": 338
+                },
+                "Type": {
+                  "Name": {
+                    "Name": "UInt32",
+                    "Unquoted": false,
+                    "NamePos": 339,
+                    "NameEnd": 345
+                  }
+                },
+                "NotNull": null,
+                "Nullable": null,
+                "Property": null,
+                "Codec": null,
+                "TTL": null,
+                "Comment": null,
+                "CompressionCodec": null
+              },
+              {
+                "NamePos": 355,
+                "ColumnEnd": 365,
+                "Name": {
+                  "Name": "f71",
+                  "Unquoted": false,
+                  "NamePos": 355,
+                  "NameEnd": 358
+                },
+                "Type": {
+                  "Name": {
+                    "Name": "UInt32",
+                    "Unquoted": false,
+                    "NamePos": 359,
+                    "NameEnd": 365
+                  }
+                },
+                "NotNull": null,
+                "Nullable": null,
+                "Property": null,
+                "Codec": null,
+                "TTL": null,
+                "Comment": null,
+                "CompressionCodec": null
+              },
+              {
+                "NamePos": 375,
+                "ColumnEnd": 387,
+                "Name": {
+                  "Name": "f72",
+                  "Unquoted": false,
+                  "NamePos": 375,
+                  "NameEnd": 378
+                },
+                "Type": {
+                  "Name": {
+                    "Name": "DateTime",
+                    "Unquoted": false,
+                    "NamePos": 379,
+                    "NameEnd": 387
+                  }
+                },
+                "NotNull": null,
+                "Nullable": null,
+                "Property": null,
+                "Codec": null,
+                "TTL": null,
+                "Comment": null,
+                "CompressionCodec": null
+              },
+              {
+                "NamePos": 397,
+                "ColumnEnd": 406,
+                "Name": {
+                  "Name": "f73",
+                  "Unquoted": false,
+                  "NamePos": 397,
+                  "NameEnd": 400
+                },
+                "Type": {
+                  "Name": {
+                    "Name": "Int64",
+                    "Unquoted": false,
+                    "NamePos": 401,
+                    "NameEnd": 406
+                  }
+                },
+                "NotNull": null,
+                "Nullable": null,
+                "Property": null,
+                "Codec": null,
+                "TTL": null,
+                "Comment": null,
+                "CompressionCodec": null
+              },
+              {
+                "NamePos": 416,
+                "ColumnEnd": 425,
+                "Name": {
+                  "Name": "f74",
+                  "Unquoted": false,
+                  "NamePos": 416,
+                  "NameEnd": 419
+                },
+                "Type": {
+                  "Name": {
+                    "Name": "Int64",
+                    "Unquoted": false,
+                    "NamePos": 420,
+                    "NameEnd": 425
+                  }
+                },
+                "NotNull": null,
+                "Nullable": null,
+                "Property": null,
+                "Codec": null,
+                "TTL": null,
+                "Comment": null,
+                "CompressionCodec": null
+              },
+              {
+                "NamePos": 435,
+                "ColumnEnd": 445,
+                "Name": {
+                  "Name": "f75",
+                  "Unquoted": false,
+                  "NamePos": 435,
+                  "NameEnd": 438
+                },
+                "Type": {
+                  "Name": {
+                    "Name": "String",
+                    "Unquoted": false,
+                    "NamePos": 439,
+                    "NameEnd": 445
+                  }
+                },
+                "NotNull": null,
+                "Nullable": null,
+                "Property": null,
+                "Codec": null,
+                "TTL": null,
+                "Comment": null,
+                "CompressionCodec": null
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 457,
+          "ColumnEnd": 481,
+          "Name": {
+            "Name": "f8",
+            "Unquoted": false,
+            "NamePos": 457,
+            "NameEnd": 459
+          },
+          "Type": {
+            "Name": {
+              "Name": "Datetime",
+              "Unquoted": false,
+              "NamePos": 460,
+              "NameEnd": 468
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": {
+            "DefaultPos": 469,
+            "Expr": {
+              "Name": {
+                "Name": "now",
+                "Unquoted": false,
+                "NamePos": 477,
+                "NameEnd": 480
+              },
+              "Params": {
+                "LeftParenPos": 480,
+                "RightParenPos": 481,
+                "Items": {
+                  "ListPos": 481,
+                  "ListEnd": 481,
+                  "Items": []
+                },
+                "ColumnArgList": null
+              }
+            }
+          },
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 485,
+      "EngineEnd": 601,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": {
+        "PrimaryPos": 504,
+        "Expr": {
+          "LeftParenPos": 516,
+          "RightParenPos": 527,
+          "Items": {
+            "ListPos": 517,
+            "ListEnd": 527,
+            "Items": [
+              {
+                "Name": "f0",
+                "Unquoted": false,
+                "NamePos": 517,
+                "NameEnd": 519
+              },
+              {
+                "Name": "f1",
+                "Unquoted": false,
+                "NamePos": 521,
+                "NameEnd": 523
+              },
+              {
+                "Name": "f2",
+                "Unquoted": false,
+                "NamePos": 525,
+                "NameEnd": 527
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      },
+      "PartitionBy": {
+        "PartitionPos": 529,
+        "Expr": {
+          "ListPos": 542,
+          "ListEnd": 555,
+          "Items": [
+            {
+              "Name": {
+                "Name": "toYYYYMMDD",
+                "Unquoted": false,
+                "NamePos": 542,
+                "NameEnd": 552
+              },
+              "Params": {
+                "LeftParenPos": 552,
+                "RightParenPos": 555,
+                "Items": {
+                  "ListPos": 553,
+                  "ListEnd": 555,
+                  "Items": [
+                    {
+                      "Name": "f3",
+                      "Unquoted": false,
+                      "NamePos": 553,
+                      "NameEnd": 555
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            }
+          ]
+        }
+      },
+      "SampleBy": null,
+      "TTLExprList": {
+        "TTLPos": 557,
+        "ListEnd": 582,
+        "Items": [
+          {
+            "TTLPos": 557,
+            "Expr": {
+              "LeftExpr": {
+                "Name": "f3",
+                "Unquoted": false,
+                "NamePos": 561,
+                "NameEnd": 563
+              },
+              "Operation": "+",
+              "RightExpr": {
+                "IntervalPos": 566,
+                "Expr": {
+                  "NumPos": 575,
+                  "NumEnd": 576,
+                  "Literal": "6",
+                  "Base": 10
+                },
+                "Unit": {
+                  "Name": "MONTH",
+                  "Unquoted": false,
+                  "NamePos": 577,
+                  "NameEnd": 582
+                }
+              },
+              "HasNot": false
+            }
+          }
+        ]
+      },
+      "SettingsExprList": null,
+      "OrderByListExpr": {
+        "OrderPos": 583,
+        "ListEnd": 601,
+        "Items": [
+          {
+            "OrderPos": 583,
+            "Expr": {
+              "LeftParenPos": 592,
+              "RightParenPos": 601,
+              "Items": {
+                "ListPos": 593,
+                "ListEnd": 601,
+                "Items": [
+                  {
+                    "Name": "f1",
+                    "Unquoted": false,
+                    "NamePos": 593,
+                    "NameEnd": 595
+                  },
+                  {
+                    "Name": "f2",
+                    "Unquoted": false,
+                    "NamePos": 596,
+                    "NameEnd": 598
+                  },
+                  {
+                    "Name": "f3",
+                    "Unquoted": false,
+                    "NamePos": 599,
+                    "NameEnd": 601
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Direction": "None"
+          }
+        ]
+      }
+    },
+    "SubQuery": null
+  }
+]

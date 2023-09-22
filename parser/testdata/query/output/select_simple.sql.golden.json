@@ -1,0 +1,356 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 267,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 11,
+      "ListEnd": 96,
+      "Items": [
+        {
+          "Name": "f0",
+          "Unquoted": false,
+          "NamePos": 11,
+          "NameEnd": 13
+        },
+        {
+          "Expr": {
+            "Name": {
+              "Name": "coalesce",
+              "Unquoted": false,
+              "NamePos": 15,
+              "NameEnd": 23
+            },
+            "Params": {
+              "LeftParenPos": 23,
+              "RightParenPos": 30,
+              "Items": {
+                "ListPos": 24,
+                "ListEnd": 30,
+                "Items": [
+                  {
+                    "Name": "f1",
+                    "Unquoted": false,
+                    "NamePos": 24,
+                    "NameEnd": 26
+                  },
+                  {
+                    "Name": "f2",
+                    "Unquoted": false,
+                    "NamePos": 28,
+                    "NameEnd": 30
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "AliasPos": 32,
+          "Alias": {
+            "Name": "f3",
+            "Unquoted": false,
+            "NamePos": 35,
+            "NameEnd": 37
+          }
+        },
+        {
+          "Expr": {
+            "Function": {
+              "Name": {
+                "Name": "row_number",
+                "Unquoted": false,
+                "NamePos": 39,
+                "NameEnd": 49
+              },
+              "Params": {
+                "LeftParenPos": 49,
+                "RightParenPos": 50,
+                "Items": {
+                  "ListPos": 50,
+                  "ListEnd": 50,
+                  "Items": []
+                },
+                "ColumnArgList": null
+              }
+            },
+            "OverPos": 52,
+            "OverExpr": {
+              "LeftParenPos": 57,
+              "RightParenPos": 89,
+              "PartitionBy": {
+                "PartitionPos": 57,
+                "Expr": {
+                  "ListPos": 71,
+                  "ListEnd": 73,
+                  "Items": [
+                    {
+                      "Name": "f0",
+                      "Unquoted": false,
+                      "NamePos": 71,
+                      "NameEnd": 73
+                    }
+                  ]
+                }
+              },
+              "OrderBy": {
+                "OrderPos": 74,
+                "ListEnd": 85,
+                "Items": [
+                  {
+                    "OrderPos": 74,
+                    "Expr": {
+                      "Name": "f1",
+                      "Unquoted": false,
+                      "NamePos": 83,
+                      "NameEnd": 85
+                    },
+                    "Direction": "ASC"
+                  }
+                ]
+              },
+              "Frame": null
+            }
+          },
+          "AliasPos": 91,
+          "Alias": {
+            "Name": "rn",
+            "Unquoted": false,
+            "NamePos": 94,
+            "NameEnd": 96
+          }
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 97,
+      "Expr": {
+        "TablePos": 102,
+        "TableEnd": 119,
+        "Alias": null,
+        "Expr": {
+          "Database": {
+            "Name": "test",
+            "Unquoted": false,
+            "NamePos": 102,
+            "NameEnd": 106
+          },
+          "Table": {
+            "Name": "events_local",
+            "Unquoted": false,
+            "NamePos": 107,
+            "NameEnd": 119
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 120,
+      "Expr": {
+        "LeftExpr": {
+          "LeftExpr": {
+            "LeftExpr": {
+              "LeftParenPos": 126,
+              "RightParenPos": 155,
+              "Items": {
+                "ListPos": 127,
+                "ListEnd": 154,
+                "Items": [
+                  {
+                    "LeftExpr": {
+                      "Name": "f0",
+                      "Unquoted": false,
+                      "NamePos": 127,
+                      "NameEnd": 129
+                    },
+                    "Operation": "IN",
+                    "RightExpr": {
+                      "LeftParenPos": 133,
+                      "RightParenPos": 154,
+                      "Items": {
+                        "ListPos": 135,
+                        "ListEnd": 153,
+                        "Items": [
+                          {
+                            "LiteralPos": 135,
+                            "LiteralEnd": 138,
+                            "Literal": "foo"
+                          },
+                          {
+                            "LiteralPos": 142,
+                            "LiteralEnd": 145,
+                            "Literal": "bar"
+                          },
+                          {
+                            "LiteralPos": 149,
+                            "LiteralEnd": 153,
+                            "Literal": "test"
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    },
+                    "HasNot": false
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Operation": "AND",
+            "RightExpr": {
+              "LeftParenPos": 161,
+              "RightParenPos": 176,
+              "Items": {
+                "ListPos": 162,
+                "ListEnd": 175,
+                "Items": [
+                  {
+                    "LeftExpr": {
+                      "Name": "f1",
+                      "Unquoted": false,
+                      "NamePos": 162,
+                      "NameEnd": 164
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "LiteralPos": 168,
+                      "LiteralEnd": 175,
+                      "Literal": "testing"
+                    },
+                    "HasNot": false
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "HasNot": false
+          },
+          "Operation": "AND",
+          "RightExpr": {
+            "LeftParenPos": 182,
+            "RightParenPos": 205,
+            "Items": {
+              "ListPos": 183,
+              "ListEnd": 204,
+              "Items": [
+                {
+                  "LeftExpr": {
+                    "Name": "f2",
+                    "Unquoted": false,
+                    "NamePos": 183,
+                    "NameEnd": 185
+                  },
+                  "Operation": "LIKE",
+                  "RightExpr": {
+                    "LiteralPos": 196,
+                    "LiteralEnd": 204,
+                    "Literal": "testing2"
+                  },
+                  "HasNot": true
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "HasNot": false
+        },
+        "Operation": "AND",
+        "RightExpr": {
+          "LeftExpr": {
+            "Name": "f3",
+            "Unquoted": false,
+            "NamePos": 211,
+            "NameEnd": 213
+          },
+          "Operation": "IN",
+          "RightExpr": {
+            "LeftParenPos": 221,
+            "RightParenPos": 235,
+            "Items": {
+              "ListPos": 223,
+              "ListEnd": 234,
+              "Items": [
+                {
+                  "LiteralPos": 223,
+                  "LiteralEnd": 224,
+                  "Literal": "a"
+                },
+                {
+                  "LiteralPos": 228,
+                  "LiteralEnd": 229,
+                  "Literal": "b"
+                },
+                {
+                  "LiteralPos": 233,
+                  "LiteralEnd": 234,
+                  "Literal": "c"
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "HasNot": true
+        },
+        "HasNot": false
+      }
+    },
+    "GroupBy": {
+      "GroupByPos": 239,
+      "AggregateType": "",
+      "Expr": {
+        "ListPos": 248,
+        "ListEnd": 256,
+        "Items": [
+          {
+            "Name": "f0",
+            "Unquoted": false,
+            "NamePos": 248,
+            "NameEnd": 250
+          },
+          {
+            "Name": "f1",
+            "Unquoted": false,
+            "NamePos": 254,
+            "NameEnd": 256
+          }
+        ]
+      },
+      "WithCube": false,
+      "WithRollup": false,
+      "WithTotals": false
+    },
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": {
+      "LimitPos": 258,
+      "Limit": {
+        "NumPos": 269,
+        "NumEnd": 271,
+        "Literal": "10",
+        "Base": 10
+      },
+      "Offset": {
+        "NumPos": 264,
+        "NumEnd": 267,
+        "Literal": "100",
+        "Base": 10
+      },
+      "ByExpr": {
+        "ListPos": 275,
+        "ListEnd": 277,
+        "Items": [
+          {
+            "Name": "f0",
+            "Unquoted": false,
+            "NamePos": 275,
+            "NameEnd": 277
+          }
+        ]
+      }
+    },
+    "Settings": null
+  }
+]

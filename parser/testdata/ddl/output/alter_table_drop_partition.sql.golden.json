@@ -1,0 +1,43 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 79,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events",
+        "Unquoted": false,
+        "NamePos": 17,
+        "NameEnd": 23
+      }
+    },
+    "OnCluster": {
+      "OnPos": 24,
+      "Expr": {
+        "LiteralPos": 36,
+        "LiteralEnd": 51,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "DropPos": 53,
+        "Partition": {
+          "PartitionPos": 58,
+          "Expr": {
+            "LiteralPos": 69,
+            "LiteralEnd": 79,
+            "Literal": "2023-07-18"
+          },
+          "ID": null,
+          "All": false
+        }
+      }
+    ]
+  }
+]

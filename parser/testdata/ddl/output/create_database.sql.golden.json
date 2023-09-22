@@ -1,0 +1,15 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 35,
+    "Name": {
+      "Name": "test",
+      "Unquoted": true,
+      "NamePos": 31,
+      "NameEnd": 35
+    },
+    "IfNotExists": true,
+    "OnCluster": null,
+    "Engine": null
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 38,
+    "With": null,
+    "Top": {
+      "TopPos": 7,
+      "TopEnd": 13,
+      "Number": {
+        "NumPos": 11,
+        "NumEnd": 13,
+        "Literal": "10",
+        "Base": 10
+      },
+      "WithTies": false
+    },
+    "SelectColumns": {
+      "ListPos": 14,
+      "ListEnd": 23,
+      "Items": [
+        {
+          "Name": "my_column",
+          "Unquoted": false,
+          "NamePos": 14,
+          "NameEnd": 23
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 24,
+      "Expr": {
+        "TablePos": 29,
+        "TableEnd": 38,
+        "Alias": null,
+        "Expr": {
+          "Database": null,
+          "Table": {
+            "Name": "tableName",
+            "Unquoted": false,
+            "NamePos": 29,
+            "NameEnd": 38
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Settings": null
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 48,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "db",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 14
+      },
+      "Table": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 15,
+        "NameEnd": 19
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "DetachPos": 27,
+        "Partition": {
+          "PartitionPos": 27,
+          "Expr": {
+            "LiteralPos": 38,
+            "LiteralEnd": 48,
+            "Literal": "2021-10-01"
+          },
+          "ID": null,
+          "All": false
+        },
+        "Settings": null
+      }
+    ]
+  }
+]

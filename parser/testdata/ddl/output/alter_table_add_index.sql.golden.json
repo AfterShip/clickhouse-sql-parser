@@ -1,0 +1,79 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 110,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events_local",
+        "Unquoted": false,
+        "NamePos": 17,
+        "NameEnd": 29
+      }
+    },
+    "OnCluster": {
+      "OnPos": 30,
+      "Expr": {
+        "LiteralPos": 42,
+        "LiteralEnd": 57,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "AddPos": 59,
+        "StatementEnd": 110,
+        "Index": {
+          "IndexPos": 63,
+          "Name": {
+            "Ident": {
+              "Name": "my_index",
+              "Unquoted": false,
+              "NamePos": 69,
+              "NameEnd": 77
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "LeftParenPos": 77,
+            "RightParenPos": 80,
+            "Items": {
+              "ListPos": 78,
+              "ListEnd": 80,
+              "Items": [
+                {
+                  "Name": "f0",
+                  "Unquoted": false,
+                  "NamePos": 78,
+                  "NameEnd": 80
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "ColumnType": {
+            "Name": {
+              "Name": "minmax",
+              "Unquoted": false,
+              "NamePos": 87,
+              "NameEnd": 93
+            }
+          },
+          "Granularity": {
+            "NumPos": 106,
+            "NumEnd": 110,
+            "Literal": "1024",
+            "Base": 10
+          }
+        },
+        "IfNotExists": false,
+        "After": null
+      }
+    ]
+  }
+]

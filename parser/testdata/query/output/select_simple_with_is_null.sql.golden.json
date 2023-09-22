@@ -1,0 +1,170 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 112,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 24,
+      "Items": [
+        {
+          "Name": "f0",
+          "Unquoted": false,
+          "NamePos": 7,
+          "NameEnd": 9
+        },
+        {
+          "Name": "f1",
+          "Unquoted": false,
+          "NamePos": 10,
+          "NameEnd": 12
+        },
+        {
+          "Name": "f2",
+          "Unquoted": false,
+          "NamePos": 13,
+          "NameEnd": 15
+        },
+        {
+          "Expr": {
+            "Name": "f3",
+            "Unquoted": false,
+            "NamePos": 16,
+            "NameEnd": 18
+          },
+          "AliasPos": 19,
+          "Alias": {
+            "Name": "a0",
+            "Unquoted": false,
+            "NamePos": 22,
+            "NameEnd": 24
+          }
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 25,
+      "Expr": {
+        "TablePos": 30,
+        "TableEnd": 47,
+        "Alias": null,
+        "Expr": {
+          "Database": {
+            "Name": "test",
+            "Unquoted": false,
+            "NamePos": 30,
+            "NameEnd": 34
+          },
+          "Table": {
+            "Name": "events_local",
+            "Unquoted": false,
+            "NamePos": 35,
+            "NameEnd": 47
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 48,
+      "Expr": {
+        "LeftExpr": {
+          "LeftExpr": {
+            "LeftParenPos": 54,
+            "RightParenPos": 83,
+            "Items": {
+              "ListPos": 55,
+              "ListEnd": 82,
+              "Items": [
+                {
+                  "LeftExpr": {
+                    "Name": "f0",
+                    "Unquoted": false,
+                    "NamePos": 55,
+                    "NameEnd": 57
+                  },
+                  "Operation": "IN",
+                  "RightExpr": {
+                    "LeftParenPos": 61,
+                    "RightParenPos": 82,
+                    "Items": {
+                      "ListPos": 63,
+                      "ListEnd": 81,
+                      "Items": [
+                        {
+                          "LiteralPos": 63,
+                          "LiteralEnd": 66,
+                          "Literal": "foo"
+                        },
+                        {
+                          "LiteralPos": 70,
+                          "LiteralEnd": 73,
+                          "Literal": "bar"
+                        },
+                        {
+                          "LiteralPos": 77,
+                          "LiteralEnd": 81,
+                          "Literal": "test"
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  },
+                  "HasNot": false
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "Operation": "AND",
+          "RightExpr": {
+            "LeftParenPos": 89,
+            "RightParenPos": 104,
+            "Items": {
+              "ListPos": 90,
+              "ListEnd": 103,
+              "Items": [
+                {
+                  "LeftExpr": {
+                    "Name": "f1",
+                    "Unquoted": false,
+                    "NamePos": 90,
+                    "NameEnd": 92
+                  },
+                  "Operation": "=",
+                  "RightExpr": {
+                    "LiteralPos": 96,
+                    "LiteralEnd": 103,
+                    "Literal": "testing"
+                  },
+                  "HasNot": false
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "HasNot": false
+        },
+        "Operation": "AND",
+        "RightExpr": {
+          "IsPos": 110,
+          "Expr": {
+            "Name": "f2",
+            "Unquoted": false,
+            "NamePos": 110,
+            "NameEnd": 112
+          }
+        },
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Settings": null
+  }
+]
