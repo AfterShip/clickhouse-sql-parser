@@ -803,7 +803,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	}
 
 	engineExpr := &EngineExpr{EnginePos: pos}
-	engineEnd := p.Pos()
+	var engineEnd Pos
 	switch {
 	case p.matchKeyword(KeywordNull):
 		engineExpr.Name = KeywordNull

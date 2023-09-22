@@ -114,7 +114,7 @@ func (a *AlterTable) End() Pos {
 }
 
 func (a *AlterTable) Type() string {
-	return "TABLE"
+	return "ALTER TABLE"
 }
 
 func (a *AlterTable) String(level int) string {
@@ -686,7 +686,7 @@ func (c *CreateTable) End() Pos {
 }
 
 func (c *CreateTable) Type() string {
-	return "TABLE"
+	return "CREATE TABLE"
 }
 
 func (c *CreateTable) String(level int) string {
@@ -2930,7 +2930,7 @@ func (d *DropTable) End() Pos {
 }
 
 func (d *DropTable) Type() string {
-	return "TABLE"
+	return "DROP TABLE"
 }
 
 func (d *DropTable) String(level int) string {
@@ -3202,7 +3202,7 @@ func (t *TruncateTable) End() Pos {
 }
 
 func (t *TruncateTable) Type() string {
-	return "TABLE"
+	return "TRUNCATE TABLE"
 }
 
 func (t *TruncateTable) String(level int) string {

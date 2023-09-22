@@ -53,7 +53,7 @@ func main() {
 		panic(fmt.Sprintf("parse statements error: %s", err.Error()))
 	}
 	if !options.format { // print AST
-		bytes, _ := json.MarshalIndent(stmts, "", "  ")
+		bytes, _ := json.MarshalIndent(stmts, "", "  ") // nolint
 		fmt.Println(string(bytes))
 	} else { // format SQL
 		for _, stmt := range stmts {

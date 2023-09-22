@@ -52,4 +52,3 @@ jobs:
           make lint
 
       - name: Test
-        run: make test

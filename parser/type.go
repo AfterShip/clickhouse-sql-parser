@@ -24,8 +24,4 @@ const (
 	// Logical operators
 	opTypeAnd TokenKind = "AND"
 	opTypeOr  TokenKind = "OR"
-	opTypeNot TokenKind = "NOT"
-
-	// Bitwise operators
-	opTypeConcat TokenKind = "||"
 )
