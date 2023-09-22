@@ -1,5 +1,5 @@
 # ClickHouse SQL Parser 
-[![Go Report Card](https://goreportcard.com/badge/github.com/AfterShip/clickhouse-sql-parser)](https://goreportcard.com/report/github.com/AfterShip/clickhouse-sql-parser) [![LICENSE](https://img.shields.io/github/license/AfterShip/clickhouse-sql-parser.svg)](https://github.com/AfterShip/clickhouse-sql-parser/blob/master/LICENSE) [![GoDoc](https://img.shields.io/badge/Godoc-reference-blue.svg)](https://godoc.org/github.com/AfterShip/clickhouse-sql-parser)
+![GitHub CI](https://github.com/AfterShip/clickhouse-sql-parser/actions/workflows/ci.yaml/badge.svg) [![Go Report Card](https://goreportcard.com/badge/github.com/AfterShip/clickhouse-sql-parser)](https://goreportcard.com/report/github.com/AfterShip/clickhouse-sql-parser) [![LICENSE](https://img.shields.io/github/license/AfterShip/clickhouse-sql-parser.svg)](https://github.com/AfterShip/clickhouse-sql-parser/blob/master/LICENSE) [![GoDoc](https://img.shields.io/badge/Godoc-reference-blue.svg)](https://godoc.org/github.com/AfterShip/clickhouse-sql-parser) [![Coverage Status](https://coveralls.io/repos/github/AfterShip/clickhouse-sql-parser/badge.svg?branch=master)](https://coveralls.io/github/AfterShip/clickhouse-sql-parser?branch=master)
 
 The goal of this project is to build a ClickHouse SQL parser in Go with the following key features:
 
