@@ -1,5 +1,5 @@
 # ClickHouse SQL Parser 
-[![Go Report Card](https://goreportcard.com/badge/github.com/AfterShip/clickhouse-sql-parser)](https://goreportcard.com/report/github.com/AfterShip/clickhouse-sql-parser) [![LICENSE](https://img.shields.io/github/license/AfterShip/clickhouse-sql-parser.svg)](https://github.com/AfterShip/clickhouse-sql-parser/blob/master/LICENSE)[![GoDoc](https://img.shields.io/badge/Godoc-reference-blue.svg)](https://godoc.org/github.com/AfterShip/clickhouse-sql-parser)
+[![Go Report Card](https://goreportcard.com/badge/github.com/AfterShip/clickhouse-sql-parser)](https://goreportcard.com/report/github.com/AfterShip/clickhouse-sql-parser) [![LICENSE](https://img.shields.io/github/license/AfterShip/clickhouse-sql-parser.svg)](https://github.com/AfterShip/clickhouse-sql-parser/blob/master/LICENSE) [![GoDoc](https://img.shields.io/badge/Godoc-reference-blue.svg)](https://godoc.org/github.com/AfterShip/clickhouse-sql-parser)
 
 The goal of this project is to build a ClickHouse SQL parser in Go with the following key features:
 
@@ -23,7 +23,7 @@ import (
 query := "SELECT * FROM clickhouse"
 parser := clickhouse.NewParser(query)
 // Parse query into AST
-statements, err := newParser.ParseStatements()
+statements, err := parser.ParseStatements()
 if err != nil {
     return nil, err
 }
