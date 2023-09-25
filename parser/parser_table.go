@@ -1013,6 +1013,10 @@ func (p *Parser) parseDeleteFrom(pos Pos) (*DeleteFromExpr, error) {
 		return nil, err
 	}
 	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
 	if err := p.consumeKeyword(KeywordWhere); err != nil {
 		return nil, err
 	}
