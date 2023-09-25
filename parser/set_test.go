@@ -1,8 +1,9 @@
 package parser
 
 import (
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestSet(t *testing.T) {
@@ -28,8 +29,5 @@ func TestSet(t *testing.T) {
 		t.Errorf("Set should not contain 4")
 	}
 
-	expected := []int{1, 2, 3}
-	if !reflect.DeepEqual(s.Members(), expected) {
-		t.Errorf("Set members should be %v, but got %v", expected, s.Members())
-	}
+	require.EqualValues(t, []int{1, 2, 3}, s.Members())
 }
