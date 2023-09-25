@@ -1,6 +1,6 @@
 [
   {
-    "CheckPos": 22,
+    "CheckPos": 0,
     "Table": {
       "Database": null,
       "Table": {
@@ -13,7 +13,7 @@
     "Partition": null
   },
   {
-    "CheckPos": 62,
+    "CheckPos": 24,
     "Table": {
       "Database": null,
       "Table": {

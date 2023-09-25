@@ -335,7 +335,7 @@ func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
 		return nil, err
 	}
 	return &CheckExpr{
-		CheckPos:  p.Pos(),
+		CheckPos:  pos,
 		Table:     table,
 		Partition: partition,
 	}, nil
