@@ -896,6 +896,8 @@ func (p *Parser) parseStatement(pos Pos) (Expr, error) {
 		expr, err = p.parseSelectQuery(pos)
 	case p.matchKeyword(KeywordDelete):
 		expr, err = p.parseDeleteFrom(pos)
+	case p.matchKeyword(KeywordInsert):
+		expr, err = p.parseInsertExpr(p.Pos())
 	case p.matchKeyword(KeywordUse):
 		expr, err = p.parseUseStatement(pos)
 	case p.matchKeyword(KeywordSet):
@@ -1011,10 +1013,6 @@ func (p *Parser) parseDeleteFrom(pos Pos) (*DeleteFromExpr, error) {
 		return nil, err
 	}
 	onCluster, err := p.tryParseOnCluster(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
 	if err := p.consumeKeyword(KeywordWhere); err != nil {
 		return nil, err
 	}
@@ -1029,4 +1027,134 @@ func (p *Parser) parseDeleteFrom(pos Pos) (*DeleteFromExpr, error) {
 		OnCluster: onCluster,
 		WhereExpr: whereExpr,
 	}, nil
+}
+
+func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
+	if _, err := p.consumeTokenKind("("); err != nil {
+		return nil, err
+	}
+
+	var columnNames []NestedIdentifier
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(")") == nil {
+		name, err := p.ParseNestedIdentifier(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+		columnNames = append(columnNames, *name)
+	}
+	rightParenPos := p.Pos()
+	if _, err := p.consumeTokenKind(")"); err != nil {
+		return nil, err
+	}
+	return &ColumnNamesExpr{
+		LeftParenPos:  pos,
+		RightParenPos: rightParenPos,
+		ColumnNames:   columnNames,
+	}, nil
+}
+
+func (p *Parser) parseValuesExpr(pos Pos) (*ValuesExpr, error) {
+	if _, err := p.consumeTokenKind("("); err != nil {
+		return nil, err
+	}
+
+	var value Expr
+	var err error
+	values := make([]Expr, 0)
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(")") == nil {
+		switch {
+		case p.matchTokenKind("("):
+			value, err = p.parseValuesExpr(p.Pos())
+		default:
+			value, err = p.parseExpr(p.Pos())
+		}
+		if err != nil {
+			return nil, err
+		}
+		values = append(values, value)
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+	}
+	rightParenPos := p.Pos()
+	if _, err := p.consumeTokenKind(")"); err != nil {
+		return nil, err
+	}
+
+	return &ValuesExpr{
+		LeftParenPos:  pos,
+		RightParenPos: rightParenPos,
+		Values:        values,
+	}, nil
+}
+
+func (p *Parser) parseInsertExpr(pos Pos) (*InsertExpr, error) {
+	if err := p.consumeKeyword(KeywordInsert); err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordInto); err != nil {
+		return nil, err
+	}
+	_ = p.tryConsumeKeyword(KeywordTable)
+
+	var table Expr
+	var err error
+	if p.tryConsumeKeyword(KeywordFunction) != nil {
+		table, err = p.parseFunctionExpr(p.Pos())
+	} else {
+		table, err = p.parseTableIdentifier(p.Pos())
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	insertExpr := &InsertExpr{
+		InsertPos: pos,
+		Table:     table,
+	}
+
+	for i := 0; i < 1; i++ {
+		switch {
+		case p.matchKeyword(KeywordFormat):
+			insertExpr.Format, err = p.parseFormatExpr(p.Pos())
+		case p.matchKeyword(KeywordValues):
+			// consume VALUES keyword
+			_ = p.lexer.consumeToken()
+		case p.matchKeyword(KeywordSelect):
+			insertExpr.SelectExpr, err = p.parseSelectQuery(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			return insertExpr, nil
+		default:
+			if insertExpr.ColumnNames == nil {
+				// columns
+				insertExpr.ColumnNames, err = p.parseColumnNamesExpr(p.Pos())
+				// need another pass to parse keywords
+				i--
+			}
+		}
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	values := make([]*ValuesExpr, 0)
+	for !p.lexer.isEOF() {
+		value, err := p.parseValuesExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		values = append(values, value)
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+	}
+	insertExpr.Values = values
+
+	return insertExpr, nil
 }

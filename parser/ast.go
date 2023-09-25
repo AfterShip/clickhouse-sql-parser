@@ -3281,3 +3281,105 @@ func (d *DeleteFromExpr) String(level int) string {
 	}
 	return builder.String()
 }
+
+type ColumnNamesExpr struct {
+	LeftParenPos  Pos
+	RightParenPos Pos
+	ColumnNames   []NestedIdentifier
+}
+
+func (c *ColumnNamesExpr) Pos() Pos {
+	return c.LeftParenPos
+}
+
+func (c *ColumnNamesExpr) End() Pos {
+	return c.RightParenPos
+}
+
+func (c *ColumnNamesExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteByte('(')
+	for i, column := range c.ColumnNames {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(column.String(level))
+	}
+	builder.WriteByte(')')
+	return builder.String()
+}
+
+type ValuesExpr struct {
+	LeftParenPos  Pos
+	RightParenPos Pos
+	Values        []Expr
+}
+
+func (v *ValuesExpr) Pos() Pos {
+	return v.LeftParenPos
+}
+
+func (v *ValuesExpr) End() Pos {
+	return v.RightParenPos
+}
+
+func (v *ValuesExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteByte('(')
+	for i, value := range v.Values {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(value.String(level))
+	}
+	builder.WriteByte(')')
+	return builder.String()
+}
+
+type InsertExpr struct {
+	InsertPos   Pos
+	Format      *FormatExpr
+	Table       Expr
+	ColumnNames *ColumnNamesExpr
+	Values      []*ValuesExpr
+	SelectExpr  *SelectExpr
+}
+
+func (i *InsertExpr) Pos() Pos {
+	return i.InsertPos
+}
+
+func (i *InsertExpr) End() Pos {
+	if i.SelectExpr != nil {
+		return i.SelectExpr.End()
+	} else {
+		return i.Values[len(i.Values)-1].End()
+	}
+}
+
+func (i *InsertExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("INSERT INTO TABLE ")
+	builder.WriteString(i.Table.String(level))
+	if i.ColumnNames != nil {
+		builder.WriteString(NewLine(level + 1))
+		builder.WriteString(i.ColumnNames.String(level))
+	}
+	if i.Format != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(i.Format.String(level))
+	}
+
+	if i.SelectExpr != nil {
+		builder.WriteString(i.SelectExpr.String(level))
+	} else {
+		builder.WriteString(NewLine(level))
+		builder.WriteString("VALUES ")
+		for _, value := range i.Values {
+			builder.WriteString(NewLine(level + 1))
+			builder.WriteString(value.String(level))
+			builder.WriteByte(',')
+		}
+	}
+	return builder.String()
+}

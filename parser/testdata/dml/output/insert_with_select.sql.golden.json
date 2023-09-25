@@ -1,0 +1,89 @@
+[
+  {
+    "InsertPos": 0,
+    "Format": null,
+    "Table": {
+      "Database": {
+        "Name": "test",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "visits_null",
+        "Unquoted": false,
+        "NamePos": 17,
+        "NameEnd": 28
+      }
+    },
+    "ColumnNames": null,
+    "Values": null,
+    "SelectExpr": {
+      "SelectPos": 29,
+      "StatementEnd": 103,
+      "With": null,
+      "Top": null,
+      "SelectColumns": {
+        "ListPos": 40,
+        "ListEnd": 86,
+        "Items": [
+          {
+            "Name": "CounterID",
+            "Unquoted": false,
+            "NamePos": 40,
+            "NameEnd": 49
+          },
+          {
+            "Name": "StartDate",
+            "Unquoted": false,
+            "NamePos": 55,
+            "NameEnd": 64
+          },
+          {
+            "Name": "Sign",
+            "Unquoted": false,
+            "NamePos": 70,
+            "NameEnd": 74
+          },
+          {
+            "Name": "UserID",
+            "Unquoted": false,
+            "NamePos": 80,
+            "NameEnd": 86
+          }
+        ]
+      },
+      "From": {
+        "FromPos": 87,
+        "Expr": {
+          "TablePos": 92,
+          "TableEnd": 103,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "test",
+              "Unquoted": false,
+              "NamePos": 92,
+              "NameEnd": 96
+            },
+            "Table": {
+              "Name": "visits",
+              "Unquoted": false,
+              "NamePos": 97,
+              "NameEnd": 103
+            }
+          }
+        }
+      },
+      "ArrayJoin": null,
+      "Window": null,
+      "Prewhere": null,
+      "Where": null,
+      "GroupBy": null,
+      "Having": null,
+      "OrderBy": null,
+      "LimitBy": null,
+      "Settings": null
+    }
+  }
+]
