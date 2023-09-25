@@ -318,3 +318,25 @@ func (p *Parser) parseSystemExpr(pos Pos) (*SystemExpr, error) {
 		Expr:      expr,
 	}, nil
 }
+
+func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
+	if err := p.consumeKeyword(KeywordCheck); err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordTable); err != nil {
+		return nil, err
+	}
+	table, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	partition, err := p.tryParsePartitionExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &CheckExpr{
+		CheckPos:  p.Pos(),
+		Table:     table,
+		Partition: partition,
+	}, nil
+}

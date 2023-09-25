@@ -27,7 +27,7 @@
           "DotIdent": null
         },
         "PartitionExpr": {
-          "PartitionPos": 47,
+          "PartitionPos": 50,
           "Expr": {
             "Name": "partition_name",
             "Unquoted": false,

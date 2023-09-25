@@ -3454,3 +3454,28 @@ func (i *InsertExpr) String(level int) string {
 	}
 	return builder.String()
 }
+
+type CheckExpr struct {
+	CheckPos  Pos
+	Table     *TableIdentifier
+	Partition *PartitionExpr
+}
+
+func (c *CheckExpr) Pos() Pos {
+	return c.CheckPos
+}
+
+func (c *CheckExpr) End() Pos {
+	return c.Partition.End()
+}
+
+func (c *CheckExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("CHECK TABLE ")
+	builder.WriteString(c.Table.String(level))
+	builder.WriteString(NewLine(level))
+	if c.Partition != nil {
+		builder.WriteString(c.Partition.String(level))
+	}
+	return builder.String()
+}
