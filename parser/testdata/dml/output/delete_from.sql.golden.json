@@ -1,0 +1,30 @@
+[
+  {
+    "DeletePos": 0,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "hits",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 16
+      }
+    },
+    "OnCluster": null,
+    "WhereExpr": {
+      "LeftExpr": {
+        "Name": "Title",
+        "Unquoted": false,
+        "NamePos": 23,
+        "NameEnd": 28
+      },
+      "Operation": "LIKE",
+      "RightExpr": {
+        "LiteralPos": 35,
+        "LiteralEnd": 42,
+        "Literal": "%hello%"
+      },
+      "HasNot": false
+    }
+  }
+]
