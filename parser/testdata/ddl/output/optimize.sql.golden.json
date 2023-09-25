@@ -1,7 +1,7 @@
 [
   {
     "OptimizePos": 0,
-    "StatementEnd": 20,
+    "StatementEnd": 32,
     "Table": {
       "Database": null,
       "Table": {
@@ -22,7 +22,7 @@
   },
   {
     "OptimizePos": 49,
-    "StatementEnd": 69,
+    "StatementEnd": 85,
     "Table": {
       "Database": null,
       "Table": {
@@ -54,7 +54,7 @@
   },
   {
     "OptimizePos": 131,
-    "StatementEnd": 151,
+    "StatementEnd": 181,
     "Table": {
       "Database": null,
       "Table": {
@@ -98,7 +98,7 @@
   },
   {
     "OptimizePos": 183,
-    "StatementEnd": 203,
+    "StatementEnd": 219,
     "Table": {
       "Database": null,
       "Table": {
@@ -141,7 +141,7 @@
   },
   {
     "OptimizePos": 234,
-    "StatementEnd": 254,
+    "StatementEnd": 270,
     "Table": {
       "Database": null,
       "Table": {
@@ -201,7 +201,7 @@
   },
   {
     "OptimizePos": 293,
-    "StatementEnd": 313,
+    "StatementEnd": 362,
     "Table": {
       "Database": null,
       "Table": {
@@ -251,7 +251,7 @@
   },
   {
     "OptimizePos": 365,
-    "StatementEnd": 385,
+    "StatementEnd": 434,
     "Table": {
       "Database": null,
       "Table": {
@@ -312,7 +312,7 @@
   },
   {
     "OptimizePos": 449,
-    "StatementEnd": 469,
+    "StatementEnd": 518,
     "Table": {
       "Database": null,
       "Table": {

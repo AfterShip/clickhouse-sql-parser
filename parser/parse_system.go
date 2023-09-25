@@ -240,11 +240,13 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 	if err := p.consumeKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
+
 	table, err := p.parseTableIdentifier(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	statmentEnd := table.End()
+
 	onCluster, err := p.tryParseOnCluster(p.Pos())
 	if err != nil {
 		return nil, err
@@ -252,6 +254,7 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 	if onCluster != nil {
 		statmentEnd = onCluster.End()
 	}
+
 	partitionExpr, err := p.tryParsePartitionExpr(p.Pos())
 	if err != nil {
 		return nil, err
@@ -266,9 +269,13 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 		hasFinal = true
 		statmentEnd = lastPos
 	}
+
 	deduplicate, err := p.tryParseDeduplicateExpr(p.Pos())
 	if err != nil {
 		return nil, err
+	}
+	if deduplicate != nil {
+		statmentEnd = deduplicate.End()
 	}
 
 	return &OptimizeExpr{
