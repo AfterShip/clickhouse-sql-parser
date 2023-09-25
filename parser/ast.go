@@ -3352,9 +3352,8 @@ func (i *InsertExpr) Pos() Pos {
 func (i *InsertExpr) End() Pos {
 	if i.SelectExpr != nil {
 		return i.SelectExpr.End()
-	} else {
-		return i.Values[len(i.Values)-1].End()
 	}
+	return i.Values[len(i.Values)-1].End()
 }
 
 func (i *InsertExpr) String(level int) string {
