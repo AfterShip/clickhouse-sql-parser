@@ -3250,3 +3250,34 @@ func (s *SampleRatioExpr) String(level int) string {
 	}
 	return builder.String()
 }
+
+type DeleteFromExpr struct {
+	DeletePos Pos
+	Table     *TableIdentifier
+	OnCluster *OnClusterExpr
+	WhereExpr Expr
+}
+
+func (d *DeleteFromExpr) Pos() Pos {
+	return d.DeletePos
+}
+
+func (d *DeleteFromExpr) End() Pos {
+	return d.WhereExpr.End()
+}
+
+func (d *DeleteFromExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("DELETE FROM ")
+	builder.WriteString(d.Table.String(level))
+	if d.OnCluster != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(d.OnCluster.String(level))
+	}
+	if d.WhereExpr != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString("WHERE ")
+		builder.WriteString(d.WhereExpr.String(level))
+	}
+	return builder.String()
+}

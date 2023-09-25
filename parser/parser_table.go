@@ -894,6 +894,8 @@ func (p *Parser) parseStatement(pos Pos) (Expr, error) {
 		expr, err = p.parseDDL(pos)
 	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordWith):
 		expr, err = p.parseSelectQuery(pos)
+	case p.matchKeyword(KeywordDelete):
+		expr, err = p.parseDeleteFrom(pos)
 	case p.matchKeyword(KeywordUse):
 		expr, err = p.parseUseStatement(pos)
 	case p.matchKeyword(KeywordSet):
@@ -995,4 +997,36 @@ func (p *Parser) parseTruncateTable(pos Pos) (*TruncateTable, error) {
 	}
 
 	return truncateTable, nil
+}
+
+func (p *Parser) parseDeleteFrom(pos Pos) (*DeleteFromExpr, error) {
+	if err := p.consumeKeyword(KeywordDelete); err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordFrom); err != nil {
+		return nil, err
+	}
+	tableIdentifier, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.consumeKeyword(KeywordWhere); err != nil {
+		return nil, err
+	}
+	whereExpr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &DeleteFromExpr{
+		DeletePos: pos,
+		Table:     tableIdentifier,
+		OnCluster: onCluster,
+		WhereExpr: whereExpr,
+	}, nil
 }
