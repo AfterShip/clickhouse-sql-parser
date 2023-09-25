@@ -60,6 +60,7 @@ const (
 	KeywordEnd          = "END"
 	KeywordEngine       = "ENGINE"
 	KeywordEvents       = "EVENTS"
+	KeywordExcept       = "EXCEPT"
 	KeywordExists       = "EXISTS"
 	KeywordExplain      = "EXPLAIN"
 	KeywordExpression   = "EXPRESSION"
@@ -261,6 +262,7 @@ var keywords = NewSet(
 	KeywordEnd,
 	KeywordEngine,
 	KeywordEvents,
+	KeywordExcept,
 	KeywordExists,
 	KeywordExplain,
 	KeywordExpression,

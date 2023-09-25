@@ -3049,6 +3049,78 @@ func (f *FormatExpr) String(level int) string {
 	return "FORMAT " + f.Format.String(level)
 }
 
+type OptimizeExpr struct {
+	OptimizePos  Pos
+	StatementEnd Pos
+	Table        *TableIdentifier
+	OnCluster    *OnClusterExpr
+	Partition    *PartitionExpr
+	HasFinal     bool
+	Deduplicate  *DeduplicateExpr
+}
+
+func (o *OptimizeExpr) Pos() Pos {
+	return o.OptimizePos
+}
+
+func (o *OptimizeExpr) End() Pos {
+	return o.StatementEnd
+}
+
+func (o *OptimizeExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("OPTIMIZE TABLE ")
+	builder.WriteString(o.Table.String(level))
+	if o.OnCluster != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(o.OnCluster.String(level))
+	}
+	if o.Partition != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(o.Partition.String(level))
+	}
+	if o.HasFinal {
+		builder.WriteString(" FINAL")
+	}
+	if o.Deduplicate != nil {
+		builder.WriteString(o.Deduplicate.String(level))
+	}
+	return builder.String()
+}
+
+type DeduplicateExpr struct {
+	DeduplicatePos Pos
+	By             *ColumnExprList
+	Except         *ColumnExprList
+}
+
+func (d *DeduplicateExpr) Pos() Pos {
+	return d.DeduplicatePos
+}
+
+func (d *DeduplicateExpr) End() Pos {
+	if d.By != nil {
+		return d.By.End()
+	} else if d.Except != nil {
+		return d.Except.End()
+	}
+	return d.DeduplicatePos + Pos(len(KeywordDeduplicate))
+}
+
+func (d *DeduplicateExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString(" DEDUPLICATE")
+	if d.By != nil {
+		builder.WriteString(" BY ")
+		builder.WriteString(d.By.String(level))
+	}
+	if d.Except != nil {
+		builder.WriteString(" EXCEPT ")
+		builder.WriteString(d.Except.String(level))
+	}
+	return builder.String()
+}
+
 type SystemExpr struct {
 	SystemPos Pos
 	Expr      Expr
