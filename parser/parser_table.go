@@ -906,6 +906,8 @@ func (p *Parser) parseStatement(pos Pos) (Expr, error) {
 		expr, err = p.parseSystemExpr(pos)
 	case p.matchKeyword(KeywordOptimize):
 		expr, err = p.parseOptimizeExpr(pos)
+	case p.matchKeyword(KeywordCheck):
+		expr, err = p.parseCheckExpr(pos)
 	default:
 		return nil, fmt.Errorf("unexpected token: %q", p.last().String)
 	}

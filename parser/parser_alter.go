@@ -233,7 +233,7 @@ func (p *Parser) parseAlterTableDetachPartition(pos Pos) (AlterTableExpr, error)
 }
 
 func (p *Parser) tryParsePartitionExpr(pos Pos) (*PartitionExpr, error) {
-	if p.tryConsumeKeyword(KeywordIn) == nil {
+	if !p.matchKeyword(KeywordPartition) {
 		return nil, nil // nolint
 	}
 	return p.parsePartitionExpr(pos)
@@ -429,12 +429,15 @@ func (p *Parser) parseAlterTableClearColumn(pos Pos) (AlterTableExpr, error) {
 	}
 	statementEnd := columnName.End()
 
-	partitionExpr, err := p.tryParsePartitionExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if partitionExpr != nil {
-		statementEnd = partitionExpr.End()
+	var partitionExpr *PartitionExpr
+	if p.tryConsumeKeyword(KeywordIn) != nil {
+		partitionExpr, err = p.tryParsePartitionExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if partitionExpr != nil {
+			statementEnd = partitionExpr.End()
+		}
 	}
 
 	return &AlterTableClearColumn{
@@ -463,12 +466,15 @@ func (p *Parser) parseAlterTableClearIndex(pos Pos) (AlterTableExpr, error) {
 	}
 	statementEnd := indexName.End()
 
-	partitionExpr, err := p.tryParsePartitionExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if partitionExpr != nil {
-		statementEnd = partitionExpr.End()
+	var partitionExpr *PartitionExpr
+	if p.tryConsumeKeyword(KeywordIn) != nil {
+		partitionExpr, err = p.tryParsePartitionExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if partitionExpr != nil {
+			statementEnd = partitionExpr.End()
+		}
 	}
 
 	return &AlterTableClearIndex{

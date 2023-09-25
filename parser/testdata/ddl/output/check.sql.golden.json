@@ -1,0 +1,37 @@
+[
+  {
+    "CheckPos": 0,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "test_table",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 22
+      }
+    },
+    "Partition": null
+  },
+  {
+    "CheckPos": 24,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "test_table",
+        "Unquoted": false,
+        "NamePos": 36,
+        "NameEnd": 46
+      }
+    },
+    "Partition": {
+      "PartitionPos": 47,
+      "Expr": {
+        "LiteralPos": 58,
+        "LiteralEnd": 61,
+        "Literal": "col"
+      },
+      "ID": null,
+      "All": false
+    }
+  }
+]
