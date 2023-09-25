@@ -198,6 +198,97 @@ func (p *Parser) parseSystemDropExpr(pos Pos) (*SystemDropExpr, error) {
 	}
 }
 
+func (p *Parser) tryParseDeduplicateExpr(pos Pos) (*DeduplicateExpr, error) {
+	if !p.matchKeyword(KeywordDeduplicate) {
+		return nil, nil
+	}
+	return p.parseDeduplicateExpr(pos)
+}
+
+func (p *Parser) parseDeduplicateExpr(pos Pos) (*DeduplicateExpr, error) {
+	if err := p.consumeKeyword(KeywordDeduplicate); err != nil {
+		return nil, err
+	}
+	if p.tryConsumeKeyword(KeywordBy) == nil {
+		return &DeduplicateExpr{
+			DeduplicatePos: pos,
+		}, nil
+	}
+
+	by, err := p.parseColumnExprList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	var except *ColumnExprList
+	if p.tryConsumeKeyword(KeywordExcept) != nil {
+		except, err = p.parseColumnExprList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &DeduplicateExpr{
+		DeduplicatePos: pos,
+		By:             by,
+		Except:         except,
+	}, nil
+}
+
+func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
+	if err := p.consumeKeyword(KeywordOptimize); err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordTable); err != nil {
+		return nil, err
+	}
+
+	table, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	statmentEnd := table.End()
+
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if onCluster != nil {
+		statmentEnd = onCluster.End()
+	}
+
+	partitionExpr, err := p.tryParsePartitionExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if partitionExpr != nil {
+		statmentEnd = partitionExpr.End()
+	}
+
+	hasFinal := false
+	lastPos := p.Pos()
+	if p.tryConsumeKeyword(KeywordFinal) != nil {
+		hasFinal = true
+		statmentEnd = lastPos
+	}
+
+	deduplicate, err := p.tryParseDeduplicateExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if deduplicate != nil {
+		statmentEnd = deduplicate.End()
+	}
+
+	return &OptimizeExpr{
+		OptimizePos:  pos,
+		StatementEnd: statmentEnd,
+		Table:        table,
+		OnCluster:    onCluster,
+		Partition:    partitionExpr,
+		HasFinal:     hasFinal,
+		Deduplicate:  deduplicate,
+	}, nil
+}
+
 func (p *Parser) parseSystemExpr(pos Pos) (*SystemExpr, error) {
 	if err := p.consumeKeyword(KeywordSystem); err != nil {
 		return nil, err
