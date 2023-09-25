@@ -211,6 +211,7 @@
               "Literal": "5",
               "Base": 10
             },
+            "HasGlobal": false,
             "HasNot": false
           },
           {

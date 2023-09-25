@@ -113,6 +113,7 @@
                     },
                     "ColumnArgList": null
                   },
+                  "HasGlobal": false,
                   "HasNot": false
                 }
               ]
@@ -140,12 +141,14 @@
                     "LiteralEnd": 103,
                     "Literal": "testing"
                   },
+                  "HasGlobal": false,
                   "HasNot": false
                 }
               ]
             },
             "ColumnArgList": null
           },
+          "HasGlobal": false,
           "HasNot": false
         },
         "Operation": "AND",
@@ -158,6 +161,7 @@
             "NameEnd": 112
           }
         },
+        "HasGlobal": false,
         "HasNot": false
       }
     },
@@ -165,6 +169,7 @@
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,
-    "Settings": null
+    "Settings": null,
+    "UnionAll": null
   }
 ]

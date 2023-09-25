@@ -56,7 +56,8 @@
             "Having": null,
             "OrderBy": null,
             "LimitBy": null,
-            "Settings": null
+            "Settings": null,
+            "UnionAll": null
           },
           "EndPos": 35,
           "ColumnAliases": null
@@ -111,7 +112,8 @@
             "Having": null,
             "OrderBy": null,
             "LimitBy": null,
-            "Settings": null
+            "Settings": null,
+            "UnionAll": null
           },
           "EndPos": 68,
           "ColumnAliases": null
@@ -232,6 +234,7 @@
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,
-    "Settings": null
+    "Settings": null,
+    "UnionAll": null
   }
 ]

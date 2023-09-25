@@ -106,7 +106,7 @@
               "NamePos": 221,
               "NameEnd": 228
             },
-            "Sizes": [
+            "Params": [
               {
                 "NumPos": 229,
                 "NumEnd": 232,
@@ -572,6 +572,7 @@
                   "NameEnd": 582
                 }
               },
+              "HasGlobal": false,
               "HasNot": false
             }
           }

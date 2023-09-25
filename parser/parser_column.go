@@ -120,7 +120,7 @@ func (p *Parser) parseIsOrNotNull(pos Pos) (Expr, error) {
 }
 
 func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
-	hasNot := false
+	hasNot, hasGolbal := false, false
 	expr, err := p.parseAddSubExpr(pos)
 	if err != nil {
 		return nil, err
@@ -146,6 +146,9 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordIn):
 	case p.matchKeyword(KeywordLike):
 	case p.matchKeyword(KeywordIlike):
+	case p.matchKeyword(KeywordGlobal):
+		_ = p.lexer.consumeToken()
+		hasGolbal = true
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
 		switch {
@@ -169,6 +172,7 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 	return &BinaryExpr{
 		LeftExpr:  expr,
 		HasNot:    hasNot,
+		HasGlobal: hasGolbal,
 		Operation: op,
 		RightExpr: rightExpr,
 	}, nil
@@ -222,7 +226,7 @@ func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryExpr, error) {
 }
 
 func (p *Parser) parseMulDivModExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseColumnExpr(pos)
+	expr, err := p.parseUnaryExpr(pos)
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +241,7 @@ func (p *Parser) parseMulDivModExpr(pos Pos) (Expr, error) {
 			p.matchTokenKind(TokenCast):
 			op := p.lastTokenKind()
 			_ = p.lexer.consumeToken()
-			rightExpr, err := p.parseColumnExpr(p.Pos())
+			rightExpr, err := p.parseUnaryExpr(p.Pos())
 			if err != nil {
 				return nil, err
 			}
@@ -289,6 +293,39 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 	}, nil
 }
 
+func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
+	kind := p.last()
+	switch {
+	case p.matchTokenKind(opTypePlus),
+		p.matchTokenKind(opTypeMinus),
+		p.matchKeyword(KeywordNot):
+		_ = p.lexer.consumeToken()
+	default:
+		return p.parseColumnExpr(pos)
+	}
+
+	var expr Expr
+	var err error
+	switch {
+	case p.matchTokenKind(TokenIdent):
+		expr, err = p.ParseNestedIdentifier(p.Pos())
+	case p.matchTokenKind("("):
+		expr, err = p.parseExpr(p.Pos())
+	default:
+		expr, err = p.parseColumnExpr(p.Pos())
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return &UnaryExpr{
+		UnaryPos: pos,
+		Kind:     kind.Kind,
+		Expr:     expr,
+	}, nil
+
+}
+
 func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	switch {
 	case p.matchKeyword(KeywordInterval):
@@ -327,6 +364,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseColumnStar(pos)
 	case p.matchTokenKind("["):
 		return p.parseArrayParams(pos)
+
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}
@@ -620,11 +658,15 @@ func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
 			}
 			return p.parseComplexType(ident, p.Pos())
 		case p.matchTokenKind(TokenString):
-			// enum values
-			return p.parseEnumExpr(p.Pos())
+			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == "=" {
+				// enum values
+				return p.parseEnumExpr(p.Pos())
+			}
+			// like Datetime('Asia/Dubai')
+			return p.parseColumnTypeWithParams(ident, p.Pos())
 		case p.matchTokenKind(TokenInt):
 			// fixed size
-			return p.parseColumnTypeSizes(ident, p.Pos())
+			return p.parseColumnTypeWithParams(ident, p.Pos())
 		default:
 			return nil, fmt.Errorf("unexpected token kind: %v", p.lastTokenKind())
 		}
@@ -693,30 +735,30 @@ func (p *Parser) parseEnumExpr(pos Pos) (*EnumValueExprList, error) {
 	return expr, nil
 }
 
-func (p *Parser) parseColumnTypeSizes(name *Ident, pos Pos) (*SizedTypeExpr, error) {
-	sizes := make([]Literal, 0)
-	size, err := p.parseLiteral(pos)
+func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParamsExpr, error) {
+	params := make([]Literal, 0)
+	param, err := p.parseLiteral(pos)
 	if err != nil {
 		return nil, err
 	}
-	sizes = append(sizes, size)
+	params = append(params, param)
 	for !p.lexer.isEOF() && p.tryConsumeTokenKind(",") != nil {
 		size, err := p.parseLiteral(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		sizes = append(sizes, size)
+		params = append(params, size)
 	}
 
 	rightParenPos := p.Pos()
 	if _, err := p.consumeTokenKind(")"); err != nil {
 		return nil, err
 	}
-	return &SizedTypeExpr{
+	return &TypeWithParamsExpr{
 		Name:          name,
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
-		Sizes:         sizes,
+		Params:        params,
 	}, nil
 }
 

@@ -364,6 +364,7 @@
                   "NameEnd": 352
                 }
               },
+              "HasGlobal": false,
               "HasNot": false
             }
           }

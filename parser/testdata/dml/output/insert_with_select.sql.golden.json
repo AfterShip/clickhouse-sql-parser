@@ -83,7 +83,8 @@
       "Having": null,
       "OrderBy": null,
       "LimitBy": null,
-      "Settings": null
+      "Settings": null,
+      "UnionAll": null
     }
   }
 ]

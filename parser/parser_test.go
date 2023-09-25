@@ -36,9 +36,8 @@ func TestParser_Compatible(t *testing.T) {
 		}
 		index, err := strconv.ParseInt(fields[0], 10, 64)
 		require.NoError(t, err)
-		// FIXME: Currently only compatible with the first 41 cases,
 		// we should make it compatible with all cases.
-		compatibleIndex := int64(41)
+		compatibleIndex := int64(80)
 		if index >= compatibleIndex {
 			break
 		}

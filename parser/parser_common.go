@@ -281,7 +281,7 @@ func (p *Parser) wrapError(err error) error {
 	lineNo := 0
 	column := 0
 
-	for i := 0; i < int(p.lexer.lastToken.Pos); i++ {
+	for i := 0; i < int(p.Pos()); i++ {
 		if p.lexer.input[i] == '\n' {
 			lineNo++
 			column = 0

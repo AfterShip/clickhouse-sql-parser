@@ -171,7 +171,7 @@
               "NamePos": 223,
               "NameEnd": 233
             },
-            "Sizes": [
+            "Params": [
               {
                 "NumPos": 234,
                 "NumEnd": 235,
@@ -216,7 +216,7 @@
                   "NamePos": 256,
                   "NameEnd": 266
                 },
-                "Sizes": [
+                "Params": [
                   {
                     "NumPos": 267,
                     "NumEnd": 268,
@@ -263,7 +263,7 @@
                   "NamePos": 298,
                   "NameEnd": 308
                 },
-                "Sizes": [
+                "Params": [
                   {
                     "NumPos": 309,
                     "NumEnd": 310,
@@ -331,6 +331,7 @@
                 "Literal": "20",
                 "Base": 10
               },
+              "HasGlobal": false,
               "HasNot": false
             }
           ]

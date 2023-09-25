@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 267,
+    "StatementEnd": 277,
     "With": null,
     "Top": null,
     "SelectColumns": {
@@ -193,6 +193,7 @@
                       },
                       "ColumnArgList": null
                     },
+                    "HasGlobal": false,
                     "HasNot": false
                   }
                 ]
@@ -220,12 +221,14 @@
                       "LiteralEnd": 175,
                       "Literal": "testing"
                     },
+                    "HasGlobal": false,
                     "HasNot": false
                   }
                 ]
               },
               "ColumnArgList": null
             },
+            "HasGlobal": false,
             "HasNot": false
           },
           "Operation": "AND",
@@ -249,12 +252,14 @@
                     "LiteralEnd": 204,
                     "Literal": "testing2"
                   },
+                  "HasGlobal": false,
                   "HasNot": true
                 }
               ]
             },
             "ColumnArgList": null
           },
+          "HasGlobal": false,
           "HasNot": false
         },
         "Operation": "AND",
@@ -292,8 +297,10 @@
             },
             "ColumnArgList": null
           },
+          "HasGlobal": false,
           "HasNot": true
         },
+        "HasGlobal": false,
         "HasNot": false
       }
     },
@@ -351,6 +358,7 @@
         ]
       }
     },
-    "Settings": null
+    "Settings": null,
+    "UnionAll": null
   }
 ]

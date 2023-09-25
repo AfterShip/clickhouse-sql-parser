@@ -24,6 +24,7 @@
         "LiteralEnd": 42,
         "Literal": "%hello%"
       },
+      "HasGlobal": false,
       "HasNot": false
     }
   }

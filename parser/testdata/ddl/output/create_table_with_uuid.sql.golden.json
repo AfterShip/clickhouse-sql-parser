@@ -370,6 +370,7 @@
                   "NameEnd": 364
                 }
               },
+              "HasGlobal": false,
               "HasNot": false
             }
           }

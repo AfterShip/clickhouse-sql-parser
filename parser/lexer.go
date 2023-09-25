@@ -227,14 +227,15 @@ func (l *Lexer) skipComments() {
 }
 
 func (l *Lexer) peekToken() (*Token, error) {
-	lastToken := l.lastToken
+	saveToken := l.lastToken
+	saveCurrent := l.current
 	if err := l.consumeToken(); err != nil {
 		return nil, err
 	}
 	token := l.lastToken
 
-	l.lastToken = lastToken
-	l.current = int(lastToken.End)
+	l.lastToken = saveToken
+	l.current = saveCurrent
 	return token, nil
 }
 

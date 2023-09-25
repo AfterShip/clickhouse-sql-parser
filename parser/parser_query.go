@@ -244,7 +244,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			}
 		}
 	case p.matchTokenKind("("):
-		expr, err = p.parseSelectUnionExprList(p.Pos())
+		expr, err = p.parseSelectQuery(p.Pos())
 	default:
 		return nil, errors.New("expect table name or subquery")
 	}
@@ -630,64 +630,42 @@ func (p *Parser) parseSubQuery(pos Pos) (*SubQueryExpr, error) {
 		return nil, err
 	}
 
-	selectExprList, err := p.parseSelectUnionExprList(p.Pos())
+	selectExprList, err := p.parseSelectQuery(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 
 	return &SubQueryExpr{
-		AsPos:   pos,
-		Selects: selectExprList,
-	}, nil
-}
-
-func (p *Parser) parseSelectUnionExprList(pos Pos) (*SelectExprList, error) {
-	var selectQueries []*SelectExpr
-	for {
-		selectQuery, err := p.parseSelectQuery(pos)
-		if err != nil {
-			return nil, err
-		}
-		selectQueries = append(selectQueries, selectQuery)
-
-		if p.tryConsumeKeyword(KeywordUnion) == nil {
-			break
-		}
-		if err := p.consumeKeyword(KeywordAll); err != nil {
-			return nil, err
-		}
-	}
-	return &SelectExprList{
-		Items: selectQueries,
+		AsPos:  pos,
+		Select: selectExprList,
 	}, nil
 }
 
 func (p *Parser) parseSelectQuery(pos Pos) (*SelectExpr, error) {
-	switch {
-	case p.matchKeyword(KeywordSelect),
-		p.matchKeyword(KeywordWith):
-		return p.parseSelectStatement(pos)
-	case p.matchTokenKind("("):
-		return p.parseSelectStatementWithParen(pos)
-	default:
+	if !p.matchKeyword(KeywordSelect) && !p.matchKeyword(KeywordWith) && !p.matchTokenKind("(") {
 		return nil, fmt.Errorf("expected SELECT, WITH or (, got %s", p.lastTokenKind())
 	}
-}
 
-func (p *Parser) parseSelectStatementWithParen(_ Pos) (*SelectExpr, error) {
-	if _, err := p.consumeTokenKind("("); err != nil {
-		return nil, err
-	}
-
+	hasParen := p.tryConsumeTokenKind("(") != nil
 	selectExpr, err := p.parseSelectStatement(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-
-	if _, err := p.consumeTokenKind(")"); err != nil {
-		return nil, err
+	if p.tryConsumeKeyword(KeywordUnion) != nil {
+		if err := p.consumeKeyword(KeywordAll); err != nil {
+			return nil, err
+		}
+		unionAllExpr, err := p.parseSelectStatement(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		selectExpr.UnionAll = unionAllExpr
 	}
-
+	if hasParen {
+		if _, err := p.consumeTokenKind(")"); err != nil {
+			return nil, err
+		}
+	}
 	return selectExpr, nil
 }
 

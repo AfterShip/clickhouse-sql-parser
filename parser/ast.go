@@ -68,6 +68,7 @@ type BinaryExpr struct {
 	LeftExpr  Expr
 	Operation TokenKind
 	RightExpr Expr
+	HasGlobal bool
 	HasNot    bool
 }
 
@@ -85,6 +86,8 @@ func (p *BinaryExpr) String(level int) string {
 	builder.WriteByte(' ')
 	if p.HasNot {
 		builder.WriteString("NOT ")
+	} else if p.HasGlobal {
+		builder.WriteString("GLOBAL ")
 	}
 	builder.WriteString(string(p.Operation))
 	builder.WriteByte(' ')
@@ -1515,26 +1518,26 @@ func (c *PropertyTypeExpr) String(level int) string {
 	return strings.ToUpper(c.Name.String(level + 1))
 }
 
-type SizedTypeExpr struct {
+type TypeWithParamsExpr struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
 	Name          *Ident
-	Sizes         []Literal
+	Params        []Literal
 }
 
-func (s *SizedTypeExpr) Pos() Pos {
+func (s *TypeWithParamsExpr) Pos() Pos {
 	return s.Name.NamePos
 }
 
-func (s *SizedTypeExpr) End() Pos {
+func (s *TypeWithParamsExpr) End() Pos {
 	return s.RightParenPos
 }
 
-func (s *SizedTypeExpr) String(level int) string {
+func (s *TypeWithParamsExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(s.Name.String(level))
 	builder.WriteByte('(')
-	for i, size := range s.Sizes {
+	for i, size := range s.Params {
 		if i > 0 {
 			builder.WriteByte(',')
 		}
@@ -2323,7 +2326,7 @@ func (a *AliasExpr) End() Pos {
 
 func (a *AliasExpr) String(level int) string {
 	var builder strings.Builder
-	if _, isSelect := a.Expr.(*SelectExprList); isSelect {
+	if _, isSelect := a.Expr.(*SelectExpr); isSelect {
 		builder.WriteByte('(')
 		builder.WriteString(a.Expr.String(level))
 		builder.WriteByte(')')
@@ -2443,7 +2446,7 @@ func (l *LimitByExpr) Pos() Pos {
 
 func (l *LimitByExpr) End() Pos {
 	if l.ByExpr != nil {
-		return l.Offset.End()
+		return l.ByExpr.End()
 	}
 	if l.Offset != nil {
 		return l.Offset.End()
@@ -2663,26 +2666,6 @@ func (a *ArrayJoinExpr) String(level int) string {
 	return a.Type + " ARRAY JOIN " + a.Expr.String(level)
 }
 
-type SelectExprList struct {
-	Items []*SelectExpr
-}
-
-func (s *SelectExprList) Pos() Pos {
-	return s.Items[0].Pos()
-}
-
-func (s *SelectExprList) End() Pos {
-	return s.Items[len(s.Items)-1].End()
-}
-
-func (s *SelectExprList) String(level int) string {
-	var builder strings.Builder
-	for _, item := range s.Items {
-		builder.WriteString(item.String(level))
-	}
-	return builder.String()
-}
-
 type SelectExpr struct {
 	SelectPos     Pos
 	StatementEnd  Pos
@@ -2699,6 +2682,7 @@ type SelectExpr struct {
 	OrderBy       *OrderByListExpr
 	LimitBy       *LimitByExpr
 	Settings      *SettingsExprList
+	UnionAll      *SelectExpr
 }
 
 func (s *SelectExpr) Pos() Pos {
@@ -2780,8 +2764,8 @@ func (s *SelectExpr) String(level int) string { // nolint: funlen
 }
 
 type SubQueryExpr struct {
-	AsPos   Pos
-	Selects *SelectExprList
+	AsPos  Pos
+	Select *SelectExpr
 }
 
 func (s *SubQueryExpr) Pos() Pos {
@@ -2789,13 +2773,13 @@ func (s *SubQueryExpr) Pos() Pos {
 }
 
 func (s *SubQueryExpr) End() Pos {
-	return s.Selects.End()
+	return s.Select.End()
 }
 
 func (s *SubQueryExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(" AS (")
-	builder.WriteString(s.Selects.String(level + 1))
+	builder.WriteString(s.Select.String(level + 1))
 	builder.WriteString(NewLine(level))
 	builder.WriteString(")")
 	return builder.String()
@@ -3478,4 +3462,22 @@ func (c *CheckExpr) String(level int) string {
 		builder.WriteString(c.Partition.String(level))
 	}
 	return builder.String()
+}
+
+type UnaryExpr struct {
+	UnaryPos Pos
+	Kind     TokenKind
+	Expr     Expr
+}
+
+func (n *UnaryExpr) Pos() Pos {
+	return n.UnaryPos
+}
+
+func (n *UnaryExpr) End() Pos {
+	return n.Expr.End()
+}
+
+func (n *UnaryExpr) String(level int) string {
+	return "-" + n.Expr.String(level+1)
 }

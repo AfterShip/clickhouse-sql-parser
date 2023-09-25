@@ -71,53 +71,50 @@
     },
     "SubQuery": {
       "AsPos": 75,
-      "Selects": {
-        "Items": [
-          {
-            "SelectPos": 78,
-            "StatementEnd": 101,
-            "With": null,
-            "Top": null,
-            "SelectColumns": {
-              "ListPos": 85,
-              "ListEnd": 87,
-              "Items": [
-                {
-                  "Name": "id",
-                  "Unquoted": false,
-                  "NamePos": 85,
-                  "NameEnd": 87
-                }
-              ]
-            },
-            "From": {
-              "FromPos": 88,
-              "Expr": {
-                "TablePos": 93,
-                "TableEnd": 101,
-                "Alias": null,
-                "Expr": {
-                  "Database": null,
-                  "Table": {
-                    "Name": "my_table",
-                    "Unquoted": false,
-                    "NamePos": 93,
-                    "NameEnd": 101
-                  }
-                }
+      "Select": {
+        "SelectPos": 78,
+        "StatementEnd": 101,
+        "With": null,
+        "Top": null,
+        "SelectColumns": {
+          "ListPos": 85,
+          "ListEnd": 87,
+          "Items": [
+            {
+              "Name": "id",
+              "Unquoted": false,
+              "NamePos": 85,
+              "NameEnd": 87
+            }
+          ]
+        },
+        "From": {
+          "FromPos": 88,
+          "Expr": {
+            "TablePos": 93,
+            "TableEnd": 101,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "my_table",
+                "Unquoted": false,
+                "NamePos": 93,
+                "NameEnd": 101
               }
-            },
-            "ArrayJoin": null,
-            "Window": null,
-            "Prewhere": null,
-            "Where": null,
-            "GroupBy": null,
-            "Having": null,
-            "OrderBy": null,
-            "LimitBy": null,
-            "Settings": null
+            }
           }
-        ]
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Settings": null,
+        "UnionAll": null
       }
     }
   }

@@ -35,59 +35,56 @@
     "TableSchema": null,
     "SubQuery": {
       "AsPos": 131,
-      "Selects": {
-        "Items": [
-          {
-            "SelectPos": 140,
-            "StatementEnd": 199,
-            "With": null,
-            "Top": null,
-            "SelectColumns": {
-              "ListPos": 151,
-              "ListEnd": 171,
-              "Items": [
-                {
-                  "Name": "column1",
-                  "Unquoted": false,
-                  "NamePos": 151,
-                  "NameEnd": 158
-                },
-                {
-                  "Name": "column2",
-                  "Unquoted": false,
-                  "NamePos": 164,
-                  "NameEnd": 171
-                }
-              ]
+      "Select": {
+        "SelectPos": 140,
+        "StatementEnd": 199,
+        "With": null,
+        "Top": null,
+        "SelectColumns": {
+          "ListPos": 151,
+          "ListEnd": 171,
+          "Items": [
+            {
+              "Name": "column1",
+              "Unquoted": false,
+              "NamePos": 151,
+              "NameEnd": 158
             },
-            "From": {
-              "FromPos": 176,
-              "Expr": {
-                "TablePos": 185,
-                "TableEnd": 199,
-                "Alias": null,
-                "Expr": {
-                  "Database": null,
-                  "Table": {
-                    "Name": "my_other_table",
-                    "Unquoted": false,
-                    "NamePos": 185,
-                    "NameEnd": 199
-                  }
-                }
+            {
+              "Name": "column2",
+              "Unquoted": false,
+              "NamePos": 164,
+              "NameEnd": 171
+            }
+          ]
+        },
+        "From": {
+          "FromPos": 176,
+          "Expr": {
+            "TablePos": 185,
+            "TableEnd": 199,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "my_other_table",
+                "Unquoted": false,
+                "NamePos": 185,
+                "NameEnd": 199
               }
-            },
-            "ArrayJoin": null,
-            "Window": null,
-            "Prewhere": null,
-            "Where": null,
-            "GroupBy": null,
-            "Having": null,
-            "OrderBy": null,
-            "LimitBy": null,
-            "Settings": null
+            }
           }
-        ]
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Settings": null,
+        "UnionAll": null
       }
     }
   }

@@ -74,59 +74,56 @@
     },
     "SubQuery": {
       "AsPos": 60,
-      "Selects": {
-        "Items": [
-          {
-            "SelectPos": 63,
-            "StatementEnd": 104,
-            "With": null,
-            "Top": null,
-            "SelectColumns": {
-              "ListPos": 74,
-              "ListEnd": 86,
-              "Items": [
-                {
-                  "Name": "id",
-                  "Unquoted": false,
-                  "NamePos": 74,
-                  "NameEnd": 76
-                },
-                {
-                  "Name": "name",
-                  "Unquoted": false,
-                  "NamePos": 82,
-                  "NameEnd": 86
-                }
-              ]
+      "Select": {
+        "SelectPos": 63,
+        "StatementEnd": 104,
+        "With": null,
+        "Top": null,
+        "SelectColumns": {
+          "ListPos": 74,
+          "ListEnd": 86,
+          "Items": [
+            {
+              "Name": "id",
+              "Unquoted": false,
+              "NamePos": 74,
+              "NameEnd": 76
             },
-            "From": {
-              "FromPos": 87,
-              "Expr": {
-                "TablePos": 96,
-                "TableEnd": 104,
-                "Alias": null,
-                "Expr": {
-                  "Database": null,
-                  "Table": {
-                    "Name": "my_table",
-                    "Unquoted": false,
-                    "NamePos": 96,
-                    "NameEnd": 104
-                  }
-                }
+            {
+              "Name": "name",
+              "Unquoted": false,
+              "NamePos": 82,
+              "NameEnd": 86
+            }
+          ]
+        },
+        "From": {
+          "FromPos": 87,
+          "Expr": {
+            "TablePos": 96,
+            "TableEnd": 104,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "my_table",
+                "Unquoted": false,
+                "NamePos": 96,
+                "NameEnd": 104
               }
-            },
-            "ArrayJoin": null,
-            "Window": null,
-            "Prewhere": null,
-            "Where": null,
-            "GroupBy": null,
-            "Having": null,
-            "OrderBy": null,
-            "LimitBy": null,
-            "Settings": null
+            }
           }
-        ]
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Settings": null,
+        "UnionAll": null
       }
     }
   }
