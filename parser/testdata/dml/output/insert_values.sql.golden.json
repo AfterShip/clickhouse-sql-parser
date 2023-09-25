@@ -1,0 +1,226 @@
+[
+  {
+    "InsertPos": 0,
+    "Format": null,
+    "Table": {
+      "Database": {
+        "Name": "helloworld",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 22
+      },
+      "Table": {
+        "Name": "my_first_table",
+        "Unquoted": false,
+        "NamePos": 23,
+        "NameEnd": 37
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 38,
+      "RightParenPos": 74,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "user_id",
+            "Unquoted": false,
+            "NamePos": 39,
+            "NameEnd": 46
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "message",
+            "Unquoted": false,
+            "NamePos": 48,
+            "NameEnd": 55
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "timestamp",
+            "Unquoted": false,
+            "NamePos": 57,
+            "NameEnd": 66
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": [
+      {
+        "LeftParenPos": 87,
+        "RightParenPos": 168,
+        "Values": [
+          {
+            "NumPos": 88,
+            "NumEnd": 91,
+            "Literal": "101",
+            "Base": 10
+          },
+          {
+            "LiteralPos": 94,
+            "LiteralEnd": 112,
+            "Literal": "Hello, ClickHouse!"
+          },
+          {
+            "Name": {
+              "Name": "now",
+              "Unquoted": false,
+              "NamePos": 147,
+              "NameEnd": 150
+            },
+            "Params": {
+              "LeftParenPos": 150,
+              "RightParenPos": 151,
+              "Items": {
+                "ListPos": 151,
+                "ListEnd": 151,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          {
+            "FloatPos": 160,
+            "FloatEnd": 164,
+            "Literal": "-1.0"
+          }
+        ]
+      },
+      {
+        "LeftParenPos": 175,
+        "RightParenPos": 256,
+        "Values": [
+          {
+            "NumPos": 176,
+            "NumEnd": 179,
+            "Literal": "102",
+            "Base": 10
+          },
+          {
+            "LiteralPos": 182,
+            "LiteralEnd": 212,
+            "Literal": "Insert a lot of rows per batch"
+          },
+          {
+            "Name": {
+              "Name": "yesterday",
+              "Unquoted": false,
+              "NamePos": 235,
+              "NameEnd": 244
+            },
+            "Params": {
+              "LeftParenPos": 244,
+              "RightParenPos": 245,
+              "Items": {
+                "ListPos": 245,
+                "ListEnd": 245,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          {
+            "FloatPos": 248,
+            "FloatEnd": 255,
+            "Literal": "1.41421"
+          }
+        ]
+      },
+      {
+        "LeftParenPos": 263,
+        "RightParenPos": 344,
+        "Values": [
+          {
+            "NumPos": 264,
+            "NumEnd": 267,
+            "Literal": "102",
+            "Base": 10
+          },
+          {
+            "LiteralPos": 270,
+            "LiteralEnd": 320,
+            "Literal": "Sort your data based on your commonly-used queries"
+          },
+          {
+            "Name": {
+              "Name": "today",
+              "Unquoted": false,
+              "NamePos": 323,
+              "NameEnd": 328
+            },
+            "Params": {
+              "LeftParenPos": 328,
+              "RightParenPos": 329,
+              "Items": {
+                "ListPos": 329,
+                "ListEnd": 329,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          {
+            "FloatPos": 336,
+            "FloatEnd": 341,
+            "Literal": "2.718"
+          }
+        ]
+      },
+      {
+        "LeftParenPos": 351,
+        "RightParenPos": 432,
+        "Values": [
+          {
+            "NumPos": 352,
+            "NumEnd": 355,
+            "Literal": "101",
+            "Base": 10
+          },
+          {
+            "LiteralPos": 358,
+            "LiteralEnd": 403,
+            "Literal": "Granules are the smallest chunks of data read"
+          },
+          {
+            "LeftExpr": {
+              "Name": {
+                "Name": "now",
+                "Unquoted": false,
+                "NamePos": 411,
+                "NameEnd": 414
+              },
+              "Params": {
+                "LeftParenPos": 414,
+                "RightParenPos": 415,
+                "Items": {
+                  "ListPos": 415,
+                  "ListEnd": 415,
+                  "Items": []
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Operation": "+",
+            "RightExpr": {
+              "NumPos": 419,
+              "NumEnd": 420,
+              "Literal": "5",
+              "Base": 10
+            },
+            "HasNot": false
+          },
+          {
+            "FloatPos": 424,
+            "FloatEnd": 431,
+            "Literal": "3.14159"
+          }
+        ]
+      }
+    ],
+    "SelectExpr": null
+  }
+]
