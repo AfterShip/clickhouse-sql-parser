@@ -220,6 +220,9 @@ func (l *Lexer) skipComments() {
 				continue
 			}
 			return
+		case '\r', '\n':
+			// skip \r\n or \n\r
+			l.skipN(1)
 		default:
 			return
 		}
@@ -250,9 +253,10 @@ func (l *Lexer) consumeToken() error {
 	}
 	switch l.peekN(0) {
 	case '>', '<', '!', '=', '|':
-		if l.peekN(0) == '|' && l.peekOk(1) && l.peekN(1) == '|' ||
-			l.peekN(0) == '<' && l.peekOk(1) && l.peekN(1) == '>' ||
-			l.peekN(0) != '|' && l.peekOk(1) && l.peekN(1) == '=' {
+		if l.peekN(0) == '|' && l.peekOk(1) && l.peekN(1) == '|' || // ||
+			l.peekN(0) == '<' && l.peekOk(1) && l.peekN(1) == '>' || // <>
+			l.peekN(0) == '=' && l.peekOk(1) && l.peekN(1) == '=' || // ==
+			l.peekN(0) != '|' && l.peekOk(1) && l.peekN(1) == '=' { // |=
 			l.lastToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKind(l.slice(0, 2)),

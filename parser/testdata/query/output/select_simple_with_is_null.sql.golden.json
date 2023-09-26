@@ -166,6 +166,7 @@
       }
     },
     "GroupBy": null,
+    "WithTotal": false,
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,

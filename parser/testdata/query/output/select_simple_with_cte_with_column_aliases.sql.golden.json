@@ -4,17 +4,48 @@
     "StatementEnd": 133,
     "With": {
       "WithPos": 0,
-      "EndPos": 58,
+      "EndPos": 24,
       "CTEs": [
         {
           "CTEPos": 9,
-          "Name": {
-            "Name": "test",
-            "Unquoted": false,
-            "NamePos": 9,
-            "NameEnd": 13
+          "Expr": {
+            "Name": {
+              "Name": "test",
+              "Unquoted": false,
+              "NamePos": 9,
+              "NameEnd": 13
+            },
+            "Params": {
+              "LeftParenPos": 13,
+              "RightParenPos": 24,
+              "Items": {
+                "ListPos": 14,
+                "ListEnd": 24,
+                "Items": [
+                  {
+                    "Name": "f1",
+                    "Unquoted": false,
+                    "NamePos": 14,
+                    "NameEnd": 16
+                  },
+                  {
+                    "Name": "f2",
+                    "Unquoted": false,
+                    "NamePos": 18,
+                    "NameEnd": 20
+                  },
+                  {
+                    "Name": "f3",
+                    "Unquoted": false,
+                    "NamePos": 22,
+                    "NameEnd": 24
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
           },
-          "SelectExpr": {
+          "Alias": {
             "SelectPos": 30,
             "StatementEnd": 58,
             "With": null,
@@ -65,33 +96,13 @@
             "Prewhere": null,
             "Where": null,
             "GroupBy": null,
+            "WithTotal": false,
             "Having": null,
             "OrderBy": null,
             "LimitBy": null,
             "Settings": null,
             "UnionAll": null
-          },
-          "EndPos": 58,
-          "ColumnAliases": [
-            {
-              "Name": "f1",
-              "Unquoted": false,
-              "NamePos": 14,
-              "NameEnd": 16
-            },
-            {
-              "Name": "f2",
-              "Unquoted": false,
-              "NamePos": 18,
-              "NameEnd": 20
-            },
-            {
-              "Name": "f3",
-              "Unquoted": false,
-              "NamePos": 22,
-              "NameEnd": 24
-            }
-          ]
+          }
         }
       ]
     },
@@ -169,6 +180,7 @@
     "Prewhere": null,
     "Where": null,
     "GroupBy": null,
+    "WithTotal": false,
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,

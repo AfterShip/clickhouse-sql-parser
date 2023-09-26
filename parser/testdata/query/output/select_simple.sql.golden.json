@@ -329,6 +329,7 @@
       "WithRollup": false,
       "WithTotals": false
     },
+    "WithTotal": false,
     "Having": null,
     "OrderBy": null,
     "LimitBy": {

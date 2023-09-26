@@ -2326,7 +2326,7 @@ func (a *AliasExpr) End() Pos {
 
 func (a *AliasExpr) String(level int) string {
 	var builder strings.Builder
-	if _, isSelect := a.Expr.(*SelectExpr); isSelect {
+	if _, isSelect := a.Expr.(*SelectQuery); isSelect {
 		builder.WriteByte('(')
 		builder.WriteString(a.Expr.String(level))
 		builder.WriteByte(')')
@@ -2666,7 +2666,7 @@ func (a *ArrayJoinExpr) String(level int) string {
 	return a.Type + " ARRAY JOIN " + a.Expr.String(level)
 }
 
-type SelectExpr struct {
+type SelectQuery struct {
 	SelectPos     Pos
 	StatementEnd  Pos
 	With          *WithExpr
@@ -2678,22 +2678,23 @@ type SelectExpr struct {
 	Prewhere      *PrewhereExpr
 	Where         *WhereExpr
 	GroupBy       *GroupByExpr
+	WithTotal     bool
 	Having        *HavingExpr
 	OrderBy       *OrderByListExpr
 	LimitBy       *LimitByExpr
 	Settings      *SettingsExprList
-	UnionAll      *SelectExpr
+	UnionAll      *SelectQuery
 }
 
-func (s *SelectExpr) Pos() Pos {
+func (s *SelectQuery) Pos() Pos {
 	return s.SelectPos
 }
 
-func (s *SelectExpr) End() Pos {
+func (s *SelectQuery) End() Pos {
 	return s.StatementEnd
 }
 
-func (s *SelectExpr) String(level int) string { // nolint: funlen
+func (s *SelectQuery) String(level int) string { // nolint: funlen
 	var builder strings.Builder
 	if s.With != nil {
 		builder.WriteString("WITH")
@@ -2765,7 +2766,7 @@ func (s *SelectExpr) String(level int) string { // nolint: funlen
 
 type SubQueryExpr struct {
 	AsPos  Pos
-	Select *SelectExpr
+	Select *SelectQuery
 }
 
 func (s *SubQueryExpr) Pos() Pos {
@@ -2957,11 +2958,9 @@ func (u *UseExpr) String(level int) string {
 }
 
 type CTEExpr struct {
-	CTEPos        Pos
-	Name          *Ident
-	SelectExpr    *SelectExpr
-	EndPos        Pos
-	ColumnAliases []*Ident
+	CTEPos Pos
+	Expr   Expr
+	Alias  Expr
 }
 
 func (c *CTEExpr) Pos() Pos {
@@ -2969,25 +2968,20 @@ func (c *CTEExpr) Pos() Pos {
 }
 
 func (c *CTEExpr) End() Pos {
-	return c.EndPos
+	return c.Expr.End()
 }
 
 func (c *CTEExpr) String(level int) string {
 	var builder strings.Builder
-	builder.WriteString(c.Name.Name)
-	if len(c.ColumnAliases) > 0 {
-		builder.WriteString("(")
-		for i, alias := range c.ColumnAliases {
-			if i > 0 {
-				builder.WriteString(", ")
-			}
-			builder.WriteString(alias.Name)
-		}
-		builder.WriteString(")")
+	builder.WriteString(c.Expr.String(level))
+	builder.WriteString(" AS ")
+	if _, isSelect := c.Alias.(*SelectQuery); isSelect {
+		builder.WriteByte('(')
+		builder.WriteString(c.Alias.String(level + 2))
+		builder.WriteByte(')')
+	} else {
+		builder.WriteString(c.Alias.String(level))
 	}
-	builder.WriteString(" AS (")
-	builder.WriteString(c.SelectExpr.String(level + 2))
-	builder.WriteString(")")
 	return builder.String()
 }
 
@@ -3398,7 +3392,7 @@ type InsertExpr struct {
 	Table       Expr
 	ColumnNames *ColumnNamesExpr
 	Values      []*ValuesExpr
-	SelectExpr  *SelectExpr
+	SelectExpr  *SelectQuery
 }
 
 func (i *InsertExpr) Pos() Pos {

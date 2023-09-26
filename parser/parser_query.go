@@ -641,7 +641,7 @@ func (p *Parser) parseSubQuery(pos Pos) (*SubQueryExpr, error) {
 	}, nil
 }
 
-func (p *Parser) parseSelectQuery(pos Pos) (*SelectExpr, error) {
+func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 	if !p.matchKeyword(KeywordSelect) && !p.matchKeyword(KeywordWith) && !p.matchTokenKind("(") {
 		return nil, fmt.Errorf("expected SELECT, WITH or (, got %s", p.lastTokenKind())
 	}
@@ -669,7 +669,7 @@ func (p *Parser) parseSelectQuery(pos Pos) (*SelectExpr, error) {
 	return selectExpr, nil
 }
 
-func (p *Parser) parseSelectStatement(pos Pos) (*SelectExpr, error) {
+func (p *Parser) parseSelectStatement(pos Pos) (*SelectQuery, error) { // nolint: funlen
 	withExpr, err := p.tryParseWithExpr(pos)
 	if err != nil {
 		return nil, err
@@ -732,6 +732,16 @@ func (p *Parser) parseSelectStatement(pos Pos) (*SelectExpr, error) {
 	if groupByExpr != nil {
 		statementEnd = groupByExpr.End()
 	}
+
+	withTotal := false
+	lastPos := p.Pos()
+	if p.tryConsumeKeyword(KeywordWith) != nil {
+		if err := p.consumeKeyword(KeywordTotals); err != nil {
+			return nil, err
+		}
+		withTotal = true
+		statementEnd = lastPos
+	}
 	havingExpr, err := p.tryParseHavingExpr(p.Pos())
 	if err != nil {
 		return nil, err
@@ -761,7 +771,7 @@ func (p *Parser) parseSelectStatement(pos Pos) (*SelectExpr, error) {
 		statementEnd = settingsExpr.End()
 	}
 
-	return &SelectExpr{
+	return &SelectQuery{
 		With:          withExpr,
 		SelectPos:     pos,
 		StatementEnd:  statementEnd,
@@ -777,54 +787,38 @@ func (p *Parser) parseSelectStatement(pos Pos) (*SelectExpr, error) {
 		OrderBy:       orderByExpr,
 		LimitBy:       limitByExpr,
 		Settings:      settingsExpr,
+		WithTotal:     withTotal,
 	}, nil
 }
 
-// ctes
-//    : WITH namedQuery (',' namedQuery)*
-//    ;
-
-// namedQuery
-//    : name=identifier (columnAliases)? AS '(' query ')'
-//    ;
-
-// columnAliases
-//
-//	: '(' identifier (',' identifier)* ')'
-//	;
 func (p *Parser) parseCTEExpr(pos Pos) (*CTEExpr, error) {
+	expr, err := p.parseOrExpr(pos)
+	if err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordAs); err != nil {
+		return nil, err
+	}
+	if p.matchTokenKind("(") {
+		selectQuery, err := p.parseSelectQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &CTEExpr{
+			CTEPos: pos,
+			Expr:   expr,
+			Alias:  selectQuery,
+		}, nil
+	}
 	name, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}
-	columnAliases, err := p.tryParseColumnAliases()
-	if err != nil {
-		return nil, err
-	}
-
-	if err = p.consumeKeyword(KeywordAs); err != nil {
-		return nil, err
-	}
-
-	if _, err := p.consumeTokenKind("("); err != nil {
-		return nil, err
-	}
-
-	selectExpr, err := p.parseSelectStatement(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
-	if _, err := p.consumeTokenKind(")"); err != nil {
-		return nil, err
-	}
 
 	return &CTEExpr{
-		CTEPos:        pos,
-		Name:          name,
-		SelectExpr:    selectExpr,
-		EndPos:        selectExpr.End(),
-		ColumnAliases: columnAliases,
+		CTEPos: pos,
+		Expr:   expr,
+		Alias:  name,
 	}, nil
 }
 

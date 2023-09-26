@@ -48,6 +48,7 @@
     "Prewhere": null,
     "Where": null,
     "GroupBy": null,
+    "WithTotal": false,
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,

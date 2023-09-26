@@ -4,17 +4,17 @@
     "StatementEnd": 124,
     "With": {
       "WithPos": 0,
-      "EndPos": 68,
+      "EndPos": 46,
       "CTEs": [
         {
           "CTEPos": 9,
-          "Name": {
+          "Expr": {
             "Name": "cte1",
             "Unquoted": false,
             "NamePos": 9,
             "NameEnd": 13
           },
-          "SelectExpr": {
+          "Alias": {
             "SelectPos": 18,
             "StatementEnd": 35,
             "With": null,
@@ -53,24 +53,23 @@
             "Prewhere": null,
             "Where": null,
             "GroupBy": null,
+            "WithTotal": false,
             "Having": null,
             "OrderBy": null,
             "LimitBy": null,
             "Settings": null,
             "UnionAll": null
-          },
-          "EndPos": 35,
-          "ColumnAliases": null
+          }
         },
         {
           "CTEPos": 42,
-          "Name": {
+          "Expr": {
             "Name": "cte2",
             "Unquoted": false,
             "NamePos": 42,
             "NameEnd": 46
           },
-          "SelectExpr": {
+          "Alias": {
             "SelectPos": 51,
             "StatementEnd": 68,
             "With": null,
@@ -109,14 +108,13 @@
             "Prewhere": null,
             "Where": null,
             "GroupBy": null,
+            "WithTotal": false,
             "Having": null,
             "OrderBy": null,
             "LimitBy": null,
             "Settings": null,
             "UnionAll": null
-          },
-          "EndPos": 68,
-          "ColumnAliases": null
+          }
         }
       ]
     },
@@ -231,6 +229,7 @@
     "Prewhere": null,
     "Where": null,
     "GroupBy": null,
+    "WithTotal": false,
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,

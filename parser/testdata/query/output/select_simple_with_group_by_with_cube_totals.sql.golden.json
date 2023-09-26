@@ -86,6 +86,7 @@
       "WithRollup": false,
       "WithTotals": true
     },
+    "WithTotal": false,
     "Having": null,
     "OrderBy": {
       "OrderPos": 76,
