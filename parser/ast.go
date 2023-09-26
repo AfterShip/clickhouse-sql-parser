@@ -3424,10 +3424,12 @@ func (i *InsertExpr) String(level int) string {
 	} else {
 		builder.WriteString(NewLine(level))
 		builder.WriteString("VALUES ")
-		for _, value := range i.Values {
+		for j, value := range i.Values {
+			if j > 0 {
+				builder.WriteByte(',')
+			}
 			builder.WriteString(NewLine(level + 1))
 			builder.WriteString(value.String(level))
-			builder.WriteByte(',')
 		}
 	}
 	return builder.String()
