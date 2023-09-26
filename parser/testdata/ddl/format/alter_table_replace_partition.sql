@@ -1,0 +1,6 @@
+-- Origin SQL:
+ALTER TABLE t2 REPLACE PARTITION 'partition' FROM t1;
+
+-- Format SQL:
+ALTER TABLE t2
+REPLACE PARTITION 'partition' FROM t1;

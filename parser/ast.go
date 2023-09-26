@@ -539,6 +539,33 @@ func (a *AlterTableModifyColumn) String(level int) string {
 	return builder.String()
 }
 
+type AlterTableReplacePartition struct {
+	ReplacePos Pos
+	Partition  *PartitionExpr
+	Table      *TableIdentifier
+}
+
+func (a *AlterTableReplacePartition) Pos() Pos {
+	return a.ReplacePos
+}
+
+func (a *AlterTableReplacePartition) End() Pos {
+	return a.Table.End()
+}
+
+func (a *AlterTableReplacePartition) AlterType() string {
+	return "REPLACE_PARTITION"
+}
+
+func (a *AlterTableReplacePartition) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("REPLACE ")
+	builder.WriteString(a.Partition.String(level))
+	builder.WriteString(" FROM ")
+	builder.WriteString(a.Table.String(level))
+	return builder.String()
+}
+
 type RemovePropertyType struct {
 	RemovePos Pos
 

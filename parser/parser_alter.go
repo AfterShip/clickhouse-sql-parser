@@ -50,6 +50,8 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			alterExpr, err = p.parseAlterTableClear(p.Pos())
 		case p.matchKeyword(KeywordModify):
 			alterExpr, err = p.parseAlterTableModify(p.Pos())
+		case p.matchKeyword(KeywordReplace):
+			alterExpr, err = p.parseAlterTableReplacePartition(p.Pos())
 
 		default:
 			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR")
@@ -589,5 +591,31 @@ func (p *Parser) tryParseRemovePropertyTypeExpr(pos Pos) (*RemovePropertyType, e
 	return &RemovePropertyType{
 		RemovePos:    pos,
 		PropertyType: columnPropertyType,
+	}, nil
+}
+
+func (p *Parser) parseAlterTableReplacePartition(pos Pos) (AlterTableExpr, error) {
+	if err := p.consumeKeyword(KeywordReplace); err != nil {
+		return nil, err
+	}
+
+	partitionExpr, err := p.parsePartitionExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	if err = p.consumeKeyword(KeywordFrom); err != nil {
+		return nil, err
+	}
+
+	table, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &AlterTableReplacePartition{
+		ReplacePos: pos,
+		Partition:  partitionExpr,
+		Table:      table,
 	}, nil
 }

@@ -1,0 +1,40 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 52,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "t2",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 14
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ReplacePos": 15,
+        "Partition": {
+          "PartitionPos": 23,
+          "Expr": {
+            "LiteralPos": 34,
+            "LiteralEnd": 43,
+            "Literal": "partition"
+          },
+          "ID": null,
+          "All": false
+        },
+        "Table": {
+          "Database": null,
+          "Table": {
+            "Name": "t1",
+            "Unquoted": false,
+            "NamePos": 50,
+            "NameEnd": 52
+          }
+        }
+      }
+    ]
+  }
+]
