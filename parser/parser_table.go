@@ -46,6 +46,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		}
 	case p.matchKeyword(KeywordTruncate):
 		return p.parseTruncateTable(pos)
+	case p.matchKeyword(KeywordRename):
+		return p.parseRenameTable(pos)
 	}
 	return nil, nil // nolint
 }
@@ -890,7 +892,8 @@ func (p *Parser) parseStatement(pos Pos) (Expr, error) {
 		p.matchKeyword(KeywordAlter),
 		p.matchKeyword(KeywordDrop),
 		p.matchKeyword(KeywordDetach),
-		p.matchKeyword(KeywordTruncate):
+		p.matchKeyword(KeywordTruncate),
+		p.matchKeyword(KeywordRename):
 		expr, err = p.parseDDL(pos)
 	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordWith):
 		expr, err = p.parseSelectQuery(pos)
@@ -1165,4 +1168,62 @@ func (p *Parser) parseInsertExpr(pos Pos) (*InsertExpr, error) {
 	insertExpr.Values = values
 
 	return insertExpr, nil
+}
+
+func (p *Parser) parseRenameTable(pos Pos) (*RenameTable, error) {
+	if err := p.consumeKeyword(KeywordRename); err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordTable); err != nil {
+		return nil, err
+	}
+
+	tablePair, err := p.parseTablePair(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	tablePairList := []*TablePair{tablePair}
+	for p.tryConsumeTokenKind(",") != nil {
+		tablePair, err := p.parseTablePair(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		tablePairList = append(tablePairList, tablePair)
+	}
+
+	renameTable := &RenameTable{
+		RenamePos:     pos,
+		StatementEnd:  tablePairList[len(tablePairList)-1].End(),
+		TablePairList: tablePairList,
+	}
+
+	onClusterExpr, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if onClusterExpr != nil {
+		renameTable.OnCluster = onClusterExpr
+		renameTable.StatementEnd = onClusterExpr.End()
+	}
+
+	return renameTable, nil
+}
+
+func (p *Parser) parseTablePair(_ Pos) (*TablePair, error) {
+	oldTable, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if err = p.consumeKeyword(KeywordTo); err != nil {
+		return nil, err
+	}
+	newTable, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &TablePair{
+		Old: oldTable,
+		New: newTable,
+	}, nil
 }
