@@ -3504,3 +3504,57 @@ func (n *UnaryExpr) End() Pos {
 func (n *UnaryExpr) String(level int) string {
 	return "-" + n.Expr.String(level+1)
 }
+
+type RenameTable struct {
+	RenamePos     Pos
+	StatementEnd  Pos
+	TablePairList []*TablePair
+	OnCluster     *OnClusterExpr
+}
+
+func (r *RenameTable) Pos() Pos {
+	return r.RenamePos
+}
+
+func (r *RenameTable) End() Pos {
+	return r.StatementEnd
+}
+
+func (r *RenameTable) Type() string {
+	return "RENAME TABLE"
+}
+
+func (r *RenameTable) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("RENAME TABLE ")
+	for i, pair := range r.TablePairList {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(pair.Old.String(level))
+		builder.WriteString(" TO ")
+		builder.WriteString(pair.New.String(level))
+	}
+	if r.OnCluster != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(r.OnCluster.String(level))
+	}
+	return builder.String()
+}
+
+type TablePair struct {
+	Old *TableIdentifier
+	New *TableIdentifier
+}
+
+func (t *TablePair) Pos() Pos {
+	return t.Old.Pos()
+}
+
+func (t *TablePair) End() Pos {
+	return t.New.End()
+}
+
+func (t *TablePair) String() string {
+	return t.Old.String(0) + " TO " + t.New.String(0)
+}
