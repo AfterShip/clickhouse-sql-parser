@@ -10,24 +10,31 @@ import (
 	clickhouse "github.com/AfterShip/clickhouse-sql-parser/parser"
 )
 
+const VERSION = "0.3.0"
 const help = `
 Usage: clickhouse-sql-parser [YOUR SQL STRING] -f [YOUR SQL FILE] -format
 `
 
 var options struct {
-	help   bool
-	file   string
-	format bool
+	help    bool
+	file    string
+	format  bool
+	version bool
 }
 
 func init() {
 	flag.BoolVar(&options.format, "format", false, "Beautify print the ClickHouse SQL")
 	flag.StringVar(&options.file, "f", "", "Parse SQL from file")
 	flag.BoolVar(&options.help, "h", false, "Print help message")
+	flag.BoolVar(&options.version, "v", false, "Print version")
 }
 
 func main() {
 	flag.Parse()
+	if options.version {
+		fmt.Println("v" + VERSION)
+		os.Exit(0)
+	}
 	if len(os.Args) < 2 || options.help {
 		fmt.Print(help)
 		os.Exit(0)
