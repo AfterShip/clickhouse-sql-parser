@@ -10,8 +10,8 @@ FROM
 -- Format SQL:
 CREATE VIEW IF NOT EXISTS my_view
 (
-  col1 STRING,
-  col2 STRING
+  col1 String,
+  col2 String
 ) AS (
   SELECT 
     id,

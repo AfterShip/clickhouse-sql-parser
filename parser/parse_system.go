@@ -177,7 +177,7 @@ func (p *Parser) parseSystemDropExpr(pos Pos) (*SystemDropExpr, error) {
 		return &SystemDropExpr{
 			DropPos:      pos,
 			StatementEnd: lastToken.End,
-			Type:         strings.ToUpper(prefixToken.String) + " CACHE",
+			Type:         prefixToken.String + " CACHE",
 		}, nil
 	case p.matchKeyword(KeywordCompiled):
 		_ = p.lexer.consumeToken()

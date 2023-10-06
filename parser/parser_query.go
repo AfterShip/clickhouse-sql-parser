@@ -3,7 +3,6 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
 func (p *Parser) tryParseWithExpr(pos Pos) (*WithExpr, error) {
@@ -347,7 +346,7 @@ func (p *Parser) parseGroupByExpr(pos Pos) (*GroupByExpr, error) {
 
 	groupByExpr := &GroupByExpr{
 		GroupByPos:    pos,
-		AggregateType: strings.ToUpper(aggregateType),
+		AggregateType: aggregateType,
 		Expr:          expr,
 	}
 
@@ -420,7 +419,7 @@ func (p *Parser) tryParseWindowFrameExpr(pos Pos) (*WindowFrameExpr, error) {
 func (p *Parser) parseWindowFrameExpr(pos Pos) (*WindowFrameExpr, error) {
 	var windowFrameType string
 	if p.matchKeyword(KeywordRows) || p.matchKeyword(KeywordRange) {
-		windowFrameType = strings.ToUpper(p.last().String)
+		windowFrameType = p.last().String
 		_ = p.lexer.consumeToken()
 	}
 

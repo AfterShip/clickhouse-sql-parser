@@ -17,14 +17,14 @@ ORDER BY (f0,f1,f2);
 CREATE TABLE IF NOT EXISTS test.events_local
 ON CLUSTER 'default_cluster'
 (
-  f0 STRING,
-  f1 STRING,
-  f2 STRING,
-  f3 DATETIME,
-  f4 DATETIME,
-  f5 Map(STRING,STRING),
-  f6 STRING,
-  f7 DATETIME DEFAULT now()
+  f0 String,
+  f1 String,
+  f2 String,
+  f3 Datetime,
+  f4 Datetime,
+  f5 Map(String,String),
+  f6 String,
+  f7 Datetime DEFAULT now()
 )
 ENGINE = ReplicatedMergeTree('/clickhouse/tables/{layer}-{shard}/test/events_local', '{replica}')
 PARTITION BY toYYYYMMDD(f3)

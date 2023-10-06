@@ -16,11 +16,11 @@ SETTINGS index_granularity = 8192;
 CREATE MATERIALIZED VIEW test.events_local
 (
     `f0` DateTime64(3),
-    `f1` STRING,
-    `f2` STRING,
-    `f3` STRING,
-    `f4` STRING,
-    `f5` INT64
+    `f1` String,
+    `f2` String,
+    `f3` String,
+    `f4` String,
+    `f5` Int64
 )
 ENGINE = ReplicatedAggregatingMergeTree('/clickhouse/tables/{layer}-{shard}}')
 PARTITION BY toDate(f1)

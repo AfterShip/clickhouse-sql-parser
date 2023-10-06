@@ -892,7 +892,7 @@ func (c *ConstraintExpr) End() Pos {
 
 func (c *ConstraintExpr) String(level int) string {
 	var builder strings.Builder
-	builder.WriteString(strings.ToUpper(c.Constraint.String(level)))
+	builder.WriteString(c.Constraint.String(level))
 	builder.WriteByte(' ')
 	builder.WriteString(c.Expr.String(level))
 	return builder.String()
@@ -1526,7 +1526,7 @@ func (s *ScalarTypeExpr) End() Pos {
 }
 
 func (s *ScalarTypeExpr) String(level int) string {
-	return strings.ToUpper(s.Name.String(level + 1))
+	return s.Name.String(level + 1)
 }
 
 type PropertyTypeExpr struct {
@@ -1542,7 +1542,7 @@ func (c *PropertyTypeExpr) End() Pos {
 }
 
 func (c *PropertyTypeExpr) String(level int) string {
-	return strings.ToUpper(c.Name.String(level + 1))
+	return c.Name.String(level + 1)
 }
 
 type TypeWithParamsExpr struct {
@@ -1861,7 +1861,7 @@ func (c *ColumnTypeExpr) End() Pos {
 }
 
 func (c *ColumnTypeExpr) String(level int) string {
-	return strings.ToUpper(c.Name.String(level))
+	return c.Name.String(level)
 }
 
 type ColumnArgList struct {
@@ -2650,7 +2650,7 @@ func (f *WindowFrameUnbounded) End() Pos {
 }
 
 func (f *WindowFrameUnbounded) String(int) string {
-	return strings.ToUpper(f.Direction) + " UNBOUNDED"
+	return f.Direction + " UNBOUNDED"
 }
 
 type WindowFrameNumber struct {
@@ -2671,7 +2671,7 @@ func (f *WindowFrameNumber) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(f.Number.String(level))
 	builder.WriteByte(' ')
-	builder.WriteString(strings.ToUpper(f.Direction))
+	builder.WriteString(f.Direction)
 	return builder.String()
 }
 
