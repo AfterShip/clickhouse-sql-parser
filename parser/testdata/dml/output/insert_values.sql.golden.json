@@ -84,9 +84,10 @@
             }
           },
           {
-            "FloatPos": 160,
-            "FloatEnd": 164,
-            "Literal": "-1.0"
+            "NumPos": 160,
+            "NumEnd": 164,
+            "Literal": "-1.0",
+            "Base": 10
           }
         ]
       },
@@ -124,9 +125,10 @@
             }
           },
           {
-            "FloatPos": 248,
-            "FloatEnd": 255,
-            "Literal": "1.41421"
+            "NumPos": 248,
+            "NumEnd": 255,
+            "Literal": "1.41421",
+            "Base": 10
           }
         ]
       },
@@ -164,9 +166,10 @@
             }
           },
           {
-            "FloatPos": 336,
-            "FloatEnd": 341,
-            "Literal": "2.718"
+            "NumPos": 336,
+            "NumEnd": 341,
+            "Literal": "2.718",
+            "Base": 10
           }
         ]
       },
@@ -215,9 +218,10 @@
             "HasNot": false
           },
           {
-            "FloatPos": 424,
-            "FloatEnd": 431,
-            "Literal": "3.14159"
+            "NumPos": 424,
+            "NumEnd": 431,
+            "Literal": "3.14159",
+            "Base": 10
           }
         ]
       }

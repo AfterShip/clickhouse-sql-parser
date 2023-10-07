@@ -860,15 +860,15 @@ func (p *Parser) parseSampleRationExpr(pos Pos) (*SampleRatioExpr, error) {
 	if err := p.consumeKeyword(KeywordSample); err != nil {
 		return nil, err
 	}
-	ratio, err := p.parseFloat(p.Pos())
+	ratio, err := p.parseRatioExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 
-	var offset *FloatLiteral
+	var offset *RatioExpr
 	if p.matchKeyword(KeywordOffset) {
 		_ = p.lexer.consumeToken()
-		offset, err = p.parseFloat(p.Pos())
+		offset, err = p.parseRatioExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}

@@ -12,7 +12,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		switch {
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseCreateDatabase(pos)
-		case p.matchKeyword(KeywordTable):
+		case p.matchKeyword(KeywordTable),
+			p.matchKeyword(KeywordTemporary):
 			return p.parseCreateTable(pos)
 		case p.matchKeyword(KeywordMaterialized):
 			return p.parseCreateMaterializedView(pos)
@@ -37,10 +38,10 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseDropDatabase(pos)
 		case p.matchKeyword(KeywordTemporary),
+			p.matchKeyword(KeywordView),
+			p.matchKeyword(KeywordDictionary),
 			p.matchKeyword(KeywordTable):
-			return p.parseDropTable(pos)
-		case p.matchKeyword(KeywordDictionary):
-		case p.matchKeyword(KeywordView):
+			return p.parserDropStmt(pos)
 		default:
 			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE, but got %q", p.last().String)
 		}
@@ -93,10 +94,13 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 }
 
 func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
+	createTable := &CreateTable{CreatePos: pos}
+
+	createTable.HasTemporary = p.tryConsumeKeyword(KeywordTemporary) != nil
+
 	if err := p.consumeKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
-	createTable := &CreateTable{CreatePos: pos}
 
 	// parse IF NOT EXISTS clause if exists
 	var err error
@@ -800,9 +804,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	if err := p.consumeKeyword(KeywordEngine); err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind("="); err != nil {
-		return nil, err
-	}
+	_ = p.tryConsumeTokenKind("=")
 
 	engineExpr := &EngineExpr{EnginePos: pos}
 	var engineEnd Pos

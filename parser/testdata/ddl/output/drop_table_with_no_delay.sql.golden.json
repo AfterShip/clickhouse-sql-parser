@@ -2,6 +2,7 @@
   {
     "DropPos": 0,
     "StatementEnd": 74,
+    "DropTarget": "TABLE",
     "Name": {
       "Database": {
         "Name": "test",

@@ -124,6 +124,7 @@
       },
       "OrderByListExpr": null
     },
-    "SubQuery": null
+    "SubQuery": null,
+    "HasTemporary": false
   }
 ]

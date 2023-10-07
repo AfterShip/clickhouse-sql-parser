@@ -37,7 +37,7 @@ func TestParser_Compatible(t *testing.T) {
 		index, err := strconv.ParseInt(fields[0], 10, 64)
 		require.NoError(t, err)
 		// we should make it compatible with all cases.
-		compatibleIndex := int64(139)
+		compatibleIndex := int64(156)
 		if index >= compatibleIndex {
 			break
 		}

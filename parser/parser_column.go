@@ -120,7 +120,7 @@ func (p *Parser) parseIsOrNotNull(pos Pos) (Expr, error) {
 }
 
 func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
-	hasNot, hasGolbal := false, false
+	hasNot, hasGlobal := false, false
 	expr, err := p.parseAddSubExpr(pos)
 	if err != nil {
 		return nil, err
@@ -148,7 +148,7 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordIlike):
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
-		hasGolbal = true
+		hasGlobal = true
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
 		switch {
@@ -172,7 +172,7 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 	return &BinaryExpr{
 		LeftExpr:  expr,
 		HasNot:    hasNot,
-		HasGlobal: hasGolbal,
+		HasGlobal: hasGlobal,
 		Operation: op,
 		RightExpr: rightExpr,
 	}, nil
@@ -307,9 +307,8 @@ func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 	var expr Expr
 	var err error
 	switch {
-	case p.matchTokenKind(TokenIdent):
-		expr, err = p.ParseNestedIdentifier(p.Pos())
-	case p.matchTokenKind("("):
+	case p.matchTokenKind(TokenIdent),
+		p.matchTokenKind("("):
 		expr, err = p.parseExpr(p.Pos())
 	default:
 		expr, err = p.parseColumnExpr(p.Pos())
@@ -349,10 +348,9 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseIdentOrFunction(pos)
 	case p.matchTokenKind(TokenString): // string literal
 		return p.parseString(pos)
-	case p.matchTokenKind(TokenInt): // number literal
+	case p.matchTokenKind(TokenInt),
+		p.matchTokenKind(TokenFloat): // number literal
 		return p.parseNumber(pos)
-	case p.matchTokenKind(TokenFloat):
-		return p.parseFloat(pos)
 	case p.matchTokenKind("("):
 		if peek, _ := p.lexer.peekToken(); peek != nil {
 			if peek.Kind == TokenKeyword && strings.EqualFold(peek.String, KeywordSelect) {

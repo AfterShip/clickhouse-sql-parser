@@ -705,6 +705,7 @@ type CreateTable struct {
 	TableSchema  *TableSchemaExpr
 	Engine       *EngineExpr
 	SubQuery     *SubQueryExpr
+	HasTemporary bool
 }
 
 func (c *CreateTable) Pos() Pos {
@@ -721,7 +722,11 @@ func (c *CreateTable) Type() string {
 
 func (c *CreateTable) String(level int) string {
 	var builder strings.Builder
-	builder.WriteString("CREATE TABLE ")
+	builder.WriteString("CREATE")
+	if c.HasTemporary {
+		builder.WriteString(" TEMPORARY")
+	}
+	builder.WriteString(" TABLE ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
@@ -1686,24 +1691,6 @@ func (n *NumberLiteral) String(int) string {
 	return n.Literal
 }
 
-type FloatLiteral struct {
-	FloatPos Pos
-	FloatEnd Pos
-	Literal  string
-}
-
-func (f *FloatLiteral) Pos() Pos {
-	return f.FloatPos
-}
-
-func (f *FloatLiteral) End() Pos {
-	return f.FloatEnd
-}
-
-func (f *FloatLiteral) String(int) string {
-	return f.Literal
-}
-
 type StringLiteral struct {
 	LiteralPos Pos
 	LiteralEnd Pos
@@ -1720,6 +1707,33 @@ func (s *StringLiteral) End() Pos {
 
 func (s *StringLiteral) String(int) string {
 	return "'" + s.Literal + "'"
+}
+
+type RatioExpr struct {
+	Numerator *NumberLiteral
+	// numberLiteral (SLASH numberLiteral)?
+	Denominator *NumberLiteral
+}
+
+func (r *RatioExpr) Pos() Pos {
+	return r.Numerator.NumPos
+}
+
+func (r *RatioExpr) End() Pos {
+	if r.Denominator != nil {
+		return r.Denominator.NumEnd
+	}
+	return r.Numerator.NumEnd
+}
+
+func (r *RatioExpr) String(int) string {
+	var builder strings.Builder
+	builder.WriteString(r.Numerator.String(0))
+	if r.Denominator != nil {
+		builder.WriteString("/")
+		builder.WriteString(r.Denominator.String(0))
+	}
+	return builder.String()
 }
 
 type EnumValueExpr struct {
@@ -2923,35 +2937,37 @@ func (d *DropDatabase) String(level int) string {
 	return builder.String()
 }
 
-type DropTable struct {
+type DropStmt struct {
 	DropPos      Pos
 	StatementEnd Pos
-	Name         *TableIdentifier
-	IfExists     bool
-	OnCluster    *OnClusterExpr
-	IsTemporary  bool
-	NoDelay      bool
+
+	DropTarget  string
+	Name        *TableIdentifier
+	IfExists    bool
+	OnCluster   *OnClusterExpr
+	IsTemporary bool
+	NoDelay     bool
 }
 
-func (d *DropTable) Pos() Pos {
+func (d *DropStmt) Pos() Pos {
 	return d.DropPos
 }
 
-func (d *DropTable) End() Pos {
+func (d *DropStmt) End() Pos {
 	return d.StatementEnd
 }
 
-func (d *DropTable) Type() string {
-	return "DROP TABLE"
+func (d *DropStmt) Type() string {
+	return "DROP " + d.DropTarget
 }
 
-func (d *DropTable) String(level int) string {
+func (d *DropStmt) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("DROP ")
 	if d.IsTemporary {
 		builder.WriteString("TEMPORARY ")
 	}
-	builder.WriteString("TABLE ")
+	builder.WriteString(d.DropTarget + " ")
 	if d.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
@@ -3302,8 +3318,8 @@ func (t *TruncateTable) String(level int) string {
 
 type SampleRatioExpr struct {
 	SamplePos Pos
-	Ratio     *FloatLiteral
-	Offset    *FloatLiteral
+	Ratio     *RatioExpr
+	Offset    *RatioExpr
 }
 
 func (s *SampleRatioExpr) Pos() Pos {

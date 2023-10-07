@@ -179,7 +179,17 @@ func (p *Parser) parseDecimal(pos Pos) (*NumberLiteral, error) {
 }
 
 func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
-	lastToken, err := p.consumeTokenKind(TokenInt)
+	var lastToken *Token
+	var err error
+
+	switch {
+	case p.matchTokenKind(TokenInt):
+		lastToken, err = p.consumeTokenKind(TokenInt)
+	case p.matchTokenKind(TokenFloat):
+		lastToken, err = p.consumeTokenKind(TokenFloat)
+	default:
+		return nil, fmt.Errorf("expected <int> or <float>, but got %q", p.lastTokenKind())
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -190,19 +200,6 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 		Base:    lastToken.Base,
 	}
 	return number, nil
-}
-
-func (p *Parser) parseFloat(pos Pos) (*FloatLiteral, error) {
-	lastToken, err := p.consumeTokenKind(TokenFloat)
-	if err != nil {
-		return nil, err
-	}
-	float := &FloatLiteral{
-		FloatPos: pos,
-		FloatEnd: lastToken.End,
-		Literal:  lastToken.String,
-	}
-	return float, nil
 }
 
 func (p *Parser) parseString(pos Pos) (*StringLiteral, error) {
@@ -305,4 +302,23 @@ func (p *Parser) wrapError(err error) error {
 		}
 	}
 	return errors.New(buf.String())
+}
+
+func (p *Parser) parseRatioExpr(pos Pos) (*RatioExpr, error) {
+	numerator, err := p.parseNumber(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	var denominator *NumberLiteral
+	if p.tryConsumeTokenKind(opTypeDiv) != nil {
+		denominator, err = p.parseNumber(pos)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &RatioExpr{
+		Numerator:   numerator,
+		Denominator: denominator,
+	}, nil
 }

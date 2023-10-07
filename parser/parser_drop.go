@@ -34,11 +34,19 @@ func (p *Parser) parseDropDatabase(pos Pos) (*DropDatabase, error) {
 	}, nil
 }
 
-func (p *Parser) parseDropTable(pos Pos) (*DropTable, error) {
-	isTemporary := p.tryConsumeKeyword(KeywordTemporary) != nil
-
-	if err := p.consumeKeyword(KeywordTable); err != nil {
-		return nil, err
+func (p *Parser) parserDropStmt(pos Pos) (*DropStmt, error) {
+	var isTemporary bool
+	dropTarget := KeywordTable
+	switch {
+	case p.tryConsumeKeyword(KeywordDictionary) != nil:
+		dropTarget = KeywordDictionary
+	case p.tryConsumeKeyword(KeywordView) != nil:
+		dropTarget = KeywordView
+	default:
+		isTemporary = p.tryConsumeKeyword(KeywordTemporary) != nil
+		if err := p.consumeKeyword(KeywordTable); err != nil {
+			return nil, err
+		}
 	}
 
 	isExists, err := p.tryParseIfExists()
@@ -68,8 +76,9 @@ func (p *Parser) parseDropTable(pos Pos) (*DropTable, error) {
 		statementEnd = p.Pos()
 	}
 
-	return &DropTable{
+	return &DropStmt{
 		DropPos:      pos,
+		DropTarget:   dropTarget,
 		Name:         name,
 		IfExists:     isExists,
 		OnCluster:    onCluster,
