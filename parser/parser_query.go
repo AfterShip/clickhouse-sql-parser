@@ -790,11 +790,18 @@ func (p *Parser) parseSelectStatement(pos Pos) (*SelectQuery, error) { // nolint
 	}
 	if parsedLimitBy != nil {
 		statementEnd = parsedLimitBy.End()
-		if e, ok := parsedLimitBy.(*LimitByExpr); ok {
+		switch e := parsedLimitBy.(type) {
+		case *LimitByExpr:
 			limitByExpr = e
 			limitExpr, err = p.tryParseLimitExpr(p.Pos())
-		} else {
-			limitExpr = parsedLimitBy.(*LimitExpr)
+			if err != nil {
+				return nil, err
+			}
+			if limitExpr != nil {
+				statementEnd = limitExpr.End()
+			}
+		case *LimitExpr:
+			limitExpr = e
 		}
 	}
 
