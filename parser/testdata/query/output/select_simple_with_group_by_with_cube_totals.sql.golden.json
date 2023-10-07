@@ -7,6 +7,7 @@
     "SelectColumns": {
       "ListPos": 7,
       "ListEnd": 17,
+      "HasDistinct": false,
       "Items": [
         {
           "Name": "a",
@@ -27,6 +28,7 @@
             "Items": {
               "ListPos": 16,
               "ListEnd": 17,
+              "HasDistinct": false,
               "Items": [
                 {
                   "Name": "b",
@@ -71,6 +73,7 @@
         "Items": {
           "ListPos": 51,
           "ListEnd": 52,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": "a",
@@ -105,7 +108,9 @@
       ]
     },
     "LimitBy": null,
+    "Limit": null,
     "Settings": null,
-    "UnionAll": null
+    "UnionAll": null,
+    "Except": null
   }
 ]

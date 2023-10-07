@@ -5,7 +5,6 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"testing"
 
@@ -28,18 +27,6 @@ func TestParser_Compatible(t *testing.T) {
 	for _, entry := range entries {
 		if !strings.HasSuffix(entry.Name(), ".sql") {
 			continue
-		}
-
-		fields := strings.SplitN(entry.Name(), "_", 2)
-		if len(fields) != 2 {
-			continue
-		}
-		index, err := strconv.ParseInt(fields[0], 10, 64)
-		require.NoError(t, err)
-		// we should make it compatible with all cases.
-		compatibleIndex := int64(156)
-		if index >= compatibleIndex {
-			break
 		}
 
 		t.Run(entry.Name(), func(t *testing.T) {

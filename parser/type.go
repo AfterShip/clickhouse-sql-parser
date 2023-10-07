@@ -6,13 +6,14 @@ type OpType string
 
 const (
 	// Comparison operators
-	opTypeEQ    TokenKind = "="
-	opTypeNE    TokenKind = "!="
-	opTypeLT    TokenKind = "<"
-	opTypeLE    TokenKind = "<="
-	opTypeGT    TokenKind = ">"
-	opTypeGE    TokenKind = ">="
-	opTypeQuery           = "?"
+	opTypeEQ       TokenKind = "="
+	opTypeDoubleEQ TokenKind = "=="
+	opTypeNE       TokenKind = "!="
+	opTypeLT       TokenKind = "<"
+	opTypeLE       TokenKind = "<="
+	opTypeGT       TokenKind = ">"
+	opTypeGE       TokenKind = ">="
+	opTypeQuery              = "?"
 
 	// Arithmetic operators
 	opTypePlus  TokenKind = "+"

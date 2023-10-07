@@ -7,6 +7,7 @@
     "SelectColumns": {
       "ListPos": 7,
       "ListEnd": 66,
+      "HasDistinct": false,
       "Items": [
         {
           "Expr": {
@@ -22,6 +23,7 @@
               "Items": {
                 "ListPos": 19,
                 "ListEnd": 40,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LeftBracketPos": 19,
@@ -29,6 +31,7 @@
                     "Items": {
                       "ListPos": 20,
                       "ListEnd": 24,
+                      "HasDistinct": false,
                       "Items": [
                         {
                           "NumPos": 20,
@@ -51,6 +54,7 @@
                     "Items": {
                       "ListPos": 28,
                       "ListEnd": 32,
+                      "HasDistinct": false,
                       "Items": [
                         {
                           "NumPos": 28,
@@ -73,6 +77,7 @@
                     "Items": {
                       "ListPos": 36,
                       "ListEnd": 40,
+                      "HasDistinct": false,
                       "Items": [
                         {
                           "NumPos": 36,
@@ -111,11 +116,12 @@
               "NameEnd": 53
             },
             "Params": {
-              "LeftBracketPos": 51,
+              "LeftBracketPos": 53,
               "RightBracketPos": 59,
               "Items": {
                 "ListPos": 55,
                 "ListEnd": 58,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LiteralPos": 55,
@@ -146,7 +152,9 @@
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,
+    "Limit": null,
     "Settings": null,
-    "UnionAll": null
+    "UnionAll": null,
+    "Except": null
   }
 ]

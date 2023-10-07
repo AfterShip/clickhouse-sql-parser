@@ -1907,9 +1907,10 @@ func (c *ColumnArgList) String(level int) string {
 }
 
 type ColumnExprList struct {
-	ListPos Pos
-	ListEnd Pos
-	Items   []Expr
+	ListPos     Pos
+	ListEnd     Pos
+	HasDistinct bool
+	Items       []Expr
 }
 
 func (c *ColumnExprList) Pos() Pos {
@@ -1922,6 +1923,9 @@ func (c *ColumnExprList) End() Pos {
 
 func (c *ColumnExprList) String(level int) string {
 	var builder strings.Builder
+	if c.HasDistinct {
+		builder.WriteString("DISTINCT ")
+	}
 	for i, item := range c.Items {
 		builder.WriteString(item.String(level))
 		if i != len(c.Items)-1 {
@@ -2474,23 +2478,49 @@ func (h *HavingExpr) String(level int) string {
 	return "HAVING " + h.Expr.String(level)
 }
 
-type LimitByExpr struct {
+type LimitExpr struct {
 	LimitPos Pos
 	Limit    Expr
 	Offset   Expr
-	ByExpr   *ColumnExprList
+}
+
+func (l *LimitExpr) Pos() Pos {
+	return l.LimitPos
+}
+
+func (l *LimitExpr) End() Pos {
+	if l.Offset != nil {
+		return l.Offset.End()
+	}
+	return l.Limit.End()
+}
+
+func (l *LimitExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("LIMIT ")
+	builder.WriteString(l.Limit.String(level))
+	if l.Offset != nil {
+		builder.WriteString(" OFFSET ")
+		builder.WriteString(l.Offset.String(level))
+	}
+	return builder.String()
+}
+
+type LimitByExpr struct {
+	Limit  *LimitExpr
+	ByExpr *ColumnExprList
 }
 
 func (l *LimitByExpr) Pos() Pos {
-	return l.LimitPos
+	return l.Limit.Pos()
 }
 
 func (l *LimitByExpr) End() Pos {
 	if l.ByExpr != nil {
 		return l.ByExpr.End()
 	}
-	if l.Offset != nil {
-		return l.Offset.End()
+	if l.Limit != nil {
+		return l.Limit.End()
 	}
 	return l.Limit.End()
 }
@@ -2499,9 +2529,9 @@ func (l *LimitByExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("LIMIT ")
 	builder.WriteString(l.Limit.String(level))
-	if l.Offset != nil {
+	if l.Limit != nil {
 		builder.WriteString(" OFFSET ")
-		builder.WriteString(l.Offset.String(level))
+		builder.WriteString(l.Limit.String(level))
 	}
 	if l.ByExpr != nil {
 		builder.WriteString(" BY ")
@@ -2723,8 +2753,10 @@ type SelectQuery struct {
 	Having        *HavingExpr
 	OrderBy       *OrderByListExpr
 	LimitBy       *LimitByExpr
+	Limit         *LimitExpr
 	Settings      *SettingsExprList
 	UnionAll      *SelectQuery
+	Except        *SelectQuery
 }
 
 func (s *SelectQuery) Pos() Pos {
@@ -2801,6 +2833,15 @@ func (s *SelectQuery) String(level int) string { // nolint: funlen
 	if s.Settings != nil {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(s.Settings.String(level))
+	}
+	if s.UnionAll != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(" UNION ALL ")
+		builder.WriteString(s.UnionAll.String(level))
+	} else if s.Except != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(" EXCEPT ")
+		builder.WriteString(s.Except.String(level))
 	}
 	return builder.String()
 }
@@ -2946,7 +2987,7 @@ type DropStmt struct {
 	IfExists    bool
 	OnCluster   *OnClusterExpr
 	IsTemporary bool
-	NoDelay     bool
+	Modifier    string
 }
 
 func (d *DropStmt) Pos() Pos {
@@ -2976,8 +3017,8 @@ func (d *DropStmt) String(level int) string {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(d.OnCluster.String(level))
 	}
-	if d.NoDelay {
-		builder.WriteString(" NO DELAY")
+	if len(d.Modifier) != 0 {
+		builder.WriteString(" " + d.Modifier)
 	}
 	return builder.String()
 }

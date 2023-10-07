@@ -1,7 +1,7 @@
 [
   {
     "DropPos": 0,
-    "StatementEnd": 64,
+    "StatementEnd": 65,
     "DropTarget": "TABLE",
     "Name": {
       "Database": {
@@ -27,6 +27,6 @@
       }
     },
     "IsTemporary": false,
-    "NoDelay": false
+    "Modifier": ""
   }
 ]

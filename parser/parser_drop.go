@@ -34,7 +34,7 @@ func (p *Parser) parseDropDatabase(pos Pos) (*DropDatabase, error) {
 	}, nil
 }
 
-func (p *Parser) parserDropStmt(pos Pos) (*DropStmt, error) {
+func (p *Parser) parseDropStmt(pos Pos) (*DropStmt, error) {
 	var isTemporary bool
 	dropTarget := KeywordTable
 	switch {
@@ -58,22 +58,15 @@ func (p *Parser) parserDropStmt(pos Pos) (*DropStmt, error) {
 	if err != nil {
 		return nil, err
 	}
-	statementEnd := name.End()
 
 	onCluster, err := p.tryParseOnCluster(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	if onCluster != nil {
-		statementEnd = onCluster.End()
-	}
 
-	noDelay, err := p.tryParseNoDelay()
+	modifier, err := p.tryParseModifier()
 	if err != nil {
 		return nil, err
-	}
-	if noDelay {
-		statementEnd = p.Pos()
 	}
 
 	return &DropStmt{
@@ -83,19 +76,20 @@ func (p *Parser) parserDropStmt(pos Pos) (*DropStmt, error) {
 		IfExists:     isExists,
 		OnCluster:    onCluster,
 		IsTemporary:  isTemporary,
-		NoDelay:      noDelay,
-		StatementEnd: statementEnd,
+		Modifier:     modifier,
+		StatementEnd: p.Pos(),
 	}, nil
 }
 
-func (p *Parser) tryParseNoDelay() (bool, error) {
-	if p.tryConsumeKeyword(KeywordNo) == nil {
-		return false, nil
+func (p *Parser) tryParseModifier() (string, error) {
+	switch {
+	case p.tryConsumeKeyword(KeywordSync) != nil:
+		return "SYNC", nil
+	case p.tryConsumeKeyword(KeywordNo) != nil:
+		if err := p.consumeKeyword(KeywordDelay); err != nil {
+			return "", err
+		}
+		return "NO DELAY", nil
 	}
-
-	if err := p.consumeKeyword(KeywordDelay); err != nil {
-		return false, err
-	}
-
-	return true, nil
+	return "", nil
 }

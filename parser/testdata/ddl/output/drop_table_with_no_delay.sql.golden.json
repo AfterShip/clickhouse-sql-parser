@@ -27,6 +27,6 @@
       }
     },
     "IsTemporary": false,
-    "NoDelay": true
+    "Modifier": "NO DELAY"
   }
 ]

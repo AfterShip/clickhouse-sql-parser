@@ -144,6 +144,7 @@
         "Expr": {
           "ListPos": 195,
           "ListEnd": 199,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": "date",
@@ -189,6 +190,7 @@
               "Items": {
                 "ListPos": 214,
                 "ListEnd": 220,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "Name": "f1",

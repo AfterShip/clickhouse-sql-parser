@@ -265,6 +265,7 @@
                 "Items": {
                   "ListPos": 237,
                   "ListEnd": 237,
+                  "HasDistinct": false,
                   "Items": []
                 },
                 "ColumnArgList": null
@@ -290,6 +291,7 @@
         "Items": {
           "ListPos": 271,
           "ListEnd": 336,
+          "HasDistinct": false,
           "Items": [
             {
               "LiteralPos": 271,
@@ -311,6 +313,7 @@
         "Expr": {
           "ListPos": 378,
           "ListEnd": 391,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": {
@@ -325,6 +328,7 @@
                 "Items": {
                   "ListPos": 389,
                   "ListEnd": 391,
+                  "HasDistinct": false,
                   "Items": [
                     {
                       "Name": "f3",
@@ -389,6 +393,7 @@
               "Items": {
                 "ListPos": 403,
                 "ListEnd": 411,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "Name": "f0",

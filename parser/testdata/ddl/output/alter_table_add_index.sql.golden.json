@@ -45,6 +45,7 @@
             "Items": {
               "ListPos": 78,
               "ListEnd": 80,
+              "HasDistinct": false,
               "Items": [
                 {
                   "Name": "f0",

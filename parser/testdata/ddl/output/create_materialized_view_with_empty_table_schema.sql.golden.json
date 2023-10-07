@@ -38,6 +38,7 @@
         "Items": {
           "ListPos": 101,
           "ListEnd": 149,
+          "HasDistinct": false,
           "Items": [
             {
               "LiteralPos": 101,
@@ -59,6 +60,7 @@
         "Expr": {
           "ListPos": 165,
           "ListEnd": 176,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": {
@@ -73,6 +75,7 @@
                 "Items": {
                   "ListPos": 174,
                   "ListEnd": 176,
+                  "HasDistinct": false,
                   "Items": [
                     {
                       "Name": "f0",
@@ -103,6 +106,7 @@
               "Items": {
                 "ListPos": 188,
                 "ListEnd": 190,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "Name": "f0",
@@ -130,6 +134,7 @@
         "SelectColumns": {
           "ListPos": 211,
           "ListEnd": 243,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": "f0",
@@ -163,6 +168,7 @@
                   "Items": {
                     "ListPos": 229,
                     "ListEnd": 234,
+                    "HasDistinct": false,
                     "Items": [
                       {
                         "Name": "f0",
@@ -206,6 +212,7 @@
                 "SelectColumns": {
                   "ListPos": 270,
                   "ListEnd": 354,
+                  "HasDistinct": false,
                   "Items": [
                     {
                       "Name": "f0",
@@ -240,6 +247,7 @@
                             "Items": {
                               "ListPos": 300,
                               "ListEnd": 300,
+                              "HasDistinct": false,
                               "Items": []
                             },
                             "ColumnArgList": null
@@ -254,6 +262,7 @@
                             "Expr": {
                               "ListPos": 320,
                               "ListEnd": 322,
+                              "HasDistinct": false,
                               "Items": [
                                 {
                                   "Name": "f0",
@@ -283,6 +292,7 @@
                                     "Items": {
                                       "ListPos": 341,
                                       "ListEnd": 346,
+                                      "HasDistinct": false,
                                       "Items": [
                                         {
                                           "Name": "f1",
@@ -360,6 +370,7 @@
                         "Items": {
                           "ListPos": 391,
                           "ListEnd": 409,
+                          "HasDistinct": false,
                           "Items": [
                             {
                               "LiteralPos": 391,
@@ -409,8 +420,10 @@
                 "Having": null,
                 "OrderBy": null,
                 "LimitBy": null,
+                "Limit": null,
                 "Settings": null,
-                "UnionAll": null
+                "UnionAll": null,
+                "Except": null
               },
               "AliasPos": 441,
               "Alias": {
@@ -450,8 +463,10 @@
         "Having": null,
         "OrderBy": null,
         "LimitBy": null,
+        "Limit": null,
         "Settings": null,
-        "UnionAll": null
+        "UnionAll": null,
+        "Except": null
       }
     },
     "Populate": true

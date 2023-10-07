@@ -40,6 +40,7 @@
       "By": {
         "ListPos": 85,
         "ListEnd": 85,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "*",
@@ -72,6 +73,7 @@
       "By": {
         "ListPos": 167,
         "ListEnd": 181,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "colX",
@@ -116,6 +118,7 @@
       "By": {
         "ListPos": 219,
         "ListEnd": 219,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "*",
@@ -128,6 +131,7 @@
       "Except": {
         "ListPos": 228,
         "ListEnd": 232,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "colX",
@@ -159,6 +163,7 @@
       "By": {
         "ListPos": 270,
         "ListEnd": 270,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "*",
@@ -171,6 +176,7 @@
       "Except": {
         "ListPos": 279,
         "ListEnd": 290,
+        "HasDistinct": false,
         "Items": [
           {
             "LeftParenPos": 279,
@@ -178,6 +184,7 @@
             "Items": {
               "ListPos": 280,
               "ListEnd": 290,
+              "HasDistinct": false,
               "Items": [
                 {
                   "Name": "colX",
@@ -219,6 +226,7 @@
       "By": {
         "ListPos": 329,
         "ListEnd": 362,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": {
@@ -233,6 +241,7 @@
               "Items": {
                 "ListPos": 338,
                 "ListEnd": 361,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LiteralPos": 338,
@@ -269,6 +278,7 @@
       "By": {
         "ListPos": 401,
         "ListEnd": 434,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": {
@@ -283,6 +293,7 @@
               "Items": {
                 "ListPos": 410,
                 "ListEnd": 433,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LiteralPos": 410,
@@ -299,6 +310,7 @@
       "Except": {
         "ListPos": 443,
         "ListEnd": 447,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "colX",
@@ -330,6 +342,7 @@
       "By": {
         "ListPos": 485,
         "ListEnd": 518,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": {
@@ -344,6 +357,7 @@
               "Items": {
                 "ListPos": 494,
                 "ListEnd": 517,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LiteralPos": 494,
@@ -360,6 +374,7 @@
       "Except": {
         "ListPos": 527,
         "ListEnd": 538,
+        "HasDistinct": false,
         "Items": [
           {
             "LeftParenPos": 527,
@@ -367,6 +382,7 @@
             "Items": {
               "ListPos": 528,
               "ListEnd": 538,
+              "HasDistinct": false,
               "Items": [
                 {
                   "Name": "colX",

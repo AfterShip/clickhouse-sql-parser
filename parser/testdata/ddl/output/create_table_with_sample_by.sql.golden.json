@@ -118,6 +118,7 @@
         "Items": {
           "ListPos": 156,
           "ListEnd": 216,
+          "HasDistinct": false,
           "Items": [
             {
               "LiteralPos": 156,
@@ -139,6 +140,7 @@
         "Expr": {
           "ListPos": 232,
           "ListEnd": 250,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": {
@@ -153,6 +155,7 @@
                 "Items": {
                   "ListPos": 241,
                   "ListEnd": 250,
+                  "HasDistinct": false,
                   "Items": [
                     {
                       "Name": "timestamp",
@@ -211,6 +214,7 @@
               "Items": {
                 "ListPos": 262,
                 "ListEnd": 299,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "Name": "contractid",
@@ -231,6 +235,7 @@
                       "Items": {
                         "ListPos": 281,
                         "ListEnd": 290,
+                        "HasDistinct": false,
                         "Items": [
                           {
                             "Name": "timestamp",

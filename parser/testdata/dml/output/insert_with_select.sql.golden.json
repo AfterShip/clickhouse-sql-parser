@@ -26,6 +26,7 @@
       "SelectColumns": {
         "ListPos": 40,
         "ListEnd": 86,
+        "HasDistinct": false,
         "Items": [
           {
             "Name": "CounterID",
@@ -84,8 +85,10 @@
       "Having": null,
       "OrderBy": null,
       "LimitBy": null,
+      "Limit": null,
       "Settings": null,
-      "UnionAll": null
+      "UnionAll": null,
+      "Except": null
     }
   }
 ]

@@ -41,7 +41,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			p.matchKeyword(KeywordView),
 			p.matchKeyword(KeywordDictionary),
 			p.matchKeyword(KeywordTable):
-			return p.parserDropStmt(pos)
+			return p.parseDropStmt(pos)
 		default:
 			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE, but got %q", p.last().String)
 		}
@@ -160,6 +160,15 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		return nil, err
 	}
 	switch {
+	case p.matchTokenKind("["):
+		params, err := p.parseArrayParams(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &ObjectParams{
+			Object: ident,
+			Params: params,
+		}, nil
 	case p.matchTokenKind("("):
 		params, err := p.parseFunctionParams(p.Pos())
 		if err != nil {

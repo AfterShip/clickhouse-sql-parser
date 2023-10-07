@@ -56,6 +56,7 @@
         "Items": {
           "ListPos": 104,
           "ListEnd": 158,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": "default_cluster",
@@ -88,6 +89,7 @@
                 "Items": {
                   "ListPos": 158,
                   "ListEnd": 158,
+                  "HasDistinct": false,
                   "Items": []
                 },
                 "ColumnArgList": null

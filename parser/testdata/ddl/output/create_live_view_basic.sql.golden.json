@@ -79,6 +79,7 @@
         "SelectColumns": {
           "ListPos": 85,
           "ListEnd": 87,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": "id",
@@ -114,8 +115,10 @@
         "Having": null,
         "OrderBy": null,
         "LimitBy": null,
+        "Limit": null,
         "Settings": null,
-        "UnionAll": null
+        "UnionAll": null,
+        "Except": null
       }
     }
   }

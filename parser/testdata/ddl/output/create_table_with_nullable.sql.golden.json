@@ -297,6 +297,7 @@
         "Expr": {
           "ListPos": 347,
           "ListEnd": 368,
+          "HasDistinct": false,
           "Items": [
             {
               "LeftExpr": {
@@ -312,6 +313,7 @@
                   "Items": {
                     "ListPos": 356,
                     "ListEnd": 362,
+                    "HasDistinct": false,
                     "Items": [
                       {
                         "Name": "tag_id",

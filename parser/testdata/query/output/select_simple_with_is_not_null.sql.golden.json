@@ -7,6 +7,7 @@
     "SelectColumns": {
       "ListPos": 7,
       "ListEnd": 24,
+      "HasDistinct": false,
       "Items": [
         {
           "Name": "f0",
@@ -79,6 +80,7 @@
               "Items": {
                 "ListPos": 55,
                 "ListEnd": 82,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LeftExpr": {
@@ -94,6 +96,7 @@
                       "Items": {
                         "ListPos": 63,
                         "ListEnd": 81,
+                        "HasDistinct": false,
                         "Items": [
                           {
                             "LiteralPos": 63,
@@ -128,6 +131,7 @@
               "Items": {
                 "ListPos": 92,
                 "ListEnd": 105,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "LeftExpr": {
@@ -184,7 +188,9 @@
     "Having": null,
     "OrderBy": null,
     "LimitBy": null,
+    "Limit": null,
     "Settings": null,
-    "UnionAll": null
+    "UnionAll": null,
+    "Except": null
   }
 ]

@@ -140,6 +140,7 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 	case p.matchTokenKind(opTypeLE):
 	case p.matchTokenKind(opTypeGE):
 	case p.matchTokenKind(opTypeGT):
+	case p.matchTokenKind(opTypeDoubleEQ):
 	case p.matchTokenKind(opTypeNE):
 	case p.matchTokenKind("<>"):
 	case p.matchTokenKind(opTypeQuery):
@@ -430,6 +431,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 		ListPos: pos,
 		ListEnd: pos,
 	}
+	columnExprList.HasDistinct = p.tryConsumeKeyword(KeywordDistinct) != nil
 	columnList := make([]Expr, 0)
 	for !p.lexer.isEOF() {
 		if term != "" && p.matchTokenKind(term) {
@@ -511,7 +513,6 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 	}
 	var items []Expr
 	for !p.lexer.isEOF() && !p.matchTokenKind(")") {
-		// TODO: parse lambda expr
 		item, err := p.parseExpr(p.Pos())
 		if err != nil {
 			return nil, err

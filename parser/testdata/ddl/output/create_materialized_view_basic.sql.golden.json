@@ -203,6 +203,7 @@
         "Items": {
           "ListPos": 213,
           "ListEnd": 248,
+          "HasDistinct": false,
           "Items": [
             {
               "LiteralPos": 213,
@@ -219,6 +220,7 @@
         "Expr": {
           "ListPos": 264,
           "ListEnd": 273,
+          "HasDistinct": false,
           "Items": [
             {
               "Name": {
@@ -233,6 +235,7 @@
                 "Items": {
                   "ListPos": 271,
                   "ListEnd": 273,
+                  "HasDistinct": false,
                   "Items": [
                     {
                       "Name": "f1",
@@ -283,6 +286,7 @@
               "Items": {
                 "ListPos": 285,
                 "ListEnd": 299,
+                "HasDistinct": false,
                 "Items": [
                   {
                     "Name": "f1",

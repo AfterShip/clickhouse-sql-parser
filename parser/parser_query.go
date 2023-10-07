@@ -367,14 +367,14 @@ func (p *Parser) parseGroupByExpr(pos Pos) (*GroupByExpr, error) {
 	return groupByExpr, nil
 }
 
-func (p *Parser) tryParseLimitByExpr(pos Pos) (*LimitByExpr, error) {
+func (p *Parser) tryParseLimitExpr(pos Pos) (*LimitExpr, error) {
 	if !p.matchKeyword(KeywordLimit) {
 		return nil, nil
 	}
-	return p.parseLimitByExpr(pos)
+	return p.parseLimitExpr(pos)
 }
 
-func (p *Parser) parseLimitByExpr(pos Pos) (*LimitByExpr, error) {
+func (p *Parser) parseLimitExpr(pos Pos) (*LimitExpr, error) {
 	if err := p.consumeKeyword(KeywordLimit); err != nil {
 		return nil, err
 	}
@@ -395,17 +395,36 @@ func (p *Parser) parseLimitByExpr(pos Pos) (*LimitByExpr, error) {
 		return nil, err
 	}
 
-	var by *ColumnExprList
-	if p.tryConsumeKeyword(KeywordBy) != nil {
-		if by, err = p.parseColumnExprListWithRoundBracket(p.Pos()); err != nil {
-			return nil, err
-		}
-	}
-	return &LimitByExpr{
+	return &LimitExpr{
 		LimitPos: pos,
 		Limit:    limit,
 		Offset:   offset,
-		ByExpr:   by,
+	}, nil
+}
+
+func (p *Parser) tryParseLimitByExpr(pos Pos) (Expr, error) {
+	if !p.matchKeyword(KeywordLimit) {
+		return nil, nil
+	}
+	return p.parseLimitByExpr(pos)
+}
+
+func (p *Parser) parseLimitByExpr(pos Pos) (Expr, error) {
+	limitExpr, err := p.parseLimitExpr(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	var by *ColumnExprList
+	if p.tryConsumeKeyword(KeywordBy) == nil {
+		return limitExpr, nil
+	}
+	if by, err = p.parseColumnExprListWithRoundBracket(p.Pos()); err != nil {
+		return nil, err
+	}
+	return &LimitByExpr{
+		Limit:  limitExpr,
+		ByExpr: by,
 	}, nil
 }
 
@@ -650,7 +669,8 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 	if err != nil {
 		return nil, err
 	}
-	if p.tryConsumeKeyword(KeywordUnion) != nil {
+	switch {
+	case p.tryConsumeKeyword(KeywordUnion) != nil:
 		if err := p.consumeKeyword(KeywordAll); err != nil {
 			return nil, err
 		}
@@ -659,6 +679,12 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 			return nil, err
 		}
 		selectExpr.UnionAll = unionAllExpr
+	case p.tryConsumeKeyword(KeywordExcept) != nil:
+		exceptExpr, err := p.parseSelectStatement(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		selectExpr.UnionAll = exceptExpr
 	}
 	if hasParen {
 		if _, err := p.consumeTokenKind(")"); err != nil {
@@ -755,13 +781,23 @@ func (p *Parser) parseSelectStatement(pos Pos) (*SelectQuery, error) { // nolint
 	if orderByExpr != nil {
 		statementEnd = orderByExpr.End()
 	}
-	limitByExpr, err := p.tryParseLimitByExpr(p.Pos())
+
+	var limitByExpr *LimitByExpr
+	var limitExpr *LimitExpr
+	parsedLimitBy, err := p.tryParseLimitByExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	if limitByExpr != nil {
-		statementEnd = limitByExpr.End()
+	if parsedLimitBy != nil {
+		statementEnd = parsedLimitBy.End()
+		if e, ok := parsedLimitBy.(*LimitByExpr); ok {
+			limitByExpr = e
+			limitExpr, err = p.tryParseLimitExpr(p.Pos())
+		} else {
+			limitExpr = parsedLimitBy.(*LimitExpr)
+		}
 	}
+
 	settingsExpr, err := p.tryParseSettingsExprList(p.Pos())
 	if err != nil {
 		return nil, err
@@ -785,6 +821,7 @@ func (p *Parser) parseSelectStatement(pos Pos) (*SelectQuery, error) { // nolint
 		Having:        havingExpr,
 		OrderBy:       orderByExpr,
 		LimitBy:       limitByExpr,
+		Limit:         limitExpr,
 		Settings:      settingsExpr,
 		WithTotal:     withTotal,
 	}, nil
