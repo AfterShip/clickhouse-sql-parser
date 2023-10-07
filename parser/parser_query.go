@@ -880,3 +880,30 @@ func (p *Parser) parseSampleRationExpr(pos Pos) (*SampleRatioExpr, error) {
 		Offset:    offset,
 	}, nil
 }
+
+func (p *Parser) parseExplainExpr(pos Pos) (*ExplainExpr, error) {
+	if err := p.consumeKeyword(KeywordExplain); err != nil {
+		return nil, err
+	}
+
+	var explainType string
+	switch {
+	case p.matchKeyword(KeywordSyntax),
+		p.matchKeyword(KeywordPipeline),
+		p.matchKeyword(KeywordEstimate),
+		p.matchKeyword(KeywordAst):
+		explainType = p.last().String
+		_ = p.lexer.consumeToken()
+	default:
+		return nil, fmt.Errorf("expected SYNTAX, PIPELINE, ESTIMATE or AST, got %s", p.lastTokenKind())
+	}
+	expr, err := p.parseSelectQuery(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &ExplainExpr{
+		ExplainPos: pos,
+		Type:       explainType,
+		Statement:  expr,
+	}, nil
+}

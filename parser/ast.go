@@ -3574,3 +3574,26 @@ func (t *TablePair) End() Pos {
 func (t *TablePair) String() string {
 	return t.Old.String(0) + " TO " + t.New.String(0)
 }
+
+type ExplainExpr struct {
+	ExplainPos Pos
+	Type       string
+	Statement  Expr
+}
+
+func (e *ExplainExpr) Pos() Pos {
+	return e.ExplainPos
+}
+
+func (e *ExplainExpr) End() Pos {
+	return e.Statement.End()
+}
+
+func (e *ExplainExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("EXPLAIN ")
+	builder.WriteString(e.Type)
+	builder.WriteByte(' ')
+	builder.WriteString(e.Statement.String(level))
+	return builder.String()
+}

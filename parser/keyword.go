@@ -59,6 +59,7 @@ const (
 	KeywordElse         = "ELSE"
 	KeywordEnd          = "END"
 	KeywordEngine       = "ENGINE"
+	KeywordEstimate     = "ESTIMATE"
 	KeywordEvents       = "EVENTS"
 	KeywordExcept       = "EXCEPT"
 	KeywordExists       = "EXISTS"
@@ -134,6 +135,7 @@ const (
 	KeywordOutfile      = "OUTFILE"
 	KeywordOver         = "OVER"
 	KeywordPartition    = "PARTITION"
+	KeywordPipeline     = "PIPELINE"
 	KeywordPopulate     = "POPULATE"
 	KeywordPreceding    = "PRECEDING"
 	KeywordPrewhere     = "PREWHERE"
@@ -261,6 +263,7 @@ var keywords = NewSet(
 	KeywordElse,
 	KeywordEnd,
 	KeywordEngine,
+	KeywordEstimate,
 	KeywordEvents,
 	KeywordExcept,
 	KeywordExists,
@@ -336,6 +339,7 @@ var keywords = NewSet(
 	KeywordOutfile,
 	KeywordOver,
 	KeywordPartition,
+	KeywordPipeline,
 	KeywordPopulate,
 	KeywordPreceding,
 	KeywordPrewhere,
