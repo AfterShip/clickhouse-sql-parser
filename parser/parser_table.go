@@ -48,7 +48,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 	case p.matchKeyword(KeywordTruncate):
 		return p.parseTruncateTable(pos)
 	case p.matchKeyword(KeywordRename):
-		return p.parseRenameTable(pos)
+		return p.parseRenameStmt(pos)
 	}
 	return nil, nil // nolint
 }
@@ -1183,31 +1183,42 @@ func (p *Parser) parseInsertExpr(pos Pos) (*InsertExpr, error) {
 	return insertExpr, nil
 }
 
-func (p *Parser) parseRenameTable(pos Pos) (*RenameTable, error) {
+func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
 	if err := p.consumeKeyword(KeywordRename); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordTable); err != nil {
-		return nil, err
+
+	renameTarget := KeywordTable
+	switch {
+	case p.tryConsumeKeyword(KeywordDictionary) != nil:
+		renameTarget = KeywordDictionary
+	case p.tryConsumeKeyword(KeywordDatabase) != nil:
+		renameTarget = KeywordDatabase
+	default:
+		if err := p.consumeKeyword(KeywordTable); err != nil {
+			return nil, err
+		}
 	}
 
-	tablePair, err := p.parseTablePair(p.Pos())
+	targetPair, err := p.parseTargetPair(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	tablePairList := []*TablePair{tablePair}
+	tablePairList := []*TargetPair{targetPair}
 	for p.tryConsumeTokenKind(",") != nil {
-		tablePair, err := p.parseTablePair(p.Pos())
+		tablePair, err := p.parseTargetPair(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		tablePairList = append(tablePairList, tablePair)
 	}
 
-	renameTable := &RenameTable{
-		RenamePos:     pos,
-		StatementEnd:  tablePairList[len(tablePairList)-1].End(),
-		TablePairList: tablePairList,
+	renameStmt := &RenameStmt{
+		RenamePos:    pos,
+		StatementEnd: tablePairList[len(tablePairList)-1].End(),
+
+		RenameTarget:   renameTarget,
+		TargetPairList: tablePairList,
 	}
 
 	onClusterExpr, err := p.tryParseOnCluster(p.Pos())
@@ -1215,14 +1226,14 @@ func (p *Parser) parseRenameTable(pos Pos) (*RenameTable, error) {
 		return nil, err
 	}
 	if onClusterExpr != nil {
-		renameTable.OnCluster = onClusterExpr
-		renameTable.StatementEnd = onClusterExpr.End()
+		renameStmt.OnCluster = onClusterExpr
+		renameStmt.StatementEnd = onClusterExpr.End()
 	}
 
-	return renameTable, nil
+	return renameStmt, nil
 }
 
-func (p *Parser) parseTablePair(_ Pos) (*TablePair, error) {
+func (p *Parser) parseTargetPair(_ Pos) (*TargetPair, error) {
 	oldTable, err := p.parseTableIdentifier(p.Pos())
 	if err != nil {
 		return nil, err
@@ -1235,7 +1246,7 @@ func (p *Parser) parseTablePair(_ Pos) (*TablePair, error) {
 		return nil, err
 	}
 
-	return &TablePair{
+	return &TargetPair{
 		Old: oldTable,
 		New: newTable,
 	}, nil

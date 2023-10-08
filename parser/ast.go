@@ -3562,29 +3562,31 @@ func (n *UnaryExpr) String(level int) string {
 	return "-" + n.Expr.String(level+1)
 }
 
-type RenameTable struct {
-	RenamePos     Pos
-	StatementEnd  Pos
-	TablePairList []*TablePair
-	OnCluster     *OnClusterExpr
+type RenameStmt struct {
+	RenamePos    Pos
+	StatementEnd Pos
+
+	RenameTarget   string
+	TargetPairList []*TargetPair
+	OnCluster      *OnClusterExpr
 }
 
-func (r *RenameTable) Pos() Pos {
+func (r *RenameStmt) Pos() Pos {
 	return r.RenamePos
 }
 
-func (r *RenameTable) End() Pos {
+func (r *RenameStmt) End() Pos {
 	return r.StatementEnd
 }
 
-func (r *RenameTable) Type() string {
-	return "RENAME TABLE"
+func (r *RenameStmt) Type() string {
+	return "RENAME " + r.RenameTarget
 }
 
-func (r *RenameTable) String(level int) string {
+func (r *RenameStmt) String(level int) string {
 	var builder strings.Builder
-	builder.WriteString("RENAME TABLE ")
-	for i, pair := range r.TablePairList {
+	builder.WriteString("RENAME " + r.RenameTarget + " ")
+	for i, pair := range r.TargetPairList {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
@@ -3599,20 +3601,20 @@ func (r *RenameTable) String(level int) string {
 	return builder.String()
 }
 
-type TablePair struct {
+type TargetPair struct {
 	Old *TableIdentifier
 	New *TableIdentifier
 }
 
-func (t *TablePair) Pos() Pos {
+func (t *TargetPair) Pos() Pos {
 	return t.Old.Pos()
 }
 
-func (t *TablePair) End() Pos {
+func (t *TargetPair) End() Pos {
 	return t.New.End()
 }
 
-func (t *TablePair) String() string {
+func (t *TargetPair) String() string {
 	return t.Old.String(0) + " TO " + t.New.String(0)
 }
 
