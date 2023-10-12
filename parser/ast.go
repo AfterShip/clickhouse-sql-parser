@@ -861,6 +861,41 @@ func (c *CreateView) String(level int) string {
 	return builder.String()
 }
 
+type CreateFunction struct {
+	CreatePos    Pos
+	FunctionName *Ident
+	OnCluster    *OnClusterExpr
+	Params       *ParamExprList
+	Expr         Expr
+}
+
+func (c *CreateFunction) Type() string {
+	return "FUNCTION"
+}
+
+func (c *CreateFunction) Pos() Pos {
+	return c.CreatePos
+}
+
+func (c *CreateFunction) End() Pos {
+	return c.Expr.End()
+}
+
+func (c *CreateFunction) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("CREATE FUNCTION ")
+	builder.WriteString(c.FunctionName.String(level))
+	if c.OnCluster != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(c.OnCluster.String(level))
+	}
+	builder.WriteString(" AS ")
+	builder.WriteString(c.Params.String(level))
+	builder.WriteString(" -> ")
+	builder.WriteString(c.Expr.String(level))
+	return builder.String()
+}
+
 type DestinationExpr struct {
 	ToPos           Pos
 	TableIdentifier *TableIdentifier
