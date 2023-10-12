@@ -1251,6 +1251,10 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err != nil {
 		return nil, err
 	}
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
 	if err := p.consumeKeyword(KeywordAs); err != nil {
 		return nil, err
 	}
@@ -1268,6 +1272,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	return &CreateFunction{
 		CreatePos:    pos,
 		FunctionName: functionName,
+		OnCluster:    onCluster,
 		Params:       params,
 		Expr:         expr,
 	}, nil
