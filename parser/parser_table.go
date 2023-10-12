@@ -15,6 +15,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordTable),
 			p.matchKeyword(KeywordTemporary):
 			return p.parseCreateTable(pos)
+		case p.matchKeyword(KeywordFunction):
+			return p.parseCreateFunction(pos)
 		case p.matchKeyword(KeywordMaterialized):
 			return p.parseCreateMaterializedView(pos)
 		case p.matchKeyword(KeywordLive):
@@ -1238,5 +1240,35 @@ func (p *Parser) parseTablePair(_ Pos) (*TablePair, error) {
 	return &TablePair{
 		Old: oldTable,
 		New: newTable,
+	}, nil
+}
+
+func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
+	if err := p.consumeKeyword(KeywordFunction); err != nil {
+		return nil, err
+	}
+	functionName, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordAs); err != nil {
+		return nil, err
+	}
+	params, err := p.parseFunctionParams(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if _, err := p.consumeTokenKind(TokenArrow); err != nil {
+		return nil, err
+	}
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &CreateFunction{
+		CreatePos:    pos,
+		FunctionName: functionName,
+		Params:       params,
+		Expr:         expr,
 	}, nil
 }

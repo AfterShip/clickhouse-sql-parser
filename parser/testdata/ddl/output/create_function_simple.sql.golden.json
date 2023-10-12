@@ -1,0 +1,70 @@
+[
+  {
+    "CreatePos": 0,
+    "FunctionName": {
+      "Name": "linear_equation",
+      "Unquoted": false,
+      "NamePos": 16,
+      "NameEnd": 31
+    },
+    "OnCluster": null,
+    "Params": {
+      "LeftParenPos": 35,
+      "RightParenPos": 43,
+      "Items": {
+        "ListPos": 36,
+        "ListEnd": 43,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Name": "x",
+            "Unquoted": false,
+            "NamePos": 36,
+            "NameEnd": 37
+          },
+          {
+            "Name": "k",
+            "Unquoted": false,
+            "NamePos": 39,
+            "NameEnd": 40
+          },
+          {
+            "Name": "b",
+            "Unquoted": false,
+            "NamePos": 42,
+            "NameEnd": 43
+          }
+        ]
+      },
+      "ColumnArgList": null
+    },
+    "Expr": {
+      "LeftExpr": {
+        "LeftExpr": {
+          "Name": "k",
+          "Unquoted": false,
+          "NamePos": 48,
+          "NameEnd": 49
+        },
+        "Operation": "*",
+        "RightExpr": {
+          "Name": "x",
+          "Unquoted": false,
+          "NamePos": 50,
+          "NameEnd": 51
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      },
+      "Operation": "+",
+      "RightExpr": {
+        "Name": "b",
+        "Unquoted": false,
+        "NamePos": 54,
+        "NameEnd": 55
+      },
+      "HasGlobal": false,
+      "HasNot": false
+    }
+  }
+]
