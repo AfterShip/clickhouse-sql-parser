@@ -12,9 +12,10 @@
           "NamePos": 34,
           "NameEnd": 42
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": null
   },
@@ -31,9 +32,10 @@
           "NamePos": 56,
           "NameEnd": 64
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -60,9 +62,10 @@
           "NamePos": 92,
           "NameEnd": 100
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -98,9 +101,10 @@
           "NamePos": 141,
           "NameEnd": 149
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -137,9 +141,10 @@
           "NamePos": 197,
           "NameEnd": 205
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -185,9 +190,10 @@
           "NamePos": 257,
           "NameEnd": 265
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -233,9 +239,10 @@
           "NamePos": 317,
           "NameEnd": 325
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -272,9 +279,10 @@
           "NamePos": 371,
           "NameEnd": 379
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -311,9 +319,10 @@
           "NamePos": 428,
           "NameEnd": 436
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -383,9 +392,10 @@
           "NamePos": 514,
           "NameEnd": 522
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -445,7 +455,7 @@
           "NamePos": 598,
           "NameEnd": 606
         },
-        "OnCluster": null
+        "Scope": null
       },
       {
         "Name": {
@@ -454,9 +464,10 @@
           "NamePos": 608,
           "NameEnd": 616
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": null
   },
@@ -473,9 +484,10 @@
           "NamePos": 630,
           "NameEnd": 638
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -512,9 +524,10 @@
           "NamePos": 672,
           "NameEnd": 680
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -550,9 +563,10 @@
           "NamePos": 721,
           "NameEnd": 729
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -622,9 +636,10 @@
           "NamePos": 810,
           "NameEnd": 818
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -698,9 +713,10 @@
           "NamePos": 897,
           "NameEnd": 905
         },
-        "OnCluster": null
+        "Scope": null
       }
     ],
+    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -713,5 +729,53 @@
         }
       }
     ]
+  },
+  {
+    "CreatePos": 921,
+    "StatementEnd": 944,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 933,
+          "NameEnd": 941
+        },
+        "Scope": {
+          "LiteralPos": 943,
+          "LiteralEnd": 944,
+          "Literal": "%"
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 947,
+    "StatementEnd": 981,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 959,
+          "NameEnd": 967
+        },
+        "Scope": {
+          "LiteralPos": 969,
+          "LiteralEnd": 981,
+          "Literal": "%.myhost.com"
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Settings": null
   }
 ]

@@ -342,18 +342,34 @@ func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
 }
 
 func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
-	name, err := p.parseIdent()
-	if err != nil {
-		return nil, err
+	switch {
+	case p.matchTokenKind(TokenIdent):
+		name, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		var scope *StringLiteral
+		if p.tryConsumeTokenKind("@") != nil {
+			scope, err = p.parseString(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+		}
+		return &RoleName{
+			Name:  name,
+			Scope: scope,
+		}, nil
+	case p.matchTokenKind(TokenString):
+		name, err := p.parseString(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &RoleName{
+			Name: name,
+		}, nil
+	default:
+		return nil, fmt.Errorf("expected <ident> or <string>")
 	}
-	onCluster, err := p.tryParseOnCluster(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	return &RoleName{
-		Name:      name,
-		OnCluster: onCluster,
-	}, nil
 }
 
 func (p *Parser) tryParseRoleSettings(pos Pos) ([]*RoleSetting, error) {
@@ -458,6 +474,11 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 	}
 	statementEnd := roleNames[len(roleNames)-1].End()
 
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
 	var accessStorageType *Ident
 	if p.tryConsumeKeyword(KeywordIn) != nil {
 		accessStorageType, err = p.parseIdent()
@@ -481,7 +502,70 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 		IfNotExists:       ifNotExists,
 		OrReplace:         orReplace,
 		RoleNames:         roleNames,
+		OnCluster:         onCluster,
 		AccessStorageType: accessStorageType,
 		Settings:          settings,
+	}, nil
+}
+
+func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
+	var target string
+	switch {
+	case p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole):
+		target = p.last().String
+		_ = p.lexer.consumeToken()
+	default:
+		return nil, fmt.Errorf("expected USER|ROLE")
+	}
+
+	ifExists, err := p.tryParseIfExists()
+	if err != nil {
+		return nil, err
+	}
+
+	names := make([]*RoleName, 0)
+	name, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	names = append(names, name)
+	for p.tryConsumeTokenKind(",") != nil {
+		name, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		names = append(names, name)
+	}
+	statementEnd := names[len(names)-1].End()
+
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if onCluster != nil {
+		statementEnd = onCluster.End()
+	}
+
+	var from *Ident
+	if p.tryConsumeKeyword(KeywordFrom) != nil {
+		from, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	modifier, err := p.tryParseModifier()
+	if err != nil {
+		return nil, err
+	}
+
+	return &DropUserOrRole{
+		DropPos:      pos,
+		StatementEnd: statementEnd,
+		Target:       target,
+		IfExists:     ifExists,
+		Names:        names,
+		From:         from,
+		Modifier:     modifier,
 	}, nil
 }

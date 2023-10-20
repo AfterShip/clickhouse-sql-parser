@@ -191,6 +191,7 @@ const (
 	KeywordUnion        = "UNION"
 	KeywordUpdate       = "UPDATE"
 	KeywordUse          = "USE"
+	KeywordUser         = "USER"
 	KeywordUsing        = "USING"
 	KeywordUuid         = "UUID"
 	KeywordValues       = "VALUES"
@@ -396,6 +397,7 @@ var keywords = NewSet(
 	KeywordUnion,
 	KeywordUpdate,
 	KeywordUse,
+	KeywordUser,
 	KeywordUsing,
 	KeywordUuid,
 	KeywordValues,

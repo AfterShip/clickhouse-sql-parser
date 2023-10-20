@@ -46,6 +46,9 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			p.matchKeyword(KeywordDictionary),
 			p.matchKeyword(KeywordTable):
 			return p.parseDropStmt(pos)
+		case p.matchKeyword(KeywordUser),
+			p.matchKeyword(KeywordRole):
+			return p.parserDropUserOrRole(pos)
 		default:
 			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE, but got %q", p.last().String)
 		}
