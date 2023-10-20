@@ -456,6 +456,7 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 		}
 		roleNames = append(roleNames, roleName)
 	}
+	statementEnd := roleNames[len(roleNames)-1].End()
 
 	var accessStorageType *Ident
 	if p.tryConsumeKeyword(KeywordIn) != nil {
@@ -463,15 +464,20 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 		if err != nil {
 			return nil, err
 		}
+		statementEnd = accessStorageType.NameEnd
 	}
 
 	settings, err := p.tryParseRoleSettings(p.Pos())
 	if err != nil {
 		return nil, err
 	}
+	if settings != nil {
+		statementEnd = settings[len(settings)-1].End()
+	}
 
 	return &CreateRole{
 		CreatePos:         pos,
+		StatementEnd:      statementEnd,
 		IfNotExists:       ifNotExists,
 		OrReplace:         orReplace,
 		RoleNames:         roleNames,
