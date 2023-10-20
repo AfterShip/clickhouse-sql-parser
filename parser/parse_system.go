@@ -341,7 +341,7 @@ func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
 	}, nil
 }
 
-func (p *Parser) parseRoleName(pos Pos) (*RoleName, error) {
+func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 	name, err := p.parseIdent()
 	if err != nil {
 		return nil, err
@@ -363,7 +363,7 @@ func (p *Parser) tryParseRoleSettings(pos Pos) ([]*RoleSetting, error) {
 	return p.parseRoleSettings(pos)
 }
 
-func (p *Parser) parseRoleSetting(pos Pos) (*RoleSetting, error) {
+func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 	pairs := make([]*SettingPair, 0)
 	for p.matchTokenKind(TokenIdent) {
 		name, err := p.parseIdent()
@@ -403,7 +403,7 @@ func (p *Parser) parseRoleSetting(pos Pos) (*RoleSetting, error) {
 	}, nil
 }
 
-func (p *Parser) parseRoleSettings(pos Pos) ([]*RoleSetting, error) {
+func (p *Parser) parseRoleSettings(_ Pos) ([]*RoleSetting, error) {
 	settings := make([]*RoleSetting, 0)
 	for {
 		setting, err := p.parseRoleSetting(p.Pos())
