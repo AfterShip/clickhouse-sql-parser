@@ -897,27 +897,27 @@ func (c *CreateFunction) String(level int) string {
 }
 
 type RoleName struct {
-	Name      *Ident
-	OnCluster *OnClusterExpr
+	Name  Expr
+	Scope *StringLiteral
 }
 
 func (r *RoleName) Pos() Pos {
-	return r.Name.NamePos
+	return r.Name.Pos()
 }
 
 func (r *RoleName) End() Pos {
-	if r.OnCluster != nil {
-		return r.OnCluster.End()
+	if r.Scope != nil {
+		return r.Scope.End()
 	}
-	return r.Name.NameEnd
+	return r.Name.End()
 }
 
 func (r *RoleName) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(r.Name.String(level))
-	if r.OnCluster != nil {
-		builder.WriteString(" ")
-		builder.WriteString(r.OnCluster.String(level))
+	if r.Scope != nil {
+		builder.WriteString("@")
+		builder.WriteString(r.Scope.String(level))
 	}
 	return builder.String()
 }
@@ -985,6 +985,7 @@ type CreateRole struct {
 	IfNotExists       bool
 	OrReplace         bool
 	RoleNames         []*RoleName
+	OnCluster         *OnClusterExpr
 	AccessStorageType *Ident
 	Settings          []*RoleSetting
 }
@@ -3191,6 +3192,55 @@ func (d *DropStmt) String(level int) string {
 	}
 	if len(d.Modifier) != 0 {
 		builder.WriteString(" " + d.Modifier)
+	}
+	return builder.String()
+}
+
+type DropUserOrRole struct {
+	DropPos      Pos
+	Target       string
+	StatementEnd Pos
+	Names        []*RoleName
+	IfExists     bool
+	OnCluster    *OnClusterExpr
+	Modifier     string
+	From         *Ident
+}
+
+func (d *DropUserOrRole) Pos() Pos {
+	return d.DropPos
+}
+
+func (d *DropUserOrRole) End() Pos {
+	return d.StatementEnd
+}
+
+func (d *DropUserOrRole) Type() string {
+	return d.Target
+}
+
+func (d *DropUserOrRole) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("DROP " + d.Target + " ")
+	if d.IfExists {
+		builder.WriteString("IF EXISTS ")
+	}
+	for i, name := range d.Names {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(name.String(level))
+	}
+	if d.OnCluster != nil {
+		builder.WriteString(" ")
+		builder.WriteString(d.OnCluster.String(level))
+	}
+	if len(d.Modifier) != 0 {
+		builder.WriteString(" " + d.Modifier)
+	}
+	if d.From != nil {
+		builder.WriteString(" FROM ")
+		builder.WriteString(d.From.String(level))
 	}
 	return builder.String()
 }

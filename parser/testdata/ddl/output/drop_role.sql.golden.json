@@ -1,0 +1,146 @@
+[
+  {
+    "DropPos": 0,
+    "Target": "ROLE",
+    "StatementEnd": 108,
+    "Names": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 20,
+          "NameEnd": 28
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 30,
+          "NameEnd": 38
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r3_01293",
+          "Unquoted": false,
+          "NamePos": 40,
+          "NameEnd": 48
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r4_01293",
+          "Unquoted": false,
+          "NamePos": 50,
+          "NameEnd": 58
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r5_01293",
+          "Unquoted": false,
+          "NamePos": 60,
+          "NameEnd": 68
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r6_01293",
+          "Unquoted": false,
+          "NamePos": 70,
+          "NameEnd": 78
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r7_01293",
+          "Unquoted": false,
+          "NamePos": 80,
+          "NameEnd": 88
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r8_01293",
+          "Unquoted": false,
+          "NamePos": 90,
+          "NameEnd": 98
+        },
+        "Scope": null
+      },
+      {
+        "Name": {
+          "Name": "r9_01293",
+          "Unquoted": false,
+          "NamePos": 100,
+          "NameEnd": 108
+        },
+        "Scope": null
+      }
+    ],
+    "IfExists": true,
+    "OnCluster": null,
+    "Modifier": "",
+    "From": null
+  },
+  {
+    "DropPos": 110,
+    "Target": "ROLE",
+    "StatementEnd": 146,
+    "Names": [
+      {
+        "Name": {
+          "Name": "r2_01293_renamed",
+          "Unquoted": false,
+          "NamePos": 130,
+          "NameEnd": 146
+        },
+        "Scope": null
+      }
+    ],
+    "IfExists": true,
+    "OnCluster": null,
+    "Modifier": "",
+    "From": null
+  },
+  {
+    "DropPos": 148,
+    "Target": "ROLE",
+    "StatementEnd": 204,
+    "Names": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 168,
+          "NameEnd": 176
+        },
+        "Scope": {
+          "LiteralPos": 178,
+          "LiteralEnd": 179,
+          "Literal": "%"
+        }
+      },
+      {
+        "Name": {
+          "LiteralPos": 183,
+          "LiteralEnd": 204,
+          "Literal": "r2_01293@%.myhost.com"
+        },
+        "Scope": null
+      }
+    ],
+    "IfExists": true,
+    "OnCluster": null,
+    "Modifier": "",
+    "From": null
+  }
+]
