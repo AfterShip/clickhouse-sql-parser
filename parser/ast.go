@@ -896,6 +896,143 @@ func (c *CreateFunction) String(level int) string {
 	return builder.String()
 }
 
+type RoleName struct {
+	Name      *Ident
+	OnCluster *OnClusterExpr
+}
+
+func (r *RoleName) Pos() Pos {
+	return r.Name.NamePos
+}
+
+func (r *RoleName) End() Pos {
+	if r.OnCluster != nil {
+		return r.OnCluster.End()
+	}
+	return r.Name.NameEnd
+}
+
+func (r *RoleName) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString(r.Name.String(level))
+	if r.OnCluster != nil {
+		builder.WriteString(" ")
+		builder.WriteString(r.OnCluster.String(level))
+	}
+	return builder.String()
+}
+
+type SettingPair struct {
+	Name  *Ident
+	Value Expr
+}
+
+func (s *SettingPair) Pos() Pos {
+	return s.Name.NamePos
+}
+
+func (s *SettingPair) End() Pos {
+	return s.Value.End()
+}
+
+func (s *SettingPair) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString(s.Name.String(level))
+	if s.Value != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(s.Value.String(level))
+	}
+	return builder.String()
+}
+
+type RoleSetting struct {
+	SettingPairs []*SettingPair
+	Modifier     *Ident
+}
+
+func (r *RoleSetting) Pos() Pos {
+	if len(r.SettingPairs) > 0 {
+		return r.SettingPairs[0].Pos()
+	}
+	return r.Modifier.NamePos
+}
+
+func (r *RoleSetting) End() Pos {
+	if r.Modifier != nil {
+		return r.Modifier.NameEnd
+	}
+	return r.SettingPairs[len(r.SettingPairs)-1].End()
+}
+
+func (r *RoleSetting) String(level int) string {
+	var builder strings.Builder
+	for i, settingPair := range r.SettingPairs {
+		if i > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(settingPair.String(level))
+	}
+	if r.Modifier != nil {
+		builder.WriteString(" ")
+		builder.WriteString(r.Modifier.String(level))
+	}
+	return builder.String()
+}
+
+type CreateRole struct {
+	CreatePos         Pos
+	StatementEnd      Pos
+	IfNotExists       bool
+	OrReplace         bool
+	RoleNames         []*RoleName
+	AccessStorageType *Ident
+	Settings          []*RoleSetting
+}
+
+func (c *CreateRole) Pos() Pos {
+	return c.CreatePos
+}
+
+func (c *CreateRole) End() Pos {
+	return c.StatementEnd
+}
+
+func (c *CreateRole) Type() string {
+	return "ROLE"
+}
+
+func (c *CreateRole) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("CREATE ROLE ")
+	if c.IfNotExists {
+		builder.WriteString("IF NOT EXISTS ")
+	}
+	if c.OrReplace {
+		builder.WriteString("OR REPLACE ")
+	}
+	for i, roleName := range c.RoleNames {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(roleName.String(level))
+	}
+	if c.AccessStorageType != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString("IN ")
+		builder.WriteString(c.AccessStorageType.String(level))
+	}
+	if len(c.Settings) > 0 {
+		builder.WriteString(" SETTINGS ")
+		for i, setting := range c.Settings {
+			if i > 0 {
+				builder.WriteString(", ")
+			}
+			builder.WriteString(setting.String(level))
+		}
+	}
+	return builder.String()
+}
+
 type DestinationExpr struct {
 	ToPos           Pos
 	TableIdentifier *TableIdentifier

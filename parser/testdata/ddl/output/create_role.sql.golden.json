@@ -1,0 +1,717 @@
+[
+  {
+    "CreatePos": 22,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 34,
+          "NameEnd": 42
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 44,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 56,
+          "NameEnd": 64
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [],
+        "Modifier": {
+          "Name": "NONE",
+          "Unquoted": false,
+          "NamePos": 74,
+          "NameEnd": 78
+        }
+      }
+    ]
+  },
+  {
+    "CreatePos": 80,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 92,
+          "NameEnd": 100
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "Unquoted": false,
+              "NamePos": 110,
+              "NameEnd": 117
+            },
+            "Value": {
+              "LiteralPos": 119,
+              "LiteralEnd": 126,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 129,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r3_01293",
+          "Unquoted": false,
+          "NamePos": 141,
+          "NameEnd": 149
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 159,
+              "NameEnd": 175
+            },
+            "Value": {
+              "NumPos": 176,
+              "NumEnd": 183,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 185,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r4_01293",
+          "Unquoted": false,
+          "NamePos": 197,
+          "NameEnd": 205
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 215,
+              "NameEnd": 231
+            },
+            "Value": null
+          },
+          {
+            "Name": {
+              "Name": "MIN",
+              "Unquoted": false,
+              "NamePos": 232,
+              "NameEnd": 235
+            },
+            "Value": {
+              "NumPos": 236,
+              "NumEnd": 243,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 245,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r5_01293",
+          "Unquoted": false,
+          "NamePos": 257,
+          "NameEnd": 265
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 275,
+              "NameEnd": 291
+            },
+            "Value": null
+          },
+          {
+            "Name": {
+              "Name": "MAX",
+              "Unquoted": false,
+              "NamePos": 292,
+              "NameEnd": 295
+            },
+            "Value": {
+              "NumPos": 296,
+              "NumEnd": 303,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 305,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r6_01293",
+          "Unquoted": false,
+          "NamePos": 317,
+          "NameEnd": 325
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 335,
+              "NameEnd": 351
+            },
+            "Value": null
+          }
+        ],
+        "Modifier": {
+          "Name": "CONST",
+          "Unquoted": false,
+          "NamePos": 352,
+          "NameEnd": 357
+        }
+      }
+    ]
+  },
+  {
+    "CreatePos": 359,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r7_01293",
+          "Unquoted": false,
+          "NamePos": 371,
+          "NameEnd": 379
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 389,
+              "NameEnd": 405
+            },
+            "Value": null
+          }
+        ],
+        "Modifier": {
+          "Name": "WRITABLE",
+          "Unquoted": false,
+          "NamePos": 406,
+          "NameEnd": 414
+        }
+      }
+    ]
+  },
+  {
+    "CreatePos": 416,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r8_01293",
+          "Unquoted": false,
+          "NamePos": 428,
+          "NameEnd": 436
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 446,
+              "NameEnd": 462
+            },
+            "Value": {
+              "NumPos": 463,
+              "NumEnd": 470,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          },
+          {
+            "Name": {
+              "Name": "MIN",
+              "Unquoted": false,
+              "NamePos": 471,
+              "NameEnd": 474
+            },
+            "Value": {
+              "NumPos": 475,
+              "NumEnd": 482,
+              "Literal": "4000000",
+              "Base": 10
+            }
+          },
+          {
+            "Name": {
+              "Name": "MAX",
+              "Unquoted": false,
+              "NamePos": 483,
+              "NameEnd": 486
+            },
+            "Value": {
+              "NumPos": 487,
+              "NumEnd": 494,
+              "Literal": "6000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": {
+          "Name": "CONST",
+          "Unquoted": false,
+          "NamePos": 495,
+          "NameEnd": 500
+        }
+      }
+    ]
+  },
+  {
+    "CreatePos": 502,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r9_01293",
+          "Unquoted": false,
+          "NamePos": 514,
+          "NameEnd": 522
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "Unquoted": false,
+              "NamePos": 532,
+              "NameEnd": 539
+            },
+            "Value": {
+              "LiteralPos": 541,
+              "LiteralEnd": 548,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      },
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 551,
+              "NameEnd": 567
+            },
+            "Value": {
+              "NumPos": 568,
+              "NumEnd": 575,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": {
+          "Name": "WRITABLE",
+          "Unquoted": false,
+          "NamePos": 576,
+          "NameEnd": 584
+        }
+      }
+    ]
+  },
+  {
+    "CreatePos": 586,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 598,
+          "NameEnd": 606
+        },
+        "OnCluster": null
+      },
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 608,
+          "NameEnd": 616
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 618,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 630,
+          "NameEnd": 638
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "readonly",
+              "Unquoted": false,
+              "NamePos": 648,
+              "NameEnd": 656
+            },
+            "Value": {
+              "NumPos": 657,
+              "NumEnd": 658,
+              "Literal": "1",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 660,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 672,
+          "NameEnd": 680
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "Unquoted": false,
+              "NamePos": 690,
+              "NameEnd": 697
+            },
+            "Value": {
+              "LiteralPos": 699,
+              "LiteralEnd": 706,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 709,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r3_01293",
+          "Unquoted": false,
+          "NamePos": 721,
+          "NameEnd": 729
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 739,
+              "NameEnd": 755
+            },
+            "Value": {
+              "NumPos": 756,
+              "NumEnd": 763,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          },
+          {
+            "Name": {
+              "Name": "MIN",
+              "Unquoted": false,
+              "NamePos": 764,
+              "NameEnd": 767
+            },
+            "Value": {
+              "NumPos": 768,
+              "NumEnd": 775,
+              "Literal": "4000000",
+              "Base": 10
+            }
+          },
+          {
+            "Name": {
+              "Name": "MAX",
+              "Unquoted": false,
+              "NamePos": 776,
+              "NameEnd": 779
+            },
+            "Value": {
+              "NumPos": 780,
+              "NumEnd": 787,
+              "Literal": "6000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": {
+          "Name": "WRITABLE",
+          "Unquoted": false,
+          "NamePos": 788,
+          "NameEnd": 796
+        }
+      }
+    ]
+  },
+  {
+    "CreatePos": 798,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r4_01293",
+          "Unquoted": false,
+          "NamePos": 810,
+          "NameEnd": 818
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "Unquoted": false,
+              "NamePos": 828,
+              "NameEnd": 835
+            },
+            "Value": {
+              "LiteralPos": 837,
+              "LiteralEnd": 844,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      },
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "Unquoted": false,
+              "NamePos": 847,
+              "NameEnd": 863
+            },
+            "Value": {
+              "NumPos": 864,
+              "NumEnd": 871,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      },
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "readonly",
+              "Unquoted": false,
+              "NamePos": 873,
+              "NameEnd": 881
+            },
+            "Value": {
+              "NumPos": 882,
+              "NumEnd": 883,
+              "Literal": "1",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 885,
+    "StatementEnd": 0,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r5_01293",
+          "Unquoted": false,
+          "NamePos": 897,
+          "NameEnd": 905
+        },
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": [
+      {
+        "SettingPairs": [],
+        "Modifier": {
+          "Name": "NONE",
+          "Unquoted": false,
+          "NamePos": 915,
+          "NameEnd": 919
+        }
+      }
+    ]
+  }
+]
