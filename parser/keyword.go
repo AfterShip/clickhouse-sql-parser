@@ -151,6 +151,7 @@ const (
 	KeywordReplica      = "REPLICA"
 	KeywordReplicated   = "REPLICATED"
 	KeywordRight        = "RIGHT"
+	KeywordRole         = "ROLE"
 	KeywordRollup       = "ROLLUP"
 	KeywordRow          = "ROW"
 	KeywordRows         = "ROWS"
@@ -355,6 +356,7 @@ var keywords = NewSet(
 	KeywordReplica,
 	KeywordReplicated,
 	KeywordRight,
+	KeywordRole,
 	KeywordRollup,
 	KeywordRow,
 	KeywordRows,

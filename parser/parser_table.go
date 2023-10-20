@@ -23,6 +23,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			return p.parseCreateLiveView(pos)
 		case p.matchKeyword(KeywordView):
 			return p.parseCreateView(pos)
+		case p.matchKeyword(KeywordRole):
+			return p.parseCreateRole(pos)
 		case p.matchKeyword(KeywordDictionary):
 		case p.matchKeyword(KeywordFunction):
 		case p.matchKeyword(KeywordRow):
@@ -726,7 +728,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingsExprList, error) {
 		return nil, err
 	}
 	items = append(items, expr)
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(",") != nil {
 		expr, err = p.parseSettingsExpr(p.Pos())
 		if err != nil {
 			return nil, err

@@ -340,3 +340,148 @@ func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
 		Partition: partition,
 	}, nil
 }
+
+func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &RoleName{
+		Name:      name,
+		OnCluster: onCluster,
+	}, nil
+}
+
+func (p *Parser) tryParseRoleSettings(pos Pos) ([]*RoleSetting, error) {
+	if p.tryConsumeKeyword(KeywordSettings) == nil {
+		return nil, nil
+	}
+	return p.parseRoleSettings(pos)
+}
+
+func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
+	pairs := make([]*SettingPair, 0)
+	for p.matchTokenKind(TokenIdent) {
+		name, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		switch name.Name {
+		case "NONE", "READABLE", "WRITABLE", "CONST", "CHANGEABLE_IN_READONLY":
+			return &RoleSetting{
+				Modifier:     name,
+				SettingPairs: pairs,
+			}, nil
+		}
+		switch {
+		case p.matchTokenKind("="),
+			p.matchTokenKind(TokenInt),
+			p.matchTokenKind(TokenFloat),
+			p.matchTokenKind(TokenString):
+			_ = p.tryConsumeTokenKind("=")
+			value, err := p.parseLiteral(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			pairs = append(pairs, &SettingPair{
+				Name:  name,
+				Value: value,
+			})
+		default:
+			pairs = append(pairs, &SettingPair{
+				Name: name,
+			})
+		}
+
+	}
+	return &RoleSetting{
+		SettingPairs: pairs,
+	}, nil
+}
+
+func (p *Parser) parseRoleSettings(_ Pos) ([]*RoleSetting, error) {
+	settings := make([]*RoleSetting, 0)
+	for {
+		setting, err := p.parseRoleSetting(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		settings = append(settings, setting)
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+	}
+	return settings, nil
+}
+
+func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
+	if err := p.consumeKeyword(KeywordRole); err != nil {
+		return nil, err
+	}
+
+	ifNotExists := false
+	orReplace := false
+	switch {
+	case p.matchKeyword(KeywordIf):
+		_ = p.lexer.consumeToken()
+		if err := p.consumeKeyword(KeywordNot); err != nil {
+			return nil, err
+		}
+		if err := p.consumeKeyword(KeywordExists); err != nil {
+			return nil, err
+		}
+		ifNotExists = true
+	case p.matchKeyword(KeywordOr):
+		_ = p.lexer.consumeToken()
+		if err := p.consumeKeyword(KeywordReplace); err != nil {
+			return nil, err
+		}
+		orReplace = true
+	}
+
+	roleNames := make([]*RoleName, 0)
+	roleName, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	roleNames = append(roleNames, roleName)
+	for p.tryConsumeTokenKind(",") != nil {
+		roleName, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		roleNames = append(roleNames, roleName)
+	}
+	statementEnd := roleNames[len(roleNames)-1].End()
+
+	var accessStorageType *Ident
+	if p.tryConsumeKeyword(KeywordIn) != nil {
+		accessStorageType, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		statementEnd = accessStorageType.NameEnd
+	}
+
+	settings, err := p.tryParseRoleSettings(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if settings != nil {
+		statementEnd = settings[len(settings)-1].End()
+	}
+
+	return &CreateRole{
+		CreatePos:         pos,
+		StatementEnd:      statementEnd,
+		IfNotExists:       ifNotExists,
+		OrReplace:         orReplace,
+		RoleNames:         roleNames,
+		AccessStorageType: accessStorageType,
+		Settings:          settings,
+	}, nil
+}
