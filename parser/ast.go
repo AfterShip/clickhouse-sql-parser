@@ -863,6 +863,7 @@ func (c *CreateView) String(level int) string {
 
 type CreateFunction struct {
 	CreatePos    Pos
+	IfNotExists  bool
 	FunctionName *Ident
 	OnCluster    *OnClusterExpr
 	Params       *ParamExprList
@@ -884,6 +885,9 @@ func (c *CreateFunction) End() Pos {
 func (c *CreateFunction) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("CREATE FUNCTION ")
+	if c.IfNotExists {
+		builder.WriteString("IF NOT EXISTS ")
+	}
 	builder.WriteString(c.FunctionName.String(level))
 	if c.OnCluster != nil {
 		builder.WriteString(NewLine(level))

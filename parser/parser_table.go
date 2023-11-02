@@ -1263,6 +1263,10 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err := p.consumeKeyword(KeywordFunction); err != nil {
 		return nil, err
 	}
+	ifNotExists, err := p.tryParseIfNotExists()
+	if err != nil {
+		return nil, err
+	}
 	functionName, err := p.parseIdent()
 	if err != nil {
 		return nil, err
@@ -1287,6 +1291,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	}
 	return &CreateFunction{
 		CreatePos:    pos,
+		IfNotExists:  ifNotExists,
 		FunctionName: functionName,
 		OnCluster:    onCluster,
 		Params:       params,
