@@ -16,6 +16,9 @@ $(PROGRAM):
 test:
 	@go test -v ./... -covermode=atomic -coverprofile=coverage.out -race -compatible
 
+update_test:
+	@go test -v ./... -update -race -compatible
+
 lint:
 	@printf $(CCCOLOR)"GolangCI Lint...\n"$(ENDCOLOR)
 	@golangci-lint run --timeout 20m0s
