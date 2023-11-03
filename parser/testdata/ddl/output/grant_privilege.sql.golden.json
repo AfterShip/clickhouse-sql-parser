@@ -440,5 +440,45 @@
       }
     ],
     "WithOptions": []
+  },
+  {
+    "GrantPos": 323,
+    "StatementEnd": 372,
+    "OnCluster": null,
+    "Privileges": [
+      {
+        "PrivilegePos": 329,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "ALL"
+        ],
+        "Params": null
+      }
+    ],
+    "On": {
+      "Database": {
+        "Name": "*",
+        "Unquoted": false,
+        "NamePos": 336,
+        "NameEnd": 337
+      },
+      "Table": {
+        "Name": "*",
+        "Unquoted": false,
+        "NamePos": 338,
+        "NameEnd": 339
+      }
+    },
+    "To": [
+      {
+        "Name": "admin_role",
+        "Unquoted": false,
+        "NamePos": 343,
+        "NameEnd": 353
+      }
+    ],
+    "WithOptions": [
+      "GRANT"
+    ]
   }
 ]

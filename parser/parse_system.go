@@ -805,6 +805,11 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		return p.parsePrivilegeDrop(pos)
 	case p.tryConsumeKeyword(KeywordShow) != nil:
 		return p.parsePrivilegeShow(pos)
+	case p.tryConsumeKeyword(KeywordAll) != nil:
+		return &PrivilegeExpr{
+			PrivilegePos: pos,
+			Keywords:     []string{KeywordAll},
+		}, nil
 	case p.tryConsumeKeyword(KeywordKill) != nil:
 		if err := p.consumeKeyword(KeywordQuery); err != nil {
 			return nil, err

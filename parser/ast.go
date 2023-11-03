@@ -3960,7 +3960,9 @@ func (p *PrivilegeExpr) String(level int) string {
 		}
 		builder.WriteString(keyword)
 	}
-	builder.WriteString(p.Params.String(level))
+	if p.Params != nil {
+		builder.WriteString(p.Params.String(level))
+	}
 	return builder.String()
 }
 
