@@ -92,6 +92,23 @@ func (p *Parser) parseIdent() (*Ident, error) {
 	return ident, nil
 }
 
+func (p *Parser) parseIdentOrStar() (*Ident, error) {
+	switch {
+	case p.matchTokenKind(TokenIdent):
+		return p.parseIdent()
+	case p.matchTokenKind("*"):
+		lastToken := p.last()
+		_ = p.lexer.consumeToken()
+		return &Ident{
+			NamePos: lastToken.Pos,
+			NameEnd: lastToken.End,
+			Name:    lastToken.String,
+		}, nil
+	default:
+		return nil, fmt.Errorf("expected <ident> or *, but got %q", p.lastTokenKind())
+	}
+}
+
 func (p *Parser) tryParseDotIdent() (*Ident, error) {
 	if p.tryConsumeTokenKind(".") == nil {
 		return nil, nil // nolint
