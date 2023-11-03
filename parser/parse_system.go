@@ -865,7 +865,7 @@ func (p *Parser) parseGrantOption(_ Pos) (string, error) {
 	}
 	ident, err := p.parseIdent()
 	if err != nil {
-		return "", err
+		return "", err // nolint
 	}
 	if err := p.consumeKeyword(KeywordOption); err != nil {
 		return "", err
@@ -895,8 +895,8 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 }
 
 func (p *Parser) parseGrantPrivilege(pos Pos) (*GrantPrivilegeExpr, error) {
-	if p.consumeKeyword(KeywordGrant) != nil {
-		return nil, nil
+	if err := p.consumeKeyword(KeywordGrant); err != nil {
+		return nil, err
 	}
 	onCluster, err := p.tryParseOnCluster(p.Pos())
 	if err != nil {
