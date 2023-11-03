@@ -1,7 +1,7 @@
 [
   {
     "GrantPos": 0,
-    "StatementEnd": 0,
+    "StatementEnd": 37,
     "OnCluster": null,
     "Privileges": [
       {
@@ -62,7 +62,7 @@
   },
   {
     "GrantPos": 39,
-    "StatementEnd": 0,
+    "StatementEnd": 113,
     "OnCluster": null,
     "Privileges": [
       {
@@ -126,7 +126,7 @@
   },
   {
     "GrantPos": 114,
-    "StatementEnd": 0,
+    "StatementEnd": 147,
     "OnCluster": null,
     "Privileges": [
       {
@@ -187,7 +187,7 @@
   },
   {
     "GrantPos": 149,
-    "StatementEnd": 0,
+    "StatementEnd": 185,
     "OnCluster": null,
     "Privileges": [
       {
@@ -248,7 +248,7 @@
   },
   {
     "GrantPos": 187,
-    "StatementEnd": 0,
+    "StatementEnd": 219,
     "OnCluster": null,
     "Privileges": [
       {
@@ -309,7 +309,7 @@
   },
   {
     "GrantPos": 221,
-    "StatementEnd": 0,
+    "StatementEnd": 265,
     "OnCluster": null,
     "Privileges": [
       {
@@ -370,7 +370,7 @@
   },
   {
     "GrantPos": 267,
-    "StatementEnd": 0,
+    "StatementEnd": 321,
     "OnCluster": null,
     "Privileges": [
       {

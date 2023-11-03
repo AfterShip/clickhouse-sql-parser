@@ -2,6 +2,7 @@ package parser
 
 const (
 	KeywordAdd          = "ADD"
+	KeywordAdmin        = "ADMIN"
 	KeywordAfter        = "AFTER"
 	KeywordAlias        = "ALIAS"
 	KeywordAll          = "ALL"
@@ -29,8 +30,10 @@ const (
 	KeywordCodec        = "CODEC"
 	KeywordCollate      = "COLLATE"
 	KeywordColumn       = "COLUMN"
+	KeywordColumns      = "COLUMNS"
 	KeywordComment      = "COMMENT"
 	KeywordCompiled     = "COMPILED"
+	KeywordConfig       = "CONFIG"
 	KeywordConstraint   = "CONSTRAINT"
 	KeywordCreate       = "CREATE"
 	KeywordCross        = "CROSS"
@@ -78,7 +81,9 @@ const (
 	KeywordFrom         = "FROM"
 	KeywordFull         = "FULL"
 	KeywordFunction     = "FUNCTION"
+	KeywordFunctions    = "FUNCTIONS"
 	KeywordGlobal       = "GLOBAL"
+	KeywordGrant        = "GRANT"
 	KeywordGranularity  = "GRANULARITY"
 	KeywordGroup        = "GROUP"
 	KeywordHaving       = "HAVING"
@@ -120,6 +125,7 @@ const (
 	KeywordModify       = "MODIFY"
 	KeywordMonth        = "MONTH"
 	KeywordMove         = "MOVE"
+	KeywordMoves        = "MOVES"
 	KeywordMutation     = "MUTATION"
 	KeywordNan_sql      = "NAN_SQL"
 	KeywordNo           = "NO"
@@ -129,6 +135,7 @@ const (
 	KeywordOffset       = "OFFSET"
 	KeywordOn           = "ON"
 	KeywordOptimize     = "OPTIMIZE"
+	KeywordOption       = "OPTION"
 	KeywordOr           = "OR"
 	KeywordOrder        = "ORDER"
 	KeywordOuter        = "OUTER"
@@ -136,6 +143,7 @@ const (
 	KeywordOver         = "OVER"
 	KeywordPartition    = "PARTITION"
 	KeywordPipeline     = "PIPELINE"
+	KeywordPolicy       = "POLICY"
 	KeywordPopulate     = "POPULATE"
 	KeywordPreceding    = "PRECEDING"
 	KeywordPrewhere     = "PREWHERE"
@@ -143,13 +151,18 @@ const (
 	KeywordProjection   = "PROJECTION"
 	KeywordQuarter      = "QUARTER"
 	KeywordQuery        = "QUERY"
+	KeywordQueues       = "QUEUES"
+	KeywordQuota        = "QUOTA"
 	KeywordRange        = "RANGE"
+	KeywordRefresh      = "REFRESH"
 	KeywordReload       = "RELOAD"
 	KeywordRemove       = "REMOVE"
 	KeywordRename       = "RENAME"
 	KeywordReplace      = "REPLACE"
 	KeywordReplica      = "REPLICA"
 	KeywordReplicated   = "REPLICATED"
+	KeywordReplication  = "REPLICATION"
+	KeywordRestart      = "RESTART"
 	KeywordRight        = "RIGHT"
 	KeywordRole         = "ROLE"
 	KeywordRollup       = "ROLLUP"
@@ -163,6 +176,7 @@ const (
 	KeywordSet          = "SET"
 	KeywordSettings     = "SETTINGS"
 	KeywordShow         = "SHOW"
+	KeywordShutdown     = "SHUTDOWN"
 	KeywordSource       = "SOURCE"
 	KeywordStart        = "START"
 	KeywordStop         = "STOP"
@@ -208,6 +222,7 @@ const (
 
 var keywords = NewSet(
 	KeywordAdd,
+	KeywordAdmin,
 	KeywordAfter,
 	KeywordAlias,
 	KeywordAll,
@@ -235,8 +250,10 @@ var keywords = NewSet(
 	KeywordCodec,
 	KeywordCollate,
 	KeywordColumn,
+	KeywordColumns,
 	KeywordComment,
 	KeywordCompiled,
+	KeywordConfig,
 	KeywordConstraint,
 	KeywordCreate,
 	KeywordCross,
@@ -284,7 +301,9 @@ var keywords = NewSet(
 	KeywordFrom,
 	KeywordFull,
 	KeywordFunction,
+	KeywordFunctions,
 	KeywordGlobal,
+	KeywordGrant,
 	KeywordGranularity,
 	KeywordGroup,
 	KeywordHaving,
@@ -326,6 +345,7 @@ var keywords = NewSet(
 	KeywordModify,
 	KeywordMonth,
 	KeywordMove,
+	KeywordMoves,
 	KeywordMutation,
 	KeywordNan_sql,
 	KeywordNo,
@@ -335,6 +355,7 @@ var keywords = NewSet(
 	KeywordOffset,
 	KeywordOn,
 	KeywordOptimize,
+	KeywordOption,
 	KeywordOr,
 	KeywordOrder,
 	KeywordOuter,
@@ -342,6 +363,7 @@ var keywords = NewSet(
 	KeywordOver,
 	KeywordPartition,
 	KeywordPipeline,
+	KeywordPolicy,
 	KeywordPopulate,
 	KeywordPreceding,
 	KeywordPrewhere,
@@ -349,6 +371,8 @@ var keywords = NewSet(
 	KeywordProjection,
 	KeywordQuarter,
 	KeywordQuery,
+	KeywordQueues,
+	KeywordQuota,
 	KeywordRange,
 	KeywordReload,
 	KeywordRemove,
@@ -356,6 +380,8 @@ var keywords = NewSet(
 	KeywordReplace,
 	KeywordReplica,
 	KeywordReplicated,
+	KeywordReplication,
+	KeywordRestart,
 	KeywordRight,
 	KeywordRole,
 	KeywordRollup,
@@ -369,6 +395,7 @@ var keywords = NewSet(
 	KeywordSet,
 	KeywordSettings,
 	KeywordShow,
+	KeywordShutdown,
 	KeywordSource,
 	KeywordStart,
 	KeywordStop,

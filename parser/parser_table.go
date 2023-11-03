@@ -931,6 +931,8 @@ func (p *Parser) parseStatement(pos Pos) (Expr, error) {
 		expr, err = p.parseCheckExpr(pos)
 	case p.matchKeyword(KeywordExplain):
 		expr, err = p.parseExplainExpr(pos)
+	case p.matchKeyword(KeywordGrant):
+		expr, err = p.parseGrantPrivilege(pos)
 	default:
 		return nil, fmt.Errorf("unexpected token: %q", p.last().String)
 	}

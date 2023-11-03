@@ -3866,3 +3866,81 @@ func (e *ExplainExpr) String(level int) string {
 	builder.WriteString(e.Statement.String(level))
 	return builder.String()
 }
+
+type PrivilegeExpr struct {
+	PrivilegePos Pos
+	PrivilegeEnd Pos
+	Keywords     []string
+	Params       *ParamExprList
+}
+
+func (p *PrivilegeExpr) Pos() Pos {
+	return p.PrivilegePos
+}
+
+func (p *PrivilegeExpr) End() Pos {
+	return p.PrivilegeEnd
+}
+
+func (p *PrivilegeExpr) String(level int) string {
+	var builder strings.Builder
+	for i, keyword := range p.Keywords {
+		if i > 0 {
+			builder.WriteByte(' ')
+		}
+		builder.WriteString(keyword)
+	}
+	builder.WriteString(p.Params.String(level))
+	return builder.String()
+}
+
+type GrantPrivilegeExpr struct {
+	GrantPos     Pos
+	StatementEnd Pos
+	OnCluster    *OnClusterExpr
+	Privileges   []*PrivilegeExpr
+	On           *TableIdentifier
+	To           []*Ident
+	WithOptions  []string
+}
+
+func (g *GrantPrivilegeExpr) Pos() Pos {
+	return g.GrantPos
+}
+
+func (g *GrantPrivilegeExpr) End() Pos {
+	return g.StatementEnd
+}
+
+func (g *GrantPrivilegeExpr) Type() string {
+	return "GRANT PRIVILEGE"
+}
+
+func (g *GrantPrivilegeExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("GRANT ")
+	if g.OnCluster != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(g.OnCluster.String(level))
+	}
+	for i, privilege := range g.Privileges {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(privilege.String(level))
+	}
+	builder.WriteString(" ON ")
+	builder.WriteString(g.On.String(level))
+	builder.WriteString(" TO ")
+	for i, role := range g.To {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(role.String(level))
+	}
+	for _, option := range g.WithOptions {
+		builder.WriteString(" WITH " + option + " OPTION")
+	}
+
+	return builder.String()
+}

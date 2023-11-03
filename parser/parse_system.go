@@ -569,3 +569,387 @@ func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 		Modifier:     modifier,
 	}, nil
 }
+
+func (p *Parser) parsePrivilegeSelectOrInsert(pos Pos) (*PrivilegeExpr, error) {
+	keyword := p.last().String
+	_ = p.lexer.consumeToken()
+	params, err := p.parseFunctionParams(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &PrivilegeExpr{
+		PrivilegePos: pos,
+		Keywords:     []string{keyword},
+		Params:       params,
+	}, nil
+}
+
+func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeExpr, error) {
+	keywords := []string{KeywordAlter}
+	switch {
+	case p.tryConsumeKeyword(KeywordIndex) != nil:
+		keywords = append(keywords, KeywordIndex)
+	case p.matchKeyword(KeywordUpdate), p.matchKeyword(KeywordDelete),
+		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+	case p.matchKeyword(KeywordAdd), p.matchKeyword(KeywordDrop),
+		p.matchKeyword(KeywordModify), p.matchKeyword(KeywordClear),
+		p.matchKeyword(KeywordComment), p.matchKeyword(KeywordRename),
+		p.matchKeyword(KeywordMaterialized):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+		switch {
+		case p.tryConsumeKeyword(KeywordColumn) != nil:
+			keywords = append(keywords, KeywordColumn)
+		case p.tryConsumeKeyword(KeywordIndex) != nil:
+			keywords = append(keywords, KeywordIndex)
+		case p.tryConsumeKeyword(KeywordConstraint) != nil:
+			keywords = append(keywords, KeywordConstraint)
+		case p.tryConsumeKeyword(KeywordTtl) != nil:
+			keywords = append(keywords, KeywordTtl)
+		default:
+			return nil, fmt.Errorf("expected COLUMN|INDEX")
+		}
+	case p.tryConsumeKeyword(KeywordOrder) != nil:
+		if err := p.consumeKeyword(KeywordBy); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordOrder, KeywordBy)
+	case p.tryConsumeKeyword(KeywordSample) != nil:
+		if err := p.consumeKeyword(KeywordBy); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordSample, KeywordBy)
+	case p.tryConsumeKeyword(KeywordSettings) != nil:
+		keywords = append(keywords, KeywordSettings)
+	case p.tryConsumeKeyword(KeywordView) != nil:
+		keywords = append(keywords, KeywordView)
+		switch {
+		case p.tryConsumeKeyword(KeywordModify) != nil:
+			keywords = append(keywords, KeywordModify)
+		case p.tryConsumeKeyword(KeywordRefresh) != nil:
+			keywords = append(keywords, KeywordRefresh)
+		default:
+			return nil, fmt.Errorf("expected MODIFY|REFRESH")
+		}
+	case p.matchKeyword(KeywordMove), p.matchKeyword(KeywordFreeze):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+		if err := p.consumeKeyword(KeywordPartition); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordPartition)
+	default:
+		return nil, fmt.Errorf("expected UPDATE|DELETE|ADD|DROP|MODIFY|CLEAR|COMMENT|RENAME|MATERIALIZED|ORDER|SAMPLE|SETTINGS|VIEW|MOVE|FREEZE")
+	}
+	return &PrivilegeExpr{
+		PrivilegePos: pos,
+		Keywords:     keywords,
+	}, nil
+}
+
+func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeExpr, error) {
+	keywords := []string{KeywordCreate}
+	switch {
+	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
+		p.matchKeyword(KeywordTable), p.matchKeyword(KeywordFunction), p.matchKeyword(KeywordView),
+		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+	case p.tryConsumeKeyword(KeywordTemporary) != nil:
+		if err := p.consumeKeyword(KeywordTable); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordTemporary, KeywordTable)
+	case p.tryConsumeKeyword(KeywordRows) != nil:
+		if err := p.consumeKeyword(KeywordPolicy); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordRows, KeywordPolicy)
+	default:
+		return nil, fmt.Errorf("expected DATABASE|DICTIONARY|TABLE|FUNCTION|VIEW|USER|ROLE|ROWS")
+	}
+	return &PrivilegeExpr{
+		PrivilegePos: pos,
+		Keywords:     keywords,
+	}, nil
+}
+
+func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeExpr, error) {
+	keywords := []string{KeywordDrop}
+	switch {
+	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
+		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota),
+		p.matchKeyword(KeywordTable), p.matchKeyword(KeywordFunction), p.matchKeyword(KeywordView):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+	default:
+		return nil, fmt.Errorf("expected DATABASE|DICTIONARY|TABLE|FUNCTION|VIEW")
+	}
+	return &PrivilegeExpr{
+		PrivilegePos: pos,
+		Keywords:     keywords,
+	}, nil
+}
+
+func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeExpr, error) {
+	keywords := []string{KeywordShow}
+	switch {
+	case p.matchKeyword(KeywordDatabases), p.matchKeyword(KeywordDictionaries),
+		p.matchKeyword(KeywordTables), p.matchKeyword(KeywordColumns):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+	default:
+		return nil, fmt.Errorf("expected DATABASES|DICTIONARIES|TABLES|COLUMNS")
+	}
+	return &PrivilegeExpr{
+		PrivilegePos: pos,
+		Keywords:     keywords,
+	}, nil
+}
+
+func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeExpr, error) {
+	keywords := []string{KeywordShow}
+	switch {
+	case p.matchKeyword(KeywordShutdown), p.matchKeyword(KeywordMerges), p.matchKeyword(KeywordFetches),
+		p.matchKeyword(KeywordSends), p.matchKeyword(KeywordMoves), p.matchKeyword(KeywordCluster):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+	case p.tryConsumeKeyword(KeywordDrop) != nil:
+		keywords = append(keywords, KeywordDrop)
+		switch {
+		case p.tryConsumeKeyword(KeywordCache) != nil:
+			keywords = append(keywords, KeywordCache)
+		case p.matchKeyword(KeywordMark), p.matchKeyword(KeywordDNS), p.matchKeyword(KeywordUncompressed):
+			keyword := p.last().String
+			_ = p.lexer.consumeToken()
+			keywords = append(keywords, keyword)
+			if err := p.consumeKeyword(KeywordCache); err != nil {
+				return nil, err
+			}
+			keywords = append(keywords, KeywordCache)
+		default:
+			return nil, fmt.Errorf("expected CACHE|MARK|DNS|UNCOMPRESSED")
+		}
+	case p.tryConsumeKeyword(KeywordReload) != nil:
+		keywords = append(keywords, KeywordReload)
+		switch {
+		case p.matchKeyword(KeywordDictionary), p.matchKeyword(KeywordFunction),
+			p.matchKeyword(KeywordFunctions), p.matchKeyword(KeywordConfig):
+			keyword := p.last().String
+			_ = p.lexer.consumeToken()
+			keywords = append(keywords, keyword)
+		default:
+			return nil, fmt.Errorf("expected DICTIONARY|FUNCTION|FUNCTIONS|CONFIG")
+		}
+	case p.tryConsumeKeyword(KeywordFlush) != nil:
+		keywords = append(keywords, KeywordFlush)
+		switch {
+		case p.matchKeyword(KeywordLogs), p.matchKeyword(KeywordDistributed):
+			keyword := p.last().String
+			_ = p.lexer.consumeToken()
+			keywords = append(keywords, keyword)
+		default:
+			return nil, fmt.Errorf("expected LOGS|DISTRIBUTED")
+		}
+	case p.tryConsumeKeyword(KeywordTtl) != nil:
+		keywords = append(keywords, KeywordTtl)
+		if err := p.consumeKeyword(KeywordMerges); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordMerges)
+	case p.matchKeyword(KeywordSync), p.matchKeyword(KeywordRestart):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		keywords = append(keywords, keyword)
+		if err := p.consumeKeyword(KeywordReplica); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordReplica)
+	case p.tryConsumeKeyword(KeywordReplication) != nil:
+		keywords = append(keywords, KeywordReplication)
+		if err := p.consumeKeyword(KeywordQueues); err != nil {
+			return nil, err
+		}
+		keywords = append(keywords, KeywordQueues)
+	default:
+		return nil, fmt.Errorf("expected QUEUES|SHUTDOWN|MERGES|FETCHES|SENDS|MOVES|CLUSTER|DROP|RELOAD|FLUSH|TTL|SYNC|RESTART|REPLICATION")
+	}
+	return &PrivilegeExpr{
+		PrivilegePos: pos,
+		Keywords:     keywords,
+	}, nil
+}
+
+func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
+	switch {
+	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordInsert):
+		return p.parsePrivilegeSelectOrInsert(pos)
+	case p.tryConsumeKeyword(KeywordAlter) != nil:
+		return p.parsePrivilegeAlter(pos)
+	case p.tryConsumeKeyword(KeywordCreate) != nil:
+		return p.parsePrivilegeCreate(pos)
+	case p.tryConsumeKeyword(KeywordDrop) != nil:
+		return p.parsePrivilegeDrop(pos)
+	case p.tryConsumeKeyword(KeywordShow) != nil:
+		return p.parsePrivilegeShow(pos)
+	case p.tryConsumeKeyword(KeywordKill) != nil:
+		if err := p.consumeKeyword(KeywordQuery); err != nil {
+			return nil, err
+		}
+		return &PrivilegeExpr{
+			PrivilegePos: pos,
+			Keywords:     []string{KeywordKill, KeywordQuery},
+		}, nil
+	case p.tryConsumeKeyword(KeywordSystem) != nil:
+		return p.parsePrivilegeSystem(pos)
+	case p.matchKeyword(KeywordOptimize), p.matchKeyword(KeywordTruncate):
+		keyword := p.last().String
+		_ = p.lexer.consumeToken()
+		return &PrivilegeExpr{
+			PrivilegePos: pos,
+			Keywords:     []string{keyword},
+		}, nil
+	case p.tryConsumeKeyword(KeywordRole) != nil:
+		if err := p.consumeKeyword(KeywordAdmin); err != nil {
+			return nil, err
+		}
+		return &PrivilegeExpr{
+			PrivilegePos: pos,
+			Keywords:     []string{KeywordRole, KeywordAdmin},
+		}, nil
+	}
+	return nil, fmt.Errorf("expected SELECT|INSERT|ALTER|CREATE|DROP|SHOW|KILL|SYSTEM|OPTIMIZE|TRUNCATE")
+}
+
+func (p *Parser) parsePrivilegeRoles(_ Pos) ([]*Ident, error) {
+	roles := make([]*Ident, 0)
+	role, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	roles = append(roles, role)
+	for p.tryConsumeTokenKind(",") != nil {
+		role, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		roles = append(roles, role)
+	}
+	return roles, nil
+}
+
+func (p *Parser) parseGrantOptions(_ Pos) ([]string, error) {
+	options := make([]string, 0)
+	for p.matchKeyword(KeywordWith) {
+		option, err := p.parseGrantOption(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		options = append(options, option)
+	}
+	return options, nil
+}
+
+func (p *Parser) parseGrantOption(_ Pos) (string, error) {
+	if err := p.consumeKeyword(KeywordWith); err != nil {
+		return "", err
+	}
+	ident, err := p.parseIdent()
+	if err != nil {
+		return "", err
+	}
+	if err := p.consumeKeyword(KeywordOption); err != nil {
+		return "", err
+	}
+	return ident.Name, nil
+}
+
+func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
+	ident, err := p.parseIdentOrStar()
+	if err != nil {
+		return nil, err
+	}
+
+	if p.tryConsumeTokenKind(".") == nil {
+		return &TableIdentifier{
+			Table: ident,
+		}, nil
+	}
+	dotIdent, err := p.parseIdentOrStar()
+	if err != nil {
+		return nil, err
+	}
+	return &TableIdentifier{
+		Database: ident,
+		Table:    dotIdent,
+	}, nil
+}
+
+func (p *Parser) parseGrantPrivilege(pos Pos) (*GrantPrivilegeExpr, error) {
+	if err := p.consumeKeyword(KeywordGrant); err != nil {
+		return nil, err
+	}
+	onCluster, err := p.tryParseOnCluster(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	var privileges []*PrivilegeExpr
+	privilege, err := p.parsePrivilege(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	privileges = append(privileges, privilege)
+	for p.tryConsumeTokenKind(",") != nil {
+		privilege, err := p.parsePrivilege(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		privileges = append(privileges, privilege)
+	}
+	statementEnd := privileges[len(privileges)-1].End()
+
+	if err := p.consumeKeyword(KeywordOn); err != nil {
+		return nil, err
+	}
+	on, err := p.parseGrantSource(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.consumeKeyword(KeywordTo); err != nil {
+		return nil, err
+	}
+	toRoles, err := p.parsePrivilegeRoles(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if len(toRoles) != 0 {
+		statementEnd = toRoles[len(toRoles)-1].NameEnd
+	}
+	options, err := p.parseGrantOptions(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if len(options) != 0 {
+		statementEnd = p.last().End
+	}
+
+	return &GrantPrivilegeExpr{
+		GrantPos:     pos,
+		StatementEnd: statementEnd,
+		OnCluster:    onCluster,
+		Privileges:   privileges,
+		On:           on,
+		To:           toRoles,
+		WithOptions:  options,
+	}, nil
+}
