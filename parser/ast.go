@@ -901,8 +901,9 @@ func (c *CreateFunction) String(level int) string {
 }
 
 type RoleName struct {
-	Name  Expr
-	Scope *StringLiteral
+	Name      Expr
+	Scope     *StringLiteral
+	OnCluster *OnClusterExpr
 }
 
 func (r *RoleName) Pos() Pos {
@@ -913,6 +914,9 @@ func (r *RoleName) End() Pos {
 	if r.Scope != nil {
 		return r.Scope.End()
 	}
+	if r.OnCluster != nil {
+		return r.OnCluster.End()
+	}
 	return r.Name.End()
 }
 
@@ -922,6 +926,10 @@ func (r *RoleName) String(level int) string {
 	if r.Scope != nil {
 		builder.WriteString("@")
 		builder.WriteString(r.Scope.String(level))
+	}
+	if r.OnCluster != nil {
+		builder.WriteString(" ON ")
+		builder.WriteString(r.OnCluster.String(level))
 	}
 	return builder.String()
 }
@@ -989,7 +997,6 @@ type CreateRole struct {
 	IfNotExists       bool
 	OrReplace         bool
 	RoleNames         []*RoleName
-	OnCluster         *OnClusterExpr
 	AccessStorageType *Ident
 	Settings          []*RoleSetting
 }
@@ -3274,7 +3281,6 @@ type DropUserOrRole struct {
 	StatementEnd Pos
 	Names        []*RoleName
 	IfExists     bool
-	OnCluster    *OnClusterExpr
 	Modifier     string
 	From         *Ident
 }
@@ -3302,10 +3308,6 @@ func (d *DropUserOrRole) String(level int) string {
 			builder.WriteString(", ")
 		}
 		builder.WriteString(name.String(level))
-	}
-	if d.OnCluster != nil {
-		builder.WriteString(" ")
-		builder.WriteString(d.OnCluster.String(level))
 	}
 	if len(d.Modifier) != 0 {
 		builder.WriteString(" " + d.Modifier)
