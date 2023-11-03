@@ -11,7 +11,8 @@
           "NamePos": 20,
           "NameEnd": 28
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -20,7 +21,8 @@
           "NamePos": 30,
           "NameEnd": 38
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -29,7 +31,8 @@
           "NamePos": 40,
           "NameEnd": 48
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -38,7 +41,8 @@
           "NamePos": 50,
           "NameEnd": 58
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -47,7 +51,8 @@
           "NamePos": 60,
           "NameEnd": 68
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -56,7 +61,8 @@
           "NamePos": 70,
           "NameEnd": 78
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -65,7 +71,8 @@
           "NamePos": 80,
           "NameEnd": 88
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -74,7 +81,8 @@
           "NamePos": 90,
           "NameEnd": 98
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
@@ -83,11 +91,11 @@
           "NamePos": 100,
           "NameEnd": 108
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
     "IfExists": true,
-    "OnCluster": null,
     "Modifier": "",
     "From": null
   },
@@ -103,11 +111,11 @@
           "NamePos": 130,
           "NameEnd": 146
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
     "IfExists": true,
-    "OnCluster": null,
     "Modifier": "",
     "From": null
   },
@@ -127,7 +135,8 @@
           "LiteralPos": 178,
           "LiteralEnd": 179,
           "Literal": "%"
-        }
+        },
+        "OnCluster": null
       },
       {
         "Name": {
@@ -135,11 +144,11 @@
           "LiteralEnd": 204,
           "Literal": "r2_01293@%.myhost.com"
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
     "IfExists": true,
-    "OnCluster": null,
     "Modifier": "",
     "From": null
   }
