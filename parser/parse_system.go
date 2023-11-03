@@ -861,11 +861,11 @@ func (p *Parser) parseGrantOptions(_ Pos) ([]string, error) {
 
 func (p *Parser) parseGrantOption(_ Pos) (string, error) {
 	if err := p.consumeKeyword(KeywordWith); err != nil {
-		return "", nil
+		return "", err
 	}
 	ident, err := p.parseIdent()
 	if err != nil {
-		return "", err // nolint
+		return "", err
 	}
 	if err := p.consumeKeyword(KeywordOption); err != nil {
 		return "", err
