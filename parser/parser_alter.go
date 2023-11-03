@@ -6,9 +6,6 @@ import (
 )
 
 func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
-	if err := p.consumeKeyword(KeywordAlter); err != nil {
-		return nil, err
-	}
 	alterTable := &AlterTable{
 		AlterPos:   pos,
 		AlterExprs: make([]AlterTableExpr, 0),

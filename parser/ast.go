@@ -1038,6 +1038,74 @@ func (c *CreateRole) String(level int) string {
 	return builder.String()
 }
 
+type AlterRole struct {
+	AlterPos        Pos
+	StatementEnd    Pos
+	IfExists        bool
+	RoleRenamePairs []*RoleRenamePair
+	Settings        []*RoleSetting
+}
+
+func (a *AlterRole) Pos() Pos {
+	return a.AlterPos
+}
+
+func (a *AlterRole) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterRole) Type() string {
+	return "ROLE"
+}
+
+func (a *AlterRole) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("ALTER ROLE ")
+	if a.IfExists {
+		builder.WriteString("IF EXISTS ")
+	}
+	for i, roleRenamePair := range a.RoleRenamePairs {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(roleRenamePair.String(level))
+	}
+	if len(a.Settings) > 0 {
+		builder.WriteString(" SETTINGS ")
+		for i, setting := range a.Settings {
+			if i > 0 {
+				builder.WriteString(", ")
+			}
+			builder.WriteString(setting.String(level))
+		}
+	}
+	return builder.String()
+}
+
+type RoleRenamePair struct {
+	RoleName     *RoleName
+	NewName      Expr
+	StatementEnd Pos
+}
+
+func (r *RoleRenamePair) Pos() Pos {
+	return r.RoleName.Pos()
+}
+
+func (r *RoleRenamePair) End() Pos {
+	return r.StatementEnd
+}
+
+func (r *RoleRenamePair) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString(r.RoleName.String(level))
+	if r.NewName != nil {
+		builder.WriteString(" RENAME TO ")
+		builder.WriteString(r.NewName.String(level))
+	}
+	return builder.String()
+}
+
 type DestinationExpr struct {
 	ToPos           Pos
 	TableIdentifier *TableIdentifier

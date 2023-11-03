@@ -34,7 +34,15 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 				p.last().String)
 		}
 	case p.matchKeyword(KeywordAlter):
-		return p.parseAlterTable(pos)
+		_ = p.lexer.consumeToken()
+		switch {
+		case p.matchKeyword(KeywordRole):
+			return p.parseAlterRole(pos)
+		case p.matchKeyword(KeywordTable):
+			return p.parseAlterTable(pos)
+		default:
+			return nil, fmt.Errorf("expected keyword: TABLE|ROLE, but got %q", p.last().String)
+		}
 	case p.matchKeyword(KeywordDrop),
 		p.matchKeyword(KeywordDetach):
 		_ = p.lexer.consumeToken()
