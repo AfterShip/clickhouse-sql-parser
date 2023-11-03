@@ -577,9 +577,14 @@ func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 func (p *Parser) parsePrivilegeSelectOrInsert(pos Pos) (*PrivilegeExpr, error) {
 	keyword := p.last().String
 	_ = p.lexer.consumeToken()
-	params, err := p.parseFunctionParams(p.Pos())
-	if err != nil {
-		return nil, err
+
+	var err error
+	var params *ParamExprList
+	if p.matchTokenKind("(") {
+		params, err = p.parseFunctionParams(p.Pos())
+		if err != nil {
+			return nil, err
+		}
 	}
 	return &PrivilegeExpr{
 		PrivilegePos: pos,
@@ -794,6 +799,15 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeExpr, error) {
 }
 
 func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
+	if p.matchTokenKind(TokenIdent) {
+		if p.last().String == "dictGet" {
+			_ = p.lexer.consumeToken()
+			return &PrivilegeExpr{
+				PrivilegePos: pos,
+				Keywords:     []string{"dictGet"},
+			}, nil
+		}
+	}
 	switch {
 	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordInsert):
 		return p.parsePrivilegeSelectOrInsert(pos)
@@ -805,7 +819,8 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		return p.parsePrivilegeDrop(pos)
 	case p.tryConsumeKeyword(KeywordShow) != nil:
 		return p.parsePrivilegeShow(pos)
-	case p.tryConsumeKeyword(KeywordAll) != nil:
+	case p.matchKeyword(KeywordAll), p.matchTokenKind(KeywordNone):
+		_ = p.lexer.consumeToken()
 		return &PrivilegeExpr{
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordAll},
@@ -820,6 +835,14 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		}, nil
 	case p.tryConsumeKeyword(KeywordSystem) != nil:
 		return p.parsePrivilegeSystem(pos)
+	case p.tryConsumeKeyword(KeywordAdmin) != nil:
+		if err := p.consumeKeyword(KeywordOption); err != nil {
+			return nil, err
+		}
+		return &PrivilegeExpr{
+			PrivilegePos: pos,
+			Keywords:     []string{KeywordAdmin, KeywordOption},
+		}, nil
 	case p.matchKeyword(KeywordOptimize), p.matchKeyword(KeywordTruncate):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()

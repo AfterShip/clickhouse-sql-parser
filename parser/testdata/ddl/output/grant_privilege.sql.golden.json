@@ -480,5 +480,211 @@
     "WithOptions": [
       "GRANT"
     ]
+  },
+  {
+    "GrantPos": 373,
+    "StatementEnd": 435,
+    "OnCluster": null,
+    "Privileges": [
+      {
+        "PrivilegePos": 379,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "SELECT"
+        ],
+        "Params": null
+      },
+      {
+        "PrivilegePos": 386,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "INSERT"
+        ],
+        "Params": null
+      }
+    ],
+    "On": {
+      "Database": {
+        "Name": "database",
+        "Unquoted": false,
+        "NamePos": 396,
+        "NameEnd": 404
+      },
+      "Table": {
+        "Name": "table_1",
+        "Unquoted": false,
+        "NamePos": 405,
+        "NameEnd": 412
+      }
+    },
+    "To": [
+      {
+        "Name": "table_1_select_role",
+        "Unquoted": false,
+        "NamePos": 416,
+        "NameEnd": 435
+      }
+    ],
+    "WithOptions": []
+  },
+  {
+    "GrantPos": 437,
+    "StatementEnd": 508,
+    "OnCluster": null,
+    "Privileges": [
+      {
+        "PrivilegePos": 443,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "SELECT"
+        ],
+        "Params": {
+          "LeftParenPos": 449,
+          "RightParenPos": 457,
+          "Items": {
+            "ListPos": 450,
+            "ListEnd": 457,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Name": "x",
+                "Unquoted": false,
+                "NamePos": 450,
+                "NameEnd": 451
+              },
+              {
+                "Name": "y",
+                "Unquoted": false,
+                "NamePos": 453,
+                "NameEnd": 454
+              },
+              {
+                "Name": "z",
+                "Unquoted": false,
+                "NamePos": 456,
+                "NameEnd": 457
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      },
+      {
+        "PrivilegePos": 459,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "INSERT"
+        ],
+        "Params": null
+      }
+    ],
+    "On": {
+      "Database": {
+        "Name": "database",
+        "Unquoted": false,
+        "NamePos": 469,
+        "NameEnd": 477
+      },
+      "Table": {
+        "Name": "table_1",
+        "Unquoted": false,
+        "NamePos": 478,
+        "NameEnd": 485
+      }
+    },
+    "To": [
+      {
+        "Name": "table_1_select_role",
+        "Unquoted": false,
+        "NamePos": 489,
+        "NameEnd": 508
+      }
+    ],
+    "WithOptions": []
+  },
+  {
+    "GrantPos": 510,
+    "StatementEnd": 558,
+    "OnCluster": null,
+    "Privileges": [
+      {
+        "PrivilegePos": 516,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "SELECT"
+        ],
+        "Params": null
+      },
+      {
+        "PrivilegePos": 524,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "dictGet"
+        ],
+        "Params": null
+      }
+    ],
+    "On": {
+      "Database": {
+        "Name": "*",
+        "Unquoted": false,
+        "NamePos": 535,
+        "NameEnd": 536
+      },
+      "Table": {
+        "Name": "*",
+        "Unquoted": false,
+        "NamePos": 537,
+        "NameEnd": 538
+      }
+    },
+    "To": [
+      {
+        "Name": "select_all_role",
+        "Unquoted": false,
+        "NamePos": 543,
+        "NameEnd": 558
+      }
+    ],
+    "WithOptions": []
+  },
+  {
+    "GrantPos": 560,
+    "StatementEnd": 605,
+    "OnCluster": null,
+    "Privileges": [
+      {
+        "PrivilegePos": 566,
+        "PrivilegeEnd": 0,
+        "Keywords": [
+          "ADMIN",
+          "OPTION"
+        ],
+        "Params": null
+      }
+    ],
+    "On": {
+      "Database": {
+        "Name": "*",
+        "Unquoted": false,
+        "NamePos": 582,
+        "NameEnd": 583
+      },
+      "Table": {
+        "Name": "*",
+        "Unquoted": false,
+        "NamePos": 584,
+        "NameEnd": 585
+      }
+    },
+    "To": [
+      {
+        "Name": "select_all_role",
+        "Unquoted": false,
+        "NamePos": 590,
+        "NameEnd": 605
+      }
+    ],
+    "WithOptions": []
   }
 ]

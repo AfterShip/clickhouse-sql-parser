@@ -129,6 +129,7 @@ const (
 	KeywordMutation     = "MUTATION"
 	KeywordNan_sql      = "NAN_SQL"
 	KeywordNo           = "NO"
+	KeywordNone         = "NONE"
 	KeywordNot          = "NOT"
 	KeywordNull         = "NULL"
 	KeywordNulls        = "NULLS"
@@ -349,6 +350,7 @@ var keywords = NewSet(
 	KeywordMutation,
 	KeywordNan_sql,
 	KeywordNo,
+	KeywordNone,
 	KeywordNot,
 	KeywordNull,
 	KeywordNulls,
