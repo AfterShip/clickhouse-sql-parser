@@ -932,9 +932,15 @@ func (p *Parser) parseGrantPrivilege(pos Pos) (*GrantPrivilegeExpr, error) {
 	if err != nil {
 		return nil, err
 	}
+	if len(toRoles) != 0 {
+		statementEnd = toRoles[len(toRoles)-1].NameEnd
+	}
 	options, err := p.parseGrantOptions(p.Pos())
 	if err != nil {
 		return nil, err
+	}
+	if len(options) != 0 {
+		statementEnd = p.last().End
 	}
 
 	return &GrantPrivilegeExpr{
