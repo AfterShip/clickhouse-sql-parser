@@ -953,3 +953,68 @@ func (p *Parser) parseGrantPrivilege(pos Pos) (*GrantPrivilegeExpr, error) {
 		WithOptions:  options,
 	}, nil
 }
+
+func (p *Parser) parseAlterRole(pos Pos) (*AlterRole, error) {
+	if err := p.consumeKeyword(KeywordRole); err != nil {
+		return nil, err
+	}
+
+	ifExists, err := p.tryParseIfExists()
+	if err != nil {
+		return nil, err
+	}
+
+	roleRenamePairs := make([]*RoleRenamePair, 0)
+	roleRenamePair, err := p.parseRoleRenamePair(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	roleRenamePairs = append(roleRenamePairs, roleRenamePair)
+	for p.tryConsumeTokenKind(",") != nil {
+		roleRenamePair, err := p.parseRoleRenamePair(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		roleRenamePairs = append(roleRenamePairs, roleRenamePair)
+	}
+	statementEnd := roleRenamePairs[len(roleRenamePairs)-1].End()
+
+	settings, err := p.tryParseRoleSettings(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if settings != nil {
+		statementEnd = settings[len(settings)-1].End()
+	}
+
+	return &AlterRole{
+		AlterPos:        pos,
+		StatementEnd:    statementEnd,
+		IfExists:        ifExists,
+		RoleRenamePairs: roleRenamePairs,
+		Settings:        settings,
+	}, nil
+}
+
+func (p *Parser) parseRoleRenamePair(_ Pos) (*RoleRenamePair, error) {
+	roleName, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	roleRenamePair := &RoleRenamePair{
+		RoleName:     roleName,
+		StatementEnd: roleName.End(),
+	}
+	if p.tryConsumeKeyword(KeywordRename) != nil {
+		if err := p.consumeKeyword(KeywordTo); err != nil {
+			return nil, err
+		}
+		newName, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		roleRenamePair.NewName = newName
+		roleRenamePair.StatementEnd = newName.NameEnd
+	}
+	return roleRenamePair, nil
+}
