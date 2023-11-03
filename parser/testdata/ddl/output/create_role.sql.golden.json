@@ -12,16 +12,16 @@
           "NamePos": 34,
           "NameEnd": 42
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": null
   },
   {
     "CreatePos": 44,
-    "StatementEnd": 78,
+    "StatementEnd": 85,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -32,10 +32,152 @@
           "NamePos": 56,
           "NameEnd": 64
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": {
+          "OnPos": 65,
+          "Expr": {
+            "Name": "cluster_1",
+            "Unquoted": false,
+            "NamePos": 76,
+            "NameEnd": 85
+          }
+        }
       }
     ],
-    "OnCluster": null,
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 87,
+    "StatementEnd": 117,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 99,
+          "NameEnd": 107
+        },
+        "Scope": null,
+        "OnCluster": null
+      },
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 109,
+          "NameEnd": 117
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 119,
+    "StatementEnd": 170,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 131,
+          "NameEnd": 139
+        },
+        "Scope": null,
+        "OnCluster": {
+          "OnPos": 140,
+          "Expr": {
+            "Name": "cluster_1",
+            "Unquoted": false,
+            "NamePos": 151,
+            "NameEnd": 160
+          }
+        }
+      },
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 162,
+          "NameEnd": 170
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 172,
+    "StatementEnd": 244,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 184,
+          "NameEnd": 192
+        },
+        "Scope": null,
+        "OnCluster": {
+          "OnPos": 193,
+          "Expr": {
+            "Name": "cluster_1",
+            "Unquoted": false,
+            "NamePos": 204,
+            "NameEnd": 213
+          }
+        }
+      },
+      {
+        "Name": {
+          "Name": "r2_01293",
+          "Unquoted": false,
+          "NamePos": 215,
+          "NameEnd": 223
+        },
+        "Scope": null,
+        "OnCluster": {
+          "OnPos": 224,
+          "Expr": {
+            "Name": "cluster_2",
+            "Unquoted": false,
+            "NamePos": 235,
+            "NameEnd": 244
+          }
+        }
+      }
+    ],
+    "AccessStorageType": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 246,
+    "StatementEnd": 280,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "RoleNames": [
+      {
+        "Name": {
+          "Name": "r1_01293",
+          "Unquoted": false,
+          "NamePos": 258,
+          "NameEnd": 266
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
     "AccessStorageType": null,
     "Settings": [
       {
@@ -43,15 +185,15 @@
         "Modifier": {
           "Name": "NONE",
           "Unquoted": false,
-          "NamePos": 74,
-          "NameEnd": 78
+          "NamePos": 276,
+          "NameEnd": 280
         }
       }
     ]
   },
   {
-    "CreatePos": 80,
-    "StatementEnd": 126,
+    "CreatePos": 282,
+    "StatementEnd": 328,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -59,13 +201,13 @@
         "Name": {
           "Name": "r2_01293",
           "Unquoted": false,
-          "NamePos": 92,
-          "NameEnd": 100
+          "NamePos": 294,
+          "NameEnd": 302
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -74,12 +216,12 @@
             "Name": {
               "Name": "PROFILE",
               "Unquoted": false,
-              "NamePos": 110,
-              "NameEnd": 117
+              "NamePos": 312,
+              "NameEnd": 319
             },
             "Value": {
-              "LiteralPos": 119,
-              "LiteralEnd": 126,
+              "LiteralPos": 321,
+              "LiteralEnd": 328,
               "Literal": "default"
             }
           }
@@ -89,8 +231,8 @@
     ]
   },
   {
-    "CreatePos": 129,
-    "StatementEnd": 183,
+    "CreatePos": 331,
+    "StatementEnd": 385,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -98,13 +240,13 @@
         "Name": {
           "Name": "r3_01293",
           "Unquoted": false,
-          "NamePos": 141,
-          "NameEnd": 149
+          "NamePos": 343,
+          "NameEnd": 351
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -113,12 +255,12 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 159,
-              "NameEnd": 175
+              "NamePos": 361,
+              "NameEnd": 377
             },
             "Value": {
-              "NumPos": 176,
-              "NumEnd": 183,
+              "NumPos": 378,
+              "NumEnd": 385,
               "Literal": "5000000",
               "Base": 10
             }
@@ -129,8 +271,8 @@
     ]
   },
   {
-    "CreatePos": 185,
-    "StatementEnd": 243,
+    "CreatePos": 387,
+    "StatementEnd": 445,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -138,13 +280,13 @@
         "Name": {
           "Name": "r4_01293",
           "Unquoted": false,
-          "NamePos": 197,
-          "NameEnd": 205
+          "NamePos": 399,
+          "NameEnd": 407
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -153,8 +295,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 215,
-              "NameEnd": 231
+              "NamePos": 417,
+              "NameEnd": 433
             },
             "Value": null
           },
@@ -162,12 +304,12 @@
             "Name": {
               "Name": "MIN",
               "Unquoted": false,
-              "NamePos": 232,
-              "NameEnd": 235
+              "NamePos": 434,
+              "NameEnd": 437
             },
             "Value": {
-              "NumPos": 236,
-              "NumEnd": 243,
+              "NumPos": 438,
+              "NumEnd": 445,
               "Literal": "5000000",
               "Base": 10
             }
@@ -178,8 +320,8 @@
     ]
   },
   {
-    "CreatePos": 245,
-    "StatementEnd": 303,
+    "CreatePos": 447,
+    "StatementEnd": 505,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -187,13 +329,13 @@
         "Name": {
           "Name": "r5_01293",
           "Unquoted": false,
-          "NamePos": 257,
-          "NameEnd": 265
+          "NamePos": 459,
+          "NameEnd": 467
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -202,8 +344,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 275,
-              "NameEnd": 291
+              "NamePos": 477,
+              "NameEnd": 493
             },
             "Value": null
           },
@@ -211,12 +353,12 @@
             "Name": {
               "Name": "MAX",
               "Unquoted": false,
-              "NamePos": 292,
-              "NameEnd": 295
+              "NamePos": 494,
+              "NameEnd": 497
             },
             "Value": {
-              "NumPos": 296,
-              "NumEnd": 303,
+              "NumPos": 498,
+              "NumEnd": 505,
               "Literal": "5000000",
               "Base": 10
             }
@@ -227,8 +369,8 @@
     ]
   },
   {
-    "CreatePos": 305,
-    "StatementEnd": 357,
+    "CreatePos": 507,
+    "StatementEnd": 559,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -236,13 +378,13 @@
         "Name": {
           "Name": "r6_01293",
           "Unquoted": false,
-          "NamePos": 317,
-          "NameEnd": 325
+          "NamePos": 519,
+          "NameEnd": 527
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -251,8 +393,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 335,
-              "NameEnd": 351
+              "NamePos": 537,
+              "NameEnd": 553
             },
             "Value": null
           }
@@ -260,15 +402,15 @@
         "Modifier": {
           "Name": "CONST",
           "Unquoted": false,
-          "NamePos": 352,
-          "NameEnd": 357
+          "NamePos": 554,
+          "NameEnd": 559
         }
       }
     ]
   },
   {
-    "CreatePos": 359,
-    "StatementEnd": 414,
+    "CreatePos": 561,
+    "StatementEnd": 616,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -276,13 +418,13 @@
         "Name": {
           "Name": "r7_01293",
           "Unquoted": false,
-          "NamePos": 371,
-          "NameEnd": 379
+          "NamePos": 573,
+          "NameEnd": 581
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -291,8 +433,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 389,
-              "NameEnd": 405
+              "NamePos": 591,
+              "NameEnd": 607
             },
             "Value": null
           }
@@ -300,15 +442,15 @@
         "Modifier": {
           "Name": "WRITABLE",
           "Unquoted": false,
-          "NamePos": 406,
-          "NameEnd": 414
+          "NamePos": 608,
+          "NameEnd": 616
         }
       }
     ]
   },
   {
-    "CreatePos": 416,
-    "StatementEnd": 500,
+    "CreatePos": 618,
+    "StatementEnd": 702,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -316,13 +458,13 @@
         "Name": {
           "Name": "r8_01293",
           "Unquoted": false,
-          "NamePos": 428,
-          "NameEnd": 436
+          "NamePos": 630,
+          "NameEnd": 638
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -331,12 +473,12 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 446,
-              "NameEnd": 462
+              "NamePos": 648,
+              "NameEnd": 664
             },
             "Value": {
-              "NumPos": 463,
-              "NumEnd": 470,
+              "NumPos": 665,
+              "NumEnd": 672,
               "Literal": "5000000",
               "Base": 10
             }
@@ -345,12 +487,12 @@
             "Name": {
               "Name": "MIN",
               "Unquoted": false,
-              "NamePos": 471,
-              "NameEnd": 474
+              "NamePos": 673,
+              "NameEnd": 676
             },
             "Value": {
-              "NumPos": 475,
-              "NumEnd": 482,
+              "NumPos": 677,
+              "NumEnd": 684,
               "Literal": "4000000",
               "Base": 10
             }
@@ -359,12 +501,12 @@
             "Name": {
               "Name": "MAX",
               "Unquoted": false,
-              "NamePos": 483,
-              "NameEnd": 486
+              "NamePos": 685,
+              "NameEnd": 688
             },
             "Value": {
-              "NumPos": 487,
-              "NumEnd": 494,
+              "NumPos": 689,
+              "NumEnd": 696,
               "Literal": "6000000",
               "Base": 10
             }
@@ -373,15 +515,15 @@
         "Modifier": {
           "Name": "CONST",
           "Unquoted": false,
-          "NamePos": 495,
-          "NameEnd": 500
+          "NamePos": 697,
+          "NameEnd": 702
         }
       }
     ]
   },
   {
-    "CreatePos": 502,
-    "StatementEnd": 584,
+    "CreatePos": 704,
+    "StatementEnd": 786,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -389,13 +531,13 @@
         "Name": {
           "Name": "r9_01293",
           "Unquoted": false,
-          "NamePos": 514,
-          "NameEnd": 522
+          "NamePos": 716,
+          "NameEnd": 724
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -404,12 +546,12 @@
             "Name": {
               "Name": "PROFILE",
               "Unquoted": false,
-              "NamePos": 532,
-              "NameEnd": 539
+              "NamePos": 734,
+              "NameEnd": 741
             },
             "Value": {
-              "LiteralPos": 541,
-              "LiteralEnd": 548,
+              "LiteralPos": 743,
+              "LiteralEnd": 750,
               "Literal": "default"
             }
           }
@@ -422,12 +564,12 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 551,
-              "NameEnd": 567
+              "NamePos": 753,
+              "NameEnd": 769
             },
             "Value": {
-              "NumPos": 568,
-              "NumEnd": 575,
+              "NumPos": 770,
+              "NumEnd": 777,
               "Literal": "5000000",
               "Base": 10
             }
@@ -436,15 +578,15 @@
         "Modifier": {
           "Name": "WRITABLE",
           "Unquoted": false,
-          "NamePos": 576,
-          "NameEnd": 584
+          "NamePos": 778,
+          "NameEnd": 786
         }
       }
     ]
   },
   {
-    "CreatePos": 586,
-    "StatementEnd": 616,
+    "CreatePos": 788,
+    "StatementEnd": 818,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -452,28 +594,29 @@
         "Name": {
           "Name": "r1_01293",
           "Unquoted": false,
-          "NamePos": 598,
-          "NameEnd": 606
+          "NamePos": 800,
+          "NameEnd": 808
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       },
       {
         "Name": {
           "Name": "r2_01293",
           "Unquoted": false,
-          "NamePos": 608,
-          "NameEnd": 616
+          "NamePos": 810,
+          "NameEnd": 818
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": null
   },
   {
-    "CreatePos": 618,
-    "StatementEnd": 658,
+    "CreatePos": 820,
+    "StatementEnd": 860,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -481,13 +624,13 @@
         "Name": {
           "Name": "r1_01293",
           "Unquoted": false,
-          "NamePos": 630,
-          "NameEnd": 638
+          "NamePos": 832,
+          "NameEnd": 840
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -496,12 +639,12 @@
             "Name": {
               "Name": "readonly",
               "Unquoted": false,
-              "NamePos": 648,
-              "NameEnd": 656
+              "NamePos": 850,
+              "NameEnd": 858
             },
             "Value": {
-              "NumPos": 657,
-              "NumEnd": 658,
+              "NumPos": 859,
+              "NumEnd": 860,
               "Literal": "1",
               "Base": 10
             }
@@ -512,8 +655,8 @@
     ]
   },
   {
-    "CreatePos": 660,
-    "StatementEnd": 706,
+    "CreatePos": 862,
+    "StatementEnd": 908,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -521,13 +664,13 @@
         "Name": {
           "Name": "r2_01293",
           "Unquoted": false,
-          "NamePos": 672,
-          "NameEnd": 680
+          "NamePos": 874,
+          "NameEnd": 882
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -536,12 +679,12 @@
             "Name": {
               "Name": "PROFILE",
               "Unquoted": false,
-              "NamePos": 690,
-              "NameEnd": 697
+              "NamePos": 892,
+              "NameEnd": 899
             },
             "Value": {
-              "LiteralPos": 699,
-              "LiteralEnd": 706,
+              "LiteralPos": 901,
+              "LiteralEnd": 908,
               "Literal": "default"
             }
           }
@@ -551,8 +694,8 @@
     ]
   },
   {
-    "CreatePos": 709,
-    "StatementEnd": 796,
+    "CreatePos": 911,
+    "StatementEnd": 998,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -560,13 +703,13 @@
         "Name": {
           "Name": "r3_01293",
           "Unquoted": false,
-          "NamePos": 721,
-          "NameEnd": 729
+          "NamePos": 923,
+          "NameEnd": 931
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -575,12 +718,12 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 739,
-              "NameEnd": 755
+              "NamePos": 941,
+              "NameEnd": 957
             },
             "Value": {
-              "NumPos": 756,
-              "NumEnd": 763,
+              "NumPos": 958,
+              "NumEnd": 965,
               "Literal": "5000000",
               "Base": 10
             }
@@ -589,12 +732,12 @@
             "Name": {
               "Name": "MIN",
               "Unquoted": false,
-              "NamePos": 764,
-              "NameEnd": 767
+              "NamePos": 966,
+              "NameEnd": 969
             },
             "Value": {
-              "NumPos": 768,
-              "NumEnd": 775,
+              "NumPos": 970,
+              "NumEnd": 977,
               "Literal": "4000000",
               "Base": 10
             }
@@ -603,12 +746,12 @@
             "Name": {
               "Name": "MAX",
               "Unquoted": false,
-              "NamePos": 776,
-              "NameEnd": 779
+              "NamePos": 978,
+              "NameEnd": 981
             },
             "Value": {
-              "NumPos": 780,
-              "NumEnd": 787,
+              "NumPos": 982,
+              "NumEnd": 989,
               "Literal": "6000000",
               "Base": 10
             }
@@ -617,15 +760,15 @@
         "Modifier": {
           "Name": "WRITABLE",
           "Unquoted": false,
-          "NamePos": 788,
-          "NameEnd": 796
+          "NamePos": 990,
+          "NameEnd": 998
         }
       }
     ]
   },
   {
-    "CreatePos": 798,
-    "StatementEnd": 883,
+    "CreatePos": 1000,
+    "StatementEnd": 1085,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -633,13 +776,13 @@
         "Name": {
           "Name": "r4_01293",
           "Unquoted": false,
-          "NamePos": 810,
-          "NameEnd": 818
+          "NamePos": 1012,
+          "NameEnd": 1020
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -648,12 +791,12 @@
             "Name": {
               "Name": "PROFILE",
               "Unquoted": false,
-              "NamePos": 828,
-              "NameEnd": 835
+              "NamePos": 1030,
+              "NameEnd": 1037
             },
             "Value": {
-              "LiteralPos": 837,
-              "LiteralEnd": 844,
+              "LiteralPos": 1039,
+              "LiteralEnd": 1046,
               "Literal": "default"
             }
           }
@@ -666,12 +809,12 @@
             "Name": {
               "Name": "max_memory_usage",
               "Unquoted": false,
-              "NamePos": 847,
-              "NameEnd": 863
+              "NamePos": 1049,
+              "NameEnd": 1065
             },
             "Value": {
-              "NumPos": 864,
-              "NumEnd": 871,
+              "NumPos": 1066,
+              "NumEnd": 1073,
               "Literal": "5000000",
               "Base": 10
             }
@@ -685,12 +828,12 @@
             "Name": {
               "Name": "readonly",
               "Unquoted": false,
-              "NamePos": 873,
-              "NameEnd": 881
+              "NamePos": 1075,
+              "NameEnd": 1083
             },
             "Value": {
-              "NumPos": 882,
-              "NumEnd": 883,
+              "NumPos": 1084,
+              "NumEnd": 1085,
               "Literal": "1",
               "Base": 10
             }
@@ -701,8 +844,8 @@
     ]
   },
   {
-    "CreatePos": 885,
-    "StatementEnd": 919,
+    "CreatePos": 1087,
+    "StatementEnd": 1121,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -710,13 +853,13 @@
         "Name": {
           "Name": "r5_01293",
           "Unquoted": false,
-          "NamePos": 897,
-          "NameEnd": 905
+          "NamePos": 1099,
+          "NameEnd": 1107
         },
-        "Scope": null
+        "Scope": null,
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": [
       {
@@ -724,15 +867,15 @@
         "Modifier": {
           "Name": "NONE",
           "Unquoted": false,
-          "NamePos": 915,
-          "NameEnd": 919
+          "NamePos": 1117,
+          "NameEnd": 1121
         }
       }
     ]
   },
   {
-    "CreatePos": 921,
-    "StatementEnd": 944,
+    "CreatePos": 1123,
+    "StatementEnd": 1146,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -740,23 +883,23 @@
         "Name": {
           "Name": "r1_01293",
           "Unquoted": false,
-          "NamePos": 933,
-          "NameEnd": 941
+          "NamePos": 1135,
+          "NameEnd": 1143
         },
         "Scope": {
-          "LiteralPos": 943,
-          "LiteralEnd": 944,
+          "LiteralPos": 1145,
+          "LiteralEnd": 1146,
           "Literal": "%"
-        }
+        },
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": null
   },
   {
-    "CreatePos": 947,
-    "StatementEnd": 981,
+    "CreatePos": 1149,
+    "StatementEnd": 1183,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -764,17 +907,17 @@
         "Name": {
           "Name": "r2_01293",
           "Unquoted": false,
-          "NamePos": 959,
-          "NameEnd": 967
+          "NamePos": 1161,
+          "NameEnd": 1169
         },
         "Scope": {
-          "LiteralPos": 969,
-          "LiteralEnd": 981,
+          "LiteralPos": 1171,
+          "LiteralEnd": 1183,
           "Literal": "%.myhost.com"
-        }
+        },
+        "OnCluster": null
       }
     ],
-    "OnCluster": null,
     "AccessStorageType": null,
     "Settings": null
   }

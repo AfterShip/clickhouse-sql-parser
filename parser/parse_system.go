@@ -355,17 +355,27 @@ func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 				return nil, err
 			}
 		}
+		onCluster, err := p.tryParseOnCluster(p.Pos())
+		if err != nil {
+			return nil, err
+		}
 		return &RoleName{
-			Name:  name,
-			Scope: scope,
+			Name:      name,
+			Scope:     scope,
+			OnCluster: onCluster,
 		}, nil
 	case p.matchTokenKind(TokenString):
 		name, err := p.parseString(p.Pos())
 		if err != nil {
 			return nil, err
 		}
+		onCluster, err := p.tryParseOnCluster(p.Pos())
+		if err != nil {
+			return nil, err
+		}
 		return &RoleName{
-			Name: name,
+			Name:      name,
+			OnCluster: onCluster,
 		}, nil
 	default:
 		return nil, fmt.Errorf("expected <ident> or <string>")
@@ -474,11 +484,6 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 	}
 	statementEnd := roleNames[len(roleNames)-1].End()
 
-	onCluster, err := p.tryParseOnCluster(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
 	var accessStorageType *Ident
 	if p.tryConsumeKeyword(KeywordIn) != nil {
 		accessStorageType, err = p.parseIdent()
@@ -502,7 +507,6 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 		IfNotExists:       ifNotExists,
 		OrReplace:         orReplace,
 		RoleNames:         roleNames,
-		OnCluster:         onCluster,
 		AccessStorageType: accessStorageType,
 		Settings:          settings,
 	}, nil
