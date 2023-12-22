@@ -1,0 +1,111 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 43,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 19,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "replica_name",
+          "Unquoted": false,
+          "NamePos": 7,
+          "NameEnd": 19
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 20,
+      "Expr": {
+        "TablePos": 25,
+        "TableEnd": 43,
+        "Alias": null,
+        "Expr": {
+          "Database": {
+            "Name": "system",
+            "Unquoted": false,
+            "NamePos": 25,
+            "NameEnd": 31
+          },
+          "Table": {
+            "Name": "ha_replicas",
+            "Unquoted": false,
+            "NamePos": 32,
+            "NameEnd": 43
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "UnionAll": null,
+    "UnionDistinct": {
+      "SelectPos": 59,
+      "StatementEnd": 109,
+      "With": null,
+      "Top": null,
+      "SelectColumns": {
+        "ListPos": 66,
+        "ListEnd": 78,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Name": "replica_name",
+            "Unquoted": false,
+            "NamePos": 66,
+            "NameEnd": 78
+          }
+        ]
+      },
+      "From": {
+        "FromPos": 79,
+        "Expr": {
+          "TablePos": 84,
+          "TableEnd": 109,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "system",
+              "Unquoted": false,
+              "NamePos": 84,
+              "NameEnd": 90
+            },
+            "Table": {
+              "Name": "ha_unique_replicas",
+              "Unquoted": false,
+              "NamePos": 91,
+              "NameEnd": 109
+            }
+          }
+        }
+      },
+      "ArrayJoin": null,
+      "Window": null,
+      "Prewhere": null,
+      "Where": null,
+      "GroupBy": null,
+      "WithTotal": false,
+      "Having": null,
+      "OrderBy": null,
+      "LimitBy": null,
+      "Limit": null,
+      "Settings": null,
+      "UnionAll": null,
+      "UnionDistinct": null,
+      "Except": null
+    },
+    "Except": null
+  }
+]

@@ -61,6 +61,7 @@
             "Limit": null,
             "Settings": null,
             "UnionAll": null,
+            "UnionDistinct": null,
             "Except": null
           }
         },
@@ -119,6 +120,7 @@
             "Limit": null,
             "Settings": null,
             "UnionAll": null,
+            "UnionDistinct": null,
             "Except": null
           }
         }
@@ -243,6 +245,7 @@
     "Limit": null,
     "Settings": null,
     "UnionAll": null,
+    "UnionDistinct": null,
     "Except": null
   }
 ]

@@ -671,20 +671,28 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 	}
 	switch {
 	case p.tryConsumeKeyword(KeywordUnion) != nil:
-		if err := p.consumeKeyword(KeywordAll); err != nil {
-			return nil, err
+		switch {
+		case p.tryConsumeKeyword(KeywordAll) != nil:
+			unionAllExpr, err := p.parseSelectStatement(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			selectExpr.UnionAll = unionAllExpr
+		case p.tryConsumeKeyword(KeywordDistinct) != nil:
+			unionDistinctExpr, err := p.parseSelectStatement(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			selectExpr.UnionDistinct = unionDistinctExpr
+		default:
+			return nil, fmt.Errorf("expected ALL or DISTINCT, got %s", p.lastTokenKind())
 		}
-		unionAllExpr, err := p.parseSelectStatement(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		selectExpr.UnionAll = unionAllExpr
 	case p.tryConsumeKeyword(KeywordExcept) != nil:
 		exceptExpr, err := p.parseSelectStatement(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		selectExpr.UnionAll = exceptExpr
+		selectExpr.Except = exceptExpr
 	}
 	if hasParen {
 		if _, err := p.consumeTokenKind(")"); err != nil {
