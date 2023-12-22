@@ -3008,6 +3008,7 @@ type SelectQuery struct {
 	Limit         *LimitExpr
 	Settings      *SettingsExprList
 	UnionAll      *SelectQuery
+	UnionDistinct *SelectQuery
 	Except        *SelectQuery
 }
 
@@ -3090,6 +3091,10 @@ func (s *SelectQuery) String(level int) string { // nolint: funlen
 		builder.WriteString(NewLine(level))
 		builder.WriteString(" UNION ALL ")
 		builder.WriteString(s.UnionAll.String(level))
+	} else if s.UnionDistinct != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(" UNION DISTINCT ")
+		builder.WriteString(s.UnionDistinct.String(level))
 	} else if s.Except != nil {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(" EXCEPT ")

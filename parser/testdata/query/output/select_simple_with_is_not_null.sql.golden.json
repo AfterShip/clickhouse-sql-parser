@@ -191,6 +191,7 @@
     "Limit": null,
     "Settings": null,
     "UnionAll": null,
+    "UnionDistinct": null,
     "Except": null
   }
 ]

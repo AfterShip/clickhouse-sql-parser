@@ -423,6 +423,7 @@
                 "Limit": null,
                 "Settings": null,
                 "UnionAll": null,
+                "UnionDistinct": null,
                 "Except": null
               },
               "AliasPos": 441,
@@ -466,6 +467,7 @@
         "Limit": null,
         "Settings": null,
         "UnionAll": null,
+        "UnionDistinct": null,
         "Except": null
       }
     },
