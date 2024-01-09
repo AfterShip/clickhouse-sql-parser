@@ -1,0 +1,35 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 83,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "infra",
+        "Unquoted": false,
+        "NamePos": 12,
+        "NameEnd": 17
+      },
+      "Table": {
+        "Name": "flow_processed_emails_local",
+        "Unquoted": false,
+        "NamePos": 18,
+        "NameEnd": 45
+      }
+    },
+    "OnCluster": {
+      "OnPos": 46,
+      "Expr": {
+        "Name": "default_cluster",
+        "Unquoted": false,
+        "NamePos": 57,
+        "NameEnd": 72
+      }
+    },
+    "AlterExprs": [
+      {
+        "RemovePos": 73,
+        "StatementEnd": 83
+      }
+    ]
+  }
+]
