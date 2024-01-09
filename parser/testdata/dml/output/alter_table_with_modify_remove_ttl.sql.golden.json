@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 87,
+    "StatementEnd": 83,
     "TableIdentifier": {
       "Database": {
         "Name": "infra",
@@ -27,10 +27,8 @@
     },
     "AlterExprs": [
       {
-        "ModifyPos": 73,
-        "StatementEnd": 87,
-        "TTL": null,
-        "IsRemove": true
+        "RemovePos": 73,
+        "StatementEnd": 83
       }
     ]
   }

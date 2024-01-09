@@ -509,7 +509,6 @@ type AlterTableModifyTTL struct {
 	ModifyPos    Pos
 	StatementEnd Pos
 	TTL          *TTLExpr
-	IsRemove     bool
 }
 
 func (a *AlterTableModifyTTL) Pos() Pos {
@@ -527,12 +526,8 @@ func (a *AlterTableModifyTTL) AlterType() string {
 func (a *AlterTableModifyTTL) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("MODIFY ")
-	if a.IsRemove {
-		builder.WriteString("REMOVE TTL")
-	} else {
-		builder.WriteString("TTL ")
-		builder.WriteString(a.TTL.String(level))
-	}
+	builder.WriteString("TTL ")
+	builder.WriteString(a.TTL.String(level))
 	return builder.String()
 }
 
