@@ -505,6 +505,37 @@ func (a *AlterTableRenameColumn) String(level int) string {
 	return builder.String()
 }
 
+type AlterTableModifyTTL struct {
+	ModifyPos    Pos
+	StatementEnd Pos
+	TTL          *TTLExpr
+	IsRemove     bool
+}
+
+func (a *AlterTableModifyTTL) Pos() Pos {
+	return a.ModifyPos
+}
+
+func (a *AlterTableModifyTTL) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableModifyTTL) AlterType() string {
+	return "MODIFY_TTL"
+}
+
+func (a *AlterTableModifyTTL) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("MODIFY ")
+	if a.IsRemove {
+		builder.WriteString("REMOVE TTL")
+	} else {
+		builder.WriteString("TTL ")
+		builder.WriteString(a.TTL.String(level))
+	}
+	return builder.String()
+}
+
 type AlterTableModifyColumn struct {
 	ModifyPos    Pos
 	StatementEnd Pos
