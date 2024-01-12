@@ -63,16 +63,16 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 			createMaterializedView.Populate = true
 			createMaterializedView.StatementEnd = populate.End
 		}
-		if p.matchKeyword(KeywordAs) {
-			subQuery, err := p.parseSubQuery(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			createMaterializedView.SubQuery = subQuery
-			createMaterializedView.StatementEnd = subQuery.End()
-		}
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
+	}
+	if p.matchKeyword(KeywordAs) {
+		subQuery, err := p.parseSubQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		createMaterializedView.SubQuery = subQuery
+		createMaterializedView.StatementEnd = subQuery.End()
 	}
 	return createMaterializedView, nil
 }

@@ -224,9 +224,20 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			if err != nil {
 				return nil, err
 			}
-			return &TableIdentifier{
-				Database: ident,
-				Table:    nextIdent,
+			if p.tryConsumeTokenKind(".") != nil {
+				thirdIdent, err := p.parseIdent()
+				if err != nil {
+					return nil, err
+				}
+				return &ColumnIdentifier{
+					Database: ident,
+					Table:    nextIdent,
+					Column:   thirdIdent,
+				}, nil
+			}
+			return &ColumnIdentifier{
+				Table:  ident,
+				Column: nextIdent,
 			}, nil
 		case p.matchTokenKind("*"):
 			nextIdent, err := p.parseColumnStar(p.Pos())

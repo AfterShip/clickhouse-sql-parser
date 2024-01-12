@@ -1237,6 +1237,36 @@ func (n *NestedIdentifier) String(int) string {
 	return n.Ident.String(0)
 }
 
+type ColumnIdentifier struct {
+	Database *Ident
+	Table    *Ident
+	Column   *Ident
+}
+
+func (c *ColumnIdentifier) Pos() Pos {
+	if c.Database != nil {
+		return c.Database.NamePos
+	} else if c.Table != nil {
+		return c.Table.NamePos
+	} else {
+		return c.Column.NamePos
+	}
+}
+
+func (c *ColumnIdentifier) End() Pos {
+	return c.Column.NameEnd
+}
+
+func (c *ColumnIdentifier) String(int) string {
+	if c.Database != nil {
+		return c.Database.String(0) + "." + c.Table.String(0) + "." + c.Column.String(0)
+	} else if c.Table != nil {
+		return c.Table.String(0) + "." + c.Column.String(0)
+	} else {
+		return c.Column.String(0)
+	}
+}
+
 type TableIdentifier struct {
 	Database *Ident
 	Table    *Ident
