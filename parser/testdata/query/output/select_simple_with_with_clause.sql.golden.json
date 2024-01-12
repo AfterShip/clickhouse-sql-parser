@@ -133,13 +133,14 @@
       "HasDistinct": false,
       "Items": [
         {
-          "Database": {
+          "Database": null,
+          "Table": {
             "Name": "cte1",
             "Unquoted": false,
             "NamePos": 81,
             "NameEnd": 85
           },
-          "Table": {
+          "Column": {
             "Name": "f1",
             "Unquoted": false,
             "NamePos": 86,
@@ -147,13 +148,14 @@
           }
         },
         {
-          "Database": {
+          "Database": null,
+          "Table": {
             "Name": "cte2",
             "Unquoted": false,
             "NamePos": 94,
             "NameEnd": 98
           },
-          "Table": {
+          "Column": {
             "Name": "f2",
             "Unquoted": false,
             "NamePos": 99,
@@ -161,13 +163,14 @@
           }
         },
         {
-          "Database": {
+          "Database": null,
+          "Table": {
             "Name": "t3",
             "Unquoted": false,
             "NamePos": 107,
             "NameEnd": 109
           },
-          "Table": {
+          "Column": {
             "Name": "f3",
             "Unquoted": false,
             "NamePos": 110,
