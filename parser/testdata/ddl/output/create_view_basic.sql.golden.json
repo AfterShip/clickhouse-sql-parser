@@ -112,7 +112,8 @@
                 "NamePos": 96,
                 "NameEnd": 104
               }
-            }
+            },
+            "HasFinal": false
           }
         },
         "ArrayJoin": null,

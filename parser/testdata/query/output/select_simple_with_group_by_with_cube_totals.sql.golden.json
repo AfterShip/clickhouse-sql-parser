@@ -57,7 +57,8 @@
             "NamePos": 24,
             "NameEnd": 36
           }
-        }
+        },
+        "HasFinal": false
       }
     },
     "ArrayJoin": null,

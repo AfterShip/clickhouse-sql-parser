@@ -347,7 +347,8 @@
                         "NamePos": 370,
                         "NameEnd": 371
                       }
-                    }
+                    },
+                    "HasFinal": false
                   }
                 },
                 "ArrayJoin": null,
@@ -433,7 +434,8 @@
                 "NamePos": 444,
                 "NameEnd": 447
               }
-            }
+            },
+            "HasFinal": false
           }
         },
         "ArrayJoin": null,

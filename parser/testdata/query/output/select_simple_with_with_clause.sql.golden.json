@@ -46,7 +46,8 @@
                     "NamePos": 33,
                     "NameEnd": 35
                   }
-                }
+                },
+                "HasFinal": false
               }
             },
             "ArrayJoin": null,
@@ -105,7 +106,8 @@
                     "NamePos": 66,
                     "NameEnd": 68
                   }
-                }
+                },
+                "HasFinal": false
               }
             },
             "ArrayJoin": null,
@@ -195,7 +197,8 @@
               "NamePos": 122,
               "NameEnd": 124
             }
-          }
+          },
+          "HasFinal": false
         },
         "Right": {
           "JoinPos": 125,
@@ -211,7 +214,8 @@
                 "NamePos": 125,
                 "NameEnd": 129
               }
-            }
+            },
+            "HasFinal": false
           },
           "Right": {
             "TablePos": 130,
@@ -225,7 +229,8 @@
                 "NamePos": 130,
                 "NameEnd": 134
               }
-            }
+            },
+            "HasFinal": false
           },
           "JoinType": "",
           "SampleRatio": null,

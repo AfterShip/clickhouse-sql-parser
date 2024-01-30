@@ -450,7 +450,8 @@
                 "NamePos": 600,
                 "NameEnd": 605
               }
-            }
+            },
+            "HasFinal": false
           }
         },
         "ArrayJoin": null,

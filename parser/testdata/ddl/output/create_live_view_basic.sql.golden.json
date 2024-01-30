@@ -103,7 +103,8 @@
                 "NamePos": 93,
                 "NameEnd": 101
               }
-            }
+            },
+            "HasFinal": false
           }
         },
         "ArrayJoin": null,
