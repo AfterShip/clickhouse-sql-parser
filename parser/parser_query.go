@@ -264,10 +264,24 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 		}
 		tableEnd = expr.End()
 	}
+
+	isFinalExist := false
+	if asToken := p.tryConsumeKeyword(KeywordFinal); asToken != nil {
+		switch expr.(type) {
+		case *TableFunctionExpr:
+			return nil, errors.New("tablefunction doesn't support FINAL")
+		case *SelectQuery:
+			return nil, errors.New("subquery doesn't support FINAL")
+		}
+		isFinalExist = true
+		tableEnd = expr.End()
+	}
+
 	return &TableExpr{
 		TablePos: pos,
 		TableEnd: tableEnd,
 		Expr:     expr,
+		HasFinal: isFinalExist,
 	}, nil
 }
 

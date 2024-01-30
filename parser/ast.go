@@ -2480,6 +2480,7 @@ type TableExpr struct {
 	TableEnd Pos
 	Alias    *AliasExpr
 	Expr     Expr
+	HasFinal bool
 }
 
 func (t *TableExpr) Pos() Pos {
@@ -2496,6 +2497,9 @@ func (t *TableExpr) String(level int) string {
 	if t.Alias != nil {
 		builder.WriteByte(' ')
 		builder.WriteString(t.Alias.String(level + 1))
+	}
+	if t.HasFinal {
+		builder.WriteString(" FINAL")
 	}
 	return builder.String()
 }
@@ -3138,6 +3142,10 @@ func (s *SelectQuery) String(level int) string { // nolint: funlen
 	if s.LimitBy != nil {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(s.LimitBy.String(level))
+	}
+	if s.Limit != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(s.Limit.String(level))
 	}
 	if s.Settings != nil {
 		builder.WriteString(NewLine(level))
