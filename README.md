@@ -27,11 +27,6 @@ statements, err := parser.ParseStatements()
 if err != nil {
     return nil, err
 }
-
-// To beautify query, it's as simple as:
-for _, statement := range statements {
-    fmt.Println(statement.String(0))
-}
 ```
 
 - Use clickhouse-sql-parser as a CLI tool
@@ -46,6 +41,22 @@ $ clickhouse-sql-parser -format "SELECT * FROM clickhouse WHERE a=100"
 
 ## Parse query from file
 $ clickhouse-sql-parser -file ./test.sql
+```
+
+- Parsed tree(AST) back into a SQL statement
+
+```Go
+parser := clickhouse.NewParser("SELECT * FROM clickhouse")
+// Parse query into AST
+statements, err := parser.ParseStatements()
+if err != nil {
+    return nil, err
+}
+
+// Call the String method to unparsed AST into a SQL string
+for _, stmt := range statements {
+  fmt.Println(stmt.String(0 /* number of tab spaces*/)
+}
 ```
 ## Update test assets
 
