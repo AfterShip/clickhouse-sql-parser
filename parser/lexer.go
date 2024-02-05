@@ -131,6 +131,9 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 
 	i := 0
 	if !isUnquoted {
+		if l.peekN(i) == '$' {
+			i++
+		}
 		for l.peekOk(i) && IsIdentPart(l.peekN(i)) {
 			i++
 		}
@@ -282,7 +285,7 @@ func (l *Lexer) consumeToken() error {
 		}
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		return l.consumeNumber()
-	case '`':
+	case '`', '$':
 		return l.consumeIdent(Pos(l.current))
 	case '\'':
 		return l.consumeString(true)
