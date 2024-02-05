@@ -2548,7 +2548,7 @@ type JoinExpr struct {
 	JoinPos     Pos
 	Left        Expr
 	Right       Expr
-	JoinType    string
+	Modifiers   []string
 	SampleRatio *SampleRatioExpr
 	Constraints Expr
 }
@@ -2564,8 +2564,9 @@ func (j *JoinExpr) End() Pos {
 func (j *JoinExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(j.Left.String(level))
-	if j.JoinType != "" {
-		builder.WriteString(j.JoinType)
+	if len(j.Modifiers) != 0 {
+		builder.WriteByte(' ')
+		builder.WriteString(strings.Join(j.Modifiers, " "))
 	} else {
 		builder.WriteString(",")
 	}

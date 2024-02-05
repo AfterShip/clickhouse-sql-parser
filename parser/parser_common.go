@@ -314,7 +314,7 @@ func (p *Parser) wrapError(err error) error {
 			for j := 0; j < column; j++ {
 				buf.WriteByte(' ')
 			}
-			buf.WriteString(strings.Repeat("^", len(p.lexer.lastToken.String)))
+			//buf.WriteString(strings.Repeat("^", len(p.lexer.lastToken.String)))
 			buf.WriteByte('\n')
 		}
 	}

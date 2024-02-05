@@ -232,11 +232,11 @@
             },
             "HasFinal": false
           },
-          "JoinType": "",
+          "Modifiers": null,
           "SampleRatio": null,
           "Constraints": null
         },
-        "JoinType": "",
+        "Modifiers": null,
         "SampleRatio": null,
         "Constraints": null
       }
