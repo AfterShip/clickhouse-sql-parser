@@ -433,7 +433,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 	}
 	columnExprList.HasDistinct = p.tryConsumeKeyword(KeywordDistinct) != nil
 	columnList := make([]Expr, 0)
-	for !p.lexer.isEOF() {
+	for !p.lexer.isEOF() || p.last() != nil {
 		if term != "" && p.matchTokenKind(term) {
 			break
 		}

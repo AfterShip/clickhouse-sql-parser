@@ -96,7 +96,7 @@ func (p *Parser) parseFromExpr(pos Pos) (*FromExpr, error) {
 func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 	switch {
 	case p.tryConsumeKeyword(KeywordOn) != nil:
-		columnExprList, err := p.parseColumnExprListWithRoundBracket(p.Pos())
+		columnExprList, err := p.parseColumnExprList(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -123,56 +123,76 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 	return nil, nil
 }
 
-func (p *Parser) parseJoinOp(_ Pos) (Expr, error) {
+func (p *Parser) parseJoinOp(_ Pos) (Expr, []string, error) {
+	var modifiers []string
 	switch {
 	case p.tryConsumeKeyword(KeywordCross) != nil: // cross join
-		if err := p.consumeKeyword(KeywordJoin); err != nil {
-			return nil, err
-		}
+		modifiers = append(modifiers, KeywordCross)
 	case p.tryConsumeTokenKind(",") != nil:
 	case p.matchKeyword(KeywordAny), p.matchKeyword(KeywordAll):
+		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordFull) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 		if p.matchKeyword(KeywordLeft) || p.matchKeyword(KeywordRight) || p.matchKeyword(KeywordInner) || p.matchKeyword(KeywordOuter) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 	case p.matchKeyword(KeywordSemi), p.matchKeyword(KeywordAsof):
+		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordLeft) || p.matchKeyword(KeywordRight) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 		if p.matchKeyword(KeywordOuter) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 	case p.matchKeyword(KeywordInner):
+		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordAll) || p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAsof) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 	case p.matchKeyword(KeywordLeft), p.matchKeyword(KeywordRight):
+		modifiers = append(modifiers, p.last().String)
+		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordOuter) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 		if p.matchKeyword(KeywordSemi) || p.matchKeyword(KeywordAnti) ||
 			p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAll) ||
 			p.matchKeyword(KeywordAsof) || p.matchKeyword(KeywordArray) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 	case p.matchKeyword(KeywordFull):
+		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordOuter) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 		if p.matchKeyword(KeywordAll) || p.matchKeyword(KeywordAny) {
+			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
 	default:
-		return nil, nil
+		return nil, nil, nil
 	}
-	_ = p.tryConsumeKeyword(KeywordJoin)
-	return p.parseJoinExpr(p.Pos())
+	if p.tryConsumeKeyword(KeywordJoin) != nil {
+		modifiers = append(modifiers, KeywordJoin)
+	}
+	expr, err := p.parseJoinExpr(p.Pos())
+	if err != nil {
+		return nil, nil, err
+	}
+	return expr, modifiers, nil
 }
 
 func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
@@ -197,7 +217,7 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 	if p.matchKeyword(KeywordGlobal) || p.matchKeyword(KeywordLocal) {
 		_ = p.lexer.consumeToken()
 	}
-	rightExpr, err := p.parseJoinOp(p.Pos())
+	rightExpr, modifiers, err := p.parseJoinOp(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -213,6 +233,7 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 		JoinPos:     pos,
 		Left:        expr,
 		Right:       rightExpr,
+		Modifiers:   modifiers,
 		SampleRatio: sampleRatio,
 		Constraints: constrains,
 	}, nil

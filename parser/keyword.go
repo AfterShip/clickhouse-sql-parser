@@ -69,6 +69,7 @@ const (
 	KeywordExplain      = "EXPLAIN"
 	KeywordExpression   = "EXPRESSION"
 	KeywordExtract      = "EXTRACT"
+	KeywordFalse        = "FALSE"
 	KeywordFetches      = "FETCHES"
 	KeywordFileSystem   = "FILESYSTEM"
 	KeywordFinal        = "FINAL"
@@ -198,6 +199,7 @@ const (
 	KeywordTotals       = "TOTALS"
 	KeywordTrailing     = "TRAILING"
 	KeywordTrim         = "TRIM"
+	KeywordTrue         = "TRUE"
 	KeywordTruncate     = "TRUNCATE"
 	KeywordTtl          = "TTL"
 	KeywordType         = "TYPE"
@@ -290,6 +292,7 @@ var keywords = NewSet(
 	KeywordExplain,
 	KeywordExpression,
 	KeywordExtract,
+	KeywordFalse,
 	KeywordFetches,
 	KeywordFileSystem,
 	KeywordFinal,
@@ -418,6 +421,7 @@ var keywords = NewSet(
 	KeywordTotals,
 	KeywordTrailing,
 	KeywordTrim,
+	KeywordTrue,
 	KeywordTruncate,
 	KeywordTtl,
 	KeywordType,
