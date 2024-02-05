@@ -1,0 +1,105 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 48,
+    "With": {
+      "WithPos": 0,
+      "EndPos": 9,
+      "CTEs": [
+        {
+          "CTEPos": 6,
+          "Expr": {
+            "LiteralPos": 6,
+            "LiteralEnd": 9,
+            "Literal": "abc"
+          },
+          "Alias": {
+            "SelectPos": 15,
+            "StatementEnd": 28,
+            "With": null,
+            "Top": null,
+            "SelectColumns": {
+              "ListPos": 22,
+              "ListEnd": 28,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "NumPos": 22,
+                    "NumEnd": 23,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "AliasPos": 24,
+                  "Alias": {
+                    "Name": "a",
+                    "Unquoted": false,
+                    "NamePos": 27,
+                    "NameEnd": 28
+                  }
+                }
+              ]
+            },
+            "From": null,
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "WithTotal": false,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Limit": null,
+            "Settings": null,
+            "UnionAll": null,
+            "UnionDistinct": null,
+            "Except": null
+          }
+        }
+      ]
+    },
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 37,
+      "ListEnd": 37,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "*",
+          "Unquoted": false,
+          "NamePos": 37,
+          "NameEnd": 37
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 39,
+      "Expr": {
+        "TablePos": 45,
+        "TableEnd": 48,
+        "Alias": null,
+        "Expr": {
+          "LiteralPos": 45,
+          "LiteralEnd": 48,
+          "Literal": "abc"
+        },
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
