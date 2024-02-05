@@ -2570,6 +2570,7 @@ func (j *JoinExpr) String(level int) string {
 	} else {
 		builder.WriteString(",")
 	}
+	builder.WriteByte(' ')
 	builder.WriteString(j.Right.String(level))
 	if j.Constraints != nil {
 		builder.WriteByte(' ')
