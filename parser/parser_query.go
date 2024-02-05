@@ -178,7 +178,7 @@ func (p *Parser) parseJoinOp(_ Pos) (Expr, error) {
 func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 	var sampleRatio *SampleRatioExpr
 	switch {
-	case p.matchTokenKind(TokenIdent), p.matchTokenKind("("):
+	case p.matchTokenKind(TokenString), p.matchTokenKind(TokenIdent), p.matchTokenKind("("):
 		expr, err = p.parseTableExpr(p.Pos())
 		if err != nil {
 			return nil, err
@@ -190,7 +190,7 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 			return nil, err
 		}
 	default:
-		return nil, fmt.Errorf("expected table name or subquery, got %v", p.last())
+		return nil, fmt.Errorf("expected table name or subquery, got %s", p.last().Kind)
 	}
 
 	// TODO: store global/local in AST
@@ -222,6 +222,8 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	var expr Expr
 	var err error
 	switch {
+	case p.matchTokenKind(TokenString):
+		expr, err = p.parseString(p.Pos())
 	case p.matchTokenKind(TokenIdent):
 		// table name
 		tableIdentifier, err := p.parseTableIdentifier(p.Pos())
