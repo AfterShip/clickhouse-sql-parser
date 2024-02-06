@@ -1,0 +1,83 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 17,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 7,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "*",
+          "Unquoted": false,
+          "NamePos": 7,
+          "NameEnd": 7
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 9,
+      "Expr": {
+        "JoinPos": 15,
+        "Left": {
+          "TablePos": 15,
+          "TableEnd": 17,
+          "Alias": null,
+          "Expr": {
+            "LiteralPos": 15,
+            "LiteralEnd": 17,
+            "Literal": "t1"
+          },
+          "HasFinal": false
+        },
+        "Right": {
+          "TablePos": 25,
+          "TableEnd": 27,
+          "Alias": null,
+          "Expr": {
+            "LiteralPos": 25,
+            "LiteralEnd": 27,
+            "Literal": "t2"
+          },
+          "HasFinal": false
+        },
+        "Modifiers": [
+          "JOIN"
+        ],
+        "SampleRatio": null,
+        "Constraints": {
+          "OnPos": 29,
+          "On": {
+            "ListPos": 32,
+            "ListEnd": 36,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Name": "true",
+                "Unquoted": false,
+                "NamePos": 32,
+                "NameEnd": 36
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

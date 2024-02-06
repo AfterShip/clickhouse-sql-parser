@@ -129,6 +129,11 @@ func (p *Parser) parseJoinOp(_ Pos) (Expr, []string, error) {
 	case p.tryConsumeKeyword(KeywordCross) != nil: // cross join
 		modifiers = append(modifiers, KeywordCross)
 	case p.tryConsumeTokenKind(",") != nil:
+		expr, err := p.parseJoinExpr(p.Pos())
+		if err != nil {
+			return nil, nil, err
+		}
+		return expr, nil, nil
 	case p.matchKeyword(KeywordAny), p.matchKeyword(KeywordAll):
 		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
@@ -182,17 +187,17 @@ func (p *Parser) parseJoinOp(_ Pos) (Expr, []string, error) {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
-	default:
-		return nil, nil, nil
 	}
+
 	if p.tryConsumeKeyword(KeywordJoin) != nil {
 		modifiers = append(modifiers, KeywordJoin)
+		expr, err := p.parseJoinExpr(p.Pos())
+		if err != nil {
+			return nil, nil, err
+		}
+		return expr, modifiers, nil
 	}
-	expr, err := p.parseJoinExpr(p.Pos())
-	if err != nil {
-		return nil, nil, err
-	}
-	return expr, modifiers, nil
+	return nil, modifiers, nil
 }
 
 func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
