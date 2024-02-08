@@ -16,6 +16,7 @@ type Expr interface {
 	Pos() Pos
 	End() Pos
 	String(level int) string
+	Accept(visitor ASTVisitor) (Expr, error)
 }
 
 type DDL interface {
@@ -40,6 +41,10 @@ func (o *OperationExpr) String(int) string {
 	return strings.ToUpper(string(o.Kind))
 }
 
+func (o *OperationExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitOperationExpr(o)
+}
+
 type TernaryExpr struct {
 	Condition Expr
 	TrueExpr  Expr
@@ -62,6 +67,25 @@ func (t *TernaryExpr) String(level int) string {
 	builder.WriteString(" : ")
 	builder.WriteString(t.FalseExpr.String(level))
 	return builder.String()
+}
+
+func (t *TernaryExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := t.TrueExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.TrueExpr = e
+	}
+	if e, err := t.FalseExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.FalseExpr = e
+	}
+	if e, err := t.Condition.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Condition = e
+	}
+	return visitor.VisitTernaryExpr(t)
 }
 
 type BinaryExpr struct {
@@ -93,6 +117,20 @@ func (p *BinaryExpr) String(level int) string {
 	builder.WriteByte(' ')
 	builder.WriteString(p.RightExpr.String(level))
 	return builder.String()
+}
+
+func (p *BinaryExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := p.LeftExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		p.LeftExpr = e
+	}
+	if e, err := p.RightExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		p.RightExpr = e
+	}
+	return visitor.VisitBinaryExpr(p)
 }
 
 type AlterTableExpr interface {
@@ -138,6 +176,25 @@ func (a *AlterTable) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTable) Accept(visitor ASTVisitor) (Expr, error) {
+	if a.OnCluster != nil {
+		if e, err := a.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.OnCluster.Expr = e
+		}
+	}
+
+	for i, expr := range a.AlterExprs {
+		if e, err := expr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.AlterExprs[i] = e.(AlterTableExpr)
+		}
+	}
+	return visitor.VisitAlterTable(a)
+}
+
 type AlterTableAttachPartition struct {
 	AttachPos Pos
 
@@ -171,6 +228,22 @@ func (a *AlterTableAttachPartition) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableAttachPartition) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Partition.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Partition = e.(*PartitionExpr)
+	}
+	if a.From != nil {
+		if e, err := a.From.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.From = e.(*TableIdentifier)
+		}
+	}
+	return visitor.VisitAlterTableAttachPartition(a)
+}
+
 type AlterTableDetachPartition struct {
 	DetachPos Pos
 	Partition *PartitionExpr
@@ -200,6 +273,22 @@ func (a *AlterTableDetachPartition) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableDetachPartition) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Partition.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Partition = e.(*PartitionExpr)
+	}
+	if a.Settings != nil {
+		if e, err := a.Settings.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.Settings = e.(*SettingsExprList)
+		}
+	}
+	return visitor.VisitAlterTableDetachPartition(a)
+}
+
 type AlterTableDropPartition struct {
 	DropPos   Pos
 	Partition *PartitionExpr
@@ -222,6 +311,15 @@ func (a *AlterTableDropPartition) String(level int) string {
 	builder.WriteString("DROP ")
 	builder.WriteString(a.Partition.String(level))
 	return builder.String()
+}
+
+func (a *AlterTableDropPartition) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Partition.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Partition = e.(*PartitionExpr)
+	}
+	return visitor.VisitAlterTableDropPartition(a)
 }
 
 type AlterTableFreezePartition struct {
@@ -250,6 +348,17 @@ func (a *AlterTableFreezePartition) String(level int) string {
 		builder.WriteString(a.Partition.String(level))
 	}
 	return builder.String()
+}
+
+func (a *AlterTableFreezePartition) Accept(visitor ASTVisitor) (Expr, error) {
+	if a.Partition != nil {
+		if e, err := a.Partition.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.Partition = e.(*PartitionExpr)
+		}
+	}
+	return visitor.VisitAlterTableFreezePartition(a)
 }
 
 type AlterTableAddColumn struct {
@@ -287,6 +396,22 @@ func (a *AlterTableAddColumn) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableAddColumn) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Column.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Column = e.(*Column)
+	}
+	if a.After != nil {
+		if e, err := a.After.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.After = e.(*NestedIdentifier)
+		}
+	}
+	return visitor.VisitAlterTableAddColumn(a)
+}
+
 type AlterTableAddIndex struct {
 	AddPos       Pos
 	StatementEnd Pos
@@ -322,6 +447,22 @@ func (a *AlterTableAddIndex) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableAddIndex) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Index.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Index = e.(*TableIndex)
+	}
+	if a.After != nil {
+		if e, err := a.After.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.After = e.(*NestedIdentifier)
+		}
+	}
+	return visitor.VisitAlterTableAddIndex(a)
+}
+
 type AlterTableDropColumn struct {
 	DropPos    Pos
 	ColumnName *NestedIdentifier
@@ -348,6 +489,15 @@ func (a *AlterTableDropColumn) String(level int) string {
 	}
 	builder.WriteString(a.ColumnName.String(level))
 	return builder.String()
+}
+
+func (a *AlterTableDropColumn) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.ColumnName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.ColumnName = e.(*NestedIdentifier)
+	}
+	return visitor.VisitAlterTableDropColumn(a)
 }
 
 type AlterTableDropIndex struct {
@@ -378,6 +528,15 @@ func (a *AlterTableDropIndex) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableDropIndex) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.IndexName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.IndexName = e.(*NestedIdentifier)
+	}
+	return visitor.VisitAlterTableDropIndex(a)
+}
+
 type AlterTableRemoveTTL struct {
 	RemovePos    Pos
 	StatementEnd Pos
@@ -397,6 +556,10 @@ func (a *AlterTableRemoveTTL) AlterType() string {
 
 func (a *AlterTableRemoveTTL) String(level int) string {
 	return "REMOVE TTL"
+}
+
+func (a *AlterTableRemoveTTL) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitAlterTableRemoveTTL(a)
 }
 
 type AlterTableClearColumn struct {
@@ -436,6 +599,22 @@ func (a *AlterTableClearColumn) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableClearColumn) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.ColumnName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.ColumnName = e.(*NestedIdentifier)
+	}
+	if a.PartitionExpr != nil {
+		if e, err := a.PartitionExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.PartitionExpr = e.(*PartitionExpr)
+		}
+	}
+	return visitor.VisitAlterTableClearColumn(a)
+}
+
 type AlterTableClearIndex struct {
 	ClearPos     Pos
 	StatementEnd Pos
@@ -473,6 +652,22 @@ func (a *AlterTableClearIndex) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableClearIndex) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.IndexName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.IndexName = e.(*NestedIdentifier)
+	}
+	if a.PartitionExpr != nil {
+		if e, err := a.PartitionExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.PartitionExpr = e.(*PartitionExpr)
+		}
+	}
+	return visitor.VisitAlterTableClearIndex(a)
+}
+
 type AlterTableRenameColumn struct {
 	RenamePos Pos
 
@@ -505,6 +700,20 @@ func (a *AlterTableRenameColumn) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableRenameColumn) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.OldColumnName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.OldColumnName = e.(*NestedIdentifier)
+	}
+	if e, err := a.NewColumnName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.NewColumnName = e.(*NestedIdentifier)
+	}
+	return visitor.VisitAlterTableRenameColumn(a)
+}
+
 type AlterTableModifyTTL struct {
 	ModifyPos    Pos
 	StatementEnd Pos
@@ -529,6 +738,15 @@ func (a *AlterTableModifyTTL) String(level int) string {
 	builder.WriteString("TTL ")
 	builder.WriteString(a.TTL.String(level))
 	return builder.String()
+}
+
+func (a *AlterTableModifyTTL) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.TTL.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.TTL = e.(*TTLExpr)
+	}
+	return visitor.VisitAlterTableModifyTTL(a)
 }
 
 type AlterTableModifyColumn struct {
@@ -565,6 +783,22 @@ func (a *AlterTableModifyColumn) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableModifyColumn) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Column.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Column = e.(*Column)
+	}
+	if a.RemovePropertyType != nil {
+		if e, err := a.RemovePropertyType.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.RemovePropertyType = e.(*RemovePropertyType)
+		}
+	}
+	return visitor.VisitAlterTableModifyColumn(a)
+}
+
 type AlterTableReplacePartition struct {
 	ReplacePos Pos
 	Partition  *PartitionExpr
@@ -592,6 +826,20 @@ func (a *AlterTableReplacePartition) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterTableReplacePartition) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Partition.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Partition = e.(*PartitionExpr)
+	}
+	if e, err := a.Table.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Table = e.(*TableIdentifier)
+	}
+	return visitor.VisitAlterTableReplacePartition(a)
+}
+
 type RemovePropertyType struct {
 	RemovePos Pos
 
@@ -611,6 +859,15 @@ func (a *RemovePropertyType) String(level int) string {
 	builder.WriteString(" REMOVE ")
 	builder.WriteString(a.PropertyType.String(level))
 	return builder.String()
+}
+
+func (a *RemovePropertyType) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.PropertyType.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.PropertyType = e
+	}
+	return visitor.VisitRemovePropertyType(a)
 }
 
 type TableIndex struct {
@@ -644,6 +901,30 @@ func (a *TableIndex) String(level int) string {
 	return builder.String()
 }
 
+func (a *TableIndex) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Name = e.(*NestedIdentifier)
+	}
+	if e, err := a.ColumnExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.ColumnExpr = e
+	}
+	if e, err := a.ColumnType.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.ColumnType = e
+	}
+	if e, err := a.Granularity.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Granularity = e.(*NumberLiteral)
+	}
+	return visitor.VisitTableIndex(a)
+}
+
 type Ident struct {
 	Name     string
 	Unquoted bool
@@ -666,6 +947,10 @@ func (i *Ident) String(int) string {
 	return i.Name
 }
 
+func (i *Ident) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitIdent(i)
+}
+
 type UUID struct {
 	Value *StringLiteral
 }
@@ -680,6 +965,10 @@ func (u *UUID) End() Pos {
 
 func (u *UUID) String(level int) string {
 	return "UUID " + u.Value.String(level)
+}
+
+func (u *UUID) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitUUID(u)
 }
 
 type CreateDatabase struct {
@@ -719,6 +1008,24 @@ func (c *CreateDatabase) String(level int) string {
 		builder.WriteString(c.Engine.String(level))
 	}
 	return builder.String()
+}
+
+func (c *CreateDatabase) Accept(visitor ASTVisitor) (Expr, error) {
+	if c.OnCluster != nil {
+		if e, err := c.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if c.Engine != nil {
+		if e, err := c.Engine.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Engine = e.(*EngineExpr)
+		}
+	}
+	return visitor.VisitCreateDatabase(c)
 }
 
 type CreateTable struct {
@@ -776,6 +1083,45 @@ func (c *CreateTable) String(level int) string {
 		builder.WriteString(c.SubQuery.String(level))
 	}
 	return builder.String()
+}
+
+func (c *CreateTable) Accept(visitor ASTVisitor) (Expr, error) {
+	if c.UUID != nil {
+		if e, err := c.UUID.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.UUID = e.(*UUID)
+		}
+	}
+	if c.OnCluster != nil {
+		if e, err := c.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if c.TableSchema != nil {
+		if e, err := c.TableSchema.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.TableSchema = e.(*TableSchemaExpr)
+		}
+	}
+	if c.Engine != nil {
+		if e, err := c.Engine.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Engine = e.(*EngineExpr)
+		}
+	}
+	if c.SubQuery != nil {
+		if e, err := c.SubQuery.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.SubQuery = e.(*SubQueryExpr)
+		}
+	}
+	return visitor.VisitCreateTable(c)
 }
 
 type CreateMaterializedView struct {
@@ -836,6 +1182,57 @@ func (c *CreateMaterializedView) String(level int) string {
 	return builder.String()
 }
 
+func (c *CreateMaterializedView) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*TableIdentifier)
+	}
+	if c.UUID != nil {
+		if e, err := c.UUID.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.UUID = e.(*UUID)
+		}
+	}
+	if c.OnCluster != nil {
+		if e, err := c.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if c.TableSchema != nil {
+		if e, err := c.TableSchema.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.TableSchema = e.(*TableSchemaExpr)
+		}
+	}
+	if c.Engine != nil {
+		if e, err := c.Engine.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Engine = e.(*EngineExpr)
+		}
+	}
+	if c.Destination != nil {
+		if e, err := c.Destination.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Destination = e.(*DestinationExpr)
+		}
+	}
+	if c.SubQuery != nil {
+		if e, err := c.SubQuery.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.SubQuery = e.(*SubQueryExpr)
+		}
+	}
+	return visitor.VisitCreateMaterializedView(c)
+}
+
 type CreateView struct {
 	CreatePos    Pos // position of CREATE|ATTACH keyword
 	StatementEnd Pos
@@ -887,6 +1284,43 @@ func (c *CreateView) String(level int) string {
 	return builder.String()
 }
 
+func (c *CreateView) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*TableIdentifier)
+	}
+	if c.UUID != nil {
+		if e, err := c.UUID.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.UUID = e.(*UUID)
+		}
+	}
+	if c.OnCluster != nil {
+		if e, err := c.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if c.TableSchema != nil {
+		if e, err := c.TableSchema.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.TableSchema = e.(*TableSchemaExpr)
+		}
+	}
+	if c.SubQuery != nil {
+		if e, err := c.SubQuery.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.SubQuery = e.(*SubQueryExpr)
+		}
+	}
+	return visitor.VisitCreateView(c)
+}
+
 type CreateFunction struct {
 	CreatePos    Pos
 	IfNotExists  bool
@@ -926,6 +1360,32 @@ func (c *CreateFunction) String(level int) string {
 	return builder.String()
 }
 
+func (c *CreateFunction) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.FunctionName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.FunctionName = e.(*Ident)
+	}
+	if c.OnCluster != nil {
+		if e, err := c.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if e, err := c.Params.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Params = e.(*ParamExprList)
+	}
+	if e, err := c.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Expr = e
+	}
+	return visitor.VisitCreateFunction(c)
+}
+
 type RoleName struct {
 	Name      Expr
 	Scope     *StringLiteral
@@ -960,6 +1420,29 @@ func (r *RoleName) String(level int) string {
 	return builder.String()
 }
 
+func (r *RoleName) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := r.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		r.Name = e
+	}
+	if r.Scope != nil {
+		if e, err := r.Scope.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.Scope = e.(*StringLiteral)
+		}
+	}
+	if r.OnCluster != nil {
+		if e, err := r.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	return visitor.VisitRoleName(r)
+}
+
 type SettingPair struct {
 	Name  *Ident
 	Value Expr
@@ -981,6 +1464,22 @@ func (s *SettingPair) String(level int) string {
 		builder.WriteString(s.Value.String(level))
 	}
 	return builder.String()
+}
+
+func (s *SettingPair) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Name = e.(*Ident)
+	}
+	if s.Value != nil {
+		if e, err := s.Value.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Value = e
+		}
+	}
+	return visitor.VisitSettingPair(s)
 }
 
 type RoleSetting struct {
@@ -1015,6 +1514,24 @@ func (r *RoleSetting) String(level int) string {
 		builder.WriteString(r.Modifier.String(level))
 	}
 	return builder.String()
+}
+
+func (r *RoleSetting) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, settingPair := range r.SettingPairs {
+		if e, err := settingPair.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.SettingPairs[i] = e.(*SettingPair)
+		}
+	}
+	if r.Modifier != nil {
+		if e, err := r.Modifier.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.Modifier = e.(*Ident)
+		}
+	}
+	return visitor.VisitRoleSetting(r)
 }
 
 type CreateRole struct {
@@ -1071,6 +1588,31 @@ func (c *CreateRole) String(level int) string {
 	return builder.String()
 }
 
+func (c *CreateRole) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, roleName := range c.RoleNames {
+		if e, err := roleName.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.RoleNames[i] = e.(*RoleName)
+		}
+	}
+	if c.AccessStorageType != nil {
+		if e, err := c.AccessStorageType.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.AccessStorageType = e.(*Ident)
+		}
+	}
+	for i, setting := range c.Settings {
+		if e, err := setting.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Settings[i] = e.(*RoleSetting)
+		}
+	}
+	return visitor.VisitCreateRole(c)
+}
+
 type AlterRole struct {
 	AlterPos        Pos
 	StatementEnd    Pos
@@ -1115,6 +1657,24 @@ func (a *AlterRole) String(level int) string {
 	return builder.String()
 }
 
+func (a *AlterRole) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, roleRenamePair := range a.RoleRenamePairs {
+		if e, err := roleRenamePair.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.RoleRenamePairs[i] = e.(*RoleRenamePair)
+		}
+	}
+	for i, setting := range a.Settings {
+		if e, err := setting.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			a.Settings[i] = e.(*RoleSetting)
+		}
+	}
+	return visitor.VisitAlterRole(a)
+}
+
 type RoleRenamePair struct {
 	RoleName     *RoleName
 	NewName      Expr
@@ -1139,6 +1699,22 @@ func (r *RoleRenamePair) String(level int) string {
 	return builder.String()
 }
 
+func (r *RoleRenamePair) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := r.RoleName.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		r.RoleName = e.(*RoleName)
+	}
+	if r.NewName != nil {
+		if e, err := r.NewName.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.NewName = e
+		}
+	}
+	return visitor.VisitRoleRenamePair(r)
+}
+
 type DestinationExpr struct {
 	ToPos           Pos
 	TableIdentifier *TableIdentifier
@@ -1157,6 +1733,15 @@ func (d *DestinationExpr) String(level int) string {
 	builder.WriteString("TO ")
 	builder.WriteString(d.TableIdentifier.String(level))
 	return builder.String()
+}
+
+func (d *DestinationExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := d.TableIdentifier.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		d.TableIdentifier = e.(*TableIdentifier)
+	}
+	return visitor.VisitDestinationExpr(d)
 }
 
 type ConstraintExpr struct {
@@ -1181,6 +1766,20 @@ func (c *ConstraintExpr) String(level int) string {
 	return builder.String()
 }
 
+func (c *ConstraintExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Constraint.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Constraint = e.(*Ident)
+	}
+	if e, err := c.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Expr = e
+	}
+	return visitor.VisitConstraintExpr(c)
+}
+
 type NullLiteral struct {
 	NullPos Pos
 }
@@ -1195,6 +1794,10 @@ func (n *NullLiteral) End() Pos {
 
 func (n *NullLiteral) String(int) string {
 	return "NULL"
+}
+
+func (n *NullLiteral) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitNullLiteral(n)
 }
 
 type NotNullLiteral struct {
@@ -1212,6 +1815,15 @@ func (n *NotNullLiteral) End() Pos {
 
 func (n *NotNullLiteral) String(int) string {
 	return "NOT NULL"
+}
+
+func (n *NotNullLiteral) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.NullLiteral.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.NullLiteral = e.(*NullLiteral)
+	}
+	return visitor.VisitNotNullLiteral(n)
 }
 
 type NestedIdentifier struct {
@@ -1235,6 +1847,22 @@ func (n *NestedIdentifier) String(int) string {
 		return n.Ident.String(0) + "." + n.DotIdent.String(0)
 	}
 	return n.Ident.String(0)
+}
+
+func (n *NestedIdentifier) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Ident.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Ident = e.(*Ident)
+	}
+	if n.DotIdent != nil {
+		if e, err := n.DotIdent.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			n.DotIdent = e.(*Ident)
+		}
+	}
+	return visitor.VisitNestedIdentifier(n)
 }
 
 type ColumnIdentifier struct {
@@ -1267,6 +1895,29 @@ func (c *ColumnIdentifier) String(int) string {
 	}
 }
 
+func (c *ColumnIdentifier) Accept(visitor ASTVisitor) (Expr, error) {
+	if c.Database != nil {
+		if e, err := c.Database.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Database = e.(*Ident)
+		}
+	}
+	if c.Table != nil {
+		if e, err := c.Table.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Table = e.(*Ident)
+		}
+	}
+	if e, err := c.Column.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Column = e.(*Ident)
+	}
+	return visitor.VisitColumnIdentifier(c)
+}
+
 type TableIdentifier struct {
 	Database *Ident
 	Table    *Ident
@@ -1288,6 +1939,22 @@ func (t *TableIdentifier) String(int) string {
 		return t.Database.String(0) + "." + t.Table.String(0)
 	}
 	return t.Table.String(0)
+}
+
+func (t *TableIdentifier) Accept(visitor ASTVisitor) (Expr, error) {
+	if t.Database != nil {
+		if e, err := t.Database.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.Database = e.(*Ident)
+		}
+	}
+	if e, err := t.Table.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Table = e.(*Ident)
+	}
+	return visitor.VisitTableIdentifier(t)
 }
 
 type TableSchemaExpr struct {
@@ -1331,6 +1998,31 @@ func (t *TableSchemaExpr) String(level int) string {
 	return builder.String()
 }
 
+func (t *TableSchemaExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, column := range t.Columns {
+		if e, err := column.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.Columns[i] = e
+		}
+	}
+	if t.AliasTable != nil {
+		if e, err := t.AliasTable.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.AliasTable = e.(*TableIdentifier)
+		}
+	}
+	if t.TableFunction != nil {
+		if e, err := t.TableFunction.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.TableFunction = e.(*TableFunctionExpr)
+		}
+	}
+	return visitor.VisitTableSchemaExpr(t)
+}
+
 type TableArgListExpr struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
@@ -1358,6 +2050,17 @@ func (t *TableArgListExpr) String(level int) string {
 	return builder.String()
 }
 
+func (t *TableArgListExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, arg := range t.Args {
+		if e, err := arg.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.Args[i] = e
+		}
+	}
+	return visitor.VisitTableArgListExpr(t)
+}
+
 type TableFunctionExpr struct {
 	Name *Ident
 	Args *TableArgListExpr
@@ -1376,6 +2079,20 @@ func (t *TableFunctionExpr) String(level int) string {
 	builder.WriteString(t.Name.String(level))
 	builder.WriteString(t.Args.String(level))
 	return builder.String()
+}
+
+func (t *TableFunctionExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := t.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Name = e.(*Ident)
+	}
+	if e, err := t.Args.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Args = e.(*TableArgListExpr)
+	}
+	return visitor.VisitTableFunctionExpr(t)
 }
 
 type OnClusterExpr struct {
@@ -1398,6 +2115,15 @@ func (o *OnClusterExpr) String(level int) string {
 	return builder.String()
 }
 
+func (o *OnClusterExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := o.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		o.Expr = e
+	}
+	return visitor.VisitOnClusterExpr(o)
+}
+
 type DefaultExpr struct {
 	DefaultPos Pos
 	Expr       Expr
@@ -1416,6 +2142,15 @@ func (d *DefaultExpr) String(level int) string {
 	builder.WriteString("DEFAULT ")
 	builder.WriteString(d.Expr.String(level + 1))
 	return builder.String()
+}
+
+func (d *DefaultExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := d.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		d.Expr = e
+	}
+	return visitor.VisitDefaultExpr(d)
 }
 
 type PartitionExpr struct {
@@ -1449,6 +2184,22 @@ func (p *PartitionExpr) String(level int) string {
 	return builder.String()
 }
 
+func (p *PartitionExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := p.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		p.Expr = e
+	}
+	if p.ID != nil {
+		if e, err := p.ID.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			p.ID = e.(*StringLiteral)
+		}
+	}
+	return visitor.VisitPartitionExpr(p)
+}
+
 type PartitionByExpr struct {
 	PartitionPos Pos
 	Expr         Expr
@@ -1467,6 +2218,15 @@ func (p *PartitionByExpr) String(level int) string {
 	builder.WriteString("PARTITION BY ")
 	builder.WriteString(p.Expr.String(level))
 	return builder.String()
+}
+
+func (p *PartitionByExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := p.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		p.Expr = e
+	}
+	return visitor.VisitPartitionByExpr(p)
 }
 
 type PrimaryKeyExpr struct {
@@ -1489,6 +2249,15 @@ func (p *PrimaryKeyExpr) String(level int) string {
 	return builder.String()
 }
 
+func (p *PrimaryKeyExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := p.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		p.Expr = e
+	}
+	return visitor.VisitPrimaryKeyExpr(p)
+}
+
 type SampleByExpr struct {
 	SamplePos Pos
 	Expr      Expr
@@ -1509,6 +2278,15 @@ func (s *SampleByExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *SampleByExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Expr = e
+	}
+	return visitor.VisitSampleByExpr(s)
+}
+
 type TTLExpr struct {
 	TTLPos Pos
 	Expr   Expr
@@ -1526,6 +2304,15 @@ func (t *TTLExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(t.Expr.String(level))
 	return builder.String()
+}
+
+func (t *TTLExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := t.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Expr = e
+	}
+	return visitor.VisitTTLExpr(t)
 }
 
 type TTLExprList struct {
@@ -1554,6 +2341,17 @@ func (t *TTLExprList) String(level int) string {
 	return builder.String()
 }
 
+func (t *TTLExprList) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, item := range t.Items {
+		if e, err := item.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.Items[i] = e.(*TTLExpr)
+		}
+	}
+	return visitor.VisitTTLExprList(t)
+}
+
 type OrderByExpr struct {
 	OrderPos  Pos
 	Expr      Expr
@@ -1576,6 +2374,15 @@ func (o *OrderByExpr) String(level int) string {
 		builder.WriteString(string(o.Direction))
 	}
 	return builder.String()
+}
+
+func (o *OrderByExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := o.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		o.Expr = e
+	}
+	return visitor.VisitOrderByExpr(o)
 }
 
 type OrderByListExpr struct {
@@ -1605,6 +2412,17 @@ func (o *OrderByListExpr) String(level int) string {
 	return builder.String()
 }
 
+func (o *OrderByListExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, item := range o.Items {
+		if e, err := item.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			o.Items[i] = e
+		}
+	}
+	return visitor.VisitOrderByListExpr(o)
+}
+
 type SettingsExpr struct {
 	SettingsPos Pos
 	Name        *Ident
@@ -1625,6 +2443,20 @@ func (s *SettingsExpr) String(level int) string {
 	builder.WriteByte('=')
 	builder.WriteString(s.Expr.String(level))
 	return builder.String()
+}
+
+func (s *SettingsExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Name = e.(*Ident)
+	}
+	if e, err := s.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Expr = e
+	}
+	return visitor.VisitSettingsExpr(s)
 }
 
 type SettingsExprList struct {
@@ -1651,6 +2483,17 @@ func (s *SettingsExprList) String(level int) string {
 		builder.WriteString(item.String(level))
 	}
 	return builder.String()
+}
+
+func (s *SettingsExprList) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, item := range s.Items {
+		if e, err := item.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Items[i] = e.(*SettingsExpr)
+		}
+	}
+	return visitor.VisitSettingsExprList(s)
 }
 
 type ParamExprList struct {
@@ -1681,6 +2524,22 @@ func (f *ParamExprList) String(level int) string {
 	return builder.String()
 }
 
+func (f *ParamExprList) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Items.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Items = e.(*ColumnExprList)
+	}
+	if f.ColumnArgList != nil {
+		if e, err := f.ColumnArgList.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			f.ColumnArgList = e.(*ColumnArgList)
+		}
+	}
+	return visitor.VisitParamExprList(f)
+}
+
 type ArrayParamList struct {
 	LeftBracketPos  Pos
 	RightBracketPos Pos
@@ -1708,6 +2567,15 @@ func (a *ArrayParamList) String(level int) string {
 	return builder.String()
 }
 
+func (a *ArrayParamList) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Items.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Items = e.(*ColumnExprList)
+	}
+	return visitor.VisitArrayParamList(a)
+}
+
 type ObjectParams struct {
 	Object Expr
 	Params *ArrayParamList
@@ -1726,6 +2594,20 @@ func (o *ObjectParams) String(level int) string {
 	builder.WriteString(o.Object.String(level))
 	builder.WriteString(o.Params.String(level))
 	return builder.String()
+}
+
+func (o *ObjectParams) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := o.Object.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		o.Object = e
+	}
+	if e, err := o.Params.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		o.Params = e.(*ArrayParamList)
+	}
+	return visitor.VisitObjectParams(o)
 }
 
 type FunctionExpr struct {
@@ -1748,6 +2630,20 @@ func (f *FunctionExpr) String(level int) string {
 	return builder.String()
 }
 
+func (f *FunctionExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Name = e.(*Ident)
+	}
+	if e, err := f.Params.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Params = e.(*ParamExprList)
+	}
+	return visitor.VisitFunctionExpr(f)
+}
+
 type WindowFunctionExpr struct {
 	Function *FunctionExpr
 	OverPos  Pos
@@ -1768,6 +2664,20 @@ func (w *WindowFunctionExpr) String(level int) string {
 	builder.WriteString(" OVER ")
 	builder.WriteString(w.OverExpr.String(level))
 	return builder.String()
+}
+
+func (w *WindowFunctionExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := w.Function.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.Function = e.(*FunctionExpr)
+	}
+	if e, err := w.OverExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.OverExpr = e
+	}
+	return visitor.VisitWindowFunctionExpr(w)
 }
 
 type Column struct {
@@ -1826,6 +2736,64 @@ func (c *Column) String(level int) string {
 	return builder.String()
 }
 
+func (c *Column) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*Ident)
+	}
+	if c.Type != nil {
+		if e, err := c.Type.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Type = e
+		}
+	}
+	if c.NotNull != nil {
+		if e, err := c.NotNull.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.NotNull = e.(*NotNullLiteral)
+		}
+	}
+	if c.Nullable != nil {
+		if e, err := c.Nullable.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Nullable = e.(*NullLiteral)
+		}
+	}
+	if c.Property != nil {
+		if e, err := c.Property.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Property = e
+		}
+	}
+	if c.Codec != nil {
+		if e, err := c.Codec.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Codec = e.(*CompressionCodec)
+		}
+	}
+	if c.TTL != nil {
+		if e, err := c.TTL.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.TTL = e
+		}
+	}
+	if c.Comment != nil {
+		if e, err := c.Comment.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Comment = e.(*StringLiteral)
+		}
+	}
+	return visitor.VisitColumn(c)
+}
+
 type ScalarTypeExpr struct {
 	Name *Ident
 }
@@ -1842,6 +2810,15 @@ func (s *ScalarTypeExpr) String(level int) string {
 	return s.Name.String(level + 1)
 }
 
+func (s *ScalarTypeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Name = e.(*Ident)
+	}
+	return visitor.VisitScalarTypeExpr(s)
+}
+
 type PropertyTypeExpr struct {
 	Name *Ident
 }
@@ -1856,6 +2833,15 @@ func (c *PropertyTypeExpr) End() Pos {
 
 func (c *PropertyTypeExpr) String(level int) string {
 	return c.Name.String(level + 1)
+}
+
+func (c *PropertyTypeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*Ident)
+	}
+	return visitor.VisitPropertyTypeExpr(c)
 }
 
 type TypeWithParamsExpr struct {
@@ -1887,6 +2873,22 @@ func (s *TypeWithParamsExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *TypeWithParamsExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Name = e.(*Ident)
+	}
+	for i, param := range s.Params {
+		if e, err := param.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Params[i] = e.(Literal)
+		}
+	}
+	return visitor.VisitTypeWithParamsExpr(s)
+}
+
 type ComplexTypeExpr struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
@@ -1914,6 +2916,22 @@ func (c *ComplexTypeExpr) String(level int) string {
 	}
 	builder.WriteByte(')')
 	return builder.String()
+}
+
+func (c *ComplexTypeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*Ident)
+	}
+	for i, param := range c.Params {
+		if e, err := param.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Params[i] = e
+		}
+	}
+	return visitor.VisitComplexTypeExpr(c)
 }
 
 type NestedTypeExpr struct {
@@ -1948,6 +2966,22 @@ func (n *NestedTypeExpr) String(level int) string {
 	return builder.String()
 }
 
+func (n *NestedTypeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Name = e.(*Ident)
+	}
+	for i, column := range n.Columns {
+		if e, err := column.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			n.Columns[i] = e
+		}
+	}
+	return visitor.VisitNestedTypeExpr(n)
+}
+
 type CompressionCodec struct {
 	CodecPos      Pos
 	RightParenPos Pos
@@ -1976,6 +3010,22 @@ func (c *CompressionCodec) String(level int) string {
 	return builder.String()
 }
 
+func (c *CompressionCodec) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*Ident)
+	}
+	if c.Level != nil {
+		if e, err := c.Level.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Level = e.(*NumberLiteral)
+		}
+	}
+	return visitor.VisitCompressionCodec(c)
+}
+
 type Literal interface {
 	Expr
 }
@@ -1999,6 +3049,10 @@ func (n *NumberLiteral) String(int) string {
 	return n.Literal
 }
 
+func (n *NumberLiteral) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitNumberLiteral(n)
+}
+
 type StringLiteral struct {
 	LiteralPos Pos
 	LiteralEnd Pos
@@ -2015,6 +3069,10 @@ func (s *StringLiteral) End() Pos {
 
 func (s *StringLiteral) String(int) string {
 	return "'" + s.Literal + "'"
+}
+
+func (s *StringLiteral) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitStringLiteral(s)
 }
 
 type RatioExpr struct {
@@ -2044,6 +3102,22 @@ func (r *RatioExpr) String(int) string {
 	return builder.String()
 }
 
+func (r *RatioExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := r.Numerator.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		r.Numerator = e.(*NumberLiteral)
+	}
+	if r.Denominator != nil {
+		if e, err := r.Denominator.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.Denominator = e.(*NumberLiteral)
+		}
+	}
+	return visitor.VisitRatioExpr(r)
+}
+
 type EnumValueExpr struct {
 	Name  *StringLiteral
 	Value *NumberLiteral
@@ -2063,6 +3137,20 @@ func (e *EnumValueExpr) String(level int) string {
 	builder.WriteByte('=')
 	builder.WriteString(e.Value.String(level))
 	return builder.String()
+}
+
+func (e *EnumValueExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if expr, err := e.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		e.Name = expr.(*StringLiteral)
+	}
+	if expr, err := e.Value.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		e.Value = expr.(*NumberLiteral)
+	}
+	return visitor.VisitEnumValueExpr(e)
 }
 
 type EnumValueExprList struct {
@@ -2090,6 +3178,17 @@ func (e *EnumValueExprList) String(level int) string {
 	return builder.String()
 }
 
+func (e *EnumValueExprList) Accept(visitor ASTVisitor) (Expr, error) {
+	for i := range e.Enums {
+		if expr, err := e.Enums[i].Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.Enums[i] = *expr.(*EnumValueExpr)
+		}
+	}
+	return visitor.VisitEnumValueExprList(e)
+}
+
 type IntervalExpr struct {
 	IntervalPos Pos
 	Expr        Expr
@@ -2111,6 +3210,20 @@ func (i *IntervalExpr) String(level int) string {
 	builder.WriteByte(' ')
 	builder.WriteString(i.Unit.String(level))
 	return builder.String()
+}
+
+func (i *IntervalExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if expr, err := i.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		i.Expr = expr
+	}
+	if expr, err := i.Unit.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		i.Unit = expr.(*Ident)
+	}
+	return visitor.VisitIntervalExpr(i)
 }
 
 type EngineExpr struct {
@@ -2170,6 +3283,59 @@ func (e *EngineExpr) String(level int) string {
 	return builder.String()
 }
 
+func (e *EngineExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e.Params != nil {
+		if expr, err := e.Params.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.Params = expr.(*ParamExprList)
+		}
+	}
+	if e.PrimaryKey != nil {
+		if expr, err := e.PrimaryKey.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.PrimaryKey = expr.(*PrimaryKeyExpr)
+		}
+	}
+	if e.PartitionBy != nil {
+		if expr, err := e.PartitionBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.PartitionBy = expr.(*PartitionByExpr)
+		}
+	}
+	if e.SampleBy != nil {
+		if expr, err := e.SampleBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.SampleBy = expr.(*SampleByExpr)
+		}
+	}
+	if e.TTLExprList != nil {
+		if expr, err := e.TTLExprList.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.TTLExprList = expr.(*TTLExprList)
+		}
+	}
+	if e.SettingsExprList != nil {
+		if expr, err := e.SettingsExprList.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.SettingsExprList = expr.(*SettingsExprList)
+		}
+	}
+	if e.OrderByListExpr != nil {
+		if expr, err := e.OrderByListExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			e.OrderByListExpr = expr.(*OrderByListExpr)
+		}
+	}
+	return visitor.VisitEngineExpr(e)
+}
+
 type ColumnTypeExpr struct {
 	Name *Ident
 }
@@ -2184,6 +3350,15 @@ func (c *ColumnTypeExpr) End() Pos {
 
 func (c *ColumnTypeExpr) String(level int) string {
 	return c.Name.String(level)
+}
+
+func (c *ColumnTypeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*Ident)
+	}
+	return visitor.VisitColumnTypeExpr(c)
 }
 
 type ColumnArgList struct {
@@ -2214,6 +3389,17 @@ func (c *ColumnArgList) String(level int) string {
 	return builder.String()
 }
 
+func (c *ColumnArgList) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, item := range c.Items {
+		if e, err := item.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Items[i] = e
+		}
+	}
+	return visitor.VisitColumnArgList(c)
+}
+
 type ColumnExprList struct {
 	ListPos     Pos
 	ListEnd     Pos
@@ -2241,6 +3427,17 @@ func (c *ColumnExprList) String(level int) string {
 		}
 	}
 	return builder.String()
+}
+
+func (c *ColumnExprList) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, item := range c.Items {
+		if e, err := item.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Items[i] = e
+		}
+	}
+	return visitor.VisitColumnExprList(c)
 }
 
 type WhenExpr struct {
@@ -2279,6 +3476,27 @@ func (w *WhenExpr) String(level int) string {
 	return builder.String()
 }
 
+func (w *WhenExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := w.When.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.When = e
+	}
+	if e, err := w.Then.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.Then = e
+	}
+	if w.Else != nil {
+		if e, err := w.Else.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.Else = e
+		}
+	}
+	return visitor.VisitWhenExpr(w)
+}
+
 type CaseExpr struct {
 	CasePos Pos
 	EndPos  Pos
@@ -2315,6 +3533,29 @@ func (c *CaseExpr) String(level int) string {
 	return builder.String()
 }
 
+func (c *CaseExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Expr = e
+	}
+	for i, when := range c.Whens {
+		if e, err := when.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Whens[i] = e.(*WhenExpr)
+		}
+	}
+	if c.Else != nil {
+		if e, err := c.Else.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Else = e
+		}
+	}
+	return visitor.VisitCaseExpr(c)
+}
+
 type CastExpr struct {
 	CastPos Pos
 	Expr    Expr
@@ -2343,6 +3584,20 @@ func (c *CastExpr) String(level int) string {
 	return builder.String()
 }
 
+func (c *CastExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Expr = e
+	}
+	if e, err := c.AsType.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.AsType = e
+	}
+	return visitor.VisitCastExpr(c)
+}
+
 type WithExpr struct {
 	WithPos Pos
 	EndPos  Pos
@@ -2369,6 +3624,17 @@ func (w *WithExpr) String(level int) string {
 	return builder.String()
 }
 
+func (w *WithExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, cte := range w.CTEs {
+		if e, err := cte.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.CTEs[i] = e.(*CTEExpr)
+		}
+	}
+	return visitor.VisitWithExpr(w)
+}
+
 type TopExpr struct {
 	TopPos   Pos
 	TopEnd   Pos
@@ -2392,6 +3658,15 @@ func (t *TopExpr) String(int) string {
 		return "WITH TIES"
 	}
 	return builder.String()
+}
+
+func (t *TopExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := t.Number.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Number = e.(*NumberLiteral)
+	}
+	return visitor.VisitTopExpr(t)
 }
 
 type CreateLiveView struct {
@@ -2454,6 +3729,57 @@ func (c *CreateLiveView) String(level int) string {
 	return builder.String()
 }
 
+func (c *CreateLiveView) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Name = e.(*TableIdentifier)
+	}
+	if c.UUID != nil {
+		if e, err := c.UUID.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.UUID = e.(*UUID)
+		}
+	}
+	if c.OnCluster != nil {
+		if e, err := c.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if c.Destination != nil {
+		if e, err := c.Destination.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Destination = e.(*DestinationExpr)
+		}
+	}
+	if c.TableSchema != nil {
+		if e, err := c.TableSchema.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.TableSchema = e.(*TableSchemaExpr)
+		}
+	}
+	if c.WithTimeout != nil {
+		if e, err := c.WithTimeout.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.WithTimeout = e.(*WithTimeoutExpr)
+		}
+	}
+	if c.SubQuery != nil {
+		if e, err := c.SubQuery.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.SubQuery = e.(*SubQueryExpr)
+		}
+	}
+	return visitor.VisitCreateLiveView(c)
+}
+
 type WithTimeoutExpr struct {
 	WithTimeoutPos Pos
 	Expr           Expr
@@ -2473,6 +3799,15 @@ func (w *WithTimeoutExpr) String(int) string {
 	builder.WriteString("WITH TIMEOUT ")
 	builder.WriteString(w.Number.String(0))
 	return builder.String()
+}
+
+func (w *WithTimeoutExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := w.Number.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.Number = e.(*NumberLiteral)
+	}
+	return visitor.VisitWithTimeoutExpr(w)
 }
 
 type TableExpr struct {
@@ -2504,6 +3839,22 @@ func (t *TableExpr) String(level int) string {
 	return builder.String()
 }
 
+func (t *TableExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := t.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Expr = e
+	}
+	if t.Alias != nil {
+		if e, err := t.Alias.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.Alias = e.(*AliasExpr)
+		}
+	}
+	return visitor.VisitTableExpr(t)
+}
+
 type OnExpr struct {
 	OnPos Pos
 	On    *ColumnExprList
@@ -2524,6 +3875,15 @@ func (o *OnExpr) String(level int) string {
 	return builder.String()
 }
 
+func (o *OnExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := o.On.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		o.On = e.(*ColumnExprList)
+	}
+	return visitor.VisitOnExpr(o)
+}
+
 type UsingExpr struct {
 	UsingPos Pos
 	Using    *ColumnExprList
@@ -2542,6 +3902,15 @@ func (u *UsingExpr) String(level int) string {
 	builder.WriteString("USING ")
 	builder.WriteString(u.Using.String(level))
 	return builder.String()
+}
+
+func (u *UsingExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := u.Using.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		u.Using = e.(*ColumnExprList)
+	}
+	return visitor.VisitUsingExpr(u)
 }
 
 type JoinExpr struct {
@@ -2579,6 +3948,34 @@ func (j *JoinExpr) String(level int) string {
 	return builder.String()
 }
 
+func (j *JoinExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := j.Left.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		j.Left = e
+	}
+	if e, err := j.Right.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		j.Right = e
+	}
+	if j.SampleRatio != nil {
+		if e, err := j.SampleRatio.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			j.SampleRatio = e.(*SampleRatioExpr)
+		}
+	}
+	if j.Constraints != nil {
+		if e, err := j.Constraints.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			j.Constraints = e
+		}
+	}
+	return visitor.VisitJoinExpr(j)
+}
+
 type JoinConstraintExpr struct {
 	ConstraintPos Pos
 	On            *ColumnExprList
@@ -2608,6 +4005,24 @@ func (j *JoinConstraintExpr) String(level int) string {
 	return builder.String()
 }
 
+func (j *JoinConstraintExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if j.On != nil {
+		if e, err := j.On.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			j.On = e.(*ColumnExprList)
+		}
+	}
+	if j.Using != nil {
+		if e, err := j.Using.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			j.Using = e.(*ColumnExprList)
+		}
+	}
+	return visitor.VisitJoinConstraintExpr(j)
+}
+
 type FromExpr struct {
 	FromPos Pos
 	Expr    Expr
@@ -2627,6 +4042,15 @@ func (f *FromExpr) String(level int) string {
 	builder.WriteString(NewLine(level + 1))
 	builder.WriteString(f.Expr.String(level + 1))
 	return builder.String()
+}
+
+func (f *FromExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Expr = e
+	}
+	return visitor.VisitFromExpr(f)
 }
 
 type IsNullExpr struct {
@@ -2649,6 +4073,15 @@ func (n *IsNullExpr) String(level int) string {
 	return builder.String()
 }
 
+func (n *IsNullExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Expr = e
+	}
+	return visitor.VisitIsNullExpr(n)
+}
+
 type IsNotNullExpr struct {
 	IsPos Pos
 	Expr  Expr
@@ -2667,6 +4100,15 @@ func (n *IsNotNullExpr) String(level int) string {
 	builder.WriteString(n.Expr.String(level))
 	builder.WriteString(" IS NOT NULL")
 	return builder.String()
+}
+
+func (n *IsNotNullExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Expr = e
+	}
+	return visitor.VisitIsNotNullExpr(n)
 }
 
 type AliasExpr struct {
@@ -2697,6 +4139,20 @@ func (a *AliasExpr) String(level int) string {
 	return builder.String()
 }
 
+func (a *AliasExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Expr = e
+	}
+	if e, err := a.Alias.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Alias = e.(*Ident)
+	}
+	return visitor.VisitAliasExpr(a)
+}
+
 type WhereExpr struct {
 	WherePos Pos
 	Expr     Expr
@@ -2718,6 +4174,15 @@ func (w *WhereExpr) String(level int) string {
 	return builder.String()
 }
 
+func (w *WhereExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := w.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.Expr = e
+	}
+	return visitor.VisitWhereExpr(w)
+}
+
 type PrewhereExpr struct {
 	PrewherePos Pos
 	Expr        Expr
@@ -2733,6 +4198,15 @@ func (w *PrewhereExpr) End() Pos {
 
 func (w *PrewhereExpr) String(level int) string {
 	return "PREWHERE " + w.Expr.String(level+1)
+}
+
+func (w *PrewhereExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := w.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		w.Expr = e
+	}
+	return visitor.VisitPrewhereExpr(w)
 }
 
 type GroupByExpr struct {
@@ -2775,6 +4249,15 @@ func (g *GroupByExpr) String(level int) string {
 	return builder.String()
 }
 
+func (g *GroupByExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := g.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		g.Expr = e
+	}
+	return visitor.VisitGroupByExpr(g)
+}
+
 type HavingExpr struct {
 	HavingPos Pos
 	Expr      Expr
@@ -2790,6 +4273,15 @@ func (h *HavingExpr) End() Pos {
 
 func (h *HavingExpr) String(level int) string {
 	return "HAVING " + h.Expr.String(level)
+}
+
+func (h *HavingExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := h.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		h.Expr = e
+	}
+	return visitor.VisitHavingExpr(h)
 }
 
 type LimitExpr struct {
@@ -2818,6 +4310,22 @@ func (l *LimitExpr) String(level int) string {
 		builder.WriteString(l.Offset.String(level))
 	}
 	return builder.String()
+}
+
+func (l *LimitExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := l.Limit.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		l.Limit = e
+	}
+	if l.Offset != nil {
+		if e, err := l.Offset.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			l.Offset = e
+		}
+	}
+	return visitor.VisitLimitExpr(l)
 }
 
 type LimitByExpr struct {
@@ -2852,6 +4360,24 @@ func (l *LimitByExpr) String(level int) string {
 		builder.WriteString(l.ByExpr.String(level))
 	}
 	return builder.String()
+}
+
+func (l *LimitByExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if l.Limit != nil {
+		if e, err := l.Limit.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			l.Limit = e.(*LimitExpr)
+		}
+	}
+	if l.ByExpr != nil {
+		if e, err := l.ByExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			l.ByExpr = e.(*ColumnExprList)
+		}
+	}
+	return visitor.VisitLimitByExpr(l)
 }
 
 type WindowConditionExpr struct {
@@ -2889,6 +4415,31 @@ func (w *WindowConditionExpr) String(level int) string {
 	return builder.String()
 }
 
+func (w *WindowConditionExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if w.PartitionBy != nil {
+		if e, err := w.PartitionBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.PartitionBy = e.(*PartitionByExpr)
+		}
+	}
+	if w.OrderBy != nil {
+		if e, err := w.OrderBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.OrderBy = e.(*OrderByListExpr)
+		}
+	}
+	if w.Frame != nil {
+		if e, err := w.Frame.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.Frame = e.(*WindowFrameExpr)
+		}
+	}
+	return visitor.VisitWindowConditionExpr(w)
+}
+
 type WindowExpr struct {
 	*WindowConditionExpr
 
@@ -2914,6 +4465,24 @@ func (w *WindowExpr) String(level int) string {
 	return builder.String()
 }
 
+func (w *WindowExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if w.WindowConditionExpr != nil {
+		if e, err := w.WindowConditionExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.WindowConditionExpr = e.(*WindowConditionExpr)
+		}
+	}
+	if w.Name != nil {
+		if e, err := w.Name.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			w.Name = e.(*Ident)
+		}
+	}
+	return visitor.VisitWindowExpr(w)
+}
+
 type WindowFrameExpr struct {
 	FramePos Pos
 	Type     string
@@ -2936,6 +4505,15 @@ func (f *WindowFrameExpr) String(level int) string {
 	return builder.String()
 }
 
+func (f *WindowFrameExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Extend.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Extend = e
+	}
+	return visitor.VisitWindowFrameExpr(f)
+}
+
 type WindowFrameExtendExpr struct {
 	Expr Expr
 }
@@ -2950,6 +4528,15 @@ func (f *WindowFrameExtendExpr) End() Pos {
 
 func (f *WindowFrameExtendExpr) String(int) string {
 	return f.Expr.String(0)
+}
+
+func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Expr = e
+	}
+	return visitor.VisitWindowFrameExtendExpr(f)
 }
 
 type WindowFrameRangeExpr struct {
@@ -2976,6 +4563,20 @@ func (f *WindowFrameRangeExpr) String(level int) string {
 	return builder.String()
 }
 
+func (f *WindowFrameRangeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.BetweenExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.BetweenExpr = e
+	}
+	if e, err := f.AndExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.AndExpr = e
+	}
+	return visitor.VisitWindowFrameRangeExpr(f)
+}
+
 type WindowFrameCurrentRow struct {
 	CurrentPos Pos
 	RowEnd     Pos
@@ -2991,6 +4592,10 @@ func (f *WindowFrameCurrentRow) End() Pos {
 
 func (f *WindowFrameCurrentRow) String(int) string {
 	return "CURRENT ROW"
+}
+
+func (f *WindowFrameCurrentRow) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitWindowFrameCurrentRow(f)
 }
 
 type WindowFrameUnbounded struct {
@@ -3009,6 +4614,10 @@ func (f *WindowFrameUnbounded) End() Pos {
 
 func (f *WindowFrameUnbounded) String(int) string {
 	return f.Direction + " UNBOUNDED"
+}
+
+func (f *WindowFrameUnbounded) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitWindowFrameUnbounded(f)
 }
 
 type WindowFrameNumber struct {
@@ -3033,6 +4642,15 @@ func (f *WindowFrameNumber) String(level int) string {
 	return builder.String()
 }
 
+func (f *WindowFrameNumber) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Number.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Number = e.(*NumberLiteral)
+	}
+	return visitor.VisitWindowFrameNumber(f)
+}
+
 type ArrayJoinExpr struct {
 	ArrayPos Pos
 	Type     string
@@ -3049,6 +4667,15 @@ func (a *ArrayJoinExpr) End() Pos {
 
 func (a *ArrayJoinExpr) String(level int) string {
 	return a.Type + " ARRAY JOIN " + a.Expr.String(level)
+}
+
+func (a *ArrayJoinExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := a.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		a.Expr = e
+	}
+	return visitor.VisitArrayJoinExpr(a)
 }
 
 type SelectQuery struct {
@@ -3169,6 +4796,129 @@ func (s *SelectQuery) String(level int) string { // nolint: funlen
 	return builder.String()
 }
 
+func (s *SelectQuery) Accept(visitor ASTVisitor) (Expr, error) {
+	if s.With != nil {
+		if e, err := s.With.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.With = e.(*WithExpr)
+		}
+	}
+	if s.Top != nil {
+		if e, err := s.Top.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Top = e.(*TopExpr)
+		}
+	}
+	if s.SelectColumns != nil {
+		if e, err := s.SelectColumns.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.SelectColumns = e.(*ColumnExprList)
+		}
+	}
+	if s.From != nil {
+		if e, err := s.From.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.From = e.(*FromExpr)
+		}
+	}
+	if s.ArrayJoin != nil {
+		if e, err := s.ArrayJoin.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.ArrayJoin = e.(*ArrayJoinExpr)
+		}
+	}
+	if s.Window != nil {
+		if e, err := s.Window.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Window = e.(*WindowExpr)
+		}
+	}
+	if s.Prewhere != nil {
+		if e, err := s.Prewhere.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Prewhere = e.(*PrewhereExpr)
+		}
+	}
+	if s.Where != nil {
+		if e, err := s.Where.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Where = e.(*WhereExpr)
+		}
+	}
+	if s.GroupBy != nil {
+		if e, err := s.GroupBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.GroupBy = e.(*GroupByExpr)
+		}
+	}
+	if s.Having != nil {
+		if e, err := s.Having.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Having = e.(*HavingExpr)
+		}
+	}
+	if s.OrderBy != nil {
+		if e, err := s.OrderBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.OrderBy = e.(*OrderByListExpr)
+		}
+	}
+	if s.LimitBy != nil {
+		if e, err := s.LimitBy.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.LimitBy = e.(*LimitByExpr)
+		}
+	}
+	if s.Limit != nil {
+		if e, err := s.Limit.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Limit = e.(*LimitExpr)
+		}
+	}
+	if s.Settings != nil {
+		if e, err := s.Settings.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Settings = e.(*SettingsExprList)
+		}
+	}
+	if s.UnionAll != nil {
+		if e, err := s.UnionAll.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.UnionAll = e.(*SelectQuery)
+		}
+	}
+	if s.UnionDistinct != nil {
+		if e, err := s.UnionDistinct.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.UnionDistinct = e.(*SelectQuery)
+		}
+	}
+	if s.Except != nil {
+		if e, err := s.Except.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Except = e.(*SelectQuery)
+		}
+	}
+	return visitor.VisitSelectQuery(s)
+}
+
 type SubQueryExpr struct {
 	AsPos  Pos
 	Select *SelectQuery
@@ -3191,6 +4941,17 @@ func (s *SubQueryExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *SubQueryExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if s.Select != nil {
+		if e, err := s.Select.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Select = e.(*SelectQuery)
+		}
+	}
+	return visitor.VisitSubQueryExpr(s)
+}
+
 type NotExpr struct {
 	NotPos Pos
 	Expr   Expr
@@ -3206,6 +4967,15 @@ func (n *NotExpr) End() Pos {
 
 func (n *NotExpr) String(level int) string {
 	return "NOT " + n.Expr.String(level+1)
+}
+
+func (n *NotExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Expr = e
+	}
+	return visitor.VisitNotExpr(n)
 }
 
 type NegateExpr struct {
@@ -3225,6 +4995,15 @@ func (n *NegateExpr) String(level int) string {
 	return "-" + n.Expr.String(level+1)
 }
 
+func (n *NegateExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Expr = e
+	}
+	return visitor.VisitNegateExpr(n)
+}
+
 type GlobalInExpr struct {
 	GlobalPos Pos
 	Expr      Expr
@@ -3240,6 +5019,15 @@ func (g *GlobalInExpr) End() Pos {
 
 func (g *GlobalInExpr) String(level int) string {
 	return "GLOBAL " + g.Expr.String(level+1)
+}
+
+func (g *GlobalInExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := g.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		g.Expr = e
+	}
+	return visitor.VisitGlobalInExpr(g)
 }
 
 type ExtractExpr struct {
@@ -3265,6 +5053,15 @@ func (e *ExtractExpr) String(level int) string {
 	builder.WriteString(e.FromExpr.String(level))
 	builder.WriteByte(')')
 	return builder.String()
+}
+
+func (e *ExtractExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if expr, err := e.FromExpr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		e.FromExpr = expr
+	}
+	return visitor.VisitExtractExpr(e)
 }
 
 type DropDatabase struct {
@@ -3299,6 +5096,22 @@ func (d *DropDatabase) String(level int) string {
 		builder.WriteString(d.OnCluster.String(level))
 	}
 	return builder.String()
+}
+
+func (d *DropDatabase) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := d.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		d.Name = e.(*Ident)
+	}
+	if d.OnCluster != nil {
+		if e, err := d.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	return visitor.VisitDropDatabase(d)
 }
 
 type DropStmt struct {
@@ -3346,6 +5159,23 @@ func (d *DropStmt) String(level int) string {
 	return builder.String()
 }
 
+func (d *DropStmt) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := d.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		d.Name = e.(*TableIdentifier)
+	}
+	if d.OnCluster != nil {
+		if e, err := d.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	return visitor.VisitDropStmt(d)
+
+}
+
 type DropUserOrRole struct {
 	DropPos      Pos
 	Target       string
@@ -3390,6 +5220,24 @@ func (d *DropUserOrRole) String(level int) string {
 	return builder.String()
 }
 
+func (d *DropUserOrRole) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, name := range d.Names {
+		if e, err := name.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.Names[i] = e.(*RoleName)
+		}
+	}
+	if d.From != nil {
+		if e, err := d.From.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.From = e.(*Ident)
+		}
+	}
+	return visitor.VisitDropUserOrRole(d)
+}
+
 type UseExpr struct {
 	UsePos       Pos
 	StatementEnd Pos
@@ -3406,6 +5254,15 @@ func (u *UseExpr) End() Pos {
 
 func (u *UseExpr) String(level int) string {
 	return "USE " + u.Database.String(level+1)
+}
+
+func (u *UseExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := u.Database.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		u.Database = e.(*Ident)
+	}
+	return visitor.VisitUseExpr(u)
 }
 
 type CTEExpr struct {
@@ -3436,6 +5293,20 @@ func (c *CTEExpr) String(level int) string {
 	return builder.String()
 }
 
+func (c *CTEExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Expr = e
+	}
+	if e, err := c.Alias.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Alias = e
+	}
+	return visitor.VisitCTEExpr(c)
+}
+
 type SetExpr struct {
 	SetPos   Pos
 	Settings *SettingsExprList
@@ -3461,6 +5332,15 @@ func (s *SetExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *SetExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Settings.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Settings = e.(*SettingsExprList)
+	}
+	return visitor.VisitSetExpr(s)
+}
+
 type FormatExpr struct {
 	FormatPos Pos
 	Format    *Ident
@@ -3476,6 +5356,15 @@ func (f *FormatExpr) End() Pos {
 
 func (f *FormatExpr) String(level int) string {
 	return "FORMAT " + f.Format.String(level)
+}
+
+func (f *FormatExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := f.Format.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		f.Format = e.(*Ident)
+	}
+	return visitor.VisitFormatExpr(f)
 }
 
 type OptimizeExpr struct {
@@ -3517,6 +5406,36 @@ func (o *OptimizeExpr) String(level int) string {
 	return builder.String()
 }
 
+func (o *OptimizeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := o.Table.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		o.Table = e.(*TableIdentifier)
+	}
+	if o.OnCluster != nil {
+		if e, err := o.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			o.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if o.Partition != nil {
+		if e, err := o.Partition.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			o.Partition = e.(*PartitionExpr)
+		}
+	}
+	if o.Deduplicate != nil {
+		if e, err := o.Deduplicate.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			o.Deduplicate = e.(*DeduplicateExpr)
+		}
+	}
+	return visitor.VisitOptimizeExpr(o)
+}
+
 type DeduplicateExpr struct {
 	DeduplicatePos Pos
 	By             *ColumnExprList
@@ -3550,6 +5469,24 @@ func (d *DeduplicateExpr) String(level int) string {
 	return builder.String()
 }
 
+func (d *DeduplicateExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if d.By != nil {
+		if e, err := d.By.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.By = e.(*ColumnExprList)
+		}
+	}
+	if d.Except != nil {
+		if e, err := d.Except.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.Except = e.(*ColumnExprList)
+		}
+	}
+	return visitor.VisitDeduplicateExpr(d)
+}
+
 type SystemExpr struct {
 	SystemPos Pos
 	Expr      Expr
@@ -3565,6 +5502,15 @@ func (s *SystemExpr) End() Pos {
 
 func (s *SystemExpr) String(level int) string {
 	return "SYSTEM " + s.Expr.String(level)
+}
+
+func (s *SystemExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Expr = e
+	}
+	return visitor.VisitSystemExpr(s)
 }
 
 type SystemFlushExpr struct {
@@ -3593,6 +5539,17 @@ func (s *SystemFlushExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *SystemFlushExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if s.Distributed != nil {
+		if e, err := s.Distributed.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Distributed = e.(*TableIdentifier)
+		}
+	}
+	return visitor.VisitSystemFlushExpr(s)
+}
+
 type SystemReloadExpr struct {
 	ReloadPos    Pos
 	StatementEnd Pos
@@ -3619,6 +5576,17 @@ func (s *SystemReloadExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *SystemReloadExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if s.Dictionary != nil {
+		if e, err := s.Dictionary.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Dictionary = e.(*TableIdentifier)
+		}
+	}
+	return visitor.VisitSystemReloadExpr(s)
+}
+
 type SystemSyncExpr struct {
 	SyncPos Pos
 	Cluster *TableIdentifier
@@ -3637,6 +5605,15 @@ func (s *SystemSyncExpr) String(level int) string {
 	builder.WriteString("SYNC ")
 	builder.WriteString(s.Cluster.String(level))
 	return builder.String()
+}
+
+func (s *SystemSyncExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Cluster.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Cluster = e.(*TableIdentifier)
+	}
+	return visitor.VisitSystemSyncExpr(s)
 }
 
 type SystemCtrlExpr struct {
@@ -3667,6 +5644,17 @@ func (s *SystemCtrlExpr) String(level int) string {
 	return builder.String()
 }
 
+func (s *SystemCtrlExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if s.Cluster != nil {
+		if e, err := s.Cluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Cluster = e.(*TableIdentifier)
+		}
+	}
+	return visitor.VisitSystemCtrlExpr(s)
+}
+
 type SystemDropExpr struct {
 	DropPos      Pos
 	StatementEnd Pos
@@ -3683,6 +5671,10 @@ func (s *SystemDropExpr) End() Pos {
 
 func (s *SystemDropExpr) String(level int) string {
 	return "DROP " + s.Type
+}
+
+func (s *SystemDropExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	return visitor.VisitSystemDropExpr(s)
 }
 
 type TruncateTable struct {
@@ -3724,6 +5716,22 @@ func (t *TruncateTable) String(level int) string {
 	return builder.String()
 }
 
+func (t *TruncateTable) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := t.Name.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		t.Name = e.(*TableIdentifier)
+	}
+	if t.OnCluster != nil {
+		if e, err := t.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			t.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	return visitor.VisitTruncateTable(t)
+}
+
 type SampleRatioExpr struct {
 	SamplePos Pos
 	Ratio     *RatioExpr
@@ -3750,6 +5758,22 @@ func (s *SampleRatioExpr) String(level int) string {
 		builder.WriteString(s.Offset.String(level))
 	}
 	return builder.String()
+}
+
+func (s *SampleRatioExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := s.Ratio.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		s.Ratio = e.(*RatioExpr)
+	}
+	if s.Offset != nil {
+		if e, err := s.Offset.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			s.Offset = e.(*RatioExpr)
+		}
+	}
+	return visitor.VisitSampleRatioExpr(s)
 }
 
 type DeleteFromExpr struct {
@@ -3783,6 +5807,29 @@ func (d *DeleteFromExpr) String(level int) string {
 	return builder.String()
 }
 
+func (d *DeleteFromExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := d.Table.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		d.Table = e.(*TableIdentifier)
+	}
+	if d.OnCluster != nil {
+		if e, err := d.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	if d.WhereExpr != nil {
+		if e, err := d.WhereExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			d.WhereExpr = e
+		}
+	}
+	return visitor.VisitDeleteFromExpr(d)
+}
+
 type ColumnNamesExpr struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
@@ -3810,6 +5857,17 @@ func (c *ColumnNamesExpr) String(level int) string {
 	return builder.String()
 }
 
+func (c *ColumnNamesExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	for i := range c.ColumnNames {
+		if e, err := c.ColumnNames[i].Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.ColumnNames[i] = *e.(*NestedIdentifier)
+		}
+	}
+	return visitor.VisitColumnNamesExpr(c)
+}
+
 type ValuesExpr struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
@@ -3835,6 +5893,17 @@ func (v *ValuesExpr) String(level int) string {
 	}
 	builder.WriteByte(')')
 	return builder.String()
+}
+
+func (v *ValuesExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, value := range v.Values {
+		if e, err := value.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			v.Values[i] = e
+		}
+	}
+	return visitor.VisitValuesExpr(v)
 }
 
 type InsertExpr struct {
@@ -3886,6 +5955,43 @@ func (i *InsertExpr) String(level int) string {
 	return builder.String()
 }
 
+func (i *InsertExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if i.Format != nil {
+		if e, err := i.Format.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			i.Format = e.(*FormatExpr)
+		}
+	}
+	if e, err := i.Table.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		i.Table = e
+	}
+	if i.ColumnNames != nil {
+		if e, err := i.ColumnNames.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			i.ColumnNames = e.(*ColumnNamesExpr)
+		}
+	}
+	for j, value := range i.Values {
+		if e, err := value.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			i.Values[j] = e.(*ValuesExpr)
+		}
+	}
+	if i.SelectExpr != nil {
+		if e, err := i.SelectExpr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			i.SelectExpr = e.(*SelectQuery)
+		}
+	}
+	return visitor.VisitInsertExpr(i)
+}
+
 type CheckExpr struct {
 	CheckPos  Pos
 	Table     *TableIdentifier
@@ -3911,6 +6017,22 @@ func (c *CheckExpr) String(level int) string {
 	return builder.String()
 }
 
+func (c *CheckExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := c.Table.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		c.Table = e.(*TableIdentifier)
+	}
+	if c.Partition != nil {
+		if e, err := c.Partition.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			c.Partition = e.(*PartitionExpr)
+		}
+	}
+	return visitor.VisitCheckExpr(c)
+}
+
 type UnaryExpr struct {
 	UnaryPos Pos
 	Kind     TokenKind
@@ -3927,6 +6049,15 @@ func (n *UnaryExpr) End() Pos {
 
 func (n *UnaryExpr) String(level int) string {
 	return "-" + n.Expr.String(level+1)
+}
+
+func (n *UnaryExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if e, err := n.Expr.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		n.Expr = e
+	}
+	return visitor.VisitUnaryExpr(n)
 }
 
 type RenameStmt struct {
@@ -3966,6 +6097,29 @@ func (r *RenameStmt) String(level int) string {
 		builder.WriteString(r.OnCluster.String(level))
 	}
 	return builder.String()
+}
+
+func (r *RenameStmt) Accept(visitor ASTVisitor) (Expr, error) {
+	for i, pair := range r.TargetPairList {
+		if e, err := pair.Old.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.TargetPairList[i].Old = e.(*TableIdentifier)
+		}
+		if e, err := pair.New.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.TargetPairList[i].New = e.(*TableIdentifier)
+		}
+	}
+	if r.OnCluster != nil {
+		if e, err := r.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			r.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	return visitor.VisitRenameStmt(r)
 }
 
 type TargetPair struct {
@@ -4008,6 +6162,15 @@ func (e *ExplainExpr) String(level int) string {
 	return builder.String()
 }
 
+func (e *ExplainExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if expr, err := e.Statement.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		e.Statement = expr
+	}
+	return visitor.VisitExplainExpr(e)
+}
+
 type PrivilegeExpr struct {
 	PrivilegePos Pos
 	PrivilegeEnd Pos
@@ -4035,6 +6198,17 @@ func (p *PrivilegeExpr) String(level int) string {
 		builder.WriteString(p.Params.String(level))
 	}
 	return builder.String()
+}
+
+func (p *PrivilegeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if p.Params != nil {
+		if e, err := p.Params.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			p.Params = e.(*ParamExprList)
+		}
+	}
+	return visitor.VisitPrivilegeExpr(p)
 }
 
 type GrantPrivilegeExpr struct {
@@ -4086,4 +6260,34 @@ func (g *GrantPrivilegeExpr) String(level int) string {
 	}
 
 	return builder.String()
+}
+
+func (g *GrantPrivilegeExpr) Accept(visitor ASTVisitor) (Expr, error) {
+	if g.OnCluster != nil {
+		if e, err := g.OnCluster.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			g.OnCluster = e.(*OnClusterExpr)
+		}
+	}
+	for i, privilege := range g.Privileges {
+		if e, err := privilege.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			g.Privileges[i] = e.(*PrivilegeExpr)
+		}
+	}
+	if e, err := g.On.Accept(visitor); err != nil {
+		return nil, err
+	} else {
+		g.On = e.(*TableIdentifier)
+	}
+	for i, role := range g.To {
+		if e, err := role.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			g.To[i] = e.(*Ident)
+		}
+	}
+	return visitor.VisitGrantPrivilegeExpr(g)
 }

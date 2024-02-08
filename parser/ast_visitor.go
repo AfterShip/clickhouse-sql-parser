@@ -1,303 +1,158 @@
 package parser
 
-//OperationExpr
-//TernaryExpr
-//BinaryExpr
-//AlterTableExpr
-//AlterTable
-//AlterTableAttachPartition
-//AlterTableDetachPartition
-//AlterTableDropPartition
-//AlterTableFreezePartition
-//AlterTableAddColumn
-//AlterTableAddIndex
-//AlterTableDropColumn
-//AlterTableDropIndex
-//AlterTableRemoveTTL
-//AlterTableClearColumn
-//AlterTableClearIndex
-//AlterTableRenameColumn
-//AlterTableModifyTTL
-//AlterTableModifyColumn
-//AlterTableReplacePartition
-//RemovePropertyType
-//TableIndex
-//Ident
-//UUID
-//CreateDatabase
-//CreateTable
-//CreateMaterializedView
-//CreateView
-//CreateFunction
-//RoleName
-//SettingPair
-//RoleSetting
-//CreateRole
-//AlterRole
-//RoleRenamePair
-//DestinationExpr
-//ConstraintExpr
-//NullLiteral
-//NotNullLiteral
-//NestedIdentifier
-//ColumnIdentifier
-//TableIdentifier
-//TableSchemaExpr
-//TableArgListExpr
-//TableFunctionExpr
-//OnClusterExpr
-//DefaultExpr
-//PartitionExpr
-//PartitionByExpr
-//PrimaryKeyExpr
-//SampleByExpr
-//TTLExpr
-//TTLExprList
-//OrderByExpr
-//OrderByListExpr
-//SettingsExpr
-//SettingsExprList
-//ParamExprList
-//ArrayParamList
-//ObjectParams
-//FunctionExpr
-//WindowFunctionExpr
-//Column
-//ScalarTypeExpr
-//PropertyTypeExpr
-//TypeWithParamsExpr
-//ComplexTypeExpr
-//NestedTypeExpr
-//CompressionCodec
-//NumberLiteral
-//StringLiteral
-//RatioExpr
-//EnumValueExpr
-//EnumValueExprList
-//IntervalExpr
-//EngineExpr
-//ColumnTypeExpr
-//ColumnArgList
-//ColumnExprList
-//WhenExpr
-//CaseExpr
-//CastExpr
-//WithExpr
-//TopExpr
-//CreateLiveView
-//WithTimeoutExpr
-//TableExpr
-//OnExpr
-//UsingExpr
-//JoinExpr
-//JoinConstraintExpr
-//FromExpr
-//IsNullExpr
-//IsNotNullExpr
-//AliasExpr
-//WhereExpr
-//PrewhereExpr
-//GroupByExpr
-//HavingExpr
-//LimitExpr
-//LimitByExpr
-//WindowConditionExpr
-//WindowExpr
-//WindowFrameExpr
-//WindowFrameExtendExpr
-//WindowFrameRangeExpr
-//WindowFrameCurrentRow
-//WindowFrameUnbounded
-//WindowFrameNumber
-//ArrayJoinExpr
-//SelectQuery
-//SubQueryExpr
-//NotExpr
-//NegateExpr
-//GlobalInExpr
-//ExtractExpr
-//DropDatabase
-//DropStmt
-//DropUserOrRole
-//UseExpr
-//CTEExpr
-//SetExpr
-//FormatExpr
-//OptimizeExpr
-//DeduplicateExpr
-//SystemExpr
-//SystemFlushExpr
-//SystemReloadExpr
-//SystemSyncExpr
-//SystemCtrlExpr
-//SystemDropExpr
-//TruncateTable
-//SampleRatioExpr
-//DeleteFromExpr
-//ColumnNamesExpr
-//ValuesExpr
-//InsertExpr
-//CheckExpr
-//UnaryExpr
-//RenameStmt
-//TargetPair
-//ExplainExpr
-//PrivilegeExpr
-//GrantPrivilegeExpr
-
 type ASTVisitor interface {
-	VisitOperationExpr(expr *OperationExpr) (interface{}, error)
-	VisitTernaryExpr(expr *TernaryExpr) (interface{}, error)
-	VisitBinaryExpr(expr *BinaryExpr) (interface{}, error)
-	VisitAlterTable(expr *AlterTable) (interface{}, error)
-	VisitAlterTableAttachPartition(expr *AlterTableAttachPartition) (interface{}, error)
-	VisitAlterTableDetachPartition(expr *AlterTableDetachPartition) (interface{}, error)
-	VisitAlterTableDropPartition(expr *AlterTableDropPartition) (interface{}, error)
-	VisitAlterTableFreezePartition(expr *AlterTableFreezePartition) (interface{}, error)
-	VisitAlterTableAddColumn(expr *AlterTableAddColumn) (interface{}, error)
-	VisitAlterTableAddIndex(expr *AlterTableAddIndex) (interface{}, error)
-	VisitAlterTableDropColumn(expr *AlterTableDropColumn) (interface{}, error)
-	VisitAlterTableDropIndex(expr *AlterTableDropIndex) (interface{}, error)
-	VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) (interface{}, error)
-	VisitAlterTableClearColumn(expr *AlterTableClearColumn) (interface{}, error)
-	VisitAlterTableClearIndex(expr *AlterTableClearIndex) (interface{}, error)
-	VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) (interface{}, error)
-	VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) (interface{}, error)
-	VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) (interface{}, error)
-	VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) (interface{}, error)
-	VisitRemovePropertyType(expr *RemovePropertyType) (interface{}, error)
-	VisitTableIndex(expr *TableIndex) (interface{}, error)
-	VisitIdent(expr *Ident) (interface{}, error)
-	VisitUUID(expr *UUID) (interface{}, error)
-	VisitCreateDatabase(expr *CreateDatabase) (interface{}, error)
-	VisitCreateTable(expr *CreateTable) (interface{}, error)
-	VisitCreateMaterializedView(expr *CreateMaterializedView) (interface{}, error)
-	VisitCreateView(expr *CreateView) (interface{}, error)
-	VisitCreateFunction(expr *CreateFunction) (interface{}, error)
-	VisitRoleName(expr *RoleName) (interface{}, error)
-	VisitSettingPair(expr *SettingPair) (interface{}, error)
-	VisitRoleSetting(expr *RoleSetting) (interface{}, error)
-	VisitCreateRole(expr *CreateRole) (interface{}, error)
-	VisitAlterRole(expr *AlterRole) (interface{}, error)
-	VisitRoleRenamePair(expr *RoleRenamePair) (interface{}, error)
-	VisitDestinationExpr(expr *DestinationExpr) (interface{}, error)
-	VisitConstraintExpr(expr *ConstraintExpr) (interface{}, error)
-	VisitNullLiteral(expr *NullLiteral) (interface{}, error)
-	VisitNotNullLiteral(expr *NotNullLiteral) (interface{}, error)
-	VisitNestedIdentifier(expr *NestedIdentifier) (interface{}, error)
-	VisitColumnIdentifier(expr *ColumnIdentifier) (interface{}, error)
-	VisitTableIdentifier(expr *TableIdentifier) (interface{}, error)
-	VisitTableSchemaExpr(expr *TableSchemaExpr) (interface{}, error)
-	VisitTableArgListExpr(expr *TableArgListExpr) (interface{}, error)
-	VisitTableFunctionExpr(expr *TableFunctionExpr) (interface{}, error)
-	VisitOnClusterExpr(expr *OnClusterExpr) (interface{}, error)
-	VisitDefaultExpr(expr *DefaultExpr) (interface{}, error)
-	VisitPartitionExpr(expr *PartitionExpr) (interface{}, error)
-	VisitPartitionByExpr(expr *PartitionByExpr) (interface{}, error)
-	VisitPrimaryKeyExpr(expr *PrimaryKeyExpr) (interface{}, error)
-	VisitSampleByExpr(expr *SampleByExpr) (interface{}, error)
-	VisitTTLExpr(expr *TTLExpr) (interface{}, error)
-	VisitTTLExprList(expr *TTLExprList) (interface{}, error)
-	VisitOrderByExpr(expr *OrderByExpr) (interface{}, error)
-	VisitOrderByListExpr(expr *OrderByListExpr) (interface{}, error)
-	VisitSettingsExpr(expr *SettingsExpr) (interface{}, error)
-	VisitSettingsExprList(expr *SettingsExprList) (interface{}, error)
-	VisitParamExprList(expr *ParamExprList) (interface{}, error)
-	VisitArrayParamList(expr *ArrayParamList) (interface{}, error)
-	VisitObjectParams(expr *ObjectParams) (interface{}, error)
-	VisitFunctionExpr(expr *FunctionExpr) (interface{}, error)
-	VisitWindowFunctionExpr(expr *WindowFunctionExpr) (interface{}, error)
-	VisitColumn(expr *Column) (interface{}, error)
-	VisitScalarTypeExpr(expr *ScalarTypeExpr) (interface{}, error)
-	VisitPropertyTypeExpr(expr *PropertyTypeExpr) (interface{}, error)
-	VisitTypeWithParamsExpr(expr *TypeWithParamsExpr) (interface{}, error)
-	VisitComplexTypeExpr(expr *ComplexTypeExpr) (interface{}, error)
-	VisitNestedTypeExpr(expr *NestedTypeExpr) (interface{}, error)
-	VisitCompressionCodec(expr *CompressionCodec) (interface{}, error)
-	VisitNumberLiteral(expr *NumberLiteral) (interface{}, error)
-	VisitStringLiteral(expr *StringLiteral) (interface{}, error)
-	VisitRatioExpr(expr *RatioExpr) (interface{}, error)
-	VisitEnumValueExpr(expr *EnumValueExpr) (interface{}, error)
-	VisitEnumValueExprList(expr *EnumValueExprList) (interface{}, error)
-	VisitIntervalExpr(expr *IntervalExpr) (interface{}, error)
-	VisitEngineExpr(expr *EngineExpr) (interface{}, error)
-	VisitColumnTypeExpr(expr *ColumnTypeExpr) (interface{}, error)
-	VisitColumnArgList(expr *ColumnArgList) (interface{}, error)
-	VisitColumnExprList(expr *ColumnExprList) (interface{}, error)
-	VisitWhenExpr(expr *WhenExpr) (interface{}, error)
-	VisitCaseExpr(expr *CaseExpr) (interface{}, error)
-	VisitCastExpr(expr *CastExpr) (interface{}, error)
-	VisitWithExpr(expr *WithExpr) (interface{}, error)
-	VisitTopExpr(expr *TopExpr) (interface{}, error)
-	VisitCreateLiveView(expr *CreateLiveView) (interface{}, error)
-	VisitWithTimeoutExpr(expr *WithTimeoutExpr) (interface{}, error)
-	VisitTableExpr(expr *TableExpr) (interface{}, error)
-	VisitOnExpr(expr *OnExpr) (interface{}, error)
-	VisitUsingExpr(expr *UsingExpr) (interface{}, error)
-	VisitJoinExpr(expr *JoinExpr) (interface{}, error)
-	VisitJoinConstraintExpr(expr *JoinConstraintExpr) (interface{}, error)
-	VisitFromExpr(expr *FromExpr) (interface{}, error)
-	VisitIsNullExpr(expr *IsNullExpr) (interface{}, error)
-	VisitIsNotNullExpr(expr *IsNotNullExpr) (interface{}, error)
-	VisitAliasExpr(expr *AliasExpr) (interface{}, error)
-	VisitWhereExpr(expr *WhereExpr) (interface{}, error)
-	VisitPrewhereExpr(expr *PrewhereExpr) (interface{}, error)
-	VisitGroupByExpr(expr *GroupByExpr) (interface{}, error)
-	VisitHavingExpr(expr *HavingExpr) (interface{}, error)
-	VisitLimitExpr(expr *LimitExpr) (interface{}, error)
-	VisitLimitByExpr(expr *LimitByExpr) (interface{}, error)
-	VisitWindowConditionExpr(expr *WindowConditionExpr) (interface{}, error)
-	VisitWindowExpr(expr *WindowExpr) (interface{}, error)
-	VisitWindowFrameExpr(expr *WindowFrameExpr) (interface{}, error)
-	VisitWindowFrameExtendExpr(expr *WindowFrameExtendExpr) (interface{}, error)
-	VisitWindowFrameRangeExpr(expr *WindowFrameRangeExpr) (interface{}, error)
-	VisitWindowFrameCurrentRow(expr *WindowFrameCurrentRow) (interface{}, error)
-	VisitWindowFrameUnbounded(expr *WindowFrameUnbounded) (interface{}, error)
-	VisitWindowFrameNumber(expr *WindowFrameNumber) (interface{}, error)
-	VisitArrayJoinExpr(expr *ArrayJoinExpr) (interface{}, error)
-	VisitSelectQuery(expr *SelectQuery) (interface{}, error)
-	VisitSubQueryExpr(expr *SubQueryExpr) (interface{}, error)
-	VisitNotExpr(expr *NotExpr) (interface{}, error)
-	VisitNegateExpr(expr *NegateExpr) (interface{}, error)
-	VisitGlobalInExpr(expr *GlobalInExpr) (interface{}, error)
-	VisitExtractExpr(expr *ExtractExpr) (interface{}, error)
-	VisitDropDatabase(expr *DropDatabase) (interface{}, error)
-	VisitDropStmt(expr *DropStmt) (interface{}, error)
-	VisitDropUserOrRole(expr *DropUserOrRole) (interface{}, error)
-	VisitUseExpr(expr *UseExpr) (interface{}, error)
-	VisitCTEExpr(expr *CTEExpr) (interface{}, error)
-	VisitSetExpr(expr *SetExpr) (interface{}, error)
-	VisitFormatExpr(expr *FormatExpr) (interface{}, error)
-	VisitOptimizeExpr(expr *OptimizeExpr) (interface{}, error)
-	VisitDeduplicateExpr(expr *DeduplicateExpr) (interface{}, error)
-	VisitSystemExpr(expr *SystemExpr) (interface{}, error)
-	VisitSystemFlushExpr(expr *SystemFlushExpr) (interface{}, error)
-	VisitSystemReloadExpr(expr *SystemReloadExpr) (interface{}, error)
-	VisitSystemSyncExpr(expr *SystemSyncExpr) (interface{}, error)
-	VisitSystemCtrlExpr(expr *SystemCtrlExpr) (interface{}, error)
-	VisitSystemDropExpr(expr *SystemDropExpr) (interface{}, error)
-	VisitTruncateTable(expr *TruncateTable) (interface{}, error)
-	VisitSampleRatioExpr(expr *SampleRatioExpr) (interface{}, error)
-	VisitDeleteFromExpr(expr *DeleteFromExpr) (interface{}, error)
-	VisitColumnNamesExpr(expr *ColumnNamesExpr) (interface{}, error)
-	VisitValuesExpr(expr *ValuesExpr) (interface{}, error)
-	VisitInsertExpr(expr *InsertExpr) (interface{}, error)
-	VisitCheckExpr(expr *CheckExpr) (interface{}, error)
-	VisitUnaryExpr(expr *UnaryExpr) (interface{}, error)
-	VisitRenameStmt(expr *RenameStmt) (interface{}, error)
-	//VisitTargetPair(expr *TargetPair) (interface{}, error)
-	VisitExplainExpr(expr *ExplainExpr) (interface{}, error)
-	VisitPrivilegeExpr(expr *PrivilegeExpr) (interface{}, error)
-	VisitGrantPrivilegeExpr(expr *GrantPrivilegeExpr) (interface{}, error)
+	VisitOperationExpr(expr *OperationExpr) (Expr, error)
+	VisitTernaryExpr(expr *TernaryExpr) (Expr, error)
+	VisitBinaryExpr(expr *BinaryExpr) (Expr, error)
+	VisitAlterTable(expr *AlterTable) (Expr, error)
+	VisitAlterTableAttachPartition(expr *AlterTableAttachPartition) (Expr, error)
+	VisitAlterTableDetachPartition(expr *AlterTableDetachPartition) (Expr, error)
+	VisitAlterTableDropPartition(expr *AlterTableDropPartition) (Expr, error)
+	VisitAlterTableFreezePartition(expr *AlterTableFreezePartition) (Expr, error)
+	VisitAlterTableAddColumn(expr *AlterTableAddColumn) (Expr, error)
+	VisitAlterTableAddIndex(expr *AlterTableAddIndex) (Expr, error)
+	VisitAlterTableDropColumn(expr *AlterTableDropColumn) (Expr, error)
+	VisitAlterTableDropIndex(expr *AlterTableDropIndex) (Expr, error)
+	VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) (Expr, error)
+	VisitAlterTableClearColumn(expr *AlterTableClearColumn) (Expr, error)
+	VisitAlterTableClearIndex(expr *AlterTableClearIndex) (Expr, error)
+	VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) (Expr, error)
+	VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) (Expr, error)
+	VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) (Expr, error)
+	VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) (Expr, error)
+	VisitRemovePropertyType(expr *RemovePropertyType) (Expr, error)
+	VisitTableIndex(expr *TableIndex) (Expr, error)
+	VisitIdent(expr *Ident) (Expr, error)
+	VisitUUID(expr *UUID) (Expr, error)
+	VisitCreateDatabase(expr *CreateDatabase) (Expr, error)
+	VisitCreateTable(expr *CreateTable) (Expr, error)
+	VisitCreateMaterializedView(expr *CreateMaterializedView) (Expr, error)
+	VisitCreateView(expr *CreateView) (Expr, error)
+	VisitCreateFunction(expr *CreateFunction) (Expr, error)
+	VisitRoleName(expr *RoleName) (Expr, error)
+	VisitSettingPair(expr *SettingPair) (Expr, error)
+	VisitRoleSetting(expr *RoleSetting) (Expr, error)
+	VisitCreateRole(expr *CreateRole) (Expr, error)
+	VisitAlterRole(expr *AlterRole) (Expr, error)
+	VisitRoleRenamePair(expr *RoleRenamePair) (Expr, error)
+	VisitDestinationExpr(expr *DestinationExpr) (Expr, error)
+	VisitConstraintExpr(expr *ConstraintExpr) (Expr, error)
+	VisitNullLiteral(expr *NullLiteral) (Expr, error)
+	VisitNotNullLiteral(expr *NotNullLiteral) (Expr, error)
+	VisitNestedIdentifier(expr *NestedIdentifier) (Expr, error)
+	VisitColumnIdentifier(expr *ColumnIdentifier) (Expr, error)
+	VisitTableIdentifier(expr *TableIdentifier) (Expr, error)
+	VisitTableSchemaExpr(expr *TableSchemaExpr) (Expr, error)
+	VisitTableArgListExpr(expr *TableArgListExpr) (Expr, error)
+	VisitTableFunctionExpr(expr *TableFunctionExpr) (Expr, error)
+	VisitOnClusterExpr(expr *OnClusterExpr) (Expr, error)
+	VisitDefaultExpr(expr *DefaultExpr) (Expr, error)
+	VisitPartitionExpr(expr *PartitionExpr) (Expr, error)
+	VisitPartitionByExpr(expr *PartitionByExpr) (Expr, error)
+	VisitPrimaryKeyExpr(expr *PrimaryKeyExpr) (Expr, error)
+	VisitSampleByExpr(expr *SampleByExpr) (Expr, error)
+	VisitTTLExpr(expr *TTLExpr) (Expr, error)
+	VisitTTLExprList(expr *TTLExprList) (Expr, error)
+	VisitOrderByExpr(expr *OrderByExpr) (Expr, error)
+	VisitOrderByListExpr(expr *OrderByListExpr) (Expr, error)
+	VisitSettingsExpr(expr *SettingsExpr) (Expr, error)
+	VisitSettingsExprList(expr *SettingsExprList) (Expr, error)
+	VisitParamExprList(expr *ParamExprList) (Expr, error)
+	VisitArrayParamList(expr *ArrayParamList) (Expr, error)
+	VisitObjectParams(expr *ObjectParams) (Expr, error)
+	VisitFunctionExpr(expr *FunctionExpr) (Expr, error)
+	VisitWindowFunctionExpr(expr *WindowFunctionExpr) (Expr, error)
+	VisitColumn(expr *Column) (Expr, error)
+	VisitScalarTypeExpr(expr *ScalarTypeExpr) (Expr, error)
+	VisitPropertyTypeExpr(expr *PropertyTypeExpr) (Expr, error)
+	VisitTypeWithParamsExpr(expr *TypeWithParamsExpr) (Expr, error)
+	VisitComplexTypeExpr(expr *ComplexTypeExpr) (Expr, error)
+	VisitNestedTypeExpr(expr *NestedTypeExpr) (Expr, error)
+	VisitCompressionCodec(expr *CompressionCodec) (Expr, error)
+	VisitNumberLiteral(expr *NumberLiteral) (Expr, error)
+	VisitStringLiteral(expr *StringLiteral) (Expr, error)
+	VisitRatioExpr(expr *RatioExpr) (Expr, error)
+	VisitEnumValueExpr(expr *EnumValueExpr) (Expr, error)
+	VisitEnumValueExprList(expr *EnumValueExprList) (Expr, error)
+	VisitIntervalExpr(expr *IntervalExpr) (Expr, error)
+	VisitEngineExpr(expr *EngineExpr) (Expr, error)
+	VisitColumnTypeExpr(expr *ColumnTypeExpr) (Expr, error)
+	VisitColumnArgList(expr *ColumnArgList) (Expr, error)
+	VisitColumnExprList(expr *ColumnExprList) (Expr, error)
+	VisitWhenExpr(expr *WhenExpr) (Expr, error)
+	VisitCaseExpr(expr *CaseExpr) (Expr, error)
+	VisitCastExpr(expr *CastExpr) (Expr, error)
+	VisitWithExpr(expr *WithExpr) (Expr, error)
+	VisitTopExpr(expr *TopExpr) (Expr, error)
+	VisitCreateLiveView(expr *CreateLiveView) (Expr, error)
+	VisitWithTimeoutExpr(expr *WithTimeoutExpr) (Expr, error)
+	VisitTableExpr(expr *TableExpr) (Expr, error)
+	VisitOnExpr(expr *OnExpr) (Expr, error)
+	VisitUsingExpr(expr *UsingExpr) (Expr, error)
+	VisitJoinExpr(expr *JoinExpr) (Expr, error)
+	VisitJoinConstraintExpr(expr *JoinConstraintExpr) (Expr, error)
+	VisitFromExpr(expr *FromExpr) (Expr, error)
+	VisitIsNullExpr(expr *IsNullExpr) (Expr, error)
+	VisitIsNotNullExpr(expr *IsNotNullExpr) (Expr, error)
+	VisitAliasExpr(expr *AliasExpr) (Expr, error)
+	VisitWhereExpr(expr *WhereExpr) (Expr, error)
+	VisitPrewhereExpr(expr *PrewhereExpr) (Expr, error)
+	VisitGroupByExpr(expr *GroupByExpr) (Expr, error)
+	VisitHavingExpr(expr *HavingExpr) (Expr, error)
+	VisitLimitExpr(expr *LimitExpr) (Expr, error)
+	VisitLimitByExpr(expr *LimitByExpr) (Expr, error)
+	VisitWindowConditionExpr(expr *WindowConditionExpr) (Expr, error)
+	VisitWindowExpr(expr *WindowExpr) (Expr, error)
+	VisitWindowFrameExpr(expr *WindowFrameExpr) (Expr, error)
+	VisitWindowFrameExtendExpr(expr *WindowFrameExtendExpr) (Expr, error)
+	VisitWindowFrameRangeExpr(expr *WindowFrameRangeExpr) (Expr, error)
+	VisitWindowFrameCurrentRow(expr *WindowFrameCurrentRow) (Expr, error)
+	VisitWindowFrameUnbounded(expr *WindowFrameUnbounded) (Expr, error)
+	VisitWindowFrameNumber(expr *WindowFrameNumber) (Expr, error)
+	VisitArrayJoinExpr(expr *ArrayJoinExpr) (Expr, error)
+	VisitSelectQuery(expr *SelectQuery) (Expr, error)
+	VisitSubQueryExpr(expr *SubQueryExpr) (Expr, error)
+	VisitNotExpr(expr *NotExpr) (Expr, error)
+	VisitNegateExpr(expr *NegateExpr) (Expr, error)
+	VisitGlobalInExpr(expr *GlobalInExpr) (Expr, error)
+	VisitExtractExpr(expr *ExtractExpr) (Expr, error)
+	VisitDropDatabase(expr *DropDatabase) (Expr, error)
+	VisitDropStmt(expr *DropStmt) (Expr, error)
+	VisitDropUserOrRole(expr *DropUserOrRole) (Expr, error)
+	VisitUseExpr(expr *UseExpr) (Expr, error)
+	VisitCTEExpr(expr *CTEExpr) (Expr, error)
+	VisitSetExpr(expr *SetExpr) (Expr, error)
+	VisitFormatExpr(expr *FormatExpr) (Expr, error)
+	VisitOptimizeExpr(expr *OptimizeExpr) (Expr, error)
+	VisitDeduplicateExpr(expr *DeduplicateExpr) (Expr, error)
+	VisitSystemExpr(expr *SystemExpr) (Expr, error)
+	VisitSystemFlushExpr(expr *SystemFlushExpr) (Expr, error)
+	VisitSystemReloadExpr(expr *SystemReloadExpr) (Expr, error)
+	VisitSystemSyncExpr(expr *SystemSyncExpr) (Expr, error)
+	VisitSystemCtrlExpr(expr *SystemCtrlExpr) (Expr, error)
+	VisitSystemDropExpr(expr *SystemDropExpr) (Expr, error)
+	VisitTruncateTable(expr *TruncateTable) (Expr, error)
+	VisitSampleRatioExpr(expr *SampleRatioExpr) (Expr, error)
+	VisitDeleteFromExpr(expr *DeleteFromExpr) (Expr, error)
+	VisitColumnNamesExpr(expr *ColumnNamesExpr) (Expr, error)
+	VisitValuesExpr(expr *ValuesExpr) (Expr, error)
+	VisitInsertExpr(expr *InsertExpr) (Expr, error)
+	VisitCheckExpr(expr *CheckExpr) (Expr, error)
+	VisitUnaryExpr(expr *UnaryExpr) (Expr, error)
+	VisitRenameStmt(expr *RenameStmt) (Expr, error)
+	//VisitTargetPair(expr *TargetPair) (Expr, error)
+	VisitExplainExpr(expr *ExplainExpr) (Expr, error)
+	VisitPrivilegeExpr(expr *PrivilegeExpr) (Expr, error)
+	VisitGrantPrivilegeExpr(expr *GrantPrivilegeExpr) (Expr, error)
 
 	enter(expr Expr)
 	leave(expr Expr)
 }
 
-type VisitFunc func(expr Expr) (interface{}, error)
+type VisitFunc func(expr Expr) (Expr, error)
 type EnterLeaveFunc func(expr Expr)
 
-func DefaultVisitFunc(expr Expr) (interface{}, error) {
+func DefaultVisitFunc(expr Expr) (Expr, error) {
 	return nil, nil
 }
 
@@ -315,575 +170,575 @@ func NewDefaultASTVisitor(visitFunc VisitFunc, enterFunc EnterLeaveFunc, leaveFu
 	}
 }
 
-func (v *defaultASTVisitor) VisitOperationExpr(expr *OperationExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitOperationExpr(expr *OperationExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTernaryExpr(expr *TernaryExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTernaryExpr(expr *TernaryExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitBinaryExpr(expr *BinaryExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitBinaryExpr(expr *BinaryExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTable(expr *AlterTable) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTable(expr *AlterTable) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableAttachPartition(expr *AlterTableAttachPartition) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableAttachPartition(expr *AlterTableAttachPartition) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableDetachPartition(expr *AlterTableDetachPartition) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableDetachPartition(expr *AlterTableDetachPartition) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableDropPartition(expr *AlterTableDropPartition) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableDropPartition(expr *AlterTableDropPartition) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableFreezePartition(expr *AlterTableFreezePartition) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableFreezePartition(expr *AlterTableFreezePartition) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableAddColumn(expr *AlterTableAddColumn) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableAddColumn(expr *AlterTableAddColumn) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableAddIndex(expr *AlterTableAddIndex) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableAddIndex(expr *AlterTableAddIndex) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableDropColumn(expr *AlterTableDropColumn) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableDropColumn(expr *AlterTableDropColumn) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableDropIndex(expr *AlterTableDropIndex) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableDropIndex(expr *AlterTableDropIndex) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableClearColumn(expr *AlterTableClearColumn) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableClearColumn(expr *AlterTableClearColumn) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableClearIndex(expr *AlterTableClearIndex) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableClearIndex(expr *AlterTableClearIndex) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitRemovePropertyType(expr *RemovePropertyType) (interface{}, error) {
+func (v *defaultASTVisitor) VisitRemovePropertyType(expr *RemovePropertyType) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTableIndex(expr *TableIndex) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTableIndex(expr *TableIndex) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitIdent(expr *Ident) (interface{}, error) {
+func (v *defaultASTVisitor) VisitIdent(expr *Ident) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitUUID(expr *UUID) (interface{}, error) {
+func (v *defaultASTVisitor) VisitUUID(expr *UUID) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateDatabase(expr *CreateDatabase) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateDatabase(expr *CreateDatabase) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateTable(expr *CreateTable) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateTable(expr *CreateTable) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateMaterializedView(expr *CreateMaterializedView) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateMaterializedView(expr *CreateMaterializedView) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateView(expr *CreateView) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateView(expr *CreateView) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateFunction(expr *CreateFunction) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateFunction(expr *CreateFunction) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitRoleName(expr *RoleName) (interface{}, error) {
+func (v *defaultASTVisitor) VisitRoleName(expr *RoleName) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSettingPair(expr *SettingPair) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSettingPair(expr *SettingPair) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitRoleSetting(expr *RoleSetting) (interface{}, error) {
+func (v *defaultASTVisitor) VisitRoleSetting(expr *RoleSetting) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateRole(expr *CreateRole) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateRole(expr *CreateRole) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAlterRole(expr *AlterRole) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAlterRole(expr *AlterRole) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitRoleRenamePair(expr *RoleRenamePair) (interface{}, error) {
+func (v *defaultASTVisitor) VisitRoleRenamePair(expr *RoleRenamePair) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDestinationExpr(expr *DestinationExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDestinationExpr(expr *DestinationExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitConstraintExpr(expr *ConstraintExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitConstraintExpr(expr *ConstraintExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNullLiteral(expr *NullLiteral) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNullLiteral(expr *NullLiteral) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNotNullLiteral(expr *NotNullLiteral) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNotNullLiteral(expr *NotNullLiteral) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNestedIdentifier(expr *NestedIdentifier) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNestedIdentifier(expr *NestedIdentifier) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitColumnIdentifier(expr *ColumnIdentifier) (interface{}, error) {
+func (v *defaultASTVisitor) VisitColumnIdentifier(expr *ColumnIdentifier) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTableIdentifier(expr *TableIdentifier) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTableIdentifier(expr *TableIdentifier) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTableSchemaExpr(expr *TableSchemaExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTableSchemaExpr(expr *TableSchemaExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTableArgListExpr(expr *TableArgListExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTableArgListExpr(expr *TableArgListExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTableFunctionExpr(expr *TableFunctionExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTableFunctionExpr(expr *TableFunctionExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitOnClusterExpr(expr *OnClusterExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitOnClusterExpr(expr *OnClusterExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDefaultExpr(expr *DefaultExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDefaultExpr(expr *DefaultExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitPartitionExpr(expr *PartitionExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitPartitionExpr(expr *PartitionExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitPartitionByExpr(expr *PartitionByExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitPartitionByExpr(expr *PartitionByExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitPrimaryKeyExpr(expr *PrimaryKeyExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitPrimaryKeyExpr(expr *PrimaryKeyExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSampleByExpr(expr *SampleByExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSampleByExpr(expr *SampleByExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTTLExpr(expr *TTLExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTTLExpr(expr *TTLExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTTLExprList(expr *TTLExprList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTTLExprList(expr *TTLExprList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitOrderByExpr(expr *OrderByExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitOrderByExpr(expr *OrderByExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitOrderByListExpr(expr *OrderByListExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitOrderByListExpr(expr *OrderByListExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSettingsExpr(expr *SettingsExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSettingsExpr(expr *SettingsExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSettingsExprList(expr *SettingsExprList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSettingsExprList(expr *SettingsExprList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitParamExprList(expr *ParamExprList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitParamExprList(expr *ParamExprList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitArrayParamList(expr *ArrayParamList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitArrayParamList(expr *ArrayParamList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitObjectParams(expr *ObjectParams) (interface{}, error) {
+func (v *defaultASTVisitor) VisitObjectParams(expr *ObjectParams) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitFunctionExpr(expr *FunctionExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitFunctionExpr(expr *FunctionExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFunctionExpr(expr *WindowFunctionExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFunctionExpr(expr *WindowFunctionExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitColumn(expr *Column) (interface{}, error) {
+func (v *defaultASTVisitor) VisitColumn(expr *Column) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitScalarTypeExpr(expr *ScalarTypeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitScalarTypeExpr(expr *ScalarTypeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitPropertyTypeExpr(expr *PropertyTypeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitPropertyTypeExpr(expr *PropertyTypeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTypeWithParamsExpr(expr *TypeWithParamsExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTypeWithParamsExpr(expr *TypeWithParamsExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitComplexTypeExpr(expr *ComplexTypeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitComplexTypeExpr(expr *ComplexTypeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNestedTypeExpr(expr *NestedTypeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNestedTypeExpr(expr *NestedTypeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCompressionCodec(expr *CompressionCodec) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCompressionCodec(expr *CompressionCodec) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNumberLiteral(expr *NumberLiteral) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNumberLiteral(expr *NumberLiteral) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitStringLiteral(expr *StringLiteral) (interface{}, error) {
+func (v *defaultASTVisitor) VisitStringLiteral(expr *StringLiteral) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitRatioExpr(expr *RatioExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitRatioExpr(expr *RatioExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitEnumValueExpr(expr *EnumValueExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitEnumValueExpr(expr *EnumValueExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitEnumValueExprList(expr *EnumValueExprList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitEnumValueExprList(expr *EnumValueExprList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitIntervalExpr(expr *IntervalExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitIntervalExpr(expr *IntervalExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitEngineExpr(expr *EngineExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitEngineExpr(expr *EngineExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitColumnTypeExpr(expr *ColumnTypeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitColumnTypeExpr(expr *ColumnTypeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitColumnArgList(expr *ColumnArgList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitColumnArgList(expr *ColumnArgList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitColumnExprList(expr *ColumnExprList) (interface{}, error) {
+func (v *defaultASTVisitor) VisitColumnExprList(expr *ColumnExprList) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWhenExpr(expr *WhenExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWhenExpr(expr *WhenExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCaseExpr(expr *CaseExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCaseExpr(expr *CaseExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCastExpr(expr *CastExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCastExpr(expr *CastExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWithExpr(expr *WithExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWithExpr(expr *WithExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTopExpr(expr *TopExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTopExpr(expr *TopExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCreateLiveView(expr *CreateLiveView) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCreateLiveView(expr *CreateLiveView) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWithTimeoutExpr(expr *WithTimeoutExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWithTimeoutExpr(expr *WithTimeoutExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTableExpr(expr *TableExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTableExpr(expr *TableExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitOnExpr(expr *OnExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitOnExpr(expr *OnExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitUsingExpr(expr *UsingExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitUsingExpr(expr *UsingExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitJoinExpr(expr *JoinExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitJoinExpr(expr *JoinExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitJoinConstraintExpr(expr *JoinConstraintExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitJoinConstraintExpr(expr *JoinConstraintExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitFromExpr(expr *FromExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitFromExpr(expr *FromExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitIsNullExpr(expr *IsNullExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitIsNullExpr(expr *IsNullExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitIsNotNullExpr(expr *IsNotNullExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitIsNotNullExpr(expr *IsNotNullExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitAliasExpr(expr *AliasExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitAliasExpr(expr *AliasExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWhereExpr(expr *WhereExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWhereExpr(expr *WhereExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitPrewhereExpr(expr *PrewhereExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitPrewhereExpr(expr *PrewhereExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitGroupByExpr(expr *GroupByExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitGroupByExpr(expr *GroupByExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitHavingExpr(expr *HavingExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitHavingExpr(expr *HavingExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitLimitExpr(expr *LimitExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitLimitExpr(expr *LimitExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitLimitByExpr(expr *LimitByExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitLimitByExpr(expr *LimitByExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowConditionExpr(expr *WindowConditionExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowConditionExpr(expr *WindowConditionExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowExpr(expr *WindowExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowExpr(expr *WindowExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFrameExpr(expr *WindowFrameExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFrameExpr(expr *WindowFrameExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFrameExtendExpr(expr *WindowFrameExtendExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFrameExtendExpr(expr *WindowFrameExtendExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFrameRangeExpr(expr *WindowFrameRangeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFrameRangeExpr(expr *WindowFrameRangeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFrameCurrentRow(expr *WindowFrameCurrentRow) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFrameCurrentRow(expr *WindowFrameCurrentRow) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFrameUnbounded(expr *WindowFrameUnbounded) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFrameUnbounded(expr *WindowFrameUnbounded) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitWindowFrameNumber(expr *WindowFrameNumber) (interface{}, error) {
+func (v *defaultASTVisitor) VisitWindowFrameNumber(expr *WindowFrameNumber) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitArrayJoinExpr(expr *ArrayJoinExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitArrayJoinExpr(expr *ArrayJoinExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSelectQuery(expr *SelectQuery) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSelectQuery(expr *SelectQuery) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSubQueryExpr(expr *SubQueryExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSubQueryExpr(expr *SubQueryExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNotExpr(expr *NotExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNotExpr(expr *NotExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitNegateExpr(expr *NegateExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitNegateExpr(expr *NegateExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitGlobalInExpr(expr *GlobalInExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitGlobalInExpr(expr *GlobalInExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitExtractExpr(expr *ExtractExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitExtractExpr(expr *ExtractExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDropDatabase(expr *DropDatabase) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDropDatabase(expr *DropDatabase) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDropStmt(expr *DropStmt) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDropStmt(expr *DropStmt) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDropUserOrRole(expr *DropUserOrRole) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDropUserOrRole(expr *DropUserOrRole) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitUseExpr(expr *UseExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitUseExpr(expr *UseExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCTEExpr(expr *CTEExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCTEExpr(expr *CTEExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSetExpr(expr *SetExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSetExpr(expr *SetExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitFormatExpr(expr *FormatExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitFormatExpr(expr *FormatExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitOptimizeExpr(expr *OptimizeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitOptimizeExpr(expr *OptimizeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDeduplicateExpr(expr *DeduplicateExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDeduplicateExpr(expr *DeduplicateExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSystemExpr(expr *SystemExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSystemExpr(expr *SystemExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSystemFlushExpr(expr *SystemFlushExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSystemFlushExpr(expr *SystemFlushExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSystemReloadExpr(expr *SystemReloadExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSystemReloadExpr(expr *SystemReloadExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSystemSyncExpr(expr *SystemSyncExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSystemSyncExpr(expr *SystemSyncExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSystemCtrlExpr(expr *SystemCtrlExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSystemCtrlExpr(expr *SystemCtrlExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSystemDropExpr(expr *SystemDropExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSystemDropExpr(expr *SystemDropExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitTruncateTable(expr *TruncateTable) (interface{}, error) {
+func (v *defaultASTVisitor) VisitTruncateTable(expr *TruncateTable) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitSampleRatioExpr(expr *SampleRatioExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitSampleRatioExpr(expr *SampleRatioExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitDeleteFromExpr(expr *DeleteFromExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitDeleteFromExpr(expr *DeleteFromExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitColumnNamesExpr(expr *ColumnNamesExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitColumnNamesExpr(expr *ColumnNamesExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitValuesExpr(expr *ValuesExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitValuesExpr(expr *ValuesExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitInsertExpr(expr *InsertExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitInsertExpr(expr *InsertExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitCheckExpr(expr *CheckExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitCheckExpr(expr *CheckExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitUnaryExpr(expr *UnaryExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitUnaryExpr(expr *UnaryExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitRenameStmt(expr *RenameStmt) (interface{}, error) {
+func (v *defaultASTVisitor) VisitRenameStmt(expr *RenameStmt) (Expr, error) {
 	return v.Visit(expr)
 }
 
-//func (v *defaultASTVisitor) VisitTargetPair(expr *TargetPair) (interface{}, error) {
+//func (v *defaultASTVisitor) VisitTargetPair(expr *TargetPair) (Expr, error) {
 //	return v.Visit(expr)
 //}
 
-func (v *defaultASTVisitor) VisitExplainExpr(expr *ExplainExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitExplainExpr(expr *ExplainExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitPrivilegeExpr(expr *PrivilegeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitPrivilegeExpr(expr *PrivilegeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
-func (v *defaultASTVisitor) VisitGrantPrivilegeExpr(expr *GrantPrivilegeExpr) (interface{}, error) {
+func (v *defaultASTVisitor) VisitGrantPrivilegeExpr(expr *GrantPrivilegeExpr) (Expr, error) {
 	return v.Visit(expr)
 }
 
