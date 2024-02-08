@@ -153,7 +153,7 @@ type VisitFunc func(expr Expr) (Expr, error)
 type EnterLeaveFunc func(expr Expr)
 
 func DefaultVisitFunc(expr Expr) (Expr, error) {
-	return nil, nil
+	return expr, nil
 }
 
 type defaultASTVisitor struct {
@@ -163,10 +163,13 @@ type defaultASTVisitor struct {
 }
 
 func NewDefaultASTVisitor(visitFunc VisitFunc, enterFunc EnterLeaveFunc, leaveFunc EnterLeaveFunc) ASTVisitor {
+	if visitFunc == nil {
+		visitFunc = DefaultVisitFunc
+	}
 	return &defaultASTVisitor{
-		Visit: DefaultVisitFunc,
-		Enter: nil,
-		Leave: nil,
+		Visit: visitFunc,
+		Enter: enterFunc,
+		Leave: leaveFunc,
 	}
 }
 

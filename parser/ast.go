@@ -181,7 +181,7 @@ func (a *AlterTable) Accept(visitor ASTVisitor) (Expr, error) {
 		if e, err := a.OnCluster.Accept(visitor); err != nil {
 			return nil, err
 		} else {
-			a.OnCluster.Expr = e
+			a.OnCluster = e.(*OnClusterExpr)
 		}
 	}
 
@@ -2185,10 +2185,12 @@ func (p *PartitionExpr) String(level int) string {
 }
 
 func (p *PartitionExpr) Accept(visitor ASTVisitor) (Expr, error) {
-	if e, err := p.Expr.Accept(visitor); err != nil {
-		return nil, err
-	} else {
-		p.Expr = e
+	if p.Expr != nil {
+		if e, err := p.Expr.Accept(visitor); err != nil {
+			return nil, err
+		} else {
+			p.Expr = e
+		}
 	}
 	if p.ID != nil {
 		if e, err := p.ID.Accept(visitor); err != nil {
