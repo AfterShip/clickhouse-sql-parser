@@ -53,3 +53,35 @@ func TestVisitor_Identical(t *testing.T) {
 		}
 	}
 }
+
+type testRewriteVisitor struct {
+	ASTVisitor
+}
+
+func (v *testRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) (Expr, error) {
+	if expr.Table.Name == "group_by_all" {
+		expr.Table.Name = "hack"
+	}
+	return expr, nil
+}
+
+func TestVisitor_Rewrite(t *testing.T) {
+	visitor := testRewriteVisitor{
+		ASTVisitor: NewDefaultASTVisitor(nil, nil, nil),
+	}
+
+	sql := `SELECT a, COUNT(b) FROM group_by_all GROUP BY CUBE(a) WITH CUBE WITH TOTALS ORDER BY a;`
+	parser := NewParser(sql)
+	stmts, err := parser.ParseStatements()
+	require.NoError(t, err)
+
+	require.Equal(t, len(stmts), 1)
+	stmt := stmts[0]
+
+	newStmt, err := stmt.Accept(&visitor)
+	require.NoError(t, err)
+	newSql := newStmt.String(0)
+
+	require.NotSame(t, sql, newSql)
+	require.True(t, strings.Contains(newSql, "hack"))
+}
