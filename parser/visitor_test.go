@@ -65,6 +65,11 @@ func (v *testRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) (Expr, 
 	return expr, nil
 }
 
+func (v *testRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) (Expr, error) {
+	expr.Direction = OrderDirectionDesc
+	return expr, nil
+}
+
 func TestVisitor_Rewrite(t *testing.T) {
 	visitor := testRewriteVisitor{
 		ASTVisitor: NewDefaultASTVisitor(nil, nil, nil),
@@ -84,4 +89,6 @@ func TestVisitor_Rewrite(t *testing.T) {
 
 	require.NotSame(t, sql, newSql)
 	require.True(t, strings.Contains(newSql, "hack"))
+	require.True(t, strings.Contains(newSql, string(OrderDirectionDesc)))
+
 }
