@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"fmt"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
 )
@@ -54,24 +55,24 @@ func TestVisitor_Identical(t *testing.T) {
 	}
 }
 
-type testRewriteVisitor struct {
+type simpleRewriteVisitor struct {
 	DefaultASTVisitor
 }
 
-func (v *testRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
+func (v *simpleRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
 	if expr.Table.Name == "group_by_all" {
 		expr.Table.Name = "hack"
 	}
 	return nil
 }
 
-func (v *testRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) error {
+func (v *simpleRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) error {
 	expr.Direction = OrderDirectionDesc
 	return nil
 }
 
-func TestVisitor_Rewrite(t *testing.T) {
-	visitor := testRewriteVisitor{}
+func TestVisitor_SimpleRewrite(t *testing.T) {
+	visitor := simpleRewriteVisitor{}
 
 	sql := `SELECT a, COUNT(b) FROM group_by_all GROUP BY CUBE(a) WITH CUBE WITH TOTALS ORDER BY a;`
 	parser := NewParser(sql)
@@ -88,5 +89,45 @@ func TestVisitor_Rewrite(t *testing.T) {
 	require.NotSame(t, sql, newSql)
 	require.True(t, strings.Contains(newSql, "hack"))
 	require.True(t, strings.Contains(newSql, string(OrderDirectionDesc)))
+}
 
+type nestedRewriteVisitor struct {
+	DefaultASTVisitor
+	stack []Expr
+}
+
+func (v *nestedRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
+	expr.Table.Name = fmt.Sprintf("table%d", len(v.stack))
+	return nil
+}
+
+func (v *nestedRewriteVisitor) enter(expr Expr) {
+	if s, ok := expr.(*SelectQuery); ok {
+		v.stack = append(v.stack, s)
+	}
+}
+
+func (v *nestedRewriteVisitor) leave(expr Expr) {
+	if _, ok := expr.(*SelectQuery); ok {
+		v.stack = v.stack[1:]
+	}
+}
+
+func TestVisitor_NestRewrite(t *testing.T) {
+	visitor := nestedRewriteVisitor{}
+
+	sql := `SELECT replica_name FROM system.ha_replicas UNION DISTINCT SELECT replica_name FROM system.ha_unique_replicas format JSON`
+	parser := NewParser(sql)
+	stmts, err := parser.ParseStatements()
+	require.NoError(t, err)
+
+	require.Equal(t, len(stmts), 1)
+	stmt := stmts[0]
+
+	err = stmt.Accept(&visitor)
+	require.NoError(t, err)
+	newSql := stmt.String(0)
+
+	require.NotSame(t, sql, newSql)
+	require.True(t, strings.Index(newSql, "table1") < strings.Index(newSql, "table2"))
 }
