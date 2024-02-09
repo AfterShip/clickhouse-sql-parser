@@ -11,7 +11,7 @@ import (
 )
 
 func TestVisitor_Identical(t *testing.T) {
-	visitor := NewDefaultASTVisitor(nil, nil, nil)
+	visitor := DefaultASTVisitor{}
 
 	for _, dir := range []string{"./testdata/dml", "./testdata/ddl", "./testdata/query", "./testdata/basic"} {
 		outputDir := dir + "/format"
@@ -37,7 +37,7 @@ func TestVisitor_Identical(t *testing.T) {
 				builder.Write(fileBytes)
 				builder.WriteString("\n\n-- Format SQL:\n")
 				for _, stmt := range stmts {
-					err := stmt.Accept(visitor)
+					err := stmt.Accept(&visitor)
 					require.NoError(t, err)
 
 					builder.WriteString(stmt.String(0))
@@ -55,7 +55,7 @@ func TestVisitor_Identical(t *testing.T) {
 }
 
 type testRewriteVisitor struct {
-	ASTVisitor
+	DefaultASTVisitor
 }
 
 func (v *testRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
@@ -71,9 +71,7 @@ func (v *testRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) error {
 }
 
 func TestVisitor_Rewrite(t *testing.T) {
-	visitor := testRewriteVisitor{
-		ASTVisitor: NewDefaultASTVisitor(nil, nil, nil),
-	}
+	visitor := testRewriteVisitor{}
 
 	sql := `SELECT a, COUNT(b) FROM group_by_all GROUP BY CUBE(a) WITH CUBE WITH TOTALS ORDER BY a;`
 	parser := NewParser(sql)
