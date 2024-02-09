@@ -140,7 +140,6 @@ type ASTVisitor interface {
 	VisitCheckExpr(expr *CheckExpr) error
 	VisitUnaryExpr(expr *UnaryExpr) error
 	VisitRenameStmt(expr *RenameStmt) error
-	//VisitTargetPair(expr *TargetPair) (error)
 	VisitExplainExpr(expr *ExplainExpr) error
 	VisitPrivilegeExpr(expr *PrivilegeExpr) error
 	VisitGrantPrivilegeExpr(expr *GrantPrivilegeExpr) error
