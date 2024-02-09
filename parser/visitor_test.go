@@ -37,10 +37,10 @@ func TestVisitor_Identical(t *testing.T) {
 				builder.Write(fileBytes)
 				builder.WriteString("\n\n-- Format SQL:\n")
 				for _, stmt := range stmts {
-					e, err := stmt.Accept(visitor)
+					err := stmt.Accept(visitor)
 					require.NoError(t, err)
 
-					builder.WriteString(e.String(0))
+					builder.WriteString(stmt.String(0))
 					builder.WriteByte(';')
 					builder.WriteByte('\n')
 				}
@@ -58,16 +58,16 @@ type testRewriteVisitor struct {
 	ASTVisitor
 }
 
-func (v *testRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) (Expr, error) {
+func (v *testRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
 	if expr.Table.Name == "group_by_all" {
 		expr.Table.Name = "hack"
 	}
-	return expr, nil
+	return nil
 }
 
-func (v *testRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) (Expr, error) {
+func (v *testRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) error {
 	expr.Direction = OrderDirectionDesc
-	return expr, nil
+	return nil
 }
 
 func TestVisitor_Rewrite(t *testing.T) {
@@ -83,9 +83,9 @@ func TestVisitor_Rewrite(t *testing.T) {
 	require.Equal(t, len(stmts), 1)
 	stmt := stmts[0]
 
-	newStmt, err := stmt.Accept(&visitor)
+	err = stmt.Accept(&visitor)
 	require.NoError(t, err)
-	newSql := newStmt.String(0)
+	newSql := stmt.String(0)
 
 	require.NotSame(t, sql, newSql)
 	require.True(t, strings.Contains(newSql, "hack"))
