@@ -18,9 +18,7 @@ func TestVisitor_Identical(t *testing.T) {
 		outputDir := dir + "/format"
 
 		entries, err := os.ReadDir(dir)
-		if err != nil {
-			require.NoError(t, err)
-		}
+		require.NoError(t, err)
 		for _, entry := range entries {
 			if !strings.HasSuffix(entry.Name(), ".sql") {
 				continue
@@ -79,7 +77,7 @@ func TestVisitor_SimpleRewrite(t *testing.T) {
 	stmts, err := parser.ParseStatements()
 	require.NoError(t, err)
 
-	require.Equal(t, len(stmts), 1)
+	require.Equal(t, 1, len(stmts))
 	stmt := stmts[0]
 
 	err = stmt.Accept(&visitor)
@@ -121,7 +119,7 @@ func TestVisitor_NestRewrite(t *testing.T) {
 	stmts, err := parser.ParseStatements()
 	require.NoError(t, err)
 
-	require.Equal(t, len(stmts), 1)
+	require.Equal(t, 1, len(stmts))
 	stmt := stmts[0]
 
 	err = stmt.Accept(&visitor)
@@ -129,5 +127,5 @@ func TestVisitor_NestRewrite(t *testing.T) {
 	newSql := stmt.String(0)
 
 	require.NotSame(t, sql, newSql)
-	require.True(t, strings.Index(newSql, "table1") < strings.Index(newSql, "table2"))
+	require.Less(t, strings.Index(newSql, "table1"), strings.Index(newSql, "table2"))
 }
