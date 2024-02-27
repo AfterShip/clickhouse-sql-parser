@@ -1095,9 +1095,7 @@ type CreateMaterializedView struct {
 	StatementEnd Pos
 	Name         *TableIdentifier
 	IfNotExists  bool
-	UUID         *UUID
 	OnCluster    *OnClusterExpr
-	TableSchema  *TableSchemaExpr
 	Engine       *EngineExpr
 	Destination  *DestinationExpr
 	SubQuery     *SubQueryExpr
@@ -1127,17 +1125,17 @@ func (c *CreateMaterializedView) String(level int) string {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(c.OnCluster.String(level))
 	}
-	if c.TableSchema != nil {
-		builder.WriteString(NewLine(level))
-		// level + 1 to add an indent for table schema
-		builder.WriteString(c.TableSchema.String(level + 1))
-	}
 	if c.Engine != nil {
 		builder.WriteString(c.Engine.String(level))
 	}
 	if c.Destination != nil {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(c.Destination.String(level))
+		if c.Destination.TableSchema != nil {
+			builder.WriteString(NewLine(level))
+			// level + 1 to add an indent for table schema
+			builder.WriteString(c.Destination.TableSchema.String(level + 1))
+		}
 	}
 	if c.Populate {
 		builder.WriteString(" POPULATE ")
@@ -1154,18 +1152,8 @@ func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
-	if c.UUID != nil {
-		if err := c.UUID.Accept(visitor); err != nil {
-			return err
-		}
-	}
 	if c.OnCluster != nil {
 		if err := c.OnCluster.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	if c.TableSchema != nil {
-		if err := c.TableSchema.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -1177,6 +1165,11 @@ func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
 	if c.Destination != nil {
 		if err := c.Destination.Accept(visitor); err != nil {
 			return err
+		}
+		if c.Destination.TableSchema != nil {
+			if err := c.Destination.TableSchema.Accept(visitor); err != nil {
+				return err
+			}
 		}
 	}
 	if c.SubQuery != nil {
@@ -1642,6 +1635,7 @@ func (r *RoleRenamePair) Accept(visitor ASTVisitor) error {
 type DestinationExpr struct {
 	ToPos           Pos
 	TableIdentifier *TableIdentifier
+	TableSchema     *TableSchemaExpr
 }
 
 func (d *DestinationExpr) Pos() Pos {
