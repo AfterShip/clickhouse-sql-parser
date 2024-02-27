@@ -238,8 +238,8 @@ func (p *Parser) parseMulDivModExpr(pos Pos) (Expr, error) {
 		case p.matchTokenKind(opTypeMul),
 			p.matchTokenKind(opTypeDiv),
 			p.matchTokenKind(opTypeMod),
-			p.matchTokenKind(TokenArrow),
-			p.matchTokenKind(TokenCast):
+			p.matchTokenKind(opTypeArrow),
+			p.matchTokenKind(opTypeCast):
 			op := p.lastTokenKind()
 			_ = p.lexer.consumeToken()
 			rightExpr, err := p.parseUnaryExpr(p.Pos())
@@ -393,10 +393,12 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 		return nil, err
 	}
 
+	var separator string
 	asPos := p.Pos()
 	switch {
 	// CAST(x, T) and CAST(x AS T) are equivalent
 	case p.matchKeyword(KeywordAs), p.matchTokenKind(","):
+		separator = p.last().String
 		_ = p.lexer.consumeToken()
 	default:
 		return nil, fmt.Errorf("expected AS or , but got %s", p.lastTokenKind())
@@ -411,10 +413,11 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 	}
 
 	return &CastExpr{
-		CastPos: pos,
-		AsPos:   asPos,
-		Expr:    columnExpr,
-		AsType:  asColumnType,
+		CastPos:   pos,
+		AsPos:     asPos,
+		Separator: separator,
+		Expr:      columnExpr,
+		AsType:    asColumnType,
 	}, nil
 }
 

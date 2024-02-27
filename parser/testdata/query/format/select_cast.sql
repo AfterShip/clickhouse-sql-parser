@@ -10,10 +10,10 @@ SELECT
   CAST(1 AS Float64) AS value;
 
 SELECT 
-  CAST(1 AS 'Float64') AS value;
+  CAST(1, 'Float64') AS value;
 
 SELECT 
   (1 AS Float64) AS value;
 
 SELECT 
-  1 <cast> Float64 AS value;
+  1::Float64 AS value;

@@ -105,14 +105,18 @@ func (p *BinaryExpr) End() Pos {
 func (p *BinaryExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(p.LeftExpr.String(level))
-	builder.WriteByte(' ')
+	if p.Operation != opTypeCast {
+		builder.WriteByte(' ')
+	}
 	if p.HasNot {
 		builder.WriteString("NOT ")
 	} else if p.HasGlobal {
 		builder.WriteString("GLOBAL ")
 	}
 	builder.WriteString(string(p.Operation))
-	builder.WriteByte(' ')
+	if p.Operation != opTypeCast {
+		builder.WriteByte(' ')
+	}
 	builder.WriteString(p.RightExpr.String(level))
 	return builder.String()
 }
@@ -3413,10 +3417,11 @@ func (c *CaseExpr) Accept(visitor ASTVisitor) error {
 }
 
 type CastExpr struct {
-	CastPos Pos
-	Expr    Expr
-	AsPos   Pos
-	AsType  Expr
+	CastPos   Pos
+	Expr      Expr
+	Separator string
+	AsPos     Pos
+	AsType    Expr
 }
 
 func (c *CastExpr) Pos() Pos {
@@ -3431,7 +3436,11 @@ func (c *CastExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("CAST(")
 	builder.WriteString(c.Expr.String(level))
-	builder.WriteString(" AS ")
+	if c.Separator == "," {
+		builder.WriteString(", ")
+	} else {
+		builder.WriteString(" AS ")
+	}
 	builder.WriteString(c.AsType.String(level))
 	builder.WriteByte(')')
 	return builder.String()
