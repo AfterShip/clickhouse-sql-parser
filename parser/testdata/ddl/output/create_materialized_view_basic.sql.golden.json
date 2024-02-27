@@ -1,328 +1,473 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 334,
+    "StatementEnd": 537,
     "Name": {
       "Database": {
-        "Name": "test",
+        "Name": "infra_bm",
         "Unquoted": false,
         "NamePos": 25,
-        "NameEnd": 29
+        "NameEnd": 33
       },
       "Table": {
-        "Name": "events_local",
+        "Name": "view_name",
         "Unquoted": false,
-        "NamePos": 30,
-        "NameEnd": 42
+        "NamePos": 34,
+        "NameEnd": 43
       }
     },
     "IfNotExists": false,
-    "UUID": {
-      "Value": {
-        "LiteralPos": 49,
-        "LiteralEnd": 85,
-        "Literal": "3493e374-e2bb-481b-b493-e374e2bb981b"
+    "OnCluster": {
+      "OnPos": 49,
+      "Expr": {
+        "LiteralPos": 61,
+        "LiteralEnd": 76,
+        "Literal": "default_cluster"
       }
     },
-    "OnCluster": null,
-    "TableSchema": {
-      "SchemaPos": 87,
-      "SchemaEnd": 170,
-      "Columns": [
-        {
-          "NamePos": 89,
-          "ColumnEnd": 105,
-          "Name": {
-            "Name": "f0",
-            "Unquoted": true,
-            "NamePos": 89,
-            "NameEnd": 91
-          },
-          "Type": {
-            "LeftParenPos": 104,
-            "RightParenPos": 105,
-            "Name": {
-              "Name": "DateTime64",
-              "Unquoted": false,
-              "NamePos": 93,
-              "NameEnd": 103
-            },
-            "Params": [
-              {
-                "NumPos": 104,
-                "NumEnd": 105,
-                "Literal": "3",
-                "Base": 10
-              }
-            ]
-          },
-          "NotNull": null,
-          "Nullable": null,
-          "Property": null,
-          "Codec": null,
-          "TTL": null,
-          "Comment": null,
-          "CompressionCodec": null
+    "Engine": null,
+    "Destination": {
+      "ToPos": 78,
+      "TableIdentifier": {
+        "Database": {
+          "Name": "infra_bm",
+          "Unquoted": false,
+          "NamePos": 81,
+          "NameEnd": 89
         },
-        {
-          "NamePos": 109,
-          "ColumnEnd": 119,
-          "Name": {
-            "Name": "f1",
-            "Unquoted": true,
-            "NamePos": 109,
-            "NameEnd": 111
-          },
-          "Type": {
-            "Name": {
-              "Name": "String",
-              "Unquoted": false,
-              "NamePos": 113,
-              "NameEnd": 119
-            }
-          },
-          "NotNull": null,
-          "Nullable": null,
-          "Property": null,
-          "Codec": null,
-          "TTL": null,
-          "Comment": null,
-          "CompressionCodec": null
-        },
-        {
-          "NamePos": 122,
-          "ColumnEnd": 132,
-          "Name": {
-            "Name": "f2",
-            "Unquoted": true,
-            "NamePos": 122,
-            "NameEnd": 124
-          },
-          "Type": {
-            "Name": {
-              "Name": "String",
-              "Unquoted": false,
-              "NamePos": 126,
-              "NameEnd": 132
-            }
-          },
-          "NotNull": null,
-          "Nullable": null,
-          "Property": null,
-          "Codec": null,
-          "TTL": null,
-          "Comment": null,
-          "CompressionCodec": null
-        },
-        {
-          "NamePos": 135,
-          "ColumnEnd": 145,
-          "Name": {
-            "Name": "f3",
-            "Unquoted": true,
-            "NamePos": 135,
-            "NameEnd": 137
-          },
-          "Type": {
-            "Name": {
-              "Name": "String",
-              "Unquoted": false,
-              "NamePos": 139,
-              "NameEnd": 145
-            }
-          },
-          "NotNull": null,
-          "Nullable": null,
-          "Property": null,
-          "Codec": null,
-          "TTL": null,
-          "Comment": null,
-          "CompressionCodec": null
-        },
-        {
-          "NamePos": 148,
-          "ColumnEnd": 158,
-          "Name": {
-            "Name": "f4",
-            "Unquoted": true,
-            "NamePos": 148,
-            "NameEnd": 150
-          },
-          "Type": {
-            "Name": {
-              "Name": "String",
-              "Unquoted": false,
-              "NamePos": 152,
-              "NameEnd": 158
-            }
-          },
-          "NotNull": null,
-          "Nullable": null,
-          "Property": null,
-          "Codec": null,
-          "TTL": null,
-          "Comment": null,
-          "CompressionCodec": null
-        },
-        {
-          "NamePos": 161,
-          "ColumnEnd": 170,
-          "Name": {
-            "Name": "f5",
-            "Unquoted": true,
-            "NamePos": 161,
-            "NameEnd": 163
-          },
-          "Type": {
-            "Name": {
-              "Name": "Int64",
-              "Unquoted": false,
-              "NamePos": 165,
-              "NameEnd": 170
-            }
-          },
-          "NotNull": null,
-          "Nullable": null,
-          "Property": null,
-          "Codec": null,
-          "TTL": null,
-          "Comment": null,
-          "CompressionCodec": null
+        "Table": {
+          "Name": "table_name",
+          "Unquoted": false,
+          "NamePos": 90,
+          "NameEnd": 100
         }
-      ],
-      "AliasTable": null,
-      "TableFunction": null
-    },
-    "Engine": {
-      "EnginePos": 172,
-      "EngineEnd": 334,
-      "Name": "ReplicatedAggregatingMergeTree",
-      "Params": {
-        "LeftParenPos": 211,
-        "RightParenPos": 249,
-        "Items": {
-          "ListPos": 213,
-          "ListEnd": 248,
-          "HasDistinct": false,
-          "Items": [
-            {
-              "LiteralPos": 213,
-              "LiteralEnd": 248,
-              "Literal": "/clickhouse/tables/{layer}-{shard}}"
-            }
-          ]
-        },
-        "ColumnArgList": null
       },
-      "PrimaryKey": null,
-      "PartitionBy": {
-        "PartitionPos": 251,
-        "Expr": {
-          "ListPos": 264,
-          "ListEnd": 273,
-          "HasDistinct": false,
-          "Items": [
-            {
+      "TableSchema": {
+        "SchemaPos": 101,
+        "SchemaEnd": 203,
+        "Columns": [
+          {
+            "NamePos": 106,
+            "ColumnEnd": 122,
+            "Name": {
+              "Name": "f1",
+              "Unquoted": true,
+              "NamePos": 106,
+              "NameEnd": 108
+            },
+            "Type": {
+              "LeftParenPos": 121,
+              "RightParenPos": 122,
               "Name": {
-                "Name": "toDate",
+                "Name": "DateTime64",
                 "Unquoted": false,
-                "NamePos": 264,
-                "NameEnd": 270
+                "NamePos": 110,
+                "NameEnd": 120
               },
-              "Params": {
-                "LeftParenPos": 270,
-                "RightParenPos": 273,
-                "Items": {
-                  "ListPos": 271,
-                  "ListEnd": 273,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
-                      "Name": "f1",
-                      "Unquoted": false,
-                      "NamePos": 271,
-                      "NameEnd": 273
-                    }
-                  ]
+              "Params": [
+                {
+                  "NumPos": 121,
+                  "NumEnd": 122,
+                  "Literal": "3",
+                  "Base": 10
+                }
+              ]
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "Property": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 129,
+            "ColumnEnd": 139,
+            "Name": {
+              "Name": "f2",
+              "Unquoted": true,
+              "NamePos": 129,
+              "NameEnd": 131
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "Unquoted": false,
+                "NamePos": 133,
+                "NameEnd": 139
+              }
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "Property": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 145,
+            "ColumnEnd": 155,
+            "Name": {
+              "Name": "f3",
+              "Unquoted": true,
+              "NamePos": 145,
+              "NameEnd": 147
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "Unquoted": false,
+                "NamePos": 149,
+                "NameEnd": 155
+              }
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "Property": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 161,
+            "ColumnEnd": 171,
+            "Name": {
+              "Name": "f4",
+              "Unquoted": true,
+              "NamePos": 161,
+              "NameEnd": 163
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "Unquoted": false,
+                "NamePos": 165,
+                "NameEnd": 171
+              }
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "Property": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 177,
+            "ColumnEnd": 187,
+            "Name": {
+              "Name": "f5",
+              "Unquoted": true,
+              "NamePos": 177,
+              "NameEnd": 179
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "Unquoted": false,
+                "NamePos": 181,
+                "NameEnd": 187
+              }
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "Property": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 193,
+            "ColumnEnd": 202,
+            "Name": {
+              "Name": "f6",
+              "Unquoted": true,
+              "NamePos": 193,
+              "NameEnd": 195
+            },
+            "Type": {
+              "Name": {
+                "Name": "Int64",
+                "Unquoted": false,
+                "NamePos": 197,
+                "NameEnd": 202
+              }
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "Property": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          }
+        ],
+        "AliasTable": null,
+        "TableFunction": null
+      }
+    },
+    "SubQuery": {
+      "AsPos": 205,
+      "Select": {
+        "SelectPos": 208,
+        "StatementEnd": 537,
+        "With": null,
+        "Top": null,
+        "SelectColumns": {
+          "ListPos": 215,
+          "ListEnd": 456,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Name": "f1",
+              "Unquoted": false,
+              "NamePos": 215,
+              "NameEnd": 217
+            },
+            {
+              "Name": "f2",
+              "Unquoted": false,
+              "NamePos": 226,
+              "NameEnd": 228
+            },
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "visitParamExtractString",
+                  "Unquoted": false,
+                  "NamePos": 237,
+                  "NameEnd": 260
                 },
-                "ColumnArgList": null
+                "Params": {
+                  "LeftParenPos": 260,
+                  "RightParenPos": 277,
+                  "Items": {
+                    "ListPos": 261,
+                    "ListEnd": 276,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Name": "properties",
+                        "Unquoted": false,
+                        "NamePos": 261,
+                        "NameEnd": 271
+                      },
+                      {
+                        "LiteralPos": 274,
+                        "LiteralEnd": 276,
+                        "Literal": "f3"
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "AliasPos": 281,
+              "Alias": {
+                "Name": "f3",
+                "Unquoted": false,
+                "NamePos": 284,
+                "NameEnd": 286
+              }
+            },
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "visitParamExtractString",
+                  "Unquoted": false,
+                  "NamePos": 295,
+                  "NameEnd": 318
+                },
+                "Params": {
+                  "LeftParenPos": 318,
+                  "RightParenPos": 335,
+                  "Items": {
+                    "ListPos": 319,
+                    "ListEnd": 334,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Name": "properties",
+                        "Unquoted": false,
+                        "NamePos": 319,
+                        "NameEnd": 329
+                      },
+                      {
+                        "LiteralPos": 332,
+                        "LiteralEnd": 334,
+                        "Literal": "f4"
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "AliasPos": 342,
+              "Alias": {
+                "Name": "f4",
+                "Unquoted": false,
+                "NamePos": 345,
+                "NameEnd": 347
+              }
+            },
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "visitParamExtractString",
+                  "Unquoted": false,
+                  "NamePos": 356,
+                  "NameEnd": 379
+                },
+                "Params": {
+                  "LeftParenPos": 379,
+                  "RightParenPos": 396,
+                  "Items": {
+                    "ListPos": 380,
+                    "ListEnd": 395,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Name": "properties",
+                        "Unquoted": false,
+                        "NamePos": 380,
+                        "NameEnd": 390
+                      },
+                      {
+                        "LiteralPos": 393,
+                        "LiteralEnd": 395,
+                        "Literal": "f5"
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "AliasPos": 401,
+              "Alias": {
+                "Name": "f5",
+                "Unquoted": false,
+                "NamePos": 404,
+                "NameEnd": 406
+              }
+            },
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "visitParamExtractInt",
+                  "Unquoted": false,
+                  "NamePos": 412,
+                  "NameEnd": 432
+                },
+                "Params": {
+                  "LeftParenPos": 432,
+                  "RightParenPos": 449,
+                  "Items": {
+                    "ListPos": 433,
+                    "ListEnd": 448,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Name": "properties",
+                        "Unquoted": false,
+                        "NamePos": 433,
+                        "NameEnd": 443
+                      },
+                      {
+                        "LiteralPos": 446,
+                        "LiteralEnd": 448,
+                        "Literal": "f6"
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "AliasPos": 451,
+              "Alias": {
+                "Name": "f6",
+                "Unquoted": false,
+                "NamePos": 454,
+                "NameEnd": 456
               }
             }
           ]
-        }
-      },
-      "SampleBy": null,
-      "TTLExprList": null,
-      "SettingsExprList": {
-        "SettingsPos": 301,
-        "ListEnd": 334,
-        "Items": [
-          {
-            "SettingsPos": 310,
-            "Name": {
-              "Name": "index_granularity",
-              "Unquoted": false,
-              "NamePos": 310,
-              "NameEnd": 327
-            },
+        },
+        "From": {
+          "FromPos": 457,
+          "Expr": {
+            "TablePos": 466,
+            "TableEnd": 486,
+            "Alias": null,
             "Expr": {
-              "NumPos": 330,
-              "NumEnd": 334,
-              "Literal": "8192",
-              "Base": 10
-            }
-          }
-        ]
-      },
-      "OrderByListExpr": {
-        "OrderPos": 275,
-        "ListEnd": 299,
-        "Items": [
-          {
-            "OrderPos": 275,
-            "Expr": {
-              "LeftParenPos": 284,
-              "RightParenPos": 299,
-              "Items": {
-                "ListPos": 285,
-                "ListEnd": 299,
-                "HasDistinct": false,
-                "Items": [
-                  {
-                    "Name": "f1",
-                    "Unquoted": false,
-                    "NamePos": 285,
-                    "NameEnd": 287
-                  },
-                  {
-                    "Name": "f2",
-                    "Unquoted": false,
-                    "NamePos": 289,
-                    "NameEnd": 291
-                  },
-                  {
-                    "Name": "f3",
-                    "Unquoted": false,
-                    "NamePos": 293,
-                    "NameEnd": 295
-                  },
-                  {
-                    "Name": "f4",
-                    "Unquoted": false,
-                    "NamePos": 297,
-                    "NameEnd": 299
-                  }
-                ]
+              "Database": {
+                "Name": "infra_bm",
+                "Unquoted": false,
+                "NamePos": 466,
+                "NameEnd": 474
               },
-              "ColumnArgList": null
+              "Table": {
+                "Name": "table_name1",
+                "Unquoted": false,
+                "NamePos": 475,
+                "NameEnd": 486
+              }
             },
-            "Direction": "None"
+            "HasFinal": false
           }
-        ]
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": {
+          "WherePos": 487,
+          "Expr": {
+            "LeftExpr": {
+              "Database": {
+                "Name": "infra_bm",
+                "Unquoted": false,
+                "NamePos": 497,
+                "NameEnd": 505
+              },
+              "Table": {
+                "Name": "table_name1",
+                "Unquoted": false,
+                "NamePos": 506,
+                "NameEnd": 517
+              },
+              "Column": {
+                "Name": "event",
+                "Unquoted": false,
+                "NamePos": 518,
+                "NameEnd": 523
+              }
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "LiteralPos": 527,
+              "LiteralEnd": 537,
+              "Literal": "test-event"
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
       }
     },
-    "Destination": null,
-    "SubQuery": null,
     "Populate": false
   }
 ]

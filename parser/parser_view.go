@@ -25,24 +25,12 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	}
 	createMaterializedView.Name = tableIdentifier
 
-	// try parse UUID clause if exists
-	uuid, err := p.tryParseUUID()
-	if err != nil {
-		return nil, err
-	}
-	createMaterializedView.UUID = uuid
 	// parse ON CLUSTER clause if exists
 	onCluster, err := p.tryParseOnCluster(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	createMaterializedView.OnCluster = onCluster
-
-	tableSchema, err := p.parseTableSchemaExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	createMaterializedView.TableSchema = tableSchema
 
 	switch {
 	case p.matchKeyword(KeywordTo):
@@ -52,6 +40,13 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		}
 		createMaterializedView.Destination = destinationExpr
 		createMaterializedView.StatementEnd = destinationExpr.End()
+		if p.matchTokenKind("(") {
+			tableSchema, err := p.parseTableSchemaExpr(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			createMaterializedView.Destination.TableSchema = tableSchema
+		}
 	case p.matchKeyword(KeywordEngine):
 		engineExpr, err := p.parseEngineExpr(p.Pos())
 		if err != nil {

@@ -17,7 +17,6 @@
       }
     },
     "IfNotExists": false,
-    "UUID": null,
     "OnCluster": {
       "OnPos": 33,
       "Expr": {
@@ -27,7 +26,6 @@
         "NameEnd": 59
       }
     },
-    "TableSchema": null,
     "Engine": {
       "EnginePos": 60,
       "EngineEnd": 190,
