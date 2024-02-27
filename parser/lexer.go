@@ -15,8 +15,6 @@ const (
 	TokenInt     TokenKind = "<int>"
 	TokenFloat   TokenKind = "<float>"
 	TokenString  TokenKind = "<string>"
-	TokenCast    TokenKind = "<cast>"
-	TokenArrow   TokenKind = "<arrow>"
 )
 
 type Pos int
@@ -276,7 +274,7 @@ func (l *Lexer) consumeToken() error {
 		} else if l.peekOk(1) && l.peekN(1) == '>' {
 			l.lastToken = &Token{
 				String: l.slice(0, 2),
-				Kind:   TokenArrow,
+				Kind:   opTypeArrow,
 				Pos:    Pos(l.current),
 				End:    Pos(l.current + 2),
 			}
@@ -295,7 +293,7 @@ func (l *Lexer) consumeToken() error {
 		if l.peekOk(1) && l.peekN(1) == ':' {
 			l.lastToken = &Token{
 				String: l.slice(0, 2),
-				Kind:   TokenCast,
+				Kind:   opTypeCast,
 				Pos:    Pos(l.current),
 				End:    Pos(l.current + 2),
 			}

@@ -22,6 +22,9 @@ const (
 	opTypeDiv   TokenKind = "/"
 	opTypeMod   TokenKind = "%"
 
+	opTypeArrow TokenKind = "->"
+	opTypeCast  TokenKind = "::"
+
 	// Logical operators
 	opTypeAnd TokenKind = "AND"
 	opTypeOr  TokenKind = "OR"

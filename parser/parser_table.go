@@ -1303,7 +1303,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(TokenArrow); err != nil {
+	if _, err := p.consumeTokenKind(opTypeArrow); err != nil {
 		return nil, err
 	}
 	expr, err := p.parseExpr(p.Pos())
