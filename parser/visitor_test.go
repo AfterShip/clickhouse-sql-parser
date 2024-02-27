@@ -1,12 +1,12 @@
 package parser
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"fmt"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
 )
@@ -58,8 +58,8 @@ type simpleRewriteVisitor struct {
 }
 
 func (v *simpleRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
-	if expr.Table.Name == "group_by_all" {
-		expr.Table.Name = "hack"
+	if expr.Table.String(0) == "group_by_all" {
+		expr.Table = &Ident{Name: "hack"}
 	}
 	return nil
 }
@@ -95,7 +95,7 @@ type nestedRewriteVisitor struct {
 }
 
 func (v *nestedRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
-	expr.Table.Name = fmt.Sprintf("table%d", len(v.stack))
+	expr.Table = &Ident{Name: fmt.Sprintf("table%d", len(v.stack))}
 	return nil
 }
 

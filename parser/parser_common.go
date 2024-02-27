@@ -120,11 +120,11 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 	}
 }
 
-func (p *Parser) tryParseDotIdent() (*Ident, error) {
+func (p *Parser) tryParseDotIdent(pos Pos) (Expr, error) {
 	if p.tryConsumeTokenKind(".") == nil {
 		return nil, nil // nolint
 	}
-	return p.parseIdent()
+	return p.parseIdentOrString(pos)
 }
 
 func (p *Parser) parseUUID() (*UUID, error) {
@@ -257,12 +257,12 @@ func (p *Parser) parseLiteral(pos Pos) (Literal, error) {
 	}
 }
 
-func (p *Parser) ParseNestedIdentifier(_ Pos) (*NestedIdentifier, error) {
-	ident, err := p.parseIdent()
+func (p *Parser) ParseNestedIdentifier(pos Pos) (*NestedIdentifier, error) {
+	ident, err := p.parseIdentOrString(pos)
 	if err != nil {
 		return nil, err
 	}
-	dotIdent, err := p.tryParseDotIdent()
+	dotIdent, err := p.tryParseDotIdent(p.Pos())
 	if err != nil {
 		return nil, err
 	}

@@ -248,9 +248,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	var expr Expr
 	var err error
 	switch {
-	case p.matchTokenKind(TokenString):
-		expr, err = p.parseString(p.Pos())
-	case p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenString), p.matchTokenKind(TokenIdent):
 		// table name
 		tableIdentifier, err := p.parseTableIdentifier(p.Pos())
 		if err != nil {

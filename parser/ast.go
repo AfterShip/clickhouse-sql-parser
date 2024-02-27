@@ -954,7 +954,7 @@ func (u *UUID) Accept(visitor ASTVisitor) error {
 type CreateDatabase struct {
 	CreatePos    Pos // position of CREATE keyword
 	StatementEnd Pos
-	Name         *Ident
+	Name         Expr
 	IfNotExists  bool // true if 'IF NOT EXISTS' is specified
 	OnCluster    *OnClusterExpr
 	Engine       *EngineExpr
@@ -1749,19 +1749,19 @@ func (n *NotNullLiteral) Accept(visitor ASTVisitor) error {
 }
 
 type NestedIdentifier struct {
-	Ident    *Ident
-	DotIdent *Ident
+	Ident    Expr
+	DotIdent Expr
 }
 
 func (n *NestedIdentifier) Pos() Pos {
-	return n.Ident.NamePos
+	return n.Ident.Pos()
 }
 
 func (n *NestedIdentifier) End() Pos {
 	if n.DotIdent != nil {
-		return n.DotIdent.NameEnd
+		return n.DotIdent.End()
 	}
-	return n.Ident.NameEnd
+	return n.Ident.End()
 }
 
 func (n *NestedIdentifier) String(int) string {
@@ -1835,19 +1835,19 @@ func (c *ColumnIdentifier) Accept(visitor ASTVisitor) error {
 }
 
 type TableIdentifier struct {
-	Database *Ident
-	Table    *Ident
+	Database Expr
+	Table    Expr
 }
 
 func (t *TableIdentifier) Pos() Pos {
 	if t.Database != nil {
-		return t.Database.NamePos
+		return t.Database.Pos()
 	}
-	return t.Table.NamePos
+	return t.Table.Pos()
 }
 
 func (t *TableIdentifier) End() Pos {
-	return t.Table.NameEnd
+	return t.Table.End()
 }
 
 func (t *TableIdentifier) String(int) string {
@@ -1972,12 +1972,12 @@ func (t *TableArgListExpr) Accept(visitor ASTVisitor) error {
 }
 
 type TableFunctionExpr struct {
-	Name *Ident
+	Name Expr
 	Args *TableArgListExpr
 }
 
 func (t *TableFunctionExpr) Pos() Pos {
-	return t.Name.NamePos
+	return t.Name.Pos()
 }
 
 func (t *TableFunctionExpr) End() Pos {
