@@ -3946,7 +3946,7 @@ func (n *IsNotNullExpr) Accept(visitor ASTVisitor) error {
 type AliasExpr struct {
 	Expr     Expr
 	AliasPos Pos
-	Alias    *Ident
+	Alias    Expr
 }
 
 func (a *AliasExpr) Pos() Pos {
@@ -3954,7 +3954,7 @@ func (a *AliasExpr) Pos() Pos {
 }
 
 func (a *AliasExpr) End() Pos {
-	return a.Alias.NameEnd
+	return a.Alias.End()
 }
 
 func (a *AliasExpr) String(level int) string {

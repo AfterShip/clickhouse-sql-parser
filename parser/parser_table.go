@@ -539,16 +539,7 @@ func (p *Parser) tryParseOnCluster(pos Pos) (*OnClusterExpr, error) {
 		return nil, err
 	}
 
-	var expr Expr
-	var err error
-	switch {
-	case p.matchTokenKind(TokenIdent):
-		expr, err = p.parseIdent()
-	case p.matchTokenKind(TokenString):
-		expr, err = p.parseString(p.Pos())
-	default:
-		return nil, fmt.Errorf("expected <Ident> or <Literal>, but got %q", p.last().String)
-	}
+	expr, err := p.parseIdentOrString(p.Pos())
 	if err != nil {
 		return nil, err
 	}
