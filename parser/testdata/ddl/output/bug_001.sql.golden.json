@@ -17,7 +17,6 @@
       }
     },
     "IfNotExists": true,
-    "UUID": null,
     "OnCluster": {
       "OnPos": 60,
       "Expr": {
@@ -26,7 +25,6 @@
         "Literal": "default_cluster"
       }
     },
-    "TableSchema": null,
     "Engine": null,
     "Destination": {
       "ToPos": 89,
@@ -43,7 +41,8 @@
           "NamePos": 95,
           "NameEnd": 103
         }
-      }
+      },
+      "TableSchema": null
     },
     "SubQuery": {
       "AsPos": 104,

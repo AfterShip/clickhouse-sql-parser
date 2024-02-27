@@ -24,7 +24,8 @@
           "NamePos": 49,
           "NameEnd": 63
         }
-      }
+      },
+      "TableSchema": null
     },
     "TableSchema": {
       "SchemaPos": 63,
