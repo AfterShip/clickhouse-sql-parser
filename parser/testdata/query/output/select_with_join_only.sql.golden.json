@@ -26,9 +26,12 @@
           "TableEnd": 17,
           "Alias": null,
           "Expr": {
-            "LiteralPos": 15,
-            "LiteralEnd": 17,
-            "Literal": "t1"
+            "Database": null,
+            "Table": {
+              "LiteralPos": 15,
+              "LiteralEnd": 17,
+              "Literal": "t1"
+            }
           },
           "HasFinal": false
         },
@@ -37,9 +40,12 @@
           "TableEnd": 27,
           "Alias": null,
           "Expr": {
-            "LiteralPos": 25,
-            "LiteralEnd": 27,
-            "Literal": "t2"
+            "Database": null,
+            "Table": {
+              "LiteralPos": 25,
+              "LiteralEnd": 27,
+              "Literal": "t2"
+            }
           },
           "HasFinal": false
         },

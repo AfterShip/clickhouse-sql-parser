@@ -80,9 +80,12 @@
         "TableEnd": 48,
         "Alias": null,
         "Expr": {
-          "LiteralPos": 45,
-          "LiteralEnd": 48,
-          "Literal": "abc"
+          "Database": null,
+          "Table": {
+            "LiteralPos": 45,
+            "LiteralEnd": 48,
+            "Literal": "abc"
+          }
         },
         "HasFinal": false
       }

@@ -1,0 +1,65 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 60,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 17,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "table_name",
+          "Unquoted": false,
+          "NamePos": 7,
+          "NameEnd": 17
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 18,
+      "Expr": {
+        "TablePos": 24,
+        "TableEnd": 51,
+        "Alias": null,
+        "Expr": {
+          "Database": {
+            "LiteralPos": 24,
+            "LiteralEnd": 42,
+            "Literal": "information_schema"
+          },
+          "Table": {
+            "LiteralPos": 45,
+            "LiteralEnd": 51,
+            "Literal": "tables"
+          }
+        },
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": {
+      "LimitPos": 53,
+      "Limit": {
+        "NumPos": 59,
+        "NumEnd": 60,
+        "Literal": "1",
+        "Base": 10
+      },
+      "Offset": null
+    },
+    "Settings": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

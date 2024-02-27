@@ -79,7 +79,7 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 		return nil, err
 	}
 	// parse database name
-	name, err := p.parseIdent()
+	name, err := p.parseIdentOrString(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -254,12 +254,12 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 	return ident, nil
 }
 
-func (p *Parser) parseTableIdentifier(_ Pos) (*TableIdentifier, error) {
-	ident, err := p.parseIdent()
+func (p *Parser) parseTableIdentifier(pos Pos) (*TableIdentifier, error) {
+	ident, err := p.parseIdentOrString(pos)
 	if err != nil {
 		return nil, err
 	}
-	dotIdent, err := p.tryParseDotIdent()
+	dotIdent, err := p.tryParseDotIdent(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -306,13 +306,13 @@ func (p *Parser) parseTableSchemaExpr(pos Pos) (*TableSchemaExpr, error) {
 			switch {
 			case p.matchTokenKind("."):
 				// it's a database.table
-				dotIdent, err := p.tryParseDotIdent()
+				dotIdent, err := p.tryParseDotIdent(p.Pos())
 				if err != nil {
 					return nil, err
 				}
 				return &TableSchemaExpr{
 					SchemaPos: pos,
-					SchemaEnd: dotIdent.NameEnd,
+					SchemaEnd: dotIdent.End(),
 					AliasTable: &TableIdentifier{
 						Database: ident,
 						Table:    dotIdent,
@@ -475,7 +475,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 		switch {
 		// nest identifier
 		case p.matchTokenKind("."):
-			dotIdent, err := p.tryParseDotIdent()
+			dotIdent, err := p.tryParseDotIdent(p.Pos())
 			if err != nil {
 				return nil, err
 			}
