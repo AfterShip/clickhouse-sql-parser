@@ -92,6 +92,17 @@ func (p *Parser) parseIdent() (*Ident, error) {
 	return ident, nil
 }
 
+func (p *Parser) parseIdentOrString(_ Pos) (Expr, error) {
+	switch {
+	case p.matchTokenKind(TokenIdent):
+		return p.parseIdent()
+	case p.matchTokenKind(TokenString):
+		return p.parseString(p.Pos())
+	default:
+		return nil, fmt.Errorf("expected <ident> or <string>, but got %q", p.lastTokenKind())
+	}
+}
+
 func (p *Parser) parseIdentOrStar() (*Ident, error) {
 	switch {
 	case p.matchTokenKind(TokenIdent):
