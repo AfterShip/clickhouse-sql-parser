@@ -388,14 +388,18 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 		return nil, err
 	}
 
-	columnExpr, err := p.parseExpr(p.Pos())
+	columnExpr, err := p.parseColumnExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 
 	asPos := p.Pos()
-	if err := p.consumeKeyword(KeywordAs); err != nil {
-		return nil, err
+	switch {
+	// CAST(x, T) and CAST(x AS T) are equivalent
+	case p.matchKeyword(KeywordAs), p.matchTokenKind(","):
+		_ = p.lexer.consumeToken()
+	default:
+		return nil, fmt.Errorf("expected AS or , but got %s", p.lastTokenKind())
 	}
 	asColumnType, err := p.parseColumnType(p.Pos())
 	if err != nil {
@@ -645,6 +649,9 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 }
 
 func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
+	if p.matchTokenKind(TokenString) {
+		return p.parseString(p.Pos())
+	}
 	ident, err := p.parseIdent()
 	if err != nil {
 		return nil, err

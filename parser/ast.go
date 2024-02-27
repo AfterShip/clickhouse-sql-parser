@@ -3430,12 +3430,9 @@ func (c *CastExpr) End() Pos {
 func (c *CastExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("CAST(")
-	builder.WriteString(NewLine(level + 1))
 	builder.WriteString(c.Expr.String(level))
 	builder.WriteString(" AS ")
-	builder.WriteString(NewLine(level + 1))
 	builder.WriteString(c.AsType.String(level))
-	builder.WriteString(NewLine(level + 1))
 	builder.WriteByte(')')
 	return builder.String()
 }
