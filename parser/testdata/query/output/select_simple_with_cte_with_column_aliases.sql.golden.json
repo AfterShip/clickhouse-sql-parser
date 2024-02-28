@@ -11,7 +11,7 @@
           "Expr": {
             "Name": {
               "Name": "test",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 9,
               "NameEnd": 13
             },
@@ -25,19 +25,19 @@
                 "Items": [
                   {
                     "Name": "f1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 14,
                     "NameEnd": 16
                   },
                   {
                     "Name": "f2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 18,
                     "NameEnd": 20
                   },
                   {
                     "Name": "f3",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 22,
                     "NameEnd": 24
                   }
@@ -58,19 +58,19 @@
               "Items": [
                 {
                   "Name": "f4",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 37,
                   "NameEnd": 39
                 },
                 {
                   "Name": "f5",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 41,
                   "NameEnd": 43
                 },
                 {
                   "Name": "f6",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 45,
                   "NameEnd": 47
                 }
@@ -86,7 +86,7 @@
                   "Database": null,
                   "Table": {
                     "Name": "sales",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 53,
                     "NameEnd": 58
                   }
@@ -121,14 +121,14 @@
         {
           "Expr": {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 71,
             "NameEnd": 73
           },
           "AliasPos": 74,
           "Alias": {
             "Name": "new_f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 77,
             "NameEnd": 83
           }
@@ -136,14 +136,14 @@
         {
           "Expr": {
             "Name": "f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 89,
             "NameEnd": 91
           },
           "AliasPos": 92,
           "Alias": {
             "Name": "new_f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 95,
             "NameEnd": 101
           }
@@ -151,14 +151,14 @@
         {
           "Expr": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 107,
             "NameEnd": 109
           },
           "AliasPos": 110,
           "Alias": {
             "Name": "new_f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 113,
             "NameEnd": 119
           }
@@ -175,7 +175,7 @@
           "Database": null,
           "Table": {
             "Name": "test",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 129,
             "NameEnd": 133
           }

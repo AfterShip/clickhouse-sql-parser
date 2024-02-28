@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "infra_bm",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 25,
         "NameEnd": 33
       },
       "Table": {
         "Name": "view_name",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 34,
         "NameEnd": 43
       }
@@ -31,13 +31,13 @@
       "TableIdentifier": {
         "Database": {
           "Name": "infra_bm",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 81,
           "NameEnd": 89
         },
         "Table": {
           "Name": "table_name",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 90,
           "NameEnd": 100
         }
@@ -51,7 +51,7 @@
             "ColumnEnd": 122,
             "Name": {
               "Name": "f1",
-              "Unquoted": true,
+              "QuoteType": 3,
               "NamePos": 106,
               "NameEnd": 108
             },
@@ -60,7 +60,7 @@
               "RightParenPos": 122,
               "Name": {
                 "Name": "DateTime64",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 110,
                 "NameEnd": 120
               },
@@ -86,14 +86,14 @@
             "ColumnEnd": 139,
             "Name": {
               "Name": "f2",
-              "Unquoted": true,
+              "QuoteType": 3,
               "NamePos": 129,
               "NameEnd": 131
             },
             "Type": {
               "Name": {
                 "Name": "String",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 133,
                 "NameEnd": 139
               }
@@ -111,14 +111,14 @@
             "ColumnEnd": 155,
             "Name": {
               "Name": "f3",
-              "Unquoted": true,
+              "QuoteType": 3,
               "NamePos": 145,
               "NameEnd": 147
             },
             "Type": {
               "Name": {
                 "Name": "String",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 149,
                 "NameEnd": 155
               }
@@ -136,14 +136,14 @@
             "ColumnEnd": 171,
             "Name": {
               "Name": "f4",
-              "Unquoted": true,
+              "QuoteType": 3,
               "NamePos": 161,
               "NameEnd": 163
             },
             "Type": {
               "Name": {
                 "Name": "String",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 165,
                 "NameEnd": 171
               }
@@ -161,14 +161,14 @@
             "ColumnEnd": 187,
             "Name": {
               "Name": "f5",
-              "Unquoted": true,
+              "QuoteType": 3,
               "NamePos": 177,
               "NameEnd": 179
             },
             "Type": {
               "Name": {
                 "Name": "String",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 181,
                 "NameEnd": 187
               }
@@ -186,14 +186,14 @@
             "ColumnEnd": 202,
             "Name": {
               "Name": "f6",
-              "Unquoted": true,
+              "QuoteType": 3,
               "NamePos": 193,
               "NameEnd": 195
             },
             "Type": {
               "Name": {
                 "Name": "Int64",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 197,
                 "NameEnd": 202
               }
@@ -225,13 +225,13 @@
           "Items": [
             {
               "Name": "f1",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 215,
               "NameEnd": 217
             },
             {
               "Name": "f2",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 226,
               "NameEnd": 228
             },
@@ -239,7 +239,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 237,
                   "NameEnd": 260
                 },
@@ -253,7 +253,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 261,
                         "NameEnd": 271
                       },
@@ -270,7 +270,7 @@
               "AliasPos": 281,
               "Alias": {
                 "Name": "f3",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 284,
                 "NameEnd": 286
               }
@@ -279,7 +279,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 295,
                   "NameEnd": 318
                 },
@@ -293,7 +293,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 319,
                         "NameEnd": 329
                       },
@@ -310,7 +310,7 @@
               "AliasPos": 342,
               "Alias": {
                 "Name": "f4",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 345,
                 "NameEnd": 347
               }
@@ -319,7 +319,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 356,
                   "NameEnd": 379
                 },
@@ -333,7 +333,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 380,
                         "NameEnd": 390
                       },
@@ -350,7 +350,7 @@
               "AliasPos": 401,
               "Alias": {
                 "Name": "f5",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 404,
                 "NameEnd": 406
               }
@@ -359,7 +359,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractInt",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 412,
                   "NameEnd": 432
                 },
@@ -373,7 +373,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 433,
                         "NameEnd": 443
                       },
@@ -390,7 +390,7 @@
               "AliasPos": 451,
               "Alias": {
                 "Name": "f6",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 454,
                 "NameEnd": 456
               }
@@ -406,13 +406,13 @@
             "Expr": {
               "Database": {
                 "Name": "infra_bm",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 466,
                 "NameEnd": 474
               },
               "Table": {
                 "Name": "table_name1",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 475,
                 "NameEnd": 486
               }
@@ -429,19 +429,19 @@
             "LeftExpr": {
               "Database": {
                 "Name": "infra_bm",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 497,
                 "NameEnd": 505
               },
               "Table": {
                 "Name": "table_name1",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 506,
                 "NameEnd": 517
               },
               "Column": {
                 "Name": "event",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 518,
                 "NameEnd": 523
               }

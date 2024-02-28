@@ -5,13 +5,13 @@
     "TableIdentifier": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 16
       },
       "Table": {
         "Name": "events_local",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 17,
         "NameEnd": 29
       }
@@ -33,7 +33,7 @@
           "Name": {
             "Ident": {
               "Name": "my_index",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 69,
               "NameEnd": 77
             },
@@ -49,7 +49,7 @@
               "Items": [
                 {
                   "Name": "f0",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 78,
                   "NameEnd": 80
                 }
@@ -60,7 +60,7 @@
           "ColumnType": {
             "Name": {
               "Name": "minmax",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 87,
               "NameEnd": 93
             }

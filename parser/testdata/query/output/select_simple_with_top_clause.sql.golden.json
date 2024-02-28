@@ -21,7 +21,7 @@
       "Items": [
         {
           "Name": "my_column",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 14,
           "NameEnd": 23
         }
@@ -37,7 +37,7 @@
           "Database": null,
           "Table": {
             "Name": "tableName",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 29,
             "NameEnd": 38
           }

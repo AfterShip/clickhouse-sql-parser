@@ -5,13 +5,13 @@
     "TableIdentifier": {
       "Database": {
         "Name": "db",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 14
       },
       "Table": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 15,
         "NameEnd": 19
       }

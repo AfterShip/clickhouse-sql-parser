@@ -11,33 +11,33 @@
       "Items": [
         {
           "Name": "f0",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 9
         },
         {
           "Name": "f1",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 10,
           "NameEnd": 12
         },
         {
           "Name": "f2",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 13,
           "NameEnd": 15
         },
         {
           "Expr": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 16,
             "NameEnd": 18
           },
           "AliasPos": 19,
           "Alias": {
             "Name": "a0",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 22,
             "NameEnd": 24
           }
@@ -53,13 +53,13 @@
         "Expr": {
           "Database": {
             "Name": "test",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 30,
             "NameEnd": 34
           },
           "Table": {
             "Name": "events_local",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 35,
             "NameEnd": 47
           }
@@ -85,7 +85,7 @@
                 {
                   "LeftExpr": {
                     "Name": "f0",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 55,
                     "NameEnd": 57
                   },
@@ -136,7 +136,7 @@
                 {
                   "LeftExpr": {
                     "Name": "f1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 90,
                     "NameEnd": 92
                   },
@@ -161,7 +161,7 @@
           "IsPos": 110,
           "Expr": {
             "Name": "f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 110,
             "NameEnd": 112
           }

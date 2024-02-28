@@ -13,7 +13,7 @@
           "Expr": {
             "Name": {
               "Name": "arrayConcat",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 7,
               "NameEnd": 18
             },
@@ -102,7 +102,7 @@
           "AliasPos": 43,
           "Alias": {
             "Name": "res",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 46,
             "NameEnd": 49
           }
@@ -111,7 +111,7 @@
           "Expr": {
             "Object": {
               "Name": "f1",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 51,
               "NameEnd": 53
             },
@@ -124,9 +124,10 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "LiteralPos": 55,
-                    "LiteralEnd": 58,
-                    "Literal": "abc"
+                    "Name": "abc",
+                    "QuoteType": 2,
+                    "NamePos": 55,
+                    "NameEnd": 58
                   }
                 ]
               }
@@ -135,7 +136,7 @@
           "AliasPos": 61,
           "Alias": {
             "Name": "f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 64,
             "NameEnd": 66
           }

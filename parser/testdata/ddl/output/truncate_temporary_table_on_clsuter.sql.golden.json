@@ -7,13 +7,13 @@
     "Name": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 35,
         "NameEnd": 39
       },
       "Table": {
         "Name": "table_name",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 40,
         "NameEnd": 50
       }

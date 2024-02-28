@@ -10,7 +10,7 @@
           "CTEPos": 9,
           "Expr": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 9,
             "NameEnd": 11
           },
@@ -34,7 +34,7 @@
                   "AliasPos": 46,
                   "Alias": {
                     "Name": "value",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 49,
                     "NameEnd": 54
                   }
@@ -62,7 +62,7 @@
           "CTEPos": 66,
           "Expr": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 66,
             "NameEnd": 68
           },
@@ -86,7 +86,7 @@
                   "AliasPos": 90,
                   "Alias": {
                     "Name": "value",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 93,
                     "NameEnd": 98
                   }
@@ -120,7 +120,7 @@
       "Items": [
         {
           "Name": "*",
-          "Unquoted": false,
+          "QuoteType": 0,
           "NamePos": 112,
           "NameEnd": 112
         }
@@ -138,7 +138,7 @@
             "Database": null,
             "Table": {
               "Name": "t1",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 119,
               "NameEnd": 121
             }
@@ -153,7 +153,7 @@
             "Database": null,
             "Table": {
               "Name": "t2",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 141,
               "NameEnd": 143
             }
@@ -174,7 +174,7 @@
             "Items": [
               {
                 "Name": "true",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 147,
                 "NameEnd": 151
               }

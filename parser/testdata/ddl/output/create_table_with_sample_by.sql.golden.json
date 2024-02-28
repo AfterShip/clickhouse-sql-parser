@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "default",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 13,
         "NameEnd": 20
       },
       "Table": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 21,
         "NameEnd": 25
       }
@@ -34,14 +34,14 @@
           "ColumnEnd": 89,
           "Name": {
             "Name": "f0",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 77,
             "NameEnd": 79
           },
           "Type": {
             "Name": {
               "Name": "DateTime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 81,
               "NameEnd": 89
             }
@@ -59,14 +59,14 @@
           "ColumnEnd": 106,
           "Name": {
             "Name": "f1",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 96,
             "NameEnd": 98
           },
           "Type": {
             "Name": {
               "Name": "UInt32",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 100,
               "NameEnd": 106
             }
@@ -84,14 +84,14 @@
           "ColumnEnd": 123,
           "Name": {
             "Name": "f3",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 113,
             "NameEnd": 115
           },
           "Type": {
             "Name": {
               "Name": "UInt32",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 117,
               "NameEnd": 123
             }
@@ -145,7 +145,7 @@
             {
               "Name": {
                 "Name": "toYYYYMM",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 232,
                 "NameEnd": 240
               },
@@ -159,7 +159,7 @@
                   "Items": [
                     {
                       "Name": "timestamp",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 241,
                       "NameEnd": 250
                     }
@@ -175,7 +175,7 @@
         "SamplePos": 301,
         "Expr": {
           "Name": "userid",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 311,
           "NameEnd": 317
         }
@@ -189,7 +189,7 @@
             "SettingsPos": 327,
             "Name": {
               "Name": "index_granularity",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 327,
               "NameEnd": 344
             },
@@ -218,14 +218,14 @@
                 "Items": [
                   {
                     "Name": "contractid",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 262,
                     "NameEnd": 272
                   },
                   {
                     "Name": {
                       "Name": "toDate",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 274,
                       "NameEnd": 280
                     },
@@ -239,7 +239,7 @@
                         "Items": [
                           {
                             "Name": "timestamp",
-                            "Unquoted": false,
+                            "QuoteType": 1,
                             "NamePos": 281,
                             "NameEnd": 290
                           }
@@ -250,7 +250,7 @@
                   },
                   {
                     "Name": "userid",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 293,
                     "NameEnd": 299
                   }

@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 16
       }
@@ -36,7 +36,7 @@
       "Database": null,
       "Table": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 58,
         "NameEnd": 62
       }
@@ -59,7 +59,7 @@
           "Database": null,
           "Table": {
             "Name": "test1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 96,
             "NameEnd": 101
           }
@@ -74,7 +74,7 @@
       "Database": null,
       "Table": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 115,
         "NameEnd": 119
       }

@@ -11,14 +11,14 @@
       "Items": [
         {
           "Name": "a",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 8
         },
         {
           "Name": {
             "Name": "COUNT",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 10,
             "NameEnd": 15
           },
@@ -32,7 +32,7 @@
               "Items": [
                 {
                   "Name": "b",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 16,
                   "NameEnd": 17
                 }
@@ -53,7 +53,7 @@
           "Database": null,
           "Table": {
             "Name": "group_by_all",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 24,
             "NameEnd": 36
           }
@@ -78,7 +78,7 @@
           "Items": [
             {
               "Name": "a",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 51,
               "NameEnd": 52
             }
@@ -100,7 +100,7 @@
           "OrderPos": 76,
           "Expr": {
             "Name": "a",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 85,
             "NameEnd": 86
           },

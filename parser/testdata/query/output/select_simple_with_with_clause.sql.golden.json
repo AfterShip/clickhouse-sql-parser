@@ -10,7 +10,7 @@
           "CTEPos": 9,
           "Expr": {
             "Name": "cte1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 9,
             "NameEnd": 13
           },
@@ -26,7 +26,7 @@
               "Items": [
                 {
                   "Name": "f1",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 25,
                   "NameEnd": 27
                 }
@@ -42,7 +42,7 @@
                   "Database": null,
                   "Table": {
                     "Name": "t1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 33,
                     "NameEnd": 35
                   }
@@ -70,7 +70,7 @@
           "CTEPos": 42,
           "Expr": {
             "Name": "cte2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 42,
             "NameEnd": 46
           },
@@ -86,7 +86,7 @@
               "Items": [
                 {
                   "Name": "f2",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 58,
                   "NameEnd": 60
                 }
@@ -102,7 +102,7 @@
                   "Database": null,
                   "Table": {
                     "Name": "t2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 66,
                     "NameEnd": 68
                   }
@@ -138,13 +138,13 @@
           "Database": null,
           "Table": {
             "Name": "cte1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 81,
             "NameEnd": 85
           },
           "Column": {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 86,
             "NameEnd": 88
           }
@@ -153,13 +153,13 @@
           "Database": null,
           "Table": {
             "Name": "cte2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 94,
             "NameEnd": 98
           },
           "Column": {
             "Name": "f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 99,
             "NameEnd": 101
           }
@@ -168,13 +168,13 @@
           "Database": null,
           "Table": {
             "Name": "t3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 107,
             "NameEnd": 109
           },
           "Column": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 110,
             "NameEnd": 112
           }
@@ -193,7 +193,7 @@
             "Database": null,
             "Table": {
               "Name": "t3",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 122,
               "NameEnd": 124
             }
@@ -210,7 +210,7 @@
               "Database": null,
               "Table": {
                 "Name": "cte1",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 125,
                 "NameEnd": 129
               }
@@ -225,7 +225,7 @@
               "Database": null,
               "Table": {
                 "Name": "cte2",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 130,
                 "NameEnd": 134
               }

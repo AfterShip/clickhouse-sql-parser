@@ -11,7 +11,7 @@
       "Items": [
         {
           "Name": "*",
-          "Unquoted": false,
+          "QuoteType": 0,
           "NamePos": 7,
           "NameEnd": 7
         }
@@ -28,9 +28,10 @@
           "Expr": {
             "Database": null,
             "Table": {
-              "LiteralPos": 15,
-              "LiteralEnd": 17,
-              "Literal": "t1"
+              "Name": "t1",
+              "QuoteType": 2,
+              "NamePos": 15,
+              "NameEnd": 17
             }
           },
           "HasFinal": false
@@ -42,9 +43,10 @@
           "Expr": {
             "Database": null,
             "Table": {
-              "LiteralPos": 25,
-              "LiteralEnd": 27,
-              "Literal": "t2"
+              "Name": "t2",
+              "QuoteType": 2,
+              "NamePos": 25,
+              "NameEnd": 27
             }
           },
           "HasFinal": false
@@ -62,7 +64,7 @@
             "Items": [
               {
                 "Name": "true",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 32,
                 "NameEnd": 36
               }

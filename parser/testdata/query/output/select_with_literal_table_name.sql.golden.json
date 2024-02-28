@@ -11,7 +11,7 @@
       "Items": [
         {
           "Name": "table_name",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 17
         }
@@ -25,14 +25,16 @@
         "Alias": null,
         "Expr": {
           "Database": {
-            "LiteralPos": 24,
-            "LiteralEnd": 42,
-            "Literal": "information_schema"
+            "Name": "information_schema",
+            "QuoteType": 2,
+            "NamePos": 24,
+            "NameEnd": 42
           },
           "Table": {
-            "LiteralPos": 45,
-            "LiteralEnd": 51,
-            "Literal": "tables"
+            "Name": "tables",
+            "QuoteType": 2,
+            "NamePos": 45,
+            "NameEnd": 51
           }
         },
         "HasFinal": false

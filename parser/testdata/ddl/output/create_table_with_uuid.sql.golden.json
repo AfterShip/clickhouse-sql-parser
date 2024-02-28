@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 27,
         "NameEnd": 31
       },
       "Table": {
         "Name": "events_local",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 32,
         "NameEnd": 44
       }
@@ -41,14 +41,14 @@
           "ColumnEnd": 101,
           "Name": {
             "Name": "f0",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 92,
             "NameEnd": 94
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 95,
               "NameEnd": 101
             }
@@ -66,14 +66,14 @@
           "ColumnEnd": 116,
           "Name": {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 107,
             "NameEnd": 109
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 110,
               "NameEnd": 116
             }
@@ -91,14 +91,14 @@
           "ColumnEnd": 131,
           "Name": {
             "Name": "f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 122,
             "NameEnd": 124
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 125,
               "NameEnd": 131
             }
@@ -116,14 +116,14 @@
           "ColumnEnd": 148,
           "Name": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 137,
             "NameEnd": 139
           },
           "Type": {
             "Name": {
               "Name": "Datetime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 140,
               "NameEnd": 148
             }
@@ -141,14 +141,14 @@
           "ColumnEnd": 165,
           "Name": {
             "Name": "f4",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 154,
             "NameEnd": 156
           },
           "Type": {
             "Name": {
               "Name": "Datetime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 157,
               "NameEnd": 165
             }
@@ -166,7 +166,7 @@
           "ColumnEnd": 191,
           "Name": {
             "Name": "f5",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 171,
             "NameEnd": 173
           },
@@ -175,7 +175,7 @@
             "RightParenPos": 191,
             "Name": {
               "Name": "Map",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 174,
               "NameEnd": 177
             },
@@ -183,7 +183,7 @@
               {
                 "Name": {
                   "Name": "String",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 178,
                   "NameEnd": 184
                 }
@@ -191,7 +191,7 @@
               {
                 "Name": {
                   "Name": "String",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 185,
                   "NameEnd": 191
                 }
@@ -211,14 +211,14 @@
           "ColumnEnd": 207,
           "Name": {
             "Name": "f6",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 198,
             "NameEnd": 200
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 201,
               "NameEnd": 207
             }
@@ -236,14 +236,14 @@
           "ColumnEnd": 237,
           "Name": {
             "Name": "f7",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 213,
             "NameEnd": 215
           },
           "Type": {
             "Name": {
               "Name": "Datetime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 216,
               "NameEnd": 224
             }
@@ -255,7 +255,7 @@
             "Expr": {
               "Name": {
                 "Name": "now",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 233,
                 "NameEnd": 236
               },
@@ -318,7 +318,7 @@
             {
               "Name": {
                 "Name": "toYYYYMMDD",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 378,
                 "NameEnd": 388
               },
@@ -332,7 +332,7 @@
                   "Items": [
                     {
                       "Name": "f3",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 389,
                       "NameEnd": 391
                     }
@@ -354,7 +354,7 @@
             "Expr": {
               "LeftExpr": {
                 "Name": "f3",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 343,
                 "NameEnd": 345
               },
@@ -369,7 +369,7 @@
                 },
                 "Unit": {
                   "Name": "MONTH",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 359,
                   "NameEnd": 364
                 }
@@ -397,19 +397,19 @@
                 "Items": [
                   {
                     "Name": "f0",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 403,
                     "NameEnd": 405
                   },
                   {
                     "Name": "f1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 406,
                     "NameEnd": 408
                   },
                   {
                     "Name": "f2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 409,
                     "NameEnd": 411
                   }

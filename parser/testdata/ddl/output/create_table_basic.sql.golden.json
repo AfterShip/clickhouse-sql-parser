@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 149,
         "NameEnd": 153
       },
       "Table": {
         "Name": "events_local",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 154,
         "NameEnd": 166
       }
@@ -28,14 +28,14 @@
           "ColumnEnd": 182,
           "Name": {
             "Name": "f0",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 173,
             "NameEnd": 175
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 176,
               "NameEnd": 182
             }
@@ -53,14 +53,14 @@
           "ColumnEnd": 212,
           "Name": {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 188,
             "NameEnd": 190
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 191,
               "NameEnd": 197
             }
@@ -73,7 +73,7 @@
             "RightParenPos": 212,
             "Name": {
               "Name": "ZSTD",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 204,
               "NameEnd": 208
             },
@@ -93,7 +93,7 @@
           "ColumnEnd": 232,
           "Name": {
             "Name": "f2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 218,
             "NameEnd": 220
           },
@@ -102,7 +102,7 @@
             "RightParenPos": 232,
             "Name": {
               "Name": "VARCHAR",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 221,
               "NameEnd": 228
             },
@@ -128,14 +128,14 @@
           "ColumnEnd": 250,
           "Name": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 239,
             "NameEnd": 241
           },
           "Type": {
             "Name": {
               "Name": "Datetime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 242,
               "NameEnd": 250
             }
@@ -153,14 +153,14 @@
           "ColumnEnd": 267,
           "Name": {
             "Name": "f4",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 256,
             "NameEnd": 258
           },
           "Type": {
             "Name": {
               "Name": "Datetime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 259,
               "NameEnd": 267
             }
@@ -178,7 +178,7 @@
           "ColumnEnd": 293,
           "Name": {
             "Name": "f5",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 273,
             "NameEnd": 275
           },
@@ -187,7 +187,7 @@
             "RightParenPos": 293,
             "Name": {
               "Name": "Map",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 276,
               "NameEnd": 279
             },
@@ -195,7 +195,7 @@
               {
                 "Name": {
                   "Name": "String",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 280,
                   "NameEnd": 286
                 }
@@ -203,7 +203,7 @@
               {
                 "Name": {
                   "Name": "String",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 287,
                   "NameEnd": 293
                 }
@@ -223,14 +223,14 @@
           "ColumnEnd": 309,
           "Name": {
             "Name": "f6",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 300,
             "NameEnd": 302
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 303,
               "NameEnd": 309
             }
@@ -248,7 +248,7 @@
           "ColumnEnd": 450,
           "Name": {
             "Name": "f7",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 315,
             "NameEnd": 317
           },
@@ -257,7 +257,7 @@
             "RightParenPos": 450,
             "Name": {
               "Name": "Nested",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 318,
               "NameEnd": 324
             },
@@ -267,14 +267,14 @@
                 "ColumnEnd": 345,
                 "Name": {
                   "Name": "f70",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 335,
                   "NameEnd": 338
                 },
                 "Type": {
                   "Name": {
                     "Name": "UInt32",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 339,
                     "NameEnd": 345
                   }
@@ -292,14 +292,14 @@
                 "ColumnEnd": 365,
                 "Name": {
                   "Name": "f71",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 355,
                   "NameEnd": 358
                 },
                 "Type": {
                   "Name": {
                     "Name": "UInt32",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 359,
                     "NameEnd": 365
                   }
@@ -317,14 +317,14 @@
                 "ColumnEnd": 387,
                 "Name": {
                   "Name": "f72",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 375,
                   "NameEnd": 378
                 },
                 "Type": {
                   "Name": {
                     "Name": "DateTime",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 379,
                     "NameEnd": 387
                   }
@@ -342,14 +342,14 @@
                 "ColumnEnd": 406,
                 "Name": {
                   "Name": "f73",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 397,
                   "NameEnd": 400
                 },
                 "Type": {
                   "Name": {
                     "Name": "Int64",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 401,
                     "NameEnd": 406
                   }
@@ -367,14 +367,14 @@
                 "ColumnEnd": 425,
                 "Name": {
                   "Name": "f74",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 416,
                   "NameEnd": 419
                 },
                 "Type": {
                   "Name": {
                     "Name": "Int64",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 420,
                     "NameEnd": 425
                   }
@@ -392,14 +392,14 @@
                 "ColumnEnd": 445,
                 "Name": {
                   "Name": "f75",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 435,
                   "NameEnd": 438
                 },
                 "Type": {
                   "Name": {
                     "Name": "String",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 439,
                     "NameEnd": 445
                   }
@@ -427,14 +427,14 @@
           "ColumnEnd": 481,
           "Name": {
             "Name": "f8",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 457,
             "NameEnd": 459
           },
           "Type": {
             "Name": {
               "Name": "Datetime",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 460,
               "NameEnd": 468
             }
@@ -446,7 +446,7 @@
             "Expr": {
               "Name": {
                 "Name": "now",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 477,
                 "NameEnd": 480
               },
@@ -489,19 +489,19 @@
             "Items": [
               {
                 "Name": "f0",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 517,
                 "NameEnd": 519
               },
               {
                 "Name": "f1",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 521,
                 "NameEnd": 523
               },
               {
                 "Name": "f2",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 525,
                 "NameEnd": 527
               }
@@ -520,7 +520,7 @@
             {
               "Name": {
                 "Name": "toYYYYMMDD",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 542,
                 "NameEnd": 552
               },
@@ -534,7 +534,7 @@
                   "Items": [
                     {
                       "Name": "f3",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 553,
                       "NameEnd": 555
                     }
@@ -556,7 +556,7 @@
             "Expr": {
               "LeftExpr": {
                 "Name": "f3",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 561,
                 "NameEnd": 563
               },
@@ -571,7 +571,7 @@
                 },
                 "Unit": {
                   "Name": "MONTH",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 577,
                   "NameEnd": 582
                 }
@@ -599,19 +599,19 @@
                 "Items": [
                   {
                     "Name": "f1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 593,
                     "NameEnd": 595
                   },
                   {
                     "Name": "f2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 596,
                     "NameEnd": 598
                   },
                   {
                     "Name": "f3",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 599,
                     "NameEnd": 601
                   }

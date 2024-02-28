@@ -9,9 +9,10 @@
         {
           "CTEPos": 6,
           "Expr": {
-            "LiteralPos": 6,
-            "LiteralEnd": 9,
-            "Literal": "abc"
+            "Name": "abc",
+            "QuoteType": 2,
+            "NamePos": 6,
+            "NameEnd": 9
           },
           "Alias": {
             "SelectPos": 15,
@@ -33,7 +34,7 @@
                   "AliasPos": 24,
                   "Alias": {
                     "Name": "a",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 27,
                     "NameEnd": 28
                   }
@@ -67,7 +68,7 @@
       "Items": [
         {
           "Name": "*",
-          "Unquoted": false,
+          "QuoteType": 0,
           "NamePos": 37,
           "NameEnd": 37
         }
@@ -82,9 +83,10 @@
         "Expr": {
           "Database": null,
           "Table": {
-            "LiteralPos": 45,
-            "LiteralEnd": 48,
-            "Literal": "abc"
+            "Name": "abc",
+            "QuoteType": 2,
+            "NamePos": 45,
+            "NameEnd": 48
           }
         },
         "HasFinal": false

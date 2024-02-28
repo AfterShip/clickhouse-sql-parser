@@ -9,7 +9,7 @@
           "SettingsPos": 4,
           "Name": {
             "Name": "max_threads",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 4,
             "NameEnd": 15
           },
@@ -24,7 +24,7 @@
           "SettingsPos": 21,
           "Name": {
             "Name": "max_insert_threads",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 21,
             "NameEnd": 39
           },
@@ -39,7 +39,7 @@
           "SettingsPos": 45,
           "Name": {
             "Name": "max_block_size",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 45,
             "NameEnd": 59
           },
@@ -54,7 +54,7 @@
           "SettingsPos": 68,
           "Name": {
             "Name": "min_insert_block_size_rows",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 68,
             "NameEnd": 94
           },
@@ -69,7 +69,7 @@
           "SettingsPos": 103,
           "Name": {
             "Name": "min_insert_block_size_bytes",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 103,
             "NameEnd": 130
           },

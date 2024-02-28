@@ -902,10 +902,10 @@ func (a *TableIndex) Accept(visitor ASTVisitor) error {
 }
 
 type Ident struct {
-	Name     string
-	Unquoted bool
-	NamePos  Pos
-	NameEnd  Pos
+	Name      string
+	QuoteType int
+	NamePos   Pos
+	NameEnd   Pos
 }
 
 func (i *Ident) Pos() Pos {
@@ -917,8 +917,10 @@ func (i *Ident) End() Pos {
 }
 
 func (i *Ident) String(int) string {
-	if i.Unquoted {
+	if i.QuoteType == BackTicks {
 		return "`" + i.Name + "`"
+	} else if i.QuoteType == DoubleQuote {
+		return `"` + i.Name + `"`
 	}
 	return i.Name
 }
@@ -1749,8 +1751,8 @@ func (n *NotNullLiteral) Accept(visitor ASTVisitor) error {
 }
 
 type NestedIdentifier struct {
-	Ident    Expr
-	DotIdent Expr
+	Ident    *Ident
+	DotIdent *Ident
 }
 
 func (n *NestedIdentifier) Pos() Pos {
@@ -1835,8 +1837,8 @@ func (c *ColumnIdentifier) Accept(visitor ASTVisitor) error {
 }
 
 type TableIdentifier struct {
-	Database Expr
-	Table    Expr
+	Database *Ident
+	Table    *Ident
 }
 
 func (t *TableIdentifier) Pos() Pos {

@@ -4,7 +4,7 @@
     "StatementEnd": 35,
     "Name": {
       "Name": "test",
-      "Unquoted": true,
+      "QuoteType": 3,
       "NamePos": 31,
       "NameEnd": 35
     },

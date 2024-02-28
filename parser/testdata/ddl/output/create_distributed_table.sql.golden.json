@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 13,
         "NameEnd": 17
       },
       "Table": {
         "Name": "event_all",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 18,
         "NameEnd": 27
       }
@@ -33,13 +33,13 @@
       "AliasTable": {
         "Database": {
           "Name": "test",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 60,
           "NameEnd": 64
         },
         "Table": {
           "Name": "evnets_local",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 65,
           "NameEnd": 77
         }
@@ -60,26 +60,26 @@
           "Items": [
             {
               "Name": "default_cluster",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 104,
               "NameEnd": 119
             },
             {
               "Name": "test",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 125,
               "NameEnd": 129
             },
             {
               "Name": "events_local",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 135,
               "NameEnd": 147
             },
             {
               "Name": {
                 "Name": "rand",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 153,
                 "NameEnd": 157
               },
@@ -111,7 +111,7 @@
             "SettingsPos": 171,
             "Name": {
               "Name": "fsync_after_insert",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 171,
               "NameEnd": 189
             },

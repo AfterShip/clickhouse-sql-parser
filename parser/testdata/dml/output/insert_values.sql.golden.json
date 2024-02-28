@@ -5,13 +5,13 @@
     "Table": {
       "Database": {
         "Name": "helloworld",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 22
       },
       "Table": {
         "Name": "my_first_table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 23,
         "NameEnd": 37
       }
@@ -23,7 +23,7 @@
         {
           "Ident": {
             "Name": "user_id",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 39,
             "NameEnd": 46
           },
@@ -32,7 +32,7 @@
         {
           "Ident": {
             "Name": "message",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 48,
             "NameEnd": 55
           },
@@ -41,7 +41,7 @@
         {
           "Ident": {
             "Name": "timestamp",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 57,
             "NameEnd": 66
           },
@@ -68,7 +68,7 @@
           {
             "Name": {
               "Name": "now",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 147,
               "NameEnd": 150
             },
@@ -110,7 +110,7 @@
           {
             "Name": {
               "Name": "yesterday",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 235,
               "NameEnd": 244
             },
@@ -152,7 +152,7 @@
           {
             "Name": {
               "Name": "today",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 323,
               "NameEnd": 328
             },
@@ -195,7 +195,7 @@
             "LeftExpr": {
               "Name": {
                 "Name": "now",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 411,
                 "NameEnd": 414
               },

@@ -21,7 +21,7 @@ func (p *Parser) parseExpr(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordAs): // syntax: columnExpr (alias | AS identifier)
 		aliasPos := p.Pos()
 		_ = p.lexer.consumeToken()
-		alias, err := p.parseIdentOrString(p.Pos())
+		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
