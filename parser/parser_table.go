@@ -79,7 +79,7 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 		return nil, err
 	}
 	// parse database name
-	name, err := p.parseIdentOrString(p.Pos())
+	name, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}
@@ -254,8 +254,8 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 	return ident, nil
 }
 
-func (p *Parser) parseTableIdentifier(pos Pos) (*TableIdentifier, error) {
-	ident, err := p.parseIdentOrString(pos)
+func (p *Parser) parseTableIdentifier(_ Pos) (*TableIdentifier, error) {
+	ident, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}
@@ -539,7 +539,16 @@ func (p *Parser) tryParseOnCluster(pos Pos) (*OnClusterExpr, error) {
 		return nil, err
 	}
 
-	expr, err := p.parseIdentOrString(p.Pos())
+	var expr Expr
+	var err error
+	switch {
+	case p.matchTokenKind(TokenIdent):
+		expr, err = p.parseIdent()
+	case p.matchTokenKind(TokenString):
+		expr, err = p.parseString(p.Pos())
+	default:
+		return nil, fmt.Errorf("unexpected token: %q, expected <IDENT> or <STRING>", p.last().String)
+	}
 	if err != nil {
 		return nil, err
 	}

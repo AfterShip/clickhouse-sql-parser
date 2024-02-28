@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 13,
         "NameEnd": 17
       },
       "Table": {
         "Name": "events_local",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 18,
         "NameEnd": 30
       }
@@ -34,14 +34,14 @@
           "ColumnEnd": 92,
           "Name": {
             "Name": "date",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 82,
             "NameEnd": 86
           },
           "Type": {
             "Name": {
               "Name": "Date",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 88,
               "NameEnd": 92
             }
@@ -59,14 +59,14 @@
           "ColumnEnd": 109,
           "Name": {
             "Name": "f1",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 99,
             "NameEnd": 101
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 103,
               "NameEnd": 109
             }
@@ -84,14 +84,14 @@
           "ColumnEnd": 126,
           "Name": {
             "Name": "f2",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 116,
             "NameEnd": 118
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 120,
               "NameEnd": 126
             }
@@ -109,14 +109,14 @@
           "ColumnEnd": 143,
           "Name": {
             "Name": "f3",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 133,
             "NameEnd": 135
           },
           "Type": {
             "Name": {
               "Name": "UInt64",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 137,
               "NameEnd": 143
             }
@@ -148,7 +148,7 @@
           "Items": [
             {
               "Name": "date",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 195,
               "NameEnd": 199
             }
@@ -165,7 +165,7 @@
             "SettingsPos": 235,
             "Name": {
               "Name": "index_granularity",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 235,
               "NameEnd": 252
             },
@@ -194,13 +194,13 @@
                 "Items": [
                   {
                     "Name": "f1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 214,
                     "NameEnd": 216
                   },
                   {
                     "Name": "f2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 218,
                     "NameEnd": 220
                   }

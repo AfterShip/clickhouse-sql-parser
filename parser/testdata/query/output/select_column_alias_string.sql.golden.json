@@ -17,9 +17,10 @@
           },
           "AliasPos": 13,
           "Alias": {
-            "LiteralPos": 17,
-            "LiteralEnd": 23,
-            "Literal": "value2"
+            "Name": "value2",
+            "QuoteType": 2,
+            "NamePos": 17,
+            "NameEnd": 23
           }
         }
       ]

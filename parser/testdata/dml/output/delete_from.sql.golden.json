@@ -5,7 +5,7 @@
       "Database": null,
       "Table": {
         "Name": "hits",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 16
       }
@@ -14,7 +14,7 @@
     "WhereExpr": {
       "LeftExpr": {
         "Name": "Title",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 23,
         "NameEnd": 28
       },

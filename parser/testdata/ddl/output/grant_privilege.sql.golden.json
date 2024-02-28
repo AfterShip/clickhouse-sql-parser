@@ -20,13 +20,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 13,
                 "NameEnd": 14
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 15,
                 "NameEnd": 16
               }
@@ -39,13 +39,13 @@
     "On": {
       "Database": {
         "Name": "db",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 21,
         "NameEnd": 23
       },
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 24,
         "NameEnd": 29
       }
@@ -53,7 +53,7 @@
     "To": [
       {
         "Name": "john",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 33,
         "NameEnd": 37
       }
@@ -81,13 +81,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 52,
                 "NameEnd": 53
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 54,
                 "NameEnd": 55
               }
@@ -100,13 +100,13 @@
     "On": {
       "Database": {
         "Name": "db",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 60,
         "NameEnd": 62
       },
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 63,
         "NameEnd": 68
       }
@@ -114,7 +114,7 @@
     "To": [
       {
         "Name": "john",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 72,
         "NameEnd": 76
       }
@@ -145,13 +145,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 127,
                 "NameEnd": 128
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 129,
                 "NameEnd": 130
               }
@@ -164,13 +164,13 @@
     "On": {
       "Database": {
         "Name": "db",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 135,
         "NameEnd": 137
       },
       "Table": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 138,
         "NameEnd": 139
       }
@@ -178,7 +178,7 @@
     "To": [
       {
         "Name": "john",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 143,
         "NameEnd": 147
       }
@@ -206,13 +206,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 162,
                 "NameEnd": 163
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 164,
                 "NameEnd": 165
               }
@@ -225,13 +225,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 170,
         "NameEnd": 171
       },
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 172,
         "NameEnd": 177
       }
@@ -239,7 +239,7 @@
     "To": [
       {
         "Name": "john",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 181,
         "NameEnd": 185
       }
@@ -267,13 +267,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 200,
                 "NameEnd": 201
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 202,
                 "NameEnd": 203
               }
@@ -286,13 +286,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 208,
         "NameEnd": 209
       },
       "Table": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 210,
         "NameEnd": 211
       }
@@ -300,7 +300,7 @@
     "To": [
       {
         "Name": "john",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 215,
         "NameEnd": 219
       }
@@ -328,13 +328,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 234,
                 "NameEnd": 235
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 236,
                 "NameEnd": 237
               }
@@ -347,13 +347,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 242,
         "NameEnd": 243
       },
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 244,
         "NameEnd": 249
       }
@@ -361,7 +361,7 @@
     "To": [
       {
         "Name": "CURRENT_USER",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 253,
         "NameEnd": 265
       }
@@ -389,13 +389,13 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 280,
                 "NameEnd": 281
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 282,
                 "NameEnd": 283
               }
@@ -408,13 +408,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 288,
         "NameEnd": 289
       },
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 290,
         "NameEnd": 295
       }
@@ -422,19 +422,19 @@
     "To": [
       {
         "Name": "CURRENT_USER",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 299,
         "NameEnd": 311
       },
       {
         "Name": "john",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 312,
         "NameEnd": 316
       },
       {
         "Name": "mary",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 317,
         "NameEnd": 321
       }
@@ -458,13 +458,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 336,
         "NameEnd": 337
       },
       "Table": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 338,
         "NameEnd": 339
       }
@@ -472,7 +472,7 @@
     "To": [
       {
         "Name": "admin_role",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 343,
         "NameEnd": 353
       }
@@ -506,13 +506,13 @@
     "On": {
       "Database": {
         "Name": "database",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 396,
         "NameEnd": 404
       },
       "Table": {
         "Name": "table_1",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 405,
         "NameEnd": 412
       }
@@ -520,7 +520,7 @@
     "To": [
       {
         "Name": "table_1_select_role",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 416,
         "NameEnd": 435
       }
@@ -548,19 +548,19 @@
             "Items": [
               {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 450,
                 "NameEnd": 451
               },
               {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 453,
                 "NameEnd": 454
               },
               {
                 "Name": "z",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 456,
                 "NameEnd": 457
               }
@@ -581,13 +581,13 @@
     "On": {
       "Database": {
         "Name": "database",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 469,
         "NameEnd": 477
       },
       "Table": {
         "Name": "table_1",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 478,
         "NameEnd": 485
       }
@@ -595,7 +595,7 @@
     "To": [
       {
         "Name": "table_1_select_role",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 489,
         "NameEnd": 508
       }
@@ -627,13 +627,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 535,
         "NameEnd": 536
       },
       "Table": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 537,
         "NameEnd": 538
       }
@@ -641,7 +641,7 @@
     "To": [
       {
         "Name": "select_all_role",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 543,
         "NameEnd": 558
       }
@@ -666,13 +666,13 @@
     "On": {
       "Database": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 582,
         "NameEnd": 583
       },
       "Table": {
         "Name": "*",
-        "Unquoted": false,
+        "QuoteType": 0,
         "NamePos": 584,
         "NameEnd": 585
       }
@@ -680,7 +680,7 @@
     "To": [
       {
         "Name": "select_all_role",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 590,
         "NameEnd": 605
       }

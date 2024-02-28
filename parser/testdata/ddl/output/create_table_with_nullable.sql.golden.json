@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 13,
         "NameEnd": 17
       },
       "Table": {
         "Name": ".inner.752391fb-44cc-4dd5-b523-91fb44cc9dd5",
-        "Unquoted": true,
+        "QuoteType": 3,
         "NamePos": 19,
         "NameEnd": 62
       }
@@ -34,14 +34,14 @@
           "ColumnEnd": 129,
           "Name": {
             "Name": "f0",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 119,
             "NameEnd": 121
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 123,
               "NameEnd": 129
             }
@@ -59,14 +59,14 @@
           "ColumnEnd": 146,
           "Name": {
             "Name": "f1",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 136,
             "NameEnd": 138
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 140,
               "NameEnd": 146
             }
@@ -84,7 +84,7 @@
           "ColumnEnd": 178,
           "Name": {
             "Name": "f2",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 153,
             "NameEnd": 155
           },
@@ -93,7 +93,7 @@
             "RightParenPos": 178,
             "Name": {
               "Name": "LowCardinality",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 157,
               "NameEnd": 171
             },
@@ -101,7 +101,7 @@
               {
                 "Name": {
                   "Name": "String",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 172,
                   "NameEnd": 178
                 }
@@ -121,7 +121,7 @@
           "ColumnEnd": 211,
           "Name": {
             "Name": "f3",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 186,
             "NameEnd": 188
           },
@@ -130,7 +130,7 @@
             "RightParenPos": 211,
             "Name": {
               "Name": "LowCardinality",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 190,
               "NameEnd": 204
             },
@@ -138,7 +138,7 @@
               {
                 "Name": {
                   "Name": "String",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 205,
                   "NameEnd": 211
                 }
@@ -158,7 +158,7 @@
           "ColumnEnd": 235,
           "Name": {
             "Name": "f4",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 219,
             "NameEnd": 221
           },
@@ -167,7 +167,7 @@
             "RightParenPos": 235,
             "Name": {
               "Name": "DateTime64",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 223,
               "NameEnd": 233
             },
@@ -193,7 +193,7 @@
           "ColumnEnd": 269,
           "Name": {
             "Name": "f5",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 243,
             "NameEnd": 245
           },
@@ -202,7 +202,7 @@
             "RightParenPos": 269,
             "Name": {
               "Name": "Nullable",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 247,
               "NameEnd": 255
             },
@@ -212,7 +212,7 @@
                 "RightParenPos": 268,
                 "Name": {
                   "Name": "DateTime64",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 256,
                   "NameEnd": 266
                 },
@@ -240,7 +240,7 @@
           "ColumnEnd": 311,
           "Name": {
             "Name": "succeed_at",
-            "Unquoted": true,
+            "QuoteType": 3,
             "NamePos": 277,
             "NameEnd": 287
           },
@@ -249,7 +249,7 @@
             "RightParenPos": 311,
             "Name": {
               "Name": "Nullable",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 289,
               "NameEnd": 297
             },
@@ -259,7 +259,7 @@
                 "RightParenPos": 310,
                 "Name": {
                   "Name": "DateTime64",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 298,
                   "NameEnd": 308
                 },
@@ -303,7 +303,7 @@
               "LeftExpr": {
                 "Name": {
                   "Name": "xxHash32",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 347,
                   "NameEnd": 355
                 },
@@ -317,7 +317,7 @@
                     "Items": [
                       {
                         "Name": "tag_id",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 356,
                         "NameEnd": 362
                       }
@@ -349,7 +349,7 @@
             "SettingsPos": 396,
             "Name": {
               "Name": "index_granularity",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 396,
               "NameEnd": 413
             },
@@ -370,7 +370,7 @@
             "OrderPos": 369,
             "Expr": {
               "Name": "label_id",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 378,
               "NameEnd": 386
             },

@@ -5,13 +5,13 @@
     "Table": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 16
       },
       "Table": {
         "Name": "visits_null",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 17,
         "NameEnd": 28
       }
@@ -30,25 +30,25 @@
         "Items": [
           {
             "Name": "CounterID",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 40,
             "NameEnd": 49
           },
           {
             "Name": "StartDate",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 55,
             "NameEnd": 64
           },
           {
             "Name": "Sign",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 70,
             "NameEnd": 74
           },
           {
             "Name": "UserID",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 80,
             "NameEnd": 86
           }
@@ -63,13 +63,13 @@
           "Expr": {
             "Database": {
               "Name": "test",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 92,
               "NameEnd": 96
             },
             "Table": {
               "Name": "visits",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 97,
               "NameEnd": 103
             }

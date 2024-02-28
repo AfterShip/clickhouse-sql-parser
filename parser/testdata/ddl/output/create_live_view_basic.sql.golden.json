@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "my_live_view",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 17,
         "NameEnd": 29
       }
@@ -20,7 +20,7 @@
         "Database": null,
         "Table": {
           "Name": "my_destination",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 49,
           "NameEnd": 63
         }
@@ -36,14 +36,14 @@
           "ColumnEnd": 73,
           "Name": {
             "Name": "id",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 64,
             "NameEnd": 66
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 67,
               "NameEnd": 73
             }
@@ -84,7 +84,7 @@
           "Items": [
             {
               "Name": "id",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 85,
               "NameEnd": 87
             }
@@ -100,7 +100,7 @@
               "Database": null,
               "Table": {
                 "Name": "my_table",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 93,
                 "NameEnd": 101
               }

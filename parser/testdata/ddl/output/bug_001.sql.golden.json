@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "db",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 39,
         "NameEnd": 41
       },
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 42,
         "NameEnd": 47
       }
@@ -31,13 +31,13 @@
       "TableIdentifier": {
         "Database": {
           "Name": "db",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 92,
           "NameEnd": 94
         },
         "Table": {
           "Name": "table_mv",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 95,
           "NameEnd": 103
         }
@@ -58,13 +58,13 @@
           "Items": [
             {
               "Name": "event_ts",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 118,
               "NameEnd": 126
             },
             {
               "Name": "org_id",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 132,
               "NameEnd": 138
             },
@@ -72,7 +72,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 144,
                   "NameEnd": 167
                 },
@@ -86,7 +86,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 168,
                         "NameEnd": 178
                       },
@@ -103,7 +103,7 @@
               "AliasPos": 185,
               "Alias": {
                 "Name": "x",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 188,
                 "NameEnd": 189
               }
@@ -112,7 +112,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 195,
                   "NameEnd": 218
                 },
@@ -126,7 +126,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 219,
                         "NameEnd": 229
                       },
@@ -143,7 +143,7 @@
               "AliasPos": 236,
               "Alias": {
                 "Name": "y",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 239,
                 "NameEnd": 240
               }
@@ -152,7 +152,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 246,
                   "NameEnd": 269
                 },
@@ -166,7 +166,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 270,
                         "NameEnd": 280
                       },
@@ -183,7 +183,7 @@
               "AliasPos": 287,
               "Alias": {
                 "Name": "z",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 290,
                 "NameEnd": 291
               }
@@ -192,7 +192,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 297,
                   "NameEnd": 320
                 },
@@ -206,7 +206,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 321,
                         "NameEnd": 331
                       },
@@ -223,7 +223,7 @@
               "AliasPos": 338,
               "Alias": {
                 "Name": "a",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 341,
                 "NameEnd": 342
               }
@@ -232,7 +232,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 348,
                   "NameEnd": 371
                 },
@@ -246,7 +246,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 372,
                         "NameEnd": 382
                       },
@@ -263,7 +263,7 @@
               "AliasPos": 389,
               "Alias": {
                 "Name": "b",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 392,
                 "NameEnd": 393
               }
@@ -272,7 +272,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 399,
                   "NameEnd": 422
                 },
@@ -286,7 +286,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 423,
                         "NameEnd": 433
                       },
@@ -303,7 +303,7 @@
               "AliasPos": 440,
               "Alias": {
                 "Name": "c",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 443,
                 "NameEnd": 444
               }
@@ -312,7 +312,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 450,
                   "NameEnd": 473
                 },
@@ -326,7 +326,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 474,
                         "NameEnd": 484
                       },
@@ -343,7 +343,7 @@
               "AliasPos": 491,
               "Alias": {
                 "Name": "d",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 494,
                 "NameEnd": 495
               }
@@ -352,7 +352,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractInt",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 501,
                   "NameEnd": 521
                 },
@@ -366,7 +366,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 522,
                         "NameEnd": 532
                       },
@@ -383,7 +383,7 @@
               "AliasPos": 539,
               "Alias": {
                 "Name": "e",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 542,
                 "NameEnd": 543
               }
@@ -392,7 +392,7 @@
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractInt",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 549,
                   "NameEnd": 569
                 },
@@ -406,7 +406,7 @@
                     "Items": [
                       {
                         "Name": "properties",
-                        "Unquoted": false,
+                        "QuoteType": 1,
                         "NamePos": 570,
                         "NameEnd": 580
                       },
@@ -423,7 +423,7 @@
               "AliasPos": 587,
               "Alias": {
                 "Name": "f",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 590,
                 "NameEnd": 591
               }
@@ -439,13 +439,13 @@
             "Expr": {
               "Database": {
                 "Name": "db",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 597,
                 "NameEnd": 599
               },
               "Table": {
                 "Name": "table",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 600,
                 "NameEnd": 605
               }
@@ -462,19 +462,19 @@
             "LeftExpr": {
               "Database": {
                 "Name": "db",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 612,
                 "NameEnd": 614
               },
               "Table": {
                 "Name": "table",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 615,
                 "NameEnd": 620
               },
               "Column": {
                 "Name": "event",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 621,
                 "NameEnd": 626
               }

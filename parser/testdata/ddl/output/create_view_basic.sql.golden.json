@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "my_view",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 26,
         "NameEnd": 33
       }
@@ -23,14 +23,14 @@
           "ColumnEnd": 45,
           "Name": {
             "Name": "col1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 34,
             "NameEnd": 38
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 39,
               "NameEnd": 45
             }
@@ -48,14 +48,14 @@
           "ColumnEnd": 58,
           "Name": {
             "Name": "col2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 47,
             "NameEnd": 51
           },
           "Type": {
             "Name": {
               "Name": "String",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 52,
               "NameEnd": 58
             }
@@ -86,13 +86,13 @@
           "Items": [
             {
               "Name": "id",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 74,
               "NameEnd": 76
             },
             {
               "Name": "name",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 82,
               "NameEnd": 86
             }
@@ -108,7 +108,7 @@
               "Database": null,
               "Table": {
                 "Name": "my_table",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 96,
                 "NameEnd": 104
               }

@@ -23,7 +23,7 @@
             "AsType": {
               "Name": {
                 "Name": "Float64",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 17,
                 "NameEnd": 24
               }
@@ -32,7 +32,7 @@
           "AliasPos": 26,
           "Alias": {
             "Name": "value",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 29,
             "NameEnd": 34
           }
@@ -85,7 +85,7 @@
           "AliasPos": 62,
           "Alias": {
             "Name": "value",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 65,
             "NameEnd": 70
           }
@@ -137,7 +137,7 @@
                   "AliasPos": 82,
                   "Alias": {
                     "Name": "Float64",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 85,
                     "NameEnd": 92
                   }
@@ -149,7 +149,7 @@
           "AliasPos": 94,
           "Alias": {
             "Name": "value",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 97,
             "NameEnd": 102
           }
@@ -193,7 +193,7 @@
             "Operation": "::",
             "RightExpr": {
               "Name": "Float64",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 114,
               "NameEnd": 121
             },
@@ -203,7 +203,7 @@
           "AliasPos": 122,
           "Alias": {
             "Name": "value",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 125,
             "NameEnd": 130
           }

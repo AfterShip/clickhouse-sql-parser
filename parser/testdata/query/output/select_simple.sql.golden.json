@@ -11,7 +11,7 @@
       "Items": [
         {
           "Name": "f0",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 11,
           "NameEnd": 13
         },
@@ -19,7 +19,7 @@
           "Expr": {
             "Name": {
               "Name": "coalesce",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 15,
               "NameEnd": 23
             },
@@ -33,13 +33,13 @@
                 "Items": [
                   {
                     "Name": "f1",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 24,
                     "NameEnd": 26
                   },
                   {
                     "Name": "f2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 28,
                     "NameEnd": 30
                   }
@@ -51,7 +51,7 @@
           "AliasPos": 32,
           "Alias": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 35,
             "NameEnd": 37
           }
@@ -61,7 +61,7 @@
             "Function": {
               "Name": {
                 "Name": "row_number",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 39,
                 "NameEnd": 49
               },
@@ -90,7 +90,7 @@
                   "Items": [
                     {
                       "Name": "f0",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 71,
                       "NameEnd": 73
                     }
@@ -105,7 +105,7 @@
                     "OrderPos": 74,
                     "Expr": {
                       "Name": "f1",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 83,
                       "NameEnd": 85
                     },
@@ -119,7 +119,7 @@
           "AliasPos": 91,
           "Alias": {
             "Name": "rn",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 94,
             "NameEnd": 96
           }
@@ -135,13 +135,13 @@
         "Expr": {
           "Database": {
             "Name": "test",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 102,
             "NameEnd": 106
           },
           "Table": {
             "Name": "events_local",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 107,
             "NameEnd": 119
           }
@@ -168,7 +168,7 @@
                   {
                     "LeftExpr": {
                       "Name": "f0",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 127,
                       "NameEnd": 129
                     },
@@ -219,7 +219,7 @@
                   {
                     "LeftExpr": {
                       "Name": "f1",
-                      "Unquoted": false,
+                      "QuoteType": 1,
                       "NamePos": 162,
                       "NameEnd": 164
                     },
@@ -251,7 +251,7 @@
                 {
                   "LeftExpr": {
                     "Name": "f2",
-                    "Unquoted": false,
+                    "QuoteType": 1,
                     "NamePos": 183,
                     "NameEnd": 185
                   },
@@ -275,7 +275,7 @@
         "RightExpr": {
           "LeftExpr": {
             "Name": "f3",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 211,
             "NameEnd": 213
           },
@@ -324,13 +324,13 @@
         "Items": [
           {
             "Name": "f0",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 248,
             "NameEnd": 250
           },
           {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 254,
             "NameEnd": 256
           }
@@ -366,7 +366,7 @@
         "Items": [
           {
             "Name": "f0",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 275,
             "NameEnd": 277
           }

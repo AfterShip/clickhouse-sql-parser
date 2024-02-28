@@ -84,23 +84,12 @@ func (p *Parser) parseIdent() (*Ident, error) {
 		return nil, err
 	}
 	ident := &Ident{
-		NamePos:  lastToken.Pos,
-		NameEnd:  lastToken.End,
-		Name:     lastToken.String,
-		Unquoted: lastToken.Unquoted,
+		NamePos:   lastToken.Pos,
+		NameEnd:   lastToken.End,
+		Name:      lastToken.String,
+		QuoteType: lastToken.QuoteType,
 	}
 	return ident, nil
-}
-
-func (p *Parser) parseIdentOrString(_ Pos) (Expr, error) {
-	switch {
-	case p.matchTokenKind(TokenIdent):
-		return p.parseIdent()
-	case p.matchTokenKind(TokenString):
-		return p.parseString(p.Pos())
-	default:
-		return nil, fmt.Errorf("expected <ident> or <string>, but got %q", p.lastTokenKind())
-	}
 }
 
 func (p *Parser) parseIdentOrStar() (*Ident, error) {
@@ -120,11 +109,11 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 	}
 }
 
-func (p *Parser) tryParseDotIdent(pos Pos) (Expr, error) {
+func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
 	if p.tryConsumeTokenKind(".") == nil {
 		return nil, nil // nolint
 	}
-	return p.parseIdentOrString(pos)
+	return p.parseIdent()
 }
 
 func (p *Parser) parseUUID() (*UUID, error) {
@@ -258,7 +247,7 @@ func (p *Parser) parseLiteral(pos Pos) (Literal, error) {
 }
 
 func (p *Parser) ParseNestedIdentifier(pos Pos) (*NestedIdentifier, error) {
-	ident, err := p.parseIdentOrString(pos)
+	ident, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}

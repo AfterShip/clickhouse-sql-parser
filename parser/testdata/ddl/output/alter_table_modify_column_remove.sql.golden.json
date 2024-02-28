@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "t1",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 14
       }
@@ -22,7 +22,7 @@
           "ColumnEnd": 31,
           "Name": {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 29,
             "NameEnd": 31
           },
@@ -40,7 +40,7 @@
           "PropertyType": {
             "Name": {
               "Name": "COMMENT",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 39,
               "NameEnd": 46
             }

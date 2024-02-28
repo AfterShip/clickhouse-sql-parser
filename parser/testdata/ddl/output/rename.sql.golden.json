@@ -9,7 +9,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 29,
             "NameEnd": 31
           }
@@ -18,7 +18,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 35,
             "NameEnd": 38
           }
@@ -37,7 +37,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 53,
             "NameEnd": 55
           }
@@ -46,7 +46,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 59,
             "NameEnd": 62
           }
@@ -72,7 +72,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 106,
             "NameEnd": 108
           }
@@ -81,7 +81,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 112,
             "NameEnd": 115
           }
@@ -92,7 +92,7 @@
           "Database": null,
           "Table": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 117,
             "NameEnd": 119
           }
@@ -101,7 +101,7 @@
           "Database": null,
           "Table": {
             "Name": "t22",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 123,
             "NameEnd": 126
           }
@@ -120,7 +120,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 141,
             "NameEnd": 143
           }
@@ -129,7 +129,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 147,
             "NameEnd": 150
           }
@@ -140,7 +140,7 @@
           "Database": null,
           "Table": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 152,
             "NameEnd": 154
           }
@@ -149,7 +149,7 @@
           "Database": null,
           "Table": {
             "Name": "t22",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 158,
             "NameEnd": 161
           }
@@ -175,7 +175,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 234,
             "NameEnd": 236
           }
@@ -184,7 +184,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 240,
             "NameEnd": 243
           }
@@ -203,7 +203,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 263,
             "NameEnd": 265
           }
@@ -212,7 +212,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 269,
             "NameEnd": 272
           }
@@ -238,7 +238,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 321,
             "NameEnd": 323
           }
@@ -247,7 +247,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 327,
             "NameEnd": 330
           }
@@ -258,7 +258,7 @@
           "Database": null,
           "Table": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 332,
             "NameEnd": 334
           }
@@ -267,7 +267,7 @@
           "Database": null,
           "Table": {
             "Name": "t22",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 338,
             "NameEnd": 341
           }
@@ -286,7 +286,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 361,
             "NameEnd": 363
           }
@@ -295,7 +295,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 367,
             "NameEnd": 370
           }
@@ -306,7 +306,7 @@
           "Database": null,
           "Table": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 372,
             "NameEnd": 374
           }
@@ -315,7 +315,7 @@
           "Database": null,
           "Table": {
             "Name": "t22",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 378,
             "NameEnd": 381
           }
@@ -341,7 +341,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 447,
             "NameEnd": 449
           }
@@ -350,7 +350,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 453,
             "NameEnd": 456
           }
@@ -369,7 +369,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 474,
             "NameEnd": 476
           }
@@ -378,7 +378,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 480,
             "NameEnd": 483
           }
@@ -404,7 +404,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 530,
             "NameEnd": 532
           }
@@ -413,7 +413,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 536,
             "NameEnd": 539
           }
@@ -424,7 +424,7 @@
           "Database": null,
           "Table": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 541,
             "NameEnd": 543
           }
@@ -433,7 +433,7 @@
           "Database": null,
           "Table": {
             "Name": "t22",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 547,
             "NameEnd": 550
           }
@@ -452,7 +452,7 @@
           "Database": null,
           "Table": {
             "Name": "t1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 568,
             "NameEnd": 570
           }
@@ -461,7 +461,7 @@
           "Database": null,
           "Table": {
             "Name": "t11",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 574,
             "NameEnd": 577
           }
@@ -472,7 +472,7 @@
           "Database": null,
           "Table": {
             "Name": "t2",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 579,
             "NameEnd": 581
           }
@@ -481,7 +481,7 @@
           "Database": null,
           "Table": {
             "Name": "t22",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 585,
             "NameEnd": 588
           }

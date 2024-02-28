@@ -7,7 +7,7 @@
       {
         "Name": {
           "Name": "r1_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 20,
           "NameEnd": 28
         },
@@ -17,7 +17,7 @@
       {
         "Name": {
           "Name": "r2_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 30,
           "NameEnd": 38
         },
@@ -27,7 +27,7 @@
       {
         "Name": {
           "Name": "r3_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 40,
           "NameEnd": 48
         },
@@ -37,7 +37,7 @@
       {
         "Name": {
           "Name": "r4_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 50,
           "NameEnd": 58
         },
@@ -47,7 +47,7 @@
       {
         "Name": {
           "Name": "r5_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 60,
           "NameEnd": 68
         },
@@ -57,7 +57,7 @@
       {
         "Name": {
           "Name": "r6_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 70,
           "NameEnd": 78
         },
@@ -67,7 +67,7 @@
       {
         "Name": {
           "Name": "r7_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 80,
           "NameEnd": 88
         },
@@ -77,7 +77,7 @@
       {
         "Name": {
           "Name": "r8_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 90,
           "NameEnd": 98
         },
@@ -87,7 +87,7 @@
       {
         "Name": {
           "Name": "r9_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 100,
           "NameEnd": 108
         },
@@ -107,7 +107,7 @@
       {
         "Name": {
           "Name": "r2_01293_renamed",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 130,
           "NameEnd": 146
         },
@@ -127,7 +127,7 @@
       {
         "Name": {
           "Name": "r1_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 168,
           "NameEnd": 176
         },

@@ -5,13 +5,13 @@
     "Name": {
       "Database": {
         "Name": "cluster_name",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 26,
         "NameEnd": 38
       },
       "Table": {
         "Name": "my_view",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 39,
         "NameEnd": 46
       }
@@ -47,13 +47,13 @@
           "Items": [
             {
               "Name": "column1",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 151,
               "NameEnd": 158
             },
             {
               "Name": "column2",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 164,
               "NameEnd": 171
             }
@@ -69,7 +69,7 @@
               "Database": null,
               "Table": {
                 "Name": "my_other_table",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 185,
                 "NameEnd": 199
               }

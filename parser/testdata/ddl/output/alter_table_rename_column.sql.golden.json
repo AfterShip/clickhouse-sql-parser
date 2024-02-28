@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "my_table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 20
       }
@@ -19,7 +19,7 @@
         "OldColumnName": {
           "Ident": {
             "Name": "old_column_name",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 35,
             "NameEnd": 50
           },
@@ -28,7 +28,7 @@
         "NewColumnName": {
           "Ident": {
             "Name": "new_column_name",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 54,
             "NameEnd": 69
           },

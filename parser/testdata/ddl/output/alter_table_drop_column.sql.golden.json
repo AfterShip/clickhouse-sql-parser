@@ -5,13 +5,13 @@
     "TableIdentifier": {
       "Database": {
         "Name": "test",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 16
       },
       "Table": {
         "Name": "events_local",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 17,
         "NameEnd": 29
       }
@@ -30,7 +30,7 @@
         "ColumnName": {
           "Ident": {
             "Name": "f1",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 81,
             "NameEnd": 83
           },

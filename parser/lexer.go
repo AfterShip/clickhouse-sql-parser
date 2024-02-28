@@ -17,6 +17,12 @@ const (
 	TokenString  TokenKind = "<string>"
 )
 
+const (
+	Unquoted = iota + 1
+	DoubleQuote
+	BackTicks
+)
+
 type Pos int
 type TokenKind string
 
@@ -24,10 +30,10 @@ type Token struct {
 	Pos Pos
 	End Pos
 
-	Kind     TokenKind
-	String   string
-	Base     int // 10 or 16 on TokenInt
-	Unquoted bool
+	Kind      TokenKind
+	String    string
+	Base      int // 10 or 16 on TokenInt
+	QuoteType int
 }
 
 type Lexer struct {
@@ -121,14 +127,18 @@ func (l *Lexer) consumeNumber() error {
 
 func (l *Lexer) consumeIdent(_ Pos) error {
 	token := &Token{}
-	isUnquoted := false
-	if l.peekOk(0) && l.peekN(0) == '`' {
+	quoteType := Unquoted
+	if l.peekOk(0) && (l.peekN(0) == '`' || l.peekN(0) == '"') {
+		if l.peekOk(0) && l.peekN(0) == '`' {
+			quoteType = BackTicks
+		} else {
+			quoteType = DoubleQuote
+		}
 		l.skipN(1)
-		isUnquoted = true
 	}
 
 	i := 0
-	if !isUnquoted {
+	if quoteType == Unquoted {
 		if l.peekN(i) == '$' {
 			i++
 		}
@@ -136,15 +146,17 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 			i++
 		}
 	} else {
-		for l.peekOk(i) && l.peekN(i) != '`' {
+		for l.peekOk(i) && (quoteType == BackTicks && l.peekN(i) != '`' ||
+			quoteType == DoubleQuote && l.peekN(i) != '"') {
 			i++
 		}
-		if !l.peekOk(i) || l.peekN(i) != '`' {
+		if !l.peekOk(i) || (quoteType == BackTicks && l.peekN(i) != '`') ||
+			(quoteType == DoubleQuote && l.peekN(i) != '"') {
 			return fmt.Errorf("unclosed quoted identifier: %s", l.slice(0, i))
 		}
 	}
 	slice := l.slice(0, i)
-	if !isUnquoted && l.isKeyword(strings.ToUpper(slice)) {
+	if quoteType == Unquoted && l.isKeyword(strings.ToUpper(slice)) {
 		token.Kind = TokenKeyword
 	} else {
 		token.Kind = TokenIdent
@@ -152,11 +164,11 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 	token.Pos = Pos(l.current)
 	token.End = Pos(l.current + i)
 	token.String = slice
-	token.Unquoted = isUnquoted
+	token.QuoteType = quoteType
 	l.lastToken = token
 
 	l.skipN(i)
-	if isUnquoted {
+	if quoteType != Unquoted {
 		l.skipN(1)
 	}
 	return nil
@@ -184,12 +196,9 @@ func (l *Lexer) consumeMultiLineComment() {
 	l.skipN(i)
 }
 
-func (l *Lexer) consumeString(isSingleQuote bool) error {
+func (l *Lexer) consumeString() error {
 	i := 1
 	endChar := byte('\'')
-	if !isSingleQuote {
-		endChar = '"'
-	}
 	for l.peekOk(i) && l.peekN(i) != endChar {
 		i++
 	}
@@ -283,12 +292,10 @@ func (l *Lexer) consumeToken() error {
 		}
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		return l.consumeNumber()
-	case '`', '$':
+	case '`', '$', '"':
 		return l.consumeIdent(Pos(l.current))
 	case '\'':
-		return l.consumeString(true)
-	case '"':
-		return l.consumeString(false)
+		return l.consumeString()
 	case ':':
 		if l.peekOk(1) && l.peekN(1) == ':' {
 			l.lastToken = &Token{

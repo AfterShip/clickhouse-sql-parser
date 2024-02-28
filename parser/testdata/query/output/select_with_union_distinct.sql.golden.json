@@ -11,7 +11,7 @@
       "Items": [
         {
           "Name": "replica_name",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 19
         }
@@ -26,13 +26,13 @@
         "Expr": {
           "Database": {
             "Name": "system",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 25,
             "NameEnd": 31
           },
           "Table": {
             "Name": "ha_replicas",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 32,
             "NameEnd": 43
           }
@@ -64,7 +64,7 @@
         "Items": [
           {
             "Name": "replica_name",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 66,
             "NameEnd": 78
           }
@@ -79,13 +79,13 @@
           "Expr": {
             "Database": {
               "Name": "system",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 84,
               "NameEnd": 90
             },
             "Table": {
               "Name": "ha_unique_replicas",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 91,
               "NameEnd": 109
             }

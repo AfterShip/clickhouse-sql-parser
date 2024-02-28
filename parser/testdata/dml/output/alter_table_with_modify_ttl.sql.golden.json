@@ -5,13 +5,13 @@
     "TableIdentifier": {
       "Database": {
         "Name": "infra",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 17
       },
       "Table": {
         "Name": "flow_processed_emails_local",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 18,
         "NameEnd": 45
       }
@@ -20,7 +20,7 @@
       "OnPos": 46,
       "Expr": {
         "Name": "default_cluster",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 57,
         "NameEnd": 72
       }
@@ -34,7 +34,7 @@
           "Expr": {
             "LeftExpr": {
               "Name": "created_at",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 84,
               "NameEnd": 94
             },
@@ -49,7 +49,7 @@
               },
               "Unit": {
                 "Name": "YEAR",
-                "Unquoted": false,
+                "QuoteType": 1,
                 "NamePos": 108,
                 "NameEnd": 112
               }

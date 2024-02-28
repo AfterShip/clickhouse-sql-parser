@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 15,
         "NameEnd": 20
       }
@@ -27,7 +27,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 64,
         "NameEnd": 69
       }
@@ -44,7 +44,7 @@
         "Items": [
           {
             "Name": "*",
-            "Unquoted": false,
+            "QuoteType": 0,
             "NamePos": 85,
             "NameEnd": 85
           }
@@ -60,7 +60,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 146,
         "NameEnd": 151
       }
@@ -77,19 +77,19 @@
         "Items": [
           {
             "Name": "colX",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 167,
             "NameEnd": 171
           },
           {
             "Name": "colY",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 172,
             "NameEnd": 176
           },
           {
             "Name": "colZ",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 177,
             "NameEnd": 181
           }
@@ -105,7 +105,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 198,
         "NameEnd": 203
       }
@@ -122,7 +122,7 @@
         "Items": [
           {
             "Name": "*",
-            "Unquoted": false,
+            "QuoteType": 0,
             "NamePos": 219,
             "NameEnd": 219
           }
@@ -135,7 +135,7 @@
         "Items": [
           {
             "Name": "colX",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 228,
             "NameEnd": 232
           }
@@ -150,7 +150,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 249,
         "NameEnd": 254
       }
@@ -167,7 +167,7 @@
         "Items": [
           {
             "Name": "*",
-            "Unquoted": false,
+            "QuoteType": 0,
             "NamePos": 270,
             "NameEnd": 270
           }
@@ -188,13 +188,13 @@
               "Items": [
                 {
                   "Name": "colX",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 280,
                   "NameEnd": 284
                 },
                 {
                   "Name": "colY",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 286,
                   "NameEnd": 290
                 }
@@ -213,7 +213,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 308,
         "NameEnd": 313
       }
@@ -231,7 +231,7 @@
           {
             "Name": {
               "Name": "COLUMNS",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 329,
               "NameEnd": 336
             },
@@ -265,7 +265,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 380,
         "NameEnd": 385
       }
@@ -283,7 +283,7 @@
           {
             "Name": {
               "Name": "COLUMNS",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 401,
               "NameEnd": 408
             },
@@ -314,7 +314,7 @@
         "Items": [
           {
             "Name": "colX",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 443,
             "NameEnd": 447
           }
@@ -329,7 +329,7 @@
       "Database": null,
       "Table": {
         "Name": "table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 464,
         "NameEnd": 469
       }
@@ -347,7 +347,7 @@
           {
             "Name": {
               "Name": "COLUMNS",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 485,
               "NameEnd": 492
             },
@@ -386,13 +386,13 @@
               "Items": [
                 {
                   "Name": "colX",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 528,
                   "NameEnd": 532
                 },
                 {
                   "Name": "colY",
-                  "Unquoted": false,
+                  "QuoteType": 1,
                   "NamePos": 534,
                   "NameEnd": 538
                 }

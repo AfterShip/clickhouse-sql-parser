@@ -4,7 +4,7 @@
     "IfNotExists": false,
     "FunctionName": {
       "Name": "linear_equation",
-      "Unquoted": false,
+      "QuoteType": 1,
       "NamePos": 16,
       "NameEnd": 31
     },
@@ -19,19 +19,19 @@
         "Items": [
           {
             "Name": "x",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 36,
             "NameEnd": 37
           },
           {
             "Name": "k",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 39,
             "NameEnd": 40
           },
           {
             "Name": "b",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 42,
             "NameEnd": 43
           }
@@ -43,14 +43,14 @@
       "LeftExpr": {
         "LeftExpr": {
           "Name": "k",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 48,
           "NameEnd": 49
         },
         "Operation": "*",
         "RightExpr": {
           "Name": "x",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 50,
           "NameEnd": 51
         },
@@ -60,7 +60,7 @@
       "Operation": "+",
       "RightExpr": {
         "Name": "b",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 54,
         "NameEnd": 55
       },

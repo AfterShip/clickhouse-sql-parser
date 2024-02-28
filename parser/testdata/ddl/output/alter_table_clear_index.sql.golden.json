@@ -6,7 +6,7 @@
       "Database": null,
       "Table": {
         "Name": "my_table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 20
       }
@@ -20,7 +20,7 @@
         "IndexName": {
           "Ident": {
             "Name": "my_index_name",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 33,
             "NameEnd": 46
           },
@@ -30,7 +30,7 @@
           "PartitionPos": 50,
           "Expr": {
             "Name": "partition_name",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 60,
             "NameEnd": 74
           },

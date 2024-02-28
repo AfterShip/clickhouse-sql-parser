@@ -8,7 +8,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 33,
             "NameEnd": 41
           },
@@ -30,7 +30,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 54,
             "NameEnd": 62
           },
@@ -39,7 +39,7 @@
             "OnPos": 63,
             "Expr": {
               "Name": "cluster_1",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 74,
               "NameEnd": 83
             }
@@ -47,7 +47,7 @@
         },
         "NewName": {
           "Name": "r2_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 94,
           "NameEnd": 102
         },
@@ -65,7 +65,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 115,
             "NameEnd": 123
           },
@@ -74,7 +74,7 @@
         },
         "NewName": {
           "Name": "r2_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 134,
           "NameEnd": 142
         },
@@ -84,7 +84,7 @@
         "RoleName": {
           "Name": {
             "Name": "r3_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 144,
             "NameEnd": 152
           },
@@ -93,7 +93,7 @@
         },
         "NewName": {
           "Name": "r4_01293",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 163,
           "NameEnd": 171
         },
@@ -111,7 +111,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 184,
             "NameEnd": 192
           },
@@ -127,7 +127,7 @@
         "SettingPairs": [],
         "Modifier": {
           "Name": "NONE",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 202,
           "NameEnd": 206
         }
@@ -143,7 +143,7 @@
         "RoleName": {
           "Name": {
             "Name": "r2_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 219,
             "NameEnd": 227
           },
@@ -160,7 +160,7 @@
           {
             "Name": {
               "Name": "PROFILE",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 237,
               "NameEnd": 244
             },
@@ -184,7 +184,7 @@
         "RoleName": {
           "Name": {
             "Name": "r3_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 267,
             "NameEnd": 275
           },
@@ -201,7 +201,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 285,
               "NameEnd": 301
             },
@@ -226,7 +226,7 @@
         "RoleName": {
           "Name": {
             "Name": "r4_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 322,
             "NameEnd": 330
           },
@@ -243,7 +243,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 340,
               "NameEnd": 356
             },
@@ -252,7 +252,7 @@
           {
             "Name": {
               "Name": "MIN",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 357,
               "NameEnd": 360
             },
@@ -277,7 +277,7 @@
         "RoleName": {
           "Name": {
             "Name": "r5_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 381,
             "NameEnd": 389
           },
@@ -294,7 +294,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 399,
               "NameEnd": 415
             },
@@ -303,7 +303,7 @@
           {
             "Name": {
               "Name": "MAX",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 416,
               "NameEnd": 419
             },
@@ -328,7 +328,7 @@
         "RoleName": {
           "Name": {
             "Name": "r6_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 440,
             "NameEnd": 448
           },
@@ -345,7 +345,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 458,
               "NameEnd": 474
             },
@@ -354,7 +354,7 @@
         ],
         "Modifier": {
           "Name": "CONST",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 475,
           "NameEnd": 480
         }
@@ -370,7 +370,7 @@
         "RoleName": {
           "Name": {
             "Name": "r7_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 493,
             "NameEnd": 501
           },
@@ -387,7 +387,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 511,
               "NameEnd": 527
             },
@@ -396,7 +396,7 @@
         ],
         "Modifier": {
           "Name": "WRITABLE",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 528,
           "NameEnd": 536
         }
@@ -412,7 +412,7 @@
         "RoleName": {
           "Name": {
             "Name": "r8_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 549,
             "NameEnd": 557
           },
@@ -429,7 +429,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 567,
               "NameEnd": 583
             },
@@ -443,7 +443,7 @@
           {
             "Name": {
               "Name": "MIN",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 592,
               "NameEnd": 595
             },
@@ -457,7 +457,7 @@
           {
             "Name": {
               "Name": "MAX",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 604,
               "NameEnd": 607
             },
@@ -471,7 +471,7 @@
         ],
         "Modifier": {
           "Name": "CONST",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 616,
           "NameEnd": 621
         }
@@ -487,7 +487,7 @@
         "RoleName": {
           "Name": {
             "Name": "r9_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 634,
             "NameEnd": 642
           },
@@ -504,7 +504,7 @@
           {
             "Name": {
               "Name": "PROFILE",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 652,
               "NameEnd": 659
             },
@@ -522,7 +522,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 671,
               "NameEnd": 687
             },
@@ -536,7 +536,7 @@
         ],
         "Modifier": {
           "Name": "WRITABLE",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 696,
           "NameEnd": 704
         }
@@ -552,7 +552,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 717,
             "NameEnd": 725
           },
@@ -566,7 +566,7 @@
         "RoleName": {
           "Name": {
             "Name": "r2_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 727,
             "NameEnd": 735
           },
@@ -588,7 +588,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 748,
             "NameEnd": 756
           },
@@ -605,7 +605,7 @@
           {
             "Name": {
               "Name": "readonly",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 766,
               "NameEnd": 774
             },
@@ -630,7 +630,7 @@
         "RoleName": {
           "Name": {
             "Name": "r2_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 789,
             "NameEnd": 797
           },
@@ -647,7 +647,7 @@
           {
             "Name": {
               "Name": "PROFILE",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 807,
               "NameEnd": 814
             },
@@ -671,7 +671,7 @@
         "RoleName": {
           "Name": {
             "Name": "r3_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 837,
             "NameEnd": 845
           },
@@ -688,7 +688,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 855,
               "NameEnd": 871
             },
@@ -702,7 +702,7 @@
           {
             "Name": {
               "Name": "MIN",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 880,
               "NameEnd": 883
             },
@@ -716,7 +716,7 @@
           {
             "Name": {
               "Name": "MAX",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 892,
               "NameEnd": 895
             },
@@ -730,7 +730,7 @@
         ],
         "Modifier": {
           "Name": "WRITABLE",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 904,
           "NameEnd": 912
         }
@@ -746,7 +746,7 @@
         "RoleName": {
           "Name": {
             "Name": "r4_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 925,
             "NameEnd": 933
           },
@@ -763,7 +763,7 @@
           {
             "Name": {
               "Name": "PROFILE",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 943,
               "NameEnd": 950
             },
@@ -781,7 +781,7 @@
           {
             "Name": {
               "Name": "max_memory_usage",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 962,
               "NameEnd": 978
             },
@@ -800,7 +800,7 @@
           {
             "Name": {
               "Name": "readonly",
-              "Unquoted": false,
+              "QuoteType": 1,
               "NamePos": 988,
               "NameEnd": 996
             },
@@ -825,7 +825,7 @@
         "RoleName": {
           "Name": {
             "Name": "r5_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 1011,
             "NameEnd": 1019
           },
@@ -841,7 +841,7 @@
         "SettingPairs": [],
         "Modifier": {
           "Name": "NONE",
-          "Unquoted": false,
+          "QuoteType": 1,
           "NamePos": 1029,
           "NameEnd": 1033
         }
@@ -857,7 +857,7 @@
         "RoleName": {
           "Name": {
             "Name": "r1_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 1046,
             "NameEnd": 1054
           },
@@ -883,7 +883,7 @@
         "RoleName": {
           "Name": {
             "Name": "r2_01293",
-            "Unquoted": false,
+            "QuoteType": 1,
             "NamePos": 1071,
             "NameEnd": 1079
           },

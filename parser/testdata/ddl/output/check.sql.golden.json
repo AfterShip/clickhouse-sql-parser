@@ -5,7 +5,7 @@
       "Database": null,
       "Table": {
         "Name": "test_table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 12,
         "NameEnd": 22
       }
@@ -18,7 +18,7 @@
       "Database": null,
       "Table": {
         "Name": "test_table",
-        "Unquoted": false,
+        "QuoteType": 1,
         "NamePos": 36,
         "NameEnd": 46
       }
