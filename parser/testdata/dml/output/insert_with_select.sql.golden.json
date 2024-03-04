@@ -57,23 +57,28 @@
       "From": {
         "FromPos": 87,
         "Expr": {
-          "TablePos": 92,
-          "TableEnd": 103,
-          "Alias": null,
-          "Expr": {
-            "Database": {
-              "Name": "test",
-              "QuoteType": 1,
-              "NamePos": 92,
-              "NameEnd": 96
+          "Table": {
+            "TablePos": 92,
+            "TableEnd": 103,
+            "Alias": null,
+            "Expr": {
+              "Database": {
+                "Name": "test",
+                "QuoteType": 1,
+                "NamePos": 92,
+                "NameEnd": 96
+              },
+              "Table": {
+                "Name": "visits",
+                "QuoteType": 1,
+                "NamePos": 97,
+                "NameEnd": 103
+              }
             },
-            "Table": {
-              "Name": "visits",
-              "QuoteType": 1,
-              "NamePos": 97,
-              "NameEnd": 103
-            }
+            "HasFinal": false
           },
+          "StatementEnd": 103,
+          "SampleRatio": null,
           "HasFinal": false
         }
       },

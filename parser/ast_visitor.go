@@ -91,6 +91,7 @@ type ASTVisitor interface {
 	VisitUsingExpr(expr *UsingExpr) error
 	VisitJoinExpr(expr *JoinExpr) error
 	VisitJoinConstraintExpr(expr *JoinConstraintExpr) error
+	VisitJoinTableExpr(expr *JoinTableExpr) error
 	VisitFromExpr(expr *FromExpr) error
 	VisitIsNullExpr(expr *IsNullExpr) error
 	VisitIsNotNullExpr(expr *IsNotNullExpr) error
@@ -169,6 +170,13 @@ func (v *DefaultASTVisitor) VisitTernaryExpr(expr *TernaryExpr) error {
 }
 
 func (v *DefaultASTVisitor) VisitBinaryExpr(expr *BinaryExpr) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitJoinTableExpr(expr *JoinTableExpr) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

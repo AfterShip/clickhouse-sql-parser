@@ -77,18 +77,23 @@
     "From": {
       "FromPos": 38,
       "Expr": {
-        "TablePos": 43,
-        "TableEnd": 47,
-        "Alias": null,
-        "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "$abc",
-            "QuoteType": 1,
-            "NamePos": 43,
-            "NameEnd": 47
-          }
+        "Table": {
+          "TablePos": 43,
+          "TableEnd": 47,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "$abc",
+              "QuoteType": 1,
+              "NamePos": 43,
+              "NameEnd": 47
+            }
+          },
+          "HasFinal": false
         },
+        "StatementEnd": 47,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },

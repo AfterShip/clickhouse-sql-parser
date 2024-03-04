@@ -20,23 +20,28 @@
     "From": {
       "FromPos": 20,
       "Expr": {
-        "TablePos": 25,
-        "TableEnd": 43,
-        "Alias": null,
-        "Expr": {
-          "Database": {
-            "Name": "system",
-            "QuoteType": 1,
-            "NamePos": 25,
-            "NameEnd": 31
+        "Table": {
+          "TablePos": 25,
+          "TableEnd": 43,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "system",
+              "QuoteType": 1,
+              "NamePos": 25,
+              "NameEnd": 31
+            },
+            "Table": {
+              "Name": "ha_replicas",
+              "QuoteType": 1,
+              "NamePos": 32,
+              "NameEnd": 43
+            }
           },
-          "Table": {
-            "Name": "ha_replicas",
-            "QuoteType": 1,
-            "NamePos": 32,
-            "NameEnd": 43
-          }
+          "HasFinal": false
         },
+        "StatementEnd": 43,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },
@@ -73,23 +78,28 @@
       "From": {
         "FromPos": 79,
         "Expr": {
-          "TablePos": 84,
-          "TableEnd": 109,
-          "Alias": null,
-          "Expr": {
-            "Database": {
-              "Name": "system",
-              "QuoteType": 1,
-              "NamePos": 84,
-              "NameEnd": 90
+          "Table": {
+            "TablePos": 84,
+            "TableEnd": 109,
+            "Alias": null,
+            "Expr": {
+              "Database": {
+                "Name": "system",
+                "QuoteType": 1,
+                "NamePos": 84,
+                "NameEnd": 90
+              },
+              "Table": {
+                "Name": "ha_unique_replicas",
+                "QuoteType": 1,
+                "NamePos": 91,
+                "NameEnd": 109
+              }
             },
-            "Table": {
-              "Name": "ha_unique_replicas",
-              "QuoteType": 1,
-              "NamePos": 91,
-              "NameEnd": 109
-            }
+            "HasFinal": false
           },
+          "StatementEnd": 109,
+          "SampleRatio": null,
           "HasFinal": false
         }
       },

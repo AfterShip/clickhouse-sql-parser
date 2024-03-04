@@ -129,23 +129,28 @@
     "From": {
       "FromPos": 97,
       "Expr": {
-        "TablePos": 102,
-        "TableEnd": 119,
-        "Alias": null,
-        "Expr": {
-          "Database": {
-            "Name": "test",
-            "QuoteType": 1,
-            "NamePos": 102,
-            "NameEnd": 106
+        "Table": {
+          "TablePos": 102,
+          "TableEnd": 119,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "test",
+              "QuoteType": 1,
+              "NamePos": 102,
+              "NameEnd": 106
+            },
+            "Table": {
+              "Name": "events_local",
+              "QuoteType": 1,
+              "NamePos": 107,
+              "NameEnd": 119
+            }
           },
-          "Table": {
-            "Name": "events_local",
-            "QuoteType": 1,
-            "NamePos": 107,
-            "NameEnd": 119
-          }
+          "HasFinal": false
         },
+        "StatementEnd": 119,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },

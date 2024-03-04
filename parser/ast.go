@@ -133,6 +133,46 @@ func (p *BinaryExpr) Accept(visitor ASTVisitor) error {
 	return visitor.VisitBinaryExpr(p)
 }
 
+type JoinTableExpr struct {
+	Table        *TableExpr
+	StatementEnd Pos
+	SampleRatio  *SampleRatioExpr
+	HasFinal     bool
+}
+
+func (j *JoinTableExpr) Accept(visitor ASTVisitor) error {
+	visitor.enter(j)
+	defer visitor.leave(j)
+	if err := j.Table.Accept(visitor); err != nil {
+		return err
+	}
+	if j.SampleRatio != nil {
+		return j.SampleRatio.Accept(visitor)
+	}
+	return visitor.VisitJoinTableExpr(j)
+}
+
+func (j *JoinTableExpr) Pos() Pos {
+	return j.Table.Pos()
+}
+
+func (j *JoinTableExpr) End() Pos {
+	return j.StatementEnd
+}
+
+func (j *JoinTableExpr) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString(j.Table.String(level))
+	if j.SampleRatio != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(j.SampleRatio.String(level))
+	}
+	if j.HasFinal {
+		builder.WriteString(" FINAL")
+	}
+	return builder.String()
+}
+
 type AlterTableExpr interface {
 	Expr
 	AlterType() string
@@ -3760,7 +3800,6 @@ type JoinExpr struct {
 	Left        Expr
 	Right       Expr
 	Modifiers   []string
-	SampleRatio *SampleRatioExpr
 	Constraints Expr
 }
 
@@ -3772,20 +3811,36 @@ func (j *JoinExpr) End() Pos {
 	return j.Left.End()
 }
 
+func buildJoinString(builder *strings.Builder, expr Expr, level int) {
+	joinExpr, ok := expr.(*JoinExpr)
+	if !ok {
+		builder.WriteString(",")
+		builder.WriteString(expr.String(level))
+		return
+	}
+
+	if len(joinExpr.Modifiers) == 0 {
+		builder.WriteString(",")
+	} else {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(strings.Join(joinExpr.Modifiers, " "))
+		builder.WriteByte(' ')
+	}
+	builder.WriteString(joinExpr.Left.String(level))
+	if joinExpr.Constraints != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(joinExpr.Constraints.String(level))
+	}
+	if joinExpr.Right != nil {
+		buildJoinString(builder, joinExpr.Right, level)
+	}
+}
+
 func (j *JoinExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(j.Left.String(level))
-	if len(j.Modifiers) != 0 {
-		builder.WriteByte(' ')
-		builder.WriteString(strings.Join(j.Modifiers, " "))
-	} else {
-		builder.WriteString(",")
-	}
-	builder.WriteByte(' ')
-	builder.WriteString(j.Right.String(level))
-	if j.Constraints != nil {
-		builder.WriteByte(' ')
-		builder.WriteString(j.Constraints.String(level))
+	if j.Right != nil {
+		buildJoinString(&builder, j.Right, level)
 	}
 	return builder.String()
 }
@@ -3796,11 +3851,8 @@ func (j *JoinExpr) Accept(visitor ASTVisitor) error {
 	if err := j.Left.Accept(visitor); err != nil {
 		return err
 	}
-	if err := j.Right.Accept(visitor); err != nil {
-		return err
-	}
-	if j.SampleRatio != nil {
-		if err := j.SampleRatio.Accept(visitor); err != nil {
+	if j.Right != nil {
+		if err := j.Right.Accept(visitor); err != nil {
 			return err
 		}
 	}

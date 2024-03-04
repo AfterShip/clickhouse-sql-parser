@@ -35,18 +35,23 @@
             "From": {
               "FromPos": 28,
               "Expr": {
-                "TablePos": 33,
-                "TableEnd": 35,
-                "Alias": null,
-                "Expr": {
-                  "Database": null,
-                  "Table": {
-                    "Name": "t1",
-                    "QuoteType": 1,
-                    "NamePos": 33,
-                    "NameEnd": 35
-                  }
+                "Table": {
+                  "TablePos": 33,
+                  "TableEnd": 35,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "t1",
+                      "QuoteType": 1,
+                      "NamePos": 33,
+                      "NameEnd": 35
+                    }
+                  },
+                  "HasFinal": false
                 },
+                "StatementEnd": 35,
+                "SampleRatio": null,
                 "HasFinal": false
               }
             },
@@ -95,18 +100,23 @@
             "From": {
               "FromPos": 61,
               "Expr": {
-                "TablePos": 66,
-                "TableEnd": 68,
-                "Alias": null,
-                "Expr": {
-                  "Database": null,
-                  "Table": {
-                    "Name": "t2",
-                    "QuoteType": 1,
-                    "NamePos": 66,
-                    "NameEnd": 68
-                  }
+                "Table": {
+                  "TablePos": 66,
+                  "TableEnd": 68,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "t2",
+                      "QuoteType": 1,
+                      "NamePos": 66,
+                      "NameEnd": 68
+                    }
+                  },
+                  "HasFinal": false
                 },
+                "StatementEnd": 68,
+                "SampleRatio": null,
                 "HasFinal": false
               }
             },
@@ -186,58 +196,71 @@
       "Expr": {
         "JoinPos": 122,
         "Left": {
-          "TablePos": 122,
-          "TableEnd": 124,
-          "Alias": null,
-          "Expr": {
-            "Database": null,
-            "Table": {
-              "Name": "t3",
-              "QuoteType": 1,
-              "NamePos": 122,
-              "NameEnd": 124
-            }
+          "Table": {
+            "TablePos": 122,
+            "TableEnd": 124,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t3",
+                "QuoteType": 1,
+                "NamePos": 122,
+                "NameEnd": 124
+              }
+            },
+            "HasFinal": false
           },
+          "StatementEnd": 124,
+          "SampleRatio": null,
           "HasFinal": false
         },
         "Right": {
           "JoinPos": 125,
           "Left": {
-            "TablePos": 125,
-            "TableEnd": 129,
-            "Alias": null,
-            "Expr": {
-              "Database": null,
-              "Table": {
-                "Name": "cte1",
-                "QuoteType": 1,
-                "NamePos": 125,
-                "NameEnd": 129
-              }
+            "Table": {
+              "TablePos": 125,
+              "TableEnd": 129,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "cte1",
+                  "QuoteType": 1,
+                  "NamePos": 125,
+                  "NameEnd": 129
+                }
+              },
+              "HasFinal": false
             },
+            "StatementEnd": 129,
+            "SampleRatio": null,
             "HasFinal": false
           },
           "Right": {
-            "TablePos": 130,
-            "TableEnd": 134,
-            "Alias": null,
-            "Expr": {
-              "Database": null,
-              "Table": {
-                "Name": "cte2",
-                "QuoteType": 1,
-                "NamePos": 130,
-                "NameEnd": 134
-              }
+            "Table": {
+              "TablePos": 130,
+              "TableEnd": 134,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "cte2",
+                  "QuoteType": 1,
+                  "NamePos": 130,
+                  "NameEnd": 134
+                }
+              },
+              "HasFinal": false
             },
+            "StatementEnd": 134,
+            "SampleRatio": null,
             "HasFinal": false
           },
           "Modifiers": null,
-          "SampleRatio": null,
           "Constraints": null
         },
         "Modifiers": null,
-        "SampleRatio": null,
         "Constraints": null
       }
     },

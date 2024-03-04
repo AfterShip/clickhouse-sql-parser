@@ -47,23 +47,28 @@
     "From": {
       "FromPos": 25,
       "Expr": {
-        "TablePos": 30,
-        "TableEnd": 47,
-        "Alias": null,
-        "Expr": {
-          "Database": {
-            "Name": "test",
-            "QuoteType": 1,
-            "NamePos": 30,
-            "NameEnd": 34
+        "Table": {
+          "TablePos": 30,
+          "TableEnd": 47,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "test",
+              "QuoteType": 1,
+              "NamePos": 30,
+              "NameEnd": 34
+            },
+            "Table": {
+              "Name": "events_local",
+              "QuoteType": 1,
+              "NamePos": 35,
+              "NameEnd": 47
+            }
           },
-          "Table": {
-            "Name": "events_local",
-            "QuoteType": 1,
-            "NamePos": 35,
-            "NameEnd": 47
-          }
+          "HasFinal": false
         },
+        "StatementEnd": 47,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },
