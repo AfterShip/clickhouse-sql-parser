@@ -123,7 +123,7 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 	return nil, nil
 }
 
-func (p *Parser) parseJoinOp(_ Pos) ([]string, error) {
+func (p *Parser) parseJoinOp(_ Pos) []string {
 	var modifiers []string
 	switch {
 	case p.tryConsumeKeyword(KeywordCross) != nil: // cross join
@@ -182,7 +182,7 @@ func (p *Parser) parseJoinOp(_ Pos) ([]string, error) {
 			_ = p.lexer.consumeToken()
 		}
 	}
-	return modifiers, nil
+	return modifiers
 }
 
 func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
@@ -227,7 +227,7 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	case p.tryConsumeTokenKind(",") != nil:
 		return p.parseJoinExpr(p.Pos())
 	default:
-		modifiers, err = p.parseJoinOp(p.Pos())
+		modifiers = p.parseJoinOp(p.Pos())
 	}
 	if err != nil {
 		return nil, err
