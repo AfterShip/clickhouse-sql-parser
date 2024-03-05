@@ -35,10 +35,13 @@
           "NamePos": 64,
           "ColumnEnd": 73,
           "Name": {
-            "Name": "id",
-            "QuoteType": 1,
-            "NamePos": 64,
-            "NameEnd": 66
+            "Ident": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 64,
+              "NameEnd": 66
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {

@@ -2623,7 +2623,7 @@ func (w *WindowFunctionExpr) Accept(visitor ASTVisitor) error {
 type Column struct {
 	NamePos   Pos
 	ColumnEnd Pos
-	Name      *Ident
+	Name      *NestedIdentifier
 	Type      Expr
 	NotNull   *NotNullLiteral
 	Nullable  *NullLiteral
@@ -2638,7 +2638,7 @@ type Column struct {
 }
 
 func (c *Column) Pos() Pos {
-	return c.Name.NamePos
+	return c.Name.Pos()
 }
 
 func (c *Column) End() Pos {

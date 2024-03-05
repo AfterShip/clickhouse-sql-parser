@@ -34,10 +34,13 @@
           "NamePos": 80,
           "ColumnEnd": 89,
           "Name": {
-            "Name": "f0",
-            "QuoteType": 1,
-            "NamePos": 80,
-            "NameEnd": 82
+            "Ident": {
+              "Name": "f0",
+              "QuoteType": 1,
+              "NamePos": 80,
+              "NameEnd": 82
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -59,10 +62,13 @@
           "NamePos": 95,
           "ColumnEnd": 104,
           "Name": {
-            "Name": "f1",
-            "QuoteType": 1,
-            "NamePos": 95,
-            "NameEnd": 97
+            "Ident": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 95,
+              "NameEnd": 97
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -84,10 +90,13 @@
           "NamePos": 110,
           "ColumnEnd": 119,
           "Name": {
-            "Name": "f2",
-            "QuoteType": 1,
-            "NamePos": 110,
-            "NameEnd": 112
+            "Ident": {
+              "Name": "f2",
+              "QuoteType": 1,
+              "NamePos": 110,
+              "NameEnd": 112
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -109,10 +118,13 @@
           "NamePos": 125,
           "ColumnEnd": 136,
           "Name": {
-            "Name": "f3",
-            "QuoteType": 1,
-            "NamePos": 125,
-            "NameEnd": 127
+            "Ident": {
+              "Name": "f3",
+              "QuoteType": 1,
+              "NamePos": 125,
+              "NameEnd": 127
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -134,10 +146,13 @@
           "NamePos": 142,
           "ColumnEnd": 153,
           "Name": {
-            "Name": "f4",
-            "QuoteType": 1,
-            "NamePos": 142,
-            "NameEnd": 144
+            "Ident": {
+              "Name": "f4",
+              "QuoteType": 1,
+              "NamePos": 142,
+              "NameEnd": 144
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -159,10 +174,13 @@
           "NamePos": 159,
           "ColumnEnd": 179,
           "Name": {
-            "Name": "f5",
-            "QuoteType": 1,
-            "NamePos": 159,
-            "NameEnd": 161
+            "Ident": {
+              "Name": "f5",
+              "QuoteType": 1,
+              "NamePos": 159,
+              "NameEnd": 161
+            },
+            "DotIdent": null
           },
           "Type": {
             "LeftParenPos": 166,
@@ -204,10 +222,13 @@
           "NamePos": 186,
           "ColumnEnd": 195,
           "Name": {
-            "Name": "f6",
-            "QuoteType": 1,
-            "NamePos": 186,
-            "NameEnd": 188
+            "Ident": {
+              "Name": "f6",
+              "QuoteType": 1,
+              "NamePos": 186,
+              "NameEnd": 188
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -229,10 +250,13 @@
           "NamePos": 201,
           "ColumnEnd": 225,
           "Name": {
-            "Name": "f7",
-            "QuoteType": 1,
-            "NamePos": 201,
-            "NameEnd": 203
+            "Ident": {
+              "Name": "f7",
+              "QuoteType": 1,
+              "NamePos": 201,
+              "NameEnd": 203
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {

@@ -22,10 +22,13 @@
           "NamePos": 34,
           "ColumnEnd": 45,
           "Name": {
-            "Name": "col1",
-            "QuoteType": 1,
-            "NamePos": 34,
-            "NameEnd": 38
+            "Ident": {
+              "Name": "col1",
+              "QuoteType": 1,
+              "NamePos": 34,
+              "NameEnd": 38
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -47,10 +50,13 @@
           "NamePos": 47,
           "ColumnEnd": 58,
           "Name": {
-            "Name": "col2",
-            "QuoteType": 1,
-            "NamePos": 47,
-            "NameEnd": 51
+            "Ident": {
+              "Name": "col2",
+              "QuoteType": 1,
+              "NamePos": 47,
+              "NameEnd": 51
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {

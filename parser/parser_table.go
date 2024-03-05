@@ -407,7 +407,7 @@ func (p *Parser) parseTableColumn(pos Pos) (*Column, error) {
 	// Not a column definition, just return
 	column := &Column{NamePos: pos}
 	// parse column name
-	name, err := p.parseIdent()
+	name, err := p.ParseNestedIdentifier(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -434,13 +434,7 @@ func (p *Parser) parseTableColumn(pos Pos) (*Column, error) {
 	if notNull != nil {
 		columnEnd = notNull.End()
 	}
-	comment, err := p.tryParseColumnComment(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if comment != nil {
-		columnEnd = comment.End()
-	}
+
 	property, err := p.tryParseTableColumnPropertyExpr(p.Pos())
 	if err != nil {
 		return nil, err
@@ -448,6 +442,15 @@ func (p *Parser) parseTableColumn(pos Pos) (*Column, error) {
 	if property != nil {
 		columnEnd = property.End()
 	}
+
+	comment, err := p.tryParseColumnComment(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if comment != nil {
+		columnEnd = comment.End()
+	}
+
 	codec, err := p.tryParseCompressionCodecs(p.Pos())
 	if err != nil {
 		return nil, err
