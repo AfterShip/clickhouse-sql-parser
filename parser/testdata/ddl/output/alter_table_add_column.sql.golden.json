@@ -32,10 +32,13 @@
           "NamePos": 70,
           "ColumnEnd": 79,
           "Name": {
-            "Name": "f1",
-            "QuoteType": 1,
-            "NamePos": 70,
-            "NameEnd": 72
+            "Ident": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 70,
+              "NameEnd": 72
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {

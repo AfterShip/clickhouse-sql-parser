@@ -1,0 +1,149 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 106,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 17,
+        "NameEnd": 29
+      }
+    },
+    "OnCluster": {
+      "OnPos": 30,
+      "Expr": {
+        "LiteralPos": 42,
+        "LiteralEnd": 57,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "AddPos": 59,
+        "StatementEnd": 106,
+        "Column": {
+          "NamePos": 70,
+          "ColumnEnd": 106,
+          "Name": {
+            "Ident": {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 70,
+              "NameEnd": 71
+            },
+            "DotIdent": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 72,
+              "NameEnd": 74
+            }
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 75,
+              "NameEnd": 81
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": {
+            "DefaultPos": 82,
+            "Expr": {
+              "LiteralPos": 91,
+              "LiteralEnd": 91,
+              "Literal": ""
+            }
+          },
+          "Codec": null,
+          "TTL": null,
+          "Comment": {
+            "LiteralPos": 93,
+            "LiteralEnd": 106,
+            "Literal": "test"
+          },
+          "CompressionCodec": null
+        },
+        "IfNotExists": false,
+        "After": null
+      }
+    ]
+  },
+  {
+    "AlterPos": 110,
+    "StatementEnd": 202,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 122,
+        "NameEnd": 126
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 127,
+        "NameEnd": 139
+      }
+    },
+    "OnCluster": {
+      "OnPos": 140,
+      "Expr": {
+        "LiteralPos": 152,
+        "LiteralEnd": 167,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "AddPos": 169,
+        "StatementEnd": 202,
+        "Column": {
+          "NamePos": 180,
+          "ColumnEnd": 202,
+          "Name": {
+            "Ident": {
+              "Name": "hello",
+              "QuoteType": 1,
+              "NamePos": 180,
+              "NameEnd": 185
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 186,
+              "NameEnd": 192
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": {
+            "DefaultPos": 193,
+            "Expr": {
+              "LiteralPos": 202,
+              "LiteralEnd": 202,
+              "Literal": ""
+            }
+          },
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        "IfNotExists": false,
+        "After": null
+      }
+    ]
+  }
+]

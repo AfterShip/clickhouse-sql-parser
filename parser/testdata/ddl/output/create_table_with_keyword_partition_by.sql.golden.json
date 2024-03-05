@@ -33,10 +33,13 @@
           "NamePos": 82,
           "ColumnEnd": 92,
           "Name": {
-            "Name": "date",
-            "QuoteType": 3,
-            "NamePos": 82,
-            "NameEnd": 86
+            "Ident": {
+              "Name": "date",
+              "QuoteType": 3,
+              "NamePos": 82,
+              "NameEnd": 86
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -58,10 +61,13 @@
           "NamePos": 99,
           "ColumnEnd": 109,
           "Name": {
-            "Name": "f1",
-            "QuoteType": 3,
-            "NamePos": 99,
-            "NameEnd": 101
+            "Ident": {
+              "Name": "f1",
+              "QuoteType": 3,
+              "NamePos": 99,
+              "NameEnd": 101
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -83,10 +89,13 @@
           "NamePos": 116,
           "ColumnEnd": 126,
           "Name": {
-            "Name": "f2",
-            "QuoteType": 3,
-            "NamePos": 116,
-            "NameEnd": 118
+            "Ident": {
+              "Name": "f2",
+              "QuoteType": 3,
+              "NamePos": 116,
+              "NameEnd": 118
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
@@ -108,10 +117,13 @@
           "NamePos": 133,
           "ColumnEnd": 143,
           "Name": {
-            "Name": "f3",
-            "QuoteType": 3,
-            "NamePos": 133,
-            "NameEnd": 135
+            "Ident": {
+              "Name": "f3",
+              "QuoteType": 3,
+              "NamePos": 133,
+              "NameEnd": 135
+            },
+            "DotIdent": null
           },
           "Type": {
             "Name": {
