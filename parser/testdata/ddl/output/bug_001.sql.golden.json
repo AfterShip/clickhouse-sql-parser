@@ -433,23 +433,28 @@
         "From": {
           "FromPos": 592,
           "Expr": {
-            "TablePos": 597,
-            "TableEnd": 605,
-            "Alias": null,
-            "Expr": {
-              "Database": {
-                "Name": "db",
-                "QuoteType": 1,
-                "NamePos": 597,
-                "NameEnd": 599
+            "Table": {
+              "TablePos": 597,
+              "TableEnd": 605,
+              "Alias": null,
+              "Expr": {
+                "Database": {
+                  "Name": "db",
+                  "QuoteType": 1,
+                  "NamePos": 597,
+                  "NameEnd": 599
+                },
+                "Table": {
+                  "Name": "table",
+                  "QuoteType": 1,
+                  "NamePos": 600,
+                  "NameEnd": 605
+                }
               },
-              "Table": {
-                "Name": "table",
-                "QuoteType": 1,
-                "NamePos": 600,
-                "NameEnd": 605
-              }
+              "HasFinal": false
             },
+            "StatementEnd": 605,
+            "SampleRatio": null,
             "HasFinal": false
           }
         },

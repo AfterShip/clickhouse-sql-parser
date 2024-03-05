@@ -400,23 +400,28 @@
         "From": {
           "FromPos": 457,
           "Expr": {
-            "TablePos": 466,
-            "TableEnd": 486,
-            "Alias": null,
-            "Expr": {
-              "Database": {
-                "Name": "infra_bm",
-                "QuoteType": 1,
-                "NamePos": 466,
-                "NameEnd": 474
+            "Table": {
+              "TablePos": 466,
+              "TableEnd": 486,
+              "Alias": null,
+              "Expr": {
+                "Database": {
+                  "Name": "infra_bm",
+                  "QuoteType": 1,
+                  "NamePos": 466,
+                  "NameEnd": 474
+                },
+                "Table": {
+                  "Name": "table_name1",
+                  "QuoteType": 1,
+                  "NamePos": 475,
+                  "NameEnd": 486
+                }
               },
-              "Table": {
-                "Name": "table_name1",
-                "QuoteType": 1,
-                "NamePos": 475,
-                "NameEnd": 486
-              }
+              "HasFinal": false
             },
+            "StatementEnd": 486,
+            "SampleRatio": null,
             "HasFinal": false
           }
         },

@@ -62,18 +62,23 @@
         "From": {
           "FromPos": 176,
           "Expr": {
-            "TablePos": 185,
-            "TableEnd": 199,
-            "Alias": null,
-            "Expr": {
-              "Database": null,
-              "Table": {
-                "Name": "my_other_table",
-                "QuoteType": 1,
-                "NamePos": 185,
-                "NameEnd": 199
-              }
+            "Table": {
+              "TablePos": 185,
+              "TableEnd": 199,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "my_other_table",
+                  "QuoteType": 1,
+                  "NamePos": 185,
+                  "NameEnd": 199
+                }
+              },
+              "HasFinal": false
             },
+            "StatementEnd": 199,
+            "SampleRatio": null,
             "HasFinal": false
           }
         },

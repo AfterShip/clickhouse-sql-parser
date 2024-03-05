@@ -23,4 +23,5 @@ WITH
 SELECT 
   *
 FROM
-  t1 LEFT JOIN t2 ON true;
+  t1
+  LEFT JOIN t2 ON true;

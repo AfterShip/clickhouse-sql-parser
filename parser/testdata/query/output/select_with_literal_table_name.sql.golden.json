@@ -20,23 +20,28 @@
     "From": {
       "FromPos": 18,
       "Expr": {
-        "TablePos": 24,
-        "TableEnd": 51,
-        "Alias": null,
-        "Expr": {
-          "Database": {
-            "Name": "information_schema",
-            "QuoteType": 2,
-            "NamePos": 24,
-            "NameEnd": 42
+        "Table": {
+          "TablePos": 24,
+          "TableEnd": 51,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "information_schema",
+              "QuoteType": 2,
+              "NamePos": 24,
+              "NameEnd": 42
+            },
+            "Table": {
+              "Name": "tables",
+              "QuoteType": 2,
+              "NamePos": 45,
+              "NameEnd": 51
+            }
           },
-          "Table": {
-            "Name": "tables",
-            "QuoteType": 2,
-            "NamePos": 45,
-            "NameEnd": 51
-          }
+          "HasFinal": false
         },
+        "StatementEnd": 51,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },

@@ -79,18 +79,23 @@
             "From": {
               "FromPos": 48,
               "Expr": {
-                "TablePos": 53,
-                "TableEnd": 58,
-                "Alias": null,
-                "Expr": {
-                  "Database": null,
-                  "Table": {
-                    "Name": "sales",
-                    "QuoteType": 1,
-                    "NamePos": 53,
-                    "NameEnd": 58
-                  }
+                "Table": {
+                  "TablePos": 53,
+                  "TableEnd": 58,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "sales",
+                      "QuoteType": 1,
+                      "NamePos": 53,
+                      "NameEnd": 58
+                    }
+                  },
+                  "HasFinal": false
                 },
+                "StatementEnd": 58,
+                "SampleRatio": null,
                 "HasFinal": false
               }
             },
@@ -168,18 +173,23 @@
     "From": {
       "FromPos": 120,
       "Expr": {
-        "TablePos": 129,
-        "TableEnd": 133,
-        "Alias": null,
-        "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "test",
-            "QuoteType": 1,
-            "NamePos": 129,
-            "NameEnd": 133
-          }
+        "Table": {
+          "TablePos": 129,
+          "TableEnd": 133,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "test",
+              "QuoteType": 1,
+              "NamePos": 129,
+              "NameEnd": 133
+            }
+          },
+          "HasFinal": false
         },
+        "StatementEnd": 133,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },

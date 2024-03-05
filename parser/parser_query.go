@@ -123,17 +123,11 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 	return nil, nil
 }
 
-func (p *Parser) parseJoinOp(_ Pos) (Expr, []string, error) {
+func (p *Parser) parseJoinOp(_ Pos) []string {
 	var modifiers []string
 	switch {
 	case p.tryConsumeKeyword(KeywordCross) != nil: // cross join
 		modifiers = append(modifiers, KeywordCross)
-	case p.tryConsumeTokenKind(",") != nil:
-		expr, err := p.parseJoinExpr(p.Pos())
-		if err != nil {
-			return nil, nil, err
-		}
-		return expr, nil, nil
 	case p.matchKeyword(KeywordAny), p.matchKeyword(KeywordAll):
 		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
@@ -188,49 +182,76 @@ func (p *Parser) parseJoinOp(_ Pos) (Expr, []string, error) {
 			_ = p.lexer.consumeToken()
 		}
 	}
-
-	if p.tryConsumeKeyword(KeywordJoin) != nil {
-		modifiers = append(modifiers, KeywordJoin)
-		expr, err := p.parseJoinExpr(p.Pos())
-		if err != nil {
-			return nil, nil, err
-		}
-		return expr, modifiers, nil
-	}
-	return nil, modifiers, nil
+	return modifiers
 }
 
-func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
-	var sampleRatio *SampleRatioExpr
+func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	switch {
-	case p.matchTokenKind(TokenString), p.matchTokenKind(TokenIdent), p.matchTokenKind("("):
-		expr, err = p.parseTableExpr(p.Pos())
+	case p.matchTokenKind(TokenIdent), p.matchTokenKind("("):
+		tableExpr, err := p.parseTableExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		_ = p.tryConsumeKeyword(KeywordFinal)
+		statementEnd := tableExpr.End()
 
-		sampleRatio, err = p.tryParseSampleRationExpr(p.Pos())
+		hasFinal := p.matchKeyword(KeywordFinal)
+		if hasFinal {
+			statementEnd = p.last().End
+			_ = p.lexer.consumeToken()
+		}
+
+		sampleRatio, err := p.tryParseSampleRatioExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
+		if sampleRatio != nil {
+			statementEnd = sampleRatio.End()
+		}
+		return &JoinTableExpr{
+			Table:        tableExpr,
+			SampleRatio:  sampleRatio,
+			HasFinal:     hasFinal,
+			StatementEnd: statementEnd,
+		}, nil
 	default:
 		return nil, fmt.Errorf("expected table name or subquery, got %s", p.last().Kind)
 	}
+}
 
-	// TODO: store global/local in AST
-	if p.matchKeyword(KeywordGlobal) || p.matchKeyword(KeywordLocal) {
-		_ = p.lexer.consumeToken()
+func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
+	var rightExpr Expr
+	var modifiers []string
+	switch {
+	case p.tryConsumeKeyword(KeywordGlobal) != nil:
+	case p.tryConsumeKeyword(KeywordLocal) != nil:
+	case p.tryConsumeTokenKind(",") != nil:
+		return p.parseJoinExpr(p.Pos())
+	default:
+		modifiers = p.parseJoinOp(p.Pos())
 	}
-	rightExpr, modifiers, err := p.parseJoinOp(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	// rightExpr is nil means no join op
-	if rightExpr == nil {
-		return
+
+	if len(modifiers) != 0 && !p.matchKeyword(KeywordJoin) {
+		return nil, fmt.Errorf("expected JOIN, got %s", p.lastTokenKind())
+	}
+	if p.tryConsumeKeyword(KeywordJoin) == nil {
+		return nil, nil
+	}
+
+	modifiers = append(modifiers, KeywordJoin)
+	expr, err = p.parseJoinTableExpr(p.Pos())
+	if err != nil {
+		return nil, err
 	}
 	constrains, err := p.tryParseJoinConstraints(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	// try parse next join
+	rightExpr, err = p.parseJoinRightExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -239,8 +260,25 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 		Left:        expr,
 		Right:       rightExpr,
 		Modifiers:   modifiers,
-		SampleRatio: sampleRatio,
 		Constraints: constrains,
+	}, nil
+}
+
+func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
+	if expr, err = p.parseJoinTableExpr(p.Pos()); err != nil {
+		return nil, err
+	}
+	rightExpr, err := p.parseJoinRightExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if rightExpr == nil {
+		return expr, nil
+	}
+	return &JoinExpr{
+		JoinPos: pos,
+		Left:    expr,
+		Right:   rightExpr,
 	}, nil
 }
 
@@ -295,7 +333,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	if asToken := p.tryConsumeKeyword(KeywordFinal); asToken != nil {
 		switch expr.(type) {
 		case *TableFunctionExpr:
-			return nil, errors.New("tablefunction doesn't support FINAL")
+			return nil, errors.New("table function doesn't support FINAL")
 		case *SelectQuery:
 			return nil, errors.New("subquery doesn't support FINAL")
 		}
@@ -941,7 +979,7 @@ func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
 	return aliasList, nil
 }
 
-func (p *Parser) tryParseSampleRationExpr(pos Pos) (*SampleRatioExpr, error) {
+func (p *Parser) tryParseSampleRatioExpr(pos Pos) (*SampleRatioExpr, error) {
 	if !p.matchKeyword(KeywordSample) {
 		return nil, nil
 	}

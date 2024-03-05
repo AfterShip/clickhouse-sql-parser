@@ -131,56 +131,71 @@
       "Expr": {
         "JoinPos": 119,
         "Left": {
-          "TablePos": 119,
-          "TableEnd": 121,
-          "Alias": null,
-          "Expr": {
-            "Database": null,
-            "Table": {
-              "Name": "t1",
-              "QuoteType": 1,
-              "NamePos": 119,
-              "NameEnd": 121
-            }
+          "Table": {
+            "TablePos": 119,
+            "TableEnd": 121,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 119,
+                "NameEnd": 121
+              }
+            },
+            "HasFinal": false
           },
+          "StatementEnd": 121,
+          "SampleRatio": null,
           "HasFinal": false
         },
         "Right": {
-          "TablePos": 141,
-          "TableEnd": 143,
-          "Alias": null,
-          "Expr": {
-            "Database": null,
+          "JoinPos": 131,
+          "Left": {
             "Table": {
-              "Name": "t2",
-              "QuoteType": 1,
-              "NamePos": 141,
-              "NameEnd": 143
-            }
+              "TablePos": 141,
+              "TableEnd": 143,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 141,
+                  "NameEnd": 143
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 143,
+            "SampleRatio": null,
+            "HasFinal": false
           },
-          "HasFinal": false
-        },
-        "Modifiers": [
-          "LEFT",
-          "JOIN"
-        ],
-        "SampleRatio": null,
-        "Constraints": {
-          "OnPos": 144,
-          "On": {
-            "ListPos": 147,
-            "ListEnd": 151,
-            "HasDistinct": false,
-            "Items": [
-              {
-                "Name": "true",
-                "QuoteType": 1,
-                "NamePos": 147,
-                "NameEnd": 151
-              }
-            ]
+          "Right": null,
+          "Modifiers": [
+            "LEFT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 144,
+            "On": {
+              "ListPos": 147,
+              "ListEnd": 151,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Name": "true",
+                  "QuoteType": 1,
+                  "NamePos": 147,
+                  "NameEnd": 151
+                }
+              ]
+            }
           }
-        }
+        },
+        "Modifiers": null,
+        "Constraints": null
       }
     },
     "ArrayJoin": null,

@@ -46,18 +46,23 @@
     "From": {
       "FromPos": 19,
       "Expr": {
-        "TablePos": 24,
-        "TableEnd": 36,
-        "Alias": null,
-        "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "group_by_all",
-            "QuoteType": 1,
-            "NamePos": 24,
-            "NameEnd": 36
-          }
+        "Table": {
+          "TablePos": 24,
+          "TableEnd": 36,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "group_by_all",
+              "QuoteType": 1,
+              "NamePos": 24,
+              "NameEnd": 36
+            }
+          },
+          "HasFinal": false
         },
+        "StatementEnd": 36,
+        "SampleRatio": null,
         "HasFinal": false
       }
     },
