@@ -11,6 +11,10 @@ type ASTVisitor interface {
 	VisitAlterTableFreezePartition(expr *AlterTableFreezePartition) error
 	VisitAlterTableAddColumn(expr *AlterTableAddColumn) error
 	VisitAlterTableAddIndex(expr *AlterTableAddIndex) error
+	VisitAlterTableAddProjection(expr *AlterTableAddProjection) error
+	VisitTableProjection(expr *TableProjection) error
+	VisitProjectionOrderBy(expr *ProjectionOrderBy) error
+	VisitProjectionSelect(expr *ProjectionSelect) error
 	VisitAlterTableDropColumn(expr *AlterTableDropColumn) error
 	VisitAlterTableDropIndex(expr *AlterTableDropIndex) error
 	VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) error
@@ -226,6 +230,34 @@ func (v *DefaultASTVisitor) VisitAlterTableAddColumn(expr *AlterTableAddColumn) 
 }
 
 func (v *DefaultASTVisitor) VisitAlterTableAddIndex(expr *AlterTableAddIndex) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableAddProjection(expr *AlterTableAddProjection) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitProjectionOrderBy(expr *ProjectionOrderBy) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitProjectionSelect(expr *ProjectionSelect) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTableProjection(expr *TableProjection) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
