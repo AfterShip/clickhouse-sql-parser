@@ -493,6 +493,179 @@ func (a *AlterTableAddIndex) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableAddIndex(a)
 }
 
+type ProjectionOrderBy struct {
+	OrderByPos Pos
+	Columns    *ColumnExprList
+}
+
+func (p *ProjectionOrderBy) Pos() Pos {
+	return p.OrderByPos
+}
+
+func (p *ProjectionOrderBy) End() Pos {
+	return p.Columns.End()
+}
+
+func (p *ProjectionOrderBy) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("ORDER BY ")
+	builder.WriteString(p.Columns.String(level))
+	return builder.String()
+}
+
+func (p *ProjectionOrderBy) Accept(visitor ASTVisitor) error {
+	visitor.enter(p)
+	defer visitor.leave(p)
+	return visitor.VisitProjectionOrderBy(p)
+}
+
+type ProjectionSelect struct {
+	LeftParenPos  Pos
+	RightParenPos Pos
+	With          *WithExpr
+	SelectColumns *ColumnExprList
+	GroupBy       *GroupByExpr
+	OrderBy       *ProjectionOrderBy
+}
+
+func (p *ProjectionSelect) Pos() Pos {
+	return p.LeftParenPos
+
+}
+
+func (p *ProjectionSelect) End() Pos {
+	return p.RightParenPos
+}
+
+func (p *ProjectionSelect) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("(")
+	if p.With != nil {
+		builder.WriteString(p.With.String(level))
+		builder.WriteByte(' ')
+	}
+	builder.WriteString("SELECT ")
+	builder.WriteString(p.SelectColumns.String(level))
+	if p.GroupBy != nil {
+		builder.WriteString(" ")
+		builder.WriteString(p.GroupBy.String(level))
+	}
+	if p.OrderBy != nil {
+		builder.WriteString(" ")
+		builder.WriteString(p.OrderBy.String(level))
+	}
+	builder.WriteString(")")
+	return builder.String()
+}
+
+func (p *ProjectionSelect) Accept(visitor ASTVisitor) error {
+	visitor.enter(p)
+	defer visitor.leave(p)
+	if p.With != nil {
+		if err := p.With.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if err := p.SelectColumns.Accept(visitor); err != nil {
+		return err
+	}
+	if p.GroupBy != nil {
+		if err := p.GroupBy.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if p.OrderBy != nil {
+		if err := p.OrderBy.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitProjectionSelect(p)
+}
+
+type TableProjection struct {
+	ProjectionPos Pos
+	StatementEnd  Pos
+	Identifier    *NestedIdentifier
+	Select        *ProjectionSelect
+}
+
+func (t *TableProjection) Pos() Pos {
+	return t.ProjectionPos
+}
+
+func (t *TableProjection) End() Pos {
+	return t.StatementEnd
+}
+
+func (t *TableProjection) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString(t.Identifier.String(level))
+	builder.WriteString(" ")
+	builder.WriteString(t.Select.String(level))
+	return builder.String()
+}
+
+func (t *TableProjection) Accept(visitor ASTVisitor) error {
+	visitor.enter(t)
+	defer visitor.leave(t)
+	if err := t.Identifier.Accept(visitor); err != nil {
+		return err
+	}
+	if err := t.Select.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitTableProjection(t)
+}
+
+type AlterTableAddProjection struct {
+	AddPos       Pos
+	StatementEnd Pos
+
+	IfNotExists     bool
+	TableProjection *TableProjection
+	After           *NestedIdentifier
+}
+
+func (a *AlterTableAddProjection) Pos() Pos {
+	return a.AddPos
+}
+
+func (a *AlterTableAddProjection) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableAddProjection) AlterType() string {
+	return "ADD_PROJECTION"
+}
+
+func (a *AlterTableAddProjection) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("ADD PROJECTION ")
+	if a.IfNotExists {
+		builder.WriteString("IF NOT EXISTS ")
+	}
+	builder.WriteString(a.TableProjection.String(level))
+	if a.After != nil {
+		builder.WriteString(" AFTER ")
+		builder.WriteString(a.After.String(level))
+	}
+	return builder.String()
+}
+
+func (a *AlterTableAddProjection) Accept(visitor ASTVisitor) error {
+	visitor.enter(a)
+	defer visitor.leave(a)
+	if err := a.TableProjection.Accept(visitor); err != nil {
+		return err
+	}
+	if a.After != nil {
+		if err := a.After.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableAddProjection(a)
+}
+
 type AlterTableDropColumn struct {
 	DropPos    Pos
 	ColumnName *NestedIdentifier

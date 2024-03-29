@@ -1,0 +1,72 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 0,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "visits_order",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 24
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AddPos": 25,
+        "StatementEnd": 0,
+        "IfNotExists": false,
+        "TableProjection": {
+          "ProjectionPos": 40,
+          "StatementEnd": 0,
+          "Identifier": {
+            "Ident": {
+              "Name": "user_name_projection",
+              "QuoteType": 1,
+              "NamePos": 40,
+              "NameEnd": 60
+            },
+            "DotIdent": null
+          },
+          "Select": {
+            "LeftParenPos": 61,
+            "RightParenPos": 89,
+            "With": null,
+            "SelectColumns": {
+              "ListPos": 69,
+              "ListEnd": 69,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Name": "*",
+                  "QuoteType": 0,
+                  "NamePos": 69,
+                  "NameEnd": 69
+                }
+              ]
+            },
+            "GroupBy": null,
+            "OrderBy": {
+              "OrderByPos": 71,
+              "Columns": {
+                "ListPos": 80,
+                "ListEnd": 89,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Name": "user_name",
+                    "QuoteType": 1,
+                    "NamePos": 80,
+                    "NameEnd": 89
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "After": null
+      }
+    ]
+  }
+]

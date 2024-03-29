@@ -79,8 +79,10 @@ func (p *Parser) parseAlterTableAdd(pos Pos) (AlterTableExpr, error) {
 		return p.parseAlterTableAddColumn(pos)
 	case p.matchKeyword(KeywordIndex):
 		return p.parseAlterTableAddIndex(pos)
+	case p.matchKeyword(KeywordProjection):
+		return p.parseAlterTableAddProjection(pos)
 	default:
-		return nil, errors.New("expected token: COLUMN|INDEX")
+		return nil, errors.New("expected token: COLUMN|INDEX|PROJECTION")
 	}
 }
 
@@ -145,6 +147,106 @@ func (p *Parser) parseAlterTableAddIndex(pos Pos) (*AlterTableAddIndex, error) {
 		IfNotExists:  ifNotExists,
 		Index:        index,
 		After:        after,
+	}, nil
+}
+
+func (p *Parser) parseProjectionOrderBy(pos Pos) (*ProjectionOrderBy, error) {
+	if err := p.consumeKeyword(KeywordOrder); err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordBy); err != nil {
+		return nil, err
+	}
+	columns, err := p.parseColumnExprList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &ProjectionOrderBy{
+		OrderByPos: pos,
+		Columns:    columns,
+	}, nil
+}
+
+func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelect, error) {
+	if _, err := p.consumeTokenKind("("); err != nil {
+		return nil, err
+	}
+	withExpr, err := p.tryParseWithExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if err := p.consumeKeyword(KeywordSelect); err != nil {
+		return nil, err
+	}
+	columns, err := p.parseColumnExprList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	groupBy, err := p.tryParseGroupByExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	orderBy, err := p.parseProjectionOrderBy(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	rightParen, err := p.consumeTokenKind(")")
+	if err != nil {
+		return nil, err
+	}
+	return &ProjectionSelect{
+		LeftParenPos:  pos,
+		RightParenPos: rightParen.Pos,
+		With:          withExpr,
+		SelectColumns: columns,
+		GroupBy:       groupBy,
+		OrderBy:       orderBy,
+	}, nil
+}
+
+func (p *Parser) parseTableProjection(pos Pos) (*TableProjection, error) {
+	identifier, err := p.ParseNestedIdentifier(pos)
+	if err != nil {
+		return nil, err
+	}
+	selectExpr, err := p.parseProjectionSelect(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &TableProjection{
+		ProjectionPos: pos,
+		Identifier:    identifier,
+		Select:        selectExpr,
+	}, nil
+}
+
+func (p *Parser) parseAlterTableAddProjection(pos Pos) (*AlterTableAddProjection, error) {
+	if err := p.consumeKeyword(KeywordProjection); err != nil {
+		return nil, err
+	}
+
+	ifNotExists, err := p.tryParseIfNotExists()
+	if err != nil {
+		return nil, err
+	}
+	tableProjection, err := p.parseTableProjection(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	statementEnd := tableProjection.End()
+	after, err := p.tryParseAfterClause()
+	if err != nil {
+		return nil, err
+	}
+	if after != nil {
+		statementEnd = after.End()
+	}
+	return &AlterTableAddProjection{
+		AddPos:          pos,
+		StatementEnd:    statementEnd,
+		IfNotExists:     ifNotExists,
+		TableProjection: tableProjection,
+		After:           after,
 	}, nil
 }
 
