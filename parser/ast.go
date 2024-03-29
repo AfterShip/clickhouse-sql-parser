@@ -584,7 +584,6 @@ func (p *ProjectionSelect) Accept(visitor ASTVisitor) error {
 
 type TableProjection struct {
 	ProjectionPos Pos
-	StatementEnd  Pos
 	Identifier    *NestedIdentifier
 	Select        *ProjectionSelect
 }
@@ -594,7 +593,7 @@ func (t *TableProjection) Pos() Pos {
 }
 
 func (t *TableProjection) End() Pos {
-	return t.StatementEnd
+	return t.Select.End()
 }
 
 func (t *TableProjection) String(level int) string {

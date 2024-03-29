@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 0,
+    "StatementEnd": 140,
     "TableIdentifier": {
       "Database": null,
       "Table": {
@@ -15,57 +15,88 @@
     "AlterExprs": [
       {
         "AddPos": 25,
-        "StatementEnd": 0,
-        "IfNotExists": false,
+        "StatementEnd": 140,
+        "IfNotExists": true,
         "TableProjection": {
-          "ProjectionPos": 40,
-          "StatementEnd": 0,
+          "ProjectionPos": 55,
           "Identifier": {
             "Ident": {
               "Name": "user_name_projection",
               "QuoteType": 1,
-              "NamePos": 40,
-              "NameEnd": 60
+              "NamePos": 55,
+              "NameEnd": 75
             },
             "DotIdent": null
           },
           "Select": {
-            "LeftParenPos": 61,
-            "RightParenPos": 89,
+            "LeftParenPos": 76,
+            "RightParenPos": 123,
             "With": null,
             "SelectColumns": {
-              "ListPos": 69,
-              "ListEnd": 69,
+              "ListPos": 84,
+              "ListEnd": 84,
               "HasDistinct": false,
               "Items": [
                 {
                   "Name": "*",
                   "QuoteType": 0,
-                  "NamePos": 69,
-                  "NameEnd": 69
+                  "NamePos": 84,
+                  "NameEnd": 84
                 }
               ]
             },
-            "GroupBy": null,
-            "OrderBy": {
-              "OrderByPos": 71,
-              "Columns": {
-                "ListPos": 80,
-                "ListEnd": 89,
+            "GroupBy": {
+              "GroupByPos": 86,
+              "AggregateType": "",
+              "Expr": {
+                "ListPos": 95,
+                "ListEnd": 104,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Name": "user_name",
                     "QuoteType": 1,
-                    "NamePos": 80,
-                    "NameEnd": 89
+                    "NamePos": 95,
+                    "NameEnd": 104
+                  }
+                ]
+              },
+              "WithCube": false,
+              "WithRollup": false,
+              "WithTotals": false
+            },
+            "OrderBy": {
+              "OrderByPos": 105,
+              "Columns": {
+                "ListPos": 114,
+                "ListEnd": 123,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Name": "user_name",
+                    "QuoteType": 1,
+                    "NamePos": 114,
+                    "NameEnd": 123
                   }
                 ]
               }
             }
           }
         },
-        "After": null
+        "After": {
+          "Ident": {
+            "Name": "a",
+            "QuoteType": 1,
+            "NamePos": 131,
+            "NameEnd": 132
+          },
+          "DotIdent": {
+            "Name": "user_id",
+            "QuoteType": 1,
+            "NamePos": 133,
+            "NameEnd": 140
+          }
+        }
       }
     ]
   }
