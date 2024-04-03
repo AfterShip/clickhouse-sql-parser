@@ -17,6 +17,7 @@ type ASTVisitor interface {
 	VisitProjectionSelect(expr *ProjectionSelect) error
 	VisitAlterTableDropColumn(expr *AlterTableDropColumn) error
 	VisitAlterTableDropIndex(expr *AlterTableDropIndex) error
+	VisitAlterTableDropProjection(expr *AlterTableDropProjection) error
 	VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) error
 	VisitAlterTableClearColumn(expr *AlterTableClearColumn) error
 	VisitAlterTableClearIndex(expr *AlterTableClearIndex) error
@@ -273,6 +274,13 @@ func (v *DefaultASTVisitor) VisitAlterTableDropColumn(expr *AlterTableDropColumn
 }
 
 func (v *DefaultASTVisitor) VisitAlterTableDropIndex(expr *AlterTableDropIndex) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableDropProjection(expr *AlterTableDropProjection) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

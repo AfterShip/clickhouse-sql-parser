@@ -739,6 +739,43 @@ func (a *AlterTableDropIndex) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableDropIndex(a)
 }
 
+type AlterTableDropProjection struct {
+	DropPos        Pos
+	ProjectionName *NestedIdentifier
+	IfExists       bool
+}
+
+func (a *AlterTableDropProjection) Pos() Pos {
+	return a.DropPos
+}
+
+func (a *AlterTableDropProjection) End() Pos {
+	return a.ProjectionName.End()
+}
+
+func (a *AlterTableDropProjection) AlterType() string {
+	return "DROP_PROJECTION"
+}
+
+func (a *AlterTableDropProjection) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("DROP PROJECTION ")
+	builder.WriteString(a.ProjectionName.String(level))
+	if a.IfExists {
+		builder.WriteString(" IF EXISTS")
+	}
+	return builder.String()
+}
+
+func (a *AlterTableDropProjection) Accept(visitor ASTVisitor) error {
+	visitor.enter(a)
+	defer visitor.leave(a)
+	if err := a.ProjectionName.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitAlterTableDropProjection(a)
+}
+
 type AlterTableRemoveTTL struct {
 	RemovePos    Pos
 	StatementEnd Pos
