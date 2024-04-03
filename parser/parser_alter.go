@@ -501,34 +501,34 @@ func (p *Parser) parseAlterTableClear(pos Pos) (AlterTableExpr, error) {
 	if err := p.consumeKeyword(KeywordClear); err != nil {
 		return nil, err
 	}
+	return p.parseAlterTableClearStatement(pos)
+}
 
+// Syntax: ALTER TABLE CLEAR COLUMN|INDEX|PROJECTION (IF EXISTS)? nestedIdentifier (IN partitionClause)?
+func (p *Parser) parseAlterTableClearStatement(pos Pos) (AlterTableExpr, error) {
+	var kind string
 	switch {
 	case p.matchKeyword(KeywordColumn):
-		return p.parseAlterTableClearColumn(pos)
+		kind = KeywordColumn
 	case p.matchKeyword(KeywordIndex):
-		return p.parseAlterTableClearIndex(pos)
-
+		kind = KeywordIndex
+	case p.matchKeyword(KeywordProjection):
+		kind = KeywordProjection
 	default:
-		return nil, errors.New("expected token: COLUMN|INDEX|PROJECTION")
+		return nil, fmt.Errorf("expected keyword: COLUMN|INDEX|PROJECTION, but got %q", p.lastTokenKind())
 	}
-}
-
-// Syntax: ALTER TABLE CLEAR COLUMN (IF EXISTS)? nestedIdentifier (IN partitionClause)?
-func (p *Parser) parseAlterTableClearColumn(pos Pos) (AlterTableExpr, error) {
-	if err := p.consumeKeyword(KeywordColumn); err != nil {
-		return nil, err
-	}
+	_ = p.lexer.consumeToken()
 
 	ifExists, err := p.tryParseIfExists()
 	if err != nil {
 		return nil, err
 	}
 
-	columnName, err := p.ParseNestedIdentifier(p.Pos())
+	name, err := p.ParseNestedIdentifier(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	statementEnd := columnName.End()
+	statementEnd := name.End()
 
 	var partitionExpr *PartitionExpr
 	if p.tryConsumeKeyword(KeywordIn) != nil {
@@ -541,50 +541,31 @@ func (p *Parser) parseAlterTableClearColumn(pos Pos) (AlterTableExpr, error) {
 		}
 	}
 
-	return &AlterTableClearColumn{
-		ClearPos:      pos,
-		StatementEnd:  statementEnd,
-		IfExists:      ifExists,
-		ColumnName:    columnName,
-		PartitionExpr: partitionExpr,
-	}, nil
-}
-
-// Syntax: ALTER TABLE CLEAR INDEX (IF EXISTS)? nestedIdentifier (IN partitionClause)?
-func (p *Parser) parseAlterTableClearIndex(pos Pos) (AlterTableExpr, error) {
-	if err := p.consumeKeyword(KeywordIndex); err != nil {
-		return nil, err
+	if kind == KeywordProjection {
+		return &AlterTableClearProjection{
+			ClearPos:       pos,
+			StatementEnd:   statementEnd,
+			IfExists:       ifExists,
+			ProjectionName: name,
+			PartitionExpr:  partitionExpr,
+		}, nil
+	} else if kind == KeywordColumn {
+		return &AlterTableClearColumn{
+			ClearPos:      pos,
+			StatementEnd:  statementEnd,
+			IfExists:      ifExists,
+			ColumnName:    name,
+			PartitionExpr: partitionExpr,
+		}, nil
+	} else {
+		return &AlterTableClearIndex{
+			ClearPos:      pos,
+			StatementEnd:  statementEnd,
+			IfExists:      ifExists,
+			IndexName:     name,
+			PartitionExpr: partitionExpr,
+		}, nil
 	}
-
-	ifExists, err := p.tryParseIfExists()
-	if err != nil {
-		return nil, err
-	}
-
-	indexName, err := p.ParseNestedIdentifier(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	statementEnd := indexName.End()
-
-	var partitionExpr *PartitionExpr
-	if p.tryConsumeKeyword(KeywordIn) != nil {
-		partitionExpr, err = p.tryParsePartitionExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		if partitionExpr != nil {
-			statementEnd = partitionExpr.End()
-		}
-	}
-
-	return &AlterTableClearIndex{
-		ClearPos:      pos,
-		StatementEnd:  statementEnd,
-		IfExists:      ifExists,
-		IndexName:     indexName,
-		PartitionExpr: partitionExpr,
-	}, nil
 }
 
 // Syntax: ALTER TABLE RENAME COLUMN (IF EXISTS)? nestedIdentifier TO nestedIdentifier
