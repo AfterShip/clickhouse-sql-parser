@@ -1,0 +1,42 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 101,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "visits_order",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 24
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "MaterializedPos": 25,
+        "StatementEnd": 101,
+        "IfExists": true,
+        "ProjectionName": {
+          "Ident": {
+            "Name": "user_name_projection",
+            "QuoteType": 1,
+            "NamePos": 58,
+            "NameEnd": 78
+          },
+          "DotIdent": null
+        },
+        "Partition": {
+          "PartitionPos": 82,
+          "Expr": {
+            "LiteralPos": 93,
+            "LiteralEnd": 101,
+            "Literal": "20240403"
+          },
+          "ID": null,
+          "All": false
+        }
+      }
+    ]
+  }
+]
