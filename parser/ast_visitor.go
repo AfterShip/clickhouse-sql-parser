@@ -20,6 +20,7 @@ type ASTVisitor interface {
 	VisitAlterTableRemoveTTL(expr *AlterTableRemoveTTL) error
 	VisitAlterTableClearColumn(expr *AlterTableClearColumn) error
 	VisitAlterTableClearIndex(expr *AlterTableClearIndex) error
+	VisitAlterTableClearProjection(expr *AlterTableClearProjection) error
 	VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) error
 	VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) error
 	VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) error
@@ -293,6 +294,13 @@ func (v *DefaultASTVisitor) VisitAlterTableClearColumn(expr *AlterTableClearColu
 }
 
 func (v *DefaultASTVisitor) VisitAlterTableClearIndex(expr *AlterTableClearIndex) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableClearProjection(expr *AlterTableClearProjection) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

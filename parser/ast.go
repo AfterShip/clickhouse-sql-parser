@@ -868,6 +868,57 @@ func (a *AlterTableClearIndex) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableClearIndex(a)
 }
 
+type AlterTableClearProjection struct {
+	ClearPos     Pos
+	StatementEnd Pos
+
+	IfExists       bool
+	ProjectionName *NestedIdentifier
+	PartitionExpr  *PartitionExpr
+}
+
+func (a *AlterTableClearProjection) Pos() Pos {
+	return a.ClearPos
+}
+
+func (a *AlterTableClearProjection) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableClearProjection) AlterType() string {
+	return "CLEAR_PROJECTION"
+}
+
+func (a *AlterTableClearProjection) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("CLEAR PROJECTION ")
+	if a.IfExists {
+		builder.WriteString("IF EXISTS ")
+	}
+	builder.WriteString(a.ProjectionName.String(level + 1))
+	if a.PartitionExpr != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString("IN ")
+		builder.WriteString(a.PartitionExpr.String(level))
+	}
+
+	return builder.String()
+}
+
+func (a *AlterTableClearProjection) Accept(visitor ASTVisitor) error {
+	visitor.enter(a)
+	defer visitor.leave(a)
+	if err := a.ProjectionName.Accept(visitor); err != nil {
+		return err
+	}
+	if a.PartitionExpr != nil {
+		if err := a.PartitionExpr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableClearProjection(a)
+}
+
 type AlterTableRenameColumn struct {
 	RenamePos Pos
 
