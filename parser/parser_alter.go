@@ -292,17 +292,15 @@ func (p *Parser) parseAlterTableDrop(pos Pos) (AlterTableExpr, error) {
 	}
 
 	switch {
-	case p.matchKeyword(KeywordColumn):
-		return p.parseAlterTableDropColumn(pos)
-	case p.matchKeyword(KeywordIndex):
-		return p.parseAlterTableDropIndex(pos)
+	case p.matchKeyword(KeywordColumn), p.matchKeyword(KeywordIndex), p.matchKeyword(KeywordProjection):
+		return p.parseAlterTableDropStatement(pos)
 	case p.matchKeyword(KeywordDetached):
 		_ = p.lexer.consumeToken()
 		return p.parseAlterTableDetachPartition(pos)
 	case p.matchKeyword(KeywordPartition):
 		return p.parseAlterTableDropPartition(pos)
 	default:
-		return nil, errors.New("expected keyword: COLUMN|INDEX|DETACH")
+		return nil, errors.New("expected keyword: COLUMN|INDEX|PROJECTION|DETACHED|PARTITION")
 	}
 }
 
@@ -389,10 +387,19 @@ func (p *Parser) parseAlterTableAttachPartition(pos Pos) (AlterTableExpr, error)
 	return alterTable, nil
 }
 
-func (p *Parser) parseAlterTableDropColumn(pos Pos) (AlterTableExpr, error) {
-	if err := p.consumeKeyword(KeywordColumn); err != nil {
-		return nil, err
+func (p *Parser) parseAlterTableDropStatement(pos Pos) (AlterTableExpr, error) {
+	var kind string
+	switch {
+	case p.matchKeyword(KeywordColumn):
+		kind = KeywordColumn
+	case p.matchKeyword(KeywordIndex):
+		kind = KeywordIndex
+	case p.matchKeyword(KeywordProjection):
+		kind = KeywordProjection
+	default:
+		return nil, fmt.Errorf("expected token: COLUMN|INDEX|PROJECTION, but got %s", p.lastTokenKind())
 	}
+	_ = p.lexer.consumeToken()
 
 	ifExists, err := p.tryParseIfExists()
 	if err != nil {
@@ -404,33 +411,25 @@ func (p *Parser) parseAlterTableDropColumn(pos Pos) (AlterTableExpr, error) {
 		return nil, err
 	}
 
-	return &AlterTableDropColumn{
-		DropPos:    pos,
-		ColumnName: name,
-		IfExists:   ifExists,
-	}, nil
-}
-
-func (p *Parser) parseAlterTableDropIndex(pos Pos) (AlterTableExpr, error) {
-	if err := p.consumeKeyword(KeywordIndex); err != nil {
-		return nil, err
+	if kind == KeywordProjection {
+		return &AlterTableDropProjection{
+			DropPos:        pos,
+			ProjectionName: name,
+			IfExists:       ifExists,
+		}, nil
+	} else if kind == KeywordColumn {
+		return &AlterTableDropColumn{
+			DropPos:    pos,
+			ColumnName: name,
+			IfExists:   ifExists,
+		}, nil
+	} else {
+		return &AlterTableDropIndex{
+			DropPos:   pos,
+			IndexName: name,
+			IfExists:  ifExists,
+		}, nil
 	}
-
-	ifExists, err := p.tryParseIfExists()
-	if err != nil {
-		return nil, err
-	}
-
-	name, err := p.ParseNestedIdentifier(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
-	return &AlterTableDropIndex{
-		DropPos:   pos,
-		IndexName: name,
-		IfExists:  ifExists,
-	}, nil
 }
 
 func (p *Parser) tryParseAfterClause() (*NestedIdentifier, error) {
