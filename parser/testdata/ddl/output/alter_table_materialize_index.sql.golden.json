@@ -1,0 +1,42 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 91,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "visits_order",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 24
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "MaterializedPos": 25,
+        "StatementEnd": 91,
+        "IfExists": true,
+        "IndexName": {
+          "Ident": {
+            "Name": "user_name_index",
+            "QuoteType": 1,
+            "NamePos": 53,
+            "NameEnd": 68
+          },
+          "DotIdent": null
+        },
+        "Partition": {
+          "PartitionPos": 72,
+          "Expr": {
+            "LiteralPos": 83,
+            "LiteralEnd": 91,
+            "Literal": "20240403"
+          },
+          "ID": null,
+          "All": false
+        }
+      }
+    ]
+  }
+]

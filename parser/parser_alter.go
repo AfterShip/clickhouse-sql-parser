@@ -49,7 +49,8 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			alterExpr, err = p.parseAlterTableModify(p.Pos())
 		case p.matchKeyword(KeywordReplace):
 			alterExpr, err = p.parseAlterTableReplacePartition(p.Pos())
-
+		case p.matchKeyword(KeywordMaterialize):
+			alterExpr, err = p.parseAlterTableMaterialize(p.Pos())
 		default:
 			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR")
 		}
@@ -707,5 +708,55 @@ func (p *Parser) parseAlterTableReplacePartition(pos Pos) (AlterTableExpr, error
 		ReplacePos: pos,
 		Partition:  partitionExpr,
 		Table:      table,
+	}, nil
+}
+
+func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableExpr, error) {
+	if err := p.consumeKeyword(KeywordMaterialize); err != nil {
+		return nil, err
+	}
+	var kind string
+	switch {
+	case p.matchKeyword(KeywordIndex):
+		kind = KeywordIndex
+	case p.matchKeyword(KeywordProjection):
+		kind = KeywordProjection
+	default:
+		return nil, fmt.Errorf("expected keyword: INDEX|PROJECTION, but got %q", p.lastTokenKind())
+	}
+	_ = p.lexer.consumeToken()
+
+	ifExists, err := p.tryParseIfExists()
+	if err != nil {
+		return nil, err
+	}
+	name, err := p.ParseNestedIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	statementEnd := name.End()
+	var partitionExpr *PartitionExpr
+	if p.tryConsumeKeyword(KeywordIn) != nil {
+		partitionExpr, err = p.tryParsePartitionExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		statementEnd = partitionExpr.End()
+	}
+	if kind == KeywordIndex {
+		return &AlterTableMaterializeIndex{
+			MaterializedPos: pos,
+			StatementEnd:    statementEnd,
+			IfExists:        ifExists,
+			IndexName:       name,
+			Partition:       partitionExpr,
+		}, nil
+	}
+	return &AlterTableMaterializeProjection{
+		MaterializedPos: pos,
+		StatementEnd:    statementEnd,
+		IfExists:        ifExists,
+		ProjectionName:  name,
+		Partition:       partitionExpr,
 	}, nil
 }

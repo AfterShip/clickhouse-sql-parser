@@ -356,6 +356,106 @@ func (a *AlterTableDropPartition) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableDropPartition(a)
 }
 
+type AlterTableMaterializeProjection struct {
+	MaterializedPos Pos
+	StatementEnd    Pos
+	IfExists        bool
+	ProjectionName  *NestedIdentifier
+	Partition       *PartitionExpr
+}
+
+func (a *AlterTableMaterializeProjection) Pos() Pos {
+	return a.MaterializedPos
+}
+
+func (a *AlterTableMaterializeProjection) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableMaterializeProjection) AlterType() string {
+	return "MATERIALIZE_PROJECTION"
+}
+
+func (a *AlterTableMaterializeProjection) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("MATERIALIZE PROJECTION")
+
+	if a.IfExists {
+		builder.WriteString(" IF EXISTS")
+	}
+	builder.WriteString(" ")
+	builder.WriteString(a.ProjectionName.String(level))
+	if a.Partition != nil {
+		builder.WriteString(" IN ")
+		builder.WriteString(a.Partition.String(level))
+	}
+	return builder.String()
+}
+
+func (a *AlterTableMaterializeProjection) Accept(visitor ASTVisitor) error {
+	visitor.enter(a)
+	defer visitor.leave(a)
+	if err := a.ProjectionName.Accept(visitor); err != nil {
+		return err
+	}
+	if a.Partition != nil {
+		if err := a.Partition.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableMaterializeProjection(a)
+}
+
+type AlterTableMaterializeIndex struct {
+	MaterializedPos Pos
+	StatementEnd    Pos
+	IfExists        bool
+	IndexName       *NestedIdentifier
+	Partition       *PartitionExpr
+}
+
+func (a *AlterTableMaterializeIndex) Pos() Pos {
+	return a.MaterializedPos
+}
+
+func (a *AlterTableMaterializeIndex) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableMaterializeIndex) AlterType() string {
+	return "MATERIALIZE_INDEX"
+}
+
+func (a *AlterTableMaterializeIndex) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("MATERIALIZE INDEX")
+
+	if a.IfExists {
+		builder.WriteString(" IF EXISTS")
+	}
+	builder.WriteString(" ")
+	builder.WriteString(a.IndexName.String(level))
+	if a.Partition != nil {
+		builder.WriteString(" IN ")
+		builder.WriteString(a.Partition.String(level))
+	}
+	return builder.String()
+}
+
+func (a *AlterTableMaterializeIndex) Accept(visitor ASTVisitor) error {
+	visitor.enter(a)
+	defer visitor.leave(a)
+	if err := a.IndexName.Accept(visitor); err != nil {
+		return err
+	}
+	if a.Partition != nil {
+		if err := a.Partition.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableMaterializeIndex(a)
+}
+
 type AlterTableFreezePartition struct {
 	FreezePos    Pos
 	StatementEnd Pos
