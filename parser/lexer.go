@@ -217,6 +217,10 @@ func (l *Lexer) consumeString() error {
 
 func (l *Lexer) skipComments() {
 	for !l.isEOF() {
+		l.skipSpace()
+		if !l.peekOk(0) {
+			return
+		}
 		switch l.peekN(0) {
 		case '-':
 			if l.peekOk(1) && l.peekN(1) == '-' {
@@ -253,7 +257,6 @@ func (l *Lexer) peekToken() (*Token, error) {
 }
 
 func (l *Lexer) consumeToken() error {
-	l.skipSpace()
 	// clear last token
 	l.lastToken = nil
 	l.skipComments()
