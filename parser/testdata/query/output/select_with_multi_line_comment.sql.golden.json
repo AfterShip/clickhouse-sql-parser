@@ -1,0 +1,58 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 61,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 48,
+      "ListEnd": 48,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 48,
+          "NameEnd": 48
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 50,
+      "Expr": {
+        "Table": {
+          "TablePos": 59,
+          "TableEnd": 61,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t0",
+              "QuoteType": 1,
+              "NamePos": 59,
+              "NameEnd": 61
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 61,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
