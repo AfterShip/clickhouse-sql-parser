@@ -57,7 +57,8 @@ func main() {
 	parser := clickhouse.NewParser(string(inputBytes))
 	stmts, err := parser.ParseStatements()
 	if err != nil {
-		panic(fmt.Sprintf("parse statements error: %s", err.Error()))
+		fmt.Printf("parse statements error: %s\n", err.Error())
+		os.Exit(1)
 	}
 	if !options.format { // print AST
 		bytes, _ := json.MarshalIndent(stmts, "", "  ") // nolint
