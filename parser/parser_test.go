@@ -35,7 +35,7 @@ func TestParser_Compatible(t *testing.T) {
 			parser := Parser{
 				lexer: NewLexer(string(fileBytes)),
 			}
-			_, err = parser.ParseStatements()
+			_, err = parser.ParseStmts()
 			require.NoError(t, err)
 		})
 	}
@@ -58,7 +58,7 @@ func TestParser_ParseStatements(t *testing.T) {
 				parser := Parser{
 					lexer: NewLexer(string(fileBytes)),
 				}
-				stmts, err := parser.ParseStatements()
+				stmts, err := parser.ParseStmts()
 				require.NoError(t, err)
 				outputBytes, _ := json.MarshalIndent(stmts, "", "  ")
 				g := goldie.New(t,
@@ -90,7 +90,7 @@ func TestParser_Format(t *testing.T) {
 				parser := Parser{
 					lexer: NewLexer(string(fileBytes)),
 				}
-				stmts, err := parser.ParseStatements()
+				stmts, err := parser.ParseStmts()
 				require.NoError(t, err)
 				var builder strings.Builder
 				builder.WriteString("-- Origin SQL:\n")

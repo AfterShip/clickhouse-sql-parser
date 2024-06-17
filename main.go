@@ -55,7 +55,7 @@ func main() {
 		inputBytes = []byte(os.Args[len(os.Args)-1])
 	}
 	parser := clickhouse.NewParser(string(inputBytes))
-	stmts, err := parser.ParseStatements()
+	stmts, err := parser.ParseStmts()
 	if err != nil {
 		fmt.Printf("parse statements error: %s\n", err.Error())
 		os.Exit(1)

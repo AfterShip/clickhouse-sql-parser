@@ -168,8 +168,8 @@
         }
       },
       "SampleBy": null,
-      "TTLExprList": null,
-      "SettingsExprList": {
+      "TTL": null,
+      "Settings": {
         "SettingsPos": 226,
         "ListEnd": 259,
         "Items": [
@@ -190,7 +190,7 @@
           }
         ]
       },
-      "OrderByListExpr": {
+      "OrderBy": {
         "OrderPos": 204,
         "ListEnd": 220,
         "Items": [

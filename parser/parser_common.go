@@ -266,14 +266,14 @@ func (p *Parser) ParseNestedIdentifier(pos Pos) (*NestedIdentifier, error) {
 	}, nil
 }
 
-func (p *Parser) tryParseFormatExpr(pos Pos) (*FormatExpr, error) {
+func (p *Parser) tryParseFormat(pos Pos) (*FormatClause, error) {
 	if !p.matchKeyword(KeywordFormat) {
 		return nil, nil // nolint
 	}
-	return p.parseFormatExpr(pos)
+	return p.parseFormat(pos)
 }
 
-func (p *Parser) parseFormatExpr(pos Pos) (*FormatExpr, error) {
+func (p *Parser) parseFormat(pos Pos) (*FormatClause, error) {
 	if err := p.consumeKeyword(KeywordFormat); err != nil {
 		return nil, err
 	}
@@ -281,7 +281,7 @@ func (p *Parser) parseFormatExpr(pos Pos) (*FormatExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &FormatExpr{
+	return &FormatClause{
 		FormatPos: pos,
 		Format:    formatIdent,
 	}, nil
