@@ -369,7 +369,7 @@
         }
       },
       "SampleBy": null,
-      "TTLExprList": {
+      "TTL": {
         "TTLPos": 339,
         "ListEnd": 364,
         "Items": [
@@ -404,8 +404,8 @@
           }
         ]
       },
-      "SettingsExprList": null,
-      "OrderByListExpr": {
+      "Settings": null,
+      "OrderBy": {
         "OrderPos": 393,
         "ListEnd": 411,
         "Items": [

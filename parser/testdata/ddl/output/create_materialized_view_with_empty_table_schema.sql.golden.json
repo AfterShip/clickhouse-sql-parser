@@ -90,9 +90,9 @@
         }
       },
       "SampleBy": null,
-      "TTLExprList": null,
-      "SettingsExprList": null,
-      "OrderByListExpr": {
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
         "OrderPos": 178,
         "ListEnd": 190,
         "Items": [

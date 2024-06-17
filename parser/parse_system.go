@@ -5,15 +5,15 @@ import (
 	"strings"
 )
 
-func (p *Parser) parseSetExpr(pos Pos) (*SetExpr, error) {
+func (p *Parser) parseSetStmt(pos Pos) (*SetStmt, error) {
 	if err := p.consumeKeyword(KeywordSet); err != nil {
 		return nil, err
 	}
-	settings, err := p.parseSettingsExprList(p.Pos())
+	settings, err := p.parseSettingsClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	return &SetExpr{
+	return &SetStmt{
 		SetPos:   pos,
 		Settings: settings,
 	}, nil
@@ -198,19 +198,19 @@ func (p *Parser) parseSystemDropExpr(pos Pos) (*SystemDropExpr, error) {
 	}
 }
 
-func (p *Parser) tryParseDeduplicateExpr(pos Pos) (*DeduplicateExpr, error) {
+func (p *Parser) tryParseDeduplicateClause(pos Pos) (*DeduplicateClause, error) {
 	if !p.matchKeyword(KeywordDeduplicate) {
 		return nil, nil
 	}
-	return p.parseDeduplicateExpr(pos)
+	return p.parseDeduplicateClause(pos)
 }
 
-func (p *Parser) parseDeduplicateExpr(pos Pos) (*DeduplicateExpr, error) {
+func (p *Parser) parseDeduplicateClause(pos Pos) (*DeduplicateClause, error) {
 	if err := p.consumeKeyword(KeywordDeduplicate); err != nil {
 		return nil, err
 	}
 	if p.tryConsumeKeyword(KeywordBy) == nil {
-		return &DeduplicateExpr{
+		return &DeduplicateClause{
 			DeduplicatePos: pos,
 		}, nil
 	}
@@ -226,14 +226,14 @@ func (p *Parser) parseDeduplicateExpr(pos Pos) (*DeduplicateExpr, error) {
 			return nil, err
 		}
 	}
-	return &DeduplicateExpr{
+	return &DeduplicateClause{
 		DeduplicatePos: pos,
 		By:             by,
 		Except:         except,
 	}, nil
 }
 
-func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
+func (p *Parser) parseOptimizeStmt(pos Pos) (*OptimizeStmt, error) {
 	if err := p.consumeKeyword(KeywordOptimize); err != nil {
 		return nil, err
 	}
@@ -247,7 +247,7 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 	}
 	statmentEnd := table.End()
 
-	onCluster, err := p.tryParseOnCluster(p.Pos())
+	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -255,12 +255,12 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 		statmentEnd = onCluster.End()
 	}
 
-	partitionExpr, err := p.tryParsePartitionExpr(p.Pos())
+	partition, err := p.tryParsePartitionClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	if partitionExpr != nil {
-		statmentEnd = partitionExpr.End()
+	if partition != nil {
+		statmentEnd = partition.End()
 	}
 
 	hasFinal := false
@@ -270,7 +270,7 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 		statmentEnd = lastPos
 	}
 
-	deduplicate, err := p.tryParseDeduplicateExpr(p.Pos())
+	deduplicate, err := p.tryParseDeduplicateClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -278,18 +278,18 @@ func (p *Parser) parseOptimizeExpr(pos Pos) (*OptimizeExpr, error) {
 		statmentEnd = deduplicate.End()
 	}
 
-	return &OptimizeExpr{
+	return &OptimizeStmt{
 		OptimizePos:  pos,
 		StatementEnd: statmentEnd,
 		Table:        table,
 		OnCluster:    onCluster,
-		Partition:    partitionExpr,
+		Partition:    partition,
 		HasFinal:     hasFinal,
 		Deduplicate:  deduplicate,
 	}, nil
 }
 
-func (p *Parser) parseSystemExpr(pos Pos) (*SystemExpr, error) {
+func (p *Parser) parseSystemStmt(pos Pos) (*SystemStmt, error) {
 	if err := p.consumeKeyword(KeywordSystem); err != nil {
 		return nil, err
 	}
@@ -313,13 +313,13 @@ func (p *Parser) parseSystemExpr(pos Pos) (*SystemExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &SystemExpr{
+	return &SystemStmt{
 		SystemPos: pos,
 		Expr:      expr,
 	}, nil
 }
 
-func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
+func (p *Parser) parseCheckStmt(pos Pos) (*CheckStmt, error) {
 	if err := p.consumeKeyword(KeywordCheck); err != nil {
 		return nil, err
 	}
@@ -330,11 +330,11 @@ func (p *Parser) parseCheckExpr(pos Pos) (*CheckExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	partition, err := p.tryParsePartitionExpr(p.Pos())
+	partition, err := p.tryParsePartitionClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	return &CheckExpr{
+	return &CheckStmt{
 		CheckPos:  pos,
 		Table:     table,
 		Partition: partition,
@@ -355,7 +355,7 @@ func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 				return nil, err
 			}
 		}
-		onCluster, err := p.tryParseOnCluster(p.Pos())
+		onCluster, err := p.tryParseClusterClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -369,7 +369,7 @@ func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 		if err != nil {
 			return nil, err
 		}
-		onCluster, err := p.tryParseOnCluster(p.Pos())
+		onCluster, err := p.tryParseClusterClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -542,7 +542,7 @@ func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 	}
 	statementEnd := names[len(names)-1].End()
 
-	onCluster, err := p.tryParseOnCluster(p.Pos())
+	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -574,7 +574,7 @@ func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 	}, nil
 }
 
-func (p *Parser) parsePrivilegeSelectOrInsert(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeSelectOrInsert(pos Pos) (*PrivilegeClause, error) {
 	keyword := p.last().String
 	_ = p.lexer.consumeToken()
 
@@ -586,14 +586,14 @@ func (p *Parser) parsePrivilegeSelectOrInsert(pos Pos) (*PrivilegeExpr, error) {
 			return nil, err
 		}
 	}
-	return &PrivilegeExpr{
+	return &PrivilegeClause{
 		PrivilegePos: pos,
 		Keywords:     []string{keyword},
 		Params:       params,
 	}, nil
 }
 
-func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordAlter}
 	switch {
 	case p.tryConsumeKeyword(KeywordIndex) != nil:
@@ -655,13 +655,13 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeExpr, error) {
 	default:
 		return nil, fmt.Errorf("expected UPDATE|DELETE|ADD|DROP|MODIFY|CLEAR|COMMENT|RENAME|MATERIALIZED|ORDER|SAMPLE|SETTINGS|VIEW|MOVE|FREEZE")
 	}
-	return &PrivilegeExpr{
+	return &PrivilegeClause{
 		PrivilegePos: pos,
 		Keywords:     keywords,
 	}, nil
 }
 
-func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordCreate}
 	switch {
 	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
@@ -683,13 +683,13 @@ func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeExpr, error) {
 	default:
 		return nil, fmt.Errorf("expected DATABASE|DICTIONARY|TABLE|FUNCTION|VIEW|USER|ROLE|ROWS")
 	}
-	return &PrivilegeExpr{
+	return &PrivilegeClause{
 		PrivilegePos: pos,
 		Keywords:     keywords,
 	}, nil
 }
 
-func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordDrop}
 	switch {
 	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
@@ -701,13 +701,13 @@ func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeExpr, error) {
 	default:
 		return nil, fmt.Errorf("expected DATABASE|DICTIONARY|TABLE|FUNCTION|VIEW")
 	}
-	return &PrivilegeExpr{
+	return &PrivilegeClause{
 		PrivilegePos: pos,
 		Keywords:     keywords,
 	}, nil
 }
 
-func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordShow}
 	switch {
 	case p.matchKeyword(KeywordDatabases), p.matchKeyword(KeywordDictionaries),
@@ -718,13 +718,13 @@ func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeExpr, error) {
 	default:
 		return nil, fmt.Errorf("expected DATABASES|DICTIONARIES|TABLES|COLUMNS")
 	}
-	return &PrivilegeExpr{
+	return &PrivilegeClause{
 		PrivilegePos: pos,
 		Keywords:     keywords,
 	}, nil
 }
 
-func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordShow}
 	switch {
 	case p.matchKeyword(KeywordShutdown), p.matchKeyword(KeywordMerges), p.matchKeyword(KeywordFetches),
@@ -792,17 +792,17 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeExpr, error) {
 	default:
 		return nil, fmt.Errorf("expected QUEUES|SHUTDOWN|MERGES|FETCHES|SENDS|MOVES|CLUSTER|DROP|RELOAD|FLUSH|TTL|SYNC|RESTART|REPLICATION")
 	}
-	return &PrivilegeExpr{
+	return &PrivilegeClause{
 		PrivilegePos: pos,
 		Keywords:     keywords,
 	}, nil
 }
 
-func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
+func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 	if p.matchTokenKind(TokenIdent) {
 		if p.last().String == "dictGet" {
 			_ = p.lexer.consumeToken()
-			return &PrivilegeExpr{
+			return &PrivilegeClause{
 				PrivilegePos: pos,
 				Keywords:     []string{"dictGet"},
 			}, nil
@@ -821,7 +821,7 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		return p.parsePrivilegeShow(pos)
 	case p.matchKeyword(KeywordAll), p.matchTokenKind(KeywordNone):
 		_ = p.lexer.consumeToken()
-		return &PrivilegeExpr{
+		return &PrivilegeClause{
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordAll},
 		}, nil
@@ -829,7 +829,7 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		if err := p.consumeKeyword(KeywordQuery); err != nil {
 			return nil, err
 		}
-		return &PrivilegeExpr{
+		return &PrivilegeClause{
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordKill, KeywordQuery},
 		}, nil
@@ -839,14 +839,14 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		if err := p.consumeKeyword(KeywordOption); err != nil {
 			return nil, err
 		}
-		return &PrivilegeExpr{
+		return &PrivilegeClause{
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordAdmin, KeywordOption},
 		}, nil
 	case p.matchKeyword(KeywordOptimize), p.matchKeyword(KeywordTruncate):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
-		return &PrivilegeExpr{
+		return &PrivilegeClause{
 			PrivilegePos: pos,
 			Keywords:     []string{keyword},
 		}, nil
@@ -854,7 +854,7 @@ func (p *Parser) parsePrivilege(pos Pos) (*PrivilegeExpr, error) {
 		if err := p.consumeKeyword(KeywordAdmin); err != nil {
 			return nil, err
 		}
-		return &PrivilegeExpr{
+		return &PrivilegeClause{
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordRole, KeywordAdmin},
 		}, nil
@@ -926,22 +926,22 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 	}, nil
 }
 
-func (p *Parser) parseGrantPrivilege(pos Pos) (*GrantPrivilegeExpr, error) {
+func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 	if err := p.consumeKeyword(KeywordGrant); err != nil {
 		return nil, err
 	}
-	onCluster, err := p.tryParseOnCluster(p.Pos())
+	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	var privileges []*PrivilegeExpr
-	privilege, err := p.parsePrivilege(p.Pos())
+	var privileges []*PrivilegeClause
+	privilege, err := p.parsePrivilegeClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	privileges = append(privileges, privilege)
 	for p.tryConsumeTokenKind(",") != nil {
-		privilege, err := p.parsePrivilege(p.Pos())
+		privilege, err := p.parsePrivilegeClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -975,7 +975,7 @@ func (p *Parser) parseGrantPrivilege(pos Pos) (*GrantPrivilegeExpr, error) {
 		statementEnd = p.last().End
 	}
 
-	return &GrantPrivilegeExpr{
+	return &GrantPrivilegeStmt{
 		GrantPos:     pos,
 		StatementEnd: statementEnd,
 		OnCluster:    onCluster,

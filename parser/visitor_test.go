@@ -29,7 +29,7 @@ func TestVisitor_Identical(t *testing.T) {
 				parser := Parser{
 					lexer: NewLexer(string(fileBytes)),
 				}
-				stmts, err := parser.ParseStatements()
+				stmts, err := parser.ParseStmts()
 				require.NoError(t, err)
 				var builder strings.Builder
 				builder.WriteString("-- Origin SQL:\n")
@@ -64,7 +64,7 @@ func (v *simpleRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error
 	return nil
 }
 
-func (v *simpleRewriteVisitor) VisitOrderByExpr(expr *OrderByExpr) error {
+func (v *simpleRewriteVisitor) VisitOrderByExpr(expr *OrderExpr) error {
 	expr.Direction = OrderDirectionDesc
 	return nil
 }
@@ -74,7 +74,7 @@ func TestVisitor_SimpleRewrite(t *testing.T) {
 
 	sql := `SELECT a, COUNT(b) FROM group_by_all GROUP BY CUBE(a) WITH CUBE WITH TOTALS ORDER BY a;`
 	parser := NewParser(sql)
-	stmts, err := parser.ParseStatements()
+	stmts, err := parser.ParseStmts()
 	require.NoError(t, err)
 
 	require.Equal(t, 1, len(stmts))
@@ -116,7 +116,7 @@ func TestVisitor_NestRewrite(t *testing.T) {
 
 	sql := `SELECT replica_name FROM system.ha_replicas UNION DISTINCT SELECT replica_name FROM system.ha_unique_replicas format JSON`
 	parser := NewParser(sql)
-	stmts, err := parser.ParseStatements()
+	stmts, err := parser.ParseStmts()
 	require.NoError(t, err)
 
 	require.Equal(t, 1, len(stmts))

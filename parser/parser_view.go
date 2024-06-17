@@ -26,7 +26,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	createMaterializedView.Name = tableIdentifier
 
 	// parse ON CLUSTER clause if exists
-	onCluster, err := p.tryParseOnCluster(p.Pos())
+	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -34,14 +34,14 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 
 	switch {
 	case p.matchKeyword(KeywordTo):
-		destinationExpr, err := p.parseDestinationExpr(p.Pos())
+		destination, err := p.parseDestinationClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		createMaterializedView.Destination = destinationExpr
-		createMaterializedView.StatementEnd = destinationExpr.End()
+		createMaterializedView.Destination = destination
+		createMaterializedView.StatementEnd = destination.End()
 		if p.matchTokenKind("(") {
-			tableSchema, err := p.parseTableSchemaExpr(p.Pos())
+			tableSchema, err := p.parseTableSchemaClause(p.Pos())
 			if err != nil {
 				return nil, err
 			}
@@ -62,7 +62,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
 	}
 	if p.matchKeyword(KeywordAs) {
-		subQuery, err := p.parseSubQuery(p.Pos())
+		subQuery, err := p.parseSubQueryClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -97,26 +97,26 @@ func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
 	}
 	createView.UUID = uuid
 
-	onCluster, err := p.tryParseOnCluster(p.Pos())
+	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	createView.OnCluster = onCluster
 
 	if p.matchTokenKind("(") {
-		tableSchema, err := p.parseTableSchemaExpr(p.Pos())
+		tableSchema, err := p.parseTableSchemaClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		createView.TableSchema = tableSchema
 	}
 
-	subQueryExpr, err := p.parseSubQuery(p.Pos())
+	subQuery, err := p.parseSubQueryClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	createView.SubQuery = subQueryExpr
-	createView.StatementEnd = subQueryExpr.End()
+	createView.SubQuery = subQuery
+	createView.StatementEnd = subQuery.End()
 
 	return createView, nil
 }
@@ -154,35 +154,35 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 	}
 	createLiveView.UUID = uuid
 	// parse ON CLUSTER clause if exists
-	onCluster, err := p.tryParseOnCluster(p.Pos())
+	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	createLiveView.OnCluster = onCluster
 
-	withTimeExpr, err := p.tryParseWithTimeout(p.Pos())
+	withTimeout, err := p.tryParseWithTimeout(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	createLiveView.WithTimeout = withTimeExpr
+	createLiveView.WithTimeout = withTimeout
 
 	if p.matchKeyword(KeywordTo) {
-		destinationExpr, err := p.parseDestinationExpr(p.Pos())
+		destination, err := p.parseDestinationClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		createLiveView.Destination = destinationExpr
+		createLiveView.Destination = destination
 	}
 
 	if p.matchTokenKind("(") {
-		tableSchema, err := p.parseTableSchemaExpr(p.Pos())
+		tableSchema, err := p.parseTableSchemaClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		createLiveView.TableSchema = tableSchema
 	}
 
-	subQuery, err := p.parseSubQuery(p.Pos())
+	subQuery, err := p.parseSubQueryClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 	return createLiveView, nil
 }
 
-func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutExpr, error) {
+func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutClause, error) {
 	if p.tryConsumeKeyword(KeywordWith) == nil {
 		return nil, nil // nolint
 	}
@@ -200,15 +200,15 @@ func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutExpr, error) {
 		return nil, err
 	}
 
-	withTimeoutExpr := &WithTimeoutExpr{WithTimeoutPos: pos}
+	withTimeout := &WithTimeoutClause{WithTimeoutPos: pos}
 
 	if p.matchTokenKind(TokenInt) {
 		decimalNumber, err := p.parseDecimal(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		withTimeoutExpr.Number = decimalNumber
+		withTimeout.Number = decimalNumber
 	}
 
-	return withTimeoutExpr, nil
+	return withTimeout, nil
 }

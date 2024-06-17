@@ -102,8 +102,8 @@
       "PrimaryKey": null,
       "PartitionBy": null,
       "SampleBy": null,
-      "TTLExprList": null,
-      "SettingsExprList": {
+      "TTL": null,
+      "Settings": {
         "SettingsPos": 162,
         "ListEnd": 191,
         "Items": [
@@ -124,7 +124,7 @@
           }
         ]
       },
-      "OrderByListExpr": null
+      "OrderBy": null
     },
     "SubQuery": null,
     "HasTemporary": false

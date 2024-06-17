@@ -48,7 +48,7 @@ func (p *Parser) parseOrExpr(pos Pos) (Expr, error) {
 		if err != nil {
 			return nil, err
 		}
-		expr = &BinaryExpr{
+		expr = &BinaryOperation{
 			LeftExpr:  expr,
 			Operation: opTypeOr,
 			RightExpr: rightExpr,
@@ -70,7 +70,7 @@ func (p *Parser) parseAndExpr(pos Pos) (Expr, error) {
 		if err != nil {
 			return nil, err
 		}
-		expr = &BinaryExpr{
+		expr = &BinaryOperation{
 			LeftExpr:  expr,
 			Operation: opTypeAnd,
 			RightExpr: rightExpr,
@@ -170,7 +170,7 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &BinaryExpr{
+	return &BinaryOperation{
 		LeftExpr:  expr,
 		HasNot:    hasNot,
 		HasGlobal: hasGlobal,
@@ -193,7 +193,7 @@ func (p *Parser) parseAddSubExpr(pos Pos) (Expr, error) {
 			if err != nil {
 				return nil, err
 			}
-			expr = &BinaryExpr{
+			expr = &BinaryOperation{
 				LeftExpr:  expr,
 				Operation: op,
 				RightExpr: rightExpr,
@@ -204,7 +204,7 @@ func (p *Parser) parseAddSubExpr(pos Pos) (Expr, error) {
 	}
 }
 
-func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryExpr, error) {
+func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
 	if _, err := p.consumeTokenKind("?"); err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &TernaryExpr{
+	return &TernaryOperation{
 		Condition: condition,
 		TrueExpr:  trueExpr,
 		FalseExpr: falseExpr,
@@ -246,7 +246,7 @@ func (p *Parser) parseMulDivModExpr(pos Pos) (Expr, error) {
 			if err != nil {
 				return nil, err
 			}
-			expr = &BinaryExpr{
+			expr = &BinaryOperation{
 				LeftExpr:  expr,
 				Operation: op,
 				RightExpr: rightExpr,
@@ -607,7 +607,7 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 	caseExpr.Expr = expr
 
 	// WHEN expr THEN expr
-	whenExprs := make([]*WhenExpr, 0)
+	whenClauses := make([]*WhenClause, 0)
 	for p.matchKeyword(KeywordWhen) {
 		whenPos := p.Pos()
 		_ = p.lexer.consumeToken()
@@ -625,14 +625,14 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 			return nil, err
 		}
 
-		whenExprs = append(whenExprs, &WhenExpr{
+		whenClauses = append(whenClauses, &WhenClause{
 			WhenPos: whenPos,
 			ThenPos: thenPos,
 			When:    whenCondition,
 			Then:    thenCondition,
 		})
 	}
-	caseExpr.Whens = whenExprs
+	caseExpr.Whens = whenClauses
 
 	// ELSE expr
 	if elseToken := p.tryConsumeKeyword(KeywordElse); elseToken != nil {
@@ -717,10 +717,10 @@ func (p *Parser) parseComplexType(name *Ident, pos Pos) (Expr, error) {
 	}, nil
 }
 
-func (p *Parser) parseEnumExpr(pos Pos) (*EnumValueExprList, error) {
-	expr := &EnumValueExprList{
+func (p *Parser) parseEnumExpr(pos Pos) (*EnumValueList, error) {
+	enumValueList := &EnumValueList{
 		ListPos: pos,
-		Enums:   make([]EnumValueExpr, 0),
+		Enums:   make([]EnumValue, 0),
 	}
 	for !p.lexer.isEOF() && !p.matchTokenKind(")") {
 		enumValueExpr, err := p.parseEnumValueExpr(p.Pos())
@@ -730,18 +730,18 @@ func (p *Parser) parseEnumExpr(pos Pos) (*EnumValueExprList, error) {
 		if enumValueExpr == nil {
 			break
 		}
-		expr.Enums = append(expr.Enums, *enumValueExpr)
+		enumValueList.Enums = append(enumValueList.Enums, *enumValueExpr)
 		if p.tryConsumeTokenKind(",") == nil {
 			break
 		}
 	}
-	if len(expr.Enums) > 0 {
-		expr.ListEnd = expr.Enums[len(expr.Enums)-1].Value.NumEnd
+	if len(enumValueList.Enums) > 0 {
+		enumValueList.ListEnd = enumValueList.Enums[len(enumValueList.Enums)-1].Value.NumEnd
 	}
 	if _, err := p.consumeTokenKind(")"); err != nil {
 		return nil, err
 	}
-	return expr, nil
+	return enumValueList, nil
 }
 
 func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParamsExpr, error) {
@@ -825,7 +825,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	}, nil
 }
 
-func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValueExpr, error) {
+func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
 	if _, err := p.consumeTokenKind(TokenString); err != nil {
 		return nil, err
 	}
@@ -842,7 +842,7 @@ func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValueExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &EnumValueExpr{
+	return &EnumValue{
 		Name:  name,
 		Value: value,
 	}, nil
