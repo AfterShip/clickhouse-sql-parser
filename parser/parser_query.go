@@ -320,7 +320,18 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 		}
 		expr = &AliasExpr{
 			Expr:     expr,
-			AliasPos: asToken.Pos,
+			AliasPos: alias.Pos(),
+			Alias:    alias,
+		}
+		tableEnd = expr.End()
+	} else if p.matchTokenKind(TokenIdent) && p.lastTokenKind() != TokenKeyword {
+		alias, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		expr = &AliasExpr{
+			Expr:     expr,
+			AliasPos: alias.Pos(),
 			Alias:    alias,
 		}
 		tableEnd = expr.End()

@@ -29,7 +29,7 @@
               }
             }
           },
-          "AliasPos": 26,
+          "AliasPos": 29,
           "Alias": {
             "Name": "value",
             "QuoteType": 1,
@@ -82,7 +82,7 @@
               "Literal": "Float64"
             }
           },
-          "AliasPos": 62,
+          "AliasPos": 65,
           "Alias": {
             "Name": "value",
             "QuoteType": 1,
@@ -134,7 +134,7 @@
                     "Literal": "1",
                     "Base": 10
                   },
-                  "AliasPos": 82,
+                  "AliasPos": 85,
                   "Alias": {
                     "Name": "Float64",
                     "QuoteType": 1,
@@ -146,7 +146,7 @@
             },
             "ColumnArgList": null
           },
-          "AliasPos": 94,
+          "AliasPos": 97,
           "Alias": {
             "Name": "value",
             "QuoteType": 1,
@@ -200,7 +200,7 @@
             "HasGlobal": false,
             "HasNot": false
           },
-          "AliasPos": 122,
+          "AliasPos": 125,
           "Alias": {
             "Name": "value",
             "QuoteType": 1,
