@@ -19,14 +19,13 @@ func (p *Parser) parseExpr(pos Pos) (Expr, error) {
 	}
 	switch {
 	case p.matchKeyword(KeywordAs): // syntax: columnExpr (alias | AS identifier)
-		aliasPos := p.Pos()
 		_ = p.lexer.consumeToken()
 		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
 		return &AliasExpr{
-			AliasPos: aliasPos,
+			AliasPos: alias.Pos(),
 			Expr:     orExpr,
 			Alias:    alias,
 		}, nil
