@@ -801,6 +801,19 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	if err != nil {
 		return nil, err
 	}
+	// parse DELTA if  CODEC(Delta, ZSTD(1))
+	var codecType *Ident
+	if strings.ToUpper(name.Name) == "DELTA" {
+		codecType = name
+		if _, err := p.consumeTokenKind(","); err != nil {
+			return nil, err
+		}
+		name, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	var level *NumberLiteral
 	// TODO: check if the codec name is valid
 	switch strings.ToUpper(name.Name) {
@@ -819,6 +832,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	return &CompressionCodec{
 		CodecPos:      pos,
 		RightParenPos: rightParenPos,
+		Type:          codecType,
 		Name:          name,
 		Level:         level,
 	}, nil
