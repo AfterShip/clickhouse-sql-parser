@@ -16,10 +16,10 @@ SETTINGS execute_merges_on_single_replica_time_threshold=1200, index_granularity
 -- Format SQL:
 CREATE TABLE IF NOT EXISTS test_local
 (
- `id` UInt64 CODEC(Delta, ZSTD(1)),
- `api_id` UInt64 CODEC(ZSTD(1)),
- `timestamp` DateTime64(9) CODEC(ZSTD(1)),
- INDEX timestamp_index(timestamp) TYPE minmax GRANULARITY 4
+  `id` UInt64 CODEC(Delta, ZSTD(1)),
+  `api_id` UInt64 CODEC(ZSTD(1)),
+  `timestamp` DateTime64(9) CODEC(ZSTD(1)),
+  INDEX timestamp_index(timestamp) TYPE minmax GRANULARITY 4
 )
 ENGINE = ReplicatedMergeTree('/root/test_local', '{replica}')
 PARTITION BY toStartOfHour(`timestamp`)
