@@ -567,7 +567,7 @@ func (a *AlterTableAddIndex) AlterType() string {
 
 func (a *AlterTableAddIndex) String(level int) string {
 	var builder strings.Builder
-	builder.WriteString("ADD INDEX ")
+	builder.WriteString("ADD ")
 	builder.WriteString(a.Index.String(level))
 	if a.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
@@ -1271,8 +1271,11 @@ func (a *TableIndex) End() Pos {
 
 func (a *TableIndex) String(level int) string {
 	var builder strings.Builder
+	builder.WriteString("INDEX")
+	builder.WriteByte(' ')
 	builder.WriteString(a.Name.String(0))
 	builder.WriteString(a.ColumnExpr.String(level))
+	builder.WriteByte(' ')
 	builder.WriteString("TYPE")
 	builder.WriteByte(' ')
 	builder.WriteString(a.ColumnType.String(level))
@@ -3265,6 +3268,7 @@ func (n *NestedTypeExpr) Accept(visitor ASTVisitor) error {
 type CompressionCodec struct {
 	CodecPos      Pos
 	RightParenPos Pos
+	Type          *Ident
 	Name          *Ident
 	Level         *NumberLiteral // compression level
 }
@@ -3280,6 +3284,11 @@ func (c *CompressionCodec) End() Pos {
 func (c *CompressionCodec) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("CODEC(")
+	if c.Type != nil {
+		builder.WriteString(c.Type.String(level))
+		builder.WriteByte(',')
+		builder.WriteByte(' ')
+	}
 	builder.WriteString(c.Name.String(level))
 	if c.Level != nil {
 		builder.WriteByte('(')
