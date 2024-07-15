@@ -66,7 +66,6 @@ func TestParser_ParseStatements(t *testing.T) {
 					goldie.WithDiffEngine(goldie.ColoredDiff),
 					goldie.WithFixtureDir(outputDir))
 				g.Assert(t, entry.Name(), outputBytes)
-
 			})
 		}
 	}

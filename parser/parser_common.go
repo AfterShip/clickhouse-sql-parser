@@ -234,7 +234,7 @@ func (p *Parser) parseString(pos Pos) (*StringLiteral, error) {
 
 func (p *Parser) parseLiteral(pos Pos) (Literal, error) {
 	switch {
-	case p.matchTokenKind(TokenInt):
+	case p.matchTokenKind(TokenInt), p.matchTokenKind(TokenFloat):
 		return p.parseNumber(pos)
 	case p.matchTokenKind(TokenString):
 		return p.parseString(pos)

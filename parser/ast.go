@@ -1274,6 +1274,11 @@ func (a *TableIndex) String(level int) string {
 	builder.WriteString("INDEX")
 	builder.WriteByte(' ')
 	builder.WriteString(a.Name.String(0))
+	// a.ColumnExpr = *Ident --- e.g. INDEX idx column TYPE ...
+	// a.ColumnExpr = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
+	if _, ok := a.ColumnExpr.(*Ident); ok {
+		builder.WriteByte(' ')
+	}
 	builder.WriteString(a.ColumnExpr.String(level))
 	builder.WriteByte(' ')
 	builder.WriteString("TYPE")
