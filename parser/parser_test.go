@@ -95,11 +95,15 @@ func TestParser_Format(t *testing.T) {
 				builder.WriteString("-- Origin SQL:\n")
 				builder.Write(fileBytes)
 				builder.WriteString("\n\n-- Format SQL:\n")
+				var formatSQLBuilder strings.Builder
 				for _, stmt := range stmts {
-					builder.WriteString(stmt.String(0))
-					builder.WriteByte(';')
-					builder.WriteByte('\n')
+					formatSQLBuilder.WriteString(stmt.String(0))
+					formatSQLBuilder.WriteByte(';')
+					formatSQLBuilder.WriteByte('\n')
 				}
+				formatSQL := formatSQLBuilder.String()
+				builder.WriteString(formatSQL)
+				validFormatSQL(t, formatSQL)
 				g := goldie.New(t,
 					goldie.WithNameSuffix(""),
 					goldie.WithDiffEngine(goldie.ColoredDiff),
@@ -108,4 +112,18 @@ func TestParser_Format(t *testing.T) {
 			})
 		}
 	}
+}
+
+// validFormatSQL Verify that the format sql can be re-parsed with consistent results
+func validFormatSQL(t *testing.T, sql string) {
+	parser := NewParser(sql)
+	stmts, err := parser.ParseStmts()
+	require.NoError(t, err)
+	var builder strings.Builder
+	for _, stmt := range stmts {
+		builder.WriteString(stmt.String(0))
+		builder.WriteByte(';')
+		builder.WriteByte('\n')
+	}
+	require.Equal(t, sql, builder.String())
 }

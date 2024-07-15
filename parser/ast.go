@@ -1761,7 +1761,7 @@ func (r *RoleName) String(level int) string {
 		builder.WriteString(r.Scope.String(level))
 	}
 	if r.OnCluster != nil {
-		builder.WriteString(" ON ")
+		builder.WriteByte(' ')
 		builder.WriteString(r.OnCluster.String(level))
 	}
 	return builder.String()
@@ -1851,7 +1851,9 @@ func (r *RoleSetting) String(level int) string {
 		builder.WriteString(settingPair.String(level))
 	}
 	if r.Modifier != nil {
-		builder.WriteString(" ")
+		if len(r.SettingPairs) > 0 {
+			builder.WriteString(" ")
+		}
 		builder.WriteString(r.Modifier.String(level))
 	}
 	return builder.String()
@@ -4490,12 +4492,8 @@ func (g *GroupByClause) String(level int) string {
 	builder.WriteString("GROUP BY ")
 	if g.AggregateType != "" {
 		builder.WriteString(g.AggregateType)
-		builder.WriteByte('(')
 	}
 	builder.WriteString(g.Expr.String(level))
-	if g.AggregateType != "" {
-		builder.WriteByte(')')
-	}
 	if g.WithCube {
 		builder.WriteString(" WITH CUBE")
 	}
@@ -4606,10 +4604,7 @@ func (l *LimitByClause) End() Pos {
 
 func (l *LimitByClause) String(level int) string {
 	var builder strings.Builder
-	builder.WriteString("LIMIT ")
-	builder.WriteString(l.Limit.String(level))
 	if l.Limit != nil {
-		builder.WriteString(" OFFSET ")
 		builder.WriteString(l.Limit.String(level))
 	}
 	if l.ByExpr != nil {

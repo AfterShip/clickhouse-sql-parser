@@ -46,6 +46,15 @@
             "NameEnd": 66
           },
           "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "metric",
+            "QuoteType": 1,
+            "NamePos": 68,
+            "NameEnd": 74
+          },
+          "DotIdent": null
         }
       ]
     },

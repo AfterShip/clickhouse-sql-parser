@@ -1095,10 +1095,11 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		columnNames = append(columnNames, *name)
 		if p.tryConsumeTokenKind(",") == nil {
 			break
 		}
-		columnNames = append(columnNames, *name)
 	}
 	rightParenPos := p.Pos()
 	if _, err := p.consumeTokenKind(")"); err != nil {

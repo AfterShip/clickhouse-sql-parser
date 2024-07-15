@@ -24,4 +24,4 @@ FROM
 WHERE
   (f0 IN ('foo', 'bar', 'test')) AND (f1 = 'testing') AND (f2 NOT LIKE 'testing2') AND f3 NOT IN ('a', 'b', 'c')
 GROUP BY f0, f1
-LIMIT LIMIT 10 OFFSET 100 OFFSET LIMIT 10 OFFSET 100 BY f0;
+LIMIT 10 OFFSET 100 BY f0;
