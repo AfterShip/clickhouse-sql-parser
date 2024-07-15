@@ -672,7 +672,7 @@ func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
 			}
 			// like Datetime('Asia/Dubai')
 			return p.parseColumnTypeWithParams(ident, p.Pos())
-		case p.matchTokenKind(TokenInt):
+		case p.matchTokenKind(TokenInt), p.matchTokenKind(TokenFloat):
 			// fixed size
 			return p.parseColumnTypeWithParams(ident, p.Pos())
 		default:
