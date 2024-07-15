@@ -801,10 +801,16 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	if err != nil {
 		return nil, err
 	}
-	// parse DELTA if  CODEC(Delta, ZSTD(1))
+	// parse DELTA if  CODEC(Delta, ZSTD(1)) or CODEC(Delta(9), ZSTD(1))
 	var codecType *Ident
 	if strings.ToUpper(name.Name) == "DELTA" {
 		codecType = name
+		// try parse delta level
+		// TODO: store the delta NumberLiteral
+		if _, err := p.tryParseDeltaLevel(p.Pos()); err != nil {
+			return nil, err
+		}
+		// consume comma
 		if _, err := p.consumeTokenKind(","); err != nil {
 			return nil, err
 		}
@@ -873,6 +879,22 @@ func (p *Parser) parseColumnStar(pos Pos) (*Ident, error) {
 }
 
 func (p *Parser) tryParseCompressionLevel(pos Pos) (*NumberLiteral, error) {
+	if p.tryConsumeTokenKind("(") == nil {
+		return nil, nil // nolint
+	}
+
+	num, err := p.parseNumber(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err := p.consumeTokenKind(")"); err != nil {
+		return nil, err
+	}
+	return num, nil
+}
+
+func (p *Parser) tryParseDeltaLevel(pos Pos) (*NumberLiteral, error) {
 	if p.tryConsumeTokenKind("(") == nil {
 		return nil, nil // nolint
 	}
