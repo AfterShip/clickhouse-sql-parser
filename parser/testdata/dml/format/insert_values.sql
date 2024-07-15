@@ -7,7 +7,7 @@ INSERT INTO helloworld.my_first_table (user_id, message, timestamp, metric) VALU
 
 -- Format SQL:
 INSERT INTO TABLE helloworld.my_first_table
-  (user_id, message, timestamp)
+  (user_id, message, timestamp, metric)
 VALUES 
   (101, 'Hello, ClickHouse!', now(), -1.0),
   (102, 'Insert a lot of rows per batch', yesterday(), 1.41421),

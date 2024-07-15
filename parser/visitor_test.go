@@ -35,14 +35,18 @@ func TestVisitor_Identical(t *testing.T) {
 				builder.WriteString("-- Origin SQL:\n")
 				builder.Write(fileBytes)
 				builder.WriteString("\n\n-- Format SQL:\n")
+				var formatSQLBuilder strings.Builder
 				for _, stmt := range stmts {
 					err := stmt.Accept(&visitor)
 					require.NoError(t, err)
 
-					builder.WriteString(stmt.String(0))
-					builder.WriteByte(';')
-					builder.WriteByte('\n')
+					formatSQLBuilder.WriteString(stmt.String(0))
+					formatSQLBuilder.WriteByte(';')
+					formatSQLBuilder.WriteByte('\n')
 				}
+				formatSQL := formatSQLBuilder.String()
+				builder.WriteString(formatSQL)
+				validFormatSQL(t, formatSQL)
 				g := goldie.New(t,
 					goldie.WithNameSuffix(""),
 					goldie.WithDiffEngine(goldie.ColoredDiff),
