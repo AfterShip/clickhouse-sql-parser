@@ -806,7 +806,6 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	if strings.ToUpper(name.Name) == "DELTA" {
 		codecType = name
 		// try parse delta level
-		// TODO: store the delta NumberLiteral
 		if _, err := p.tryParseCompressionLevel(p.Pos()); err != nil {
 			return nil, err
 		}
