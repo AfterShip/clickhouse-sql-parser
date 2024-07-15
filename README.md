@@ -55,7 +55,7 @@ if err != nil {
 
 // Call the String method to unparsed AST into a SQL string
 for _, stmt := range statements {
-  fmt.Println(stmt.String(0 /* number of tab spaces*/)
+  fmt.Println(stmt.String(0 /* number of tab spaces*/))
 }
 ```
 ## Update test assets
