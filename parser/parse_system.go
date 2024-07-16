@@ -417,7 +417,8 @@ func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 				return nil, err
 			}
 			// docs: https://clickhouse.com/docs/en/sql-reference/statements/alter/role
-			// should be an equal sign operator if variable has value
+			// the operator "=" was required if the variable name is NOT in
+			// ["MIN", "MAX", "PROFILE"] and value is existed.
 			if value != nil && name.Name != "MIN" && name.Name != "MAX" && name.Name != "PROFILE" && op != opTypeEQ {
 				return nil, fmt.Errorf("expected operator = or no value, but got %s", op)
 			}
