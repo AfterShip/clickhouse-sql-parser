@@ -773,7 +773,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind("="); err != nil {
+	if _, err := p.consumeTokenKind(opTypeEQ); err != nil {
 		return nil, err
 	}
 
@@ -842,7 +842,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	if err := p.consumeKeyword(KeywordEngine); err != nil {
 		return nil, err
 	}
-	_ = p.tryConsumeTokenKind("=")
+	_ = p.tryConsumeTokenKind(opTypeEQ)
 
 	engineExpr := &EngineExpr{EnginePos: pos}
 	var engineEnd Pos

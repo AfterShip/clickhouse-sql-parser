@@ -1799,8 +1799,9 @@ func (r *RoleName) Accept(visitor ASTVisitor) error {
 }
 
 type SettingPair struct {
-	Name  *Ident
-	Value Expr
+	Name      *Ident
+	Operation TokenKind
+	Value     Expr
 }
 
 func (s *SettingPair) Pos() Pos {
@@ -1815,7 +1816,11 @@ func (s *SettingPair) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString(s.Name.String(level))
 	if s.Value != nil {
-		builder.WriteByte(' ')
+		if s.Operation == opTypeEQ {
+			builder.WriteString(string(s.Operation))
+		} else {
+			builder.WriteByte(' ')
+		}
 		builder.WriteString(s.Value.String(level))
 	}
 	return builder.String()
