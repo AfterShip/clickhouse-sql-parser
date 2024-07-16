@@ -801,10 +801,15 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	if err != nil {
 		return nil, err
 	}
-	// parse DELTA if  CODEC(Delta, ZSTD(1))
+	// parse DELTA if  CODEC(Delta, ZSTD(1)) or CODEC(Delta(9), ZSTD(1))
 	var codecType *Ident
 	if strings.ToUpper(name.Name) == "DELTA" {
 		codecType = name
+		// try parse delta level
+		if _, err := p.tryParseCompressionLevel(p.Pos()); err != nil {
+			return nil, err
+		}
+		// consume comma
 		if _, err := p.consumeTokenKind(","); err != nil {
 			return nil, err
 		}
