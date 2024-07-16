@@ -19,7 +19,8 @@
     "OnCluster": null,
     "AlterExprs": [
       {
-        "DetachPos": 85,
+        "DropPos": 85,
+        "HasDetached": true,
         "Partition": {
           "PartitionPos": 99,
           "Expr": {

@@ -324,8 +324,10 @@ func (a *AlterTableDetachPartition) Accept(visitor ASTVisitor) error {
 }
 
 type AlterTableDropPartition struct {
-	DropPos   Pos
-	Partition *PartitionClause
+	DropPos     Pos
+	HasDetached bool
+	Partition   *PartitionClause
+	Settings    *SettingsClause
 }
 
 func (a *AlterTableDropPartition) Pos() Pos {
@@ -333,6 +335,9 @@ func (a *AlterTableDropPartition) Pos() Pos {
 }
 
 func (a *AlterTableDropPartition) End() Pos {
+	if a.Settings != nil {
+		a.Settings.End()
+	}
 	return a.Partition.End()
 }
 
@@ -343,7 +348,14 @@ func (a *AlterTableDropPartition) AlterType() string {
 func (a *AlterTableDropPartition) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("DROP ")
+	if a.HasDetached {
+		builder.WriteString("DETACHED ")
+	}
 	builder.WriteString(a.Partition.String(level))
+	if a.Settings != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(a.Settings.String(level))
+	}
 	return builder.String()
 }
 

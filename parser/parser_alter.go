@@ -295,10 +295,7 @@ func (p *Parser) parseAlterTableDrop(pos Pos) (AlterTableClause, error) {
 	switch {
 	case p.matchKeyword(KeywordColumn), p.matchKeyword(KeywordIndex), p.matchKeyword(KeywordProjection):
 		return p.parseAlterTableDropClause(pos)
-	case p.matchKeyword(KeywordDetached):
-		_ = p.lexer.consumeToken()
-		return p.parseAlterTableDetachPartition(pos)
-	case p.matchKeyword(KeywordPartition):
+	case p.matchKeyword(KeywordDetached), p.matchKeyword(KeywordPartition):
 		return p.parseAlterTableDropPartition(pos)
 	default:
 		return nil, errors.New("expected keyword: COLUMN|INDEX|PROJECTION|DETACHED|PARTITION")
@@ -443,6 +440,11 @@ func (p *Parser) tryParseAfterClause() (*NestedIdentifier, error) {
 
 // Syntax: ALTER TABLE DROP partitionClause
 func (p *Parser) parseAlterTableDropPartition(pos Pos) (AlterTableClause, error) {
+	var hasDetached bool
+	if p.matchKeyword(KeywordDetached) {
+		_ = p.lexer.consumeToken()
+		hasDetached = true
+	}
 	partitionPos := p.Pos()
 	if err := p.consumeKeyword(KeywordPartition); err != nil {
 		return nil, err
@@ -456,9 +458,16 @@ func (p *Parser) parseAlterTableDropPartition(pos Pos) (AlterTableClause, error)
 	}
 	partition.Expr = expr
 
+	settings, err := p.tryParseSettingsClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
 	return &AlterTableDropPartition{
-		DropPos:   pos,
-		Partition: partition,
+		DropPos:     pos,
+		Partition:   partition,
+		HasDetached: hasDetached,
+		Settings:    settings,
 	}, nil
 }
 
