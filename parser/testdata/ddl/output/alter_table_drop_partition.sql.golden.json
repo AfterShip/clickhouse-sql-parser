@@ -27,6 +27,7 @@
     "AlterExprs": [
       {
         "DropPos": 53,
+        "HasDetached": false,
         "Partition": {
           "PartitionPos": 58,
           "Expr": {
@@ -36,7 +37,8 @@
           },
           "ID": null,
           "All": false
-        }
+        },
+        "Settings": null
       }
     ]
   }
