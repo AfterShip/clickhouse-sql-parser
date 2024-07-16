@@ -50,6 +50,7 @@
               "NamePos": 59,
               "NameEnd": 64
             },
+            "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,
@@ -94,6 +95,7 @@
             "CodecPos": 93,
             "RightParenPos": 107,
             "Type": null,
+            "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,
@@ -178,6 +180,7 @@
             "CodecPos": 148,
             "RightParenPos": 162,
             "Type": null,
+            "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,

@@ -3276,6 +3276,7 @@ type CompressionCodec struct {
 	CodecPos      Pos
 	RightParenPos Pos
 	Type          *Ident
+	TypeLevel     *NumberLiteral
 	Name          *Ident
 	Level         *NumberLiteral // compression level
 }
@@ -3293,6 +3294,11 @@ func (c *CompressionCodec) String(level int) string {
 	builder.WriteString("CODEC(")
 	if c.Type != nil {
 		builder.WriteString(c.Type.String(level))
+		if c.TypeLevel != nil {
+			builder.WriteByte('(')
+			builder.WriteString(c.TypeLevel.String(level))
+			builder.WriteByte(')')
+		}
 		builder.WriteByte(',')
 		builder.WriteByte(' ')
 	}
@@ -3309,6 +3315,14 @@ func (c *CompressionCodec) String(level int) string {
 func (c *CompressionCodec) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
+	if err := c.Type.Accept(visitor); err != nil {
+		return err
+	}
+	if c.TypeLevel != nil {
+		if err := c.TypeLevel.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS test_local
 (
   `id` UInt64 CODEC(Delta, ZSTD(1)),
   `api_id` UInt64 CODEC(ZSTD(1)),
-  `app_id` UInt64 CODEC(Delta, ZSTD(1)),
+  `app_id` UInt64 CODEC(Delta(9), ZSTD(1)),
   `timestamp` DateTime64(9) CODEC(ZSTD(1)),
   INDEX timestamp_index(timestamp) TYPE minmax GRANULARITY 4
 )
