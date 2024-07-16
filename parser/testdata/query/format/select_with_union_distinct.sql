@@ -11,4 +11,5 @@ FROM
 SELECT 
   replica_name
 FROM
-  system.ha_unique_replicas;
+  system.ha_unique_replicas
+FORMAT JSON;
