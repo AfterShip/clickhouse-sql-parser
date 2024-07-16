@@ -78,6 +78,7 @@
             "CodecPos": 198,
             "RightParenPos": 212,
             "Type": null,
+            "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,
