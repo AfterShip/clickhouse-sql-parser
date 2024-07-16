@@ -404,18 +404,27 @@ func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 			}, nil
 		}
 		switch {
-		case p.matchTokenKind("="),
+		case p.matchTokenKind(opTypeEQ),
 			p.matchTokenKind(TokenInt),
 			p.matchTokenKind(TokenFloat),
 			p.matchTokenKind(TokenString):
-			_ = p.tryConsumeTokenKind("=")
+			var op TokenKind
+			if token := p.tryConsumeTokenKind(opTypeEQ); token != nil {
+				op = token.Kind
+			}
 			value, err := p.parseLiteral(p.Pos())
 			if err != nil {
 				return nil, err
 			}
+			// docs: https://clickhouse.com/docs/en/sql-reference/statements/alter/role
+			// should be an equal sign operator if variable has value
+			if value != nil && name.Name != "MIN" && name.Name != "MAX" && name.Name != "PROFILE" && op != opTypeEQ {
+				return nil, fmt.Errorf("expected operator = or no value, but got %s", op)
+			}
 			pairs = append(pairs, &SettingPair{
-				Name:  name,
-				Value: value,
+				Name:      name,
+				Operation: op,
+				Value:     value,
 			})
 		default:
 			pairs = append(pairs, &SettingPair{

@@ -666,7 +666,7 @@ func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
 			}
 			return p.parseComplexType(ident, p.Pos())
 		case p.matchTokenKind(TokenString):
-			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == "=" {
+			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == opTypeEQ {
 				// enum values
 				return p.parseEnumExpr(p.Pos())
 			}
@@ -852,7 +852,7 @@ func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind("="); err != nil {
+	if _, err := p.consumeTokenKind(opTypeEQ); err != nil {
 		return nil, err
 	}
 

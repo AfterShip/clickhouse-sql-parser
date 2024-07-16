@@ -164,6 +164,7 @@
               "NamePos": 237,
               "NameEnd": 244
             },
+            "Operation": "",
             "Value": {
               "LiteralPos": 246,
               "LiteralEnd": 253,
@@ -205,6 +206,7 @@
               "NamePos": 285,
               "NameEnd": 301
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 302,
               "NumEnd": 309,
@@ -247,6 +249,7 @@
               "NamePos": 340,
               "NameEnd": 356
             },
+            "Operation": "",
             "Value": null
           },
           {
@@ -256,6 +259,7 @@
               "NamePos": 357,
               "NameEnd": 360
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 361,
               "NumEnd": 368,
@@ -298,6 +302,7 @@
               "NamePos": 399,
               "NameEnd": 415
             },
+            "Operation": "",
             "Value": null
           },
           {
@@ -307,6 +312,7 @@
               "NamePos": 416,
               "NameEnd": 419
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 420,
               "NumEnd": 427,
@@ -349,6 +355,7 @@
               "NamePos": 458,
               "NameEnd": 474
             },
+            "Operation": "",
             "Value": null
           }
         ],
@@ -391,6 +398,7 @@
               "NamePos": 511,
               "NameEnd": 527
             },
+            "Operation": "",
             "Value": null
           }
         ],
@@ -433,6 +441,7 @@
               "NamePos": 567,
               "NameEnd": 583
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 584,
               "NumEnd": 591,
@@ -447,6 +456,7 @@
               "NamePos": 592,
               "NameEnd": 595
             },
+            "Operation": "",
             "Value": {
               "NumPos": 596,
               "NumEnd": 603,
@@ -461,6 +471,7 @@
               "NamePos": 604,
               "NameEnd": 607
             },
+            "Operation": "",
             "Value": {
               "NumPos": 608,
               "NumEnd": 615,
@@ -508,6 +519,7 @@
               "NamePos": 652,
               "NameEnd": 659
             },
+            "Operation": "",
             "Value": {
               "LiteralPos": 661,
               "LiteralEnd": 668,
@@ -526,6 +538,7 @@
               "NamePos": 671,
               "NameEnd": 687
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 688,
               "NumEnd": 695,
@@ -609,6 +622,7 @@
               "NamePos": 766,
               "NameEnd": 774
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 775,
               "NumEnd": 776,
@@ -651,6 +665,7 @@
               "NamePos": 807,
               "NameEnd": 814
             },
+            "Operation": "",
             "Value": {
               "LiteralPos": 816,
               "LiteralEnd": 823,
@@ -692,6 +707,7 @@
               "NamePos": 855,
               "NameEnd": 871
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 872,
               "NumEnd": 879,
@@ -706,6 +722,7 @@
               "NamePos": 880,
               "NameEnd": 883
             },
+            "Operation": "",
             "Value": {
               "NumPos": 884,
               "NumEnd": 891,
@@ -720,6 +737,7 @@
               "NamePos": 892,
               "NameEnd": 895
             },
+            "Operation": "",
             "Value": {
               "NumPos": 896,
               "NumEnd": 903,
@@ -767,6 +785,7 @@
               "NamePos": 943,
               "NameEnd": 950
             },
+            "Operation": "",
             "Value": {
               "LiteralPos": 952,
               "LiteralEnd": 959,
@@ -785,6 +804,7 @@
               "NamePos": 962,
               "NameEnd": 978
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 979,
               "NumEnd": 986,
@@ -804,6 +824,7 @@
               "NamePos": 988,
               "NameEnd": 996
             },
+            "Operation": "=",
             "Value": {
               "NumPos": 997,
               "NumEnd": 998,
