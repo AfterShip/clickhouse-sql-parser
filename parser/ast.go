@@ -4942,6 +4942,7 @@ type SelectQuery struct {
 	LimitBy       *LimitByClause
 	Limit         *LimitClause
 	Settings      *SettingsClause
+	Format        *FormatClause
 	UnionAll      *SelectQuery
 	UnionDistinct *SelectQuery
 	Except        *SelectQuery
@@ -5025,6 +5026,10 @@ func (s *SelectQuery) String(level int) string { // nolint: funlen
 	if s.Settings != nil {
 		builder.WriteString(NewLine(level))
 		builder.WriteString(s.Settings.String(level))
+	}
+	if s.Format != nil {
+		builder.WriteString(NewLine(level))
+		builder.WriteString(s.Format.String(level))
 	}
 	if s.UnionAll != nil {
 		builder.WriteString(NewLine(level))
@@ -5112,6 +5117,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	}
 	if s.Settings != nil {
 		if err := s.Settings.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Format != nil {
+		if err := s.Format.Accept(visitor); err != nil {
 			return err
 		}
 	}

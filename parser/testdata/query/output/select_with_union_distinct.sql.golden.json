@@ -56,10 +56,11 @@
     "LimitBy": null,
     "Limit": null,
     "Settings": null,
+    "Format": null,
     "UnionAll": null,
     "UnionDistinct": {
       "SelectPos": 59,
-      "StatementEnd": 109,
+      "StatementEnd": 121,
       "With": null,
       "Top": null,
       "SelectColumns": {
@@ -114,6 +115,15 @@
       "LimitBy": null,
       "Limit": null,
       "Settings": null,
+      "Format": {
+        "FormatPos": 110,
+        "Format": {
+          "Name": "JSON",
+          "QuoteType": 1,
+          "NamePos": 117,
+          "NameEnd": 121
+        }
+      },
       "UnionAll": null,
       "UnionDistinct": null,
       "Except": null

@@ -907,6 +907,14 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		statementEnd = settings.End()
 	}
 
+	format, err := p.tryParseFormat(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if format != nil {
+		statementEnd = format.End()
+	}
+
 	return &SelectQuery{
 		With:          withClause,
 		SelectPos:     pos,
@@ -924,6 +932,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		LimitBy:       limitBy,
 		Limit:         limit,
 		Settings:      settings,
+		Format:        format,
 		WithTotal:     withTotal,
 	}, nil
 }
