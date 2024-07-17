@@ -801,10 +801,12 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	if err != nil {
 		return nil, err
 	}
-	// parse DELTA if  CODEC(Delta, ZSTD(1)) or CODEC(Delta(9), ZSTD(1))
+	// parse DELTA if  CODEC(Delta, ZSTD(1))
+	// or CODEC(Delta(9), ZSTD(1)) or CODEC(T64, ZSTD(1))
 	var codecType *Ident
 	var typeLevel *NumberLiteral
-	if strings.ToUpper(name.Name) == "DELTA" {
+	switch strings.ToUpper(name.Name) {
+	case "DELTA", "DoubleDelta", "T64", "Gorilla":
 		codecType = name
 		// try parse delta level
 		typeLevel, err = p.tryParseCompressionLevel(p.Pos())
@@ -824,7 +826,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	var level *NumberLiteral
 	// TODO: check if the codec name is valid
 	switch strings.ToUpper(name.Name) {
-	case "ZSTD", "LZ4HC":
+	case "ZSTD", "LZ4HC", "LH4":
 		level, err = p.tryParseCompressionLevel(p.Pos())
 		if err != nil {
 			return nil, err
