@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 692,
+    "StatementEnd": 812,
     "Name": {
       "Database": null,
       "Table": {
@@ -16,7 +16,7 @@
     "OnCluster": null,
     "TableSchema": {
       "SchemaPos": 38,
-      "SchemaEnd": 255,
+      "SchemaEnd": 375,
       "Columns": [
         {
           "NamePos": 42,
@@ -170,10 +170,10 @@
         },
         {
           "NamePos": 154,
-          "ColumnEnd": 193,
+          "ColumnEnd": 199,
           "Name": {
             "Ident": {
-              "Name": "timestamp",
+              "Name": "device_id",
               "QuoteType": 3,
               "NamePos": 154,
               "NameEnd": 163
@@ -181,40 +181,35 @@
             "DotIdent": null
           },
           "Type": {
-            "LeftParenPos": 176,
-            "RightParenPos": 177,
             "Name": {
-              "Name": "DateTime64",
+              "Name": "UInt64",
               "QuoteType": 1,
               "NamePos": 165,
-              "NameEnd": 175
-            },
-            "Params": [
-              {
-                "NumPos": 176,
-                "NumEnd": 177,
-                "Literal": "9",
-                "Base": 10
-              }
-            ]
+              "NameEnd": 171
+            }
           },
           "NotNull": null,
           "Nullable": null,
           "Property": null,
           "Codec": {
-            "CodecPos": 179,
-            "RightParenPos": 193,
-            "Type": null,
+            "CodecPos": 172,
+            "RightParenPos": 199,
+            "Type": {
+              "Name": "DoubleDelta",
+              "QuoteType": 1,
+              "NamePos": 178,
+              "NameEnd": 189
+            },
             "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,
-              "NamePos": 185,
-              "NameEnd": 189
+              "NamePos": 191,
+              "NameEnd": 195
             },
             "Level": {
-              "NumPos": 189,
-              "NumEnd": 191,
+              "NumPos": 195,
+              "NumEnd": 197,
               "Literal": "1",
               "Base": 10
             }
@@ -224,29 +219,174 @@
           "CompressionCodec": null
         },
         {
-          "IndexPos": 196,
+          "NamePos": 203,
+          "ColumnEnd": 237,
+          "Name": {
+            "Ident": {
+              "Name": "guage",
+              "QuoteType": 3,
+              "NamePos": 203,
+              "NameEnd": 208
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Float64",
+              "QuoteType": 1,
+              "NamePos": 210,
+              "NameEnd": 217
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": {
+            "CodecPos": 218,
+            "RightParenPos": 237,
+            "Type": {
+              "Name": "Gorilla",
+              "QuoteType": 1,
+              "NamePos": 224,
+              "NameEnd": 231
+            },
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 233,
+              "NameEnd": 236
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 241,
+          "ColumnEnd": 270,
+          "Name": {
+            "Ident": {
+              "Name": "value",
+              "QuoteType": 3,
+              "NamePos": 241,
+              "NameEnd": 246
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 248,
+              "NameEnd": 254
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": {
+            "CodecPos": 255,
+            "RightParenPos": 270,
+            "Type": {
+              "Name": "T64",
+              "QuoteType": 1,
+              "NamePos": 261,
+              "NameEnd": 264
+            },
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 266,
+              "NameEnd": 269
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 274,
+          "ColumnEnd": 313,
+          "Name": {
+            "Ident": {
+              "Name": "timestamp",
+              "QuoteType": 3,
+              "NamePos": 274,
+              "NameEnd": 283
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 296,
+            "RightParenPos": 297,
+            "Name": {
+              "Name": "DateTime64",
+              "QuoteType": 1,
+              "NamePos": 285,
+              "NameEnd": 295
+            },
+            "Params": [
+              {
+                "NumPos": 296,
+                "NumEnd": 297,
+                "Literal": "9",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "Property": null,
+          "Codec": {
+            "CodecPos": 299,
+            "RightParenPos": 313,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 305,
+              "NameEnd": 309
+            },
+            "Level": {
+              "NumPos": 309,
+              "NumEnd": 311,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "IndexPos": 316,
           "Name": {
             "Ident": {
               "Name": "timestamp_index",
               "QuoteType": 1,
-              "NamePos": 202,
-              "NameEnd": 217
+              "NamePos": 322,
+              "NameEnd": 337
             },
             "DotIdent": null
           },
           "ColumnExpr": {
-            "LeftParenPos": 217,
-            "RightParenPos": 227,
+            "LeftParenPos": 337,
+            "RightParenPos": 347,
             "Items": {
-              "ListPos": 218,
-              "ListEnd": 227,
+              "ListPos": 338,
+              "ListEnd": 347,
               "HasDistinct": false,
               "Items": [
                 {
                   "Name": "timestamp",
                   "QuoteType": 1,
-                  "NamePos": 218,
-                  "NameEnd": 227
+                  "NamePos": 338,
+                  "NameEnd": 347
                 }
               ]
             },
@@ -256,13 +396,13 @@
             "Name": {
               "Name": "minmax",
               "QuoteType": 1,
-              "NamePos": 234,
-              "NameEnd": 240
+              "NamePos": 354,
+              "NameEnd": 360
             }
           },
           "Granularity": {
-            "NumPos": 253,
-            "NumEnd": 254,
+            "NumPos": 373,
+            "NumEnd": 374,
             "Literal": "4",
             "Base": 10
           }
@@ -272,25 +412,25 @@
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 257,
-      "EngineEnd": 692,
+      "EnginePos": 377,
+      "EngineEnd": 812,
       "Name": "ReplicatedMergeTree",
       "Params": {
-        "LeftParenPos": 285,
-        "RightParenPos": 317,
+        "LeftParenPos": 405,
+        "RightParenPos": 437,
         "Items": {
-          "ListPos": 287,
-          "ListEnd": 316,
+          "ListPos": 407,
+          "ListEnd": 436,
           "HasDistinct": false,
           "Items": [
             {
-              "LiteralPos": 287,
-              "LiteralEnd": 303,
+              "LiteralPos": 407,
+              "LiteralEnd": 423,
               "Literal": "/root/test_local"
             },
             {
-              "LiteralPos": 307,
-              "LiteralEnd": 316,
+              "LiteralPos": 427,
+              "LiteralEnd": 436,
               "Literal": "{replica}"
             }
           ]
@@ -299,32 +439,32 @@
       },
       "PrimaryKey": null,
       "PartitionBy": {
-        "PartitionPos": 319,
+        "PartitionPos": 439,
         "Expr": {
-          "ListPos": 332,
-          "ListEnd": 357,
+          "ListPos": 452,
+          "ListEnd": 477,
           "HasDistinct": false,
           "Items": [
             {
               "Name": {
                 "Name": "toStartOfHour",
                 "QuoteType": 1,
-                "NamePos": 332,
-                "NameEnd": 345
+                "NamePos": 452,
+                "NameEnd": 465
               },
               "Params": {
-                "LeftParenPos": 345,
-                "RightParenPos": 357,
+                "LeftParenPos": 465,
+                "RightParenPos": 477,
                 "Items": {
-                  "ListPos": 347,
-                  "ListEnd": 356,
+                  "ListPos": 467,
+                  "ListEnd": 476,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Name": "timestamp",
                       "QuoteType": 3,
-                      "NamePos": 347,
-                      "NameEnd": 356
+                      "NamePos": 467,
+                      "NameEnd": 476
                     }
                   ]
                 },
@@ -336,32 +476,32 @@
       },
       "SampleBy": null,
       "TTL": {
-        "TTLPos": 415,
-        "ListEnd": 506,
+        "TTLPos": 535,
+        "ListEnd": 626,
         "Items": [
           {
-            "TTLPos": 415,
+            "TTLPos": 535,
             "Expr": {
               "LeftExpr": {
                 "Name": {
                   "Name": "toStartOfHour",
                   "QuoteType": 1,
-                  "NamePos": 419,
-                  "NameEnd": 432
+                  "NamePos": 539,
+                  "NameEnd": 552
                 },
                 "Params": {
-                  "LeftParenPos": 432,
-                  "RightParenPos": 444,
+                  "LeftParenPos": 552,
+                  "RightParenPos": 564,
                   "Items": {
-                    "ListPos": 434,
-                    "ListEnd": 443,
+                    "ListPos": 554,
+                    "ListEnd": 563,
                     "HasDistinct": false,
                     "Items": [
                       {
                         "Name": "timestamp",
                         "QuoteType": 3,
-                        "NamePos": 434,
-                        "NameEnd": 443
+                        "NamePos": 554,
+                        "NameEnd": 563
                       }
                     ]
                   },
@@ -370,18 +510,18 @@
               },
               "Operation": "+",
               "RightExpr": {
-                "IntervalPos": 448,
+                "IntervalPos": 568,
                 "Expr": {
-                  "NumPos": 457,
-                  "NumEnd": 458,
+                  "NumPos": 577,
+                  "NumEnd": 578,
                   "Literal": "7",
                   "Base": 10
                 },
                 "Unit": {
                   "Name": "DAY",
                   "QuoteType": 1,
-                  "NamePos": 459,
-                  "NameEnd": 462
+                  "NamePos": 579,
+                  "NameEnd": 582
                 }
               },
               "HasGlobal": false,
@@ -389,28 +529,28 @@
             }
           },
           {
-            "TTLPos": 415,
+            "TTLPos": 535,
             "Expr": {
               "LeftExpr": {
                 "Name": {
                   "Name": "toStartOfHour",
                   "QuoteType": 1,
-                  "NamePos": 463,
-                  "NameEnd": 476
+                  "NamePos": 583,
+                  "NameEnd": 596
                 },
                 "Params": {
-                  "LeftParenPos": 476,
-                  "RightParenPos": 488,
+                  "LeftParenPos": 596,
+                  "RightParenPos": 608,
                   "Items": {
-                    "ListPos": 478,
-                    "ListEnd": 487,
+                    "ListPos": 598,
+                    "ListEnd": 607,
                     "HasDistinct": false,
                     "Items": [
                       {
                         "Name": "timestamp",
                         "QuoteType": 3,
-                        "NamePos": 478,
-                        "NameEnd": 487
+                        "NamePos": 598,
+                        "NameEnd": 607
                       }
                     ]
                   },
@@ -419,18 +559,18 @@
               },
               "Operation": "+",
               "RightExpr": {
-                "IntervalPos": 492,
+                "IntervalPos": 612,
                 "Expr": {
-                  "NumPos": 501,
-                  "NumEnd": 502,
+                  "NumPos": 621,
+                  "NumEnd": 622,
                   "Literal": "2",
                   "Base": 10
                 },
                 "Unit": {
                   "Name": "DAY",
                   "QuoteType": 1,
-                  "NamePos": 503,
-                  "NameEnd": 506
+                  "NamePos": 623,
+                  "NameEnd": 626
                 }
               },
               "HasGlobal": false,
@@ -440,79 +580,79 @@
         ]
       },
       "Settings": {
-        "SettingsPos": 507,
-        "ListEnd": 692,
+        "SettingsPos": 627,
+        "ListEnd": 812,
         "Items": [
           {
-            "SettingsPos": 516,
+            "SettingsPos": 636,
             "Name": {
               "Name": "execute_merges_on_single_replica_time_threshold",
               "QuoteType": 1,
-              "NamePos": 516,
-              "NameEnd": 563
+              "NamePos": 636,
+              "NameEnd": 683
             },
             "Expr": {
-              "NumPos": 564,
-              "NumEnd": 568,
+              "NumPos": 684,
+              "NumEnd": 688,
               "Literal": "1200",
               "Base": 10
             }
           },
           {
-            "SettingsPos": 570,
+            "SettingsPos": 690,
             "Name": {
               "Name": "index_granularity",
               "QuoteType": 1,
-              "NamePos": 570,
-              "NameEnd": 587
+              "NamePos": 690,
+              "NameEnd": 707
             },
             "Expr": {
-              "NumPos": 588,
-              "NumEnd": 593,
+              "NumPos": 708,
+              "NumEnd": 713,
               "Literal": "16384",
               "Base": 10
             }
           },
           {
-            "SettingsPos": 595,
+            "SettingsPos": 715,
             "Name": {
               "Name": "max_bytes_to_merge_at_max_space_in_pool",
               "QuoteType": 1,
-              "NamePos": 595,
-              "NameEnd": 634
+              "NamePos": 715,
+              "NameEnd": 754
             },
             "Expr": {
-              "NumPos": 635,
-              "NumEnd": 646,
+              "NumPos": 755,
+              "NumEnd": 766,
               "Literal": "64424509440",
               "Base": 10
             }
           },
           {
-            "SettingsPos": 648,
+            "SettingsPos": 768,
             "Name": {
               "Name": "storage_policy",
               "QuoteType": 1,
-              "NamePos": 648,
-              "NameEnd": 662
+              "NamePos": 768,
+              "NameEnd": 782
             },
             "Expr": {
-              "LiteralPos": 664,
-              "LiteralEnd": 668,
+              "LiteralPos": 784,
+              "LiteralEnd": 788,
               "Literal": "main"
             }
           },
           {
-            "SettingsPos": 671,
+            "SettingsPos": 791,
             "Name": {
               "Name": "ttl_only_drop_parts",
               "QuoteType": 1,
-              "NamePos": 671,
-              "NameEnd": 690
+              "NamePos": 791,
+              "NameEnd": 810
             },
             "Expr": {
-              "NumPos": 691,
-              "NumEnd": 692,
+              "NumPos": 811,
+              "NumEnd": 812,
               "Literal": "1",
               "Base": 10
             }
@@ -520,39 +660,39 @@
         ]
       },
       "OrderBy": {
-        "OrderPos": 359,
-        "ListEnd": 413,
+        "OrderPos": 479,
+        "ListEnd": 533,
         "Items": [
           {
-            "OrderPos": 359,
+            "OrderPos": 479,
             "Expr": {
-              "LeftParenPos": 368,
-              "RightParenPos": 413,
+              "LeftParenPos": 488,
+              "RightParenPos": 533,
               "Items": {
-                "ListPos": 369,
-                "ListEnd": 412,
+                "ListPos": 489,
+                "ListEnd": 532,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Name": {
                       "Name": "toUnixTimestamp64Nano",
                       "QuoteType": 1,
-                      "NamePos": 369,
-                      "NameEnd": 390
+                      "NamePos": 489,
+                      "NameEnd": 510
                     },
                     "Params": {
-                      "LeftParenPos": 390,
-                      "RightParenPos": 402,
+                      "LeftParenPos": 510,
+                      "RightParenPos": 522,
                       "Items": {
-                        "ListPos": 392,
-                        "ListEnd": 401,
+                        "ListPos": 512,
+                        "ListEnd": 521,
                         "HasDistinct": false,
                         "Items": [
                           {
                             "Name": "timestamp",
                             "QuoteType": 3,
-                            "NamePos": 392,
-                            "NameEnd": 401
+                            "NamePos": 512,
+                            "NameEnd": 521
                           }
                         ]
                       },
@@ -562,8 +702,8 @@
                   {
                     "Name": "api_id",
                     "QuoteType": 3,
-                    "NamePos": 406,
-                    "NameEnd": 412
+                    "NamePos": 526,
+                    "NameEnd": 532
                   }
                 ]
               },
