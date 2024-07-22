@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS test.events_local (
         f74 Int64,
         f75 String
     ),
-    f8 Datetime DEFAULT now()
+    f8 Datetime DEFAULT now(),
+    f9 String MATERIALIZED toString(f7['f70']),
+    f10 String ALIAS f11,
 ) ENGINE = MergeTree
 PRIMARY KEY (f0, f1, f2)
 PARTITION BY toYYYYMMDD(f3)
@@ -44,7 +46,9 @@ CREATE TABLE IF NOT EXISTS test.events_local
     f73 Int64,
     f74 Int64,
     f75 String),
-  f8 Datetime DEFAULT now()
+  f8 Datetime DEFAULT now(),
+  f9 String MATERIALIZED toString(f7['f70']),
+  f10 String ALIAS f11
 )
 ENGINE = MergeTree
 PRIMARY KEY (f0, f1, f2)

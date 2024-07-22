@@ -52,7 +52,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -80,7 +82,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -108,7 +112,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -136,7 +142,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -164,7 +172,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -212,7 +222,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -240,7 +252,9 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,
@@ -268,28 +282,27 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": {
-            "DefaultPos": 213,
-            "Expr": {
-              "Name": {
-                "Name": "now",
-                "QuoteType": 1,
-                "NamePos": 221,
-                "NameEnd": 224
+          "DefaultExpr": {
+            "Name": {
+              "Name": "now",
+              "QuoteType": 1,
+              "NamePos": 221,
+              "NameEnd": 224
+            },
+            "Params": {
+              "LeftParenPos": 224,
+              "RightParenPos": 225,
+              "Items": {
+                "ListPos": 225,
+                "ListEnd": 225,
+                "HasDistinct": false,
+                "Items": []
               },
-              "Params": {
-                "LeftParenPos": 224,
-                "RightParenPos": 225,
-                "Items": {
-                  "ListPos": 225,
-                  "ListEnd": 225,
-                  "HasDistinct": false,
-                  "Items": []
-                },
-                "ColumnArgList": null
-              }
+              "ColumnArgList": null
             }
           },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,

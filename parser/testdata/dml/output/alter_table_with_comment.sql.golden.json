@@ -55,14 +55,13 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": {
-            "DefaultPos": 82,
-            "Expr": {
-              "LiteralPos": 91,
-              "LiteralEnd": 91,
-              "Literal": ""
-            }
+          "DefaultExpr": {
+            "LiteralPos": 91,
+            "LiteralEnd": 91,
+            "Literal": ""
           },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": {
@@ -128,14 +127,13 @@
           },
           "NotNull": null,
           "Nullable": null,
-          "Property": {
-            "DefaultPos": 193,
-            "Expr": {
-              "LiteralPos": 202,
-              "LiteralEnd": 202,
-              "Literal": ""
-            }
+          "DefaultExpr": {
+            "LiteralPos": 202,
+            "LiteralEnd": 202,
+            "Literal": ""
           },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
           "Codec": null,
           "TTL": null,
           "Comment": null,

@@ -2461,35 +2461,6 @@ func (o *ClusterClause) Accept(visitor ASTVisitor) error {
 	return visitor.VisitOnClusterExpr(o)
 }
 
-type DefaultExpr struct {
-	DefaultPos Pos
-	Expr       Expr
-}
-
-func (d *DefaultExpr) Pos() Pos {
-	return d.DefaultPos
-}
-
-func (d *DefaultExpr) End() Pos {
-	return d.Expr.End()
-}
-
-func (d *DefaultExpr) String(level int) string {
-	var builder strings.Builder
-	builder.WriteString("DEFAULT ")
-	builder.WriteString(d.Expr.String(level + 1))
-	return builder.String()
-}
-
-func (d *DefaultExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
-	if err := d.Expr.Accept(visitor); err != nil {
-		return err
-	}
-	return visitor.VisitDefaultExpr(d)
-}
-
 type PartitionClause struct {
 	PartitionPos Pos
 	Expr         Expr
@@ -3015,7 +2986,9 @@ type ColumnExpr struct {
 	NotNull   *NotNullLiteral
 	Nullable  *NullLiteral
 
-	Property Expr
+	DefaultExpr      Expr
+	MaterializedExpr Expr
+	AliasExpr        Expr
 
 	Codec *CompressionCodec
 	TTL   Expr
@@ -3044,9 +3017,17 @@ func (c *ColumnExpr) String(level int) string {
 	} else if c.Nullable != nil {
 		builder.WriteString(" NULL")
 	}
-	if c.Property != nil {
-		builder.WriteByte(' ')
-		builder.WriteString(c.Property.String(level))
+	if c.DefaultExpr != nil {
+		builder.WriteString(" DEFAULT ")
+		builder.WriteString(c.DefaultExpr.String(level))
+	}
+	if c.MaterializedExpr != nil {
+		builder.WriteString(" MATERIALIZED ")
+		builder.WriteString(c.MaterializedExpr.String(level))
+	}
+	if c.AliasExpr != nil {
+		builder.WriteString(" ALIAS ")
+		builder.WriteString(c.AliasExpr.String(level))
 	}
 	if c.Codec != nil {
 		builder.WriteByte(' ')
@@ -3084,8 +3065,18 @@ func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	if c.Property != nil {
-		if err := c.Property.Accept(visitor); err != nil {
+	if c.DefaultExpr != nil {
+		if err := c.DefaultExpr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.MaterializedExpr != nil {
+		if err := c.MaterializedExpr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.AliasExpr != nil {
+		if err := c.AliasExpr.Accept(visitor); err != nil {
 			return err
 		}
 	}
