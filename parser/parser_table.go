@@ -435,12 +435,19 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnExpr, error) {
 		columnEnd = notNull.End()
 	}
 
-	property, err := p.tryParseTableColumnPropertyExpr(p.Pos())
+	switch {
+	case p.tryConsumeKeyword(KeywordDefault) != nil:
+		column.DefaultExpr, err = p.parseExpr(p.Pos())
+		columnEnd = column.DefaultExpr.End()
+	case p.tryConsumeKeyword(KeywordMaterialized) != nil:
+		column.MaterializedExpr, err = p.parseExpr(p.Pos())
+		columnEnd = column.MaterializedExpr.End()
+	case p.tryConsumeKeyword(KeywordAlias) != nil:
+		column.AliasExpr, err = p.parseExpr(p.Pos())
+		columnEnd = column.AliasExpr.End()
+	}
 	if err != nil {
 		return nil, err
-	}
-	if property != nil {
-		columnEnd = property.End()
 	}
 
 	comment, err := p.tryParseColumnComment(p.Pos())
@@ -464,7 +471,6 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnExpr, error) {
 	column.Codec = codec
 	column.Nullable = nullable
 	column.NotNull = notNull
-	column.Property = property
 	return column, nil
 }
 
@@ -799,20 +805,6 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		SettingsPos: pos,
 		Name:        ident,
 		Expr:        expr,
-	}, nil
-}
-
-func (p *Parser) parseDefaultExpr(pos Pos) (Expr, error) {
-	if err := p.consumeKeyword(KeywordDefault); err != nil {
-		return nil, err
-	}
-	expr, err := p.parseExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	return &DefaultExpr{
-		DefaultPos: pos,
-		Expr:       expr,
 	}, nil
 }
 

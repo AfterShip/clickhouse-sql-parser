@@ -54,7 +54,6 @@ type ASTVisitor interface {
 	VisitTableArgListExpr(expr *TableArgListExpr) error
 	VisitTableFunctionExpr(expr *TableFunctionExpr) error
 	VisitOnClusterExpr(expr *ClusterClause) error
-	VisitDefaultExpr(expr *DefaultExpr) error
 	VisitPartitionExpr(expr *PartitionClause) error
 	VisitPartitionByExpr(expr *PartitionByClause) error
 	VisitPrimaryKeyExpr(expr *PrimaryKeyClause) error
@@ -535,13 +534,6 @@ func (v *DefaultASTVisitor) VisitTableFunctionExpr(expr *TableFunctionExpr) erro
 }
 
 func (v *DefaultASTVisitor) VisitOnClusterExpr(expr *ClusterClause) error {
-	if v.Visit != nil {
-		return v.Visit(expr)
-	}
-	return nil
-}
-
-func (v *DefaultASTVisitor) VisitDefaultExpr(expr *DefaultExpr) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
