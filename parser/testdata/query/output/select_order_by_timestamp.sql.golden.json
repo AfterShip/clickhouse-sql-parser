@@ -1,0 +1,74 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 47,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 16,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "Timestamp",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 16
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 17,
+      "Expr": {
+        "Table": {
+          "TablePos": 22,
+          "TableEnd": 28,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "events",
+              "QuoteType": 1,
+              "NamePos": 22,
+              "NameEnd": 28
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 28,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 29,
+      "ListEnd": 47,
+      "Items": [
+        {
+          "OrderPos": 29,
+          "Expr": {
+            "Name": "Timestamp",
+            "QuoteType": 1,
+            "NamePos": 38,
+            "NameEnd": 47
+          },
+          "Direction": "None"
+        }
+      ]
+    },
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
