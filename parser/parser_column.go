@@ -298,7 +298,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		if err != nil {
 			return nil, err
 		}
-		if nextToken.Kind == TokenString {
+		if nextToken != nil && nextToken.Kind == TokenString {
 			return p.parseString(pos)
 		}
 		return p.parseIdentOrFunction(pos)
