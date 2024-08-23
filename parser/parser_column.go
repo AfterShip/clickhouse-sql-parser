@@ -591,11 +591,14 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 		return nil, err
 	}
 
-	expr, err := p.parseExpr(p.Pos())
-	if err != nil {
-		return nil, err
+	// case expr is optional
+	if !p.matchKeyword(KeywordWhen) {
+		expr, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		caseExpr.Expr = expr
 	}
-	caseExpr.Expr = expr
 
 	// WHEN expr THEN expr
 	whenClauses := make([]*WhenClause, 0)

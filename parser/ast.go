@@ -3766,13 +3766,10 @@ func (w *WhenClause) End() Pos {
 func (w *WhenClause) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("WHEN ")
-	builder.WriteString(NewLine(level + 1))
 	builder.WriteString(w.When.String(level))
-	builder.WriteString(NewLine(level + 1))
 	builder.WriteString(" THEN ")
 	builder.WriteString(w.Then.String(level))
 	if w.Else != nil {
-		builder.WriteString(NewLine(level + 1))
 		builder.WriteString(" ELSE ")
 		builder.WriteString(w.Else.String(level))
 	}
@@ -3799,7 +3796,7 @@ func (w *WhenClause) Accept(visitor ASTVisitor) error {
 type CaseExpr struct {
 	CasePos Pos
 	EndPos  Pos
-	Expr    Expr
+	Expr    Expr // optional
 	Whens   []*WhenClause
 	ElsePos Pos
 	Else    Expr
@@ -3816,27 +3813,27 @@ func (c *CaseExpr) End() Pos {
 func (c *CaseExpr) String(level int) string {
 	var builder strings.Builder
 	builder.WriteString("CASE ")
-	builder.WriteString(NewLine(level))
-	builder.WriteString(c.Expr.String(level))
+	if c.Expr != nil {
+		builder.WriteString(c.Expr.String(level))
+	}
 	for _, when := range c.Whens {
-		builder.WriteString(NewLine(level))
 		builder.WriteString(when.String(level))
 	}
 	if c.Else != nil {
-		builder.WriteString("ELSE ")
-		builder.WriteString(NewLine(level))
+		builder.WriteString(" ELSE ")
 		builder.WriteString(c.Else.String(level))
 	}
-	builder.WriteString(NewLine(level))
-	builder.WriteString("END")
+	builder.WriteString(" END")
 	return builder.String()
 }
 
 func (c *CaseExpr) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
-	if err := c.Expr.Accept(visitor); err != nil {
-		return err
+	if c.Expr != nil {
+		if err := c.Expr.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	for _, when := range c.Whens {
 		if err := when.Accept(visitor); err != nil {

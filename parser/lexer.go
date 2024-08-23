@@ -256,8 +256,17 @@ func (l *Lexer) peekToken() (*Token, error) {
 	return token, nil
 }
 
+func (l *Lexer) hasPrecedenceToken(last *Token) bool {
+	return last != nil && (last.Kind == TokenIdent ||
+		last.Kind == TokenKeyword ||
+		last.Kind == TokenInt ||
+		last.Kind == TokenFloat ||
+		last.Kind == TokenString)
+}
+
 func (l *Lexer) consumeToken() error {
 	// clear last token
+	lastToken := l.lastToken
 	l.lastToken = nil
 	l.skipComments()
 	l.skipSpace()
@@ -281,7 +290,8 @@ func (l *Lexer) consumeToken() error {
 		}
 
 	case '+', '-':
-		if l.peekOk(1) && IsDigit(l.peekN(1)) {
+		// hasPrecedenceToken is used to distinguish between unary and binary operators
+		if !l.hasPrecedenceToken(lastToken) && l.peekOk(1) && IsDigit(l.peekN(1)) {
 			return l.consumeNumber()
 		} else if l.peekOk(1) && l.peekN(1) == '>' {
 			l.lastToken = &Token{
