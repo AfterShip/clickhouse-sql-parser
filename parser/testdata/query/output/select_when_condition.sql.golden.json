@@ -1,0 +1,61 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 0,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 0,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "CasePos": 7,
+          "EndPos": 0,
+          "Expr": null,
+          "Whens": [
+            {
+              "WhenPos": 12,
+              "ThenPos": 23,
+              "When": {
+                "Name": "false",
+                "QuoteType": 1,
+                "NamePos": 17,
+                "NameEnd": 22
+              },
+              "Then": {
+                "LiteralPos": 29,
+                "LiteralEnd": 34,
+                "Literal": "hello"
+              },
+              "ElsePos": 0,
+              "Else": null
+            }
+          ],
+          "ElsePos": 36,
+          "Else": {
+            "LiteralPos": 42,
+            "LiteralEnd": 47,
+            "Literal": "world"
+          }
+        }
+      ]
+    },
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
