@@ -3820,10 +3820,10 @@ func (c *CaseExpr) String(level int) string {
 		builder.WriteString(when.String(level))
 	}
 	if c.Else != nil {
-		builder.WriteString("ELSE ")
+		builder.WriteString(" ELSE ")
 		builder.WriteString(c.Else.String(level))
 	}
-	builder.WriteString("END")
+	builder.WriteString(" END")
 	return builder.String()
 }
 
