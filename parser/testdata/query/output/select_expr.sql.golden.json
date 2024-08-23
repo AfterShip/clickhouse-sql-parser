@@ -1,0 +1,48 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 10,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 10,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "LeftExpr": {
+            "NumPos": 7,
+            "NumEnd": 8,
+            "Literal": "1",
+            "Base": 10
+          },
+          "Operation": "+",
+          "RightExpr": {
+            "NumPos": 9,
+            "NumEnd": 10,
+            "Literal": "1",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        }
+      ]
+    },
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
