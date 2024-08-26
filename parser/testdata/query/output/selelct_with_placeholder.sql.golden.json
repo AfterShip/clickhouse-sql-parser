@@ -1,0 +1,77 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 28,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 7,
+      "ListEnd": 7,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 7,
+          "NameEnd": 7
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 9,
+      "Expr": {
+        "Table": {
+          "TablePos": 14,
+          "TableEnd": 16,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t0",
+              "QuoteType": 1,
+              "NamePos": 14,
+              "NameEnd": 16
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 16,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 17,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 23,
+          "NameEnd": 25
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "PlaceholderPos": 28,
+          "PlaceHolderEnd": 28,
+          "Type": "?"
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
