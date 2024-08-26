@@ -285,5 +285,93 @@
     "UnionAll": null,
     "UnionDistinct": null,
     "Except": null
+  },
+  {
+    "SelectPos": 222,
+    "StatementEnd": 283,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 229,
+      "ListEnd": 229,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 229,
+          "NameEnd": 229
+        }
+      ]
+    },
+    "From": {
+      "FromPos": 231,
+      "Expr": {
+        "Table": {
+          "TablePos": 236,
+          "TableEnd": 246,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "clickhouse",
+              "QuoteType": 1,
+              "NamePos": 236,
+              "NameEnd": 246
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 246,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 247,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "tenant_id",
+          "QuoteType": 1,
+          "NamePos": 253,
+          "NameEnd": 262
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "LBracePos": 265,
+          "RBracePos": 283,
+          "Name": {
+            "Name": "tenant_id",
+            "QuoteType": 1,
+            "NamePos": 266,
+            "NameEnd": 275
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 277,
+              "NameEnd": 283
+            }
+          }
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
   }
 ]
