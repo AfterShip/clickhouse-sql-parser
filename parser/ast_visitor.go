@@ -65,7 +65,9 @@ type ASTVisitor interface {
 	VisitSettingsExpr(expr *SettingExprList) error
 	VisitSettingsExprList(expr *SettingsClause) error
 	VisitParamExprList(expr *ParamExprList) error
+	VisitMapLiteral(expr *MapLiteral) error
 	VisitArrayParamList(expr *ArrayParamList) error
+	VisitQueryParam(expr *QueryParam) error
 	VisitObjectParams(expr *ObjectParams) error
 	VisitFunctionExpr(expr *FunctionExpr) error
 	VisitWindowFunctionExpr(expr *WindowFunctionExpr) error
@@ -618,6 +620,20 @@ func (v *DefaultASTVisitor) VisitParamExprList(expr *ParamExprList) error {
 }
 
 func (v *DefaultASTVisitor) VisitArrayParamList(expr *ArrayParamList) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitQueryParam(expr *QueryParam) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitMapLiteral(expr *MapLiteral) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

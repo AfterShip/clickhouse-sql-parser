@@ -797,6 +797,12 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		if err != nil {
 			return nil, err
 		}
+	case p.matchTokenKind("{"):
+		m, err := p.parseMapLiteral(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		expr = m
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <number> or <string>", p.last().String)
 	}

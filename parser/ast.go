@@ -2844,6 +2844,92 @@ func (f *ParamExprList) Accept(visitor ASTVisitor) error {
 	return visitor.VisitParamExprList(f)
 }
 
+type KeyValue struct {
+	Key   StringLiteral
+	Value Expr
+}
+
+type MapLiteral struct {
+	LBracePos Pos
+	RBracePos Pos
+	KeyValues []KeyValue
+}
+
+func (m *MapLiteral) Pos() Pos {
+	return m.LBracePos
+}
+
+func (m *MapLiteral) End() Pos {
+	return m.RBracePos
+}
+
+func (m *MapLiteral) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("{")
+
+	for i, value := range m.KeyValues {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(value.Key.String(level))
+		builder.WriteString(": ")
+		builder.WriteString(value.Value.String(level))
+	}
+	builder.WriteString("}")
+	return builder.String()
+}
+
+func (m *MapLiteral) Accept(visitor ASTVisitor) error {
+	visitor.enter(m)
+	defer visitor.leave(m)
+	for _, kv := range m.KeyValues {
+		if err := kv.Key.Accept(visitor); err != nil {
+			return err
+		}
+		if err := kv.Value.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitMapLiteral(m)
+}
+
+type QueryParam struct {
+	LBracePos Pos
+	RBracePos Pos
+	Name      *Ident
+	Type      Expr
+}
+
+func (q *QueryParam) Pos() Pos {
+	return q.LBracePos
+}
+
+func (q *QueryParam) End() Pos {
+	return q.RBracePos
+}
+
+func (q *QueryParam) String(level int) string {
+	var builder strings.Builder
+	builder.WriteString("{")
+	builder.WriteString(q.Name.String(level))
+	builder.WriteString(": ")
+	builder.WriteString(q.Type.String(level))
+	builder.WriteString("}")
+	return builder.String()
+}
+
+func (q *QueryParam) Accept(visitor ASTVisitor) error {
+	visitor.enter(q)
+	defer visitor.leave(q)
+	if err := q.Name.Accept(visitor); err != nil {
+		return err
+	}
+	if err := q.Type.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitQueryParam(q)
+}
+
 type ArrayParamList struct {
 	LeftBracketPos  Pos
 	RightBracketPos Pos

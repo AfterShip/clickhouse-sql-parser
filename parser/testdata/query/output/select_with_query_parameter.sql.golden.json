@@ -1,0 +1,289 @@
+[
+  {
+    "SetPos": 0,
+    "Settings": {
+      "SettingsPos": 4,
+      "ListEnd": 16,
+      "Items": [
+        {
+          "SettingsPos": 4,
+          "Name": {
+            "Name": "param_a",
+            "QuoteType": 1,
+            "NamePos": 4,
+            "NameEnd": 11
+          },
+          "Expr": {
+            "NumPos": 14,
+            "NumEnd": 16,
+            "Literal": "13",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 18,
+    "Settings": {
+      "SettingsPos": 22,
+      "ListEnd": 36,
+      "Items": [
+        {
+          "SettingsPos": 22,
+          "Name": {
+            "Name": "param_b",
+            "QuoteType": 1,
+            "NamePos": 22,
+            "NameEnd": 29
+          },
+          "Expr": {
+            "LiteralPos": 33,
+            "LiteralEnd": 36,
+            "Literal": "str"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 39,
+    "Settings": {
+      "SettingsPos": 43,
+      "ListEnd": 73,
+      "Items": [
+        {
+          "SettingsPos": 43,
+          "Name": {
+            "Name": "param_c",
+            "QuoteType": 1,
+            "NamePos": 43,
+            "NameEnd": 50
+          },
+          "Expr": {
+            "LiteralPos": 54,
+            "LiteralEnd": 73,
+            "Literal": "2022-08-04 18:30:53"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 76,
+    "Settings": {
+      "SettingsPos": 80,
+      "ListEnd": 121,
+      "Items": [
+        {
+          "SettingsPos": 80,
+          "Name": {
+            "Name": "param_d",
+            "QuoteType": 1,
+            "NamePos": 80,
+            "NameEnd": 87
+          },
+          "Expr": {
+            "LBracePos": 90,
+            "RBracePos": 121,
+            "KeyValues": [
+              {
+                "Key": {
+                  "LiteralPos": 92,
+                  "LiteralEnd": 94,
+                  "Literal": "10"
+                },
+                "Value": {
+                  "LeftBracketPos": 97,
+                  "RightBracketPos": 104,
+                  "Items": {
+                    "ListPos": 98,
+                    "ListEnd": 104,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "NumPos": 98,
+                        "NumEnd": 100,
+                        "Literal": "11",
+                        "Base": 10
+                      },
+                      {
+                        "NumPos": 102,
+                        "NumEnd": 104,
+                        "Literal": "12",
+                        "Base": 10
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "Key": {
+                  "LiteralPos": 108,
+                  "LiteralEnd": 110,
+                  "Literal": "13"
+                },
+                "Value": {
+                  "LeftBracketPos": 113,
+                  "RightBracketPos": 120,
+                  "Items": {
+                    "ListPos": 114,
+                    "ListEnd": 120,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "NumPos": 114,
+                        "NumEnd": 116,
+                        "Literal": "14",
+                        "Base": 10
+                      },
+                      {
+                        "NumPos": 118,
+                        "NumEnd": 120,
+                        "Literal": "15",
+                        "Base": 10
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SelectPos": 125,
+    "StatementEnd": 218,
+    "With": null,
+    "Top": null,
+    "SelectColumns": {
+      "ListPos": 136,
+      "ListEnd": 218,
+      "HasDistinct": false,
+      "Items": [
+        {
+          "LBracePos": 136,
+          "RBracePos": 146,
+          "Name": {
+            "Name": "a",
+            "QuoteType": 1,
+            "NamePos": 137,
+            "NameEnd": 138
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "QuoteType": 1,
+              "NamePos": 140,
+              "NameEnd": 146
+            }
+          }
+        },
+        {
+          "LBracePos": 153,
+          "RBracePos": 163,
+          "Name": {
+            "Name": "b",
+            "QuoteType": 1,
+            "NamePos": 154,
+            "NameEnd": 155
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 157,
+              "NameEnd": 163
+            }
+          }
+        },
+        {
+          "LBracePos": 170,
+          "RBracePos": 182,
+          "Name": {
+            "Name": "c",
+            "QuoteType": 1,
+            "NamePos": 171,
+            "NameEnd": 172
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "QuoteType": 1,
+              "NamePos": 174,
+              "NameEnd": 182
+            }
+          }
+        },
+        {
+          "LBracePos": 189,
+          "RBracePos": 218,
+          "Name": {
+            "Name": "d",
+            "QuoteType": 1,
+            "NamePos": 190,
+            "NameEnd": 191
+          },
+          "Type": {
+            "LeftParenPos": 197,
+            "RightParenPos": 217,
+            "Name": {
+              "Name": "Map",
+              "QuoteType": 1,
+              "NamePos": 193,
+              "NameEnd": 196
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 197,
+                  "NameEnd": 203
+                }
+              },
+              {
+                "LeftParenPos": 211,
+                "RightParenPos": 216,
+                "Name": {
+                  "Name": "Array",
+                  "QuoteType": 1,
+                  "NamePos": 205,
+                  "NameEnd": 210
+                },
+                "Params": [
+                  {
+                    "Name": {
+                      "Name": "UInt8",
+                      "QuoteType": 1,
+                      "NamePos": 211,
+                      "NameEnd": 216
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
