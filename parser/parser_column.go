@@ -382,7 +382,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseMapLiteral(p.Pos())
 	case p.matchTokenKind(opTypeQuery):
 		// Placeholder `?`
-		p.lexer.consumeToken()
+		_ = p.lexer.consumeToken()
 		return &PlaceHolder{
 			PlaceholderPos: pos,
 			PlaceHolderEnd: pos,
