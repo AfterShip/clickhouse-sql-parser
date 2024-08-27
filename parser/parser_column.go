@@ -380,6 +380,14 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 			return p.parseQueryParam(p.Pos())
 		}
 		return p.parseMapLiteral(p.Pos())
+	case p.matchTokenKind(opTypeQuery):
+		// Placeholder `?`
+		_ = p.lexer.consumeToken()
+		return &PlaceHolder{
+			PlaceholderPos: pos,
+			PlaceHolderEnd: pos,
+			Type:           opTypeQuery,
+		}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}

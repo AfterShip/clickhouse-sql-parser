@@ -3481,6 +3481,30 @@ func (s *StringLiteral) Accept(visitor ASTVisitor) error {
 	return visitor.VisitStringLiteral(s)
 }
 
+type PlaceHolder struct {
+	PlaceholderPos Pos
+	PlaceHolderEnd Pos
+	Type           string
+}
+
+func (p *PlaceHolder) Pos() Pos {
+	return p.PlaceholderPos
+}
+
+func (p *PlaceHolder) End() Pos {
+	return p.PlaceHolderEnd
+}
+
+func (p *PlaceHolder) String(int) string {
+	return p.Type
+}
+
+func (p *PlaceHolder) Accept(visitor ASTVisitor) error {
+	visitor.enter(p)
+	defer visitor.leave(p)
+	return visitor.VisitPlaceHolderExpr(p)
+}
+
 type RatioExpr struct {
 	Numerator *NumberLiteral
 	// numberLiteral (SLASH numberLiteral)?

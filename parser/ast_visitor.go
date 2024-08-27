@@ -143,6 +143,7 @@ type ASTVisitor interface {
 	VisitSystemDropExpr(expr *SystemDropExpr) error
 	VisitTruncateTable(expr *TruncateTable) error
 	VisitSampleRatioExpr(expr *SampleClause) error
+	VisitPlaceHolderExpr(expr *PlaceHolder) error
 	VisitDeleteFromExpr(expr *DeleteClause) error
 	VisitColumnNamesExpr(expr *ColumnNamesExpr) error
 	VisitValuesExpr(expr *AssignmentValues) error
@@ -1152,6 +1153,13 @@ func (v *DefaultASTVisitor) VisitTruncateTable(expr *TruncateTable) error {
 }
 
 func (v *DefaultASTVisitor) VisitSampleRatioExpr(expr *SampleClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitPlaceHolderExpr(expr *PlaceHolder) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

@@ -1,0 +1,164 @@
+[
+  {
+    "InsertPos": 0,
+    "Format": null,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "t0",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 14
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 14,
+      "RightParenPos": 50,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "user_id",
+            "QuoteType": 1,
+            "NamePos": 15,
+            "NameEnd": 22
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "message",
+            "QuoteType": 1,
+            "NamePos": 24,
+            "NameEnd": 31
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "timestamp",
+            "QuoteType": 1,
+            "NamePos": 33,
+            "NameEnd": 42
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "metric",
+            "QuoteType": 1,
+            "NamePos": 44,
+            "NameEnd": 50
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": [
+      {
+        "LeftParenPos": 63,
+        "RightParenPos": 74,
+        "Values": [
+          {
+            "PlaceholderPos": 64,
+            "PlaceHolderEnd": 64,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 67,
+            "PlaceHolderEnd": 67,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 70,
+            "PlaceHolderEnd": 70,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 73,
+            "PlaceHolderEnd": 73,
+            "Type": "?"
+          }
+        ]
+      },
+      {
+        "LeftParenPos": 81,
+        "RightParenPos": 92,
+        "Values": [
+          {
+            "PlaceholderPos": 82,
+            "PlaceHolderEnd": 82,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 85,
+            "PlaceHolderEnd": 85,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 88,
+            "PlaceHolderEnd": 88,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 91,
+            "PlaceHolderEnd": 91,
+            "Type": "?"
+          }
+        ]
+      },
+      {
+        "LeftParenPos": 99,
+        "RightParenPos": 110,
+        "Values": [
+          {
+            "PlaceholderPos": 100,
+            "PlaceHolderEnd": 100,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 103,
+            "PlaceHolderEnd": 103,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 106,
+            "PlaceHolderEnd": 106,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 109,
+            "PlaceHolderEnd": 109,
+            "Type": "?"
+          }
+        ]
+      },
+      {
+        "LeftParenPos": 117,
+        "RightParenPos": 128,
+        "Values": [
+          {
+            "PlaceholderPos": 118,
+            "PlaceHolderEnd": 118,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 121,
+            "PlaceHolderEnd": 121,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 124,
+            "PlaceHolderEnd": 124,
+            "Type": "?"
+          },
+          {
+            "PlaceholderPos": 127,
+            "PlaceHolderEnd": 127,
+            "Type": "?"
+          }
+        ]
+      }
+    ],
+    "SelectExpr": null
+  }
+]
