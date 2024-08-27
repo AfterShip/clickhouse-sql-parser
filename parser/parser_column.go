@@ -325,6 +325,17 @@ func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 
 }
 
+func (p *Parser) peekTokenKind(kind TokenKind) bool {
+	if p.lexer.isEOF() {
+		return false
+	}
+	token, err := p.lexer.peekToken()
+	if err != nil || token == nil {
+		return false
+	}
+	return token.Kind == kind
+}
+
 func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	switch {
 	case p.matchKeyword(KeywordInterval):
@@ -357,12 +368,18 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 				return p.parseSelectQuery(pos)
 			}
 		}
-		return p.parseFunctionParams(pos)
+		return p.parseFunctionParams(p.Pos())
 	case p.matchTokenKind("*"):
-		return p.parseColumnStar(pos)
+		return p.parseColumnStar(p.Pos())
 	case p.matchTokenKind("["):
-		return p.parseArrayParams(pos)
-
+		return p.parseArrayParams(p.Pos())
+	case p.matchTokenKind("{"):
+		// The map literal string also starts with '{', so we need to check the next token
+		// to determine if it is a map literal or a query param.
+		if p.peekTokenKind(TokenIdent) {
+			return p.parseQueryParam(p.Pos())
+		}
+		return p.parseMapLiteral(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}
@@ -559,6 +576,71 @@ func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {
 		paramExprList.ColumnArgList = columnArgList
 	}
 	return paramExprList, nil
+}
+
+func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
+	if _, err := p.consumeTokenKind("{"); err != nil {
+		return nil, err
+	}
+
+	keyValues := make([]KeyValue, 0)
+	for !p.lexer.isEOF() && !p.matchTokenKind("}") {
+		key, err := p.parseString(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if _, err := p.consumeTokenKind(":"); err != nil {
+			return nil, err
+		}
+		value, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		keyValues = append(keyValues, KeyValue{
+			Key:   *key,
+			Value: value,
+		})
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+	}
+	rightBracePos := p.Pos()
+	if _, err := p.consumeTokenKind("}"); err != nil {
+		return nil, err
+	}
+	return &MapLiteral{
+		LBracePos: pos,
+		RBracePos: rightBracePos,
+		KeyValues: keyValues,
+	}, nil
+}
+
+func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
+	if _, err := p.consumeTokenKind("{"); err != nil {
+		return nil, err
+	}
+
+	ident, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	if _, err := p.consumeTokenKind(":"); err != nil {
+		return nil, err
+	}
+	columnType, err := p.parseColumnType(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	rightBracePos := p.Pos()
+	if _, err := p.consumeTokenKind("}"); err != nil {
+		return nil, err
+	}
+	return &QueryParam{
+		LBracePos: pos,
+		RBracePos: rightBracePos,
+		Name:      ident,
+		Type:      columnType,
+	}, nil
 }
 
 func (p *Parser) parseArrayParams(pos Pos) (*ArrayParamList, error) {
