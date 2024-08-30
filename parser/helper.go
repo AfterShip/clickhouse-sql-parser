@@ -1,21 +1,5 @@
 package parser
 
-import (
-	"fmt"
-	"strings"
-)
-
-func TabSpaces(level int) string {
-	if level > 0 {
-		return strings.Repeat("  ", level)
-	}
-	return ""
-}
-
-func NewLine(level int) string {
-	return fmt.Sprintf("\n%s", TabSpaces(level))
-}
-
 func IsDigit(c byte) bool {
 	return '0' <= c && c <= '9'
 }

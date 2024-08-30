@@ -7,8 +7,4 @@ from
     t0
 
 -- Format SQL:
-
-SELECT 
-  *
-FROM
-  t0;
+SELECT * FROM t0;

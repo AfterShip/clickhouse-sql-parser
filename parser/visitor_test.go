@@ -40,7 +40,7 @@ func TestVisitor_Identical(t *testing.T) {
 					err := stmt.Accept(&visitor)
 					require.NoError(t, err)
 
-					formatSQLBuilder.WriteString(stmt.String(0))
+					formatSQLBuilder.WriteString(stmt.String())
 					formatSQLBuilder.WriteByte(';')
 					formatSQLBuilder.WriteByte('\n')
 				}
@@ -62,7 +62,7 @@ type simpleRewriteVisitor struct {
 }
 
 func (v *simpleRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error {
-	if expr.Table.String(0) == "group_by_all" {
+	if expr.Table.String() == "group_by_all" {
 		expr.Table = &Ident{Name: "hack"}
 	}
 	return nil
@@ -86,7 +86,7 @@ func TestVisitor_SimpleRewrite(t *testing.T) {
 
 	err = stmt.Accept(&visitor)
 	require.NoError(t, err)
-	newSql := stmt.String(0)
+	newSql := stmt.String()
 
 	require.NotSame(t, sql, newSql)
 	require.True(t, strings.Contains(newSql, "hack"))
@@ -128,7 +128,7 @@ func TestVisitor_NestRewrite(t *testing.T) {
 
 	err = stmt.Accept(&visitor)
 	require.NoError(t, err)
-	newSql := stmt.String(0)
+	newSql := stmt.String()
 
 	require.NotSame(t, sql, newSql)
 	require.Less(t, strings.Index(newSql, "table1"), strings.Index(newSql, "table2"))

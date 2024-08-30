@@ -15,7 +15,7 @@ const (
 type Expr interface {
 	Pos() Pos
 	End() Pos
-	String(level int) string
+	String() string
 	Accept(visitor ASTVisitor) error
 }
 
@@ -37,7 +37,7 @@ func (o *OperationExpr) End() Pos {
 	return o.OperationPos + Pos(len(o.Kind))
 }
 
-func (o *OperationExpr) String(int) string {
+func (o *OperationExpr) String() string {
 	return strings.ToUpper(string(o.Kind))
 }
 
@@ -61,13 +61,13 @@ func (t *TernaryOperation) End() Pos {
 	return t.FalseExpr.End()
 }
 
-func (t *TernaryOperation) String(level int) string {
+func (t *TernaryOperation) String() string {
 	var builder strings.Builder
-	builder.WriteString(t.Condition.String(level))
+	builder.WriteString(t.Condition.String())
 	builder.WriteString(" ? ")
-	builder.WriteString(t.TrueExpr.String(level))
+	builder.WriteString(t.TrueExpr.String())
 	builder.WriteString(" : ")
-	builder.WriteString(t.FalseExpr.String(level))
+	builder.WriteString(t.FalseExpr.String())
 	return builder.String()
 }
 
@@ -102,9 +102,9 @@ func (p *BinaryOperation) End() Pos {
 	return p.RightExpr.End()
 }
 
-func (p *BinaryOperation) String(level int) string {
+func (p *BinaryOperation) String() string {
 	var builder strings.Builder
-	builder.WriteString(p.LeftExpr.String(level))
+	builder.WriteString(p.LeftExpr.String())
 	if p.Operation != opTypeCast {
 		builder.WriteByte(' ')
 	}
@@ -117,7 +117,7 @@ func (p *BinaryOperation) String(level int) string {
 	if p.Operation != opTypeCast {
 		builder.WriteByte(' ')
 	}
-	builder.WriteString(p.RightExpr.String(level))
+	builder.WriteString(p.RightExpr.String())
 	return builder.String()
 }
 
@@ -160,12 +160,12 @@ func (j *JoinTableExpr) End() Pos {
 	return j.StatementEnd
 }
 
-func (j *JoinTableExpr) String(level int) string {
+func (j *JoinTableExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(j.Table.String(level))
+	builder.WriteString(j.Table.String())
 	if j.SampleRatio != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(j.SampleRatio.String(level))
+		builder.WriteString(j.SampleRatio.String())
 	}
 	if j.HasFinal {
 		builder.WriteString(" FINAL")
@@ -198,17 +198,17 @@ func (a *AlterTable) Type() string {
 	return "ALTER TABLE"
 }
 
-func (a *AlterTable) String(level int) string {
+func (a *AlterTable) String() string {
 	var builder strings.Builder
 	builder.WriteString("ALTER TABLE ")
-	builder.WriteString(a.TableIdentifier.String(level))
+	builder.WriteString(a.TableIdentifier.String())
 	if a.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(a.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(a.OnCluster.String())
 	}
 	for i, expr := range a.AlterExprs {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(expr.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(expr.String())
 		if i != len(a.AlterExprs)-1 {
 			builder.WriteString(",")
 		}
@@ -255,13 +255,13 @@ func (a *AlterTableAttachPartition) AlterType() string {
 	return "ATTACH_PARTITION"
 }
 
-func (a *AlterTableAttachPartition) String(level int) string {
+func (a *AlterTableAttachPartition) String() string {
 	var builder strings.Builder
 	builder.WriteString("ATTACH ")
-	builder.WriteString(a.Partition.String(level))
+	builder.WriteString(a.Partition.String())
 	if a.From != nil {
 		builder.WriteString(" FROM ")
-		builder.WriteString(a.From.String(level))
+		builder.WriteString(a.From.String())
 	}
 	return builder.String()
 }
@@ -298,13 +298,13 @@ func (a *AlterTableDetachPartition) AlterType() string {
 	return "DETACH_PARTITION"
 }
 
-func (a *AlterTableDetachPartition) String(level int) string {
+func (a *AlterTableDetachPartition) String() string {
 	var builder strings.Builder
 	builder.WriteString("DETACH ")
-	builder.WriteString(a.Partition.String(level))
+	builder.WriteString(a.Partition.String())
 	if a.Settings != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(a.Settings.String(level))
+		builder.WriteString(a.Settings.String())
 	}
 	return builder.String()
 }
@@ -345,16 +345,16 @@ func (a *AlterTableDropPartition) AlterType() string {
 	return "DROP_PARTITION"
 }
 
-func (a *AlterTableDropPartition) String(level int) string {
+func (a *AlterTableDropPartition) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP ")
 	if a.HasDetached {
 		builder.WriteString("DETACHED ")
 	}
-	builder.WriteString(a.Partition.String(level))
+	builder.WriteString(a.Partition.String())
 	if a.Settings != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(a.Settings.String(level))
+		builder.WriteString(a.Settings.String())
 	}
 	return builder.String()
 }
@@ -388,7 +388,7 @@ func (a *AlterTableMaterializeProjection) AlterType() string {
 	return "MATERIALIZE_PROJECTION"
 }
 
-func (a *AlterTableMaterializeProjection) String(level int) string {
+func (a *AlterTableMaterializeProjection) String() string {
 	var builder strings.Builder
 	builder.WriteString("MATERIALIZE PROJECTION")
 
@@ -396,10 +396,10 @@ func (a *AlterTableMaterializeProjection) String(level int) string {
 		builder.WriteString(" IF EXISTS")
 	}
 	builder.WriteString(" ")
-	builder.WriteString(a.ProjectionName.String(level))
+	builder.WriteString(a.ProjectionName.String())
 	if a.Partition != nil {
 		builder.WriteString(" IN ")
-		builder.WriteString(a.Partition.String(level))
+		builder.WriteString(a.Partition.String())
 	}
 	return builder.String()
 }
@@ -438,7 +438,7 @@ func (a *AlterTableMaterializeIndex) AlterType() string {
 	return "MATERIALIZE_INDEX"
 }
 
-func (a *AlterTableMaterializeIndex) String(level int) string {
+func (a *AlterTableMaterializeIndex) String() string {
 	var builder strings.Builder
 	builder.WriteString("MATERIALIZE INDEX")
 
@@ -446,10 +446,10 @@ func (a *AlterTableMaterializeIndex) String(level int) string {
 		builder.WriteString(" IF EXISTS")
 	}
 	builder.WriteString(" ")
-	builder.WriteString(a.IndexName.String(level))
+	builder.WriteString(a.IndexName.String())
 	if a.Partition != nil {
 		builder.WriteString(" IN ")
-		builder.WriteString(a.Partition.String(level))
+		builder.WriteString(a.Partition.String())
 	}
 	return builder.String()
 }
@@ -486,12 +486,12 @@ func (a *AlterTableFreezePartition) AlterType() string {
 	return "FREEZE_PARTITION"
 }
 
-func (a *AlterTableFreezePartition) String(level int) string {
+func (a *AlterTableFreezePartition) String() string {
 	var builder strings.Builder
 	builder.WriteString("FREEZE")
 	if a.Partition != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(a.Partition.String(level))
+		builder.WriteString(a.Partition.String())
 	}
 	return builder.String()
 }
@@ -528,16 +528,16 @@ func (a *AlterTableAddColumn) AlterType() string {
 	return "ADD_COLUMN"
 }
 
-func (a *AlterTableAddColumn) String(level int) string {
+func (a *AlterTableAddColumn) String() string {
 	var builder strings.Builder
 	builder.WriteString("ADD COLUMN ")
-	builder.WriteString(a.Column.String(level))
+	builder.WriteString(a.Column.String())
 	if a.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
 	if a.After != nil {
 		builder.WriteString(" AFTER ")
-		builder.WriteString(a.After.String(level))
+		builder.WriteString(a.After.String())
 	}
 	return builder.String()
 }
@@ -577,16 +577,16 @@ func (a *AlterTableAddIndex) AlterType() string {
 	return "ADD_INDEX"
 }
 
-func (a *AlterTableAddIndex) String(level int) string {
+func (a *AlterTableAddIndex) String() string {
 	var builder strings.Builder
 	builder.WriteString("ADD ")
-	builder.WriteString(a.Index.String(level))
+	builder.WriteString(a.Index.String())
 	if a.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
 	if a.After != nil {
 		builder.WriteString(" AFTER ")
-		builder.WriteString(a.After.String(level))
+		builder.WriteString(a.After.String())
 	}
 	return builder.String()
 }
@@ -618,10 +618,10 @@ func (p *ProjectionOrderByClause) End() Pos {
 	return p.Columns.End()
 }
 
-func (p *ProjectionOrderByClause) String(level int) string {
+func (p *ProjectionOrderByClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("ORDER BY ")
-	builder.WriteString(p.Columns.String(level))
+	builder.WriteString(p.Columns.String())
 	return builder.String()
 }
 
@@ -649,22 +649,22 @@ func (p *ProjectionSelectStmt) End() Pos {
 	return p.RightParenPos
 }
 
-func (p *ProjectionSelectStmt) String(level int) string {
+func (p *ProjectionSelectStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("(")
 	if p.With != nil {
-		builder.WriteString(p.With.String(level))
+		builder.WriteString(p.With.String())
 		builder.WriteByte(' ')
 	}
 	builder.WriteString("SELECT ")
-	builder.WriteString(p.SelectColumns.String(level))
+	builder.WriteString(p.SelectColumns.String())
 	if p.GroupBy != nil {
 		builder.WriteString(" ")
-		builder.WriteString(p.GroupBy.String(level))
+		builder.WriteString(p.GroupBy.String())
 	}
 	if p.OrderBy != nil {
 		builder.WriteString(" ")
-		builder.WriteString(p.OrderBy.String(level))
+		builder.WriteString(p.OrderBy.String())
 	}
 	builder.WriteString(")")
 	return builder.String()
@@ -708,11 +708,11 @@ func (t *TableProjection) End() Pos {
 	return t.Select.End()
 }
 
-func (t *TableProjection) String(level int) string {
+func (t *TableProjection) String() string {
 	var builder strings.Builder
-	builder.WriteString(t.Identifier.String(level))
+	builder.WriteString(t.Identifier.String())
 	builder.WriteString(" ")
-	builder.WriteString(t.Select.String(level))
+	builder.WriteString(t.Select.String())
 	return builder.String()
 }
 
@@ -749,16 +749,16 @@ func (a *AlterTableAddProjection) AlterType() string {
 	return "ADD_PROJECTION"
 }
 
-func (a *AlterTableAddProjection) String(level int) string {
+func (a *AlterTableAddProjection) String() string {
 	var builder strings.Builder
 	builder.WriteString("ADD PROJECTION ")
 	if a.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(a.TableProjection.String(level))
+	builder.WriteString(a.TableProjection.String())
 	if a.After != nil {
 		builder.WriteString(" AFTER ")
-		builder.WriteString(a.After.String(level))
+		builder.WriteString(a.After.String())
 	}
 	return builder.String()
 }
@@ -795,13 +795,13 @@ func (a *AlterTableDropColumn) AlterType() string {
 	return "DROP_COLUMN"
 }
 
-func (a *AlterTableDropColumn) String(level int) string {
+func (a *AlterTableDropColumn) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP COLUMN ")
 	if a.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(a.ColumnName.String(level))
+	builder.WriteString(a.ColumnName.String())
 	return builder.String()
 }
 
@@ -832,10 +832,10 @@ func (a *AlterTableDropIndex) AlterType() string {
 	return "DROP_INDEX"
 }
 
-func (a *AlterTableDropIndex) String(level int) string {
+func (a *AlterTableDropIndex) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP INDEX ")
-	builder.WriteString(a.IndexName.String(level))
+	builder.WriteString(a.IndexName.String())
 	if a.IfExists {
 		builder.WriteString(" IF EXISTS")
 	}
@@ -869,10 +869,10 @@ func (a *AlterTableDropProjection) AlterType() string {
 	return "DROP_PROJECTION"
 }
 
-func (a *AlterTableDropProjection) String(level int) string {
+func (a *AlterTableDropProjection) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP PROJECTION ")
-	builder.WriteString(a.ProjectionName.String(level))
+	builder.WriteString(a.ProjectionName.String())
 	if a.IfExists {
 		builder.WriteString(" IF EXISTS")
 	}
@@ -905,7 +905,7 @@ func (a *AlterTableRemoveTTL) AlterType() string {
 	return "REMOVE_TTL"
 }
 
-func (a *AlterTableRemoveTTL) String(level int) string {
+func (a *AlterTableRemoveTTL) String() string {
 	return "REMOVE TTL"
 }
 
@@ -936,17 +936,16 @@ func (a *AlterTableClearColumn) AlterType() string {
 	return "CLEAR_COLUMN"
 }
 
-func (a *AlterTableClearColumn) String(level int) string {
+func (a *AlterTableClearColumn) String() string {
 	var builder strings.Builder
 	builder.WriteString("CLEAR COLUMN ")
 	if a.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(a.ColumnName.String(level))
+	builder.WriteString(a.ColumnName.String())
 	if a.PartitionExpr != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString("IN ")
-		builder.WriteString(a.PartitionExpr.String(level))
+		builder.WriteString(" IN ")
+		builder.WriteString(a.PartitionExpr.String())
 	}
 
 	return builder.String()
@@ -987,17 +986,16 @@ func (a *AlterTableClearIndex) AlterType() string {
 	return "CLEAR_INDEX"
 }
 
-func (a *AlterTableClearIndex) String(level int) string {
+func (a *AlterTableClearIndex) String() string {
 	var builder strings.Builder
 	builder.WriteString("CLEAR INDEX ")
 	if a.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(a.IndexName.String(level + 1))
+	builder.WriteString(a.IndexName.String())
 	if a.PartitionExpr != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString("IN ")
-		builder.WriteString(a.PartitionExpr.String(level))
+		builder.WriteString(" IN ")
+		builder.WriteString(a.PartitionExpr.String())
 	}
 
 	return builder.String()
@@ -1038,17 +1036,16 @@ func (a *AlterTableClearProjection) AlterType() string {
 	return "CLEAR_PROJECTION"
 }
 
-func (a *AlterTableClearProjection) String(level int) string {
+func (a *AlterTableClearProjection) String() string {
 	var builder strings.Builder
 	builder.WriteString("CLEAR PROJECTION ")
 	if a.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(a.ProjectionName.String(level + 1))
+	builder.WriteString(a.ProjectionName.String())
 	if a.PartitionExpr != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString("IN ")
-		builder.WriteString(a.PartitionExpr.String(level))
+		builder.WriteString(" IN ")
+		builder.WriteString(a.PartitionExpr.String())
 	}
 
 	return builder.String()
@@ -1088,15 +1085,15 @@ func (a *AlterTableRenameColumn) AlterType() string {
 	return "RENAME_COLUMN"
 }
 
-func (a *AlterTableRenameColumn) String(level int) string {
+func (a *AlterTableRenameColumn) String() string {
 	var builder strings.Builder
 	builder.WriteString("RENAME COLUMN ")
 	if a.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(a.OldColumnName.String(level))
+	builder.WriteString(a.OldColumnName.String())
 	builder.WriteString(" TO ")
-	builder.WriteString(a.NewColumnName.String(level))
+	builder.WriteString(a.NewColumnName.String())
 	return builder.String()
 }
 
@@ -1130,11 +1127,11 @@ func (a *AlterTableModifyTTL) AlterType() string {
 	return "MODIFY_TTL"
 }
 
-func (a *AlterTableModifyTTL) String(level int) string {
+func (a *AlterTableModifyTTL) String() string {
 	var builder strings.Builder
 	builder.WriteString("MODIFY ")
 	builder.WriteString("TTL ")
-	builder.WriteString(a.TTL.String(level))
+	builder.WriteString(a.TTL.String())
 	return builder.String()
 }
 
@@ -1168,15 +1165,15 @@ func (a *AlterTableModifyColumn) AlterType() string {
 	return "MODIFY_COLUMN"
 }
 
-func (a *AlterTableModifyColumn) String(level int) string {
+func (a *AlterTableModifyColumn) String() string {
 	var builder strings.Builder
 	builder.WriteString("MODIFY COLUMN ")
 	if a.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(a.Column.String(level))
+	builder.WriteString(a.Column.String())
 	if a.RemovePropertyType != nil {
-		builder.WriteString(a.RemovePropertyType.String(level))
+		builder.WriteString(a.RemovePropertyType.String())
 	}
 	return builder.String()
 }
@@ -1213,12 +1210,12 @@ func (a *AlterTableReplacePartition) AlterType() string {
 	return "REPLACE_PARTITION"
 }
 
-func (a *AlterTableReplacePartition) String(level int) string {
+func (a *AlterTableReplacePartition) String() string {
 	var builder strings.Builder
 	builder.WriteString("REPLACE ")
-	builder.WriteString(a.Partition.String(level))
+	builder.WriteString(a.Partition.String())
 	builder.WriteString(" FROM ")
-	builder.WriteString(a.Table.String(level))
+	builder.WriteString(a.Table.String())
 	return builder.String()
 }
 
@@ -1248,10 +1245,10 @@ func (a *RemovePropertyType) End() Pos {
 	return a.PropertyType.End()
 }
 
-func (a *RemovePropertyType) String(level int) string {
+func (a *RemovePropertyType) String() string {
 	var builder strings.Builder
 	builder.WriteString(" REMOVE ")
-	builder.WriteString(a.PropertyType.String(level))
+	builder.WriteString(a.PropertyType.String())
 	return builder.String()
 }
 
@@ -1281,25 +1278,25 @@ func (a *TableIndex) End() Pos {
 	return a.Granularity.End()
 }
 
-func (a *TableIndex) String(level int) string {
+func (a *TableIndex) String() string {
 	var builder strings.Builder
 	builder.WriteString("INDEX")
 	builder.WriteByte(' ')
-	builder.WriteString(a.Name.String(0))
+	builder.WriteString(a.Name.String())
 	// a.ColumnExpr = *Ident --- e.g. INDEX idx column TYPE ...
 	// a.ColumnExpr = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
 	if _, ok := a.ColumnExpr.(*Ident); ok {
 		builder.WriteByte(' ')
 	}
-	builder.WriteString(a.ColumnExpr.String(level))
+	builder.WriteString(a.ColumnExpr.String())
 	builder.WriteByte(' ')
 	builder.WriteString("TYPE")
 	builder.WriteByte(' ')
-	builder.WriteString(a.ColumnType.String(level))
+	builder.WriteString(a.ColumnType.String())
 	builder.WriteByte(' ')
 	builder.WriteString("GRANULARITY")
 	builder.WriteByte(' ')
-	builder.WriteString(a.Granularity.String(level))
+	builder.WriteString(a.Granularity.String())
 	return builder.String()
 }
 
@@ -1336,7 +1333,7 @@ func (i *Ident) End() Pos {
 	return i.NameEnd
 }
 
-func (i *Ident) String(int) string {
+func (i *Ident) String() string {
 	if i.QuoteType == BackTicks {
 		return "`" + i.Name + "`"
 	} else if i.QuoteType == DoubleQuote {
@@ -1363,8 +1360,8 @@ func (u *UUID) End() Pos {
 	return u.Value.LiteralEnd
 }
 
-func (u *UUID) String(level int) string {
-	return "UUID " + u.Value.String(level)
+func (u *UUID) String() string {
+	return "UUID " + u.Value.String()
 }
 
 func (u *UUID) Accept(visitor ASTVisitor) error {
@@ -1394,20 +1391,20 @@ func (c *CreateDatabase) Type() string {
 	return "DATABASE"
 }
 
-func (c *CreateDatabase) String(level int) string {
+func (c *CreateDatabase) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE DATABASE ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	if c.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
 	}
 	if c.Engine != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.Engine.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.Engine.String())
 	}
 	return builder.String()
 }
@@ -1453,7 +1450,7 @@ func (c *CreateTable) Type() string {
 	return "CREATE TABLE"
 }
 
-func (c *CreateTable) String(level int) string {
+func (c *CreateTable) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE")
 	if c.HasTemporary {
@@ -1463,24 +1460,24 @@ func (c *CreateTable) String(level int) string {
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	if c.UUID != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.UUID.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.UUID.String())
 	}
 	if c.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
 	}
 	if c.TableSchema != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.TableSchema.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.TableSchema.String())
 	}
 	if c.Engine != nil {
-		builder.WriteString(c.Engine.String(level))
+		builder.WriteString(c.Engine.String())
 	}
 	if c.SubQuery != nil {
-		builder.WriteString(c.SubQuery.String(level))
+		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
 }
@@ -1540,34 +1537,33 @@ func (c *CreateMaterializedView) Type() string {
 	return "MATERIALIZED_VIEW"
 }
 
-func (c *CreateMaterializedView) String(level int) string {
+func (c *CreateMaterializedView) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE MATERIALIZED VIEW ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	if c.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
 	}
 	if c.Engine != nil {
-		builder.WriteString(c.Engine.String(level))
+		builder.WriteString(c.Engine.String())
 	}
 	if c.Destination != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.Destination.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.Destination.String())
 		if c.Destination.TableSchema != nil {
-			builder.WriteString(NewLine(level))
-			// level + 1 to add an indent for table schema
-			builder.WriteString(c.Destination.TableSchema.String(level + 1))
+			builder.WriteString(" ")
+			builder.WriteString(c.Destination.TableSchema.String())
 		}
 	}
 	if c.Populate {
 		builder.WriteString(" POPULATE ")
 	}
 	if c.SubQuery != nil {
-		builder.WriteString(c.SubQuery.String(level))
+		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
 }
@@ -1629,30 +1625,30 @@ func (c *CreateView) Type() string {
 	return "VIEW"
 }
 
-func (c *CreateView) String(level int) string {
+func (c *CreateView) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE VIEW ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	if c.UUID != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.UUID.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.UUID.String())
 	}
 
 	if c.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
 	}
 
 	if c.TableSchema != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.TableSchema.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.TableSchema.String())
 	}
 
 	if c.SubQuery != nil {
-		builder.WriteString(c.SubQuery.String(level))
+		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
 }
@@ -1707,21 +1703,21 @@ func (c *CreateFunction) End() Pos {
 	return c.Expr.End()
 }
 
-func (c *CreateFunction) String(level int) string {
+func (c *CreateFunction) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE FUNCTION ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(c.FunctionName.String(level))
+	builder.WriteString(c.FunctionName.String())
 	if c.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
 	}
 	builder.WriteString(" AS ")
-	builder.WriteString(c.Params.String(level))
+	builder.WriteString(c.Params.String())
 	builder.WriteString(" -> ")
-	builder.WriteString(c.Expr.String(level))
+	builder.WriteString(c.Expr.String())
 	return builder.String()
 }
 
@@ -1765,16 +1761,16 @@ func (r *RoleName) End() Pos {
 	return r.Name.End()
 }
 
-func (r *RoleName) String(level int) string {
+func (r *RoleName) String() string {
 	var builder strings.Builder
-	builder.WriteString(r.Name.String(level))
+	builder.WriteString(r.Name.String())
 	if r.Scope != nil {
 		builder.WriteString("@")
-		builder.WriteString(r.Scope.String(level))
+		builder.WriteString(r.Scope.String())
 	}
 	if r.OnCluster != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(r.OnCluster.String(level))
+		builder.WriteString(r.OnCluster.String())
 	}
 	return builder.String()
 }
@@ -1812,16 +1808,16 @@ func (s *SettingPair) End() Pos {
 	return s.Value.End()
 }
 
-func (s *SettingPair) String(level int) string {
+func (s *SettingPair) String() string {
 	var builder strings.Builder
-	builder.WriteString(s.Name.String(level))
+	builder.WriteString(s.Name.String())
 	if s.Value != nil {
 		if s.Operation == opTypeEQ {
 			builder.WriteString(string(s.Operation))
 		} else {
 			builder.WriteByte(' ')
 		}
-		builder.WriteString(s.Value.String(level))
+		builder.WriteString(s.Value.String())
 	}
 	return builder.String()
 }
@@ -1859,19 +1855,19 @@ func (r *RoleSetting) End() Pos {
 	return r.SettingPairs[len(r.SettingPairs)-1].End()
 }
 
-func (r *RoleSetting) String(level int) string {
+func (r *RoleSetting) String() string {
 	var builder strings.Builder
 	for i, settingPair := range r.SettingPairs {
 		if i > 0 {
 			builder.WriteString(" ")
 		}
-		builder.WriteString(settingPair.String(level))
+		builder.WriteString(settingPair.String())
 	}
 	if r.Modifier != nil {
 		if len(r.SettingPairs) > 0 {
 			builder.WriteString(" ")
 		}
-		builder.WriteString(r.Modifier.String(level))
+		builder.WriteString(r.Modifier.String())
 	}
 	return builder.String()
 }
@@ -1914,7 +1910,7 @@ func (c *CreateRole) Type() string {
 	return "ROLE"
 }
 
-func (c *CreateRole) String(level int) string {
+func (c *CreateRole) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE ROLE ")
 	if c.IfNotExists {
@@ -1927,12 +1923,11 @@ func (c *CreateRole) String(level int) string {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(roleName.String(level))
+		builder.WriteString(roleName.String())
 	}
 	if c.AccessStorageType != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString("IN ")
-		builder.WriteString(c.AccessStorageType.String(level))
+		builder.WriteString(" IN ")
+		builder.WriteString(c.AccessStorageType.String())
 	}
 	if len(c.Settings) > 0 {
 		builder.WriteString(" SETTINGS ")
@@ -1940,7 +1935,7 @@ func (c *CreateRole) String(level int) string {
 			if i > 0 {
 				builder.WriteString(", ")
 			}
-			builder.WriteString(setting.String(level))
+			builder.WriteString(setting.String())
 		}
 	}
 	return builder.String()
@@ -1987,7 +1982,7 @@ func (a *AlterRole) Type() string {
 	return "ROLE"
 }
 
-func (a *AlterRole) String(level int) string {
+func (a *AlterRole) String() string {
 	var builder strings.Builder
 	builder.WriteString("ALTER ROLE ")
 	if a.IfExists {
@@ -1997,7 +1992,7 @@ func (a *AlterRole) String(level int) string {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(roleRenamePair.String(level))
+		builder.WriteString(roleRenamePair.String())
 	}
 	if len(a.Settings) > 0 {
 		builder.WriteString(" SETTINGS ")
@@ -2005,7 +2000,7 @@ func (a *AlterRole) String(level int) string {
 			if i > 0 {
 				builder.WriteString(", ")
 			}
-			builder.WriteString(setting.String(level))
+			builder.WriteString(setting.String())
 		}
 	}
 	return builder.String()
@@ -2041,12 +2036,12 @@ func (r *RoleRenamePair) End() Pos {
 	return r.StatementEnd
 }
 
-func (r *RoleRenamePair) String(level int) string {
+func (r *RoleRenamePair) String() string {
 	var builder strings.Builder
-	builder.WriteString(r.RoleName.String(level))
+	builder.WriteString(r.RoleName.String())
 	if r.NewName != nil {
 		builder.WriteString(" RENAME TO ")
-		builder.WriteString(r.NewName.String(level))
+		builder.WriteString(r.NewName.String())
 	}
 	return builder.String()
 }
@@ -2079,10 +2074,10 @@ func (d *DestinationClause) End() Pos {
 	return d.TableIdentifier.End()
 }
 
-func (d *DestinationClause) String(level int) string {
+func (d *DestinationClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("TO ")
-	builder.WriteString(d.TableIdentifier.String(level))
+	builder.WriteString(d.TableIdentifier.String())
 	return builder.String()
 }
 
@@ -2109,11 +2104,11 @@ func (c *ConstraintClause) End() Pos {
 	return c.Expr.End()
 }
 
-func (c *ConstraintClause) String(level int) string {
+func (c *ConstraintClause) String() string {
 	var builder strings.Builder
-	builder.WriteString(c.Constraint.String(level))
+	builder.WriteString(c.Constraint.String())
 	builder.WriteByte(' ')
-	builder.WriteString(c.Expr.String(level))
+	builder.WriteString(c.Expr.String())
 	return builder.String()
 }
 
@@ -2141,7 +2136,7 @@ func (n *NullLiteral) End() Pos {
 	return n.NullPos + 4
 }
 
-func (n *NullLiteral) String(int) string {
+func (n *NullLiteral) String() string {
 	return "NULL"
 }
 
@@ -2164,7 +2159,7 @@ func (n *NotNullLiteral) End() Pos {
 	return n.NullLiteral.End()
 }
 
-func (n *NotNullLiteral) String(int) string {
+func (n *NotNullLiteral) String() string {
 	return "NOT NULL"
 }
 
@@ -2193,11 +2188,11 @@ func (n *NestedIdentifier) End() Pos {
 	return n.Ident.End()
 }
 
-func (n *NestedIdentifier) String(int) string {
+func (n *NestedIdentifier) String() string {
 	if n.DotIdent != nil {
-		return n.Ident.String(0) + "." + n.DotIdent.String(0)
+		return n.Ident.String() + "." + n.DotIdent.String()
 	}
-	return n.Ident.String(0)
+	return n.Ident.String()
 }
 
 func (n *NestedIdentifier) Accept(visitor ASTVisitor) error {
@@ -2234,13 +2229,13 @@ func (c *ColumnIdentifier) End() Pos {
 	return c.Column.NameEnd
 }
 
-func (c *ColumnIdentifier) String(int) string {
+func (c *ColumnIdentifier) String() string {
 	if c.Database != nil {
-		return c.Database.String(0) + "." + c.Table.String(0) + "." + c.Column.String(0)
+		return c.Database.String() + "." + c.Table.String() + "." + c.Column.String()
 	} else if c.Table != nil {
-		return c.Table.String(0) + "." + c.Column.String(0)
+		return c.Table.String() + "." + c.Column.String()
 	} else {
-		return c.Column.String(0)
+		return c.Column.String()
 	}
 }
 
@@ -2279,11 +2274,11 @@ func (t *TableIdentifier) End() Pos {
 	return t.Table.End()
 }
 
-func (t *TableIdentifier) String(int) string {
+func (t *TableIdentifier) String() string {
 	if t.Database != nil {
-		return t.Database.String(0) + "." + t.Table.String(0)
+		return t.Database.String() + "." + t.Table.String()
 	}
-	return t.Table.String(0)
+	return t.Table.String()
 }
 
 func (t *TableIdentifier) Accept(visitor ASTVisitor) error {
@@ -2316,27 +2311,25 @@ func (t *TableSchemaClause) End() Pos {
 	return t.SchemaEnd
 }
 
-func (t *TableSchemaClause) String(level int) string {
+func (t *TableSchemaClause) String() string {
 	var builder strings.Builder
 	if len(t.Columns) > 0 {
 		builder.WriteString("(")
 		for i, column := range t.Columns {
 			if i > 0 {
-				builder.WriteByte(',')
+				builder.WriteString(", ")
 			}
-			builder.WriteString(NewLine(level + 1))
-			builder.WriteString(column.String(level))
+			builder.WriteString(column.String())
 		}
-		builder.WriteString(NewLine(level - 1))
 		builder.WriteByte(')')
 	}
 	if t.AliasTable != nil {
 		builder.WriteString(" AS ")
-		builder.WriteString(t.AliasTable.String(level))
+		builder.WriteString(t.AliasTable.String())
 	}
 	if t.TableFunction != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(t.TableFunction.String(level))
+		builder.WriteString(t.TableFunction.String())
 	}
 	return builder.String()
 }
@@ -2376,14 +2369,14 @@ func (t *TableArgListExpr) End() Pos {
 	return t.RightParenPos
 }
 
-func (t *TableArgListExpr) String(level int) string {
+func (t *TableArgListExpr) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
 	for i, arg := range t.Args {
 		if i > 0 {
-			builder.WriteByte(',')
+			builder.WriteString(", ")
 		}
-		builder.WriteString(arg.String(level))
+		builder.WriteString(arg.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -2413,10 +2406,10 @@ func (t *TableFunctionExpr) End() Pos {
 	return t.Args.End()
 }
 
-func (t *TableFunctionExpr) String(level int) string {
+func (t *TableFunctionExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(t.Name.String(level))
-	builder.WriteString(t.Args.String(level))
+	builder.WriteString(t.Name.String())
+	builder.WriteString(t.Args.String())
 	return builder.String()
 }
 
@@ -2445,10 +2438,10 @@ func (o *ClusterClause) End() Pos {
 	return o.Expr.End()
 }
 
-func (o *ClusterClause) String(level int) string {
+func (o *ClusterClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("ON CLUSTER ")
-	builder.WriteString(o.Expr.String(level + 1))
+	builder.WriteString(o.Expr.String())
 	return builder.String()
 }
 
@@ -2479,15 +2472,15 @@ func (p *PartitionClause) End() Pos {
 	return p.Expr.End()
 }
 
-func (p *PartitionClause) String(level int) string {
+func (p *PartitionClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("PARTITION ")
 	if p.ID != nil {
-		builder.WriteString(p.ID.String(level))
+		builder.WriteString(p.ID.String())
 	} else if p.All {
 		builder.WriteString("ALL")
 	} else {
-		builder.WriteString(p.Expr.String(level))
+		builder.WriteString(p.Expr.String())
 	}
 	return builder.String()
 }
@@ -2521,10 +2514,10 @@ func (p *PartitionByClause) End() Pos {
 	return p.Expr.End()
 }
 
-func (p *PartitionByClause) String(level int) string {
+func (p *PartitionByClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("PARTITION BY ")
-	builder.WriteString(p.Expr.String(level))
+	builder.WriteString(p.Expr.String())
 	return builder.String()
 }
 
@@ -2550,10 +2543,10 @@ func (p *PrimaryKeyClause) End() Pos {
 	return p.Expr.End()
 }
 
-func (p *PrimaryKeyClause) String(level int) string {
+func (p *PrimaryKeyClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("PRIMARY KEY ")
-	builder.WriteString(p.Expr.String(level))
+	builder.WriteString(p.Expr.String())
 	return builder.String()
 }
 
@@ -2579,10 +2572,10 @@ func (s *SampleByClause) End() Pos {
 	return s.Expr.End()
 }
 
-func (s *SampleByClause) String(level int) string {
+func (s *SampleByClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("SAMPLE BY ")
-	builder.WriteString(s.Expr.String(level))
+	builder.WriteString(s.Expr.String())
 	return builder.String()
 }
 
@@ -2608,9 +2601,9 @@ func (t *TTLExpr) End() Pos {
 	return t.Expr.End()
 }
 
-func (t *TTLExpr) String(level int) string {
+func (t *TTLExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(t.Expr.String(level))
+	builder.WriteString(t.Expr.String())
 	return builder.String()
 }
 
@@ -2637,14 +2630,14 @@ func (t *TTLClause) End() Pos {
 	return t.ListEnd
 }
 
-func (t *TTLClause) String(level int) string {
+func (t *TTLClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("TTL ")
 	for i, item := range t.Items {
 		if i > 0 {
-			builder.WriteString(",")
+			builder.WriteString(", ")
 		}
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 	}
 	return builder.String()
 }
@@ -2674,9 +2667,9 @@ func (o *OrderExpr) End() Pos {
 	return o.Expr.End()
 }
 
-func (o *OrderExpr) String(level int) string {
+func (o *OrderExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(o.Expr.String(level))
+	builder.WriteString(o.Expr.String())
 	if o.Direction != OrderDirectionNone {
 		builder.WriteByte(' ')
 		builder.WriteString(string(o.Direction))
@@ -2707,11 +2700,11 @@ func (o *OrderByClause) End() Pos {
 	return o.ListEnd
 }
 
-func (o *OrderByClause) String(level int) string {
+func (o *OrderByClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("ORDER BY ")
 	for i, item := range o.Items {
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 		if i != len(o.Items)-1 {
 			builder.WriteByte(',')
 			builder.WriteByte(' ')
@@ -2745,11 +2738,11 @@ func (s *SettingExprList) End() Pos {
 	return s.Expr.End()
 }
 
-func (s *SettingExprList) String(level int) string {
+func (s *SettingExprList) String() string {
 	var builder strings.Builder
-	builder.WriteString(s.Name.String(level))
+	builder.WriteString(s.Name.String())
 	builder.WriteByte('=')
-	builder.WriteString(s.Expr.String(level))
+	builder.WriteString(s.Expr.String())
 	return builder.String()
 }
 
@@ -2779,14 +2772,14 @@ func (s *SettingsClause) End() Pos {
 	return s.ListEnd
 }
 
-func (s *SettingsClause) String(level int) string {
+func (s *SettingsClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("SETTINGS ")
 	for i, item := range s.Items {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 	}
 	return builder.String()
 }
@@ -2817,14 +2810,14 @@ func (f *ParamExprList) End() Pos {
 	return f.RightParenPos
 }
 
-func (f *ParamExprList) String(level int) string {
+func (f *ParamExprList) String() string {
 	var builder strings.Builder
 	builder.WriteString("(")
 	for i, item := range f.Items.Items {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 	}
 	builder.WriteString(")")
 	return builder.String()
@@ -2863,7 +2856,7 @@ func (m *MapLiteral) End() Pos {
 	return m.RBracePos
 }
 
-func (m *MapLiteral) String(level int) string {
+func (m *MapLiteral) String() string {
 	var builder strings.Builder
 	builder.WriteString("{")
 
@@ -2871,9 +2864,9 @@ func (m *MapLiteral) String(level int) string {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(value.Key.String(level))
+		builder.WriteString(value.Key.String())
 		builder.WriteString(": ")
-		builder.WriteString(value.Value.String(level))
+		builder.WriteString(value.Value.String())
 	}
 	builder.WriteString("}")
 	return builder.String()
@@ -2908,12 +2901,12 @@ func (q *QueryParam) End() Pos {
 	return q.RBracePos
 }
 
-func (q *QueryParam) String(level int) string {
+func (q *QueryParam) String() string {
 	var builder strings.Builder
 	builder.WriteString("{")
-	builder.WriteString(q.Name.String(level))
+	builder.WriteString(q.Name.String())
 	builder.WriteString(": ")
-	builder.WriteString(q.Type.String(level))
+	builder.WriteString(q.Type.String())
 	builder.WriteString("}")
 	return builder.String()
 }
@@ -2944,14 +2937,14 @@ func (a *ArrayParamList) End() Pos {
 	return a.RightBracketPos
 }
 
-func (a *ArrayParamList) String(level int) string {
+func (a *ArrayParamList) String() string {
 	var builder strings.Builder
 	builder.WriteString("[")
 	for i, item := range a.Items.Items {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 	}
 	builder.WriteString("]")
 	return builder.String()
@@ -2979,10 +2972,10 @@ func (o *ObjectParams) End() Pos {
 	return o.Params.End()
 }
 
-func (o *ObjectParams) String(level int) string {
+func (o *ObjectParams) String() string {
 	var builder strings.Builder
-	builder.WriteString(o.Object.String(level))
-	builder.WriteString(o.Params.String(level))
+	builder.WriteString(o.Object.String())
+	builder.WriteString(o.Params.String())
 	return builder.String()
 }
 
@@ -3011,10 +3004,10 @@ func (f *FunctionExpr) End() Pos {
 	return f.Params.RightParenPos
 }
 
-func (f *FunctionExpr) String(level int) string {
+func (f *FunctionExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(f.Name.String(level))
-	builder.WriteString(f.Params.String(level))
+	builder.WriteString(f.Name.String())
+	builder.WriteString(f.Params.String())
 	return builder.String()
 }
 
@@ -3044,11 +3037,11 @@ func (w *WindowFunctionExpr) End() Pos {
 	return w.OverExpr.End()
 }
 
-func (w *WindowFunctionExpr) String(level int) string {
+func (w *WindowFunctionExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(w.Function.String(level))
+	builder.WriteString(w.Function.String())
 	builder.WriteString(" OVER ")
-	builder.WriteString(w.OverExpr.String(level))
+	builder.WriteString(w.OverExpr.String())
 	return builder.String()
 }
 
@@ -3091,12 +3084,12 @@ func (c *ColumnExpr) End() Pos {
 	return c.ColumnEnd
 }
 
-func (c *ColumnExpr) String(level int) string {
+func (c *ColumnExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	if c.Type != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(c.Type.String(level))
+		builder.WriteString(c.Type.String())
 	}
 	if c.NotNull != nil {
 		builder.WriteString(" NOT NULL")
@@ -3105,27 +3098,27 @@ func (c *ColumnExpr) String(level int) string {
 	}
 	if c.DefaultExpr != nil {
 		builder.WriteString(" DEFAULT ")
-		builder.WriteString(c.DefaultExpr.String(level))
+		builder.WriteString(c.DefaultExpr.String())
 	}
 	if c.MaterializedExpr != nil {
 		builder.WriteString(" MATERIALIZED ")
-		builder.WriteString(c.MaterializedExpr.String(level))
+		builder.WriteString(c.MaterializedExpr.String())
 	}
 	if c.AliasExpr != nil {
 		builder.WriteString(" ALIAS ")
-		builder.WriteString(c.AliasExpr.String(level))
+		builder.WriteString(c.AliasExpr.String())
 	}
 	if c.Codec != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(c.Codec.String(level))
+		builder.WriteString(c.Codec.String())
 	}
 	if c.TTL != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(c.TTL.String(level))
+		builder.WriteString(c.TTL.String())
 	}
 	if c.Comment != nil {
 		builder.WriteString(" COMMENT ")
-		builder.WriteString(c.Comment.String(level))
+		builder.WriteString(c.Comment.String())
 	}
 	return builder.String()
 }
@@ -3196,8 +3189,8 @@ func (s *ScalarTypeExpr) End() Pos {
 	return s.Name.NameEnd
 }
 
-func (s *ScalarTypeExpr) String(level int) string {
-	return s.Name.String(level + 1)
+func (s *ScalarTypeExpr) String() string {
+	return s.Name.String()
 }
 
 func (s *ScalarTypeExpr) Accept(visitor ASTVisitor) error {
@@ -3221,8 +3214,8 @@ func (c *PropertyTypeExpr) End() Pos {
 	return c.Name.NameEnd
 }
 
-func (c *PropertyTypeExpr) String(level int) string {
-	return c.Name.String(level + 1)
+func (c *PropertyTypeExpr) String() string {
+	return c.Name.String()
 }
 
 func (c *PropertyTypeExpr) Accept(visitor ASTVisitor) error {
@@ -3249,15 +3242,15 @@ func (s *TypeWithParamsExpr) End() Pos {
 	return s.RightParenPos
 }
 
-func (s *TypeWithParamsExpr) String(level int) string {
+func (s *TypeWithParamsExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(s.Name.String(level))
+	builder.WriteString(s.Name.String())
 	builder.WriteByte('(')
 	for i, size := range s.Params {
 		if i > 0 {
-			builder.WriteByte(',')
+			builder.WriteString(", ")
 		}
-		builder.WriteString(size.String(level))
+		builder.WriteString(size.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -3292,15 +3285,15 @@ func (c *ComplexTypeExpr) End() Pos {
 	return c.RightParenPos
 }
 
-func (c *ComplexTypeExpr) String(level int) string {
+func (c *ComplexTypeExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	builder.WriteByte('(')
 	for i, param := range c.Params {
 		if i > 0 {
-			builder.WriteByte(',')
+			builder.WriteString(", ")
 		}
-		builder.WriteString(param.String(level))
+		builder.WriteString(param.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -3335,16 +3328,15 @@ func (n *NestedTypeExpr) End() Pos {
 	return n.RightParenPos
 }
 
-func (n *NestedTypeExpr) String(level int) string {
+func (n *NestedTypeExpr) String() string {
 	var builder strings.Builder
 	// on the same level as the column type
-	builder.WriteString(n.Name.String(level))
+	builder.WriteString(n.Name.String())
 	builder.WriteByte('(')
 	for i, column := range n.Columns {
-		builder.WriteString(NewLine(level + 2))
-		builder.WriteString(column.String(level))
+		builder.WriteString(column.String())
 		if i != len(n.Columns)-1 {
-			builder.WriteByte(',')
+			builder.WriteString(", ")
 		}
 	}
 	// right paren needs to be on the same level as the column
@@ -3383,23 +3375,23 @@ func (c *CompressionCodec) End() Pos {
 	return c.RightParenPos
 }
 
-func (c *CompressionCodec) String(level int) string {
+func (c *CompressionCodec) String() string {
 	var builder strings.Builder
 	builder.WriteString("CODEC(")
 	if c.Type != nil {
-		builder.WriteString(c.Type.String(level))
+		builder.WriteString(c.Type.String())
 		if c.TypeLevel != nil {
 			builder.WriteByte('(')
-			builder.WriteString(c.TypeLevel.String(level))
+			builder.WriteString(c.TypeLevel.String())
 			builder.WriteByte(')')
 		}
 		builder.WriteByte(',')
 		builder.WriteByte(' ')
 	}
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 	if c.Level != nil {
 		builder.WriteByte('(')
-		builder.WriteString(c.Level.String(level))
+		builder.WriteString(c.Level.String())
 		builder.WriteByte(')')
 	}
 	builder.WriteByte(')')
@@ -3447,7 +3439,7 @@ func (n *NumberLiteral) End() Pos {
 	return n.NumEnd
 }
 
-func (n *NumberLiteral) String(int) string {
+func (n *NumberLiteral) String() string {
 	return n.Literal
 }
 
@@ -3471,7 +3463,7 @@ func (s *StringLiteral) End() Pos {
 	return s.LiteralEnd
 }
 
-func (s *StringLiteral) String(int) string {
+func (s *StringLiteral) String() string {
 	return "'" + s.Literal + "'"
 }
 
@@ -3495,7 +3487,7 @@ func (p *PlaceHolder) End() Pos {
 	return p.PlaceHolderEnd
 }
 
-func (p *PlaceHolder) String(int) string {
+func (p *PlaceHolder) String() string {
 	return p.Type
 }
 
@@ -3522,12 +3514,12 @@ func (r *RatioExpr) End() Pos {
 	return r.Numerator.NumEnd
 }
 
-func (r *RatioExpr) String(int) string {
+func (r *RatioExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(r.Numerator.String(0))
+	builder.WriteString(r.Numerator.String())
 	if r.Denominator != nil {
 		builder.WriteString("/")
-		builder.WriteString(r.Denominator.String(0))
+		builder.WriteString(r.Denominator.String())
 	}
 	return builder.String()
 }
@@ -3559,11 +3551,11 @@ func (e *EnumValue) End() Pos {
 	return e.Value.End()
 }
 
-func (e *EnumValue) String(level int) string {
+func (e *EnumValue) String() string {
 	var builder strings.Builder
-	builder.WriteString(e.Name.String(level))
+	builder.WriteString(e.Name.String())
 	builder.WriteByte('=')
-	builder.WriteString(e.Value.String(level))
+	builder.WriteString(e.Value.String())
 	return builder.String()
 }
 
@@ -3593,13 +3585,13 @@ func (e *EnumValueList) End() Pos {
 	return e.ListEnd
 }
 
-func (e *EnumValueList) String(level int) string {
+func (e *EnumValueList) String() string {
 	var builder strings.Builder
 	for i, enum := range e.Enums {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(enum.String(level))
+		builder.WriteString(enum.String())
 	}
 	return builder.String()
 }
@@ -3629,12 +3621,12 @@ func (i *IntervalExpr) End() Pos {
 	return i.Unit.End()
 }
 
-func (i *IntervalExpr) String(level int) string {
+func (i *IntervalExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("INTERVAL ")
-	builder.WriteString(i.Expr.String(level))
+	builder.WriteString(i.Expr.String())
 	builder.WriteByte(' ')
-	builder.WriteString(i.Unit.String(level))
+	builder.WriteString(i.Unit.String())
 	return builder.String()
 }
 
@@ -3672,38 +3664,37 @@ func (e *EngineExpr) End() Pos {
 	return e.EngineEnd
 }
 
-func (e *EngineExpr) String(level int) string {
+func (e *EngineExpr) String() string {
 	// align with the engine level
 	var builder strings.Builder
-	builder.WriteString(NewLine(level))
-	builder.WriteString("ENGINE = ")
+	builder.WriteString(" ENGINE = ")
 	builder.WriteString(e.Name)
 	if e.Params != nil {
-		builder.WriteString(e.Params.String(level))
+		builder.WriteString(e.Params.String())
 	}
 	if e.PrimaryKey != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(e.PrimaryKey.String(level + 1))
+		builder.WriteString(" ")
+		builder.WriteString(e.PrimaryKey.String())
 	}
 	if e.PartitionBy != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(e.PartitionBy.String(level + 1))
+		builder.WriteString(" ")
+		builder.WriteString(e.PartitionBy.String())
 	}
 	if e.SampleBy != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(e.SampleBy.String(level + 1))
+		builder.WriteString(" ")
+		builder.WriteString(e.SampleBy.String())
 	}
 	if e.TTL != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(e.TTL.String(level + 1))
+		builder.WriteString(" ")
+		builder.WriteString(e.TTL.String())
 	}
 	if e.Settings != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(e.Settings.String(level + 1))
+		builder.WriteString(" ")
+		builder.WriteString(e.Settings.String())
 	}
 	if e.OrderBy != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(e.OrderBy.String(level + 1))
+		builder.WriteString(" ")
+		builder.WriteString(e.OrderBy.String())
 	}
 	return builder.String()
 }
@@ -3761,8 +3752,8 @@ func (c *ColumnTypeExpr) End() Pos {
 	return c.Name.NameEnd
 }
 
-func (c *ColumnTypeExpr) String(level int) string {
-	return c.Name.String(level)
+func (c *ColumnTypeExpr) String() string {
+	return c.Name.String()
 }
 
 func (c *ColumnTypeExpr) Accept(visitor ASTVisitor) error {
@@ -3789,14 +3780,14 @@ func (c *ColumnArgList) End() Pos {
 	return c.RightParenPos
 }
 
-func (c *ColumnArgList) String(level int) string {
+func (c *ColumnArgList) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
 	for i, item := range c.Items {
 		if i > 0 {
-			builder.WriteByte(',')
+			builder.WriteString(", ")
 		}
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -3828,13 +3819,13 @@ func (c *ColumnExprList) End() Pos {
 	return c.ListEnd
 }
 
-func (c *ColumnExprList) String(level int) string {
+func (c *ColumnExprList) String() string {
 	var builder strings.Builder
 	if c.HasDistinct {
 		builder.WriteString("DISTINCT ")
 	}
 	for i, item := range c.Items {
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 		if i != len(c.Items)-1 {
 			builder.WriteString(", ")
 		}
@@ -3873,15 +3864,15 @@ func (w *WhenClause) End() Pos {
 	return w.Then.End()
 }
 
-func (w *WhenClause) String(level int) string {
+func (w *WhenClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("WHEN ")
-	builder.WriteString(w.When.String(level))
+	builder.WriteString(w.When.String())
 	builder.WriteString(" THEN ")
-	builder.WriteString(w.Then.String(level))
+	builder.WriteString(w.Then.String())
 	if w.Else != nil {
 		builder.WriteString(" ELSE ")
-		builder.WriteString(w.Else.String(level))
+		builder.WriteString(w.Else.String())
 	}
 	return builder.String()
 }
@@ -3920,18 +3911,18 @@ func (c *CaseExpr) End() Pos {
 	return c.EndPos
 }
 
-func (c *CaseExpr) String(level int) string {
+func (c *CaseExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("CASE ")
 	if c.Expr != nil {
-		builder.WriteString(c.Expr.String(level))
+		builder.WriteString(c.Expr.String())
 	}
 	for _, when := range c.Whens {
-		builder.WriteString(when.String(level))
+		builder.WriteString(when.String())
 	}
 	if c.Else != nil {
 		builder.WriteString(" ELSE ")
-		builder.WriteString(c.Else.String(level))
+		builder.WriteString(c.Else.String())
 	}
 	builder.WriteString(" END")
 	return builder.String()
@@ -3974,16 +3965,16 @@ func (c *CastExpr) End() Pos {
 	return c.AsType.End()
 }
 
-func (c *CastExpr) String(level int) string {
+func (c *CastExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("CAST(")
-	builder.WriteString(c.Expr.String(level))
+	builder.WriteString(c.Expr.String())
 	if c.Separator == "," {
 		builder.WriteString(", ")
 	} else {
 		builder.WriteString(" AS ")
 	}
-	builder.WriteString(c.AsType.String(level))
+	builder.WriteString(c.AsType.String())
 	builder.WriteByte(')')
 	return builder.String()
 }
@@ -4014,14 +4005,14 @@ func (w *WithClause) End() Pos {
 	return w.EndPos
 }
 
-func (w *WithClause) String(level int) string {
+func (w *WithClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("WITH ")
 	for i, cte := range w.CTEs {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(cte.String(level + 1))
+		builder.WriteString(cte.String())
 	}
 	return builder.String()
 }
@@ -4052,7 +4043,7 @@ func (t *TopClause) End() Pos {
 	return t.TopEnd
 }
 
-func (t *TopClause) String(int) string {
+func (t *TopClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("TOP ")
 	builder.WriteString(t.Number.Literal)
@@ -4096,36 +4087,36 @@ func (c *CreateLiveView) End() Pos {
 	return c.StatementEnd
 }
 
-func (c *CreateLiveView) String(level int) string {
+func (c *CreateLiveView) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE LIVE VIEW ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
-	builder.WriteString(c.Name.String(level))
+	builder.WriteString(c.Name.String())
 
 	if c.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
 	}
 
 	if c.WithTimeout != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.WithTimeout.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.WithTimeout.String())
 	}
 
 	if c.Destination != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.Destination.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.Destination.String())
 	}
 
 	if c.TableSchema != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(c.TableSchema.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.TableSchema.String())
 	}
 
 	if c.SubQuery != nil {
-		builder.WriteString(c.SubQuery.String(level))
+		builder.WriteString(c.SubQuery.String())
 	}
 
 	return builder.String()
@@ -4184,10 +4175,10 @@ func (w *WithTimeoutClause) End() Pos {
 	return w.Number.End()
 }
 
-func (w *WithTimeoutClause) String(int) string {
+func (w *WithTimeoutClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("WITH TIMEOUT ")
-	builder.WriteString(w.Number.String(0))
+	builder.WriteString(w.Number.String())
 	return builder.String()
 }
 
@@ -4216,12 +4207,12 @@ func (t *TableExpr) End() Pos {
 	return t.TableEnd
 }
 
-func (t *TableExpr) String(level int) string {
+func (t *TableExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(t.Expr.String(level + 1))
+	builder.WriteString(t.Expr.String())
 	if t.Alias != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(t.Alias.String(level + 1))
+		builder.WriteString(t.Alias.String())
 	}
 	if t.HasFinal {
 		builder.WriteString(" FINAL")
@@ -4256,10 +4247,10 @@ func (o *OnClause) End() Pos {
 	return o.On.End()
 }
 
-func (o *OnClause) String(level int) string {
+func (o *OnClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("ON ")
-	builder.WriteString(o.On.String(level))
+	builder.WriteString(o.On.String())
 	return builder.String()
 }
 
@@ -4285,10 +4276,10 @@ func (u *UsingClause) End() Pos {
 	return u.Using.End()
 }
 
-func (u *UsingClause) String(level int) string {
+func (u *UsingClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("USING ")
-	builder.WriteString(u.Using.String(level))
+	builder.WriteString(u.Using.String())
 	return builder.String()
 }
 
@@ -4317,36 +4308,36 @@ func (j *JoinExpr) End() Pos {
 	return j.Left.End()
 }
 
-func buildJoinString(builder *strings.Builder, expr Expr, level int) {
+func buildJoinString(builder *strings.Builder, expr Expr) {
 	joinExpr, ok := expr.(*JoinExpr)
 	if !ok {
 		builder.WriteString(",")
-		builder.WriteString(expr.String(level))
+		builder.WriteString(expr.String())
 		return
 	}
 
 	if len(joinExpr.Modifiers) == 0 {
 		builder.WriteString(",")
 	} else {
-		builder.WriteString(NewLine(level))
+		builder.WriteString(" ")
 		builder.WriteString(strings.Join(joinExpr.Modifiers, " "))
 		builder.WriteByte(' ')
 	}
-	builder.WriteString(joinExpr.Left.String(level))
+	builder.WriteString(joinExpr.Left.String())
 	if joinExpr.Constraints != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(joinExpr.Constraints.String(level))
+		builder.WriteString(joinExpr.Constraints.String())
 	}
 	if joinExpr.Right != nil {
-		buildJoinString(builder, joinExpr.Right, level)
+		buildJoinString(builder, joinExpr.Right)
 	}
 }
 
-func (j *JoinExpr) String(level int) string {
+func (j *JoinExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(j.Left.String(level))
+	builder.WriteString(j.Left.String())
 	if j.Right != nil {
-		buildJoinString(&builder, j.Right, level)
+		buildJoinString(&builder, j.Right)
 	}
 	return builder.String()
 }
@@ -4387,14 +4378,14 @@ func (j *JoinConstraintClause) End() Pos {
 	return j.Using.End()
 }
 
-func (j *JoinConstraintClause) String(level int) string {
+func (j *JoinConstraintClause) String() string {
 	var builder strings.Builder
 	if j.On != nil {
 		builder.WriteString("ON ")
-		builder.WriteString(j.On.String(level))
+		builder.WriteString(j.On.String())
 	} else {
 		builder.WriteString("USING ")
-		builder.WriteString(j.Using.String(level))
+		builder.WriteString(j.Using.String())
 	}
 	return builder.String()
 }
@@ -4428,11 +4419,10 @@ func (f *FromClause) End() Pos {
 	return f.Expr.End()
 }
 
-func (f *FromClause) String(level int) string {
+func (f *FromClause) String() string {
 	var builder strings.Builder
-	builder.WriteString("FROM")
-	builder.WriteString(NewLine(level + 1))
-	builder.WriteString(f.Expr.String(level + 1))
+	builder.WriteString("FROM ")
+	builder.WriteString(f.Expr.String())
 	return builder.String()
 }
 
@@ -4458,9 +4448,9 @@ func (n *IsNullExpr) End() Pos {
 	return n.Expr.End()
 }
 
-func (n *IsNullExpr) String(level int) string {
+func (n *IsNullExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(n.Expr.String(level))
+	builder.WriteString(n.Expr.String())
 	builder.WriteString(" IS NULL")
 	return builder.String()
 }
@@ -4487,9 +4477,9 @@ func (n *IsNotNullExpr) End() Pos {
 	return n.Expr.End()
 }
 
-func (n *IsNotNullExpr) String(level int) string {
+func (n *IsNotNullExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString(n.Expr.String(level))
+	builder.WriteString(n.Expr.String())
 	builder.WriteString(" IS NOT NULL")
 	return builder.String()
 }
@@ -4517,17 +4507,17 @@ func (a *AliasExpr) End() Pos {
 	return a.Alias.End()
 }
 
-func (a *AliasExpr) String(level int) string {
+func (a *AliasExpr) String() string {
 	var builder strings.Builder
 	if _, isSelect := a.Expr.(*SelectQuery); isSelect {
 		builder.WriteByte('(')
-		builder.WriteString(a.Expr.String(level))
+		builder.WriteString(a.Expr.String())
 		builder.WriteByte(')')
 	} else {
-		builder.WriteString(a.Expr.String(level))
+		builder.WriteString(a.Expr.String())
 	}
 	builder.WriteString(" AS ")
-	builder.WriteString(a.Alias.String(level))
+	builder.WriteString(a.Alias.String())
 	return builder.String()
 }
 
@@ -4556,11 +4546,10 @@ func (w *WhereClause) End() Pos {
 	return w.Expr.End()
 }
 
-func (w *WhereClause) String(level int) string {
+func (w *WhereClause) String() string {
 	var builder strings.Builder
-	builder.WriteString("WHERE")
-	builder.WriteString(NewLine(level + 1))
-	builder.WriteString(w.Expr.String(level))
+	builder.WriteString("WHERE ")
+	builder.WriteString(w.Expr.String())
 	return builder.String()
 }
 
@@ -4586,8 +4575,8 @@ func (w *PrewhereClause) End() Pos {
 	return w.Expr.End()
 }
 
-func (w *PrewhereClause) String(level int) string {
-	return "PREWHERE " + w.Expr.String(level+1)
+func (w *PrewhereClause) String() string {
+	return "PREWHERE " + w.Expr.String()
 }
 
 func (w *PrewhereClause) Accept(visitor ASTVisitor) error {
@@ -4616,13 +4605,13 @@ func (g *GroupByClause) End() Pos {
 	return g.Expr.End()
 }
 
-func (g *GroupByClause) String(level int) string {
+func (g *GroupByClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("GROUP BY ")
 	if g.AggregateType != "" {
 		builder.WriteString(g.AggregateType)
 	}
-	builder.WriteString(g.Expr.String(level))
+	builder.WriteString(g.Expr.String())
 	if g.WithCube {
 		builder.WriteString(" WITH CUBE")
 	}
@@ -4657,8 +4646,8 @@ func (h *HavingClause) End() Pos {
 	return h.Expr.End()
 }
 
-func (h *HavingClause) String(level int) string {
-	return "HAVING " + h.Expr.String(level)
+func (h *HavingClause) String() string {
+	return "HAVING " + h.Expr.String()
 }
 
 func (h *HavingClause) Accept(visitor ASTVisitor) error {
@@ -4687,13 +4676,13 @@ func (l *LimitClause) End() Pos {
 	return l.Limit.End()
 }
 
-func (l *LimitClause) String(level int) string {
+func (l *LimitClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("LIMIT ")
-	builder.WriteString(l.Limit.String(level))
+	builder.WriteString(l.Limit.String())
 	if l.Offset != nil {
 		builder.WriteString(" OFFSET ")
-		builder.WriteString(l.Offset.String(level))
+		builder.WriteString(l.Offset.String())
 	}
 	return builder.String()
 }
@@ -4731,14 +4720,14 @@ func (l *LimitByClause) End() Pos {
 	return l.Limit.End()
 }
 
-func (l *LimitByClause) String(level int) string {
+func (l *LimitByClause) String() string {
 	var builder strings.Builder
 	if l.Limit != nil {
-		builder.WriteString(l.Limit.String(level))
+		builder.WriteString(l.Limit.String())
 	}
 	if l.ByExpr != nil {
 		builder.WriteString(" BY ")
-		builder.WriteString(l.ByExpr.String(level))
+		builder.WriteString(l.ByExpr.String())
 	}
 	return builder.String()
 }
@@ -4775,20 +4764,20 @@ func (w *WindowExpr) End() Pos {
 	return w.RightParenPos
 }
 
-func (w *WindowExpr) String(level int) string {
+func (w *WindowExpr) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
 	if w.PartitionBy != nil {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(w.PartitionBy.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(w.PartitionBy.String())
 	}
 	if w.OrderBy != nil {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(w.OrderBy.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(w.OrderBy.String())
 	}
 	if w.Frame != nil {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(w.Frame.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(w.Frame.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -4831,12 +4820,12 @@ func (w *WindowClause) End() Pos {
 	return w.WindowExpr.End()
 }
 
-func (w *WindowClause) String(level int) string {
+func (w *WindowClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("WINDOW ")
-	builder.WriteString(w.Name.String(level))
+	builder.WriteString(w.Name.String())
 	builder.WriteString(" ")
-	builder.WriteString(w.WindowExpr.String(level))
+	builder.WriteString(w.WindowExpr.String())
 	return builder.String()
 }
 
@@ -4870,11 +4859,11 @@ func (f *WindowFrameClause) End() Pos {
 	return f.Extend.End()
 }
 
-func (f *WindowFrameClause) String(level int) string {
+func (f *WindowFrameClause) String() string {
 	var builder strings.Builder
 	builder.WriteString(f.Type)
 	builder.WriteString(" ")
-	builder.WriteString(f.Extend.String(level))
+	builder.WriteString(f.Extend.String())
 	return builder.String()
 }
 
@@ -4899,8 +4888,8 @@ func (f *WindowFrameExtendExpr) End() Pos {
 	return f.Expr.End()
 }
 
-func (f *WindowFrameExtendExpr) String(int) string {
-	return f.Expr.String(0)
+func (f *WindowFrameExtendExpr) String() string {
+	return f.Expr.String()
 }
 
 func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) error {
@@ -4927,12 +4916,12 @@ func (f *WindowFrameRangeClause) End() Pos {
 	return f.And.End()
 }
 
-func (f *WindowFrameRangeClause) String(level int) string {
+func (f *WindowFrameRangeClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("BETWEEN ")
-	builder.WriteString(f.Between.String(level))
+	builder.WriteString(f.Between.String())
 	builder.WriteString(" AND ")
-	builder.WriteString(f.And.String(level))
+	builder.WriteString(f.And.String())
 	return builder.String()
 }
 
@@ -4961,7 +4950,7 @@ func (f *WindowFrameCurrentRow) End() Pos {
 	return f.RowEnd
 }
 
-func (f *WindowFrameCurrentRow) String(int) string {
+func (f *WindowFrameCurrentRow) String() string {
 	return "CURRENT ROW"
 }
 
@@ -4985,7 +4974,7 @@ func (f *WindowFrameUnbounded) End() Pos {
 	return f.UnboundedEnd
 }
 
-func (f *WindowFrameUnbounded) String(int) string {
+func (f *WindowFrameUnbounded) String() string {
 	return f.Direction + " UNBOUNDED"
 }
 
@@ -5009,9 +4998,9 @@ func (f *WindowFrameNumber) End() Pos {
 	return f.UnboundedEnd
 }
 
-func (f *WindowFrameNumber) String(level int) string {
+func (f *WindowFrameNumber) String() string {
 	var builder strings.Builder
-	builder.WriteString(f.Number.String(level))
+	builder.WriteString(f.Number.String())
 	builder.WriteByte(' ')
 	builder.WriteString(f.Direction)
 	return builder.String()
@@ -5040,8 +5029,8 @@ func (a *ArrayJoinClause) End() Pos {
 	return a.Expr.End()
 }
 
-func (a *ArrayJoinClause) String(level int) string {
-	return a.Type + " ARRAY JOIN " + a.Expr.String(level)
+func (a *ArrayJoinClause) String() string {
+	return a.Type + " ARRAY JOIN " + a.Expr.String()
 }
 
 func (a *ArrayJoinClause) Accept(visitor ASTVisitor) error {
@@ -5085,93 +5074,88 @@ func (s *SelectQuery) End() Pos {
 	return s.StatementEnd
 }
 
-func (s *SelectQuery) String(level int) string { // nolint: funlen
+func (s *SelectQuery) String() string { // nolint: funlen
 	var builder strings.Builder
 	if s.With != nil {
 		builder.WriteString("WITH")
 		for i, cte := range s.With.CTEs {
-			builder.WriteString(NewLine(level + 1))
-			builder.WriteString(cte.String(level))
+			builder.WriteString(" ")
+			builder.WriteString(cte.String())
 			if i != len(s.With.CTEs)-1 {
 				builder.WriteByte(',')
 			}
 		}
+		builder.WriteString(" ")
 	}
-	builder.WriteString(NewLine(level))
 	builder.WriteString("SELECT ")
 	if s.Top != nil {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(s.Top.String(level))
+		builder.WriteString(s.Top.String())
 		builder.WriteString(" ")
 	}
 	columns := s.SelectColumns.Items
 	for i, column := range columns {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(column.String(level))
+		builder.WriteString(column.String())
 		if i != len(columns)-1 {
-			builder.WriteByte(',')
+			builder.WriteString(", ")
 		}
 	}
 	if s.From != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.From.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.From.String())
 	}
 	if s.ArrayJoin != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.ArrayJoin.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.ArrayJoin.String())
 	}
 	if s.Window != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Window.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Window.String())
 	}
 	if s.Prewhere != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Prewhere.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Prewhere.String())
 	}
 	if s.Where != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Where.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Where.String())
 	}
 	if s.GroupBy != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.GroupBy.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.GroupBy.String())
 	}
 	if s.Having != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Having.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Having.String())
 	}
 	if s.OrderBy != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.OrderBy.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.OrderBy.String())
 	}
 	if s.LimitBy != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.LimitBy.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.LimitBy.String())
 	}
 	if s.Limit != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Limit.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Limit.String())
 	}
 	if s.Settings != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Settings.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Settings.String())
 	}
 	if s.Format != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(s.Format.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(s.Format.String())
 	}
 	if s.UnionAll != nil {
-		builder.WriteString(NewLine(level))
 		builder.WriteString(" UNION ALL ")
-		builder.WriteString(s.UnionAll.String(level))
+		builder.WriteString(s.UnionAll.String())
 	} else if s.UnionDistinct != nil {
-		builder.WriteString(NewLine(level))
 		builder.WriteString(" UNION DISTINCT ")
-		builder.WriteString(s.UnionDistinct.String(level))
+		builder.WriteString(s.UnionDistinct.String())
 	} else if s.Except != nil {
-		builder.WriteString(NewLine(level))
 		builder.WriteString(" EXCEPT ")
-		builder.WriteString(s.Except.String(level))
+		builder.WriteString(s.Except.String())
 	}
 	return builder.String()
 }
@@ -5285,11 +5269,10 @@ func (s *SubQueryClause) End() Pos {
 	return s.Select.End()
 }
 
-func (s *SubQueryClause) String(level int) string {
+func (s *SubQueryClause) String() string {
 	var builder strings.Builder
 	builder.WriteString(" AS (")
-	builder.WriteString(s.Select.String(level + 1))
-	builder.WriteString(NewLine(level))
+	builder.WriteString(s.Select.String())
 	builder.WriteString(")")
 	return builder.String()
 }
@@ -5318,8 +5301,8 @@ func (n *NotExpr) End() Pos {
 	return n.Expr.End()
 }
 
-func (n *NotExpr) String(level int) string {
-	return "NOT " + n.Expr.String(level+1)
+func (n *NotExpr) String() string {
+	return "NOT " + n.Expr.String()
 }
 
 func (n *NotExpr) Accept(visitor ASTVisitor) error {
@@ -5344,8 +5327,8 @@ func (n *NegateExpr) End() Pos {
 	return n.Expr.End()
 }
 
-func (n *NegateExpr) String(level int) string {
-	return "-" + n.Expr.String(level+1)
+func (n *NegateExpr) String() string {
+	return "-" + n.Expr.String()
 }
 
 func (n *NegateExpr) Accept(visitor ASTVisitor) error {
@@ -5370,8 +5353,8 @@ func (g *GlobalInOperation) End() Pos {
 	return g.Expr.End()
 }
 
-func (g *GlobalInOperation) String(level int) string {
-	return "GLOBAL " + g.Expr.String(level+1)
+func (g *GlobalInOperation) String() string {
+	return "GLOBAL " + g.Expr.String()
 }
 
 func (g *GlobalInOperation) Accept(visitor ASTVisitor) error {
@@ -5398,12 +5381,12 @@ func (e *ExtractExpr) End() Pos {
 	return e.FromExpr.End()
 }
 
-func (e *ExtractExpr) String(level int) string {
+func (e *ExtractExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("EXTRACT(")
-	builder.WriteString(e.Interval.String(level))
+	builder.WriteString(e.Interval.String())
 	builder.WriteString(" FROM ")
-	builder.WriteString(e.FromExpr.String(level))
+	builder.WriteString(e.FromExpr.String())
 	builder.WriteByte(')')
 	return builder.String()
 }
@@ -5437,16 +5420,16 @@ func (d *DropDatabase) Type() string {
 	return "DATABASE"
 }
 
-func (d *DropDatabase) String(level int) string {
+func (d *DropDatabase) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP DATABASE ")
 	if d.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(d.Name.String(level))
+	builder.WriteString(d.Name.String())
 	if d.OnCluster != nil {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(d.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(d.OnCluster.String())
 	}
 	return builder.String()
 }
@@ -5489,7 +5472,7 @@ func (d *DropStmt) Type() string {
 	return "DROP " + d.DropTarget
 }
 
-func (d *DropStmt) String(level int) string {
+func (d *DropStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP ")
 	if d.IsTemporary {
@@ -5499,10 +5482,10 @@ func (d *DropStmt) String(level int) string {
 	if d.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(d.Name.String(level))
+	builder.WriteString(d.Name.String())
 	if d.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(d.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(d.OnCluster.String())
 	}
 	if len(d.Modifier) != 0 {
 		builder.WriteString(" " + d.Modifier)
@@ -5547,7 +5530,7 @@ func (d *DropUserOrRole) Type() string {
 	return d.Target
 }
 
-func (d *DropUserOrRole) String(level int) string {
+func (d *DropUserOrRole) String() string {
 	var builder strings.Builder
 	builder.WriteString("DROP " + d.Target + " ")
 	if d.IfExists {
@@ -5557,14 +5540,14 @@ func (d *DropUserOrRole) String(level int) string {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(name.String(level))
+		builder.WriteString(name.String())
 	}
 	if len(d.Modifier) != 0 {
 		builder.WriteString(" " + d.Modifier)
 	}
 	if d.From != nil {
 		builder.WriteString(" FROM ")
-		builder.WriteString(d.From.String(level))
+		builder.WriteString(d.From.String())
 	}
 	return builder.String()
 }
@@ -5599,8 +5582,8 @@ func (u *UseStmt) End() Pos {
 	return u.Database.End()
 }
 
-func (u *UseStmt) String(level int) string {
-	return "USE " + u.Database.String(level+1)
+func (u *UseStmt) String() string {
+	return "USE " + u.Database.String()
 }
 
 func (u *UseStmt) Accept(visitor ASTVisitor) error {
@@ -5626,16 +5609,16 @@ func (c *CTEStmt) End() Pos {
 	return c.Expr.End()
 }
 
-func (c *CTEStmt) String(level int) string {
+func (c *CTEStmt) String() string {
 	var builder strings.Builder
-	builder.WriteString(c.Expr.String(level))
+	builder.WriteString(c.Expr.String())
 	builder.WriteString(" AS ")
 	if _, isSelect := c.Alias.(*SelectQuery); isSelect {
 		builder.WriteByte('(')
-		builder.WriteString(c.Alias.String(level + 2))
+		builder.WriteString(c.Alias.String())
 		builder.WriteByte(')')
 	} else {
-		builder.WriteString(c.Alias.String(level))
+		builder.WriteString(c.Alias.String())
 	}
 	return builder.String()
 }
@@ -5665,14 +5648,14 @@ func (s *SetStmt) End() Pos {
 	return s.Settings.End()
 }
 
-func (s *SetStmt) String(level int) string {
+func (s *SetStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("SET ")
 	for i, item := range s.Settings.Items {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(item.String(level))
+		builder.WriteString(item.String())
 	}
 	return builder.String()
 }
@@ -5699,8 +5682,8 @@ func (f *FormatClause) End() Pos {
 	return f.Format.End()
 }
 
-func (f *FormatClause) String(level int) string {
-	return "FORMAT " + f.Format.String(level)
+func (f *FormatClause) String() string {
+	return "FORMAT " + f.Format.String()
 }
 
 func (f *FormatClause) Accept(visitor ASTVisitor) error {
@@ -5730,23 +5713,23 @@ func (o *OptimizeStmt) End() Pos {
 	return o.StatementEnd
 }
 
-func (o *OptimizeStmt) String(level int) string {
+func (o *OptimizeStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("OPTIMIZE TABLE ")
-	builder.WriteString(o.Table.String(level))
+	builder.WriteString(o.Table.String())
 	if o.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(o.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(o.OnCluster.String())
 	}
 	if o.Partition != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(o.Partition.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(o.Partition.String())
 	}
 	if o.HasFinal {
 		builder.WriteString(" FINAL")
 	}
 	if o.Deduplicate != nil {
-		builder.WriteString(o.Deduplicate.String(level))
+		builder.WriteString(o.Deduplicate.String())
 	}
 	return builder.String()
 }
@@ -5794,16 +5777,16 @@ func (d *DeduplicateClause) End() Pos {
 	return d.DeduplicatePos + Pos(len(KeywordDeduplicate))
 }
 
-func (d *DeduplicateClause) String(level int) string {
+func (d *DeduplicateClause) String() string {
 	var builder strings.Builder
 	builder.WriteString(" DEDUPLICATE")
 	if d.By != nil {
 		builder.WriteString(" BY ")
-		builder.WriteString(d.By.String(level))
+		builder.WriteString(d.By.String())
 	}
 	if d.Except != nil {
 		builder.WriteString(" EXCEPT ")
-		builder.WriteString(d.Except.String(level))
+		builder.WriteString(d.Except.String())
 	}
 	return builder.String()
 }
@@ -5837,8 +5820,8 @@ func (s *SystemStmt) End() Pos {
 	return s.Expr.End()
 }
 
-func (s *SystemStmt) String(level int) string {
-	return "SYSTEM " + s.Expr.String(level)
+func (s *SystemStmt) String() string {
+	return "SYSTEM " + s.Expr.String()
 }
 
 func (s *SystemStmt) Accept(visitor ASTVisitor) error {
@@ -5865,13 +5848,13 @@ func (s *SystemFlushExpr) End() Pos {
 	return s.StatementEnd
 }
 
-func (s *SystemFlushExpr) String(level int) string {
+func (s *SystemFlushExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("FLUSH ")
 	if s.Logs {
 		builder.WriteString("LOGS")
 	} else {
-		builder.WriteString(s.Distributed.String(level))
+		builder.WriteString(s.Distributed.String())
 	}
 	return builder.String()
 }
@@ -5902,13 +5885,13 @@ func (s *SystemReloadExpr) End() Pos {
 	return s.StatementEnd
 }
 
-func (s *SystemReloadExpr) String(level int) string {
+func (s *SystemReloadExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("RELOAD ")
 	builder.WriteString(s.Type)
 	if s.Dictionary != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(s.Dictionary.String(level))
+		builder.WriteString(s.Dictionary.String())
 	}
 	return builder.String()
 }
@@ -5937,10 +5920,10 @@ func (s *SystemSyncExpr) End() Pos {
 	return s.Cluster.End()
 }
 
-func (s *SystemSyncExpr) String(level int) string {
+func (s *SystemSyncExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("SYNC ")
-	builder.WriteString(s.Cluster.String(level))
+	builder.WriteString(s.Cluster.String())
 	return builder.String()
 }
 
@@ -5969,14 +5952,14 @@ func (s *SystemCtrlExpr) End() Pos {
 	return s.StatementEnd
 }
 
-func (s *SystemCtrlExpr) String(level int) string {
+func (s *SystemCtrlExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString(s.Command)
 	builder.WriteByte(' ')
 	builder.WriteString(s.Type)
 	if s.Cluster != nil {
 		builder.WriteByte(' ')
-		builder.WriteString(s.Cluster.String(level))
+		builder.WriteString(s.Cluster.String())
 	}
 	return builder.String()
 }
@@ -6006,7 +5989,7 @@ func (s *SystemDropExpr) End() Pos {
 	return s.StatementEnd
 }
 
-func (s *SystemDropExpr) String(level int) string {
+func (s *SystemDropExpr) String() string {
 	return "DROP " + s.Type
 }
 
@@ -6037,7 +6020,7 @@ func (t *TruncateTable) Type() string {
 	return "TRUNCATE TABLE"
 }
 
-func (t *TruncateTable) String(level int) string {
+func (t *TruncateTable) String() string {
 	var builder strings.Builder
 	builder.WriteString("TRUNCATE ")
 	if t.IsTemporary {
@@ -6047,10 +6030,10 @@ func (t *TruncateTable) String(level int) string {
 	if t.IfExists {
 		builder.WriteString("IF EXISTS ")
 	}
-	builder.WriteString(t.Name.String(level))
+	builder.WriteString(t.Name.String())
 	if t.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(t.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(t.OnCluster.String())
 	}
 	return builder.String()
 }
@@ -6086,13 +6069,13 @@ func (s *SampleClause) End() Pos {
 	return s.Ratio.End()
 }
 
-func (s *SampleClause) String(level int) string {
+func (s *SampleClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("SAMPLE ")
-	builder.WriteString(s.Ratio.String(level))
+	builder.WriteString(s.Ratio.String())
 	if s.Offset != nil {
 		builder.WriteString(" OFFSET ")
-		builder.WriteString(s.Offset.String(level))
+		builder.WriteString(s.Offset.String())
 	}
 	return builder.String()
 }
@@ -6126,18 +6109,17 @@ func (d *DeleteClause) End() Pos {
 	return d.WhereExpr.End()
 }
 
-func (d *DeleteClause) String(level int) string {
+func (d *DeleteClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("DELETE FROM ")
-	builder.WriteString(d.Table.String(level))
+	builder.WriteString(d.Table.String())
 	if d.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(d.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(d.OnCluster.String())
 	}
 	if d.WhereExpr != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString("WHERE ")
-		builder.WriteString(d.WhereExpr.String(level))
+		builder.WriteString(" WHERE ")
+		builder.WriteString(d.WhereExpr.String())
 	}
 	return builder.String()
 }
@@ -6175,14 +6157,14 @@ func (c *ColumnNamesExpr) End() Pos {
 	return c.RightParenPos
 }
 
-func (c *ColumnNamesExpr) String(level int) string {
+func (c *ColumnNamesExpr) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
 	for i, column := range c.ColumnNames {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(column.String(level))
+		builder.WriteString(column.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -6213,14 +6195,14 @@ func (v *AssignmentValues) End() Pos {
 	return v.RightParenPos
 }
 
-func (v *AssignmentValues) String(level int) string {
+func (v *AssignmentValues) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
 	for i, value := range v.Values {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(value.String(level))
+		builder.WriteString(value.String())
 	}
 	builder.WriteByte(')')
 	return builder.String()
@@ -6257,30 +6239,29 @@ func (i *InsertStmt) End() Pos {
 	return i.Values[len(i.Values)-1].End()
 }
 
-func (i *InsertStmt) String(level int) string {
+func (i *InsertStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("INSERT INTO TABLE ")
-	builder.WriteString(i.Table.String(level))
+	builder.WriteString(i.Table.String())
 	if i.ColumnNames != nil {
-		builder.WriteString(NewLine(level + 1))
-		builder.WriteString(i.ColumnNames.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(i.ColumnNames.String())
 	}
 	if i.Format != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(i.Format.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(i.Format.String())
 	}
 
+	builder.WriteString(" ")
 	if i.SelectExpr != nil {
-		builder.WriteString(i.SelectExpr.String(level))
+		builder.WriteString(i.SelectExpr.String())
 	} else {
-		builder.WriteString(NewLine(level))
 		builder.WriteString("VALUES ")
 		for j, value := range i.Values {
 			if j > 0 {
-				builder.WriteByte(',')
+				builder.WriteString(", ")
 			}
-			builder.WriteString(NewLine(level + 1))
-			builder.WriteString(value.String(level))
+			builder.WriteString(value.String())
 		}
 	}
 	return builder.String()
@@ -6329,13 +6310,13 @@ func (c *CheckStmt) End() Pos {
 	return c.Partition.End()
 }
 
-func (c *CheckStmt) String(level int) string {
+func (c *CheckStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("CHECK TABLE ")
-	builder.WriteString(c.Table.String(level))
-	builder.WriteString(NewLine(level))
+	builder.WriteString(c.Table.String())
 	if c.Partition != nil {
-		builder.WriteString(c.Partition.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(c.Partition.String())
 	}
 	return builder.String()
 }
@@ -6368,8 +6349,8 @@ func (n *UnaryExpr) End() Pos {
 	return n.Expr.End()
 }
 
-func (n *UnaryExpr) String(level int) string {
-	return "-" + n.Expr.String(level+1)
+func (n *UnaryExpr) String() string {
+	return "-" + n.Expr.String()
 }
 
 func (n *UnaryExpr) Accept(visitor ASTVisitor) error {
@@ -6402,20 +6383,20 @@ func (r *RenameStmt) Type() string {
 	return "RENAME " + r.RenameTarget
 }
 
-func (r *RenameStmt) String(level int) string {
+func (r *RenameStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("RENAME " + r.RenameTarget + " ")
 	for i, pair := range r.TargetPairList {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(pair.Old.String(level))
+		builder.WriteString(pair.Old.String())
 		builder.WriteString(" TO ")
-		builder.WriteString(pair.New.String(level))
+		builder.WriteString(pair.New.String())
 	}
 	if r.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(r.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(r.OnCluster.String())
 	}
 	return builder.String()
 }
@@ -6453,7 +6434,7 @@ func (t *TargetPair) End() Pos {
 }
 
 func (t *TargetPair) String() string {
-	return t.Old.String(0) + " TO " + t.New.String(0)
+	return t.Old.String() + " TO " + t.New.String()
 }
 
 type ExplainStmt struct {
@@ -6470,12 +6451,12 @@ func (e *ExplainStmt) End() Pos {
 	return e.Statement.End()
 }
 
-func (e *ExplainStmt) String(level int) string {
+func (e *ExplainStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("EXPLAIN ")
 	builder.WriteString(e.Type)
 	builder.WriteByte(' ')
-	builder.WriteString(e.Statement.String(level))
+	builder.WriteString(e.Statement.String())
 	return builder.String()
 }
 
@@ -6503,7 +6484,7 @@ func (p *PrivilegeClause) End() Pos {
 	return p.PrivilegeEnd
 }
 
-func (p *PrivilegeClause) String(level int) string {
+func (p *PrivilegeClause) String() string {
 	var builder strings.Builder
 	for i, keyword := range p.Keywords {
 		if i > 0 {
@@ -6512,7 +6493,7 @@ func (p *PrivilegeClause) String(level int) string {
 		builder.WriteString(keyword)
 	}
 	if p.Params != nil {
-		builder.WriteString(p.Params.String(level))
+		builder.WriteString(p.Params.String())
 	}
 	return builder.String()
 }
@@ -6550,27 +6531,27 @@ func (g *GrantPrivilegeStmt) Type() string {
 	return "GRANT PRIVILEGE"
 }
 
-func (g *GrantPrivilegeStmt) String(level int) string {
+func (g *GrantPrivilegeStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("GRANT ")
 	if g.OnCluster != nil {
-		builder.WriteString(NewLine(level))
-		builder.WriteString(g.OnCluster.String(level))
+		builder.WriteString(" ")
+		builder.WriteString(g.OnCluster.String())
 	}
 	for i, privilege := range g.Privileges {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(privilege.String(level))
+		builder.WriteString(privilege.String())
 	}
 	builder.WriteString(" ON ")
-	builder.WriteString(g.On.String(level))
+	builder.WriteString(g.On.String())
 	builder.WriteString(" TO ")
 	for i, role := range g.To {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
-		builder.WriteString(role.String(level))
+		builder.WriteString(role.String())
 	}
 	for _, option := range g.WithOptions {
 		builder.WriteString(" WITH " + option + " OPTION")

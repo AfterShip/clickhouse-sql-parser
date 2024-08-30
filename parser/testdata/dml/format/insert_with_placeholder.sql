@@ -6,10 +6,4 @@ INSERT INTO t0(user_id, message, timestamp, metric) VALUES
     (?, ?, ?, ?)
 
 -- Format SQL:
-INSERT INTO TABLE t0
-  (user_id, message, timestamp, metric)
-VALUES 
-  (?, ?, ?, ?),
-  (?, ?, ?, ?),
-  (?, ?, ?, ?),
-  (?, ?, ?, ?);
+INSERT INTO TABLE t0 (user_id, message, timestamp, metric) VALUES (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?);

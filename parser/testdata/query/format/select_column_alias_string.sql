@@ -2,6 +2,4 @@
 SELECT 'abc' as "value2";
 
 -- Format SQL:
-
-SELECT 
-  'abc' AS "value2";
+SELECT 'abc' AS "value2";

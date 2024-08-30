@@ -4,9 +4,5 @@ ALTER TABLE test.events_local ON CLUSTER 'default_cluster' ADD COLUMN hello Stri
 
 
 -- Format SQL:
-ALTER TABLE test.events_local
-ON CLUSTER 'default_cluster'
-ADD COLUMN a.f1 String DEFAULT '' COMMENT 'test';
-ALTER TABLE test.events_local
-ON CLUSTER 'default_cluster'
-ADD COLUMN hello String DEFAULT '';
+ALTER TABLE test.events_local ON CLUSTER 'default_cluster' ADD COLUMN a.f1 String DEFAULT '' COMMENT 'test';
+ALTER TABLE test.events_local ON CLUSTER 'default_cluster' ADD COLUMN hello String DEFAULT '';
