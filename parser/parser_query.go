@@ -759,7 +759,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 	case p.tryConsumeKeyword(KeywordUnion) != nil:
 		switch {
 		case p.tryConsumeKeyword(KeywordAll) != nil:
-			unionAllExpr, err := p.parseSelectStmt(p.Pos())
+			unionAllExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
 				return nil, err
 			}

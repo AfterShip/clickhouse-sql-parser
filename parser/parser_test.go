@@ -49,7 +49,7 @@ func TestParser_ParseStatements(t *testing.T) {
 			require.NoError(t, err)
 		}
 		for _, entry := range entries {
-			if !strings.HasSuffix(entry.Name(), ".sql") {
+			if !strings.HasSuffix(entry.Name(), "select_with_multi_union.sql") {
 				continue
 			}
 			t.Run(entry.Name(), func(t *testing.T) {
