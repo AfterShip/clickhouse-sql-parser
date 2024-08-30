@@ -2,10 +2,4 @@
 SELECT * FROM t0 WHERE id = ?;
 
 -- Format SQL:
-
-SELECT 
-  *
-FROM
-  t0
-WHERE
-  id = ?;
+SELECT * FROM t0 WHERE id = ?;

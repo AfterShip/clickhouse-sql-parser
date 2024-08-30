@@ -65,7 +65,7 @@ func main() {
 		fmt.Println(string(bytes))
 	} else { // format SQL
 		for _, stmt := range stmts {
-			fmt.Println(stmt.String(0))
+			fmt.Println(stmt.String())
 		}
 	}
 }
