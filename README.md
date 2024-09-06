@@ -23,7 +23,7 @@ import (
 query := "SELECT * FROM clickhouse"
 parser := clickhouse.NewParser(query)
 // Parse query into AST
-statements, err := parser.ParseStatements()
+statements, err := parser.ParseStmts()
 if err != nil {
     return nil, err
 }
@@ -48,7 +48,7 @@ $ clickhouse-sql-parser -file ./test.sql
 ```Go
 parser := clickhouse.NewParser("SELECT * FROM clickhouse")
 // Parse query into AST
-statements, err := parser.ParseStatements()
+statements, err := parser.ParseStmts()
 if err != nil {
     return nil, err
 }
