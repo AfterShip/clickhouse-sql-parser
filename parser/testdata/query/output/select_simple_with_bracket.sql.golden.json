@@ -4,12 +4,9 @@
     "StatementEnd": 66,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 66,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "Name": {
               "Name": "arrayConcat",
@@ -107,7 +104,10 @@
             "NameEnd": 49
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Object": {
               "Name": "f1",
@@ -140,9 +140,10 @@
             "NamePos": 64,
             "NameEnd": 66
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,

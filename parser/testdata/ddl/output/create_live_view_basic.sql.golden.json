@@ -82,19 +82,17 @@
         "StatementEnd": 101,
         "With": null,
         "Top": null,
-        "SelectColumns": {
-          "ListPos": 85,
-          "ListEnd": 87,
-          "HasDistinct": false,
-          "Items": [
-            {
+        "SelectItems": [
+          {
+            "Expr": {
               "Name": "id",
               "QuoteType": 1,
               "NamePos": 85,
               "NameEnd": 87
-            }
-          ]
-        },
+            },
+            "Modifiers": []
+          }
+        ],
         "From": {
           "FromPos": 88,
           "Expr": {

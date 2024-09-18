@@ -4,19 +4,17 @@
     "StatementEnd": 43,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 19,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "replica_name",
           "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 19
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 20,
       "Expr": {
@@ -63,19 +61,17 @@
       "StatementEnd": 121,
       "With": null,
       "Top": null,
-      "SelectColumns": {
-        "ListPos": 66,
-        "ListEnd": 78,
-        "HasDistinct": false,
-        "Items": [
-          {
+      "SelectItems": [
+        {
+          "Expr": {
             "Name": "replica_name",
             "QuoteType": 1,
             "NamePos": 66,
             "NameEnd": 78
-          }
-        ]
-      },
+          },
+          "Modifiers": []
+        }
+      ],
       "From": {
         "FromPos": 79,
         "Expr": {

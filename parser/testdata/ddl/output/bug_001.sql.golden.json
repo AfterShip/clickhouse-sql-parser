@@ -51,24 +51,27 @@
         "StatementEnd": 635,
         "With": null,
         "Top": null,
-        "SelectColumns": {
-          "ListPos": 118,
-          "ListEnd": 591,
-          "HasDistinct": false,
-          "Items": [
-            {
+        "SelectItems": [
+          {
+            "Expr": {
               "Name": "event_ts",
               "QuoteType": 1,
               "NamePos": 118,
               "NameEnd": 126
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Name": "org_id",
               "QuoteType": 1,
               "NamePos": 132,
               "NameEnd": 138
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -108,7 +111,10 @@
                 "NameEnd": 189
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -148,7 +154,10 @@
                 "NameEnd": 240
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -188,7 +197,10 @@
                 "NameEnd": 291
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -228,7 +240,10 @@
                 "NameEnd": 342
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -268,7 +283,10 @@
                 "NameEnd": 393
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -308,7 +326,10 @@
                 "NameEnd": 444
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -348,7 +369,10 @@
                 "NameEnd": 495
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractInt",
@@ -388,7 +412,10 @@
                 "NameEnd": 543
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractInt",
@@ -427,9 +454,10 @@
                 "NamePos": 590,
                 "NameEnd": 591
               }
-            }
-          ]
-        },
+            },
+            "Modifiers": []
+          }
+        ],
         "From": {
           "FromPos": 592,
           "Expr": {

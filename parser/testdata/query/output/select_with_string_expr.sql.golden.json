@@ -19,12 +19,9 @@
             "StatementEnd": 28,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 22,
-              "ListEnd": 28,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Expr": {
                     "NumPos": 22,
                     "NumEnd": 23,
@@ -38,9 +35,10 @@
                     "NamePos": 27,
                     "NameEnd": 28
                   }
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": null,
             "ArrayJoin": null,
             "Window": null,
@@ -62,19 +60,17 @@
       ]
     },
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 37,
-      "ListEnd": 37,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 37,
           "NameEnd": 37
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 39,
       "Expr": {

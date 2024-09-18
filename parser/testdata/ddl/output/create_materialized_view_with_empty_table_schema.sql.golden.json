@@ -129,30 +129,36 @@
         "StatementEnd": 460,
         "With": null,
         "Top": null,
-        "SelectColumns": {
-          "ListPos": 211,
-          "ListEnd": 243,
-          "HasDistinct": false,
-          "Items": [
-            {
+        "SelectItems": [
+          {
+            "Expr": {
               "Name": "f0",
               "QuoteType": 1,
               "NamePos": 211,
               "NameEnd": 213
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Name": "f1",
               "QuoteType": 1,
               "NamePos": 214,
               "NameEnd": 216
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Name": "f2",
               "QuoteType": 1,
               "NamePos": 217,
               "NameEnd": 219
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "coalesce",
@@ -192,9 +198,10 @@
                 "NamePos": 239,
                 "NameEnd": 243
               }
-            }
-          ]
-        },
+            },
+            "Modifiers": []
+          }
+        ],
         "From": {
           "FromPos": 244,
           "Expr": {
@@ -208,30 +215,36 @@
                   "StatementEnd": 433,
                   "With": null,
                   "Top": null,
-                  "SelectColumns": {
-                    "ListPos": 270,
-                    "ListEnd": 354,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+                  "SelectItems": [
+                    {
+                      "Expr": {
                         "Name": "f0",
                         "QuoteType": 1,
                         "NamePos": 270,
                         "NameEnd": 272
                       },
-                      {
+                      "Modifiers": []
+                    },
+                    {
+                      "Expr": {
                         "Name": "f1",
                         "QuoteType": 1,
                         "NamePos": 273,
                         "NameEnd": 275
                       },
-                      {
+                      "Modifiers": []
+                    },
+                    {
+                      "Expr": {
                         "Name": "f2",
                         "QuoteType": 1,
                         "NamePos": 276,
                         "NameEnd": 278
                       },
-                      {
+                      "Modifiers": []
+                    },
+                    {
+                      "Expr": {
                         "Expr": {
                           "Function": {
                             "Name": {
@@ -324,9 +337,10 @@
                           "NamePos": 352,
                           "NameEnd": 354
                         }
-                      }
-                    ]
-                  },
+                      },
+                      "Modifiers": []
+                    }
+                  ],
                   "From": {
                     "FromPos": 360,
                     "Expr": {

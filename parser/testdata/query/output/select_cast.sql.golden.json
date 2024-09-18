@@ -4,12 +4,9 @@
     "StatementEnd": 34,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 34,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "CastPos": 7,
             "Expr": {
@@ -36,9 +33,10 @@
             "NamePos": 29,
             "NameEnd": 34
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,
@@ -61,12 +59,9 @@
     "StatementEnd": 70,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 43,
-      "ListEnd": 70,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "CastPos": 43,
             "Expr": {
@@ -90,9 +85,10 @@
             "NamePos": 65,
             "NameEnd": 70
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,
@@ -115,12 +111,9 @@
     "StatementEnd": 102,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 79,
-      "ListEnd": 102,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "LeftParenPos": 79,
             "RightParenPos": 92,
@@ -155,9 +148,10 @@
             "NamePos": 97,
             "NameEnd": 102
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,
@@ -180,12 +174,9 @@
     "StatementEnd": 130,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 111,
-      "ListEnd": 130,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "LeftExpr": {
               "NumPos": 111,
@@ -210,9 +201,10 @@
             "NamePos": 125,
             "NameEnd": 130
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,

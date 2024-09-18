@@ -248,24 +248,27 @@
         "StatementEnd": 537,
         "With": null,
         "Top": null,
-        "SelectColumns": {
-          "ListPos": 215,
-          "ListEnd": 456,
-          "HasDistinct": false,
-          "Items": [
-            {
+        "SelectItems": [
+          {
+            "Expr": {
               "Name": "f1",
               "QuoteType": 1,
               "NamePos": 215,
               "NameEnd": 217
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Name": "f2",
               "QuoteType": 1,
               "NamePos": 226,
               "NameEnd": 228
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -305,7 +308,10 @@
                 "NameEnd": 286
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -345,7 +351,10 @@
                 "NameEnd": 347
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractString",
@@ -385,7 +394,10 @@
                 "NameEnd": 406
               }
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Expr": {
                 "Name": {
                   "Name": "visitParamExtractInt",
@@ -424,9 +436,10 @@
                 "NamePos": 454,
                 "NameEnd": 456
               }
-            }
-          ]
-        },
+            },
+            "Modifiers": []
+          }
+        ],
         "From": {
           "FromPos": 457,
           "Expr": {

@@ -477,6 +477,24 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 	return columnExprList, nil
 }
 
+func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
+	selectItems := make([]*SelectItem, 0)
+	for !p.lexer.isEOF() || p.last() != nil {
+		selectItem, err := p.parseSelectItem()
+		if err != nil {
+			return nil, err
+		}
+		if selectItem == nil {
+			break
+		}
+		selectItems = append(selectItems, selectItem)
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+	}
+	return selectItems, nil
+}
+
 // Syntax: INTERVAL expr interval
 func (p *Parser) parseColumnExprInterval(pos Pos) (Expr, error) {
 	if err := p.consumeKeyword(KeywordInterval); err != nil {
@@ -504,10 +522,7 @@ func (p *Parser) parseColumnExprInterval(pos Pos) (Expr, error) {
 	}, nil
 }
 
-func (p *Parser) parseFunctionExpr(_ Pos) (Expr, error) {
-	if _, err := p.consumeTokenKind(TokenIdent); err != nil {
-		return nil, err
-	}
+func (p *Parser) parseFunctionExpr(_ Pos) (*FunctionExpr, error) {
 	// parse function name
 	name, err := p.parseIdent()
 	if err != nil {
@@ -672,6 +687,30 @@ func (p *Parser) parseArrayParams(pos Pos) (*ArrayParamList, error) {
 
 func (p *Parser) parseColumnsExpr(pos Pos) (Expr, error) {
 	return p.parseExpr(pos)
+}
+
+func (p *Parser) parseSelectItem() (*SelectItem, error) {
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	modifiers := make([]*FunctionExpr, 0)
+	for {
+		if p.matchKeyword(KeywordExcept) || p.matchKeyword(KeywordApply) || p.matchKeyword(KeywordReplace) {
+			modifier, err := p.parseFunctionExpr(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			modifiers = append(modifiers, modifier)
+		} else {
+			break
+		}
+	}
+	return &SelectItem{
+		Expr:      expr,
+		Modifiers: modifiers,
+	}, nil
 }
 
 func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {

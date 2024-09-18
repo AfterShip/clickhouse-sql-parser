@@ -24,6 +24,47 @@ type DDL interface {
 	Type() string
 }
 
+type SelectItem struct {
+	Expr Expr
+	// Please refer: https://clickhouse.com/docs/en/sql-reference/statements/select#select-modifiers
+	Modifiers []*FunctionExpr
+}
+
+func (s *SelectItem) Pos() Pos {
+	return s.Expr.Pos()
+}
+
+func (s *SelectItem) End() Pos {
+	if len(s.Modifiers) > 0 {
+		return s.Modifiers[len(s.Modifiers)-1].End()
+	}
+	return s.Expr.End()
+}
+
+func (s *SelectItem) String() string {
+	var builder strings.Builder
+	builder.WriteString(s.Expr.String())
+	for _, modifier := range s.Modifiers {
+		builder.WriteByte(' ')
+		builder.WriteString(modifier.String())
+	}
+	return builder.String()
+}
+
+func (s *SelectItem) Accept(visitor ASTVisitor) error {
+	visitor.enter(s)
+	defer visitor.leave(s)
+	if err := s.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	for _, modifier := range s.Modifiers {
+		if err := modifier.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitSelectItem(s)
+}
+
 type OperationExpr struct {
 	OperationPos Pos
 	Kind         TokenKind
@@ -5047,7 +5088,7 @@ type SelectQuery struct {
 	StatementEnd  Pos
 	With          *WithClause
 	Top           *TopClause
-	SelectColumns *ColumnExprList
+	SelectItems   []*SelectItem
 	From          *FromClause
 	ArrayJoin     *ArrayJoinClause
 	Window        *WindowClause
@@ -5092,10 +5133,9 @@ func (s *SelectQuery) String() string { // nolint: funlen
 		builder.WriteString(s.Top.String())
 		builder.WriteString(" ")
 	}
-	columns := s.SelectColumns.Items
-	for i, column := range columns {
-		builder.WriteString(column.String())
-		if i != len(columns)-1 {
+	for i, selectItem := range s.SelectItems {
+		builder.WriteString(selectItem.String())
+		if i != len(s.SelectItems)-1 {
 			builder.WriteString(", ")
 		}
 	}
@@ -5173,9 +5213,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	if s.SelectColumns != nil {
-		if err := s.SelectColumns.Accept(visitor); err != nil {
-			return err
+	if s.SelectItems != nil {
+		for _, item := range s.SelectItems {
+			if err := item.Accept(visitor); err != nil {
+				return err
+			}
 		}
 	}
 	if s.From != nil {

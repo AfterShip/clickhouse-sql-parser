@@ -4,30 +4,36 @@
     "StatementEnd": 133,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 24,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "f0",
           "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 9
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Name": "f1",
           "QuoteType": 1,
           "NamePos": 10,
           "NameEnd": 12
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Name": "f2",
           "QuoteType": 1,
           "NamePos": 13,
           "NameEnd": 15
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Name": "f3",
             "QuoteType": 1,
@@ -41,9 +47,10 @@
             "NamePos": 22,
             "NameEnd": 24
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 25,
       "Expr": {

@@ -19,19 +19,17 @@
             "StatementEnd": 35,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 25,
-              "ListEnd": 27,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Name": "f1",
                   "QuoteType": 1,
                   "NamePos": 25,
                   "NameEnd": 27
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": {
               "FromPos": 28,
               "Expr": {
@@ -85,19 +83,17 @@
             "StatementEnd": 68,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 58,
-              "ListEnd": 60,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Name": "f2",
                   "QuoteType": 1,
                   "NamePos": 58,
                   "NameEnd": 60
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": {
               "FromPos": 61,
               "Expr": {
@@ -141,12 +137,9 @@
       ]
     },
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 81,
-      "ListEnd": 112,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Database": null,
           "Table": {
             "Name": "cte1",
@@ -161,7 +154,10 @@
             "NameEnd": 88
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Database": null,
           "Table": {
             "Name": "cte2",
@@ -176,7 +172,10 @@
             "NameEnd": 101
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Database": null,
           "Table": {
             "Name": "t3",
@@ -190,9 +189,10 @@
             "NamePos": 110,
             "NameEnd": 112
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 113,
       "Expr": {

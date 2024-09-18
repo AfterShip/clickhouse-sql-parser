@@ -14,19 +14,17 @@
       },
       "WithTies": false
     },
-    "SelectColumns": {
-      "ListPos": 14,
-      "ListEnd": 23,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "my_column",
           "QuoteType": 1,
           "NamePos": 14,
           "NameEnd": 23
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 24,
       "Expr": {

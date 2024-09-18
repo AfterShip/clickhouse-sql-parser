@@ -803,11 +803,15 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if err != nil {
 		return nil, err
 	}
-	selectColumns, err := p.parseColumnExprListWithRoundBracket(p.Pos())
+	selectItems, err := p.parseSelectItems()
 	if err != nil {
 		return nil, err
 	}
-	statementEnd := selectColumns.End()
+
+	statementEnd := pos
+	if len(selectItems) > 0 {
+		statementEnd = selectItems[len(selectItems)-1].End()
+	}
 	from, err := p.tryParseFromClause(p.Pos())
 	if err != nil {
 		return nil, err
@@ -916,24 +920,24 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	}
 
 	return &SelectQuery{
-		With:          withClause,
-		SelectPos:     pos,
-		StatementEnd:  statementEnd,
-		Top:           top,
-		SelectColumns: selectColumns,
-		From:          from,
-		ArrayJoin:     arrayJoin,
-		Window:        window,
-		Prewhere:      prewhere,
-		Where:         where,
-		GroupBy:       groupBy,
-		Having:        having,
-		OrderBy:       orderBy,
-		LimitBy:       limitBy,
-		Limit:         limit,
-		Settings:      settings,
-		Format:        format,
-		WithTotal:     withTotal,
+		With:         withClause,
+		SelectPos:    pos,
+		StatementEnd: statementEnd,
+		Top:          top,
+		SelectItems:  selectItems,
+		From:         from,
+		ArrayJoin:    arrayJoin,
+		Window:       window,
+		Prewhere:     prewhere,
+		Where:        where,
+		GroupBy:      groupBy,
+		Having:       having,
+		OrderBy:      orderBy,
+		LimitBy:      limitBy,
+		Limit:        limit,
+		Settings:     settings,
+		Format:       format,
+		WithTotal:    withTotal,
 	}, nil
 }
 

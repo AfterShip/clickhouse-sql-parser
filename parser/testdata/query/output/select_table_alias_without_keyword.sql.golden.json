@@ -4,12 +4,9 @@
     "StatementEnd": 36,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 19,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Database": null,
           "Table": {
             "Name": "t1",
@@ -23,9 +20,10 @@
             "NamePos": 10,
             "NameEnd": 19
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 20,
       "Expr": {

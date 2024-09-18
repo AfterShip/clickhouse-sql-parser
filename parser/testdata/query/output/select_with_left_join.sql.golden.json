@@ -19,12 +19,9 @@
             "StatementEnd": 54,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 44,
-              "ListEnd": 54,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Expr": {
                     "NumPos": 44,
                     "NumEnd": 45,
@@ -38,9 +35,10 @@
                     "NamePos": 49,
                     "NameEnd": 54
                   }
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": null,
             "ArrayJoin": null,
             "Window": null,
@@ -72,12 +70,9 @@
             "StatementEnd": 98,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 88,
-              "ListEnd": 98,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Expr": {
                     "NumPos": 88,
                     "NumEnd": 89,
@@ -91,9 +86,10 @@
                     "NamePos": 93,
                     "NameEnd": 98
                   }
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": null,
             "ArrayJoin": null,
             "Window": null,
@@ -115,19 +111,17 @@
       ]
     },
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 112,
-      "ListEnd": 112,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 112,
           "NameEnd": 112
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 114,
       "Expr": {

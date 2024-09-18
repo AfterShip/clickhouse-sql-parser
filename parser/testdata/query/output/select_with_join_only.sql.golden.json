@@ -4,19 +4,17 @@
     "StatementEnd": 17,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 7,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 7,
           "NameEnd": 7
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 9,
       "Expr": {
