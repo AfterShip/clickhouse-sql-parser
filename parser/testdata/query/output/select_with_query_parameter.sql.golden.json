@@ -158,12 +158,9 @@
     "StatementEnd": 218,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 136,
-      "ListEnd": 218,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "LBracePos": 136,
           "RBracePos": 146,
           "Name": {
@@ -181,7 +178,10 @@
             }
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "LBracePos": 153,
           "RBracePos": 163,
           "Name": {
@@ -199,7 +199,10 @@
             }
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "LBracePos": 170,
           "RBracePos": 182,
           "Name": {
@@ -217,7 +220,10 @@
             }
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "LBracePos": 189,
           "RBracePos": 218,
           "Name": {
@@ -266,9 +272,10 @@
               }
             ]
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,
@@ -291,19 +298,17 @@
     "StatementEnd": 283,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 229,
-      "ListEnd": 229,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 229,
           "NameEnd": 229
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 231,
       "Expr": {

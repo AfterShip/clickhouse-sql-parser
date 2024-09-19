@@ -4,12 +4,9 @@
     "StatementEnd": 23,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 8,
-      "ListEnd": 23,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "LiteralPos": 8,
             "LiteralEnd": 11,
@@ -22,9 +19,10 @@
             "NamePos": 17,
             "NameEnd": 23
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": null,
     "ArrayJoin": null,
     "Window": null,

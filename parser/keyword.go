@@ -10,6 +10,7 @@ const (
 	KeywordAnd          = "AND"
 	KeywordAnti         = "ANTI"
 	KeywordAny          = "ANY"
+	KeywordApply        = "APPLY"
 	KeywordArray        = "ARRAY"
 	KeywordAs           = "AS"
 	KeywordAsc          = "ASC"
@@ -233,6 +234,7 @@ var keywords = NewSet(
 	KeywordAnd,
 	KeywordAnti,
 	KeywordAny,
+	KeywordApply,
 	KeywordArray,
 	KeywordAs,
 	KeywordAsc,

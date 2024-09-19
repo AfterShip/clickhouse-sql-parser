@@ -23,37 +23,44 @@
       "StatementEnd": 103,
       "With": null,
       "Top": null,
-      "SelectColumns": {
-        "ListPos": 40,
-        "ListEnd": 86,
-        "HasDistinct": false,
-        "Items": [
-          {
+      "SelectItems": [
+        {
+          "Expr": {
             "Name": "CounterID",
             "QuoteType": 1,
             "NamePos": 40,
             "NameEnd": 49
           },
-          {
+          "Modifiers": []
+        },
+        {
+          "Expr": {
             "Name": "StartDate",
             "QuoteType": 1,
             "NamePos": 55,
             "NameEnd": 64
           },
-          {
+          "Modifiers": []
+        },
+        {
+          "Expr": {
             "Name": "Sign",
             "QuoteType": 1,
             "NamePos": 70,
             "NameEnd": 74
           },
-          {
+          "Modifiers": []
+        },
+        {
+          "Expr": {
             "Name": "UserID",
             "QuoteType": 1,
             "NamePos": 80,
             "NameEnd": 86
-          }
-        ]
-      },
+          },
+          "Modifiers": []
+        }
+      ],
       "From": {
         "FromPos": 87,
         "Expr": {

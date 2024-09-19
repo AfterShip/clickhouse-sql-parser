@@ -51,31 +51,35 @@
             "StatementEnd": 58,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 37,
-              "ListEnd": 47,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Name": "f4",
                   "QuoteType": 1,
                   "NamePos": 37,
                   "NameEnd": 39
                 },
-                {
+                "Modifiers": []
+              },
+              {
+                "Expr": {
                   "Name": "f5",
                   "QuoteType": 1,
                   "NamePos": 41,
                   "NameEnd": 43
                 },
-                {
+                "Modifiers": []
+              },
+              {
+                "Expr": {
                   "Name": "f6",
                   "QuoteType": 1,
                   "NamePos": 45,
                   "NameEnd": 47
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": {
               "FromPos": 48,
               "Expr": {
@@ -119,12 +123,9 @@
       ]
     },
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 71,
-      "ListEnd": 119,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "Name": "f1",
             "QuoteType": 1,
@@ -139,7 +140,10 @@
             "NameEnd": 83
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Name": "f2",
             "QuoteType": 1,
@@ -154,7 +158,10 @@
             "NameEnd": 101
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Name": "f3",
             "QuoteType": 1,
@@ -168,9 +175,10 @@
             "NamePos": 113,
             "NameEnd": 119
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 120,
       "Expr": {

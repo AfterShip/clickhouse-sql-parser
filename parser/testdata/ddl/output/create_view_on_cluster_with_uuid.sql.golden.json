@@ -40,25 +40,26 @@
         "StatementEnd": 199,
         "With": null,
         "Top": null,
-        "SelectColumns": {
-          "ListPos": 151,
-          "ListEnd": 171,
-          "HasDistinct": false,
-          "Items": [
-            {
+        "SelectItems": [
+          {
+            "Expr": {
               "Name": "column1",
               "QuoteType": 1,
               "NamePos": 151,
               "NameEnd": 158
             },
-            {
+            "Modifiers": []
+          },
+          {
+            "Expr": {
               "Name": "column2",
               "QuoteType": 1,
               "NamePos": 164,
               "NameEnd": 171
-            }
-          ]
-        },
+            },
+            "Modifiers": []
+          }
+        ],
         "From": {
           "FromPos": 176,
           "Expr": {

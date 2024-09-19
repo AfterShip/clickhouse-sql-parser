@@ -4,18 +4,18 @@
     "StatementEnd": 86,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 7,
-      "ListEnd": 17,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "a",
           "QuoteType": 1,
           "NamePos": 7,
           "NameEnd": 8
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Name": {
             "Name": "COUNT",
             "QuoteType": 1,
@@ -40,9 +40,10 @@
             },
             "ColumnArgList": null
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 19,
       "Expr": {

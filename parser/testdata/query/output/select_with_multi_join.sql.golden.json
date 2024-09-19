@@ -19,12 +19,9 @@
             "StatementEnd": 41,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 25,
-              "ListEnd": 41,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Expr": {
                     "LiteralPos": 25,
                     "LiteralEnd": 31,
@@ -37,9 +34,10 @@
                     "NamePos": 36,
                     "NameEnd": 41
                   }
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": null,
             "ArrayJoin": null,
             "Window": null,
@@ -71,12 +69,9 @@
             "StatementEnd": 81,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 65,
-              "ListEnd": 81,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Expr": {
                     "LiteralPos": 65,
                     "LiteralEnd": 71,
@@ -89,9 +84,10 @@
                     "NamePos": 76,
                     "NameEnd": 81
                   }
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": null,
             "ArrayJoin": null,
             "Window": null,
@@ -123,12 +119,9 @@
             "StatementEnd": 121,
             "With": null,
             "Top": null,
-            "SelectColumns": {
-              "ListPos": 105,
-              "ListEnd": 121,
-              "HasDistinct": false,
-              "Items": [
-                {
+            "SelectItems": [
+              {
+                "Expr": {
                   "Expr": {
                     "LiteralPos": 105,
                     "LiteralEnd": 111,
@@ -141,9 +134,10 @@
                     "NamePos": 116,
                     "NameEnd": 121
                   }
-                }
-              ]
-            },
+                },
+                "Modifiers": []
+              }
+            ],
             "From": null,
             "ArrayJoin": null,
             "Window": null,
@@ -165,12 +159,9 @@
       ]
     },
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 139,
-      "ListEnd": 205,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Expr": {
             "Database": null,
             "Table": {
@@ -194,7 +185,10 @@
             "NameEnd": 157
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Database": null,
             "Table": {
@@ -218,7 +212,10 @@
             "NameEnd": 181
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Database": null,
             "Table": {
@@ -241,9 +238,10 @@
             "NamePos": 199,
             "NameEnd": 205
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 206,
       "Expr": {

@@ -4,18 +4,18 @@
     "StatementEnd": 277,
     "With": null,
     "Top": null,
-    "SelectColumns": {
-      "ListPos": 11,
-      "ListEnd": 96,
-      "HasDistinct": false,
-      "Items": [
-        {
+    "SelectItems": [
+      {
+        "Expr": {
           "Name": "f0",
           "QuoteType": 1,
           "NamePos": 11,
           "NameEnd": 13
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Name": {
               "Name": "coalesce",
@@ -56,7 +56,10 @@
             "NameEnd": 37
           }
         },
-        {
+        "Modifiers": []
+      },
+      {
+        "Expr": {
           "Expr": {
             "Function": {
               "Name": {
@@ -123,9 +126,10 @@
             "NamePos": 94,
             "NameEnd": 96
           }
-        }
-      ]
-    },
+        },
+        "Modifiers": []
+      }
+    ],
     "From": {
       "FromPos": 97,
       "Expr": {
