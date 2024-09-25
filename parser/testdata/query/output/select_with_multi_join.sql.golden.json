@@ -27,7 +27,7 @@
                     "LiteralEnd": 31,
                     "Literal": "value1"
                   },
-                  "AliasPos": 36,
+                  "AliasPos": 33,
                   "Alias": {
                     "Name": "value",
                     "QuoteType": 1,
@@ -77,7 +77,7 @@
                     "LiteralEnd": 71,
                     "Literal": "value2"
                   },
-                  "AliasPos": 76,
+                  "AliasPos": 73,
                   "Alias": {
                     "Name": "value",
                     "QuoteType": 1,
@@ -127,7 +127,7 @@
                     "LiteralEnd": 111,
                     "Literal": "value3"
                   },
-                  "AliasPos": 116,
+                  "AliasPos": 113,
                   "Alias": {
                     "Name": "value",
                     "QuoteType": 1,
@@ -177,7 +177,7 @@
               "NameEnd": 147
             }
           },
-          "AliasPos": 151,
+          "AliasPos": 148,
           "Alias": {
             "Name": "value1",
             "QuoteType": 1,
@@ -204,7 +204,7 @@
               "NameEnd": 171
             }
           },
-          "AliasPos": 175,
+          "AliasPos": 172,
           "Alias": {
             "Name": "value2",
             "QuoteType": 1,
@@ -231,7 +231,7 @@
               "NameEnd": 195
             }
           },
-          "AliasPos": 199,
+          "AliasPos": 196,
           "Alias": {
             "Name": "value3",
             "QuoteType": 1,

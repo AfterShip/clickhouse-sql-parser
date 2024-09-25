@@ -13,7 +13,7 @@
             "Literal": "1",
             "Base": 10
           },
-          "AliasPos": 12,
+          "AliasPos": 9,
           "Alias": {
             "Name": "v1",
             "QuoteType": 1,
@@ -51,7 +51,7 @@
               "Literal": "2",
               "Base": 10
             },
-            "AliasPos": 37,
+            "AliasPos": 34,
             "Alias": {
               "Name": "v2",
               "QuoteType": 1,
@@ -89,7 +89,7 @@
                 "Literal": "3",
                 "Base": 10
               },
-              "AliasPos": 62,
+              "AliasPos": 59,
               "Alias": {
                 "Name": "v3",
                 "QuoteType": 1,

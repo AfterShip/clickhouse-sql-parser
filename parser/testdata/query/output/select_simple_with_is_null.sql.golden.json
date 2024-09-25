@@ -40,7 +40,7 @@
             "NamePos": 16,
             "NameEnd": 18
           },
-          "AliasPos": 22,
+          "AliasPos": 19,
           "Alias": {
             "Name": "a0",
             "QuoteType": 1,
@@ -170,7 +170,7 @@
         },
         "Operation": "AND",
         "RightExpr": {
-          "IsPos": 110,
+          "IsPos": 120,
           "Expr": {
             "Name": "f2",
             "QuoteType": 1,

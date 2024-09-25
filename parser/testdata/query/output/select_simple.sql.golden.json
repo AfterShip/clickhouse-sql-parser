@@ -48,7 +48,7 @@
               "ColumnArgList": null
             }
           },
-          "AliasPos": 35,
+          "AliasPos": 32,
           "Alias": {
             "Name": "f3",
             "QuoteType": 1,
@@ -119,7 +119,7 @@
               "Frame": null
             }
           },
-          "AliasPos": 94,
+          "AliasPos": 91,
           "Alias": {
             "Name": "rn",
             "QuoteType": 1,
@@ -264,14 +264,14 @@
                     "NamePos": 183,
                     "NameEnd": 185
                   },
-                  "Operation": "LIKE",
+                  "Operation": "NOT LIKE",
                   "RightExpr": {
                     "LiteralPos": 196,
                     "LiteralEnd": 204,
                     "Literal": "testing2"
                   },
                   "HasGlobal": false,
-                  "HasNot": true
+                  "HasNot": false
                 }
               ]
             },
@@ -288,7 +288,7 @@
             "NamePos": 211,
             "NameEnd": 213
           },
-          "Operation": "IN",
+          "Operation": "NOT IN",
           "RightExpr": {
             "LeftParenPos": 221,
             "RightParenPos": 235,
@@ -317,7 +317,7 @@
             "ColumnArgList": null
           },
           "HasGlobal": false,
-          "HasNot": true
+          "HasNot": false
         },
         "HasGlobal": false,
         "HasNot": false

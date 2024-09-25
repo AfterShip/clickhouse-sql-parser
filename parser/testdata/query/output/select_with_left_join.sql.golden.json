@@ -28,7 +28,7 @@
                     "Literal": "1",
                     "Base": 10
                   },
-                  "AliasPos": 49,
+                  "AliasPos": 46,
                   "Alias": {
                     "Name": "value",
                     "QuoteType": 1,
@@ -79,7 +79,7 @@
                     "Literal": "2",
                     "Base": 10
                   },
-                  "AliasPos": 93,
+                  "AliasPos": 90,
                   "Alias": {
                     "Name": "value",
                     "QuoteType": 1,

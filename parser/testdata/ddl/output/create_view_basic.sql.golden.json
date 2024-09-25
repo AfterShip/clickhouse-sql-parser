@@ -83,7 +83,7 @@
       "TableFunction": null
     },
     "SubQuery": {
-      "AsPos": 60,
+      "HasParen": false,
       "Select": {
         "SelectPos": 63,
         "StatementEnd": 104,

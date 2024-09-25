@@ -96,7 +96,7 @@
               "ColumnArgList": null
             }
           },
-          "AliasPos": 46,
+          "AliasPos": 43,
           "Alias": {
             "Name": "res",
             "QuoteType": 1,
@@ -133,7 +133,7 @@
               }
             }
           },
-          "AliasPos": 64,
+          "AliasPos": 61,
           "Alias": {
             "Name": "f2",
             "QuoteType": 1,

@@ -158,8 +158,8 @@ func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
 		createTable.StatementEnd = engineExpr.End()
 	}
 
-	if p.matchKeyword(KeywordAs) {
-		subQuery, err := p.parseSubQueryClause(p.Pos())
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
 		}

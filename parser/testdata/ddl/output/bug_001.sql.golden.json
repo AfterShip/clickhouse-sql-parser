@@ -45,7 +45,7 @@
       "TableSchema": null
     },
     "SubQuery": {
-      "AsPos": 104,
+      "HasParen": false,
       "Select": {
         "SelectPos": 107,
         "StatementEnd": 635,
@@ -103,7 +103,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 188,
+              "AliasPos": 185,
               "Alias": {
                 "Name": "x",
                 "QuoteType": 1,
@@ -146,7 +146,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 239,
+              "AliasPos": 236,
               "Alias": {
                 "Name": "y",
                 "QuoteType": 1,
@@ -189,7 +189,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 290,
+              "AliasPos": 287,
               "Alias": {
                 "Name": "z",
                 "QuoteType": 1,
@@ -232,7 +232,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 341,
+              "AliasPos": 338,
               "Alias": {
                 "Name": "a",
                 "QuoteType": 1,
@@ -275,7 +275,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 392,
+              "AliasPos": 389,
               "Alias": {
                 "Name": "b",
                 "QuoteType": 1,
@@ -318,7 +318,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 443,
+              "AliasPos": 440,
               "Alias": {
                 "Name": "c",
                 "QuoteType": 1,
@@ -361,7 +361,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 494,
+              "AliasPos": 491,
               "Alias": {
                 "Name": "d",
                 "QuoteType": 1,
@@ -404,7 +404,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 542,
+              "AliasPos": 539,
               "Alias": {
                 "Name": "e",
                 "QuoteType": 1,
@@ -447,7 +447,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 590,
+              "AliasPos": 587,
               "Alias": {
                 "Name": "f",
                 "QuoteType": 1,

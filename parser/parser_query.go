@@ -304,7 +304,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			}
 		}
 	case p.matchTokenKind("("):
-		expr, err = p.parseSelectQuery(p.Pos())
+		expr, err = p.parseSubQuery(p.Pos())
 	default:
 		return nil, errors.New("expect table name or subquery")
 	}
@@ -729,19 +729,23 @@ func (p *Parser) parseHavingClause(pos Pos) (*HavingClause, error) {
 	}, nil
 }
 
-func (p *Parser) parseSubQueryClause(pos Pos) (*SubQueryClause, error) {
-	if err := p.consumeKeyword(KeywordAs); err != nil {
-		return nil, err
-	}
+func (p *Parser) parseSubQuery(pos Pos) (*SubQuery, error) {
+
+	hasParen := p.tryConsumeTokenKind("(") != nil
 
 	selectQuery, err := p.parseSelectQuery(p.Pos())
 	if err != nil {
 		return nil, err
 	}
+	if hasParen {
+		if _, err := p.consumeTokenKind(")"); err != nil {
+			return nil, err
+		}
+	}
 
-	return &SubQueryClause{
-		AsPos:  pos,
-		Select: selectQuery,
+	return &SubQuery{
+		HasParen: hasParen,
+		Select:   selectQuery,
 	}, nil
 }
 

@@ -242,7 +242,7 @@
       }
     },
     "SubQuery": {
-      "AsPos": 205,
+      "HasParen": false,
       "Select": {
         "SelectPos": 208,
         "StatementEnd": 537,
@@ -300,7 +300,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 284,
+              "AliasPos": 281,
               "Alias": {
                 "Name": "f3",
                 "QuoteType": 1,
@@ -343,7 +343,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 345,
+              "AliasPos": 342,
               "Alias": {
                 "Name": "f4",
                 "QuoteType": 1,
@@ -386,7 +386,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 404,
+              "AliasPos": 401,
               "Alias": {
                 "Name": "f5",
                 "QuoteType": 1,
@@ -429,7 +429,7 @@
                   "ColumnArgList": null
                 }
               },
-              "AliasPos": 454,
+              "AliasPos": 451,
               "Alias": {
                 "Name": "f6",
                 "QuoteType": 1,

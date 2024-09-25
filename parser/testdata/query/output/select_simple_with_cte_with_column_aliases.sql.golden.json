@@ -132,7 +132,7 @@
             "NamePos": 71,
             "NameEnd": 73
           },
-          "AliasPos": 77,
+          "AliasPos": 74,
           "Alias": {
             "Name": "new_f1",
             "QuoteType": 1,
@@ -150,7 +150,7 @@
             "NamePos": 89,
             "NameEnd": 91
           },
-          "AliasPos": 95,
+          "AliasPos": 92,
           "Alias": {
             "Name": "new_f2",
             "QuoteType": 1,
@@ -168,7 +168,7 @@
             "NamePos": 107,
             "NameEnd": 109
           },
-          "AliasPos": 113,
+          "AliasPos": 110,
           "Alias": {
             "Name": "new_f3",
             "QuoteType": 1,

@@ -35,7 +35,7 @@
                       "NamePos": 18,
                       "NameEnd": 20
                     },
-                    "AliasPos": 24,
+                    "AliasPos": 21,
                     "Alias": {
                       "Name": "c1",
                       "QuoteType": 1,
@@ -137,7 +137,7 @@
                       "HasGlobal": false,
                       "HasNot": false
                     },
-                    "AliasPos": 63,
+                    "AliasPos": 60,
                     "Alias": {
                       "Name": "i",
                       "QuoteType": 1,
@@ -239,7 +239,7 @@
                       "HasGlobal": false,
                       "HasNot": false
                     },
-                    "AliasPos": 101,
+                    "AliasPos": 98,
                     "Alias": {
                       "Name": "i",
                       "QuoteType": 1,

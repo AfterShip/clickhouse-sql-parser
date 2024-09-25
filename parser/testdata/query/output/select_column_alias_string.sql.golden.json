@@ -12,7 +12,7 @@
             "LiteralEnd": 11,
             "Literal": "abc"
           },
-          "AliasPos": 17,
+          "AliasPos": 13,
           "Alias": {
             "Name": "value2",
             "QuoteType": 2,

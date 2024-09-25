@@ -1475,7 +1475,7 @@ type CreateTable struct {
 	OnCluster    *ClusterClause
 	TableSchema  *TableSchemaClause
 	Engine       *EngineExpr
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 	HasTemporary bool
 }
 
@@ -1518,6 +1518,7 @@ func (c *CreateTable) String() string {
 		builder.WriteString(c.Engine.String())
 	}
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
@@ -1562,7 +1563,7 @@ type CreateMaterializedView struct {
 	OnCluster    *ClusterClause
 	Engine       *EngineExpr
 	Destination  *DestinationClause
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 	Populate     bool
 }
 
@@ -1604,6 +1605,7 @@ func (c *CreateMaterializedView) String() string {
 		builder.WriteString(" POPULATE ")
 	}
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
@@ -1651,7 +1653,7 @@ type CreateView struct {
 	UUID         *UUID
 	OnCluster    *ClusterClause
 	TableSchema  *TableSchemaClause
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 }
 
 func (c *CreateView) Pos() Pos {
@@ -1689,6 +1691,7 @@ func (c *CreateView) String() string {
 	}
 
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
@@ -4113,7 +4116,7 @@ type CreateLiveView struct {
 	Destination  *DestinationClause
 	TableSchema  *TableSchemaClause
 	WithTimeout  *WithTimeoutClause
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 }
 
 func (c *CreateLiveView) Type() string {
@@ -4157,6 +4160,7 @@ func (c *CreateLiveView) String() string {
 	}
 
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 
@@ -5298,28 +5302,31 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	return visitor.VisitSelectQuery(s)
 }
 
-type SubQueryClause struct {
-	AsPos  Pos
-	Select *SelectQuery
+type SubQuery struct {
+	HasParen bool
+	Select   *SelectQuery
 }
 
-func (s *SubQueryClause) Pos() Pos {
-	return s.AsPos
+func (s *SubQuery) Pos() Pos {
+	return s.Select.Pos()
 }
 
-func (s *SubQueryClause) End() Pos {
+func (s *SubQuery) End() Pos {
 	return s.Select.End()
 }
 
-func (s *SubQueryClause) String() string {
-	var builder strings.Builder
-	builder.WriteString(" AS (")
-	builder.WriteString(s.Select.String())
-	builder.WriteString(")")
-	return builder.String()
+func (s *SubQuery) String() string {
+	if s.HasParen {
+		var builder strings.Builder
+		builder.WriteString("(")
+		builder.WriteString(s.Select.String())
+		builder.WriteString(")")
+		return builder.String()
+	}
+	return s.Select.String()
 }
 
-func (s *SubQueryClause) Accept(visitor ASTVisitor) error {
+func (s *SubQuery) Accept(visitor ASTVisitor) error {
 	visitor.enter(s)
 	defer visitor.leave(s)
 	if s.Select != nil {

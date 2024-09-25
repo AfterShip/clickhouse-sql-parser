@@ -36,6 +36,13 @@ type Token struct {
 	QuoteType int
 }
 
+func (t *Token) ToString() string {
+	if t.Kind == TokenKeyword {
+		return strings.ToUpper(t.String)
+	}
+	return t.String
+}
+
 type Lexer struct {
 	input     string
 	current   int

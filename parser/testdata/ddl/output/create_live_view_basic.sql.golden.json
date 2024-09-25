@@ -76,7 +76,7 @@
       }
     },
     "SubQuery": {
-      "AsPos": 75,
+      "HasParen": false,
       "Select": {
         "SelectPos": 78,
         "StatementEnd": 101,

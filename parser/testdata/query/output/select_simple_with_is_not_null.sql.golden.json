@@ -40,7 +40,7 @@
             "NamePos": 16,
             "NameEnd": 18
           },
-          "AliasPos": 22,
+          "AliasPos": 19,
           "Alias": {
             "Name": "a0",
             "QuoteType": 1,
@@ -171,7 +171,7 @@
           },
           "Operation": "AND",
           "RightExpr": {
-            "IsPos": 114,
+            "IsPos": 127,
             "Expr": {
               "Name": "f2",
               "QuoteType": 1,
@@ -184,7 +184,7 @@
         },
         "Operation": "AND",
         "RightExpr": {
-          "IsPos": 131,
+          "IsPos": 145,
           "Expr": {
             "Name": "f3",
             "QuoteType": 1,

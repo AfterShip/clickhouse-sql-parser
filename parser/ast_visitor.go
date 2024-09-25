@@ -121,7 +121,7 @@ type ASTVisitor interface {
 	VisitWindowFrameNumber(expr *WindowFrameNumber) error
 	VisitArrayJoinExpr(expr *ArrayJoinClause) error
 	VisitSelectQuery(expr *SelectQuery) error
-	VisitSubQueryExpr(expr *SubQueryClause) error
+	VisitSubQueryExpr(expr *SubQuery) error
 	VisitNotExpr(expr *NotExpr) error
 	VisitNegateExpr(expr *NegateExpr) error
 	VisitGlobalInExpr(expr *GlobalInOperation) error
@@ -1006,7 +1006,7 @@ func (v *DefaultASTVisitor) VisitSelectQuery(expr *SelectQuery) error {
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitSubQueryExpr(expr *SubQueryClause) error {
+func (v *DefaultASTVisitor) VisitSubQueryExpr(expr *SubQuery) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

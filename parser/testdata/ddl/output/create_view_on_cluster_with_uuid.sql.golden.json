@@ -34,7 +34,7 @@
     },
     "TableSchema": null,
     "SubQuery": {
-      "AsPos": 131,
+      "HasParen": true,
       "Select": {
         "SelectPos": 140,
         "StatementEnd": 199,
