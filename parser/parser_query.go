@@ -729,7 +729,7 @@ func (p *Parser) parseHavingClause(pos Pos) (*HavingClause, error) {
 	}, nil
 }
 
-func (p *Parser) parseSubQuery(pos Pos) (*SubQuery, error) {
+func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 
 	hasParen := p.tryConsumeTokenKind("(") != nil
 

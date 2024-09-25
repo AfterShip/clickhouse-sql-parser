@@ -30,7 +30,7 @@ func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
 	return p.parseString(pos)
 }
 
-func (p *Parser) getNextPrecedence(pos Pos) int {
+func (p *Parser) getNextPrecedence() int {
 	switch {
 	case p.matchKeyword(KeywordOr):
 		return PrecedenceOr
@@ -185,7 +185,7 @@ func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
 		return nil, err
 	}
 	for !p.lexer.isEOF() {
-		nextPrecedence := p.getNextPrecedence(p.Pos())
+		nextPrecedence := p.getNextPrecedence()
 		if nextPrecedence <= precedence {
 			return expr, nil
 		}
