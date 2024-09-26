@@ -116,7 +116,7 @@ type ASTVisitor interface {
 	VisitWindowExpr(expr *WindowClause) error
 	VisitWindowFrameExpr(expr *WindowFrameClause) error
 	VisitWindowFrameExtendExpr(expr *WindowFrameExtendExpr) error
-	VisitWindowFrameRangeExpr(expr *WindowFrameRangeClause) error
+	VisitBetweenClause(expr *BetweenClause) error
 	VisitWindowFrameCurrentRow(expr *WindowFrameCurrentRow) error
 	VisitWindowFrameUnbounded(expr *WindowFrameUnbounded) error
 	VisitWindowFrameNumber(expr *WindowFrameNumber) error
@@ -972,7 +972,7 @@ func (v *DefaultASTVisitor) VisitWindowFrameExtendExpr(expr *WindowFrameExtendEx
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitWindowFrameRangeExpr(expr *WindowFrameRangeClause) error {
+func (v *DefaultASTVisitor) VisitBetweenClause(expr *BetweenClause) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

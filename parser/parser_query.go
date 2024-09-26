@@ -495,6 +495,34 @@ func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {
 	return p.parseLimitByClause(pos)
 }
 
+func (p *Parser) parseBetweenClause(expr Expr) (*BetweenClause, error) {
+	if err := p.consumeKeyword(KeywordBetween); err != nil {
+		return nil, err
+	}
+
+	betweenExpr, err := p.parseSubExpr(p.Pos(), PrecedenceBetweenLike)
+	if err != nil {
+		return nil, err
+	}
+
+	andPos := p.Pos()
+	if err := p.consumeKeyword(KeywordAnd); err != nil {
+		return nil, err
+	}
+
+	andExpr, err := p.parseSubExpr(p.Pos(), PrecedenceBetweenLike)
+	if err != nil {
+		return nil, err
+	}
+
+	return &BetweenClause{
+		Expr:    expr,
+		Between: betweenExpr,
+		AndPos:  andPos,
+		And:     andExpr,
+	}, nil
+}
+
 func (p *Parser) parseLimitByClause(pos Pos) (Expr, error) {
 	limit, err := p.parseLimitClause(pos)
 	if err != nil {
@@ -545,11 +573,11 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 		if err != nil {
 			return nil, err
 		}
-		expr = &WindowFrameRangeClause{
-			BetweenPos: pos,
-			Between:    betweenWindowFrame,
-			AndPos:     andPos,
-			And:        andWindowFrame,
+		expr = &BetweenClause{
+			Expr:    expr,
+			Between: betweenWindowFrame,
+			AndPos:  andPos,
+			And:     andWindowFrame,
 		}
 	case p.matchKeyword(KeywordCurrent):
 		currentPos := p.Pos()

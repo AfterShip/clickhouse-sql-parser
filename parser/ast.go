@@ -5012,31 +5012,32 @@ func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) error {
 	return visitor.VisitWindowFrameExtendExpr(f)
 }
 
-type WindowFrameRangeClause struct {
-	BetweenPos Pos
-	Between    Expr
-	AndPos     Pos
-	And        Expr
+type BetweenClause struct {
+	Expr    Expr
+	Between Expr
+	AndPos  Pos
+	And     Expr
 }
 
-func (f *WindowFrameRangeClause) Pos() Pos {
-	return f.BetweenPos
+func (f *BetweenClause) Pos() Pos {
+	return f.Expr.Pos()
 }
 
-func (f *WindowFrameRangeClause) End() Pos {
+func (f *BetweenClause) End() Pos {
 	return f.And.End()
 }
 
-func (f *WindowFrameRangeClause) String() string {
+func (f *BetweenClause) String() string {
 	var builder strings.Builder
-	builder.WriteString("BETWEEN ")
+	builder.WriteString(f.Expr.String())
+	builder.WriteString(" BETWEEN ")
 	builder.WriteString(f.Between.String())
 	builder.WriteString(" AND ")
 	builder.WriteString(f.And.String())
 	return builder.String()
 }
 
-func (f *WindowFrameRangeClause) Accept(visitor ASTVisitor) error {
+func (f *BetweenClause) Accept(visitor ASTVisitor) error {
 	visitor.enter(f)
 	defer visitor.leave(f)
 	if err := f.Between.Accept(visitor); err != nil {
@@ -5045,7 +5046,7 @@ func (f *WindowFrameRangeClause) Accept(visitor ASTVisitor) error {
 	if err := f.And.Accept(visitor); err != nil {
 		return err
 	}
-	return visitor.VisitWindowFrameRangeExpr(f)
+	return visitor.VisitBetweenClause(f)
 }
 
 type WindowFrameCurrentRow struct {

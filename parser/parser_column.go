@@ -90,6 +90,8 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Operation: TokenKind(op),
 			RightExpr: rightExpr,
 		}, nil
+	case p.matchKeyword(KeywordBetween):
+		return p.parseBetweenClause(expr)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
 		if p.consumeKeyword(KeywordIn) != nil {
@@ -111,9 +113,11 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		case p.matchKeyword(KeywordIn):
 		case p.matchKeyword(KeywordLike):
 		case p.matchKeyword(KeywordIlike):
-		case p.matchKeyword(KeywordBetween):
 		default:
-			return nil, fmt.Errorf("expected IN, LIKE, ILIKE or BETWEEN after NOT, got %s", p.lastTokenKind())
+			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.lastTokenKind())
+		}
+		if p.matchKeyword(KeywordBetween) {
+			return p.parseBetweenClause(expr)
 		}
 		op := p.last().ToString()
 		_ = p.lexer.consumeToken()

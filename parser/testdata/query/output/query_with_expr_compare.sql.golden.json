@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 219,
+    "StatementEnd": 225,
     "With": null,
     "Top": null,
     "SelectItems": [
@@ -170,53 +170,46 @@
       "WherePos": 128,
       "Expr": {
         "LeftExpr": {
-          "LeftExpr": {
-            "LeftExpr": {
-              "Name": {
-                "Name": "toDate",
-                "QuoteType": 1,
-                "NamePos": 134,
-                "NameEnd": 140
+          "Expr": {
+            "Name": {
+              "Name": "toDate",
+              "QuoteType": 1,
+              "NamePos": 134,
+              "NameEnd": 140
+            },
+            "Params": {
+              "LeftParenPos": 140,
+              "RightParenPos": 145,
+              "Items": {
+                "ListPos": 141,
+                "ListEnd": 145,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "date",
+                      "QuoteType": 1,
+                      "NamePos": 141,
+                      "NameEnd": 145
+                    },
+                    "Alias": null
+                  }
+                ]
               },
-              "Params": {
-                "LeftParenPos": 140,
-                "RightParenPos": 145,
-                "Items": {
-                  "ListPos": 141,
-                  "ListEnd": 145,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
-                      "Expr": {
-                        "Name": "date",
-                        "QuoteType": 1,
-                        "NamePos": 141,
-                        "NameEnd": 145
-                      },
-                      "Alias": null
-                    }
-                  ]
-                },
-                "ColumnArgList": null
-              }
-            },
-            "Operation": "=",
-            "RightExpr": {
-              "LiteralPos": 150,
-              "LiteralEnd": 160,
-              "Literal": "2024-09-01"
-            },
-            "HasGlobal": false,
-            "HasNot": false
+              "ColumnArgList": null
+            }
           },
-          "Operation": "AND",
-          "RightExpr": {
-            "LiteralPos": 167,
-            "LiteralEnd": 177,
+          "Between": {
+            "LiteralPos": 156,
+            "LiteralEnd": 166,
+            "Literal": "2024-09-01"
+          },
+          "AndPos": 168,
+          "And": {
+            "LiteralPos": 173,
+            "LiteralEnd": 183,
             "Literal": "2024-09-30"
-          },
-          "HasGlobal": false,
-          "HasNot": false
+          }
         },
         "Operation": "AND",
         "RightExpr": {
@@ -225,21 +218,21 @@
               "Name": {
                 "Name": "splitByChar",
                 "QuoteType": 1,
-                "NamePos": 185,
-                "NameEnd": 196
+                "NamePos": 191,
+                "NameEnd": 202
               },
               "Params": {
-                "LeftParenPos": 196,
-                "RightParenPos": 206,
+                "LeftParenPos": 202,
+                "RightParenPos": 212,
                 "Items": {
-                  "ListPos": 198,
-                  "ListEnd": 206,
+                  "ListPos": 204,
+                  "ListEnd": 212,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
-                        "LiteralPos": 198,
-                        "LiteralEnd": 199,
+                        "LiteralPos": 204,
+                        "LiteralEnd": 205,
                         "Literal": "/"
                       },
                       "Alias": null
@@ -248,8 +241,8 @@
                       "Expr": {
                         "Name": "path",
                         "QuoteType": 1,
-                        "NamePos": 202,
-                        "NameEnd": 206
+                        "NamePos": 208,
+                        "NameEnd": 212
                       },
                       "Alias": null
                     }
@@ -259,17 +252,17 @@
               }
             },
             "Params": {
-              "LeftBracketPos": 207,
-              "RightBracketPos": 209,
+              "LeftBracketPos": 213,
+              "RightBracketPos": 215,
               "Items": {
-                "ListPos": 208,
-                "ListEnd": 209,
+                "ListPos": 214,
+                "ListEnd": 215,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
-                      "NumPos": 208,
-                      "NumEnd": 209,
+                      "NumPos": 214,
+                      "NumEnd": 215,
                       "Literal": "1",
                       "Base": 10
                     },
@@ -281,8 +274,8 @@
           },
           "Operation": "=",
           "RightExpr": {
-            "LiteralPos": 214,
-            "LiteralEnd": 219,
+            "LiteralPos": 220,
+            "LiteralEnd": 225,
             "Literal": "pathA"
           },
           "HasGlobal": false,
