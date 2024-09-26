@@ -7,21 +7,18 @@
     "SelectItems": [
       {
         "Expr": {
-          "Expr": {
-            "NumPos": 7,
-            "NumEnd": 8,
-            "Literal": "1",
-            "Base": 10
-          },
-          "AliasPos": 9,
-          "Alias": {
-            "Name": "v1",
-            "QuoteType": 1,
-            "NamePos": 12,
-            "NameEnd": 14
-          }
+          "NumPos": 7,
+          "NumEnd": 8,
+          "Literal": "1",
+          "Base": 10
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "v1",
+          "QuoteType": 1,
+          "NamePos": 12,
+          "NameEnd": 14
+        }
       }
     ],
     "From": null,
@@ -45,21 +42,18 @@
       "SelectItems": [
         {
           "Expr": {
-            "Expr": {
-              "NumPos": 32,
-              "NumEnd": 33,
-              "Literal": "2",
-              "Base": 10
-            },
-            "AliasPos": 34,
-            "Alias": {
-              "Name": "v2",
-              "QuoteType": 1,
-              "NamePos": 37,
-              "NameEnd": 39
-            }
+            "NumPos": 32,
+            "NumEnd": 33,
+            "Literal": "2",
+            "Base": 10
           },
-          "Modifiers": []
+          "Modifiers": [],
+          "Alias": {
+            "Name": "v2",
+            "QuoteType": 1,
+            "NamePos": 37,
+            "NameEnd": 39
+          }
         }
       ],
       "From": null,
@@ -83,21 +77,18 @@
         "SelectItems": [
           {
             "Expr": {
-              "Expr": {
-                "NumPos": 57,
-                "NumEnd": 58,
-                "Literal": "3",
-                "Base": 10
-              },
-              "AliasPos": 59,
-              "Alias": {
-                "Name": "v3",
-                "QuoteType": 1,
-                "NamePos": 62,
-                "NameEnd": 64
-              }
+              "NumPos": 57,
+              "NumEnd": 58,
+              "Literal": "3",
+              "Base": 10
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "v3",
+              "QuoteType": 1,
+              "NamePos": 62,
+              "NameEnd": 64
+            }
           }
         ],
         "From": null,

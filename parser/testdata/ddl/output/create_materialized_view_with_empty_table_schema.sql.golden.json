@@ -39,14 +39,20 @@
           "HasDistinct": false,
           "Items": [
             {
-              "LiteralPos": 101,
-              "LiteralEnd": 136,
-              "Literal": "/clickhouse/{layer}-{shard}/test/t0"
+              "Expr": {
+                "LiteralPos": 101,
+                "LiteralEnd": 136,
+                "Literal": "/clickhouse/{layer}-{shard}/test/t0"
+              },
+              "Alias": null
             },
             {
-              "LiteralPos": 140,
-              "LiteralEnd": 149,
-              "Literal": "{replica}"
+              "Expr": {
+                "LiteralPos": 140,
+                "LiteralEnd": 149,
+                "Literal": "{replica}"
+              },
+              "Alias": null
             }
           ]
         },
@@ -61,30 +67,36 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": {
-                "Name": "toYYYYMM",
-                "QuoteType": 1,
-                "NamePos": 165,
-                "NameEnd": 173
-              },
-              "Params": {
-                "LeftParenPos": 173,
-                "RightParenPos": 176,
-                "Items": {
-                  "ListPos": 174,
-                  "ListEnd": 176,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
-                      "Name": "f0",
-                      "QuoteType": 1,
-                      "NamePos": 174,
-                      "NameEnd": 176
-                    }
-                  ]
+              "Expr": {
+                "Name": {
+                  "Name": "toYYYYMM",
+                  "QuoteType": 1,
+                  "NamePos": 165,
+                  "NameEnd": 173
                 },
-                "ColumnArgList": null
-              }
+                "Params": {
+                  "LeftParenPos": 173,
+                  "RightParenPos": 176,
+                  "Items": {
+                    "ListPos": 174,
+                    "ListEnd": 176,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "f0",
+                          "QuoteType": 1,
+                          "NamePos": 174,
+                          "NameEnd": 176
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
             }
           ]
         }
@@ -107,15 +119,19 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "f0",
-                    "QuoteType": 1,
-                    "NamePos": 188,
-                    "NameEnd": 190
+                    "Expr": {
+                      "Name": "f0",
+                      "QuoteType": 1,
+                      "NamePos": 188,
+                      "NameEnd": 190
+                    },
+                    "Alias": null
                   }
                 ]
               },
               "ColumnArgList": null
             },
+            "Alias": null,
             "Direction": "None"
           }
         ]
@@ -137,7 +153,8 @@
               "NamePos": 211,
               "NameEnd": 213
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
@@ -146,7 +163,8 @@
               "NamePos": 214,
               "NameEnd": 216
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
@@ -155,51 +173,55 @@
               "NamePos": 217,
               "NameEnd": 219
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "coalesce",
-                  "QuoteType": 1,
-                  "NamePos": 220,
-                  "NameEnd": 228
-                },
-                "Params": {
-                  "LeftParenPos": 228,
-                  "RightParenPos": 234,
-                  "Items": {
-                    "ListPos": 229,
-                    "ListEnd": 234,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "coalesce",
+                "QuoteType": 1,
+                "NamePos": 220,
+                "NameEnd": 228
+              },
+              "Params": {
+                "LeftParenPos": 228,
+                "RightParenPos": 234,
+                "Items": {
+                  "ListPos": 229,
+                  "ListEnd": 234,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "f0",
                         "QuoteType": 1,
                         "NamePos": 229,
                         "NameEnd": 231
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "Name": "f1",
                         "QuoteType": 1,
                         "NamePos": 232,
                         "NameEnd": 234
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 236,
-              "Alias": {
-                "Name": "f333",
-                "QuoteType": 1,
-                "NamePos": 239,
-                "NameEnd": 243
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "f333",
+              "QuoteType": 1,
+              "NamePos": 239,
+              "NameEnd": 243
+            }
           }
         ],
         "From": {
@@ -225,7 +247,8 @@
                           "NamePos": 270,
                           "NameEnd": 272
                         },
-                        "Modifiers": []
+                        "Modifiers": [],
+                        "Alias": null
                       },
                       {
                         "Expr": {
@@ -234,7 +257,8 @@
                           "NamePos": 273,
                           "NameEnd": 275
                         },
-                        "Modifiers": []
+                        "Modifiers": [],
+                        "Alias": null
                       },
                       {
                         "Expr": {
@@ -243,104 +267,112 @@
                           "NamePos": 276,
                           "NameEnd": 278
                         },
-                        "Modifiers": []
+                        "Modifiers": [],
+                        "Alias": null
                       },
                       {
                         "Expr": {
-                          "Expr": {
-                            "Function": {
-                              "Name": {
-                                "Name": "ROW_NUMBER",
-                                "QuoteType": 1,
-                                "NamePos": 289,
-                                "NameEnd": 299
-                              },
-                              "Params": {
-                                "LeftParenPos": 299,
-                                "RightParenPos": 300,
-                                "Items": {
-                                  "ListPos": 300,
-                                  "ListEnd": 300,
-                                  "HasDistinct": false,
-                                  "Items": []
-                                },
-                                "ColumnArgList": null
-                              }
+                          "Function": {
+                            "Name": {
+                              "Name": "ROW_NUMBER",
+                              "QuoteType": 1,
+                              "NamePos": 289,
+                              "NameEnd": 299
                             },
-                            "OverPos": 302,
-                            "OverExpr": {
-                              "LeftParenPos": 306,
-                              "RightParenPos": 347,
-                              "PartitionBy": {
-                                "PartitionPos": 306,
-                                "Expr": {
-                                  "ListPos": 320,
-                                  "ListEnd": 322,
-                                  "HasDistinct": false,
-                                  "Items": [
-                                    {
+                            "Params": {
+                              "LeftParenPos": 299,
+                              "RightParenPos": 300,
+                              "Items": {
+                                "ListPos": 300,
+                                "ListEnd": 300,
+                                "HasDistinct": false,
+                                "Items": []
+                              },
+                              "ColumnArgList": null
+                            }
+                          },
+                          "OverPos": 302,
+                          "OverExpr": {
+                            "LeftParenPos": 306,
+                            "RightParenPos": 347,
+                            "PartitionBy": {
+                              "PartitionPos": 306,
+                              "Expr": {
+                                "ListPos": 320,
+                                "ListEnd": 322,
+                                "HasDistinct": false,
+                                "Items": [
+                                  {
+                                    "Expr": {
                                       "Name": "f0",
                                       "QuoteType": 1,
                                       "NamePos": 320,
                                       "NameEnd": 322
-                                    }
-                                  ]
-                                }
-                              },
-                              "OrderBy": {
-                                "OrderPos": 323,
-                                "ListEnd": 346,
-                                "Items": [
-                                  {
-                                    "OrderPos": 323,
-                                    "Expr": {
-                                      "Name": {
-                                        "Name": "coalesce",
-                                        "QuoteType": 1,
-                                        "NamePos": 332,
-                                        "NameEnd": 340
-                                      },
-                                      "Params": {
-                                        "LeftParenPos": 340,
-                                        "RightParenPos": 346,
-                                        "Items": {
-                                          "ListPos": 341,
-                                          "ListEnd": 346,
-                                          "HasDistinct": false,
-                                          "Items": [
-                                            {
+                                    },
+                                    "Alias": null
+                                  }
+                                ]
+                              }
+                            },
+                            "OrderBy": {
+                              "OrderPos": 323,
+                              "ListEnd": 346,
+                              "Items": [
+                                {
+                                  "OrderPos": 323,
+                                  "Expr": {
+                                    "Name": {
+                                      "Name": "coalesce",
+                                      "QuoteType": 1,
+                                      "NamePos": 332,
+                                      "NameEnd": 340
+                                    },
+                                    "Params": {
+                                      "LeftParenPos": 340,
+                                      "RightParenPos": 346,
+                                      "Items": {
+                                        "ListPos": 341,
+                                        "ListEnd": 346,
+                                        "HasDistinct": false,
+                                        "Items": [
+                                          {
+                                            "Expr": {
                                               "Name": "f1",
                                               "QuoteType": 1,
                                               "NamePos": 341,
                                               "NameEnd": 343
                                             },
-                                            {
+                                            "Alias": null
+                                          },
+                                          {
+                                            "Expr": {
                                               "Name": "f2",
                                               "QuoteType": 1,
                                               "NamePos": 344,
                                               "NameEnd": 346
-                                            }
-                                          ]
-                                        },
-                                        "ColumnArgList": null
-                                      }
-                                    },
-                                    "Direction": "None"
-                                  }
-                                ]
-                              },
-                              "Frame": null
-                            }
-                          },
-                          "AliasPos": 349,
-                          "Alias": {
-                            "Name": "rn",
-                            "QuoteType": 1,
-                            "NamePos": 352,
-                            "NameEnd": 354
+                                            },
+                                            "Alias": null
+                                          }
+                                        ]
+                                      },
+                                      "ColumnArgList": null
+                                    }
+                                  },
+                                  "Alias": null,
+                                  "Direction": "None"
+                                }
+                              ]
+                            },
+                            "Frame": null
                           }
                         },
-                        "Modifiers": []
+                        "Modifiers": [],
+                        "Alias": {
+                          "Name": "rn",
+                          "QuoteType": 1,
+                          "NamePos": 352,
+                          "NameEnd": 354
+                        }
                       }
                     ],
                     "From": {
@@ -394,19 +426,28 @@
                               "HasDistinct": false,
                               "Items": [
                                 {
-                                  "LiteralPos": 391,
-                                  "LiteralEnd": 394,
-                                  "Literal": "foo"
+                                  "Expr": {
+                                    "LiteralPos": 391,
+                                    "LiteralEnd": 394,
+                                    "Literal": "foo"
+                                  },
+                                  "Alias": null
                                 },
                                 {
-                                  "LiteralPos": 398,
-                                  "LiteralEnd": 401,
-                                  "Literal": "bar"
+                                  "Expr": {
+                                    "LiteralPos": 398,
+                                    "LiteralEnd": 401,
+                                    "Literal": "bar"
+                                  },
+                                  "Alias": null
                                 },
                                 {
-                                  "LiteralPos": 405,
-                                  "LiteralEnd": 409,
-                                  "Literal": "test"
+                                  "Expr": {
+                                    "LiteralPos": 405,
+                                    "LiteralEnd": 409,
+                                    "Literal": "test"
+                                  },
+                                  "Alias": null
                                 }
                               ]
                             },

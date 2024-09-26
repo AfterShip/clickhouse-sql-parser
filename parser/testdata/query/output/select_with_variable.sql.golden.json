@@ -22,21 +22,18 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "Expr": {
-                    "NumPos": 21,
-                    "NumEnd": 22,
-                    "Literal": "1",
-                    "Base": 10
-                  },
-                  "AliasPos": 23,
-                  "Alias": {
-                    "Name": "a",
-                    "QuoteType": 1,
-                    "NamePos": 26,
-                    "NameEnd": 27
-                  }
+                  "NumPos": 21,
+                  "NumEnd": 22,
+                  "Literal": "1",
+                  "Base": 10
                 },
-                "Modifiers": []
+                "Modifiers": [],
+                "Alias": {
+                  "Name": "a",
+                  "QuoteType": 1,
+                  "NamePos": 26,
+                  "NameEnd": 27
+                }
               }
             ],
             "From": null,
@@ -68,7 +65,8 @@
           "NamePos": 36,
           "NameEnd": 36
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {

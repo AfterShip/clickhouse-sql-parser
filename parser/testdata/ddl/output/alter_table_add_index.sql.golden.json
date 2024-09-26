@@ -40,22 +40,28 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "LeftParenPos": 77,
-            "RightParenPos": 80,
-            "Items": {
-              "ListPos": 78,
-              "ListEnd": 80,
-              "HasDistinct": false,
-              "Items": [
-                {
-                  "Name": "f0",
-                  "QuoteType": 1,
-                  "NamePos": 78,
-                  "NameEnd": 80
-                }
-              ]
+            "Expr": {
+              "LeftParenPos": 77,
+              "RightParenPos": 80,
+              "Items": {
+                "ListPos": 78,
+                "ListEnd": 80,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "f0",
+                      "QuoteType": 1,
+                      "NamePos": 78,
+                      "NameEnd": 80
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
             },
-            "ColumnArgList": null
+            "Alias": null
           },
           "ColumnType": {
             "Name": {
@@ -118,10 +124,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "api_id",
-            "QuoteType": 1,
-            "NamePos": 192,
-            "NameEnd": 198
+            "Expr": {
+              "Name": "api_id",
+              "QuoteType": 1,
+              "NamePos": 192,
+              "NameEnd": 198
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 208,
@@ -194,10 +203,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "arr",
-            "QuoteType": 1,
-            "NamePos": 305,
-            "NameEnd": 308
+            "Expr": {
+              "Name": "arr",
+              "QuoteType": 1,
+              "NamePos": 305,
+              "NameEnd": 308
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 327,
@@ -270,10 +282,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "content",
-            "QuoteType": 1,
-            "NamePos": 429,
-            "NameEnd": 436
+            "Expr": {
+              "Name": "content",
+              "QuoteType": 1,
+              "NamePos": 429,
+              "NameEnd": 436
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 453,
@@ -358,10 +373,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "output",
-            "QuoteType": 1,
-            "NamePos": 561,
-            "NameEnd": 567
+            "Expr": {
+              "Name": "output",
+              "QuoteType": 1,
+              "NamePos": 561,
+              "NameEnd": 567
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 584,

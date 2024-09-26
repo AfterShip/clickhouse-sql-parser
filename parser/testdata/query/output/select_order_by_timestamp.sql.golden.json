@@ -12,7 +12,8 @@
           "NamePos": 7,
           "NameEnd": 16
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {
@@ -57,6 +58,7 @@
             "NamePos": 38,
             "NameEnd": 47
           },
+          "Alias": null,
           "Direction": "None"
         }
       ]

@@ -946,7 +946,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 }
 
 func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
-	expr, err := p.parseOrExpr(pos)
+	expr, err := p.parseExpr(pos)
 	if err != nil {
 		return nil, err
 	}

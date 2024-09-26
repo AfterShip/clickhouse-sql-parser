@@ -28,6 +28,7 @@ type SelectItem struct {
 	Expr Expr
 	// Please refer: https://clickhouse.com/docs/en/sql-reference/statements/select#select-modifiers
 	Modifiers []*FunctionExpr
+	Alias     *Ident
 }
 
 func (s *SelectItem) Pos() Pos {
@@ -35,6 +36,9 @@ func (s *SelectItem) Pos() Pos {
 }
 
 func (s *SelectItem) End() Pos {
+	if s.Alias != nil {
+		return s.Alias.End()
+	}
 	if len(s.Modifiers) > 0 {
 		return s.Modifiers[len(s.Modifiers)-1].End()
 	}
@@ -48,6 +52,10 @@ func (s *SelectItem) String() string {
 		builder.WriteByte(' ')
 		builder.WriteString(modifier.String())
 	}
+	if s.Alias != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(s.Alias.String())
+	}
 	return builder.String()
 }
 
@@ -59,6 +67,11 @@ func (s *SelectItem) Accept(visitor ASTVisitor) error {
 	}
 	for _, modifier := range s.Modifiers {
 		if err := modifier.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Alias != nil {
+		if err := s.Alias.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -552,7 +565,7 @@ type AlterTableAddColumn struct {
 	AddPos       Pos
 	StatementEnd Pos
 
-	Column      *ColumnExpr
+	Column      *ColumnDef
 	IfNotExists bool
 	After       *NestedIdentifier
 }
@@ -1190,7 +1203,7 @@ type AlterTableModifyColumn struct {
 	StatementEnd Pos
 
 	IfExists           bool
-	Column             *ColumnExpr
+	Column             *ColumnDef
 	RemovePropertyType *RemovePropertyType
 }
 
@@ -1306,7 +1319,7 @@ type TableIndex struct {
 	IndexPos Pos
 
 	Name        *NestedIdentifier
-	ColumnExpr  Expr
+	ColumnExpr  *ColumnExpr
 	ColumnType  Expr
 	Granularity *NumberLiteral
 }
@@ -1324,9 +1337,9 @@ func (a *TableIndex) String() string {
 	builder.WriteString("INDEX")
 	builder.WriteByte(' ')
 	builder.WriteString(a.Name.String())
-	// a.ColumnExpr = *Ident --- e.g. INDEX idx column TYPE ...
-	// a.ColumnExpr = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
-	if _, ok := a.ColumnExpr.(*Ident); ok {
+	// a.ColumnDef = *Ident --- e.g. INDEX idx column TYPE ...
+	// a.ColumnDef = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
+	if _, ok := a.ColumnExpr.Expr.(*Ident); ok {
 		builder.WriteByte(' ')
 	}
 	builder.WriteString(a.ColumnExpr.String())
@@ -2700,6 +2713,7 @@ func (t *TTLClause) Accept(visitor ASTVisitor) error {
 type OrderExpr struct {
 	OrderPos  Pos
 	Expr      Expr
+	Alias     *Ident
 	Direction OrderDirection
 }
 
@@ -2708,12 +2722,19 @@ func (o *OrderExpr) Pos() Pos {
 }
 
 func (o *OrderExpr) End() Pos {
+	if o.Alias != nil {
+		return o.Alias.End()
+	}
 	return o.Expr.End()
 }
 
 func (o *OrderExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString(o.Expr.String())
+	if o.Alias != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(o.Alias.String())
+	}
 	if o.Direction != OrderDirectionNone {
 		builder.WriteByte(' ')
 		builder.WriteString(string(o.Direction))
@@ -2726,6 +2747,11 @@ func (o *OrderExpr) Accept(visitor ASTVisitor) error {
 	defer visitor.leave(o)
 	if err := o.Expr.Accept(visitor); err != nil {
 		return err
+	}
+	if o.Alias != nil {
+		if err := o.Alias.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitOrderByExpr(o)
 }
@@ -3102,6 +3128,46 @@ func (w *WindowFunctionExpr) Accept(visitor ASTVisitor) error {
 }
 
 type ColumnExpr struct {
+	Expr  Expr
+	Alias *Ident
+}
+
+func (c *ColumnExpr) Pos() Pos {
+	return c.Expr.Pos()
+}
+
+func (c *ColumnExpr) End() Pos {
+	if c.Alias != nil {
+		return c.Alias.NameEnd
+	}
+	return c.Expr.End()
+}
+
+func (c *ColumnExpr) String() string {
+	var builder strings.Builder
+	builder.WriteString(c.Expr.String())
+	if c.Alias != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(c.Alias.String())
+	}
+	return builder.String()
+}
+
+func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
+	visitor.enter(c)
+	defer visitor.leave(c)
+	if err := c.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	if c.Alias != nil {
+		if err := c.Alias.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitColumnExpr(c)
+}
+
+type ColumnDef struct {
 	NamePos   Pos
 	ColumnEnd Pos
 	Name      *NestedIdentifier
@@ -3120,15 +3186,15 @@ type ColumnExpr struct {
 	CompressionCodec *Ident
 }
 
-func (c *ColumnExpr) Pos() Pos {
+func (c *ColumnDef) Pos() Pos {
 	return c.Name.Pos()
 }
 
-func (c *ColumnExpr) End() Pos {
+func (c *ColumnDef) End() Pos {
 	return c.ColumnEnd
 }
 
-func (c *ColumnExpr) String() string {
+func (c *ColumnDef) String() string {
 	var builder strings.Builder
 	builder.WriteString(c.Name.String())
 	if c.Type != nil {
@@ -3167,7 +3233,7 @@ func (c *ColumnExpr) String() string {
 	return builder.String()
 }
 
-func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
+func (c *ColumnDef) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
@@ -3218,7 +3284,7 @@ func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	return visitor.VisitColumn(c)
+	return visitor.VisitColumnDef(c)
 }
 
 type ScalarTypeExpr struct {

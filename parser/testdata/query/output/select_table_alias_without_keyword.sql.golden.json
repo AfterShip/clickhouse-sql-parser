@@ -21,7 +21,8 @@
             "NameEnd": 19
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {
@@ -101,39 +102,42 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "LeftExpr": {
-                    "Database": null,
-                    "Table": {
-                      "Name": "t1",
-                      "QuoteType": 1,
-                      "NamePos": 69,
-                      "NameEnd": 71
+                  "Expr": {
+                    "LeftExpr": {
+                      "Database": null,
+                      "Table": {
+                        "Name": "t1",
+                        "QuoteType": 1,
+                        "NamePos": 69,
+                        "NameEnd": 71
+                      },
+                      "Column": {
+                        "Name": "a",
+                        "QuoteType": 1,
+                        "NamePos": 72,
+                        "NameEnd": 73
+                      }
                     },
-                    "Column": {
-                      "Name": "a",
-                      "QuoteType": 1,
-                      "NamePos": 72,
-                      "NameEnd": 73
-                    }
-                  },
-                  "Operation": "=",
-                  "RightExpr": {
-                    "Database": null,
-                    "Table": {
-                      "Name": "t2",
-                      "QuoteType": 1,
-                      "NamePos": 74,
-                      "NameEnd": 76
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Database": null,
+                      "Table": {
+                        "Name": "t2",
+                        "QuoteType": 1,
+                        "NamePos": 74,
+                        "NameEnd": 76
+                      },
+                      "Column": {
+                        "Name": "b",
+                        "QuoteType": 1,
+                        "NamePos": 77,
+                        "NameEnd": 78
+                      }
                     },
-                    "Column": {
-                      "Name": "b",
-                      "QuoteType": 1,
-                      "NamePos": 77,
-                      "NameEnd": 78
-                    }
+                    "HasGlobal": false,
+                    "HasNot": false
                   },
-                  "HasGlobal": false,
-                  "HasNot": false
+                  "Alias": null
                 }
               ]
             }

@@ -159,24 +159,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 }
 
 func (p *Parser) parseExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseSubExpr(pos, PrecedenceUnknown)
-	if err != nil {
-		return nil, err
-	}
-	if p.matchKeyword(KeywordAs) {
-		pos := p.Pos()
-		_ = p.lexer.consumeToken()
-		alias, err := p.parseIdent()
-		if err != nil {
-			return nil, err
-		}
-		return &AliasExpr{
-			AliasPos: pos,
-			Expr:     expr,
-			Alias:    alias,
-		}, nil
-	}
-	return expr, nil
+	return p.parseSubExpr(pos, PrecedenceUnknown)
 }
 
 func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
@@ -196,176 +179,6 @@ func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
 		}
 	}
 	return expr, nil
-}
-
-func (p *Parser) parseOrExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseAndExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		if p.tryConsumeKeyword(KeywordOr) == nil {
-			return expr, nil
-		}
-
-		rightExpr, err := p.parseAndExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		expr = &BinaryOperation{
-			LeftExpr:  expr,
-			Operation: opTypeOr,
-			RightExpr: rightExpr,
-		}
-	}
-}
-
-func (p *Parser) parseAndExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseNotExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		if p.tryConsumeKeyword(KeywordAnd) == nil {
-			return expr, nil
-		}
-
-		rightExpr, err := p.parseNotExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		expr = &BinaryOperation{
-			LeftExpr:  expr,
-			Operation: opTypeAnd,
-			RightExpr: rightExpr,
-		}
-	}
-}
-
-func (p *Parser) parseNotExpr(pos Pos) (Expr, error) {
-	if p.tryConsumeKeyword(KeywordNot) == nil {
-		return p.parseIsOrNotNull(p.Pos())
-	}
-
-	notExpr, err := p.parseNotExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	return &NotExpr{
-		NotPos: pos,
-		Expr:   notExpr,
-	}, nil
-}
-
-func (p *Parser) parseIsOrNotNull(pos Pos) (Expr, error) {
-	expr, err := p.parseCompareExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if p.tryConsumeKeyword(KeywordIs) == nil {
-		return expr, nil
-	}
-
-	isNotNull := p.tryConsumeKeyword(KeywordNot) != nil
-	if err := p.consumeKeyword(KeywordNull); err != nil {
-		return nil, err
-	}
-
-	if isNotNull {
-		return &IsNotNullExpr{
-			IsPos: pos,
-			Expr:  expr,
-		}, nil
-	}
-	return &IsNullExpr{
-		IsPos: pos,
-		Expr:  expr,
-	}, nil
-}
-
-func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
-	hasNot, hasGlobal := false, false
-	expr, err := p.parseAddSubExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	switch {
-	case p.matchTokenKind("["):
-		params, err := p.parseArrayParams(pos)
-		if err != nil {
-			return nil, err
-		}
-		return &ObjectParams{
-			Object: expr,
-			Params: params,
-		}, nil
-	case p.matchTokenKind(opTypeEQ):
-	case p.matchTokenKind(opTypeLT):
-	case p.matchTokenKind(opTypeLE):
-	case p.matchTokenKind(opTypeGE):
-	case p.matchTokenKind(opTypeGT):
-	case p.matchTokenKind(opTypeDoubleEQ):
-	case p.matchTokenKind(opTypeNE):
-	case p.matchTokenKind("<>"):
-	case p.matchTokenKind(opTypeQuery):
-	case p.matchKeyword(KeywordIn):
-	case p.matchKeyword(KeywordLike):
-	case p.matchKeyword(KeywordIlike):
-	case p.matchKeyword(KeywordGlobal):
-		_ = p.lexer.consumeToken()
-		hasGlobal = true
-	case p.matchKeyword(KeywordNot):
-		_ = p.lexer.consumeToken()
-		switch {
-		case p.matchKeyword(KeywordIn):
-		case p.matchKeyword(KeywordLike):
-		case p.matchKeyword(KeywordIlike):
-		default:
-			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.lastTokenKind())
-		}
-		hasNot = true
-	default:
-		return expr, nil
-	}
-	op := TokenKind(strings.ToUpper(p.last().String))
-	_ = p.lexer.consumeToken()
-
-	rightExpr, err := p.parseAddSubExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	return &BinaryOperation{
-		LeftExpr:  expr,
-		HasNot:    hasNot,
-		HasGlobal: hasGlobal,
-		Operation: op,
-		RightExpr: rightExpr,
-	}, nil
-}
-
-func (p *Parser) parseAddSubExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseMulDivModExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		switch {
-		case p.matchTokenKind(opTypePlus), p.matchTokenKind(opTypeMinus):
-			op := p.lastTokenKind()
-			_ = p.lexer.consumeToken()
-			rightExpr, err := p.parseMulDivModExpr(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			expr = &BinaryOperation{
-				LeftExpr:  expr,
-				Operation: op,
-				RightExpr: rightExpr,
-			}
-		default:
-			return expr, nil
-		}
-	}
 }
 
 func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
@@ -388,37 +201,6 @@ func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
 		TrueExpr:  trueExpr,
 		FalseExpr: falseExpr,
 	}, nil
-}
-
-func (p *Parser) parseMulDivModExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseUnaryExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		switch {
-		case p.matchTokenKind(opTypeQuery):
-			return p.parseTernaryExpr(expr)
-		case p.matchTokenKind(opTypeMul),
-			p.matchTokenKind(opTypeDiv),
-			p.matchTokenKind(opTypeMod),
-			p.matchTokenKind(opTypeArrow),
-			p.matchTokenKind(opTypeCast):
-			op := p.lastTokenKind()
-			_ = p.lexer.consumeToken()
-			rightExpr, err := p.parseUnaryExpr(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			expr = &BinaryOperation{
-				LeftExpr:  expr,
-				Operation: op,
-				RightExpr: rightExpr,
-			}
-		default:
-			return expr, nil
-		}
-	}
 }
 
 func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
@@ -850,8 +632,23 @@ func (p *Parser) parseArrayParams(pos Pos) (*ArrayParamList, error) {
 	}, nil
 }
 
-func (p *Parser) parseColumnsExpr(pos Pos) (Expr, error) {
-	return p.parseExpr(pos)
+func (p *Parser) parseColumnsExpr(pos Pos) (*ColumnExpr, error) {
+	expr, err := p.parseExpr(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	var alias *Ident
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		alias, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &ColumnExpr{
+		Expr:  expr,
+		Alias: alias,
+	}, nil
 }
 
 func (p *Parser) parseSelectItem() (*SelectItem, error) {
@@ -872,9 +669,18 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 			break
 		}
 	}
+
+	var alias *Ident
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		alias, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
 	return &SelectItem{
 		Expr:      expr,
 		Modifiers: modifiers,
+		Alias:     alias,
 	}, nil
 }
 

@@ -7,34 +7,31 @@
     "SelectItems": [
       {
         "Expr": {
+          "CastPos": 7,
           "Expr": {
-            "CastPos": 7,
-            "Expr": {
-              "NumPos": 12,
-              "NumEnd": 13,
-              "Literal": "1",
-              "Base": 10
-            },
-            "Separator": "as",
-            "AsPos": 14,
-            "AsType": {
-              "Name": {
-                "Name": "Float64",
-                "QuoteType": 1,
-                "NamePos": 17,
-                "NameEnd": 24
-              }
-            }
+            "NumPos": 12,
+            "NumEnd": 13,
+            "Literal": "1",
+            "Base": 10
           },
-          "AliasPos": 26,
-          "Alias": {
-            "Name": "value",
-            "QuoteType": 1,
-            "NamePos": 29,
-            "NameEnd": 34
+          "Separator": "as",
+          "AsPos": 14,
+          "AsType": {
+            "Name": {
+              "Name": "Float64",
+              "QuoteType": 1,
+              "NamePos": 17,
+              "NameEnd": 24
+            }
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 29,
+          "NameEnd": 34
+        }
       }
     ],
     "From": null,
@@ -62,31 +59,28 @@
     "SelectItems": [
       {
         "Expr": {
+          "CastPos": 43,
           "Expr": {
-            "CastPos": 43,
-            "Expr": {
-              "NumPos": 48,
-              "NumEnd": 49,
-              "Literal": "1",
-              "Base": 10
-            },
-            "Separator": ",",
-            "AsPos": 49,
-            "AsType": {
-              "LiteralPos": 52,
-              "LiteralEnd": 59,
-              "Literal": "Float64"
-            }
+            "NumPos": 48,
+            "NumEnd": 49,
+            "Literal": "1",
+            "Base": 10
           },
-          "AliasPos": 62,
-          "Alias": {
-            "Name": "value",
-            "QuoteType": 1,
-            "NamePos": 65,
-            "NameEnd": 70
+          "Separator": ",",
+          "AsPos": 49,
+          "AsType": {
+            "LiteralPos": 52,
+            "LiteralEnd": 59,
+            "Literal": "Float64"
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 65,
+          "NameEnd": 70
+        }
       }
     ],
     "From": null,
@@ -114,42 +108,38 @@
     "SelectItems": [
       {
         "Expr": {
-          "Expr": {
-            "LeftParenPos": 79,
-            "RightParenPos": 92,
-            "Items": {
-              "ListPos": 80,
-              "ListEnd": 92,
-              "HasDistinct": false,
-              "Items": [
-                {
-                  "Expr": {
-                    "NumPos": 80,
-                    "NumEnd": 81,
-                    "Literal": "1",
-                    "Base": 10
-                  },
-                  "AliasPos": 82,
-                  "Alias": {
-                    "Name": "Float64",
-                    "QuoteType": 1,
-                    "NamePos": 85,
-                    "NameEnd": 92
-                  }
+          "LeftParenPos": 79,
+          "RightParenPos": 92,
+          "Items": {
+            "ListPos": 80,
+            "ListEnd": 92,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "NumPos": 80,
+                  "NumEnd": 81,
+                  "Literal": "1",
+                  "Base": 10
+                },
+                "Alias": {
+                  "Name": "Float64",
+                  "QuoteType": 1,
+                  "NamePos": 85,
+                  "NameEnd": 92
                 }
-              ]
-            },
-            "ColumnArgList": null
+              }
+            ]
           },
-          "AliasPos": 94,
-          "Alias": {
-            "Name": "value",
-            "QuoteType": 1,
-            "NamePos": 97,
-            "NameEnd": 102
-          }
+          "ColumnArgList": null
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 97,
+          "NameEnd": 102
+        }
       }
     ],
     "From": null,
@@ -177,32 +167,29 @@
     "SelectItems": [
       {
         "Expr": {
-          "Expr": {
-            "LeftExpr": {
-              "NumPos": 111,
-              "NumEnd": 112,
-              "Literal": "1",
-              "Base": 10
-            },
-            "Operation": "::",
-            "RightExpr": {
-              "Name": "Float64",
-              "QuoteType": 1,
-              "NamePos": 114,
-              "NameEnd": 121
-            },
-            "HasGlobal": false,
-            "HasNot": false
+          "LeftExpr": {
+            "NumPos": 111,
+            "NumEnd": 112,
+            "Literal": "1",
+            "Base": 10
           },
-          "AliasPos": 122,
-          "Alias": {
-            "Name": "value",
+          "Operation": "::",
+          "RightExpr": {
+            "Name": "Float64",
             "QuoteType": 1,
-            "NamePos": 125,
-            "NameEnd": 130
-          }
+            "NamePos": 114,
+            "NameEnd": 121
+          },
+          "HasGlobal": false,
+          "HasNot": false
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 125,
+          "NameEnd": 130
+        }
       }
     ],
     "From": null,

@@ -23,7 +23,8 @@
           "HasGlobal": false,
           "HasNot": false
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": null,

@@ -97,7 +97,8 @@
               "NamePos": 74,
               "NameEnd": 76
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
@@ -106,7 +107,8 @@
               "NamePos": 82,
               "NameEnd": 86
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           }
         ],
         "From": {

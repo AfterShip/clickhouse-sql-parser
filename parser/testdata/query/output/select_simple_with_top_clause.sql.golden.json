@@ -22,7 +22,8 @@
           "NamePos": 14,
           "NameEnd": 23
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {

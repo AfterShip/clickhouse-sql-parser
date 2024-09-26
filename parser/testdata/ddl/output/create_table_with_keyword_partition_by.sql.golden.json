@@ -167,10 +167,13 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": "date",
-              "QuoteType": 1,
-              "NamePos": 195,
-              "NameEnd": 199
+              "Expr": {
+                "Name": "date",
+                "QuoteType": 1,
+                "NamePos": 195,
+                "NameEnd": 199
+              },
+              "Alias": null
             }
           ]
         }
@@ -213,21 +216,28 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "f1",
-                    "QuoteType": 1,
-                    "NamePos": 214,
-                    "NameEnd": 216
+                    "Expr": {
+                      "Name": "f1",
+                      "QuoteType": 1,
+                      "NamePos": 214,
+                      "NameEnd": 216
+                    },
+                    "Alias": null
                   },
                   {
-                    "Name": "f2",
-                    "QuoteType": 1,
-                    "NamePos": 218,
-                    "NameEnd": 220
+                    "Expr": {
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 218,
+                      "NameEnd": 220
+                    },
+                    "Alias": null
                   }
                 ]
               },
               "ColumnArgList": null
             },
+            "Alias": null,
             "Direction": "None"
           }
         ]

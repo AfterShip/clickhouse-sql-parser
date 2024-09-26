@@ -396,16 +396,16 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 	return columns, nil
 }
 
-func (p *Parser) tryParseTableColumnExpr(pos Pos) (*ColumnExpr, error) {
+func (p *Parser) tryParseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	if !p.matchTokenKind(TokenIdent) {
 		return nil, nil // nolint
 	}
 	return p.parseTableColumnExpr(pos)
 }
 
-func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnExpr, error) {
+func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	// Not a column definition, just return
-	column := &ColumnExpr{NamePos: pos}
+	column := &ColumnDef{NamePos: pos}
 	// parse column name
 	name, err := p.ParseNestedIdentifier(p.Pos())
 	if err != nil {
@@ -649,6 +649,14 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 		return nil, err
 	}
 
+	var alias *Ident
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		alias, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	direction := OrderDirectionNone
 	switch {
 	case p.matchKeyword(KeywordAsc), p.matchKeyword(KeywordAscending):
@@ -660,6 +668,7 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 	}
 	return &OrderExpr{
 		OrderPos:  pos,
+		Alias:     alias,
 		Expr:      columnExpr,
 		Direction: direction,
 	}, nil

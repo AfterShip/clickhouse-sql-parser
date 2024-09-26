@@ -136,14 +136,20 @@
           "HasDistinct": false,
           "Items": [
             {
-              "LiteralPos": 156,
-              "LiteralEnd": 203,
-              "Literal": "/clickhouse/tables/{layer}/{shard}/default/test"
+              "Expr": {
+                "LiteralPos": 156,
+                "LiteralEnd": 203,
+                "Literal": "/clickhouse/tables/{layer}/{shard}/default/test"
+              },
+              "Alias": null
             },
             {
-              "LiteralPos": 207,
-              "LiteralEnd": 216,
-              "Literal": "{replica}"
+              "Expr": {
+                "LiteralPos": 207,
+                "LiteralEnd": 216,
+                "Literal": "{replica}"
+              },
+              "Alias": null
             }
           ]
         },
@@ -158,30 +164,36 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": {
-                "Name": "toYYYYMM",
-                "QuoteType": 1,
-                "NamePos": 232,
-                "NameEnd": 240
-              },
-              "Params": {
-                "LeftParenPos": 240,
-                "RightParenPos": 250,
-                "Items": {
-                  "ListPos": 241,
-                  "ListEnd": 250,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
-                      "Name": "timestamp",
-                      "QuoteType": 1,
-                      "NamePos": 241,
-                      "NameEnd": 250
-                    }
-                  ]
+              "Expr": {
+                "Name": {
+                  "Name": "toYYYYMM",
+                  "QuoteType": 1,
+                  "NamePos": 232,
+                  "NameEnd": 240
                 },
-                "ColumnArgList": null
-              }
+                "Params": {
+                  "LeftParenPos": 240,
+                  "RightParenPos": 250,
+                  "Items": {
+                    "ListPos": 241,
+                    "ListEnd": 250,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 241,
+                          "NameEnd": 250
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
             }
           ]
         }
@@ -232,47 +244,60 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "contractid",
-                    "QuoteType": 1,
-                    "NamePos": 262,
-                    "NameEnd": 272
-                  },
-                  {
-                    "Name": {
-                      "Name": "toDate",
+                    "Expr": {
+                      "Name": "contractid",
                       "QuoteType": 1,
-                      "NamePos": 274,
-                      "NameEnd": 280
+                      "NamePos": 262,
+                      "NameEnd": 272
                     },
-                    "Params": {
-                      "LeftParenPos": 280,
-                      "RightParenPos": 290,
-                      "Items": {
-                        "ListPos": 281,
-                        "ListEnd": 290,
-                        "HasDistinct": false,
-                        "Items": [
-                          {
-                            "Name": "timestamp",
-                            "QuoteType": 1,
-                            "NamePos": 281,
-                            "NameEnd": 290
-                          }
-                        ]
-                      },
-                      "ColumnArgList": null
-                    }
+                    "Alias": null
                   },
                   {
-                    "Name": "userid",
-                    "QuoteType": 1,
-                    "NamePos": 293,
-                    "NameEnd": 299
+                    "Expr": {
+                      "Name": {
+                        "Name": "toDate",
+                        "QuoteType": 1,
+                        "NamePos": 274,
+                        "NameEnd": 280
+                      },
+                      "Params": {
+                        "LeftParenPos": 280,
+                        "RightParenPos": 290,
+                        "Items": {
+                          "ListPos": 281,
+                          "ListEnd": 290,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "Name": "timestamp",
+                                "QuoteType": 1,
+                                "NamePos": 281,
+                                "NameEnd": 290
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "userid",
+                      "QuoteType": 1,
+                      "NamePos": 293,
+                      "NameEnd": 299
+                    },
+                    "Alias": null
                   }
                 ]
               },
               "ColumnArgList": null
             },
+            "Alias": null,
             "Direction": "None"
           }
         ]

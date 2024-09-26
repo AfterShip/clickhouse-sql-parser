@@ -59,41 +59,53 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": "default_cluster",
-              "QuoteType": 1,
-              "NamePos": 104,
-              "NameEnd": 119
-            },
-            {
-              "Name": "test",
-              "QuoteType": 1,
-              "NamePos": 125,
-              "NameEnd": 129
-            },
-            {
-              "Name": "events_local",
-              "QuoteType": 1,
-              "NamePos": 135,
-              "NameEnd": 147
-            },
-            {
-              "Name": {
-                "Name": "rand",
+              "Expr": {
+                "Name": "default_cluster",
                 "QuoteType": 1,
-                "NamePos": 153,
-                "NameEnd": 157
+                "NamePos": 104,
+                "NameEnd": 119
               },
-              "Params": {
-                "LeftParenPos": 157,
-                "RightParenPos": 158,
-                "Items": {
-                  "ListPos": 158,
-                  "ListEnd": 158,
-                  "HasDistinct": false,
-                  "Items": []
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "Name": "test",
+                "QuoteType": 1,
+                "NamePos": 125,
+                "NameEnd": 129
+              },
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "Name": "events_local",
+                "QuoteType": 1,
+                "NamePos": 135,
+                "NameEnd": 147
+              },
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "rand",
+                  "QuoteType": 1,
+                  "NamePos": 153,
+                  "NameEnd": 157
                 },
-                "ColumnArgList": null
-              }
+                "Params": {
+                  "LeftParenPos": 157,
+                  "RightParenPos": 158,
+                  "Items": {
+                    "ListPos": 158,
+                    "ListEnd": 158,
+                    "HasDistinct": false,
+                    "Items": []
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
             }
           ]
         },

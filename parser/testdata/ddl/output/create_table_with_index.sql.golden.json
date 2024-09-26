@@ -248,10 +248,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "id",
-            "QuoteType": 1,
-            "NamePos": 196,
-            "NameEnd": 198
+            "Expr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 196,
+              "NameEnd": 198
+            },
+            "Alias": null
           },
           "ColumnType": {
             "Name": {
@@ -280,10 +283,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "api_id",
-            "QuoteType": 1,
-            "NamePos": 245,
-            "NameEnd": 251
+            "Expr": {
+              "Name": "api_id",
+              "QuoteType": 1,
+              "NamePos": 245,
+              "NameEnd": 251
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 261,
@@ -322,10 +328,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "arr",
-            "QuoteType": 1,
-            "NamePos": 296,
-            "NameEnd": 299
+            "Expr": {
+              "Name": "arr",
+              "QuoteType": 1,
+              "NamePos": 296,
+              "NameEnd": 299
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 318,
@@ -364,10 +373,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "content",
-            "QuoteType": 1,
-            "NamePos": 358,
-            "NameEnd": 365
+            "Expr": {
+              "Name": "content",
+              "QuoteType": 1,
+              "NamePos": 358,
+              "NameEnd": 365
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 382,
@@ -418,10 +430,13 @@
             "DotIdent": null
           },
           "ColumnExpr": {
-            "Name": "output",
-            "QuoteType": 1,
-            "NamePos": 428,
-            "NameEnd": 434
+            "Expr": {
+              "Name": "output",
+              "QuoteType": 1,
+              "NamePos": 428,
+              "NameEnd": 434
+            },
+            "Alias": null
           },
           "ColumnType": {
             "LeftParenPos": 451,
@@ -483,14 +498,20 @@
           "HasDistinct": false,
           "Items": [
             {
-              "LiteralPos": 513,
-              "LiteralEnd": 529,
-              "Literal": "/root/test_local"
+              "Expr": {
+                "LiteralPos": 513,
+                "LiteralEnd": 529,
+                "Literal": "/root/test_local"
+              },
+              "Alias": null
             },
             {
-              "LiteralPos": 533,
-              "LiteralEnd": 542,
-              "Literal": "{replica}"
+              "Expr": {
+                "LiteralPos": 533,
+                "LiteralEnd": 542,
+                "Literal": "{replica}"
+              },
+              "Alias": null
             }
           ]
         },
@@ -505,30 +526,36 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": {
-                "Name": "toStartOfHour",
-                "QuoteType": 1,
-                "NamePos": 558,
-                "NameEnd": 571
-              },
-              "Params": {
-                "LeftParenPos": 571,
-                "RightParenPos": 583,
-                "Items": {
-                  "ListPos": 573,
-                  "ListEnd": 582,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
-                      "Name": "timestamp",
-                      "QuoteType": 3,
-                      "NamePos": 573,
-                      "NameEnd": 582
-                    }
-                  ]
+              "Expr": {
+                "Name": {
+                  "Name": "toStartOfHour",
+                  "QuoteType": 1,
+                  "NamePos": 558,
+                  "NameEnd": 571
                 },
-                "ColumnArgList": null
-              }
+                "Params": {
+                  "LeftParenPos": 571,
+                  "RightParenPos": 583,
+                  "Items": {
+                    "ListPos": 573,
+                    "ListEnd": 582,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 3,
+                          "NamePos": 573,
+                          "NameEnd": 582
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
             }
           ]
         }
@@ -557,10 +584,13 @@
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "Name": "timestamp",
-                        "QuoteType": 3,
-                        "NamePos": 660,
-                        "NameEnd": 669
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 3,
+                          "NamePos": 660,
+                          "NameEnd": 669
+                        },
+                        "Alias": null
                       }
                     ]
                   },
@@ -606,10 +636,13 @@
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "Name": "timestamp",
-                        "QuoteType": 3,
-                        "NamePos": 704,
-                        "NameEnd": 713
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 3,
+                          "NamePos": 704,
+                          "NameEnd": 713
+                        },
+                        "Alias": null
                       }
                     ]
                   },
@@ -733,41 +766,51 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": {
-                      "Name": "toUnixTimestamp64Nano",
-                      "QuoteType": 1,
-                      "NamePos": 595,
-                      "NameEnd": 616
-                    },
-                    "Params": {
-                      "LeftParenPos": 616,
-                      "RightParenPos": 628,
-                      "Items": {
-                        "ListPos": 618,
-                        "ListEnd": 627,
-                        "HasDistinct": false,
-                        "Items": [
-                          {
-                            "Name": "timestamp",
-                            "QuoteType": 3,
-                            "NamePos": 618,
-                            "NameEnd": 627
-                          }
-                        ]
+                    "Expr": {
+                      "Name": {
+                        "Name": "toUnixTimestamp64Nano",
+                        "QuoteType": 1,
+                        "NamePos": 595,
+                        "NameEnd": 616
                       },
-                      "ColumnArgList": null
-                    }
+                      "Params": {
+                        "LeftParenPos": 616,
+                        "RightParenPos": 628,
+                        "Items": {
+                          "ListPos": 618,
+                          "ListEnd": 627,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "Name": "timestamp",
+                                "QuoteType": 3,
+                                "NamePos": 618,
+                                "NameEnd": 627
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Alias": null
                   },
                   {
-                    "Name": "api_id",
-                    "QuoteType": 3,
-                    "NamePos": 632,
-                    "NameEnd": 638
+                    "Expr": {
+                      "Name": "api_id",
+                      "QuoteType": 3,
+                      "NamePos": 632,
+                      "NameEnd": 638
+                    },
+                    "Alias": null
                   }
                 ]
               },
               "ColumnArgList": null
             },
+            "Alias": null,
             "Direction": "None"
           }
         ]

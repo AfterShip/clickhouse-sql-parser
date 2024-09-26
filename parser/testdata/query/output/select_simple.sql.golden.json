@@ -12,122 +12,127 @@
           "NamePos": 11,
           "NameEnd": 13
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
-          "Expr": {
-            "Name": {
-              "Name": "coalesce",
-              "QuoteType": 1,
-              "NamePos": 15,
-              "NameEnd": 23
-            },
-            "Params": {
-              "LeftParenPos": 23,
-              "RightParenPos": 30,
-              "Items": {
-                "ListPos": 24,
-                "ListEnd": 30,
-                "HasDistinct": false,
-                "Items": [
-                  {
+          "Name": {
+            "Name": "coalesce",
+            "QuoteType": 1,
+            "NamePos": 15,
+            "NameEnd": 23
+          },
+          "Params": {
+            "LeftParenPos": 23,
+            "RightParenPos": 30,
+            "Items": {
+              "ListPos": 24,
+              "ListEnd": 30,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
                     "Name": "f1",
                     "QuoteType": 1,
                     "NamePos": 24,
                     "NameEnd": 26
                   },
-                  {
+                  "Alias": null
+                },
+                {
+                  "Expr": {
                     "Name": "f2",
                     "QuoteType": 1,
                     "NamePos": 28,
                     "NameEnd": 30
-                  }
-                ]
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "f3",
+          "QuoteType": 1,
+          "NamePos": 35,
+          "NameEnd": 37
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "row_number",
+              "QuoteType": 1,
+              "NamePos": 39,
+              "NameEnd": 49
+            },
+            "Params": {
+              "LeftParenPos": 49,
+              "RightParenPos": 50,
+              "Items": {
+                "ListPos": 50,
+                "ListEnd": 50,
+                "HasDistinct": false,
+                "Items": []
               },
               "ColumnArgList": null
             }
           },
-          "AliasPos": 32,
-          "Alias": {
-            "Name": "f3",
-            "QuoteType": 1,
-            "NamePos": 35,
-            "NameEnd": 37
-          }
-        },
-        "Modifiers": []
-      },
-      {
-        "Expr": {
-          "Expr": {
-            "Function": {
-              "Name": {
-                "Name": "row_number",
-                "QuoteType": 1,
-                "NamePos": 39,
-                "NameEnd": 49
-              },
-              "Params": {
-                "LeftParenPos": 49,
-                "RightParenPos": 50,
-                "Items": {
-                  "ListPos": 50,
-                  "ListEnd": 50,
-                  "HasDistinct": false,
-                  "Items": []
-                },
-                "ColumnArgList": null
-              }
-            },
-            "OverPos": 52,
-            "OverExpr": {
-              "LeftParenPos": 57,
-              "RightParenPos": 89,
-              "PartitionBy": {
-                "PartitionPos": 57,
-                "Expr": {
-                  "ListPos": 71,
-                  "ListEnd": 73,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
+          "OverPos": 52,
+          "OverExpr": {
+            "LeftParenPos": 57,
+            "RightParenPos": 89,
+            "PartitionBy": {
+              "PartitionPos": 57,
+              "Expr": {
+                "ListPos": 71,
+                "ListEnd": 73,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
                       "Name": "f0",
                       "QuoteType": 1,
                       "NamePos": 71,
                       "NameEnd": 73
-                    }
-                  ]
-                }
-              },
-              "OrderBy": {
-                "OrderPos": 74,
-                "ListEnd": 85,
-                "Items": [
-                  {
-                    "OrderPos": 74,
-                    "Expr": {
-                      "Name": "f1",
-                      "QuoteType": 1,
-                      "NamePos": 83,
-                      "NameEnd": 85
                     },
-                    "Direction": "ASC"
+                    "Alias": null
                   }
                 ]
-              },
-              "Frame": null
-            }
-          },
-          "AliasPos": 91,
-          "Alias": {
-            "Name": "rn",
-            "QuoteType": 1,
-            "NamePos": 94,
-            "NameEnd": 96
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 74,
+              "ListEnd": 85,
+              "Items": [
+                {
+                  "OrderPos": 74,
+                  "Expr": {
+                    "Name": "f1",
+                    "QuoteType": 1,
+                    "NamePos": 83,
+                    "NameEnd": 85
+                  },
+                  "Alias": null,
+                  "Direction": "ASC"
+                }
+              ]
+            },
+            "Frame": null
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rn",
+          "QuoteType": 1,
+          "NamePos": 94,
+          "NameEnd": 96
+        }
       }
     ],
     "From": {
@@ -175,42 +180,54 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "LeftExpr": {
-                      "Name": "f0",
-                      "QuoteType": 1,
-                      "NamePos": 127,
-                      "NameEnd": 129
-                    },
-                    "Operation": "IN",
-                    "RightExpr": {
-                      "LeftParenPos": 133,
-                      "RightParenPos": 154,
-                      "Items": {
-                        "ListPos": 135,
-                        "ListEnd": 153,
-                        "HasDistinct": false,
-                        "Items": [
-                          {
-                            "LiteralPos": 135,
-                            "LiteralEnd": 138,
-                            "Literal": "foo"
-                          },
-                          {
-                            "LiteralPos": 142,
-                            "LiteralEnd": 145,
-                            "Literal": "bar"
-                          },
-                          {
-                            "LiteralPos": 149,
-                            "LiteralEnd": 153,
-                            "Literal": "test"
-                          }
-                        ]
+                    "Expr": {
+                      "LeftExpr": {
+                        "Name": "f0",
+                        "QuoteType": 1,
+                        "NamePos": 127,
+                        "NameEnd": 129
                       },
-                      "ColumnArgList": null
+                      "Operation": "IN",
+                      "RightExpr": {
+                        "LeftParenPos": 133,
+                        "RightParenPos": 154,
+                        "Items": {
+                          "ListPos": 135,
+                          "ListEnd": 153,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "LiteralPos": 135,
+                                "LiteralEnd": 138,
+                                "Literal": "foo"
+                              },
+                              "Alias": null
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 142,
+                                "LiteralEnd": 145,
+                                "Literal": "bar"
+                              },
+                              "Alias": null
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 149,
+                                "LiteralEnd": 153,
+                                "Literal": "test"
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      },
+                      "HasGlobal": false,
+                      "HasNot": false
                     },
-                    "HasGlobal": false,
-                    "HasNot": false
+                    "Alias": null
                   }
                 ]
               },
@@ -226,20 +243,23 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "LeftExpr": {
-                      "Name": "f1",
-                      "QuoteType": 1,
-                      "NamePos": 162,
-                      "NameEnd": 164
+                    "Expr": {
+                      "LeftExpr": {
+                        "Name": "f1",
+                        "QuoteType": 1,
+                        "NamePos": 162,
+                        "NameEnd": 164
+                      },
+                      "Operation": "=",
+                      "RightExpr": {
+                        "LiteralPos": 168,
+                        "LiteralEnd": 175,
+                        "Literal": "testing"
+                      },
+                      "HasGlobal": false,
+                      "HasNot": false
                     },
-                    "Operation": "=",
-                    "RightExpr": {
-                      "LiteralPos": 168,
-                      "LiteralEnd": 175,
-                      "Literal": "testing"
-                    },
-                    "HasGlobal": false,
-                    "HasNot": false
+                    "Alias": null
                   }
                 ]
               },
@@ -258,20 +278,23 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "LeftExpr": {
-                    "Name": "f2",
-                    "QuoteType": 1,
-                    "NamePos": 183,
-                    "NameEnd": 185
+                  "Expr": {
+                    "LeftExpr": {
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 183,
+                      "NameEnd": 185
+                    },
+                    "Operation": "NOT LIKE",
+                    "RightExpr": {
+                      "LiteralPos": 196,
+                      "LiteralEnd": 204,
+                      "Literal": "testing2"
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
                   },
-                  "Operation": "NOT LIKE",
-                  "RightExpr": {
-                    "LiteralPos": 196,
-                    "LiteralEnd": 204,
-                    "Literal": "testing2"
-                  },
-                  "HasGlobal": false,
-                  "HasNot": false
+                  "Alias": null
                 }
               ]
             },
@@ -298,19 +321,28 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "LiteralPos": 223,
-                  "LiteralEnd": 224,
-                  "Literal": "a"
+                  "Expr": {
+                    "LiteralPos": 223,
+                    "LiteralEnd": 224,
+                    "Literal": "a"
+                  },
+                  "Alias": null
                 },
                 {
-                  "LiteralPos": 228,
-                  "LiteralEnd": 229,
-                  "Literal": "b"
+                  "Expr": {
+                    "LiteralPos": 228,
+                    "LiteralEnd": 229,
+                    "Literal": "b"
+                  },
+                  "Alias": null
                 },
                 {
-                  "LiteralPos": 233,
-                  "LiteralEnd": 234,
-                  "Literal": "c"
+                  "Expr": {
+                    "LiteralPos": 233,
+                    "LiteralEnd": 234,
+                    "Literal": "c"
+                  },
+                  "Alias": null
                 }
               ]
             },
@@ -332,16 +364,22 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "f0",
-            "QuoteType": 1,
-            "NamePos": 248,
-            "NameEnd": 250
+            "Expr": {
+              "Name": "f0",
+              "QuoteType": 1,
+              "NamePos": 248,
+              "NameEnd": 250
+            },
+            "Alias": null
           },
           {
-            "Name": "f1",
-            "QuoteType": 1,
-            "NamePos": 254,
-            "NameEnd": 256
+            "Expr": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 254,
+              "NameEnd": 256
+            },
+            "Alias": null
           }
         ]
       },
@@ -374,10 +412,13 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "f0",
-            "QuoteType": 1,
-            "NamePos": 275,
-            "NameEnd": 277
+            "Expr": {
+              "Name": "f0",
+              "QuoteType": 1,
+              "NamePos": 275,
+              "NameEnd": 277
+            },
+            "Alias": null
           }
         ]
       }

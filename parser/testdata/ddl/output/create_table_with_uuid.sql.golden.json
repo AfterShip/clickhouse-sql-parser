@@ -331,14 +331,20 @@
           "HasDistinct": false,
           "Items": [
             {
-              "LiteralPos": 271,
-              "LiteralEnd": 323,
-              "Literal": "/clickhouse/tables/{layer}-{shard}/test/events_local"
+              "Expr": {
+                "LiteralPos": 271,
+                "LiteralEnd": 323,
+                "Literal": "/clickhouse/tables/{layer}-{shard}/test/events_local"
+              },
+              "Alias": null
             },
             {
-              "LiteralPos": 327,
-              "LiteralEnd": 336,
-              "Literal": "{replica}"
+              "Expr": {
+                "LiteralPos": 327,
+                "LiteralEnd": 336,
+                "Literal": "{replica}"
+              },
+              "Alias": null
             }
           ]
         },
@@ -353,30 +359,36 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": {
-                "Name": "toYYYYMMDD",
-                "QuoteType": 1,
-                "NamePos": 378,
-                "NameEnd": 388
-              },
-              "Params": {
-                "LeftParenPos": 388,
-                "RightParenPos": 391,
-                "Items": {
-                  "ListPos": 389,
-                  "ListEnd": 391,
-                  "HasDistinct": false,
-                  "Items": [
-                    {
-                      "Name": "f3",
-                      "QuoteType": 1,
-                      "NamePos": 389,
-                      "NameEnd": 391
-                    }
-                  ]
+              "Expr": {
+                "Name": {
+                  "Name": "toYYYYMMDD",
+                  "QuoteType": 1,
+                  "NamePos": 378,
+                  "NameEnd": 388
                 },
-                "ColumnArgList": null
-              }
+                "Params": {
+                  "LeftParenPos": 388,
+                  "RightParenPos": 391,
+                  "Items": {
+                    "ListPos": 389,
+                    "ListEnd": 391,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "f3",
+                          "QuoteType": 1,
+                          "NamePos": 389,
+                          "NameEnd": 391
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
             }
           ]
         }
@@ -433,27 +445,37 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "f0",
-                    "QuoteType": 1,
-                    "NamePos": 403,
-                    "NameEnd": 405
+                    "Expr": {
+                      "Name": "f0",
+                      "QuoteType": 1,
+                      "NamePos": 403,
+                      "NameEnd": 405
+                    },
+                    "Alias": null
                   },
                   {
-                    "Name": "f1",
-                    "QuoteType": 1,
-                    "NamePos": 406,
-                    "NameEnd": 408
+                    "Expr": {
+                      "Name": "f1",
+                      "QuoteType": 1,
+                      "NamePos": 406,
+                      "NameEnd": 408
+                    },
+                    "Alias": null
                   },
                   {
-                    "Name": "f2",
-                    "QuoteType": 1,
-                    "NamePos": 409,
-                    "NameEnd": 411
+                    "Expr": {
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 409,
+                      "NameEnd": 411
+                    },
+                    "Alias": null
                   }
                 ]
               },
               "ColumnArgList": null
             },
+            "Alias": null,
             "Direction": "None"
           }
         ]

@@ -27,7 +27,8 @@
                   "NamePos": 25,
                   "NameEnd": 27
                 },
-                "Modifiers": []
+                "Modifiers": [],
+                "Alias": null
               }
             ],
             "From": {
@@ -91,7 +92,8 @@
                   "NamePos": 58,
                   "NameEnd": 60
                 },
-                "Modifiers": []
+                "Modifiers": [],
+                "Alias": null
               }
             ],
             "From": {
@@ -154,7 +156,8 @@
             "NameEnd": 88
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
@@ -172,7 +175,8 @@
             "NameEnd": 101
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
@@ -190,7 +194,8 @@
             "NameEnd": 112
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {

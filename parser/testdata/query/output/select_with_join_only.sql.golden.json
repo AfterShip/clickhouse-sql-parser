@@ -12,7 +12,8 @@
           "NamePos": 7,
           "NameEnd": 7
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {
@@ -73,10 +74,13 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "Name": "true",
-                  "QuoteType": 1,
-                  "NamePos": 32,
-                  "NameEnd": 36
+                  "Expr": {
+                    "Name": "true",
+                    "QuoteType": 1,
+                    "NamePos": 32,
+                    "NameEnd": 36
+                  },
+                  "Alias": null
                 }
               ]
             }
