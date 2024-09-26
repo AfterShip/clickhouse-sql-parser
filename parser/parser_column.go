@@ -5,6 +5,24 @@ import (
 	"strings"
 )
 
+const (
+	PrecedenceUnknown = iota
+	PrecedenceOr
+	PrecedenceAnd
+	PrecedenceQuery
+	PrecedenceNot
+	PrecedenceGlobal
+	PrecedenceIs
+	PrecedenceCompare
+	PrecedenceBetweenLike
+	precedenceIn
+	PrecedenceAddSub
+	PrecedenceMulDivMod
+	PrecedenceBracket
+	PrecedenceArrow
+	PrecedenceDoubleColon
+)
+
 func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
 	if p.tryConsumeKeyword(KeywordComment) == nil {
 		return nil, nil // nolint
@@ -12,143 +30,83 @@ func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
 	return p.parseString(pos)
 }
 
-func (p *Parser) parseExpr(pos Pos) (Expr, error) {
-	orExpr, err := p.parseOrExpr(pos)
-	if err != nil {
-		return orExpr, err
-	}
+func (p *Parser) getNextPrecedence() int {
 	switch {
-	case p.matchKeyword(KeywordAs): // syntax: columnExpr (alias | AS identifier)
-		_ = p.lexer.consumeToken()
-		alias, err := p.parseIdent()
-		if err != nil {
-			return nil, err
-		}
-		return &AliasExpr{
-			AliasPos: alias.Pos(),
-			Expr:     orExpr,
-			Alias:    alias,
-		}, nil
-	}
-	return orExpr, nil
-}
-
-func (p *Parser) parseOrExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseAndExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		if p.tryConsumeKeyword(KeywordOr) == nil {
-			return expr, nil
-		}
-
-		rightExpr, err := p.parseAndExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		expr = &BinaryOperation{
-			LeftExpr:  expr,
-			Operation: opTypeOr,
-			RightExpr: rightExpr,
-		}
-	}
-}
-
-func (p *Parser) parseAndExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseNotExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		if p.tryConsumeKeyword(KeywordAnd) == nil {
-			return expr, nil
-		}
-
-		rightExpr, err := p.parseNotExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		expr = &BinaryOperation{
-			LeftExpr:  expr,
-			Operation: opTypeAnd,
-			RightExpr: rightExpr,
-		}
-	}
-}
-
-func (p *Parser) parseNotExpr(pos Pos) (Expr, error) {
-	if p.tryConsumeKeyword(KeywordNot) == nil {
-		return p.parseIsOrNotNull(p.Pos())
-	}
-
-	notExpr, err := p.parseNotExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	return &NotExpr{
-		NotPos: pos,
-		Expr:   notExpr,
-	}, nil
-}
-
-func (p *Parser) parseIsOrNotNull(pos Pos) (Expr, error) {
-	expr, err := p.parseCompareExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if p.tryConsumeKeyword(KeywordIs) == nil {
-		return expr, nil
-	}
-
-	isNotNull := p.tryConsumeKeyword(KeywordNot) != nil
-	if err := p.consumeKeyword(KeywordNull); err != nil {
-		return nil, err
-	}
-
-	if isNotNull {
-		return &IsNotNullExpr{
-			IsPos: pos,
-			Expr:  expr,
-		}, nil
-	}
-	return &IsNullExpr{
-		IsPos: pos,
-		Expr:  expr,
-	}, nil
-}
-
-func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
-	hasNot, hasGlobal := false, false
-	expr, err := p.parseAddSubExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	switch {
-	case p.matchTokenKind("["):
-		params, err := p.parseArrayParams(pos)
-		if err != nil {
-			return nil, err
-		}
-		return &ObjectParams{
-			Object: expr,
-			Params: params,
-		}, nil
-	case p.matchTokenKind(opTypeEQ):
-	case p.matchTokenKind(opTypeLT):
-	case p.matchTokenKind(opTypeLE):
-	case p.matchTokenKind(opTypeGE):
-	case p.matchTokenKind(opTypeGT):
-	case p.matchTokenKind(opTypeDoubleEQ):
-	case p.matchTokenKind(opTypeNE):
-	case p.matchTokenKind("<>"):
-	case p.matchTokenKind(opTypeQuery):
+	case p.matchKeyword(KeywordOr):
+		return PrecedenceOr
+	case p.matchKeyword(KeywordAnd):
+		return PrecedenceAnd
+	case p.matchKeyword(KeywordIs):
+		return PrecedenceIs
+	case p.matchKeyword(KeywordNot):
+		return PrecedenceNot
+	case p.matchTokenKind(opTypeCast):
+		return PrecedenceDoubleColon
+	case p.matchTokenKind(opTypeEQ), p.matchTokenKind(opTypeLT), p.matchTokenKind(opTypeLE),
+		p.matchTokenKind(opTypeGE), p.matchTokenKind(opTypeGT), p.matchTokenKind(opTypeDoubleEQ),
+		p.matchTokenKind(opTypeNE), p.matchTokenKind("<>"):
+		return PrecedenceCompare
+	case p.matchTokenKind(opTypePlus), p.matchTokenKind(opTypeMinus):
+		return PrecedenceAddSub
+	case p.matchTokenKind(opTypeMul), p.matchTokenKind(opTypeDiv), p.matchTokenKind(opTypeMod):
+		return PrecedenceMulDivMod
+	case p.matchTokenKind(opTypeArrow):
+		return PrecedenceArrow
+	case p.matchTokenKind("("), p.matchTokenKind("["):
+		return PrecedenceBracket
+	case p.matchTokenKind(opTypeCast):
+		return PrecedenceDoubleColon
+	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike):
+		return PrecedenceBetweenLike
 	case p.matchKeyword(KeywordIn):
-	case p.matchKeyword(KeywordLike):
-	case p.matchKeyword(KeywordIlike):
+		return precedenceIn
+	case p.matchKeyword(KeywordGlobal):
+		return PrecedenceGlobal
+	case p.matchTokenKind(opTypeQuery):
+		return PrecedenceQuery
+	default:
+		return PrecedenceUnknown
+	}
+}
+
+func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
+	switch {
+	case p.matchTokenKind(opTypeEQ), p.matchTokenKind(opTypeLT), p.matchTokenKind(opTypeLE),
+		p.matchTokenKind(opTypeGE), p.matchTokenKind(opTypeGT),
+		p.matchTokenKind(opTypeNE), p.matchTokenKind("<>"),
+		p.matchTokenKind(opTypeMinus), p.matchTokenKind(opTypePlus), p.matchTokenKind(opTypeMul),
+		p.matchTokenKind(opTypeDiv), p.matchTokenKind(opTypeMod),
+		p.matchKeyword(KeywordIn), p.matchKeyword(KeywordLike),
+		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
+		p.matchTokenKind(opTypeCast), p.matchTokenKind(opTypeArrow), p.matchTokenKind(opTypeDoubleEQ):
+		op := p.last().ToString()
+		_ = p.lexer.consumeToken()
+		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
+		if err != nil {
+			return nil, err
+		}
+		return &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: TokenKind(op),
+			RightExpr: rightExpr,
+		}, nil
+	case p.matchKeyword(KeywordBetween):
+		return p.parseBetweenClause(expr)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
-		hasGlobal = true
+		if p.consumeKeyword(KeywordIn) != nil {
+			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.lastTokenKind())
+		}
+		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
+		if err != nil {
+			return nil, err
+		}
+		return &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: "GLOBAL IN",
+			RightExpr: rightExpr,
+		}, nil
+
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
 		switch {
@@ -158,49 +116,73 @@ func (p *Parser) parseCompareExpr(pos Pos) (Expr, error) {
 		default:
 			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.lastTokenKind())
 		}
-		hasNot = true
+		if p.matchKeyword(KeywordBetween) {
+			return p.parseBetweenClause(expr)
+		}
+		op := p.last().ToString()
+		_ = p.lexer.consumeToken()
+		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
+		if err != nil {
+			return nil, err
+		}
+		return &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: TokenKind("NOT " + op),
+			RightExpr: rightExpr,
+		}, nil
+	case p.matchTokenKind("["):
+		params, err := p.parseArrayParams(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &ObjectParams{
+			Object: expr,
+			Params: params,
+		}, nil
+	case p.matchTokenKind(opTypeQuery):
+		return p.parseTernaryExpr(expr)
+	case p.matchKeyword(KeywordIs):
+		_ = p.lexer.consumeToken()
+		isNotNull := p.tryConsumeKeyword(KeywordNot) != nil
+		if err := p.consumeKeyword(KeywordNull); err != nil {
+			return nil, err
+		}
+		if isNotNull {
+			return &IsNotNullExpr{
+				IsPos: p.Pos(),
+				Expr:  expr,
+			}, nil
+		}
+		return &IsNullExpr{
+			IsPos: p.Pos(),
+			Expr:  expr,
+		}, nil
 	default:
-		return expr, nil
+		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}
-	op := TokenKind(strings.ToUpper(p.last().String))
-	_ = p.lexer.consumeToken()
-
-	rightExpr, err := p.parseAddSubExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	return &BinaryOperation{
-		LeftExpr:  expr,
-		HasNot:    hasNot,
-		HasGlobal: hasGlobal,
-		Operation: op,
-		RightExpr: rightExpr,
-	}, nil
 }
 
-func (p *Parser) parseAddSubExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseMulDivModExpr(pos)
+func (p *Parser) parseExpr(pos Pos) (Expr, error) {
+	return p.parseSubExpr(pos, PrecedenceUnknown)
+}
+
+func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
+	expr, err := p.parseUnaryExpr(pos)
 	if err != nil {
 		return nil, err
 	}
-	for {
-		switch {
-		case p.matchTokenKind(opTypePlus), p.matchTokenKind(opTypeMinus):
-			op := p.lastTokenKind()
-			_ = p.lexer.consumeToken()
-			rightExpr, err := p.parseMulDivModExpr(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			expr = &BinaryOperation{
-				LeftExpr:  expr,
-				Operation: op,
-				RightExpr: rightExpr,
-			}
-		default:
+	for !p.lexer.isEOF() {
+		nextPrecedence := p.getNextPrecedence()
+		if nextPrecedence <= precedence {
 			return expr, nil
 		}
+		// parse binary operation
+		expr, err = p.parseInfix(expr, nextPrecedence)
+		if err != nil {
+			return nil, err
+		}
 	}
+	return expr, nil
 }
 
 func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
@@ -223,37 +205,6 @@ func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
 		TrueExpr:  trueExpr,
 		FalseExpr: falseExpr,
 	}, nil
-}
-
-func (p *Parser) parseMulDivModExpr(pos Pos) (Expr, error) {
-	expr, err := p.parseUnaryExpr(pos)
-	if err != nil {
-		return nil, err
-	}
-	for {
-		switch {
-		case p.matchTokenKind(opTypeQuery):
-			return p.parseTernaryExpr(expr)
-		case p.matchTokenKind(opTypeMul),
-			p.matchTokenKind(opTypeDiv),
-			p.matchTokenKind(opTypeMod),
-			p.matchTokenKind(opTypeArrow),
-			p.matchTokenKind(opTypeCast):
-			op := p.lastTokenKind()
-			_ = p.lexer.consumeToken()
-			rightExpr, err := p.parseUnaryExpr(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			expr = &BinaryOperation{
-				LeftExpr:  expr,
-				Operation: op,
-				RightExpr: rightExpr,
-			}
-		default:
-			return expr, nil
-		}
-	}
 }
 
 func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
@@ -346,7 +297,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 			return nil, err
 		}
 		if nextToken != nil && nextToken.Kind == TokenString {
-			return p.parseString(pos)
+			return p.parseString(p.Pos())
 		}
 		return p.parseIdentOrFunction(pos)
 	case p.matchKeyword(KeywordCast):
@@ -365,7 +316,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	case p.matchTokenKind("("):
 		if peek, _ := p.lexer.peekToken(); peek != nil {
 			if peek.Kind == TokenKeyword && strings.EqualFold(peek.String, KeywordSelect) {
-				return p.parseSelectQuery(pos)
+				return p.parseSubQuery(pos)
 			}
 		}
 		return p.parseFunctionParams(p.Pos())
@@ -458,7 +409,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 		if term != "" && p.matchTokenKind(term) {
 			break
 		}
-		columnExpr, err := p.parseColumnsExpr(pos)
+		columnExpr, err := p.parseColumnsExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -685,8 +636,23 @@ func (p *Parser) parseArrayParams(pos Pos) (*ArrayParamList, error) {
 	}, nil
 }
 
-func (p *Parser) parseColumnsExpr(pos Pos) (Expr, error) {
-	return p.parseExpr(pos)
+func (p *Parser) parseColumnsExpr(pos Pos) (*ColumnExpr, error) {
+	expr, err := p.parseExpr(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	var alias *Ident
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		alias, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &ColumnExpr{
+		Expr:  expr,
+		Alias: alias,
+	}, nil
 }
 
 func (p *Parser) parseSelectItem() (*SelectItem, error) {
@@ -707,9 +673,18 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 			break
 		}
 	}
+
+	var alias *Ident
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		alias, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
 	return &SelectItem{
 		Expr:      expr,
 		Modifiers: modifiers,
+		Alias:     alias,
 	}, nil
 }
 
@@ -869,7 +844,7 @@ func (p *Parser) parseEnumExpr(pos Pos) (*EnumValueList, error) {
 
 func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParamsExpr, error) {
 	params := make([]Literal, 0)
-	param, err := p.parseLiteral(pos)
+	param, err := p.parseLiteral(p.Pos())
 	if err != nil {
 		return nil, err
 	}

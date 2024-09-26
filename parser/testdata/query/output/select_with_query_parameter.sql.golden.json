@@ -102,16 +102,22 @@
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "NumPos": 98,
-                        "NumEnd": 100,
-                        "Literal": "11",
-                        "Base": 10
+                        "Expr": {
+                          "NumPos": 98,
+                          "NumEnd": 100,
+                          "Literal": "11",
+                          "Base": 10
+                        },
+                        "Alias": null
                       },
                       {
-                        "NumPos": 102,
-                        "NumEnd": 104,
-                        "Literal": "12",
-                        "Base": 10
+                        "Expr": {
+                          "NumPos": 102,
+                          "NumEnd": 104,
+                          "Literal": "12",
+                          "Base": 10
+                        },
+                        "Alias": null
                       }
                     ]
                   }
@@ -132,16 +138,22 @@
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "NumPos": 114,
-                        "NumEnd": 116,
-                        "Literal": "14",
-                        "Base": 10
+                        "Expr": {
+                          "NumPos": 114,
+                          "NumEnd": 116,
+                          "Literal": "14",
+                          "Base": 10
+                        },
+                        "Alias": null
                       },
                       {
-                        "NumPos": 118,
-                        "NumEnd": 120,
-                        "Literal": "15",
-                        "Base": 10
+                        "Expr": {
+                          "NumPos": 118,
+                          "NumEnd": 120,
+                          "Literal": "15",
+                          "Base": 10
+                        },
+                        "Alias": null
                       }
                     ]
                   }
@@ -178,7 +190,8 @@
             }
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
@@ -199,7 +212,8 @@
             }
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
@@ -220,7 +234,8 @@
             }
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
@@ -273,7 +288,8 @@
             ]
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": null,
@@ -306,7 +322,8 @@
           "NamePos": 229,
           "NameEnd": 229
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {

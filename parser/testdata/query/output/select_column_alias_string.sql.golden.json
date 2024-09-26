@@ -7,20 +7,17 @@
     "SelectItems": [
       {
         "Expr": {
-          "Expr": {
-            "LiteralPos": 8,
-            "LiteralEnd": 11,
-            "Literal": "abc"
-          },
-          "AliasPos": 17,
-          "Alias": {
-            "Name": "value2",
-            "QuoteType": 2,
-            "NamePos": 17,
-            "NameEnd": 23
-          }
+          "LiteralPos": 8,
+          "LiteralEnd": 11,
+          "Literal": "abc"
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value2",
+          "QuoteType": 2,
+          "NamePos": 17,
+          "NameEnd": 23
+        }
       }
     ],
     "From": null,

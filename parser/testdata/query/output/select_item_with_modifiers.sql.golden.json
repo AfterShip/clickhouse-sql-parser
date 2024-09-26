@@ -35,7 +35,6 @@
                       "NamePos": 18,
                       "NameEnd": 20
                     },
-                    "AliasPos": 24,
                     "Alias": {
                       "Name": "c1",
                       "QuoteType": 1,
@@ -48,7 +47,8 @@
               "ColumnArgList": null
             }
           }
-        ]
+        ],
+        "Alias": null
       }
     ],
     "From": {
@@ -137,7 +137,6 @@
                       "HasGlobal": false,
                       "HasNot": false
                     },
-                    "AliasPos": 63,
                     "Alias": {
                       "Name": "i",
                       "QuoteType": 1,
@@ -150,7 +149,8 @@
               "ColumnArgList": null
             }
           }
-        ]
+        ],
+        "Alias": null
       }
     ],
     "From": {
@@ -239,7 +239,6 @@
                       "HasGlobal": false,
                       "HasNot": false
                     },
-                    "AliasPos": 101,
                     "Alias": {
                       "Name": "i",
                       "QuoteType": 1,
@@ -268,10 +267,13 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "j",
-                    "QuoteType": 1,
-                    "NamePos": 112,
-                    "NameEnd": 113
+                    "Expr": {
+                      "Name": "j",
+                      "QuoteType": 1,
+                      "NamePos": 112,
+                      "NameEnd": 113
+                    },
+                    "Alias": null
                   }
                 ]
               },
@@ -294,17 +296,21 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "sum",
-                    "QuoteType": 1,
-                    "NamePos": 121,
-                    "NameEnd": 124
+                    "Expr": {
+                      "Name": "sum",
+                      "QuoteType": 1,
+                      "NamePos": 121,
+                      "NameEnd": 124
+                    },
+                    "Alias": null
                   }
                 ]
               },
               "ColumnArgList": null
             }
           }
-        ]
+        ],
+        "Alias": null
       }
     ],
     "From": {

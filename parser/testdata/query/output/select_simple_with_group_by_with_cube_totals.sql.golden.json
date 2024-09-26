@@ -12,7 +12,8 @@
           "NamePos": 7,
           "NameEnd": 8
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       },
       {
         "Expr": {
@@ -31,17 +32,21 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "Name": "b",
-                  "QuoteType": 1,
-                  "NamePos": 16,
-                  "NameEnd": 17
+                  "Expr": {
+                    "Name": "b",
+                    "QuoteType": 1,
+                    "NamePos": 16,
+                    "NameEnd": 17
+                  },
+                  "Alias": null
                 }
               ]
             },
             "ColumnArgList": null
           }
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {
@@ -83,10 +88,13 @@
           "HasDistinct": false,
           "Items": [
             {
-              "Name": "a",
-              "QuoteType": 1,
-              "NamePos": 51,
-              "NameEnd": 52
+              "Expr": {
+                "Name": "a",
+                "QuoteType": 1,
+                "NamePos": 51,
+                "NameEnd": 52
+              },
+              "Alias": null
             }
           ]
         },
@@ -110,6 +118,7 @@
             "NamePos": 85,
             "NameEnd": 86
           },
+          "Alias": null,
           "Direction": "None"
         }
       ]

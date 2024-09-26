@@ -335,41 +335,47 @@
           "HasDistinct": false,
           "Items": [
             {
-              "LeftExpr": {
-                "Name": {
-                  "Name": "xxHash32",
-                  "QuoteType": 1,
-                  "NamePos": 347,
-                  "NameEnd": 355
-                },
-                "Params": {
-                  "LeftParenPos": 355,
-                  "RightParenPos": 362,
-                  "Items": {
-                    "ListPos": 356,
-                    "ListEnd": 362,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
-                        "Name": "tag_id",
-                        "QuoteType": 1,
-                        "NamePos": 356,
-                        "NameEnd": 362
-                      }
-                    ]
+              "Expr": {
+                "LeftExpr": {
+                  "Name": {
+                    "Name": "xxHash32",
+                    "QuoteType": 1,
+                    "NamePos": 347,
+                    "NameEnd": 355
                   },
-                  "ColumnArgList": null
-                }
+                  "Params": {
+                    "LeftParenPos": 355,
+                    "RightParenPos": 362,
+                    "Items": {
+                      "ListPos": 356,
+                      "ListEnd": 362,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "Name": "tag_id",
+                            "QuoteType": 1,
+                            "NamePos": 356,
+                            "NameEnd": 362
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Operation": "%",
+                "RightExpr": {
+                  "NumPos": 366,
+                  "NumEnd": 368,
+                  "Literal": "20",
+                  "Base": 10
+                },
+                "HasGlobal": false,
+                "HasNot": false
               },
-              "Operation": "%",
-              "RightExpr": {
-                "NumPos": 366,
-                "NumEnd": 368,
-                "Literal": "20",
-                "Base": 10
-              },
-              "HasGlobal": false,
-              "HasNot": false
+              "Alias": null
             }
           ]
         }
@@ -409,6 +415,7 @@
               "NamePos": 378,
               "NameEnd": 386
             },
+            "Alias": null,
             "Direction": "None"
           }
         ]

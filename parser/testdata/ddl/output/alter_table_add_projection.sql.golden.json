@@ -38,10 +38,13 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "Name": "*",
-                  "QuoteType": 0,
-                  "NamePos": 84,
-                  "NameEnd": 84
+                  "Expr": {
+                    "Name": "*",
+                    "QuoteType": 0,
+                    "NamePos": 84,
+                    "NameEnd": 84
+                  },
+                  "Alias": null
                 }
               ]
             },
@@ -54,10 +57,13 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "user_name",
-                    "QuoteType": 1,
-                    "NamePos": 95,
-                    "NameEnd": 104
+                    "Expr": {
+                      "Name": "user_name",
+                      "QuoteType": 1,
+                      "NamePos": 95,
+                      "NameEnd": 104
+                    },
+                    "Alias": null
                   }
                 ]
               },
@@ -73,10 +79,13 @@
                 "HasDistinct": false,
                 "Items": [
                   {
-                    "Name": "user_name",
-                    "QuoteType": 1,
-                    "NamePos": 114,
-                    "NameEnd": 123
+                    "Expr": {
+                      "Name": "user_name",
+                      "QuoteType": 1,
+                      "NamePos": 114,
+                      "NameEnd": 123
+                    },
+                    "Alias": null
                   }
                 ]
               }

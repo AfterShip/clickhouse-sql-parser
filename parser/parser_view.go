@@ -61,8 +61,8 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
 	}
-	if p.matchKeyword(KeywordAs) {
-		subQuery, err := p.parseSubQueryClause(p.Pos())
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -111,12 +111,14 @@ func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
 		createView.TableSchema = tableSchema
 	}
 
-	subQuery, err := p.parseSubQueryClause(p.Pos())
-	if err != nil {
-		return nil, err
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		subQuery, err := p.parseSubQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		createView.SubQuery = subQuery
+		createView.StatementEnd = subQuery.End()
 	}
-	createView.SubQuery = subQuery
-	createView.StatementEnd = subQuery.End()
 
 	return createView, nil
 }
@@ -182,12 +184,14 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 		createLiveView.TableSchema = tableSchema
 	}
 
-	subQuery, err := p.parseSubQueryClause(p.Pos())
-	if err != nil {
-		return nil, err
+	if p.tryConsumeKeyword(KeywordAs) != nil {
+		subQuery, err := p.parseSubQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		createLiveView.SubQuery = subQuery
+		createLiveView.StatementEnd = subQuery.End()
 	}
-	createLiveView.SubQuery = subQuery
-	createLiveView.StatementEnd = subQuery.End()
 
 	return createLiveView, nil
 }

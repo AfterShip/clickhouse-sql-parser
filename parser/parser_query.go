@@ -304,7 +304,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			}
 		}
 	case p.matchTokenKind("("):
-		expr, err = p.parseSelectQuery(p.Pos())
+		expr, err = p.parseSubQuery(p.Pos())
 	default:
 		return nil, errors.New("expect table name or subquery")
 	}
@@ -495,6 +495,34 @@ func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {
 	return p.parseLimitByClause(pos)
 }
 
+func (p *Parser) parseBetweenClause(expr Expr) (*BetweenClause, error) {
+	if err := p.consumeKeyword(KeywordBetween); err != nil {
+		return nil, err
+	}
+
+	betweenExpr, err := p.parseSubExpr(p.Pos(), PrecedenceBetweenLike)
+	if err != nil {
+		return nil, err
+	}
+
+	andPos := p.Pos()
+	if err := p.consumeKeyword(KeywordAnd); err != nil {
+		return nil, err
+	}
+
+	andExpr, err := p.parseSubExpr(p.Pos(), PrecedenceBetweenLike)
+	if err != nil {
+		return nil, err
+	}
+
+	return &BetweenClause{
+		Expr:    expr,
+		Between: betweenExpr,
+		AndPos:  andPos,
+		And:     andExpr,
+	}, nil
+}
+
 func (p *Parser) parseLimitByClause(pos Pos) (Expr, error) {
 	limit, err := p.parseLimitClause(pos)
 	if err != nil {
@@ -545,11 +573,11 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 		if err != nil {
 			return nil, err
 		}
-		expr = &WindowFrameRangeClause{
-			BetweenPos: pos,
-			Between:    betweenWindowFrame,
-			AndPos:     andPos,
-			And:        andWindowFrame,
+		expr = &BetweenClause{
+			Expr:    expr,
+			Between: betweenWindowFrame,
+			AndPos:  andPos,
+			And:     andWindowFrame,
 		}
 	case p.matchKeyword(KeywordCurrent):
 		currentPos := p.Pos()
@@ -729,19 +757,23 @@ func (p *Parser) parseHavingClause(pos Pos) (*HavingClause, error) {
 	}, nil
 }
 
-func (p *Parser) parseSubQueryClause(pos Pos) (*SubQueryClause, error) {
-	if err := p.consumeKeyword(KeywordAs); err != nil {
-		return nil, err
-	}
+func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
+
+	hasParen := p.tryConsumeTokenKind("(") != nil
 
 	selectQuery, err := p.parseSelectQuery(p.Pos())
 	if err != nil {
 		return nil, err
 	}
+	if hasParen {
+		if _, err := p.consumeTokenKind(")"); err != nil {
+			return nil, err
+		}
+	}
 
-	return &SubQueryClause{
-		AsPos:  pos,
-		Select: selectQuery,
+	return &SubQuery{
+		HasParen: hasParen,
+		Select:   selectQuery,
 	}, nil
 }
 
@@ -942,7 +974,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 }
 
 func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
-	expr, err := p.parseOrExpr(pos)
+	expr, err := p.parseExpr(pos)
 	if err != nil {
 		return nil, err
 	}

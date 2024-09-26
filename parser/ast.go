@@ -28,6 +28,7 @@ type SelectItem struct {
 	Expr Expr
 	// Please refer: https://clickhouse.com/docs/en/sql-reference/statements/select#select-modifiers
 	Modifiers []*FunctionExpr
+	Alias     *Ident
 }
 
 func (s *SelectItem) Pos() Pos {
@@ -35,6 +36,9 @@ func (s *SelectItem) Pos() Pos {
 }
 
 func (s *SelectItem) End() Pos {
+	if s.Alias != nil {
+		return s.Alias.End()
+	}
 	if len(s.Modifiers) > 0 {
 		return s.Modifiers[len(s.Modifiers)-1].End()
 	}
@@ -48,6 +52,10 @@ func (s *SelectItem) String() string {
 		builder.WriteByte(' ')
 		builder.WriteString(modifier.String())
 	}
+	if s.Alias != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(s.Alias.String())
+	}
 	return builder.String()
 }
 
@@ -59,6 +67,11 @@ func (s *SelectItem) Accept(visitor ASTVisitor) error {
 	}
 	for _, modifier := range s.Modifiers {
 		if err := modifier.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Alias != nil {
+		if err := s.Alias.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -552,7 +565,7 @@ type AlterTableAddColumn struct {
 	AddPos       Pos
 	StatementEnd Pos
 
-	Column      *ColumnExpr
+	Column      *ColumnDef
 	IfNotExists bool
 	After       *NestedIdentifier
 }
@@ -1190,7 +1203,7 @@ type AlterTableModifyColumn struct {
 	StatementEnd Pos
 
 	IfExists           bool
-	Column             *ColumnExpr
+	Column             *ColumnDef
 	RemovePropertyType *RemovePropertyType
 }
 
@@ -1306,7 +1319,7 @@ type TableIndex struct {
 	IndexPos Pos
 
 	Name        *NestedIdentifier
-	ColumnExpr  Expr
+	ColumnExpr  *ColumnExpr
 	ColumnType  Expr
 	Granularity *NumberLiteral
 }
@@ -1324,9 +1337,9 @@ func (a *TableIndex) String() string {
 	builder.WriteString("INDEX")
 	builder.WriteByte(' ')
 	builder.WriteString(a.Name.String())
-	// a.ColumnExpr = *Ident --- e.g. INDEX idx column TYPE ...
-	// a.ColumnExpr = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
-	if _, ok := a.ColumnExpr.(*Ident); ok {
+	// a.ColumnDef = *Ident --- e.g. INDEX idx column TYPE ...
+	// a.ColumnDef = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
+	if _, ok := a.ColumnExpr.Expr.(*Ident); ok {
 		builder.WriteByte(' ')
 	}
 	builder.WriteString(a.ColumnExpr.String())
@@ -1475,7 +1488,7 @@ type CreateTable struct {
 	OnCluster    *ClusterClause
 	TableSchema  *TableSchemaClause
 	Engine       *EngineExpr
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 	HasTemporary bool
 }
 
@@ -1518,6 +1531,7 @@ func (c *CreateTable) String() string {
 		builder.WriteString(c.Engine.String())
 	}
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
@@ -1562,7 +1576,7 @@ type CreateMaterializedView struct {
 	OnCluster    *ClusterClause
 	Engine       *EngineExpr
 	Destination  *DestinationClause
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 	Populate     bool
 }
 
@@ -1604,6 +1618,7 @@ func (c *CreateMaterializedView) String() string {
 		builder.WriteString(" POPULATE ")
 	}
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
@@ -1651,7 +1666,7 @@ type CreateView struct {
 	UUID         *UUID
 	OnCluster    *ClusterClause
 	TableSchema  *TableSchemaClause
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 }
 
 func (c *CreateView) Pos() Pos {
@@ -1689,6 +1704,7 @@ func (c *CreateView) String() string {
 	}
 
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 	return builder.String()
@@ -2697,6 +2713,7 @@ func (t *TTLClause) Accept(visitor ASTVisitor) error {
 type OrderExpr struct {
 	OrderPos  Pos
 	Expr      Expr
+	Alias     *Ident
 	Direction OrderDirection
 }
 
@@ -2705,12 +2722,19 @@ func (o *OrderExpr) Pos() Pos {
 }
 
 func (o *OrderExpr) End() Pos {
+	if o.Alias != nil {
+		return o.Alias.End()
+	}
 	return o.Expr.End()
 }
 
 func (o *OrderExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString(o.Expr.String())
+	if o.Alias != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(o.Alias.String())
+	}
 	if o.Direction != OrderDirectionNone {
 		builder.WriteByte(' ')
 		builder.WriteString(string(o.Direction))
@@ -2723,6 +2747,11 @@ func (o *OrderExpr) Accept(visitor ASTVisitor) error {
 	defer visitor.leave(o)
 	if err := o.Expr.Accept(visitor); err != nil {
 		return err
+	}
+	if o.Alias != nil {
+		if err := o.Alias.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitOrderByExpr(o)
 }
@@ -3099,6 +3128,46 @@ func (w *WindowFunctionExpr) Accept(visitor ASTVisitor) error {
 }
 
 type ColumnExpr struct {
+	Expr  Expr
+	Alias *Ident
+}
+
+func (c *ColumnExpr) Pos() Pos {
+	return c.Expr.Pos()
+}
+
+func (c *ColumnExpr) End() Pos {
+	if c.Alias != nil {
+		return c.Alias.NameEnd
+	}
+	return c.Expr.End()
+}
+
+func (c *ColumnExpr) String() string {
+	var builder strings.Builder
+	builder.WriteString(c.Expr.String())
+	if c.Alias != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(c.Alias.String())
+	}
+	return builder.String()
+}
+
+func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
+	visitor.enter(c)
+	defer visitor.leave(c)
+	if err := c.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	if c.Alias != nil {
+		if err := c.Alias.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitColumnExpr(c)
+}
+
+type ColumnDef struct {
 	NamePos   Pos
 	ColumnEnd Pos
 	Name      *NestedIdentifier
@@ -3117,15 +3186,15 @@ type ColumnExpr struct {
 	CompressionCodec *Ident
 }
 
-func (c *ColumnExpr) Pos() Pos {
+func (c *ColumnDef) Pos() Pos {
 	return c.Name.Pos()
 }
 
-func (c *ColumnExpr) End() Pos {
+func (c *ColumnDef) End() Pos {
 	return c.ColumnEnd
 }
 
-func (c *ColumnExpr) String() string {
+func (c *ColumnDef) String() string {
 	var builder strings.Builder
 	builder.WriteString(c.Name.String())
 	if c.Type != nil {
@@ -3164,7 +3233,7 @@ func (c *ColumnExpr) String() string {
 	return builder.String()
 }
 
-func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
+func (c *ColumnDef) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
@@ -3215,7 +3284,7 @@ func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	return visitor.VisitColumn(c)
+	return visitor.VisitColumnDef(c)
 }
 
 type ScalarTypeExpr struct {
@@ -4113,7 +4182,7 @@ type CreateLiveView struct {
 	Destination  *DestinationClause
 	TableSchema  *TableSchemaClause
 	WithTimeout  *WithTimeoutClause
-	SubQuery     *SubQueryClause
+	SubQuery     *SubQuery
 }
 
 func (c *CreateLiveView) Type() string {
@@ -4157,6 +4226,7 @@ func (c *CreateLiveView) String() string {
 	}
 
 	if c.SubQuery != nil {
+		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
 
@@ -4942,31 +5012,32 @@ func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) error {
 	return visitor.VisitWindowFrameExtendExpr(f)
 }
 
-type WindowFrameRangeClause struct {
-	BetweenPos Pos
-	Between    Expr
-	AndPos     Pos
-	And        Expr
+type BetweenClause struct {
+	Expr    Expr
+	Between Expr
+	AndPos  Pos
+	And     Expr
 }
 
-func (f *WindowFrameRangeClause) Pos() Pos {
-	return f.BetweenPos
+func (f *BetweenClause) Pos() Pos {
+	return f.Expr.Pos()
 }
 
-func (f *WindowFrameRangeClause) End() Pos {
+func (f *BetweenClause) End() Pos {
 	return f.And.End()
 }
 
-func (f *WindowFrameRangeClause) String() string {
+func (f *BetweenClause) String() string {
 	var builder strings.Builder
-	builder.WriteString("BETWEEN ")
+	builder.WriteString(f.Expr.String())
+	builder.WriteString(" BETWEEN ")
 	builder.WriteString(f.Between.String())
 	builder.WriteString(" AND ")
 	builder.WriteString(f.And.String())
 	return builder.String()
 }
 
-func (f *WindowFrameRangeClause) Accept(visitor ASTVisitor) error {
+func (f *BetweenClause) Accept(visitor ASTVisitor) error {
 	visitor.enter(f)
 	defer visitor.leave(f)
 	if err := f.Between.Accept(visitor); err != nil {
@@ -4975,7 +5046,7 @@ func (f *WindowFrameRangeClause) Accept(visitor ASTVisitor) error {
 	if err := f.And.Accept(visitor); err != nil {
 		return err
 	}
-	return visitor.VisitWindowFrameRangeExpr(f)
+	return visitor.VisitBetweenClause(f)
 }
 
 type WindowFrameCurrentRow struct {
@@ -5298,28 +5369,31 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	return visitor.VisitSelectQuery(s)
 }
 
-type SubQueryClause struct {
-	AsPos  Pos
-	Select *SelectQuery
+type SubQuery struct {
+	HasParen bool
+	Select   *SelectQuery
 }
 
-func (s *SubQueryClause) Pos() Pos {
-	return s.AsPos
+func (s *SubQuery) Pos() Pos {
+	return s.Select.Pos()
 }
 
-func (s *SubQueryClause) End() Pos {
+func (s *SubQuery) End() Pos {
 	return s.Select.End()
 }
 
-func (s *SubQueryClause) String() string {
-	var builder strings.Builder
-	builder.WriteString(" AS (")
-	builder.WriteString(s.Select.String())
-	builder.WriteString(")")
-	return builder.String()
+func (s *SubQuery) String() string {
+	if s.HasParen {
+		var builder strings.Builder
+		builder.WriteString("(")
+		builder.WriteString(s.Select.String())
+		builder.WriteString(")")
+		return builder.String()
+	}
+	return s.Select.String()
 }
 
-func (s *SubQueryClause) Accept(visitor ASTVisitor) error {
+func (s *SubQuery) Accept(visitor ASTVisitor) error {
 	visitor.enter(s)
 	defer visitor.leave(s)
 	if s.Select != nil {

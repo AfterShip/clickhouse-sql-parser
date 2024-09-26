@@ -76,7 +76,7 @@
       }
     },
     "SubQuery": {
-      "AsPos": 75,
+      "HasParen": false,
       "Select": {
         "SelectPos": 78,
         "StatementEnd": 101,
@@ -90,7 +90,8 @@
               "NamePos": 85,
               "NameEnd": 87
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           }
         ],
         "From": {

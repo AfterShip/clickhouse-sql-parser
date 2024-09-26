@@ -34,7 +34,7 @@
     },
     "TableSchema": null,
     "SubQuery": {
-      "AsPos": 131,
+      "HasParen": true,
       "Select": {
         "SelectPos": 140,
         "StatementEnd": 199,
@@ -48,7 +48,8 @@
               "NamePos": 151,
               "NameEnd": 158
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
@@ -57,7 +58,8 @@
               "NamePos": 164,
               "NameEnd": 171
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           }
         ],
         "From": {

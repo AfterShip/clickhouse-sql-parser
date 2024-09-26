@@ -18,22 +18,31 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "x",
-            "QuoteType": 1,
-            "NamePos": 36,
-            "NameEnd": 37
+            "Expr": {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 36,
+              "NameEnd": 37
+            },
+            "Alias": null
           },
           {
-            "Name": "k",
-            "QuoteType": 1,
-            "NamePos": 39,
-            "NameEnd": 40
+            "Expr": {
+              "Name": "k",
+              "QuoteType": 1,
+              "NamePos": 39,
+              "NameEnd": 40
+            },
+            "Alias": null
           },
           {
-            "Name": "b",
-            "QuoteType": 1,
-            "NamePos": 42,
-            "NameEnd": 43
+            "Expr": {
+              "Name": "b",
+              "QuoteType": 1,
+              "NamePos": 42,
+              "NameEnd": 43
+            },
+            "Alias": null
           }
         ]
       },

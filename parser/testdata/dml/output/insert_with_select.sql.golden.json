@@ -31,7 +31,8 @@
             "NamePos": 40,
             "NameEnd": 49
           },
-          "Modifiers": []
+          "Modifiers": [],
+          "Alias": null
         },
         {
           "Expr": {
@@ -40,7 +41,8 @@
             "NamePos": 55,
             "NameEnd": 64
           },
-          "Modifiers": []
+          "Modifiers": [],
+          "Alias": null
         },
         {
           "Expr": {
@@ -49,7 +51,8 @@
             "NamePos": 70,
             "NameEnd": 74
           },
-          "Modifiers": []
+          "Modifiers": [],
+          "Alias": null
         },
         {
           "Expr": {
@@ -58,7 +61,8 @@
             "NamePos": 80,
             "NameEnd": 86
           },
-          "Modifiers": []
+          "Modifiers": [],
+          "Alias": null
         }
       ],
       "From": {

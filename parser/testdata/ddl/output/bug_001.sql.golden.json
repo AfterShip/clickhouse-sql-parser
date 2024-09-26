@@ -45,7 +45,7 @@
       "TableSchema": null
     },
     "SubQuery": {
-      "AsPos": 104,
+      "HasParen": false,
       "Select": {
         "SelectPos": 107,
         "StatementEnd": 635,
@@ -59,7 +59,8 @@
               "NamePos": 118,
               "NameEnd": 126
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
@@ -68,394 +69,422 @@
               "NamePos": 132,
               "NameEnd": 138
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": null
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 144,
-                  "NameEnd": 167
-                },
-                "Params": {
-                  "LeftParenPos": 167,
-                  "RightParenPos": 183,
-                  "Items": {
-                    "ListPos": 168,
-                    "ListEnd": 182,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 144,
+                "NameEnd": 167
+              },
+              "Params": {
+                "LeftParenPos": 167,
+                "RightParenPos": 183,
+                "Items": {
+                  "ListPos": 168,
+                  "ListEnd": 182,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 168,
                         "NameEnd": 178
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 181,
                         "LiteralEnd": 182,
                         "Literal": "x"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 188,
-              "Alias": {
-                "Name": "x",
-                "QuoteType": 1,
-                "NamePos": 188,
-                "NameEnd": 189
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 188,
+              "NameEnd": 189
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 195,
-                  "NameEnd": 218
-                },
-                "Params": {
-                  "LeftParenPos": 218,
-                  "RightParenPos": 234,
-                  "Items": {
-                    "ListPos": 219,
-                    "ListEnd": 233,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 195,
+                "NameEnd": 218
+              },
+              "Params": {
+                "LeftParenPos": 218,
+                "RightParenPos": 234,
+                "Items": {
+                  "ListPos": 219,
+                  "ListEnd": 233,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 219,
                         "NameEnd": 229
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 232,
                         "LiteralEnd": 233,
                         "Literal": "y"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 239,
-              "Alias": {
-                "Name": "y",
-                "QuoteType": 1,
-                "NamePos": 239,
-                "NameEnd": 240
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "y",
+              "QuoteType": 1,
+              "NamePos": 239,
+              "NameEnd": 240
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 246,
-                  "NameEnd": 269
-                },
-                "Params": {
-                  "LeftParenPos": 269,
-                  "RightParenPos": 285,
-                  "Items": {
-                    "ListPos": 270,
-                    "ListEnd": 284,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 246,
+                "NameEnd": 269
+              },
+              "Params": {
+                "LeftParenPos": 269,
+                "RightParenPos": 285,
+                "Items": {
+                  "ListPos": 270,
+                  "ListEnd": 284,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 270,
                         "NameEnd": 280
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 283,
                         "LiteralEnd": 284,
                         "Literal": "z"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 290,
-              "Alias": {
-                "Name": "z",
-                "QuoteType": 1,
-                "NamePos": 290,
-                "NameEnd": 291
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "z",
+              "QuoteType": 1,
+              "NamePos": 290,
+              "NameEnd": 291
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 297,
-                  "NameEnd": 320
-                },
-                "Params": {
-                  "LeftParenPos": 320,
-                  "RightParenPos": 336,
-                  "Items": {
-                    "ListPos": 321,
-                    "ListEnd": 335,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 297,
+                "NameEnd": 320
+              },
+              "Params": {
+                "LeftParenPos": 320,
+                "RightParenPos": 336,
+                "Items": {
+                  "ListPos": 321,
+                  "ListEnd": 335,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 321,
                         "NameEnd": 331
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 334,
                         "LiteralEnd": 335,
                         "Literal": "a"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 341,
-              "Alias": {
-                "Name": "a",
-                "QuoteType": 1,
-                "NamePos": 341,
-                "NameEnd": 342
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 341,
+              "NameEnd": 342
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 348,
-                  "NameEnd": 371
-                },
-                "Params": {
-                  "LeftParenPos": 371,
-                  "RightParenPos": 387,
-                  "Items": {
-                    "ListPos": 372,
-                    "ListEnd": 386,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 348,
+                "NameEnd": 371
+              },
+              "Params": {
+                "LeftParenPos": 371,
+                "RightParenPos": 387,
+                "Items": {
+                  "ListPos": 372,
+                  "ListEnd": 386,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 372,
                         "NameEnd": 382
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 385,
                         "LiteralEnd": 386,
                         "Literal": "b"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 392,
-              "Alias": {
-                "Name": "b",
-                "QuoteType": 1,
-                "NamePos": 392,
-                "NameEnd": 393
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "b",
+              "QuoteType": 1,
+              "NamePos": 392,
+              "NameEnd": 393
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 399,
-                  "NameEnd": 422
-                },
-                "Params": {
-                  "LeftParenPos": 422,
-                  "RightParenPos": 438,
-                  "Items": {
-                    "ListPos": 423,
-                    "ListEnd": 437,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 399,
+                "NameEnd": 422
+              },
+              "Params": {
+                "LeftParenPos": 422,
+                "RightParenPos": 438,
+                "Items": {
+                  "ListPos": 423,
+                  "ListEnd": 437,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 423,
                         "NameEnd": 433
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 436,
                         "LiteralEnd": 437,
                         "Literal": "c"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 443,
-              "Alias": {
-                "Name": "c",
-                "QuoteType": 1,
-                "NamePos": 443,
-                "NameEnd": 444
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "c",
+              "QuoteType": 1,
+              "NamePos": 443,
+              "NameEnd": 444
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractString",
-                  "QuoteType": 1,
-                  "NamePos": 450,
-                  "NameEnd": 473
-                },
-                "Params": {
-                  "LeftParenPos": 473,
-                  "RightParenPos": 489,
-                  "Items": {
-                    "ListPos": 474,
-                    "ListEnd": 488,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractString",
+                "QuoteType": 1,
+                "NamePos": 450,
+                "NameEnd": 473
+              },
+              "Params": {
+                "LeftParenPos": 473,
+                "RightParenPos": 489,
+                "Items": {
+                  "ListPos": 474,
+                  "ListEnd": 488,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 474,
                         "NameEnd": 484
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 487,
                         "LiteralEnd": 488,
                         "Literal": "d"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 494,
-              "Alias": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 494,
-                "NameEnd": 495
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "d",
+              "QuoteType": 1,
+              "NamePos": 494,
+              "NameEnd": 495
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractInt",
-                  "QuoteType": 1,
-                  "NamePos": 501,
-                  "NameEnd": 521
-                },
-                "Params": {
-                  "LeftParenPos": 521,
-                  "RightParenPos": 537,
-                  "Items": {
-                    "ListPos": 522,
-                    "ListEnd": 536,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractInt",
+                "QuoteType": 1,
+                "NamePos": 501,
+                "NameEnd": 521
+              },
+              "Params": {
+                "LeftParenPos": 521,
+                "RightParenPos": 537,
+                "Items": {
+                  "ListPos": 522,
+                  "ListEnd": 536,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 522,
                         "NameEnd": 532
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 535,
                         "LiteralEnd": 536,
                         "Literal": "e"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 542,
-              "Alias": {
-                "Name": "e",
-                "QuoteType": 1,
-                "NamePos": 542,
-                "NameEnd": 543
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "e",
+              "QuoteType": 1,
+              "NamePos": 542,
+              "NameEnd": 543
+            }
           },
           {
             "Expr": {
-              "Expr": {
-                "Name": {
-                  "Name": "visitParamExtractInt",
-                  "QuoteType": 1,
-                  "NamePos": 549,
-                  "NameEnd": 569
-                },
-                "Params": {
-                  "LeftParenPos": 569,
-                  "RightParenPos": 585,
-                  "Items": {
-                    "ListPos": 570,
-                    "ListEnd": 584,
-                    "HasDistinct": false,
-                    "Items": [
-                      {
+              "Name": {
+                "Name": "visitParamExtractInt",
+                "QuoteType": 1,
+                "NamePos": 549,
+                "NameEnd": 569
+              },
+              "Params": {
+                "LeftParenPos": 569,
+                "RightParenPos": 585,
+                "Items": {
+                  "ListPos": 570,
+                  "ListEnd": 584,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
                         "Name": "properties",
                         "QuoteType": 1,
                         "NamePos": 570,
                         "NameEnd": 580
                       },
-                      {
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
                         "LiteralPos": 583,
                         "LiteralEnd": 584,
                         "Literal": "f"
-                      }
-                    ]
-                  },
-                  "ColumnArgList": null
-                }
-              },
-              "AliasPos": 590,
-              "Alias": {
-                "Name": "f",
-                "QuoteType": 1,
-                "NamePos": 590,
-                "NameEnd": 591
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
               }
             },
-            "Modifiers": []
+            "Modifiers": [],
+            "Alias": {
+              "Name": "f",
+              "QuoteType": 1,
+              "NamePos": 590,
+              "NameEnd": 591
+            }
           }
         ],
         "From": {

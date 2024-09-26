@@ -22,21 +22,18 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "Expr": {
-                    "NumPos": 44,
-                    "NumEnd": 45,
-                    "Literal": "1",
-                    "Base": 10
-                  },
-                  "AliasPos": 49,
-                  "Alias": {
-                    "Name": "value",
-                    "QuoteType": 1,
-                    "NamePos": 49,
-                    "NameEnd": 54
-                  }
+                  "NumPos": 44,
+                  "NumEnd": 45,
+                  "Literal": "1",
+                  "Base": 10
                 },
-                "Modifiers": []
+                "Modifiers": [],
+                "Alias": {
+                  "Name": "value",
+                  "QuoteType": 1,
+                  "NamePos": 49,
+                  "NameEnd": 54
+                }
               }
             ],
             "From": null,
@@ -73,21 +70,18 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "Expr": {
-                    "NumPos": 88,
-                    "NumEnd": 89,
-                    "Literal": "2",
-                    "Base": 10
-                  },
-                  "AliasPos": 93,
-                  "Alias": {
-                    "Name": "value",
-                    "QuoteType": 1,
-                    "NamePos": 93,
-                    "NameEnd": 98
-                  }
+                  "NumPos": 88,
+                  "NumEnd": 89,
+                  "Literal": "2",
+                  "Base": 10
                 },
-                "Modifiers": []
+                "Modifiers": [],
+                "Alias": {
+                  "Name": "value",
+                  "QuoteType": 1,
+                  "NamePos": 93,
+                  "NameEnd": 98
+                }
               }
             ],
             "From": null,
@@ -119,7 +113,8 @@
           "NamePos": 112,
           "NameEnd": 112
         },
-        "Modifiers": []
+        "Modifiers": [],
+        "Alias": null
       }
     ],
     "From": {
@@ -181,10 +176,13 @@
               "HasDistinct": false,
               "Items": [
                 {
-                  "Name": "true",
-                  "QuoteType": 1,
-                  "NamePos": 147,
-                  "NameEnd": 151
+                  "Expr": {
+                    "Name": "true",
+                    "QuoteType": 1,
+                    "NamePos": 147,
+                    "NameEnd": 151
+                  },
+                  "Alias": null
                 }
               ]
             }

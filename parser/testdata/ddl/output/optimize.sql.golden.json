@@ -43,10 +43,13 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "*",
-            "QuoteType": 0,
-            "NamePos": 85,
-            "NameEnd": 85
+            "Expr": {
+              "Name": "*",
+              "QuoteType": 0,
+              "NamePos": 85,
+              "NameEnd": 85
+            },
+            "Alias": null
           }
         ]
       },
@@ -76,22 +79,31 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "colX",
-            "QuoteType": 1,
-            "NamePos": 167,
-            "NameEnd": 171
+            "Expr": {
+              "Name": "colX",
+              "QuoteType": 1,
+              "NamePos": 167,
+              "NameEnd": 171
+            },
+            "Alias": null
           },
           {
-            "Name": "colY",
-            "QuoteType": 1,
-            "NamePos": 172,
-            "NameEnd": 176
+            "Expr": {
+              "Name": "colY",
+              "QuoteType": 1,
+              "NamePos": 172,
+              "NameEnd": 176
+            },
+            "Alias": null
           },
           {
-            "Name": "colZ",
-            "QuoteType": 1,
-            "NamePos": 177,
-            "NameEnd": 181
+            "Expr": {
+              "Name": "colZ",
+              "QuoteType": 1,
+              "NamePos": 177,
+              "NameEnd": 181
+            },
+            "Alias": null
           }
         ]
       },
@@ -121,10 +133,13 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "*",
-            "QuoteType": 0,
-            "NamePos": 219,
-            "NameEnd": 219
+            "Expr": {
+              "Name": "*",
+              "QuoteType": 0,
+              "NamePos": 219,
+              "NameEnd": 219
+            },
+            "Alias": null
           }
         ]
       },
@@ -134,10 +149,13 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "colX",
-            "QuoteType": 1,
-            "NamePos": 228,
-            "NameEnd": 232
+            "Expr": {
+              "Name": "colX",
+              "QuoteType": 1,
+              "NamePos": 228,
+              "NameEnd": 232
+            },
+            "Alias": null
           }
         ]
       }
@@ -166,10 +184,13 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "*",
-            "QuoteType": 0,
-            "NamePos": 270,
-            "NameEnd": 270
+            "Expr": {
+              "Name": "*",
+              "QuoteType": 0,
+              "NamePos": 270,
+              "NameEnd": 270
+            },
+            "Alias": null
           }
         ]
       },
@@ -179,28 +200,37 @@
         "HasDistinct": false,
         "Items": [
           {
-            "LeftParenPos": 279,
-            "RightParenPos": 290,
-            "Items": {
-              "ListPos": 280,
-              "ListEnd": 290,
-              "HasDistinct": false,
-              "Items": [
-                {
-                  "Name": "colX",
-                  "QuoteType": 1,
-                  "NamePos": 280,
-                  "NameEnd": 284
-                },
-                {
-                  "Name": "colY",
-                  "QuoteType": 1,
-                  "NamePos": 286,
-                  "NameEnd": 290
-                }
-              ]
+            "Expr": {
+              "LeftParenPos": 279,
+              "RightParenPos": 290,
+              "Items": {
+                "ListPos": 280,
+                "ListEnd": 290,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "colX",
+                      "QuoteType": 1,
+                      "NamePos": 280,
+                      "NameEnd": 284
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "colY",
+                      "QuoteType": 1,
+                      "NamePos": 286,
+                      "NameEnd": 290
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
             },
-            "ColumnArgList": null
+            "Alias": null
           }
         ]
       }
@@ -229,29 +259,35 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": {
-              "Name": "COLUMNS",
-              "QuoteType": 1,
-              "NamePos": 329,
-              "NameEnd": 336
-            },
-            "Params": {
-              "LeftParenPos": 336,
-              "RightParenPos": 362,
-              "Items": {
-                "ListPos": 338,
-                "ListEnd": 361,
-                "HasDistinct": false,
-                "Items": [
-                  {
-                    "LiteralPos": 338,
-                    "LiteralEnd": 361,
-                    "Literal": "column-matched-by-regex"
-                  }
-                ]
+            "Expr": {
+              "Name": {
+                "Name": "COLUMNS",
+                "QuoteType": 1,
+                "NamePos": 329,
+                "NameEnd": 336
               },
-              "ColumnArgList": null
-            }
+              "Params": {
+                "LeftParenPos": 336,
+                "RightParenPos": 362,
+                "Items": {
+                  "ListPos": 338,
+                  "ListEnd": 361,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "LiteralPos": 338,
+                        "LiteralEnd": 361,
+                        "Literal": "column-matched-by-regex"
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Alias": null
           }
         ]
       },
@@ -281,29 +317,35 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": {
-              "Name": "COLUMNS",
-              "QuoteType": 1,
-              "NamePos": 401,
-              "NameEnd": 408
-            },
-            "Params": {
-              "LeftParenPos": 408,
-              "RightParenPos": 434,
-              "Items": {
-                "ListPos": 410,
-                "ListEnd": 433,
-                "HasDistinct": false,
-                "Items": [
-                  {
-                    "LiteralPos": 410,
-                    "LiteralEnd": 433,
-                    "Literal": "column-matched-by-regex"
-                  }
-                ]
+            "Expr": {
+              "Name": {
+                "Name": "COLUMNS",
+                "QuoteType": 1,
+                "NamePos": 401,
+                "NameEnd": 408
               },
-              "ColumnArgList": null
-            }
+              "Params": {
+                "LeftParenPos": 408,
+                "RightParenPos": 434,
+                "Items": {
+                  "ListPos": 410,
+                  "ListEnd": 433,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "LiteralPos": 410,
+                        "LiteralEnd": 433,
+                        "Literal": "column-matched-by-regex"
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Alias": null
           }
         ]
       },
@@ -313,10 +355,13 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": "colX",
-            "QuoteType": 1,
-            "NamePos": 443,
-            "NameEnd": 447
+            "Expr": {
+              "Name": "colX",
+              "QuoteType": 1,
+              "NamePos": 443,
+              "NameEnd": 447
+            },
+            "Alias": null
           }
         ]
       }
@@ -345,29 +390,35 @@
         "HasDistinct": false,
         "Items": [
           {
-            "Name": {
-              "Name": "COLUMNS",
-              "QuoteType": 1,
-              "NamePos": 485,
-              "NameEnd": 492
-            },
-            "Params": {
-              "LeftParenPos": 492,
-              "RightParenPos": 518,
-              "Items": {
-                "ListPos": 494,
-                "ListEnd": 517,
-                "HasDistinct": false,
-                "Items": [
-                  {
-                    "LiteralPos": 494,
-                    "LiteralEnd": 517,
-                    "Literal": "column-matched-by-regex"
-                  }
-                ]
+            "Expr": {
+              "Name": {
+                "Name": "COLUMNS",
+                "QuoteType": 1,
+                "NamePos": 485,
+                "NameEnd": 492
               },
-              "ColumnArgList": null
-            }
+              "Params": {
+                "LeftParenPos": 492,
+                "RightParenPos": 518,
+                "Items": {
+                  "ListPos": 494,
+                  "ListEnd": 517,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "LiteralPos": 494,
+                        "LiteralEnd": 517,
+                        "Literal": "column-matched-by-regex"
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Alias": null
           }
         ]
       },
@@ -377,28 +428,37 @@
         "HasDistinct": false,
         "Items": [
           {
-            "LeftParenPos": 527,
-            "RightParenPos": 538,
-            "Items": {
-              "ListPos": 528,
-              "ListEnd": 538,
-              "HasDistinct": false,
-              "Items": [
-                {
-                  "Name": "colX",
-                  "QuoteType": 1,
-                  "NamePos": 528,
-                  "NameEnd": 532
-                },
-                {
-                  "Name": "colY",
-                  "QuoteType": 1,
-                  "NamePos": 534,
-                  "NameEnd": 538
-                }
-              ]
+            "Expr": {
+              "LeftParenPos": 527,
+              "RightParenPos": 538,
+              "Items": {
+                "ListPos": 528,
+                "ListEnd": 538,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "colX",
+                      "QuoteType": 1,
+                      "NamePos": 528,
+                      "NameEnd": 532
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "colY",
+                      "QuoteType": 1,
+                      "NamePos": 534,
+                      "NameEnd": 538
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
             },
-            "ColumnArgList": null
+            "Alias": null
           }
         ]
       }
