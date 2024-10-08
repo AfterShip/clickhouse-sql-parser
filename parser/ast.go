@@ -1583,6 +1583,7 @@ type CreateMaterializedView struct {
 	Destination  *DestinationClause
 	SubQuery     *SubQuery
 	Populate     bool
+	Comment      *StringLiteral
 }
 
 func (c *CreateMaterializedView) Pos() Pos {
@@ -1625,6 +1626,11 @@ func (c *CreateMaterializedView) String() string {
 	if c.SubQuery != nil {
 		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
+	}
+
+	if c.Comment != nil {
+		builder.WriteString(" COMMENT ")
+		builder.WriteString(c.Comment.String())
 	}
 	return builder.String()
 }

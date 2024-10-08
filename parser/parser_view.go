@@ -69,6 +69,12 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		createMaterializedView.SubQuery = subQuery
 		createMaterializedView.StatementEnd = subQuery.End()
 	}
+
+	comment, err := p.tryParseComment()
+	if err != nil {
+		return nil, err
+	}
+	createMaterializedView.Comment = comment
 	return createMaterializedView, nil
 }
 
