@@ -166,6 +166,12 @@ func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
 		createTable.SubQuery = subQuery
 		createTable.StatementEnd = subQuery.End()
 	}
+
+	comment, err := p.tryParseComment()
+	if err != nil {
+		return nil, err
+	}
+	createTable.Comment = comment
 	return createTable, nil
 }
 

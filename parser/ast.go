@@ -1490,6 +1490,7 @@ type CreateTable struct {
 	Engine       *EngineExpr
 	SubQuery     *SubQuery
 	HasTemporary bool
+	Comment      *StringLiteral
 }
 
 func (c *CreateTable) Pos() Pos {
@@ -1533,6 +1534,10 @@ func (c *CreateTable) String() string {
 	if c.SubQuery != nil {
 		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
+	}
+	if c.Comment != nil {
+		builder.WriteString(" COMMENT ")
+		builder.WriteString(c.Comment.String())
 	}
 	return builder.String()
 }

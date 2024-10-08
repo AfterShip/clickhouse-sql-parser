@@ -27,3 +27,4 @@ PRIMARY KEY (f0, f1, f2)
 PARTITION BY toYYYYMMDD(f3)
 TTL f3 + INTERVAL 6 MONTH
 ORDER BY (f1,f2,f3)
+COMMENT 'Comment for table';
