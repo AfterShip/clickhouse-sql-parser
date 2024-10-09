@@ -72,8 +72,7 @@ func TestParser_ParseStatements(t *testing.T) {
 }
 
 func TestParser_Format(t *testing.T) {
-	for _, dir := range []string{"./testdata/ddl"} {
-		//for _, dir := range []string{"./testdata/dml", "./testdata/ddl", "./testdata/query", "./testdata/basic"} {
+	for _, dir := range []string{"./testdata/dml", "./testdata/ddl", "./testdata/query", "./testdata/basic"} {
 		outputDir := dir + "/format"
 
 		entries, err := os.ReadDir(dir)
