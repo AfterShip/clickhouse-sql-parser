@@ -83,9 +83,6 @@ func TestParser_Format(t *testing.T) {
 			if !strings.HasSuffix(entry.Name(), ".sql") {
 				continue
 			}
-			if entry.Name() != "create_materialized_view_basic.sql" {
-				continue
-			}
 			t.Run(entry.Name(), func(t *testing.T) {
 				fileBytes, err := os.ReadFile(filepath.Join(dir, entry.Name()))
 				require.NoError(t, err)
