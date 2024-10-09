@@ -137,6 +137,13 @@ func (p *Parser) tryParseUUID() (*UUID, error) {
 	return p.parseUUID()
 }
 
+func (p *Parser) tryParseComment() (*StringLiteral, error) {
+	if p.tryConsumeKeyword(KeywordComment) == nil {
+		return nil, nil
+	}
+	return p.parseString(p.Pos())
+}
+
 func (p *Parser) tryParseIfExists() (bool, error) {
 	if p.tryConsumeKeyword(KeywordIf) == nil {
 		return false, nil

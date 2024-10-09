@@ -838,6 +838,11 @@
       }
     },
     "SubQuery": null,
-    "HasTemporary": false
+    "HasTemporary": false,
+    "Comment": {
+      "LiteralPos": 687,
+      "LiteralEnd": 704,
+      "Literal": "Comment for table"
+    }
   }
 ]

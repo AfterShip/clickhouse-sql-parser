@@ -18,4 +18,5 @@ SELECT f1,
 FROM
     infra_bm.table_name1
 WHERE
-    infra_bm.table_name1.event = 'test-event';
+    infra_bm.table_name1.event = 'test-event'
+COMMENT 'Comment for table';
