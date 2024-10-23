@@ -29,10 +29,24 @@ if err != nil {
 }
 ```
 
-- Use clickhouse-sql-parser as a CLI tool
+- Install clickhouse-sql-parser as a CLI tool
+
+
+On Linux:
 
 ```bash
 $ go install github.com/AfterShip/clickhouse-sql-parser@latest
+```
+
+On macOS:
+
+```bash
+$ brew install clickhouse-sql-parser
+```
+
+Parse ClickHouse SQL into AST or beautify ClickHouse SQL format:
+
+```bash
 ## Parse query into AST
 $ clickhouse-sql-parser "SELECT * FROM clickhouse WHERE a=100"
 
