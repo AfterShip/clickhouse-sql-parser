@@ -41,7 +41,7 @@ $ go install github.com/AfterShip/clickhouse-sql-parser@latest
 On macOS:
 
 ```bash
-$ homebrew install clickhouse-sql-parser
+$ brew install clickhouse-sql-parser
 ```
 
 Parse ClickHouse SQL into AST or beautify ClickHouse SQL format:
