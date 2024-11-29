@@ -767,7 +767,7 @@ func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
 		case p.matchTokenKind(TokenString):
 			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == opTypeEQ {
 				// enum values
-				return p.parseEnumExpr(p.Pos())
+				return p.parseEnumExpr(ident,p.Pos())
 			}
 			// like Datetime('Asia/Dubai')
 			return p.parseColumnTypeWithParams(ident, p.Pos())
@@ -815,8 +815,9 @@ func (p *Parser) parseComplexType(name *Ident, pos Pos) (Expr, error) {
 	}, nil
 }
 
-func (p *Parser) parseEnumExpr(pos Pos) (*EnumValueList, error) {
+func (p *Parser) parseEnumExpr(name *Ident, pos Pos) (*EnumValueList, error) {
 	enumValueList := &EnumValueList{
+		Name: name,
 		ListPos: pos,
 		Enums:   make([]EnumValue, 0),
 	}
@@ -948,9 +949,6 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 }
 
 func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
-	if _, err := p.consumeTokenKind(TokenString); err != nil {
-		return nil, err
-	}
 	name, err := p.parseString(pos)
 	if err != nil {
 		return nil, err
