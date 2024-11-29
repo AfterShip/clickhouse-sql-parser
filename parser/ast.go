@@ -3693,6 +3693,7 @@ func (e *EnumValue) Accept(visitor ASTVisitor) error {
 }
 
 type EnumValueList struct {
+	Name    *Ident
 	ListPos Pos
 	ListEnd Pos
 	Enums   []EnumValue
@@ -3708,18 +3709,24 @@ func (e *EnumValueList) End() Pos {
 
 func (e *EnumValueList) String() string {
 	var builder strings.Builder
+	builder.WriteString(e.Name.String())
+	builder.WriteByte('(')
 	for i, enum := range e.Enums {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
 		builder.WriteString(enum.String())
 	}
+	builder.WriteByte(')')
 	return builder.String()
 }
 
 func (e *EnumValueList) Accept(visitor ASTVisitor) error {
 	visitor.enter(e)
 	defer visitor.leave(e)
+	if err := e.Name.Accept(visitor); err != nil {
+		return err
+	}
 	for i := range e.Enums {
 		if err := e.Enums[i].Accept(visitor); err != nil {
 			return err

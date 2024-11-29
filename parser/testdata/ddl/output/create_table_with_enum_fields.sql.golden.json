@@ -1,0 +1,473 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 448,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "t0",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 15
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": {
+      "OnPos": 16,
+      "Expr": {
+        "Name": "default_cluster",
+        "QuoteType": 1,
+        "NamePos": 27,
+        "NameEnd": 42
+      }
+    },
+    "TableSchema": {
+      "SchemaPos": 43,
+      "SchemaEnd": 233,
+      "Columns": [
+        {
+          "NamePos": 50,
+          "ColumnEnd": 176,
+          "Name": {
+            "Ident": {
+              "Name": "method",
+              "QuoteType": 3,
+              "NamePos": 50,
+              "NameEnd": 56
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Enum8",
+              "QuoteType": 1,
+              "NamePos": 58,
+              "NameEnd": 63
+            },
+            "ListPos": 65,
+            "ListEnd": 160,
+            "Enums": [
+              {
+                "Name": {
+                  "LiteralPos": 65,
+                  "LiteralEnd": 68,
+                  "Literal": "GET"
+                },
+                "Value": {
+                  "NumPos": 70,
+                  "NumEnd": 71,
+                  "Literal": "1",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 75,
+                  "LiteralEnd": 79,
+                  "Literal": "POST"
+                },
+                "Value": {
+                  "NumPos": 81,
+                  "NumEnd": 82,
+                  "Literal": "2",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 85,
+                  "LiteralEnd": 89,
+                  "Literal": "HEAD"
+                },
+                "Value": {
+                  "NumPos": 91,
+                  "NumEnd": 92,
+                  "Literal": "3",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 95,
+                  "LiteralEnd": 98,
+                  "Literal": "PUT"
+                },
+                "Value": {
+                  "NumPos": 100,
+                  "NumEnd": 101,
+                  "Literal": "4",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 103,
+                  "LiteralEnd": 108,
+                  "Literal": "PATCH"
+                },
+                "Value": {
+                  "NumPos": 110,
+                  "NumEnd": 111,
+                  "Literal": "5",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 114,
+                  "LiteralEnd": 120,
+                  "Literal": "DELETE"
+                },
+                "Value": {
+                  "NumPos": 122,
+                  "NumEnd": 123,
+                  "Literal": "6",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 126,
+                  "LiteralEnd": 133,
+                  "Literal": "CONNECT"
+                },
+                "Value": {
+                  "NumPos": 135,
+                  "NumEnd": 136,
+                  "Literal": "7",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 139,
+                  "LiteralEnd": 146,
+                  "Literal": "OPTIONS"
+                },
+                "Value": {
+                  "NumPos": 148,
+                  "NumEnd": 149,
+                  "Literal": "8",
+                  "Base": 10
+                }
+              },
+              {
+                "Name": {
+                  "LiteralPos": 152,
+                  "LiteralEnd": 157,
+                  "Literal": "TRACE"
+                },
+                "Value": {
+                  "NumPos": 159,
+                  "NumEnd": 160,
+                  "Literal": "9",
+                  "Base": 10
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 162,
+            "RightParenPos": 176,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 168,
+              "NameEnd": 172
+            },
+            "Level": {
+              "NumPos": 172,
+              "NumEnd": 174,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 183,
+          "ColumnEnd": 232,
+          "Name": {
+            "Ident": {
+              "Name": "timestamp",
+              "QuoteType": 3,
+              "NamePos": 183,
+              "NameEnd": 192
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 205,
+            "RightParenPos": 206,
+            "Name": {
+              "Name": "DateTime64",
+              "QuoteType": 1,
+              "NamePos": 194,
+              "NameEnd": 204
+            },
+            "Params": [
+              {
+                "NumPos": 205,
+                "NumEnd": 206,
+                "Literal": "3",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 208,
+            "RightParenPos": 232,
+            "Type": {
+              "Name": "DoubleDelta",
+              "QuoteType": 1,
+              "NamePos": 214,
+              "NameEnd": 225
+            },
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 227,
+              "NameEnd": 231
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 235,
+      "EngineEnd": 448,
+      "Name": "ReplicatedMergeTree",
+      "Params": {
+        "LeftParenPos": 263,
+        "RightParenPos": 313,
+        "Items": {
+          "ListPos": 265,
+          "ListEnd": 312,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "LiteralPos": 265,
+                "LiteralEnd": 299,
+                "Literal": "/clickhouse/tables/{layer}-{shard}"
+              },
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "LiteralPos": 303,
+                "LiteralEnd": 312,
+                "Literal": "{replica}"
+              },
+              "Alias": null
+            }
+          ]
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": {
+        "PartitionPos": 315,
+        "Expr": {
+          "ListPos": 328,
+          "ListEnd": 344,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "toDate",
+                  "QuoteType": 1,
+                  "NamePos": 328,
+                  "NameEnd": 334
+                },
+                "Params": {
+                  "LeftParenPos": 334,
+                  "RightParenPos": 344,
+                  "Items": {
+                    "ListPos": 335,
+                    "ListEnd": 344,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 335,
+                          "NameEnd": 344
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
+            }
+          ]
+        }
+      },
+      "SampleBy": null,
+      "TTL": {
+        "TTLPos": 374,
+        "ListEnd": 413,
+        "Items": [
+          {
+            "TTLPos": 374,
+            "Expr": {
+              "LeftExpr": {
+                "Name": {
+                  "Name": "toDate",
+                  "QuoteType": 1,
+                  "NamePos": 378,
+                  "NameEnd": 384
+                },
+                "Params": {
+                  "LeftParenPos": 384,
+                  "RightParenPos": 394,
+                  "Items": {
+                    "ListPos": 385,
+                    "ListEnd": 394,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 385,
+                          "NameEnd": 394
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Operation": "+",
+              "RightExpr": {
+                "Name": {
+                  "Name": "toIntervalDay",
+                  "QuoteType": 1,
+                  "NamePos": 398,
+                  "NameEnd": 411
+                },
+                "Params": {
+                  "LeftParenPos": 411,
+                  "RightParenPos": 413,
+                  "Items": {
+                    "ListPos": 412,
+                    "ListEnd": 413,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "NumPos": 412,
+                          "NumEnd": 413,
+                          "Literal": "3",
+                          "Base": 10
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "HasGlobal": false,
+              "HasNot": false
+            }
+          }
+        ]
+      },
+      "Settings": {
+        "SettingsPos": 415,
+        "ListEnd": 448,
+        "Items": [
+          {
+            "SettingsPos": 424,
+            "Name": {
+              "Name": "index_granularity",
+              "QuoteType": 1,
+              "NamePos": 424,
+              "NameEnd": 441
+            },
+            "Expr": {
+              "NumPos": 444,
+              "NumEnd": 448,
+              "Literal": "8192",
+              "Base": 10
+            }
+          }
+        ]
+      },
+      "OrderBy": {
+        "OrderPos": 346,
+        "ListEnd": 372,
+        "Items": [
+          {
+            "OrderPos": 346,
+            "Expr": {
+              "LeftParenPos": 355,
+              "RightParenPos": 372,
+              "Items": {
+                "ListPos": 356,
+                "ListEnd": 372,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "method",
+                      "QuoteType": 1,
+                      "NamePos": 356,
+                      "NameEnd": 362
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "timestamp",
+                      "QuoteType": 1,
+                      "NamePos": 363,
+                      "NameEnd": 372
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Alias": null,
+            "Direction": "None"
+          }
+        ]
+      }
+    },
+    "SubQuery": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
