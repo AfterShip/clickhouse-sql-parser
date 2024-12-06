@@ -2971,7 +2971,7 @@ type QueryParam struct {
 	LBracePos Pos
 	RBracePos Pos
 	Name      *Ident
-	Type      Expr
+	Type      ColumnType
 }
 
 func (q *QueryParam) Pos() Pos {
@@ -3182,7 +3182,7 @@ type ColumnDef struct {
 	NamePos   Pos
 	ColumnEnd Pos
 	Name      *NestedIdentifier
-	Type      Expr
+	Type      ColumnType
 	NotNull   *NotNullLiteral
 	Nullable  *NullLiteral
 
@@ -3298,72 +3298,85 @@ func (c *ColumnDef) Accept(visitor ASTVisitor) error {
 	return visitor.VisitColumnDef(c)
 }
 
-type ScalarTypeExpr struct {
+type ColumnType interface {
+	Expr
+	Type() string
+}
+
+type ScalarType struct {
 	Name *Ident
 }
 
-func (s *ScalarTypeExpr) Pos() Pos {
+func (s *ScalarType) Pos() Pos {
 	return s.Name.NamePos
 }
 
-func (s *ScalarTypeExpr) End() Pos {
+func (s *ScalarType) End() Pos {
 	return s.Name.NameEnd
 }
 
-func (s *ScalarTypeExpr) String() string {
+func (s *ScalarType) String() string {
 	return s.Name.String()
 }
 
-func (s *ScalarTypeExpr) Accept(visitor ASTVisitor) error {
+func (s *ScalarType) Accept(visitor ASTVisitor) error {
 	visitor.enter(s)
 	defer visitor.leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
 		return err
 	}
-	return visitor.VisitScalarTypeExpr(s)
+	return visitor.VisitScalarType(s)
 }
 
-type PropertyTypeExpr struct {
+func (s *ScalarType) Type() string {
+	return s.Name.Name
+}
+
+type PropertyType struct {
 	Name *Ident
 }
 
-func (c *PropertyTypeExpr) Pos() Pos {
+func (c *PropertyType) Pos() Pos {
 	return c.Name.NamePos
 }
 
-func (c *PropertyTypeExpr) End() Pos {
+func (c *PropertyType) End() Pos {
 	return c.Name.NameEnd
 }
 
-func (c *PropertyTypeExpr) String() string {
+func (c *PropertyType) String() string {
 	return c.Name.String()
 }
 
-func (c *PropertyTypeExpr) Accept(visitor ASTVisitor) error {
+func (c *PropertyType) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
-	return visitor.VisitPropertyTypeExpr(c)
+	return visitor.VisitPropertyType(c)
 }
 
-type TypeWithParamsExpr struct {
+func (c *PropertyType) Type() string {
+	return c.Name.Name
+}
+
+type TypeWithParams struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
 	Name          *Ident
 	Params        []Literal
 }
 
-func (s *TypeWithParamsExpr) Pos() Pos {
+func (s *TypeWithParams) Pos() Pos {
 	return s.Name.NamePos
 }
 
-func (s *TypeWithParamsExpr) End() Pos {
+func (s *TypeWithParams) End() Pos {
 	return s.RightParenPos
 }
 
-func (s *TypeWithParamsExpr) String() string {
+func (s *TypeWithParams) String() string {
 	var builder strings.Builder
 	builder.WriteString(s.Name.String())
 	builder.WriteByte('(')
@@ -3377,7 +3390,7 @@ func (s *TypeWithParamsExpr) String() string {
 	return builder.String()
 }
 
-func (s *TypeWithParamsExpr) Accept(visitor ASTVisitor) error {
+func (s *TypeWithParams) Accept(visitor ASTVisitor) error {
 	visitor.enter(s)
 	defer visitor.leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
@@ -3388,25 +3401,29 @@ func (s *TypeWithParamsExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	return visitor.VisitTypeWithParamsExpr(s)
+	return visitor.VisitTypeWithParams(s)
 }
 
-type ComplexTypeExpr struct {
+func (s *TypeWithParams) Type() string {
+	return s.Name.Name
+}
+
+type ComplexType struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
 	Name          *Ident
-	Params        []Expr
+	Params        []ColumnType
 }
 
-func (c *ComplexTypeExpr) Pos() Pos {
+func (c *ComplexType) Pos() Pos {
 	return c.Name.NamePos
 }
 
-func (c *ComplexTypeExpr) End() Pos {
+func (c *ComplexType) End() Pos {
 	return c.RightParenPos
 }
 
-func (c *ComplexTypeExpr) String() string {
+func (c *ComplexType) String() string {
 	var builder strings.Builder
 	builder.WriteString(c.Name.String())
 	builder.WriteByte('(')
@@ -3420,7 +3437,7 @@ func (c *ComplexTypeExpr) String() string {
 	return builder.String()
 }
 
-func (c *ComplexTypeExpr) Accept(visitor ASTVisitor) error {
+func (c *ComplexType) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
@@ -3431,25 +3448,29 @@ func (c *ComplexTypeExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	return visitor.VisitComplexTypeExpr(c)
+	return visitor.VisitComplexType(c)
 }
 
-type NestedTypeExpr struct {
+func (c *ComplexType) Type() string {
+	return c.Name.Name
+}
+
+type NestedType struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
 	Name          *Ident
 	Columns       []Expr
 }
 
-func (n *NestedTypeExpr) Pos() Pos {
+func (n *NestedType) Pos() Pos {
 	return n.Name.NamePos
 }
 
-func (n *NestedTypeExpr) End() Pos {
+func (n *NestedType) End() Pos {
 	return n.RightParenPos
 }
 
-func (n *NestedTypeExpr) String() string {
+func (n *NestedType) String() string {
 	var builder strings.Builder
 	// on the same level as the column type
 	builder.WriteString(n.Name.String())
@@ -3465,7 +3486,7 @@ func (n *NestedTypeExpr) String() string {
 	return builder.String()
 }
 
-func (n *NestedTypeExpr) Accept(visitor ASTVisitor) error {
+func (n *NestedType) Accept(visitor ASTVisitor) error {
 	visitor.enter(n)
 	defer visitor.leave(n)
 	if err := n.Name.Accept(visitor); err != nil {
@@ -3476,7 +3497,11 @@ func (n *NestedTypeExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	return visitor.VisitNestedTypeExpr(n)
+	return visitor.VisitNestedType(n)
+}
+
+func (n *NestedType) Type() string {
+	return n.Name.Name
 }
 
 type CompressionCodec struct {
@@ -3689,29 +3714,29 @@ func (e *EnumValue) Accept(visitor ASTVisitor) error {
 	if err := e.Value.Accept(visitor); err != nil {
 		return err
 	}
-	return visitor.VisitEnumValueExpr(e)
+	return visitor.VisitEnumValue(e)
 }
 
-type EnumValueList struct {
+type EnumType struct {
 	Name    *Ident
 	ListPos Pos
 	ListEnd Pos
-	Enums   []EnumValue
+	Values  []EnumValue
 }
 
-func (e *EnumValueList) Pos() Pos {
+func (e *EnumType) Pos() Pos {
 	return e.ListPos
 }
 
-func (e *EnumValueList) End() Pos {
+func (e *EnumType) End() Pos {
 	return e.ListEnd
 }
 
-func (e *EnumValueList) String() string {
+func (e *EnumType) String() string {
 	var builder strings.Builder
 	builder.WriteString(e.Name.String())
 	builder.WriteByte('(')
-	for i, enum := range e.Enums {
+	for i, enum := range e.Values {
 		if i > 0 {
 			builder.WriteString(", ")
 		}
@@ -3721,18 +3746,22 @@ func (e *EnumValueList) String() string {
 	return builder.String()
 }
 
-func (e *EnumValueList) Accept(visitor ASTVisitor) error {
+func (e *EnumType) Accept(visitor ASTVisitor) error {
 	visitor.enter(e)
 	defer visitor.leave(e)
 	if err := e.Name.Accept(visitor); err != nil {
 		return err
 	}
-	for i := range e.Enums {
-		if err := e.Enums[i].Accept(visitor); err != nil {
+	for i := range e.Values {
+		if err := e.Values[i].Accept(visitor); err != nil {
 			return err
 		}
 	}
-	return visitor.VisitEnumValueExprList(e)
+	return visitor.VisitEnumType(e)
+}
+
+func (e *EnumType) Type() string {
+	return e.Name.Name
 }
 
 type IntervalExpr struct {
