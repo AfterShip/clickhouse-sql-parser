@@ -368,7 +368,14 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 	default:
 		return nil, fmt.Errorf("expected AS or , but got %s", p.lastTokenKind())
 	}
-	asColumnType, err := p.parseColumnType(p.Pos())
+
+	var asColumnType Expr
+	// CAST(1 AS 'Float') or CAST(1 AS Float) are equivalent
+	if p.matchTokenKind(TokenString) {
+		asColumnType, err = p.parseString(p.Pos())
+	} else {
+		asColumnType, err = p.parseColumnType(p.Pos())
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -749,10 +756,7 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 	return caseExpr, nil
 }
 
-func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
-	if p.matchTokenKind(TokenString) {
-		return p.parseString(p.Pos())
-	}
+func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 	ident, err := p.parseIdent()
 	if err != nil {
 		return nil, err
@@ -767,7 +771,7 @@ func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
 		case p.matchTokenKind(TokenString):
 			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == opTypeEQ {
 				// enum values
-				return p.parseEnumExpr(ident,p.Pos())
+				return p.parseEnumType(ident, p.Pos())
 			}
 			// like Datetime('Asia/Dubai')
 			return p.parseColumnTypeWithParams(ident, p.Pos())
@@ -778,7 +782,7 @@ func (p *Parser) parseColumnType(_ Pos) (Expr, error) { // nolint:funlen
 			return nil, fmt.Errorf("unexpected token kind: %v", p.lastTokenKind())
 		}
 	}
-	return &ScalarTypeExpr{Name: ident}, nil
+	return &ScalarType{Name: ident}, nil
 }
 
 func (p *Parser) parseColumnPropertyType(_ Pos) (Expr, error) {
@@ -786,13 +790,13 @@ func (p *Parser) parseColumnPropertyType(_ Pos) (Expr, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &PropertyTypeExpr{
+	return &PropertyType{
 		Name: ident,
 	}, nil
 }
 
-func (p *Parser) parseComplexType(name *Ident, pos Pos) (Expr, error) {
-	subTypes := make([]Expr, 0)
+func (p *Parser) parseComplexType(name *Ident, pos Pos) (*ComplexType, error) {
+	subTypes := make([]ColumnType, 0)
 	for !p.lexer.isEOF() && !p.matchTokenKind(")") {
 		subExpr, err := p.parseColumnType(p.Pos())
 		if err != nil {
@@ -807,7 +811,7 @@ func (p *Parser) parseComplexType(name *Ident, pos Pos) (Expr, error) {
 	if _, err := p.consumeTokenKind(")"); err != nil {
 		return nil, err
 	}
-	return &ComplexTypeExpr{
+	return &ComplexType{
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
 		Name:          name,
@@ -815,35 +819,35 @@ func (p *Parser) parseComplexType(name *Ident, pos Pos) (Expr, error) {
 	}, nil
 }
 
-func (p *Parser) parseEnumExpr(name *Ident, pos Pos) (*EnumValueList, error) {
-	enumValueList := &EnumValueList{
-		Name: name,
+func (p *Parser) parseEnumType(name *Ident, pos Pos) (*EnumType, error) {
+	enumType := &EnumType{
+		Name:    name,
 		ListPos: pos,
-		Enums:   make([]EnumValue, 0),
+		Values:  make([]EnumValue, 0),
 	}
 	for !p.lexer.isEOF() && !p.matchTokenKind(")") {
-		enumValueExpr, err := p.parseEnumValueExpr(p.Pos())
+		enumValue, err := p.parseEnumValueExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		if enumValueExpr == nil {
+		if enumValue == nil {
 			break
 		}
-		enumValueList.Enums = append(enumValueList.Enums, *enumValueExpr)
+		enumType.Values = append(enumType.Values, *enumValue)
 		if p.tryConsumeTokenKind(",") == nil {
 			break
 		}
 	}
-	if len(enumValueList.Enums) > 0 {
-		enumValueList.ListEnd = enumValueList.Enums[len(enumValueList.Enums)-1].Value.NumEnd
+	if len(enumType.Values) > 0 {
+		enumType.ListEnd = enumType.Values[len(enumType.Values)-1].Value.NumEnd
 	}
 	if _, err := p.consumeTokenKind(")"); err != nil {
 		return nil, err
 	}
-	return enumValueList, nil
+	return enumType, nil
 }
 
-func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParamsExpr, error) {
+func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParams, error) {
 	params := make([]Literal, 0)
 	param, err := p.parseLiteral(p.Pos())
 	if err != nil {
@@ -862,7 +866,7 @@ func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParam
 	if _, err := p.consumeTokenKind(")"); err != nil {
 		return nil, err
 	}
-	return &TypeWithParamsExpr{
+	return &TypeWithParams{
 		Name:          name,
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
@@ -870,7 +874,7 @@ func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParam
 	}, nil
 }
 
-func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedTypeExpr, error) {
+func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedType, error) {
 	columns, err := p.parseTableColumns()
 	if err != nil {
 		return nil, err
@@ -879,7 +883,7 @@ func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedTypeExpr, error) 
 	if _, err := p.consumeTokenKind(")"); err != nil {
 		return nil, err
 	}
-	return &NestedTypeExpr{
+	return &NestedType{
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
 		Name:          name,

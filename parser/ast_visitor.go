@@ -73,17 +73,17 @@ type ASTVisitor interface {
 	VisitWindowFunctionExpr(expr *WindowFunctionExpr) error
 	VisitColumnDef(expr *ColumnDef) error
 	VisitColumnExpr(expr *ColumnExpr) error
-	VisitScalarTypeExpr(expr *ScalarTypeExpr) error
-	VisitPropertyTypeExpr(expr *PropertyTypeExpr) error
-	VisitTypeWithParamsExpr(expr *TypeWithParamsExpr) error
-	VisitComplexTypeExpr(expr *ComplexTypeExpr) error
-	VisitNestedTypeExpr(expr *NestedTypeExpr) error
+	VisitScalarType(expr *ScalarType) error
+	VisitPropertyType(expr *PropertyType) error
+	VisitTypeWithParams(expr *TypeWithParams) error
+	VisitComplexType(expr *ComplexType) error
+	VisitNestedType(expr *NestedType) error
 	VisitCompressionCodec(expr *CompressionCodec) error
 	VisitNumberLiteral(expr *NumberLiteral) error
 	VisitStringLiteral(expr *StringLiteral) error
 	VisitRatioExpr(expr *RatioExpr) error
-	VisitEnumValueExpr(expr *EnumValue) error
-	VisitEnumValueExprList(expr *EnumValueList) error
+	VisitEnumValue(expr *EnumValue) error
+	VisitEnumType(expr *EnumType) error
 	VisitIntervalExpr(expr *IntervalExpr) error
 	VisitEngineExpr(expr *EngineExpr) error
 	VisitColumnTypeExpr(expr *ColumnTypeExpr) error
@@ -678,35 +678,35 @@ func (v *DefaultASTVisitor) VisitColumnExpr(expr *ColumnExpr) error {
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitScalarTypeExpr(expr *ScalarTypeExpr) error {
+func (v *DefaultASTVisitor) VisitScalarType(expr *ScalarType) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitPropertyTypeExpr(expr *PropertyTypeExpr) error {
+func (v *DefaultASTVisitor) VisitPropertyType(expr *PropertyType) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitTypeWithParamsExpr(expr *TypeWithParamsExpr) error {
+func (v *DefaultASTVisitor) VisitTypeWithParams(expr *TypeWithParams) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitComplexTypeExpr(expr *ComplexTypeExpr) error {
+func (v *DefaultASTVisitor) VisitComplexType(expr *ComplexType) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitNestedTypeExpr(expr *NestedTypeExpr) error {
+func (v *DefaultASTVisitor) VisitNestedType(expr *NestedType) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
@@ -741,14 +741,14 @@ func (v *DefaultASTVisitor) VisitRatioExpr(expr *RatioExpr) error {
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitEnumValueExpr(expr *EnumValue) error {
+func (v *DefaultASTVisitor) VisitEnumValue(expr *EnumValue) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitEnumValueExprList(expr *EnumValueList) error {
+func (v *DefaultASTVisitor) VisitEnumType(expr *EnumType) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
