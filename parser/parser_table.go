@@ -860,10 +860,6 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	engineExpr := &EngineExpr{EnginePos: pos}
 	var engineEnd Pos
 	switch {
-	case p.matchKeyword(KeywordNull):
-		engineExpr.Name = KeywordNull
-		engineEnd = p.last().End
-		_ = p.lexer.consumeToken()
 	case p.matchTokenKind(TokenIdent):
 		ident, err := p.parseIdent()
 		if err != nil {
