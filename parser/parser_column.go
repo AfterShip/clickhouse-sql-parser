@@ -101,7 +101,9 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			if err != nil {
 				return nil, err
 			}
-			p.consumeTokenKind("(")
+			if _, err = p.consumeTokenKind("("); err != nil {
+				return nil, err
+			}
 			// it's a tuple type definition after "::" operator
 			rightExpr, err := p.parseNestedType(name, p.Pos())
 			if err != nil {

@@ -212,7 +212,7 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 	case p.matchTokenKind(TokenFloat):
 		lastToken, err = p.consumeTokenKind(TokenFloat)
 	case p.matchTokenKind(TokenDot):
-		p.lexer.consumeToken()
+		_ = p.lexer.consumeToken()
 		lastToken, err = p.consumeTokenKind(TokenInt)
 		if err != nil {
 			return nil, err
