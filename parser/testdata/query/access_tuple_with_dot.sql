@@ -1,0 +1,1 @@
+SELECT tuple('a','b','c').3, .1234

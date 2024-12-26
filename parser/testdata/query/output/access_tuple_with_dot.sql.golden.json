@@ -1,0 +1,93 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 34,
+    "With": null,
+    "Top": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": {
+              "Name": "tuple",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 12
+            },
+            "Params": {
+              "LeftParenPos": 12,
+              "RightParenPos": 24,
+              "Items": {
+                "ListPos": 14,
+                "ListEnd": 23,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "LiteralPos": 14,
+                      "LiteralEnd": 15,
+                      "Literal": "a"
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "LiteralPos": 18,
+                      "LiteralEnd": 19,
+                      "Literal": "b"
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "LiteralPos": 22,
+                      "LiteralEnd": 23,
+                      "Literal": "c"
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "Operation": ".",
+          "Index": {
+            "NumPos": 26,
+            "NumEnd": 27,
+            "Literal": "3",
+            "Base": 10
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "NumPos": 29,
+          "NumEnd": 34,
+          "Literal": ".1234",
+          "Base": 10
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

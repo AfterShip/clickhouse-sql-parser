@@ -223,14 +223,14 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			}, nil
 		}
 		return funcExpr, nil
-	case p.tryConsumeTokenKind(".") != nil:
+	case p.tryConsumeTokenKind(TokenDot) != nil:
 		switch {
 		case p.matchTokenKind(TokenIdent):
 			nextIdent, err := p.parseIdent()
 			if err != nil {
 				return nil, err
 			}
-			if p.tryConsumeTokenKind(".") != nil {
+			if p.tryConsumeTokenKind(TokenDot) != nil {
 				thirdIdent, err := p.parseIdent()
 				if err != nil {
 					return nil, err
@@ -310,7 +310,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 				return nil, err
 			}
 			switch {
-			case p.matchTokenKind("."):
+			case p.matchTokenKind(TokenDot):
 				// it's a database.table
 				dotIdent, err := p.tryParseDotIdent(p.Pos())
 				if err != nil {
@@ -489,7 +489,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 		}
 		switch {
 		// nest identifier
-		case p.matchTokenKind("."):
+		case p.matchTokenKind(TokenDot):
 			dotIdent, err := p.tryParseDotIdent(p.Pos())
 			if err != nil {
 				return nil, err

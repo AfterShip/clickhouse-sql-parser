@@ -106,7 +106,6 @@ func TestConsumeNumber(t *testing.T) {
 	t.Run("Float number", func(t *testing.T) {
 		floats := []string{
 			"123.456",
-			".456",
 			"123.456e+10",
 			"123.456e-10",
 			"123.456e10",
@@ -126,7 +125,6 @@ func TestConsumeNumber(t *testing.T) {
 
 	t.Run("Invalid float number", func(t *testing.T) {
 		invalidFloats := []string{
-			".456a",
 			"123.456b",
 			"123.456e",
 			"123.456e+",

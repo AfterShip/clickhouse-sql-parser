@@ -187,6 +187,40 @@ func (p *BinaryOperation) Accept(visitor ASTVisitor) error {
 	return visitor.VisitBinaryExpr(p)
 }
 
+type IndexOperation struct {
+	LeftExpr  Expr
+	Operation TokenKind
+	Index     Expr
+}
+
+func (i *IndexOperation) Accept(visitor ASTVisitor) error {
+	visitor.enter(i)
+	defer visitor.leave(i)
+	if err := i.LeftExpr.Accept(visitor); err != nil {
+		return err
+	}
+	if err := i.Index.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitIndexOperation(i)
+}
+
+func (i *IndexOperation) Pos() Pos {
+	return i.LeftExpr.Pos()
+}
+
+func (i *IndexOperation) End() Pos {
+	return i.Index.End()
+}
+
+func (i *IndexOperation) String() string {
+	var builder strings.Builder
+	builder.WriteString(i.LeftExpr.String())
+	builder.WriteString(string(i.Operation))
+	builder.WriteString(i.Index.String())
+	return builder.String()
+}
+
 type JoinTableExpr struct {
 	Table        *TableExpr
 	StatementEnd Pos

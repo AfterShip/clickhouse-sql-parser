@@ -20,6 +20,7 @@ const (
 	PrecedenceMulDivMod
 	PrecedenceBracket
 	PrecedenceArrow
+	PrecedenceDot
 	PrecedenceDoubleColon
 )
 
@@ -56,6 +57,8 @@ func (p *Parser) getNextPrecedence() int {
 		return PrecedenceBracket
 	case p.matchTokenKind(opTypeCast):
 		return PrecedenceDoubleColon
+	case p.matchTokenKind(TokenDot):
+		return PrecedenceDot
 	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike):
 		return PrecedenceBetweenLike
 	case p.matchKeyword(KeywordIn):
@@ -106,7 +109,24 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Operation: "GLOBAL IN",
 			RightExpr: rightExpr,
 		}, nil
-
+	case p.matchTokenKind(TokenDot):
+		_ = p.lexer.consumeToken()
+		// access column with dot notation
+		var rightExpr Expr
+		var err error
+		if p.matchTokenKind(TokenIdent) {
+			rightExpr, err = p.parseIdent()
+		} else {
+			rightExpr, err = p.parseDecimal(p.Pos())
+		}
+		if err != nil {
+			return nil, err
+		}
+		return &IndexOperation{
+			LeftExpr:  expr,
+			Operation: TokenDot,
+			Index:     rightExpr,
+		}, nil
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
 		switch {
@@ -331,6 +351,8 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 			return p.parseQueryParam(p.Pos())
 		}
 		return p.parseMapLiteral(p.Pos())
+	case p.matchTokenKind(TokenDot):
+		return p.parseNumber(p.Pos())
 	case p.matchTokenKind(opTypeQuery):
 		// Placeholder `?`
 		_ = p.lexer.consumeToken()

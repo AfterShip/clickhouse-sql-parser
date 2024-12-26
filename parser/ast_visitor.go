@@ -4,6 +4,7 @@ type ASTVisitor interface {
 	VisitOperationExpr(expr *OperationExpr) error
 	VisitTernaryExpr(expr *TernaryOperation) error
 	VisitBinaryExpr(expr *BinaryOperation) error
+	VisitIndexOperation(expr *IndexOperation) error
 	VisitAlterTable(expr *AlterTable) error
 	VisitAlterTableAttachPartition(expr *AlterTableAttachPartition) error
 	VisitAlterTableDetachPartition(expr *AlterTableDetachPartition) error
@@ -182,6 +183,13 @@ func (v *DefaultASTVisitor) VisitTernaryExpr(expr *TernaryOperation) error {
 }
 
 func (v *DefaultASTVisitor) VisitBinaryExpr(expr *BinaryOperation) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitIndexOperation(expr *IndexOperation) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
