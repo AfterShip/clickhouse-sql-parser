@@ -89,5 +89,553 @@
     "UnionAll": null,
     "UnionDistinct": null,
     "Except": null
+  },
+  {
+    "SelectPos": 37,
+    "StatementEnd": 336,
+    "With": null,
+    "Top": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "toTypeName",
+            "QuoteType": 1,
+            "NamePos": 44,
+            "NameEnd": 54
+          },
+          "Params": {
+            "LeftParenPos": 54,
+            "RightParenPos": 151,
+            "Items": {
+              "ListPos": 56,
+              "ListEnd": 150,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Name": {
+                        "Name": "tuple",
+                        "QuoteType": 1,
+                        "NamePos": 56,
+                        "NameEnd": 61
+                      },
+                      "Params": {
+                        "LeftParenPos": 61,
+                        "RightParenPos": 102,
+                        "Items": {
+                          "ListPos": 63,
+                          "ListEnd": 102,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "LiteralPos": 63,
+                                "LiteralEnd": 64,
+                                "Literal": "a"
+                              },
+                              "Alias": {
+                                "Name": "first",
+                                "QuoteType": 1,
+                                "NamePos": 69,
+                                "NameEnd": 74
+                              }
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 76,
+                                "LiteralEnd": 77,
+                                "Literal": "b"
+                              },
+                              "Alias": {
+                                "Name": "second",
+                                "QuoteType": 1,
+                                "NamePos": 82,
+                                "NameEnd": 88
+                              }
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 91,
+                                "LiteralEnd": 92,
+                                "Literal": "c"
+                              },
+                              "Alias": {
+                                "Name": "third",
+                                "QuoteType": 1,
+                                "NamePos": 97,
+                                "NameEnd": 102
+                              }
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Operation": "::",
+                    "RightExpr": {
+                      "LeftParenPos": 111,
+                      "RightParenPos": 150,
+                      "Name": {
+                        "Name": "Tuple",
+                        "QuoteType": 1,
+                        "NamePos": 105,
+                        "NameEnd": 110
+                      },
+                      "Columns": [
+                        {
+                          "NamePos": 111,
+                          "ColumnEnd": 123,
+                          "Name": {
+                            "Ident": {
+                              "Name": "first",
+                              "QuoteType": 1,
+                              "NamePos": 111,
+                              "NameEnd": 116
+                            },
+                            "DotIdent": null
+                          },
+                          "Type": {
+                            "Name": {
+                              "Name": "String",
+                              "QuoteType": 1,
+                              "NamePos": 117,
+                              "NameEnd": 123
+                            }
+                          },
+                          "NotNull": null,
+                          "Nullable": null,
+                          "DefaultExpr": null,
+                          "MaterializedExpr": null,
+                          "AliasExpr": null,
+                          "Codec": null,
+                          "TTL": null,
+                          "Comment": null,
+                          "CompressionCodec": null
+                        },
+                        {
+                          "NamePos": 124,
+                          "ColumnEnd": 137,
+                          "Name": {
+                            "Ident": {
+                              "Name": "second",
+                              "QuoteType": 1,
+                              "NamePos": 124,
+                              "NameEnd": 130
+                            },
+                            "DotIdent": null
+                          },
+                          "Type": {
+                            "Name": {
+                              "Name": "String",
+                              "QuoteType": 1,
+                              "NamePos": 131,
+                              "NameEnd": 137
+                            }
+                          },
+                          "NotNull": null,
+                          "Nullable": null,
+                          "DefaultExpr": null,
+                          "MaterializedExpr": null,
+                          "AliasExpr": null,
+                          "Codec": null,
+                          "TTL": null,
+                          "Comment": null,
+                          "CompressionCodec": null
+                        },
+                        {
+                          "NamePos": 138,
+                          "ColumnEnd": 150,
+                          "Name": {
+                            "Ident": {
+                              "Name": "third",
+                              "QuoteType": 1,
+                              "NamePos": 138,
+                              "NameEnd": 143
+                            },
+                            "DotIdent": null
+                          },
+                          "Type": {
+                            "Name": {
+                              "Name": "String",
+                              "QuoteType": 1,
+                              "NamePos": 144,
+                              "NameEnd": 150
+                            }
+                          },
+                          "NotNull": null,
+                          "Nullable": null,
+                          "DefaultExpr": null,
+                          "MaterializedExpr": null,
+                          "AliasExpr": null,
+                          "Codec": null,
+                          "TTL": null,
+                          "Comment": null,
+                          "CompressionCodec": null
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "LeftParenPos": 161,
+            "RightParenPos": 257,
+            "Items": {
+              "ListPos": 162,
+              "ListEnd": 256,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Name": {
+                        "Name": "tuple",
+                        "QuoteType": 1,
+                        "NamePos": 162,
+                        "NameEnd": 167
+                      },
+                      "Params": {
+                        "LeftParenPos": 167,
+                        "RightParenPos": 208,
+                        "Items": {
+                          "ListPos": 169,
+                          "ListEnd": 208,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "LiteralPos": 169,
+                                "LiteralEnd": 170,
+                                "Literal": "a"
+                              },
+                              "Alias": {
+                                "Name": "first",
+                                "QuoteType": 1,
+                                "NamePos": 175,
+                                "NameEnd": 180
+                              }
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 182,
+                                "LiteralEnd": 183,
+                                "Literal": "b"
+                              },
+                              "Alias": {
+                                "Name": "second",
+                                "QuoteType": 1,
+                                "NamePos": 188,
+                                "NameEnd": 194
+                              }
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 197,
+                                "LiteralEnd": 198,
+                                "Literal": "c"
+                              },
+                              "Alias": {
+                                "Name": "third",
+                                "QuoteType": 1,
+                                "NamePos": 203,
+                                "NameEnd": 208
+                              }
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Operation": "::",
+                    "RightExpr": {
+                      "LeftParenPos": 217,
+                      "RightParenPos": 256,
+                      "Name": {
+                        "Name": "Tuple",
+                        "QuoteType": 1,
+                        "NamePos": 211,
+                        "NameEnd": 216
+                      },
+                      "Columns": [
+                        {
+                          "NamePos": 217,
+                          "ColumnEnd": 229,
+                          "Name": {
+                            "Ident": {
+                              "Name": "first",
+                              "QuoteType": 1,
+                              "NamePos": 217,
+                              "NameEnd": 222
+                            },
+                            "DotIdent": null
+                          },
+                          "Type": {
+                            "Name": {
+                              "Name": "String",
+                              "QuoteType": 1,
+                              "NamePos": 223,
+                              "NameEnd": 229
+                            }
+                          },
+                          "NotNull": null,
+                          "Nullable": null,
+                          "DefaultExpr": null,
+                          "MaterializedExpr": null,
+                          "AliasExpr": null,
+                          "Codec": null,
+                          "TTL": null,
+                          "Comment": null,
+                          "CompressionCodec": null
+                        },
+                        {
+                          "NamePos": 230,
+                          "ColumnEnd": 243,
+                          "Name": {
+                            "Ident": {
+                              "Name": "second",
+                              "QuoteType": 1,
+                              "NamePos": 230,
+                              "NameEnd": 236
+                            },
+                            "DotIdent": null
+                          },
+                          "Type": {
+                            "Name": {
+                              "Name": "String",
+                              "QuoteType": 1,
+                              "NamePos": 237,
+                              "NameEnd": 243
+                            }
+                          },
+                          "NotNull": null,
+                          "Nullable": null,
+                          "DefaultExpr": null,
+                          "MaterializedExpr": null,
+                          "AliasExpr": null,
+                          "Codec": null,
+                          "TTL": null,
+                          "Comment": null,
+                          "CompressionCodec": null
+                        },
+                        {
+                          "NamePos": 244,
+                          "ColumnEnd": 256,
+                          "Name": {
+                            "Ident": {
+                              "Name": "third",
+                              "QuoteType": 1,
+                              "NamePos": 244,
+                              "NameEnd": 249
+                            },
+                            "DotIdent": null
+                          },
+                          "Type": {
+                            "Name": {
+                              "Name": "String",
+                              "QuoteType": 1,
+                              "NamePos": 250,
+                              "NameEnd": 256
+                            }
+                          },
+                          "NotNull": null,
+                          "Nullable": null,
+                          "DefaultExpr": null,
+                          "MaterializedExpr": null,
+                          "AliasExpr": null,
+                          "Codec": null,
+                          "TTL": null,
+                          "Comment": null,
+                          "CompressionCodec": null
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "Operation": ".",
+          "Index": {
+            "Name": "second",
+            "QuoteType": 1,
+            "NamePos": 259,
+            "NameEnd": 265
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": {
+              "Name": "tuple",
+              "QuoteType": 1,
+              "NamePos": 274,
+              "NameEnd": 279
+            },
+            "Params": {
+              "LeftParenPos": 279,
+              "RightParenPos": 291,
+              "Items": {
+                "ListPos": 281,
+                "ListEnd": 290,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "LiteralPos": 281,
+                      "LiteralEnd": 282,
+                      "Literal": "a"
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "LiteralPos": 285,
+                      "LiteralEnd": 286,
+                      "Literal": "b"
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "LiteralPos": 289,
+                      "LiteralEnd": 290,
+                      "Literal": "c"
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "Operation": ".",
+          "Index": {
+            "NumPos": 293,
+            "NumEnd": 294,
+            "Literal": "3",
+            "Base": 10
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "tupleElement",
+            "QuoteType": 1,
+            "NamePos": 303,
+            "NameEnd": 315
+          },
+          "Params": {
+            "LeftParenPos": 315,
+            "RightParenPos": 336,
+            "Items": {
+              "ListPos": 316,
+              "ListEnd": 336,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "tuple",
+                      "QuoteType": 1,
+                      "NamePos": 316,
+                      "NameEnd": 321
+                    },
+                    "Params": {
+                      "LeftParenPos": 321,
+                      "RightParenPos": 333,
+                      "Items": {
+                        "ListPos": 323,
+                        "ListEnd": 332,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "LiteralPos": 323,
+                              "LiteralEnd": 324,
+                              "Literal": "a"
+                            },
+                            "Alias": null
+                          },
+                          {
+                            "Expr": {
+                              "LiteralPos": 327,
+                              "LiteralEnd": 328,
+                              "Literal": "b"
+                            },
+                            "Alias": null
+                          },
+                          {
+                            "Expr": {
+                              "LiteralPos": 331,
+                              "LiteralEnd": 332,
+                              "Literal": "c"
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 335,
+                    "NumEnd": 336,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
   }
 ]

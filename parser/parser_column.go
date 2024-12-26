@@ -81,7 +81,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		p.matchTokenKind(opTypeDiv), p.matchTokenKind(opTypeMod),
 		p.matchKeyword(KeywordIn), p.matchKeyword(KeywordLike),
 		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
-		p.matchTokenKind(opTypeCast), p.matchTokenKind(opTypeArrow), p.matchTokenKind(opTypeDoubleEQ):
+		p.matchTokenKind(opTypeArrow), p.matchTokenKind(opTypeDoubleEQ):
 		op := p.last().ToString()
 		_ = p.lexer.consumeToken()
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
@@ -91,6 +91,36 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return &BinaryOperation{
 			LeftExpr:  expr,
 			Operation: TokenKind(op),
+			RightExpr: rightExpr,
+		}, nil
+	case p.matchTokenKind(opTypeCast):
+		_ = p.lexer.consumeToken()
+
+		if p.matchTokenKind(TokenIdent) && p.last().String == "Tuple" {
+			name, err := p.parseIdent()
+			if err != nil {
+				return nil, err
+			}
+			p.consumeTokenKind("(")
+			// it's a tuple type definition after "::" operator
+			rightExpr, err := p.parseNestedType(name, p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			return &BinaryOperation{
+				LeftExpr:  expr,
+				Operation: opTypeCast,
+				RightExpr: rightExpr,
+			}, nil
+		}
+
+		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
+		if err != nil {
+			return nil, err
+		}
+		return &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: opTypeCast,
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchKeyword(KeywordBetween):
