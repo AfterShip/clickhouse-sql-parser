@@ -921,7 +921,7 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 		return nil, err
 	}
 
-	if p.tryConsumeTokenKind(".") == nil {
+	if p.tryConsumeTokenKind(TokenDot) == nil {
 		return &TableIdentifier{
 			Table: ident,
 		}, nil

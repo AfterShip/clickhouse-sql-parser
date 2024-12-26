@@ -110,7 +110,7 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 }
 
 func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
-	if p.tryConsumeTokenKind(".") == nil {
+	if p.tryConsumeTokenKind(TokenDot) == nil {
 		return nil, nil // nolint
 	}
 	return p.parseIdent()
@@ -211,6 +211,17 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 		lastToken, err = p.consumeTokenKind(TokenInt)
 	case p.matchTokenKind(TokenFloat):
 		lastToken, err = p.consumeTokenKind(TokenFloat)
+	case p.matchTokenKind(TokenDot):
+		_ = p.lexer.consumeToken()
+		lastToken, err = p.consumeTokenKind(TokenInt)
+		if err != nil {
+			return nil, err
+		}
+		if lastToken.Base != 10 {
+			return nil, fmt.Errorf("invalid decimal literal: %q", lastToken.String)
+		}
+		lastToken.String = "." + lastToken.String
+		lastToken.Kind = TokenFloat
 	default:
 		return nil, fmt.Errorf("expected <int> or <float>, but got %q", p.lastTokenKind())
 	}

@@ -15,6 +15,7 @@ const (
 	TokenInt     TokenKind = "<int>"
 	TokenFloat   TokenKind = "<float>"
 	TokenString  TokenKind = "<string>"
+	TokenDot               = "."
 )
 
 const (
@@ -328,19 +329,14 @@ func (l *Lexer) consumeToken() error {
 			return nil
 		}
 	case '.':
-		// check if the next token is a number. If so, parse it as a float number
-		if l.peekOk(1) && IsDigit(l.peekN(1)) {
-			return l.consumeNumber()
+		l.lastToken = &Token{
+			String: l.slice(0, 1),
+			Kind:   TokenDot,
+			Pos:    Pos(l.current),
+			End:    Pos(l.current + 1),
 		}
-		// check if the previous lastToken is an Ident. If so, it's a field name.
-		if l.lastToken != nil && l.lastToken.Kind != TokenIdent {
-			return fmt.Errorf("'.' should be after an Ident, but got <%q>", l.lastToken.Kind)
-		}
-	}
-
-	// The subsequent lastToken after the dot should be an Ident.
-	if l.lastToken != nil && l.lastToken.Kind == "." && !IsIdentStart(l.peekN(0)) {
-		return fmt.Errorf("'.' should follow with an Ident, but got <%q>", l.lastToken.Kind)
+		l.skipN(1)
+		return nil
 	}
 
 	if IsIdentStart(l.peekN(0)) {
