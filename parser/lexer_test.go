@@ -40,7 +40,7 @@ func TestConsumeString(t *testing.T) {
 		lexer := NewLexer(s)
 		err := lexer.consumeToken()
 		require.NoError(t, err)
-		require.Equal(t, TokenString, lexer.lastToken.Kind)
+		require.Equal(t, TokenKindString, lexer.lastToken.Kind)
 		require.Equal(t, strings.Trim(s, "'"), lexer.lastToken.String)
 		require.True(t, lexer.isEOF())
 	}
@@ -61,7 +61,7 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(i)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenInt, lexer.lastToken.Kind)
+			require.Equal(t, TokenKindInt, lexer.lastToken.Kind)
 			require.Equal(t, 10, lexer.lastToken.Base)
 			require.Equal(t, i, lexer.lastToken.String)
 			require.True(t, lexer.isEOF())
@@ -77,7 +77,7 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(n)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenInt, lexer.lastToken.Kind)
+			require.Equal(t, TokenKindInt, lexer.lastToken.Kind)
 			require.Equal(t, 16, lexer.lastToken.Base)
 			require.Equal(t, n, lexer.lastToken.String)
 			require.True(t, lexer.isEOF())
@@ -117,7 +117,7 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(f)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenFloat, lexer.lastToken.Kind)
+			require.Equal(t, TokenKindFloat, lexer.lastToken.Kind)
 			require.Equal(t, f, lexer.lastToken.String)
 			require.True(t, lexer.isEOF())
 		}
@@ -167,7 +167,7 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(i)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenIdent, lexer.lastToken.Kind)
+			require.Equal(t, TokenKindIdent, lexer.lastToken.Kind)
 			require.Equal(t, strings.Trim(i, "`"), lexer.lastToken.String)
 			require.True(t, lexer.isEOF())
 		}
@@ -178,7 +178,7 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(k)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKeyword, lexer.lastToken.Kind)
+			require.Equal(t, TokenKindKeyword, lexer.lastToken.Kind)
 			require.Equal(t, k, lexer.lastToken.String)
 			require.True(t, lexer.isEOF())
 		}

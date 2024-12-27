@@ -212,7 +212,7 @@ func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutClause, error) {
 
 	withTimeout := &WithTimeoutClause{WithTimeoutPos: pos}
 
-	if p.matchTokenKind(TokenInt) {
+	if p.matchTokenKind(TokenKindInt) {
 		decimalNumber, err := p.parseDecimal(p.Pos())
 		if err != nil {
 			return nil, err

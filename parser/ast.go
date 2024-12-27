@@ -159,7 +159,7 @@ func (p *BinaryOperation) End() Pos {
 func (p *BinaryOperation) String() string {
 	var builder strings.Builder
 	builder.WriteString(p.LeftExpr.String())
-	if p.Operation != opTypeCast {
+	if p.Operation != TokenKindDash {
 		builder.WriteByte(' ')
 	}
 	if p.HasNot {
@@ -168,7 +168,7 @@ func (p *BinaryOperation) String() string {
 		builder.WriteString("GLOBAL ")
 	}
 	builder.WriteString(string(p.Operation))
-	if p.Operation != opTypeCast {
+	if p.Operation != TokenKindDash {
 		builder.WriteByte(' ')
 	}
 	builder.WriteString(p.RightExpr.String())
@@ -1914,7 +1914,7 @@ func (s *SettingPair) String() string {
 	var builder strings.Builder
 	builder.WriteString(s.Name.String())
 	if s.Value != nil {
-		if s.Operation == opTypeEQ {
+		if s.Operation == TokenKindSingleEQ {
 			builder.WriteString(string(s.Operation))
 		} else {
 			builder.WriteByte(' ')

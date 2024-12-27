@@ -343,7 +343,7 @@ func (p *Parser) parseCheckStmt(pos Pos) (*CheckStmt, error) {
 
 func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 	switch {
-	case p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenKindIdent):
 		name, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -364,7 +364,7 @@ func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 			Scope:     scope,
 			OnCluster: onCluster,
 		}, nil
-	case p.matchTokenKind(TokenString):
+	case p.matchTokenKind(TokenKindString):
 		name, err := p.parseString(p.Pos())
 		if err != nil {
 			return nil, err
@@ -391,7 +391,7 @@ func (p *Parser) tryParseRoleSettings(pos Pos) ([]*RoleSetting, error) {
 
 func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 	pairs := make([]*SettingPair, 0)
-	for p.matchTokenKind(TokenIdent) {
+	for p.matchTokenKind(TokenKindIdent) {
 		name, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -404,12 +404,12 @@ func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 			}, nil
 		}
 		switch {
-		case p.matchTokenKind(opTypeEQ),
-			p.matchTokenKind(TokenInt),
-			p.matchTokenKind(TokenFloat),
-			p.matchTokenKind(TokenString):
+		case p.matchTokenKind(TokenKindSingleEQ),
+			p.matchTokenKind(TokenKindInt),
+			p.matchTokenKind(TokenKindFloat),
+			p.matchTokenKind(TokenKindString):
 			var op TokenKind
-			if token := p.tryConsumeTokenKind(opTypeEQ); token != nil {
+			if token := p.tryConsumeTokenKind(TokenKindSingleEQ); token != nil {
 				op = token.Kind
 			}
 			value, err := p.parseLiteral(p.Pos())
@@ -419,7 +419,7 @@ func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 			// docs: https://clickhouse.com/docs/en/sql-reference/statements/alter/role
 			// the operator "=" was required if the variable name is NOT in
 			// ["MIN", "MAX", "PROFILE"] and value is existed.
-			if value != nil && name.Name != "MIN" && name.Name != "MAX" && name.Name != "PROFILE" && op != opTypeEQ {
+			if value != nil && name.Name != "MIN" && name.Name != "MAX" && name.Name != "PROFILE" && op != TokenKindSingleEQ {
 				return nil, fmt.Errorf("expected operator = or no value, but got %s", op)
 			}
 			pairs = append(pairs, &SettingPair{
@@ -809,7 +809,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 }
 
 func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
-	if p.matchTokenKind(TokenIdent) {
+	if p.matchTokenKind(TokenKindIdent) {
 		if p.last().String == "dictGet" {
 			_ = p.lexer.consumeToken()
 			return &PrivilegeClause{
@@ -921,7 +921,7 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 		return nil, err
 	}
 
-	if p.tryConsumeTokenKind(TokenDot) == nil {
+	if p.tryConsumeTokenKind(TokenKindDot) == nil {
 		return &TableIdentifier{
 			Table: ident,
 		}, nil

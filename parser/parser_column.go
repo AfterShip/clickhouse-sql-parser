@@ -41,23 +41,23 @@ func (p *Parser) getNextPrecedence() int {
 		return PrecedenceIs
 	case p.matchKeyword(KeywordNot):
 		return PrecedenceNot
-	case p.matchTokenKind(opTypeCast):
+	case p.matchTokenKind(TokenKindDash):
 		return PrecedenceDoubleColon
-	case p.matchTokenKind(opTypeEQ), p.matchTokenKind(opTypeLT), p.matchTokenKind(opTypeLE),
-		p.matchTokenKind(opTypeGE), p.matchTokenKind(opTypeGT), p.matchTokenKind(opTypeDoubleEQ),
-		p.matchTokenKind(opTypeNE), p.matchTokenKind("<>"):
+	case p.matchTokenKind(TokenKindSingleEQ), p.matchTokenKind(TokenKindLT), p.matchTokenKind(TokenKindLE),
+		p.matchTokenKind(TokenKindGE), p.matchTokenKind(TokenKindGT), p.matchTokenKind(TokenKindDoubleEQ),
+		p.matchTokenKind(TokenKindNE), p.matchTokenKind("<>"):
 		return PrecedenceCompare
-	case p.matchTokenKind(opTypePlus), p.matchTokenKind(opTypeMinus):
+	case p.matchTokenKind(TokenKindPlus), p.matchTokenKind(TokenKindMinus):
 		return PrecedenceAddSub
-	case p.matchTokenKind(opTypeMul), p.matchTokenKind(opTypeDiv), p.matchTokenKind(opTypeMod):
+	case p.matchTokenKind(TokenKindMul), p.matchTokenKind(TokenKindDiv), p.matchTokenKind(TokenKindMod):
 		return PrecedenceMulDivMod
-	case p.matchTokenKind(opTypeArrow):
+	case p.matchTokenKind(TokenKindArrow):
 		return PrecedenceArrow
 	case p.matchTokenKind("("), p.matchTokenKind("["):
 		return PrecedenceBracket
-	case p.matchTokenKind(opTypeCast):
+	case p.matchTokenKind(TokenKindDash):
 		return PrecedenceDoubleColon
-	case p.matchTokenKind(TokenDot):
+	case p.matchTokenKind(TokenKindDot):
 		return PrecedenceDot
 	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike):
 		return PrecedenceBetweenLike
@@ -65,7 +65,7 @@ func (p *Parser) getNextPrecedence() int {
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
 		return PrecedenceGlobal
-	case p.matchTokenKind(opTypeQuery):
+	case p.matchTokenKind(TokenKindQuery):
 		return PrecedenceQuery
 	default:
 		return PrecedenceUnknown
@@ -74,14 +74,14 @@ func (p *Parser) getNextPrecedence() int {
 
 func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 	switch {
-	case p.matchTokenKind(opTypeEQ), p.matchTokenKind(opTypeLT), p.matchTokenKind(opTypeLE),
-		p.matchTokenKind(opTypeGE), p.matchTokenKind(opTypeGT),
-		p.matchTokenKind(opTypeNE), p.matchTokenKind("<>"),
-		p.matchTokenKind(opTypeMinus), p.matchTokenKind(opTypePlus), p.matchTokenKind(opTypeMul),
-		p.matchTokenKind(opTypeDiv), p.matchTokenKind(opTypeMod),
+	case p.matchTokenKind(TokenKindSingleEQ), p.matchTokenKind(TokenKindLT), p.matchTokenKind(TokenKindLE),
+		p.matchTokenKind(TokenKindGE), p.matchTokenKind(TokenKindGT),
+		p.matchTokenKind(TokenKindNE), p.matchTokenKind("<>"),
+		p.matchTokenKind(TokenKindMinus), p.matchTokenKind(TokenKindPlus), p.matchTokenKind(TokenKindMul),
+		p.matchTokenKind(TokenKindDiv), p.matchTokenKind(TokenKindMod),
 		p.matchKeyword(KeywordIn), p.matchKeyword(KeywordLike),
 		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
-		p.matchTokenKind(opTypeArrow), p.matchTokenKind(opTypeDoubleEQ):
+		p.matchTokenKind(TokenKindArrow), p.matchTokenKind(TokenKindDoubleEQ):
 		op := p.last().ToString()
 		_ = p.lexer.consumeToken()
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
@@ -93,10 +93,10 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Operation: TokenKind(op),
 			RightExpr: rightExpr,
 		}, nil
-	case p.matchTokenKind(opTypeCast):
+	case p.matchTokenKind(TokenKindDash):
 		_ = p.lexer.consumeToken()
 
-		if p.matchTokenKind(TokenIdent) && p.last().String == "Tuple" {
+		if p.matchTokenKind(TokenKindIdent) && p.last().String == "Tuple" {
 			name, err := p.parseIdent()
 			if err != nil {
 				return nil, err
@@ -111,7 +111,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			}
 			return &BinaryOperation{
 				LeftExpr:  expr,
-				Operation: opTypeCast,
+				Operation: TokenKindDash,
 				RightExpr: rightExpr,
 			}, nil
 		}
@@ -122,7 +122,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		}
 		return &BinaryOperation{
 			LeftExpr:  expr,
-			Operation: opTypeCast,
+			Operation: TokenKindDash,
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchKeyword(KeywordBetween):
@@ -141,12 +141,12 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Operation: "GLOBAL IN",
 			RightExpr: rightExpr,
 		}, nil
-	case p.matchTokenKind(TokenDot):
+	case p.matchTokenKind(TokenKindDot):
 		_ = p.lexer.consumeToken()
 		// access column with dot notation
 		var rightExpr Expr
 		var err error
-		if p.matchTokenKind(TokenIdent) {
+		if p.matchTokenKind(TokenKindIdent) {
 			rightExpr, err = p.parseIdent()
 		} else {
 			rightExpr, err = p.parseDecimal(p.Pos())
@@ -156,7 +156,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		}
 		return &IndexOperation{
 			LeftExpr:  expr,
-			Operation: TokenDot,
+			Operation: TokenKindDot,
 			Index:     rightExpr,
 		}, nil
 	case p.matchKeyword(KeywordNot):
@@ -191,7 +191,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Object: expr,
 			Params: params,
 		}, nil
-	case p.matchTokenKind(opTypeQuery):
+	case p.matchTokenKind(TokenKindQuery):
 		return p.parseTernaryExpr(expr)
 	case p.matchKeyword(KeywordIs):
 		_ = p.lexer.consumeToken()
@@ -299,8 +299,8 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 	kind := p.last()
 	switch {
-	case p.matchTokenKind(opTypePlus),
-		p.matchTokenKind(opTypeMinus),
+	case p.matchTokenKind(TokenKindPlus),
+		p.matchTokenKind(TokenKindMinus),
 		p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
 	default:
@@ -310,7 +310,7 @@ func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 	var expr Expr
 	var err error
 	switch {
-	case p.matchTokenKind(TokenIdent),
+	case p.matchTokenKind(TokenKindIdent),
 		p.matchTokenKind("("):
 		expr, err = p.parseExpr(p.Pos())
 	default:
@@ -348,7 +348,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		if err != nil {
 			return nil, err
 		}
-		if nextToken != nil && nextToken.Kind == TokenString {
+		if nextToken != nil && nextToken.Kind == TokenKindString {
 			return p.parseString(p.Pos())
 		}
 		return p.parseIdentOrFunction(pos)
@@ -358,16 +358,16 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseColumnCaseExpr(pos)
 	case p.matchKeyword(KeywordExtract):
 		return p.parseColumnExtractExpr(pos)
-	case p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenKindIdent):
 		return p.parseIdentOrFunction(pos)
-	case p.matchTokenKind(TokenString): // string literal
+	case p.matchTokenKind(TokenKindString): // string literal
 		return p.parseString(pos)
-	case p.matchTokenKind(TokenInt),
-		p.matchTokenKind(TokenFloat): // number literal
+	case p.matchTokenKind(TokenKindInt),
+		p.matchTokenKind(TokenKindFloat): // number literal
 		return p.parseNumber(pos)
 	case p.matchTokenKind("("):
 		if peek, _ := p.lexer.peekToken(); peek != nil {
-			if peek.Kind == TokenKeyword && strings.EqualFold(peek.String, KeywordSelect) {
+			if peek.Kind == TokenKindKeyword && strings.EqualFold(peek.String, KeywordSelect) {
 				return p.parseSubQuery(pos)
 			}
 		}
@@ -379,19 +379,19 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	case p.matchTokenKind("{"):
 		// The map literal string also starts with '{', so we need to check the next token
 		// to determine if it is a map literal or a query param.
-		if p.peekTokenKind(TokenIdent) {
+		if p.peekTokenKind(TokenKindIdent) {
 			return p.parseQueryParam(p.Pos())
 		}
 		return p.parseMapLiteral(p.Pos())
-	case p.matchTokenKind(TokenDot):
+	case p.matchTokenKind(TokenKindDot):
 		return p.parseNumber(p.Pos())
-	case p.matchTokenKind(opTypeQuery):
+	case p.matchTokenKind(TokenKindQuery):
 		// Placeholder `?`
 		_ = p.lexer.consumeToken()
 		return &PlaceHolder{
 			PlaceholderPos: pos,
 			PlaceHolderEnd: pos,
-			Type:           opTypeQuery,
+			Type:           TokenKindQuery,
 		}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
@@ -425,7 +425,7 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 
 	var asColumnType Expr
 	// CAST(1 AS 'Float') or CAST(1 AS Float) are equivalent
-	if p.matchTokenKind(TokenString) {
+	if p.matchTokenKind(TokenKindString) {
 		asColumnType, err = p.parseString(p.Pos())
 	} else {
 		asColumnType, err = p.parseColumnType(p.Pos())
@@ -817,19 +817,19 @@ func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 	}
 	if p.tryConsumeTokenKind("(") != nil {
 		switch {
-		case p.matchTokenKind(TokenIdent):
+		case p.matchTokenKind(TokenKindIdent):
 			if ident.Name == "Nested" {
 				return p.parseNestedType(ident, p.Pos())
 			}
 			return p.parseComplexType(ident, p.Pos())
-		case p.matchTokenKind(TokenString):
-			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == opTypeEQ {
+		case p.matchTokenKind(TokenKindString):
+			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == TokenKindSingleEQ {
 				// enum values
 				return p.parseEnumType(ident, p.Pos())
 			}
 			// like Datetime('Asia/Dubai')
 			return p.parseColumnTypeWithParams(ident, p.Pos())
-		case p.matchTokenKind(TokenInt), p.matchTokenKind(TokenFloat):
+		case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat):
 			// fixed size
 			return p.parseColumnTypeWithParams(ident, p.Pos())
 		default:
@@ -1012,7 +1012,7 @@ func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(opTypeEQ); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindSingleEQ); err != nil {
 		return nil, err
 	}
 
