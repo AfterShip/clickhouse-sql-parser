@@ -9,13 +9,30 @@ import (
 )
 
 const (
-	TokenEOF     TokenKind = "<eof>"
-	TokenIdent   TokenKind = "<ident>"
-	TokenKeyword TokenKind = "<keyword>"
-	TokenInt     TokenKind = "<int>"
-	TokenFloat   TokenKind = "<float>"
-	TokenString  TokenKind = "<string>"
-	TokenDot               = "."
+	TokenKindEOF      TokenKind = "<eof>"
+	TokenKindIdent    TokenKind = "<ident>"
+	TokenKindKeyword  TokenKind = "<keyword>"
+	TokenKindInt      TokenKind = "<int>"
+	TokenKindFloat    TokenKind = "<float>"
+	TokenKindString   TokenKind = "<string>"
+	TokenKindDot                = "."
+	TokenKindSingleEQ TokenKind = "="
+	TokenKindDoubleEQ TokenKind = "=="
+	TokenKindNE       TokenKind = "!="
+	TokenKindLT       TokenKind = "<"
+	TokenKindLE       TokenKind = "<="
+	TokenKindGT       TokenKind = ">"
+	TokenKindGE       TokenKind = ">="
+	TokenKindQuery              = "?"
+
+	TokenKindPlus  TokenKind = "+"
+	TokenKindMinus TokenKind = "-"
+	TokenKindMul   TokenKind = "*"
+	TokenKindDiv   TokenKind = "/"
+	TokenKindMod   TokenKind = "%"
+
+	TokenKindArrow TokenKind = "->"
+	TokenKindDash  TokenKind = "::"
 )
 
 const (
@@ -33,12 +50,12 @@ type Token struct {
 
 	Kind      TokenKind
 	String    string
-	Base      int // 10 or 16 on TokenInt
+	Base      int // 10 or 16 on TokenKindInt
 	QuoteType int
 }
 
 func (t *Token) ToString() string {
-	if t.Kind == TokenKeyword {
+	if t.Kind == TokenKindKeyword {
 		return strings.ToUpper(t.String)
 	}
 	return t.String
@@ -87,7 +104,7 @@ func (l *Lexer) consumeNumber() error {
 	}
 
 	hasExp := false
-	tokenKind := TokenInt
+	tokenKind := TokenKindInt
 	hasNumberPart := false
 	for l.peekOk(i) {
 		hasNumberPart = true
@@ -100,7 +117,7 @@ func (l *Lexer) consumeNumber() error {
 			i++
 			continue
 		case c == '.': // float
-			tokenKind = TokenFloat
+			tokenKind = TokenKindFloat
 			i++
 			continue
 		case base != 16 && (c == 'e' || c == 'E' || c == 'p' || c == 'P'):
@@ -165,9 +182,9 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 	}
 	slice := l.slice(0, i)
 	if quoteType == Unquoted && l.isKeyword(strings.ToUpper(slice)) {
-		token.Kind = TokenKeyword
+		token.Kind = TokenKindKeyword
 	} else {
-		token.Kind = TokenIdent
+		token.Kind = TokenKindIdent
 	}
 	token.Pos = Pos(l.current)
 	token.End = Pos(l.current + i)
@@ -214,7 +231,7 @@ func (l *Lexer) consumeString() error {
 		return errors.New("invalid string")
 	}
 	l.lastToken = &Token{
-		Kind:   TokenString,
+		Kind:   TokenKindString,
 		String: l.slice(1, i),
 		Pos:    Pos(l.current + 1),
 		End:    Pos(l.current + i),
@@ -265,11 +282,11 @@ func (l *Lexer) peekToken() (*Token, error) {
 }
 
 func (l *Lexer) hasPrecedenceToken(last *Token) bool {
-	return last != nil && (last.Kind == TokenIdent ||
-		last.Kind == TokenKeyword ||
-		last.Kind == TokenInt ||
-		last.Kind == TokenFloat ||
-		last.Kind == TokenString)
+	return last != nil && (last.Kind == TokenKindIdent ||
+		last.Kind == TokenKindKeyword ||
+		last.Kind == TokenKindInt ||
+		last.Kind == TokenKindFloat ||
+		last.Kind == TokenKindString)
 }
 
 func (l *Lexer) consumeToken() error {
@@ -304,7 +321,7 @@ func (l *Lexer) consumeToken() error {
 		} else if l.peekOk(1) && l.peekN(1) == '>' {
 			l.lastToken = &Token{
 				String: l.slice(0, 2),
-				Kind:   opTypeArrow,
+				Kind:   TokenKindArrow,
 				Pos:    Pos(l.current),
 				End:    Pos(l.current + 2),
 			}
@@ -321,7 +338,7 @@ func (l *Lexer) consumeToken() error {
 		if l.peekOk(1) && l.peekN(1) == ':' {
 			l.lastToken = &Token{
 				String: l.slice(0, 2),
-				Kind:   opTypeCast,
+				Kind:   TokenKindDash,
 				Pos:    Pos(l.current),
 				End:    Pos(l.current + 2),
 			}
@@ -331,7 +348,7 @@ func (l *Lexer) consumeToken() error {
 	case '.':
 		l.lastToken = &Token{
 			String: l.slice(0, 1),
-			Kind:   TokenDot,
+			Kind:   TokenKindDot,
 			Pos:    Pos(l.current),
 			End:    Pos(l.current + 1),
 		}

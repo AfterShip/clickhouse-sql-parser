@@ -202,7 +202,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		if overToken := p.tryConsumeKeyword(KeywordOver); overToken != nil {
 			var overExpr Expr
 			switch {
-			case p.matchTokenKind(TokenIdent):
+			case p.matchTokenKind(TokenKindIdent):
 				overExpr, err = p.parseIdent()
 			case p.matchTokenKind("("):
 				overExpr, err = p.parseWindowCondition(p.Pos())
@@ -223,14 +223,14 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			}, nil
 		}
 		return funcExpr, nil
-	case p.tryConsumeTokenKind(TokenDot) != nil:
+	case p.tryConsumeTokenKind(TokenKindDot) != nil:
 		switch {
-		case p.matchTokenKind(TokenIdent):
+		case p.matchTokenKind(TokenKindIdent):
 			nextIdent, err := p.parseIdent()
 			if err != nil {
 				return nil, err
 			}
-			if p.tryConsumeTokenKind(TokenDot) != nil {
+			if p.tryConsumeTokenKind(TokenKindDot) != nil {
 				thirdIdent, err := p.parseIdent()
 				if err != nil {
 					return nil, err
@@ -304,13 +304,13 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 		}, nil
 	case p.tryConsumeKeyword(KeywordAs) != nil:
 		switch {
-		case p.matchTokenKind(TokenIdent):
+		case p.matchTokenKind(TokenKindIdent):
 			ident, err := p.parseIdent()
 			if err != nil {
 				return nil, err
 			}
 			switch {
-			case p.matchTokenKind(TokenDot):
+			case p.matchTokenKind(TokenKindDot):
 				// it's a database.table
 				dotIdent, err := p.tryParseDotIdent(p.Pos())
 				if err != nil {
@@ -403,7 +403,7 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 }
 
 func (p *Parser) tryParseTableColumnExpr(pos Pos) (*ColumnDef, error) {
-	if !p.matchTokenKind(TokenIdent) {
+	if !p.matchTokenKind(TokenKindIdent) {
 		return nil, nil // nolint
 	}
 	return p.parseTableColumnExpr(pos)
@@ -420,7 +420,7 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	column.Name = name
 	columnEnd := name.End()
 
-	if p.matchTokenKind(TokenIdent) && !p.matchKeyword(KeywordRemove) {
+	if p.matchTokenKind(TokenKindIdent) && !p.matchKeyword(KeywordRemove) {
 		columnType, err := p.parseColumnType(p.Pos())
 		if err != nil {
 			return nil, err
@@ -482,14 +482,14 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 
 func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 	switch {
-	case p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenKindIdent):
 		ident, err := p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
 		switch {
 		// nest identifier
-		case p.matchTokenKind(TokenDot):
+		case p.matchTokenKind(TokenKindDot):
 			dotIdent, err := p.tryParseDotIdent(p.Pos())
 			if err != nil {
 				return nil, err
@@ -510,7 +510,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 		default:
 			return ident, nil
 		}
-	case p.matchTokenKind(TokenInt), p.matchTokenKind(TokenString), p.matchKeyword("NULL"):
+	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindString), p.matchKeyword("NULL"):
 		return p.parseLiteral(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <Ident>, <literal>", p.last().String)
@@ -557,9 +557,9 @@ func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
 	var expr Expr
 	var err error
 	switch {
-	case p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenKindIdent):
 		expr, err = p.parseIdent()
-	case p.matchTokenKind(TokenString):
+	case p.matchTokenKind(TokenKindString):
 		expr, err = p.parseString(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <IDENT> or <STRING>", p.last().String)
@@ -794,19 +794,19 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(opTypeEQ); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindSingleEQ); err != nil {
 		return nil, err
 	}
 
 	var expr Expr
 	switch {
-	case p.matchTokenKind(TokenInt):
+	case p.matchTokenKind(TokenKindInt):
 		number, err := p.parseNumber(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		expr = number
-	case p.matchTokenKind(TokenString):
+	case p.matchTokenKind(TokenKindString):
 		str, err := p.parseString(p.Pos())
 		expr = str
 		if err != nil {
@@ -855,12 +855,12 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	if err := p.consumeKeyword(KeywordEngine); err != nil {
 		return nil, err
 	}
-	_ = p.tryConsumeTokenKind(opTypeEQ)
+	_ = p.tryConsumeTokenKind(TokenKindSingleEQ)
 
 	engineExpr := &EngineExpr{EnginePos: pos}
 	var engineEnd Pos
 	switch {
-	case p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenKindIdent):
 		ident, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -1316,7 +1316,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(opTypeArrow); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindArrow); err != nil {
 		return nil, err
 	}
 	expr, err := p.parseExpr(p.Pos())

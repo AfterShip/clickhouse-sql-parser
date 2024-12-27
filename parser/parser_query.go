@@ -187,7 +187,7 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 
 func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	switch {
-	case p.matchTokenKind(TokenIdent), p.matchTokenKind("("):
+	case p.matchTokenKind(TokenKindIdent), p.matchTokenKind("("):
 		tableExpr, err := p.parseTableExpr(p.Pos())
 		if err != nil {
 			return nil, err
@@ -283,7 +283,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	var expr Expr
 	var err error
 	switch {
-	case p.matchTokenKind(TokenString), p.matchTokenKind(TokenIdent):
+	case p.matchTokenKind(TokenKindString), p.matchTokenKind(TokenKindIdent):
 		// table name
 		tableIdentifier, err := p.parseTableIdentifier(p.Pos())
 		if err != nil {
@@ -324,7 +324,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			Alias:    alias,
 		}
 		tableEnd = expr.End()
-	} else if p.matchTokenKind(TokenIdent) && p.lastTokenKind() != TokenKeyword {
+	} else if p.matchTokenKind(TokenKindIdent) && p.lastTokenKind() != TokenKindKeyword {
 		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -606,7 +606,7 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 			UnboundedPos: unboundedPos,
 			Direction:    direction,
 		}
-	case p.matchTokenKind(TokenInt):
+	case p.matchTokenKind(TokenKindInt):
 		number, err := p.parseNumber(p.Pos())
 		if err != nil {
 			return nil, err
