@@ -65,7 +65,7 @@ func (p *Parser) getNextPrecedence() int {
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
 		return PrecedenceGlobal
-	case p.matchTokenKind(TokenKindQuery):
+	case p.matchTokenKind(TokenKindQuestionMark):
 		return PrecedenceQuery
 	default:
 		return PrecedenceUnknown
@@ -191,7 +191,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Object: expr,
 			Params: params,
 		}, nil
-	case p.matchTokenKind(TokenKindQuery):
+	case p.matchTokenKind(TokenKindQuestionMark):
 		return p.parseTernaryExpr(expr)
 	case p.matchKeyword(KeywordIs):
 		_ = p.lexer.consumeToken()
@@ -238,14 +238,14 @@ func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
 }
 
 func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
-	if _, err := p.consumeTokenKind(TokenKindQuery); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindQuestionMark); err != nil {
 		return nil, err
 	}
 	trueExpr, err := p.parseExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(":"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindColon); err != nil {
 		return nil, err
 	}
 	falseExpr, err := p.parseExpr(p.Pos())
@@ -377,13 +377,13 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseMapLiteral(p.Pos())
 	case p.matchTokenKind(TokenKindDot):
 		return p.parseNumber(p.Pos())
-	case p.matchTokenKind(TokenKindQuery):
+	case p.matchTokenKind(TokenKindQuestionMark):
 		// Placeholder `?`
 		_ = p.lexer.consumeToken()
 		return &PlaceHolder{
 			PlaceholderPos: pos,
 			PlaceHolderEnd: pos,
-			Type:           TokenKindQuery,
+			Type:           string(TokenKindQuestionMark),
 		}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
@@ -470,7 +470,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 			break
 		}
 		columnList = append(columnList, columnExpr)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -492,7 +492,7 @@ func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
 			break
 		}
 		selectItems = append(selectItems, selectItem)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -558,7 +558,7 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 			return nil, err
 		}
 		items = append(items, item)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -616,7 +616,7 @@ func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
 		if err != nil {
 			return nil, err
 		}
-		if _, err := p.consumeTokenKind(":"); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindColon); err != nil {
 			return nil, err
 		}
 		value, err := p.parseExpr(p.Pos())
@@ -627,7 +627,7 @@ func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
 			Key:   *key,
 			Value: value,
 		})
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -651,7 +651,7 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(":"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindColon); err != nil {
 		return nil, err
 	}
 	columnType, err := p.parseColumnType(p.Pos())
@@ -849,7 +849,7 @@ func (p *Parser) parseComplexType(name *Ident, pos Pos) (*ComplexType, error) {
 			return nil, err
 		}
 		subTypes = append(subTypes, subExpr)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -880,7 +880,7 @@ func (p *Parser) parseEnumType(name *Ident, pos Pos) (*EnumType, error) {
 			break
 		}
 		enumType.Values = append(enumType.Values, *enumValue)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -900,7 +900,7 @@ func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParam
 		return nil, err
 	}
 	params = append(params, param)
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(",") != nil {
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindComma) != nil {
 		size, err := p.parseLiteral(p.Pos())
 		if err != nil {
 			return nil, err
@@ -964,7 +964,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 			return nil, err
 		}
 		// consume comma
-		if _, err := p.consumeTokenKind(","); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindComma); err != nil {
 			return nil, err
 		}
 		name, err = p.parseIdent()

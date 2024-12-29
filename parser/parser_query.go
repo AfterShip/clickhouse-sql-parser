@@ -22,7 +22,7 @@ func (p *Parser) parseWithClause(pos Pos) (*WithClause, error) {
 		return nil, err
 	}
 	ctes := []*CTEStmt{cteExpr}
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		cteExpr, err := p.parseCTEStmt(p.Pos())
 		if err != nil {
 			return nil, err
@@ -224,7 +224,7 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	switch {
 	case p.tryConsumeKeyword(KeywordGlobal) != nil:
 	case p.tryConsumeKeyword(KeywordLocal) != nil:
-	case p.tryConsumeTokenKind(",") != nil:
+	case p.tryConsumeTokenKind(TokenKindComma) != nil:
 		return p.parseJoinExpr(p.Pos())
 	default:
 		modifiers = p.parseJoinOp(p.Pos())
@@ -473,7 +473,7 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 	var offset Expr
 	if p.tryConsumeKeyword(KeywordOffset) != nil {
 		offset, err = p.parseExpr(p.Pos())
-	} else if p.tryConsumeTokenKind(",") != nil {
+	} else if p.tryConsumeTokenKind(TokenKindComma) != nil {
 		offset = limit
 		limit, err = p.parseExpr(p.Pos())
 	}
@@ -1022,7 +1022,7 @@ func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
 		if p.matchTokenKind(TokenKindRParen) {
 			break
 		}
-		if _, err := p.consumeTokenKind(","); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindComma); err != nil {
 			return nil, err
 		}
 	}

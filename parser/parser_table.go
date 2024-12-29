@@ -394,7 +394,7 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 			}
 			columns = append(columns, column)
 		}
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -529,7 +529,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 			return nil, err
 		}
 		args = append(args, arg)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -637,7 +637,7 @@ func (p *Parser) parseOrderByClause(pos Pos) (*OrderByClause, error) {
 		}
 		items = append(items, expr)
 
-		if p.lexer.isEOF() || p.tryConsumeTokenKind(",") == nil {
+		if p.lexer.isEOF() || p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -704,7 +704,7 @@ func (p *Parser) parseTTLClause(pos Pos) ([]*TTLExpr, error) {
 		return nil, err
 	}
 	items = append(items, expr)
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(",") != nil {
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindComma) != nil {
 		expr, err = p.parseTTLExpr(pos)
 		if err != nil {
 			return nil, err
@@ -774,7 +774,7 @@ func (p *Parser) parseSettingsClause(pos Pos) (*SettingsClause, error) {
 		return nil, err
 	}
 	items = append(items, expr)
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		expr, err = p.parseSettingsExprList(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1106,7 +1106,7 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 		}
 
 		columnNames = append(columnNames, *name)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -1140,7 +1140,7 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 			return nil, err
 		}
 		values = append(values, value)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -1215,7 +1215,7 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 			return nil, err
 		}
 		values = append(values, value)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -1246,7 +1246,7 @@ func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
 		return nil, err
 	}
 	tablePairList := []*TargetPair{targetPair}
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		tablePair, err := p.parseTargetPair(p.Pos())
 		if err != nil {
 			return nil, err

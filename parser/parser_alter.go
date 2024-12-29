@@ -58,7 +58,7 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			return nil, err
 		}
 		alterTable.AlterExprs = append(alterTable.AlterExprs, alter)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}

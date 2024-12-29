@@ -9,21 +9,21 @@ import (
 )
 
 const (
-	TokenKindEOF      TokenKind = "<eof>"
-	TokenKindIdent    TokenKind = "<ident>"
-	TokenKindKeyword  TokenKind = "<keyword>"
-	TokenKindInt      TokenKind = "<int>"
-	TokenKindFloat    TokenKind = "<float>"
-	TokenKindString   TokenKind = "<string>"
-	TokenKindDot                = "."
-	TokenKindSingleEQ TokenKind = "="
-	TokenKindDoubleEQ TokenKind = "=="
-	TokenKindNE       TokenKind = "!="
-	TokenKindLT       TokenKind = "<"
-	TokenKindLE       TokenKind = "<="
-	TokenKindGT       TokenKind = ">"
-	TokenKindGE       TokenKind = ">="
-	TokenKindQuery              = "?"
+	TokenKindEOF          TokenKind = "<eof>"
+	TokenKindIdent        TokenKind = "<ident>"
+	TokenKindKeyword      TokenKind = "<keyword>"
+	TokenKindInt          TokenKind = "<int>"
+	TokenKindFloat        TokenKind = "<float>"
+	TokenKindString       TokenKind = "<string>"
+	TokenKindDot                    = "."
+	TokenKindSingleEQ     TokenKind = "="
+	TokenKindDoubleEQ     TokenKind = "=="
+	TokenKindNE           TokenKind = "!="
+	TokenKindLT           TokenKind = "<"
+	TokenKindLE           TokenKind = "<="
+	TokenKindGT           TokenKind = ">"
+	TokenKindGE           TokenKind = ">="
+	TokenKindQuestionMark TokenKind = "?"
 
 	TokenKindPlus  TokenKind = "+"
 	TokenKindMinus TokenKind = "-"
@@ -40,6 +40,10 @@ const (
 	TokenKindRBrace   TokenKind = "}"
 	TokenKindLBracket TokenKind = "["
 	TokenKindRBracket TokenKind = "]"
+
+	TokenKindComma  TokenKind = ","
+	TokenKindColon  TokenKind = ":"
+	TokenKindAtSign TokenKind = "@"
 )
 
 const (

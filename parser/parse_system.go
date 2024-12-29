@@ -349,7 +349,7 @@ func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 			return nil, err
 		}
 		var scope *StringLiteral
-		if p.tryConsumeTokenKind("@") != nil {
+		if p.tryConsumeTokenKind(TokenKindAtSign) != nil {
 			scope, err = p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
@@ -447,7 +447,7 @@ func (p *Parser) parseRoleSettings(_ Pos) ([]*RoleSetting, error) {
 			return nil, err
 		}
 		settings = append(settings, setting)
-		if p.tryConsumeTokenKind(",") == nil {
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
@@ -485,7 +485,7 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 		return nil, err
 	}
 	roleNames = append(roleNames, roleName)
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		roleName, err := p.parseRoleName(p.Pos())
 		if err != nil {
 			return nil, err
@@ -543,7 +543,7 @@ func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 		return nil, err
 	}
 	names = append(names, name)
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		name, err := p.parseRoleName(p.Pos())
 		if err != nil {
 			return nil, err
@@ -879,7 +879,7 @@ func (p *Parser) parsePrivilegeRoles(_ Pos) ([]*Ident, error) {
 		return nil, err
 	}
 	roles = append(roles, role)
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		role, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -950,7 +950,7 @@ func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 		return nil, err
 	}
 	privileges = append(privileges, privilege)
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		privilege, err := p.parsePrivilegeClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1012,7 +1012,7 @@ func (p *Parser) parseAlterRole(pos Pos) (*AlterRole, error) {
 		return nil, err
 	}
 	roleRenamePairs = append(roleRenamePairs, roleRenamePair)
-	for p.tryConsumeTokenKind(",") != nil {
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
 		roleRenamePair, err := p.parseRoleRenamePair(p.Pos())
 		if err != nil {
 			return nil, err
