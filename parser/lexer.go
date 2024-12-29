@@ -33,6 +33,13 @@ const (
 
 	TokenKindArrow TokenKind = "->"
 	TokenKindDash  TokenKind = "::"
+
+	TokenKindLParen   TokenKind = "("
+	TokenKindRParen   TokenKind = ")"
+	TokenKindLBrace   TokenKind = "{"
+	TokenKindRBrace   TokenKind = "}"
+	TokenKindLBracket TokenKind = "["
+	TokenKindRBracket TokenKind = "]"
 )
 
 const (

@@ -181,7 +181,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		return nil, err
 	}
 	switch {
-	case p.matchTokenKind("["):
+	case p.matchTokenKind(TokenKindLBracket):
 		params, err := p.parseArrayParams(p.Pos())
 		if err != nil {
 			return nil, err
@@ -190,7 +190,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			Object: ident,
 			Params: params,
 		}, nil
-	case p.matchTokenKind("("):
+	case p.matchTokenKind(TokenKindLParen):
 		params, err := p.parseFunctionParams(p.Pos())
 		if err != nil {
 			return nil, err
@@ -204,7 +204,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			switch {
 			case p.matchTokenKind(TokenKindIdent):
 				overExpr, err = p.parseIdent()
-			case p.matchTokenKind("("):
+			case p.matchTokenKind(TokenKindLParen):
 				overExpr, err = p.parseWindowCondition(p.Pos())
 				if err != nil {
 					return nil, err
@@ -282,9 +282,9 @@ func (p *Parser) parseTableIdentifier(_ Pos) (*TableIdentifier, error) {
 
 func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 	switch {
-	case p.matchTokenKind("("):
+	case p.matchTokenKind(TokenKindLParen):
 		// parse column definitions
-		if _, err := p.consumeTokenKind("("); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
 			return nil, err
 		}
 
@@ -294,7 +294,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 		}
 
 		rightParenPos := p.Pos()
-		if _, err := p.consumeTokenKind(")"); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 		return &TableSchemaClause{
@@ -324,7 +324,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 						Table:    dotIdent,
 					},
 				}, nil
-			case p.matchTokenKind("("):
+			case p.matchTokenKind(TokenKindLParen):
 				// it's a table function
 				argsExpr, err := p.parseTableArgList(pos)
 				if err != nil {
@@ -498,7 +498,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 				Ident:    ident,
 				DotIdent: dotIdent,
 			}, nil
-		case p.matchTokenKind("("):
+		case p.matchTokenKind(TokenKindLParen):
 			argsExpr, err := p.parseTableArgList(pos)
 			if err != nil {
 				return nil, err
@@ -518,7 +518,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 }
 
 func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
-	if _, err := p.consumeTokenKind("("); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -535,7 +535,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 	}
 
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(")"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -583,7 +583,7 @@ func (p *Parser) tryParsePartitionByClause(pos Pos) (*PartitionByClause, error) 
 	}
 
 	// parse partition key list
-	columnExpr, err := p.parseColumnExprListWithRoundBracket(p.Pos())
+	columnExpr, err := p.parseColumnExprListWithLParen(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -812,7 +812,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		if err != nil {
 			return nil, err
 		}
-	case p.matchTokenKind("{"):
+	case p.matchTokenKind(TokenKindLBrace):
 		m, err := p.parseMapLiteral(p.Pos())
 		if err != nil {
 			return nil, err
@@ -867,7 +867,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 		}
 		engineExpr.Name = ident.Name
 		engineEnd = ident.End()
-		if p.matchTokenKind("(") {
+		if p.matchTokenKind(TokenKindLParen) {
 			params, err := p.parseFunctionParams(p.Pos())
 			if err != nil {
 				return nil, err
@@ -1094,12 +1094,12 @@ func (p *Parser) parseDeleteClause(pos Pos) (*DeleteClause, error) {
 }
 
 func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
-	if _, err := p.consumeTokenKind("("); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
 	var columnNames []NestedIdentifier
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(")") == nil {
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindRParen) == nil {
 		name, err := p.ParseNestedIdentifier(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1111,7 +1111,7 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(")"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ColumnNamesExpr{
@@ -1122,16 +1122,16 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 }
 
 func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
-	if _, err := p.consumeTokenKind("("); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
 	var value Expr
 	var err error
 	values := make([]Expr, 0)
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(")") == nil {
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindRParen) == nil {
 		switch {
-		case p.matchTokenKind("("):
+		case p.matchTokenKind(TokenKindLParen):
 			value, err = p.parseAssignmentValues(p.Pos())
 		default:
 			value, err = p.parseExpr(p.Pos())
@@ -1145,7 +1145,7 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(")"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 

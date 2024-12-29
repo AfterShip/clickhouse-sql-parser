@@ -590,7 +590,7 @@ func (p *Parser) parsePrivilegeSelectOrInsert(pos Pos) (*PrivilegeClause, error)
 
 	var err error
 	var params *ParamExprList
-	if p.matchTokenKind("(") {
+	if p.matchTokenKind(TokenKindLParen) {
 		params, err = p.parseFunctionParams(p.Pos())
 		if err != nil {
 			return nil, err

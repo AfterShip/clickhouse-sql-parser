@@ -105,13 +105,13 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 			On:    columnExprList,
 		}, nil
 	case p.tryConsumeKeyword(KeywordUsing) != nil:
-		hasParen := p.tryConsumeTokenKind("(") != nil
-		columnExprList, err := p.parseColumnExprListWithRoundBracket(p.Pos())
+		hasParen := p.tryConsumeTokenKind(TokenKindLParen) != nil
+		columnExprList, err := p.parseColumnExprListWithLParen(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		if hasParen {
-			if _, err := p.consumeTokenKind(")"); err != nil {
+			if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 				return nil, err
 			}
 		}
@@ -187,7 +187,7 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 
 func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	switch {
-	case p.matchTokenKind(TokenKindIdent), p.matchTokenKind("("):
+	case p.matchTokenKind(TokenKindIdent), p.matchTokenKind(TokenKindLParen):
 		tableExpr, err := p.parseTableExpr(p.Pos())
 		if err != nil {
 			return nil, err
@@ -290,7 +290,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			return nil, err
 		}
 		// it's a table name
-		if tableIdentifier.Database != nil || !p.matchTokenKind("(") { // database.table
+		if tableIdentifier.Database != nil || !p.matchTokenKind(TokenKindLParen) { // database.table
 			expr = tableIdentifier
 		} else {
 			// table function expr
@@ -303,7 +303,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 				Args: tableArgs,
 			}
 		}
-	case p.matchTokenKind("("):
+	case p.matchTokenKind(TokenKindLParen):
 		expr, err = p.parseSubQuery(p.Pos())
 	default:
 		return nil, errors.New("expect table name or subquery")
@@ -424,7 +424,7 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 		_ = p.lexer.consumeToken()
 		expr, err = p.parseFunctionParams(p.Pos())
 	} else {
-		expr, err = p.parseColumnExprListWithRoundBracket(p.Pos())
+		expr, err = p.parseColumnExprListWithLParen(p.Pos())
 	}
 	if err != nil {
 		return nil, err
@@ -533,7 +533,7 @@ func (p *Parser) parseLimitByClause(pos Pos) (Expr, error) {
 	if p.tryConsumeKeyword(KeywordBy) == nil {
 		return limit, nil
 	}
-	if by, err = p.parseColumnExprListWithRoundBracket(p.Pos()); err != nil {
+	if by, err = p.parseColumnExprListWithLParen(p.Pos()); err != nil {
 		return nil, err
 	}
 	return &LimitByClause{
@@ -645,7 +645,7 @@ func (p *Parser) tryParseWindowClause(pos Pos) (*WindowClause, error) {
 }
 
 func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
-	if _, err := p.consumeTokenKind("("); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 	partitionBy, err := p.tryParsePartitionByClause(pos)
@@ -661,7 +661,7 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 		return nil, err
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(")"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &WindowExpr{
@@ -759,14 +759,14 @@ func (p *Parser) parseHavingClause(pos Pos) (*HavingClause, error) {
 
 func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 
-	hasParen := p.tryConsumeTokenKind("(") != nil
+	hasParen := p.tryConsumeTokenKind(TokenKindLParen) != nil
 
 	selectQuery, err := p.parseSelectQuery(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	if hasParen {
-		if _, err := p.consumeTokenKind(")"); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 	}
@@ -778,11 +778,11 @@ func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 }
 
 func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
-	if !p.matchKeyword(KeywordSelect) && !p.matchKeyword(KeywordWith) && !p.matchTokenKind("(") {
+	if !p.matchKeyword(KeywordSelect) && !p.matchKeyword(KeywordWith) && !p.matchTokenKind(TokenKindLParen) {
 		return nil, fmt.Errorf("expected SELECT, WITH or (, got %s", p.lastTokenKind())
 	}
 
-	hasParen := p.tryConsumeTokenKind("(") != nil
+	hasParen := p.tryConsumeTokenKind(TokenKindLParen) != nil
 	selectStmt, err := p.parseSelectStmt(p.Pos())
 	if err != nil {
 		return nil, err
@@ -813,7 +813,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		selectStmt.Except = exceptExpr
 	}
 	if hasParen {
-		if _, err := p.consumeTokenKind(")"); err != nil {
+		if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 	}
@@ -981,7 +981,7 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 	if err := p.consumeKeyword(KeywordAs); err != nil {
 		return nil, err
 	}
-	if p.matchTokenKind("(") {
+	if p.matchTokenKind(TokenKindLParen) {
 		selectQuery, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1005,10 +1005,10 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 }
 
 func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
-	if !p.matchTokenKind("(") {
+	if !p.matchTokenKind(TokenKindLParen) {
 		return nil, nil
 	}
-	if _, err := p.consumeTokenKind("("); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1019,14 +1019,14 @@ func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
 			return nil, err
 		}
 		aliasList = append(aliasList, ident)
-		if p.matchTokenKind(")") {
+		if p.matchTokenKind(TokenKindRParen) {
 			break
 		}
 		if _, err := p.consumeTokenKind(","); err != nil {
 			return nil, err
 		}
 	}
-	if _, err := p.consumeTokenKind(")"); err != nil {
+	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return aliasList, nil
