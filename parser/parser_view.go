@@ -40,7 +40,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		}
 		createMaterializedView.Destination = destination
 		createMaterializedView.StatementEnd = destination.End()
-		if p.matchTokenKind("(") {
+		if p.matchTokenKind(TokenKindLParen) {
 			tableSchema, err := p.parseTableSchemaClause(p.Pos())
 			if err != nil {
 				return nil, err
@@ -109,7 +109,7 @@ func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
 	}
 	createView.OnCluster = onCluster
 
-	if p.matchTokenKind("(") {
+	if p.matchTokenKind(TokenKindLParen) {
 		tableSchema, err := p.parseTableSchemaClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -182,7 +182,7 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 		createLiveView.Destination = destination
 	}
 
-	if p.matchTokenKind("(") {
+	if p.matchTokenKind(TokenKindLParen) {
 		tableSchema, err := p.parseTableSchemaClause(p.Pos())
 		if err != nil {
 			return nil, err
