@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS test.events_local (
     f8 Datetime DEFAULT now(),
     f9 String MATERIALIZED toString(f7['f70']),
     f10 String ALIAS f11,
+    f12 JSON(SKIP a, SKIP a.b.c, SKIP REGEXP 'hello'),
 ) ENGINE = MergeTree
 PRIMARY KEY (f0, f1, f2)
 PARTITION BY toYYYYMMDD(f3)

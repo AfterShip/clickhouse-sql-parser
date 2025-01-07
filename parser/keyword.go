@@ -105,6 +105,7 @@ const (
 	KeywordIs           = "IS"
 	KeywordIs_object_id = "IS_OBJECT_ID"
 	KeywordJoin         = "JOIN"
+	KeywordJSON         = "JSON"
 	KeywordKey          = "KEY"
 	KeywordKill         = "KILL"
 	KeywordLast         = "LAST"
@@ -158,6 +159,7 @@ const (
 	KeywordQuota        = "QUOTA"
 	KeywordRange        = "RANGE"
 	KeywordRefresh      = "REFRESH"
+	KeywordRegexp       = "REGEXP"
 	KeywordReload       = "RELOAD"
 	KeywordRemove       = "REMOVE"
 	KeywordRename       = "RENAME"
@@ -180,6 +182,7 @@ const (
 	KeywordSettings     = "SETTINGS"
 	KeywordShow         = "SHOW"
 	KeywordShutdown     = "SHUTDOWN"
+	KeywordSkip         = "SKIP"
 	KeywordSource       = "SOURCE"
 	KeywordStart        = "START"
 	KeywordStop         = "STOP"
@@ -329,6 +332,7 @@ var keywords = NewSet(
 	KeywordIs,
 	KeywordIs_object_id,
 	KeywordJoin,
+	KeywordJSON,
 	KeywordKey,
 	KeywordKill,
 	KeywordLast,
@@ -381,6 +385,8 @@ var keywords = NewSet(
 	KeywordQueues,
 	KeywordQuota,
 	KeywordRange,
+	KeywordRefresh,
+	KeywordRegexp,
 	KeywordReload,
 	KeywordRemove,
 	KeywordRename,
@@ -403,6 +409,7 @@ var keywords = NewSet(
 	KeywordSettings,
 	KeywordShow,
 	KeywordShutdown,
+	KeywordSkip,
 	KeywordSource,
 	KeywordStart,
 	KeywordStop,

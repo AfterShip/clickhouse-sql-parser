@@ -144,7 +144,7 @@ func TestConsumeNumber(t *testing.T) {
 		}
 	})
 
-	t.Run("Ident", func(t *testing.T) {
+	t.Run("Name", func(t *testing.T) {
 		idents := []string{
 			"`CASE`",
 			"`TEST`",

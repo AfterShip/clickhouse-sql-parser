@@ -75,6 +75,7 @@ type ASTVisitor interface {
 	VisitColumnDef(expr *ColumnDef) error
 	VisitColumnExpr(expr *ColumnExpr) error
 	VisitScalarType(expr *ScalarType) error
+	VisitJSONType(expr *JSONType) error
 	VisitPropertyType(expr *PropertyType) error
 	VisitTypeWithParams(expr *TypeWithParams) error
 	VisitComplexType(expr *ComplexType) error
@@ -687,6 +688,13 @@ func (v *DefaultASTVisitor) VisitColumnExpr(expr *ColumnExpr) error {
 }
 
 func (v *DefaultASTVisitor) VisitScalarType(expr *ScalarType) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitJSONType(expr *JSONType) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
