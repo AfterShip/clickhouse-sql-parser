@@ -810,10 +810,14 @@ func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
 		switch {
 		case p.matchTokenKind(TokenKindIdent):
-			if ident.Name == "Nested" {
+			switch ident.Name {
+			case "Nested":
 				return p.parseNestedType(ident, p.Pos())
+			case "JSON":
+				return p.parseJSONType(ident, p.Pos())
+			default:
+				return p.parseComplexType(ident, p.Pos())
 			}
-			return p.parseComplexType(ident, p.Pos())
 		case p.matchTokenKind(TokenKindString):
 			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == TokenKindSingleEQ {
 				// enum values
@@ -917,6 +921,81 @@ func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParam
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
 		Params:        params,
+	}, nil
+}
+
+func (p *Parser) parseJSONPath() (*JSONPath, error) {
+	idents := make([]*Ident, 0)
+	ident, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	idents = append(idents, ident)
+
+	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindDot) != nil {
+		ident, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		idents = append(idents, ident)
+	}
+	return &JSONPath{
+		Idents: idents,
+	}, nil
+}
+
+func (p *Parser) parseJSONOption() (*JSONOption, error) {
+	switch {
+	case p.tryConsumeKeyword(KeywordSkip) != nil:
+		if p.tryConsumeKeyword(KeywordRegexp) != nil {
+			regex, err := p.parseString(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			return &JSONOption{
+				SkipRegex: regex,
+			}, nil
+		}
+		jsonPath, err := p.parseJSONPath()
+		if err != nil {
+			return nil, err
+		}
+		return &JSONOption{
+			SkipPath: jsonPath,
+		}, nil
+	default:
+		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+	}
+}
+
+func (p *Parser) parseJSONType(name *Ident, pos Pos) (*JSONType, error) {
+	if p.matchTokenKind(TokenKindLParen) {
+		return &JSONType{Name: name}, nil
+	}
+
+	options := make([]*JSONOption, 0)
+	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
+		option, err := p.parseJSONOption()
+		if err != nil {
+			return nil, err
+		}
+		options = append(options, option)
+		if p.tryConsumeTokenKind(",") == nil {
+			break
+		}
+	}
+
+	rparenPos := p.Pos()
+	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+	return &JSONType{
+		Name: name,
+		Options: &JSONOptions{
+			LParen: pos,
+			RParen: rparenPos,
+			Items:  options,
+		},
 	}, nil
 }
 

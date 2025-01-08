@@ -1371,7 +1371,7 @@ func (a *TableIndex) String() string {
 	builder.WriteString("INDEX")
 	builder.WriteByte(' ')
 	builder.WriteString(a.Name.String())
-	// a.ColumnDef = *Ident --- e.g. INDEX idx column TYPE ...
+	// a.ColumnDef = *Name --- e.g. INDEX idx column TYPE ...
 	// a.ColumnDef = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
 	if _, ok := a.ColumnExpr.Expr.(*Ident); ok {
 		builder.WriteByte(' ')
@@ -3364,6 +3364,104 @@ func (s *ScalarType) Accept(visitor ASTVisitor) error {
 
 func (s *ScalarType) Type() string {
 	return s.Name.Name
+}
+
+type JSONPath struct {
+	Idents []*Ident
+}
+
+func (j *JSONPath) String() string {
+	var builder strings.Builder
+	for i, ident := range j.Idents {
+		if i > 0 {
+			builder.WriteString(".")
+		}
+		builder.WriteString(ident.String())
+	}
+	return builder.String()
+}
+
+type JSONOption struct {
+	SkipPath  *JSONPath
+	SkipRegex *StringLiteral
+}
+
+func (j *JSONOption) String() string {
+	var builder strings.Builder
+	if j.SkipPath != nil {
+		builder.WriteString("SKIP ")
+		builder.WriteString(j.SkipPath.String())
+	}
+	if j.SkipRegex != nil {
+		builder.WriteString(" SKIP REGEXP ")
+		builder.WriteString(j.SkipRegex.String())
+	}
+	return builder.String()
+}
+
+type JSONOptions struct {
+	LParen Pos
+	RParen Pos
+	Items  []*JSONOption
+}
+
+func (j *JSONOptions) Pos() Pos {
+	return j.LParen
+}
+
+func (j *JSONOptions) End() Pos {
+	return j.RParen
+}
+
+func (j *JSONOptions) String() string {
+	var builder strings.Builder
+	builder.WriteByte('(')
+	for i, item := range j.Items {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(item.String())
+	}
+	builder.WriteByte(')')
+	return builder.String()
+}
+
+type JSONType struct {
+	Name    *Ident
+	Options *JSONOptions
+}
+
+func (j *JSONType) Pos() Pos {
+	return j.Name.NamePos
+}
+
+func (j *JSONType) End() Pos {
+	if j.Options != nil {
+		return j.Options.RParen
+	}
+	return j.Name.NameEnd
+}
+
+func (j *JSONType) String() string {
+	var builder strings.Builder
+	builder.WriteString(j.Name.String())
+	if j.Options != nil {
+		builder.WriteString(j.Options.String())
+	}
+	return builder.String()
+}
+
+func (j *JSONType) Type() string {
+	return j.Name.Name
+}
+
+func (j *JSONType) Accept(visitor ASTVisitor) error {
+	visitor.enter(j)
+	defer visitor.leave(j)
+	if err := j.Name.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitJSONType(j)
 }
 
 type PropertyType struct {
