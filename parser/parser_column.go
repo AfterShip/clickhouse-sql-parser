@@ -41,6 +41,8 @@ func (p *Parser) getNextPrecedence() int {
 		return PrecedenceIs
 	case p.matchKeyword(KeywordNot):
 		return PrecedenceNot
+	case p.matchTokenKind(TokenKindDot):
+		return PrecedenceDot
 	case p.matchTokenKind(TokenKindDash):
 		return PrecedenceDoubleColon
 	case p.matchTokenKind(TokenKindSingleEQ), p.matchTokenKind(TokenKindLT), p.matchTokenKind(TokenKindLE),
@@ -155,7 +157,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			return nil, err
 		}
 		return &IndexOperation{
-			LeftExpr:  expr,
+			Object:    expr,
 			Operation: TokenKindDot,
 			Index:     rightExpr,
 		}, nil

@@ -254,8 +254,19 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 				Ident:    ident,
 				DotIdent: nextIdent,
 			}, nil
+		case p.matchTokenKind(TokenKindInt):
+			i, err := p.parseNumber(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			return &IndexOperation{
+				Object:    ident,
+				Operation: TokenKindDot,
+				Index:     i,
+			}, nil
+		default:
+			return nil, fmt.Errorf("expected IDENT, NUMBER or *, but got %q", p.lastTokenKind())
 		}
-
 	}
 	return ident, nil
 }

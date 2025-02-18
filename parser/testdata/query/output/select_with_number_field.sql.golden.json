@@ -1,0 +1,120 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 53,
+    "With": null,
+    "Top": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "foo",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 10
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Object": {
+            "Name": "bar",
+            "QuoteType": 1,
+            "NamePos": 12,
+            "NameEnd": 15
+          },
+          "Operation": ".",
+          "Index": {
+            "NumPos": 16,
+            "NumEnd": 17,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Object": {
+            "Name": "foo",
+            "QuoteType": 1,
+            "NamePos": 19,
+            "NameEnd": 22
+          },
+          "Operation": ".",
+          "Index": {
+            "NumPos": 23,
+            "NumEnd": 24,
+            "Literal": "2",
+            "Base": 10
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 25,
+      "Expr": {
+        "Table": {
+          "TablePos": 30,
+          "TableEnd": 33,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "foo",
+              "QuoteType": 1,
+              "NamePos": 30,
+              "NameEnd": 33
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 33,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": {
+      "ArrayPos": 34,
+      "Type": "",
+      "Expr": {
+        "ListPos": 45,
+        "ListEnd": 53,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Expr": {
+              "Name": "m",
+              "QuoteType": 1,
+              "NamePos": 45,
+              "NameEnd": 46
+            },
+            "Alias": {
+              "Name": "bar",
+              "QuoteType": 1,
+              "NamePos": 50,
+              "NameEnd": 53
+            }
+          }
+        ]
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

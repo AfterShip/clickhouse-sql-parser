@@ -188,7 +188,7 @@ func (p *BinaryOperation) Accept(visitor ASTVisitor) error {
 }
 
 type IndexOperation struct {
-	LeftExpr  Expr
+	Object    Expr
 	Operation TokenKind
 	Index     Expr
 }
@@ -196,7 +196,7 @@ type IndexOperation struct {
 func (i *IndexOperation) Accept(visitor ASTVisitor) error {
 	visitor.enter(i)
 	defer visitor.leave(i)
-	if err := i.LeftExpr.Accept(visitor); err != nil {
+	if err := i.Object.Accept(visitor); err != nil {
 		return err
 	}
 	if err := i.Index.Accept(visitor); err != nil {
@@ -206,7 +206,7 @@ func (i *IndexOperation) Accept(visitor ASTVisitor) error {
 }
 
 func (i *IndexOperation) Pos() Pos {
-	return i.LeftExpr.Pos()
+	return i.Object.Pos()
 }
 
 func (i *IndexOperation) End() Pos {
@@ -215,7 +215,7 @@ func (i *IndexOperation) End() Pos {
 
 func (i *IndexOperation) String() string {
 	var builder strings.Builder
-	builder.WriteString(i.LeftExpr.String())
+	builder.WriteString(i.Object.String())
 	builder.WriteString(string(i.Operation))
 	builder.WriteString(i.Index.String())
 	return builder.String()

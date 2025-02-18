@@ -7,7 +7,7 @@
     "SelectItems": [
       {
         "Expr": {
-          "LeftExpr": {
+          "Object": {
             "Name": {
               "Name": "tuple",
               "QuoteType": 1,
@@ -291,7 +291,7 @@
       },
       {
         "Expr": {
-          "LeftExpr": {
+          "Object": {
             "LeftParenPos": 161,
             "RightParenPos": 257,
             "Items": {
@@ -485,7 +485,7 @@
       },
       {
         "Expr": {
-          "LeftExpr": {
+          "Object": {
             "Name": {
               "Name": "tuple",
               "QuoteType": 1,
