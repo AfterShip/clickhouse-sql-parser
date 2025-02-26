@@ -1,0 +1,709 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 581,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 39,
+        "NameEnd": 43
+      },
+      "Table": {
+        "Name": "t0_view",
+        "QuoteType": 1,
+        "NamePos": 44,
+        "NameEnd": 51
+      }
+    },
+    "IfNotExists": true,
+    "OnCluster": {
+      "OnPos": 52,
+      "Expr": {
+        "LiteralPos": 64,
+        "LiteralEnd": 79,
+        "Literal": "default_cluster"
+      }
+    },
+    "Engine": null,
+    "Destination": {
+      "ToPos": 81,
+      "TableIdentifier": {
+        "Database": {
+          "Name": "test",
+          "QuoteType": 1,
+          "NamePos": 84,
+          "NameEnd": 88
+        },
+        "Table": {
+          "Name": "t0_name",
+          "QuoteType": 1,
+          "NamePos": 89,
+          "NameEnd": 96
+        }
+      },
+      "TableSchema": null
+    },
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 100,
+        "StatementEnd": 581,
+        "With": null,
+        "Top": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 109,
+              "NameEnd": 111
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "f2",
+              "QuoteType": 1,
+              "NamePos": 114,
+              "NameEnd": 116
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "f3",
+              "QuoteType": 1,
+              "NamePos": 119,
+              "NameEnd": 121
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "LeftExpr": {
+                "Name": "attrs",
+                "QuoteType": 1,
+                "NamePos": 124,
+                "NameEnd": 129
+              },
+              "Operation": ".",
+              "Index": {
+                "NumPos": 130,
+                "NumEnd": 131,
+                "Literal": "1",
+                "Base": 10
+              }
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "f4",
+              "QuoteType": 1,
+              "NamePos": 135,
+              "NameEnd": 137
+            }
+          },
+          {
+            "Expr": {
+              "Name": {
+                "Name": "arrayJoin",
+                "QuoteType": 1,
+                "NamePos": 140,
+                "NameEnd": 149
+              },
+              "Params": {
+                "LeftParenPos": 149,
+                "RightParenPos": 157,
+                "Items": {
+                  "ListPos": 150,
+                  "ListEnd": 157,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "LeftExpr": {
+                          "Name": "attrs",
+                          "QuoteType": 1,
+                          "NamePos": 150,
+                          "NameEnd": 155
+                        },
+                        "Operation": ".",
+                        "Index": {
+                          "NumPos": 156,
+                          "NumEnd": 157,
+                          "Literal": "2",
+                          "Base": 10
+                        }
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "f5",
+              "QuoteType": 1,
+              "NamePos": 162,
+              "NameEnd": 164
+            }
+          }
+        ],
+        "From": {
+          "FromPos": 165,
+          "Expr": {
+            "Table": {
+              "TablePos": 171,
+              "TableEnd": 177,
+              "Alias": null,
+              "Expr": {
+                "Database": {
+                  "Name": "test",
+                  "QuoteType": 1,
+                  "NamePos": 171,
+                  "NameEnd": 175
+                },
+                "Table": {
+                  "Name": "t",
+                  "QuoteType": 1,
+                  "NamePos": 176,
+                  "NameEnd": 177
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 177,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "ArrayJoin": {
+          "ArrayPos": 178,
+          "Type": "",
+          "Expr": {
+            "ListPos": 190,
+            "ListEnd": 563,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "LeftBracketPos": 190,
+                  "RightBracketPos": 553,
+                  "Items": {
+                    "ListPos": 194,
+                    "ListEnd": 550,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "LeftParenPos": 194,
+                          "RightParenPos": 231,
+                          "Items": {
+                            "ListPos": 196,
+                            "ListEnd": 230,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 196,
+                                  "LiteralEnd": 202,
+                                  "Literal": "string"
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "Name": {
+                                    "Name": "mapKeys",
+                                    "QuoteType": 1,
+                                    "NamePos": 205,
+                                    "NameEnd": 212
+                                  },
+                                  "Params": {
+                                    "LeftParenPos": 212,
+                                    "RightParenPos": 230,
+                                    "Items": {
+                                      "ListPos": 213,
+                                      "ListEnd": 230,
+                                      "HasDistinct": false,
+                                      "Items": [
+                                        {
+                                          "Expr": {
+                                            "Name": "string_attributes",
+                                            "QuoteType": 1,
+                                            "NamePos": 213,
+                                            "NameEnd": 230
+                                          },
+                                          "Alias": null
+                                        }
+                                      ]
+                                    },
+                                    "ColumnArgList": null
+                                  }
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        },
+                        "Alias": null
+                      },
+                      {
+                        "Expr": {
+                          "LeftParenPos": 236,
+                          "RightParenPos": 267,
+                          "Items": {
+                            "ListPos": 238,
+                            "ListEnd": 266,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 238,
+                                  "LiteralEnd": 241,
+                                  "Literal": "int"
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "Name": {
+                                    "Name": "mapKeys",
+                                    "QuoteType": 1,
+                                    "NamePos": 244,
+                                    "NameEnd": 251
+                                  },
+                                  "Params": {
+                                    "LeftParenPos": 251,
+                                    "RightParenPos": 266,
+                                    "Items": {
+                                      "ListPos": 252,
+                                      "ListEnd": 266,
+                                      "HasDistinct": false,
+                                      "Items": [
+                                        {
+                                          "Expr": {
+                                            "Name": "int_attributes",
+                                            "QuoteType": 1,
+                                            "NamePos": 252,
+                                            "NameEnd": 266
+                                          },
+                                          "Alias": null
+                                        }
+                                      ]
+                                    },
+                                    "ColumnArgList": null
+                                  }
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        },
+                        "Alias": null
+                      },
+                      {
+                        "Expr": {
+                          "LeftParenPos": 272,
+                          "RightParenPos": 307,
+                          "Items": {
+                            "ListPos": 274,
+                            "ListEnd": 306,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 274,
+                                  "LiteralEnd": 279,
+                                  "Literal": "float"
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "Name": {
+                                    "Name": "mapKeys",
+                                    "QuoteType": 1,
+                                    "NamePos": 282,
+                                    "NameEnd": 289
+                                  },
+                                  "Params": {
+                                    "LeftParenPos": 289,
+                                    "RightParenPos": 306,
+                                    "Items": {
+                                      "ListPos": 290,
+                                      "ListEnd": 306,
+                                      "HasDistinct": false,
+                                      "Items": [
+                                        {
+                                          "Expr": {
+                                            "Name": "float_attributes",
+                                            "QuoteType": 1,
+                                            "NamePos": 290,
+                                            "NameEnd": 306
+                                          },
+                                          "Alias": null
+                                        }
+                                      ]
+                                    },
+                                    "ColumnArgList": null
+                                  }
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        },
+                        "Alias": null
+                      },
+                      {
+                        "Expr": {
+                          "LeftParenPos": 312,
+                          "RightParenPos": 345,
+                          "Items": {
+                            "ListPos": 314,
+                            "ListEnd": 344,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 314,
+                                  "LiteralEnd": 318,
+                                  "Literal": "bool"
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "Name": {
+                                    "Name": "mapKeys",
+                                    "QuoteType": 1,
+                                    "NamePos": 321,
+                                    "NameEnd": 328
+                                  },
+                                  "Params": {
+                                    "LeftParenPos": 328,
+                                    "RightParenPos": 344,
+                                    "Items": {
+                                      "ListPos": 329,
+                                      "ListEnd": 344,
+                                      "HasDistinct": false,
+                                      "Items": [
+                                        {
+                                          "Expr": {
+                                            "Name": "bool_attributes",
+                                            "QuoteType": 1,
+                                            "NamePos": 329,
+                                            "NameEnd": 344
+                                          },
+                                          "Alias": null
+                                        }
+                                      ]
+                                    },
+                                    "ColumnArgList": null
+                                  }
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        },
+                        "Alias": null
+                      },
+                      {
+                        "Expr": {
+                          "LeftParenPos": 350,
+                          "RightParenPos": 383,
+                          "Items": {
+                            "ListPos": 352,
+                            "ListEnd": 382,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 352,
+                                  "LiteralEnd": 356,
+                                  "Literal": "null"
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "Name": {
+                                    "Name": "mapKeys",
+                                    "QuoteType": 1,
+                                    "NamePos": 359,
+                                    "NameEnd": 366
+                                  },
+                                  "Params": {
+                                    "LeftParenPos": 366,
+                                    "RightParenPos": 382,
+                                    "Items": {
+                                      "ListPos": 367,
+                                      "ListEnd": 382,
+                                      "HasDistinct": false,
+                                      "Items": [
+                                        {
+                                          "Expr": {
+                                            "Name": "null_attributes",
+                                            "QuoteType": 1,
+                                            "NamePos": 367,
+                                            "NameEnd": 382
+                                          },
+                                          "Alias": null
+                                        }
+                                      ]
+                                    },
+                                    "ColumnArgList": null
+                                  }
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        },
+                        "Alias": null
+                      },
+                      {
+                        "Expr": {
+                          "LeftParenPos": 388,
+                          "RightParenPos": 550,
+                          "Items": {
+                            "ListPos": 390,
+                            "ListEnd": 545,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 390,
+                                  "LiteralEnd": 393,
+                                  "Literal": "int"
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "CastPos": 400,
+                                  "Expr": {
+                                    "Name": {
+                                      "Name": "mapFilter",
+                                      "QuoteType": 1,
+                                      "NamePos": 410,
+                                      "NameEnd": 419
+                                    },
+                                    "Params": {
+                                      "LeftParenPos": 419,
+                                      "RightParenPos": 519,
+                                      "Items": {
+                                        "ListPos": 426,
+                                        "ListEnd": 513,
+                                        "HasDistinct": false,
+                                        "Items": [
+                                          {
+                                            "Expr": {
+                                              "LeftExpr": {
+                                                "Name": "x",
+                                                "QuoteType": 1,
+                                                "NamePos": 426,
+                                                "NameEnd": 427
+                                              },
+                                              "Operation": "-\u003e",
+                                              "RightExpr": {
+                                                "UnaryPos": 431,
+                                                "Kind": "\u003ckeyword\u003e",
+                                                "Expr": {
+                                                  "Name": {
+                                                    "Name": "isZeroOrNull",
+                                                    "QuoteType": 1,
+                                                    "NamePos": 435,
+                                                    "NameEnd": 447
+                                                  },
+                                                  "Params": {
+                                                    "LeftParenPos": 447,
+                                                    "RightParenPos": 451,
+                                                    "Items": {
+                                                      "ListPos": 448,
+                                                      "ListEnd": 451,
+                                                      "HasDistinct": false,
+                                                      "Items": [
+                                                        {
+                                                          "Expr": {
+                                                            "LeftExpr": {
+                                                              "Name": "x",
+                                                              "QuoteType": 1,
+                                                              "NamePos": 448,
+                                                              "NameEnd": 449
+                                                            },
+                                                            "Operation": ".",
+                                                            "Index": {
+                                                              "NumPos": 450,
+                                                              "NumEnd": 451,
+                                                              "Literal": "1",
+                                                              "Base": 10
+                                                            }
+                                                          },
+                                                          "Alias": null
+                                                        }
+                                                      ]
+                                                    },
+                                                    "ColumnArgList": null
+                                                  }
+                                                }
+                                              },
+                                              "HasGlobal": false,
+                                              "HasNot": false
+                                            },
+                                            "Alias": null
+                                          },
+                                          {
+                                            "Expr": {
+                                              "Name": {
+                                                "Name": "map",
+                                                "QuoteType": 1,
+                                                "NamePos": 459,
+                                                "NameEnd": 462
+                                              },
+                                              "Params": {
+                                                "LeftParenPos": 462,
+                                                "RightParenPos": 513,
+                                                "Items": {
+                                                  "ListPos": 471,
+                                                  "ListEnd": 505,
+                                                  "HasDistinct": false,
+                                                  "Items": [
+                                                    {
+                                                      "Expr": {
+                                                        "LiteralPos": 471,
+                                                        "LiteralEnd": 475,
+                                                        "Literal": "int1"
+                                                      },
+                                                      "Alias": null
+                                                    },
+                                                    {
+                                                      "Expr": {
+                                                        "Name": "int1",
+                                                        "QuoteType": 3,
+                                                        "NamePos": 479,
+                                                        "NameEnd": 483
+                                                      },
+                                                      "Alias": null
+                                                    },
+                                                    {
+                                                      "Expr": {
+                                                        "LiteralPos": 493,
+                                                        "LiteralEnd": 497,
+                                                        "Literal": "int2"
+                                                      },
+                                                      "Alias": null
+                                                    },
+                                                    {
+                                                      "Expr": {
+                                                        "Name": "int2",
+                                                        "QuoteType": 3,
+                                                        "NamePos": 501,
+                                                        "NameEnd": 505
+                                                      },
+                                                      "Alias": null
+                                                    }
+                                                  ]
+                                                },
+                                                "ColumnArgList": null
+                                              }
+                                            },
+                                            "Alias": null
+                                          }
+                                        ]
+                                      },
+                                      "ColumnArgList": null
+                                    }
+                                  },
+                                  "Separator": ",",
+                                  "AsPos": 520,
+                                  "AsType": {
+                                    "LiteralPos": 526,
+                                    "LiteralEnd": 545,
+                                    "Literal": "Map(String, String)"
+                                  }
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  }
+                },
+                "Alias": {
+                  "Name": "attrs",
+                  "QuoteType": 1,
+                  "NamePos": 558,
+                  "NameEnd": 563
+                }
+              }
+            ]
+          }
+        },
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": {
+          "GroupByPos": 564,
+          "AggregateType": "",
+          "Expr": {
+            "ListPos": 574,
+            "ListEnd": 581,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "f1",
+                  "QuoteType": 1,
+                  "NamePos": 574,
+                  "NameEnd": 576
+                },
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "f4",
+                  "QuoteType": 1,
+                  "NamePos": 579,
+                  "NameEnd": 581
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "WithCube": false,
+          "WithRollup": false,
+          "WithTotals": false
+        },
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": null
+  }
+]

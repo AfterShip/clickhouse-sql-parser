@@ -254,8 +254,17 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 				Ident:    ident,
 				DotIdent: nextIdent,
 			}, nil
+		case p.matchTokenKind(TokenKindInt):
+			lastToken, err := p.parseDecimal(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			return &IndexOperation{
+				LeftExpr:  ident,
+				Operation: TokenKindDot,
+				Index:     lastToken,
+			}, nil
 		}
-
 	}
 	return ident, nil
 }
@@ -1316,6 +1325,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err != nil {
 		return nil, err
 	}
+	// IMPORTANT
 	if _, err := p.consumeTokenKind(TokenKindArrow); err != nil {
 		return nil, err
 	}
