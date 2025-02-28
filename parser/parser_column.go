@@ -299,7 +299,7 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 }
 
 func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
-	kind := p.last()
+	op := p.last()
 	switch {
 	case p.matchTokenKind(TokenKindPlus),
 		p.matchTokenKind(TokenKindMinus),
@@ -316,7 +316,7 @@ func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 
 	return &UnaryExpr{
 		UnaryPos: pos,
-		Kind:     kind.Kind,
+		Kind:     TokenKind(op.ToString()),
 		Expr:     expr,
 	}, nil
 
