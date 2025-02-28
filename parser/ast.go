@@ -6645,7 +6645,7 @@ func (n *UnaryExpr) End() Pos {
 }
 
 func (n *UnaryExpr) String() string {
-	return "-" + n.Expr.String()
+	return string(n.Kind) + " " + n.Expr.String()
 }
 
 func (n *UnaryExpr) Accept(visitor ASTVisitor) error {
