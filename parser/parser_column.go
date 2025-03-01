@@ -735,7 +735,10 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 		if err != nil {
 			return nil, err
 		}
+	} else {
+		alias = p.tryParseIdent()
 	}
+
 	return &SelectItem{
 		Expr:      expr,
 		Modifiers: modifiers,
