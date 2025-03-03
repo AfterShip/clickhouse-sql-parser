@@ -574,7 +574,6 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 			return nil, err
 		}
 		expr = &BetweenClause{
-			Expr:    expr,
 			Between: betweenWindowFrame,
 			AndPos:  andPos,
 			And:     andWindowFrame,
