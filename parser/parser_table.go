@@ -521,7 +521,9 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 		default:
 			return ident, nil
 		}
-	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindString), p.matchKeyword("NULL"):
+	case p.matchTokenKind(TokenKindLParen):
+		return p.parseSubQuery(p.Pos())
+	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
 		return p.parseLiteral(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <Name>, <literal>", p.last().String)
