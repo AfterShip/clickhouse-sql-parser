@@ -1,0 +1,88 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 48,
+    "With": null,
+    "Top": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "field0",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 13
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "field1",
+          "QuoteType": 1,
+          "NamePos": 15,
+          "NameEnd": 21
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "x",
+          "QuoteType": 1,
+          "NamePos": 25,
+          "NameEnd": 26
+        }
+      },
+      {
+        "Expr": {
+          "Name": "field2",
+          "QuoteType": 1,
+          "NamePos": 28,
+          "NameEnd": 34
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "y",
+          "QuoteType": 1,
+          "NamePos": 35,
+          "NameEnd": 36
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 37,
+      "Expr": {
+        "Table": {
+          "TablePos": 42,
+          "TableEnd": 48,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "events",
+              "QuoteType": 1,
+              "NamePos": 42,
+              "NameEnd": 48
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 48,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

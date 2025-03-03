@@ -78,6 +78,20 @@ func (p *Parser) tryConsumeKeyword(keyword string) *Token {
 	return nil
 }
 
+func (p *Parser) tryParseIdent() *Ident {
+	if p.lastTokenKind() != TokenKindIdent {
+		return nil
+	}
+	lastToken := p.last()
+	_ = p.lexer.consumeToken()
+	return &Ident{
+		NamePos:   lastToken.Pos,
+		NameEnd:   lastToken.End,
+		Name:      lastToken.String,
+		QuoteType: lastToken.QuoteType,
+	}
+}
+
 func (p *Parser) parseIdent() (*Ident, error) {
 	lastToken, err := p.consumeTokenKind(TokenKindIdent)
 	if err != nil {
