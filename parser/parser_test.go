@@ -127,3 +127,14 @@ func validFormatSQL(t *testing.T, sql string) {
 	}
 	require.Equal(t, sql, builder.String())
 }
+
+func TestParser_InvalidSyntax(t *testing.T) {
+	invalidSQLs := []string{
+		"SELECT * FROM",
+	}
+	for _, sql := range invalidSQLs {
+		parser := NewParser(sql)
+		_, err := parser.ParseStmts()
+		require.Error(t, err)
+	}
+}

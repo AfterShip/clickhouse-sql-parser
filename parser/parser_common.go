@@ -274,7 +274,7 @@ func (p *Parser) parseLiteral(pos Pos) (Literal, error) {
 		// accept the NULL keyword
 		return &NullLiteral{NullPos: pos}, nil
 	default:
-		return nil, fmt.Errorf("expected <int>, <string> or keyword <NULL>, but got %q", p.last().Kind)
+		return nil, fmt.Errorf("expected <int>, <string> or keyword <NULL>, but got %q", p.lastTokenKind())
 	}
 }
 
