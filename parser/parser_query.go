@@ -214,7 +214,7 @@ func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 			StatementEnd: statementEnd,
 		}, nil
 	default:
-		return nil, fmt.Errorf("expected table name or subquery, got %s", p.last().Kind)
+		return nil, fmt.Errorf("expected table name or subquery, got %s", p.lastTokenKind())
 	}
 }
 
