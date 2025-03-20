@@ -1,0 +1,277 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 135,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "test_mv",
+        "QuoteType": 1,
+        "NamePos": 39,
+        "NameEnd": 46
+      }
+    },
+    "IfNotExists": true,
+    "OnCluster": null,
+    "Engine": {
+      "EnginePos": 47,
+      "EngineEnd": 106,
+      "Name": "ReplacingMergeTree",
+      "Params": {
+        "LeftParenPos": 74,
+        "RightParenPos": 75,
+        "Items": {
+          "ListPos": 75,
+          "ListEnd": 75,
+          "HasDistinct": false,
+          "Items": []
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": {
+        "PrimaryPos": 77,
+        "Expr": {
+          "LeftParenPos": 89,
+          "RightParenPos": 92,
+          "Items": {
+            "ListPos": 90,
+            "ListEnd": 92,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 90,
+                  "NameEnd": 92
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      },
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 94,
+        "ListEnd": 106,
+        "Items": [
+          {
+            "OrderPos": 94,
+            "Expr": {
+              "LeftParenPos": 103,
+              "RightParenPos": 106,
+              "Items": {
+                "ListPos": 104,
+                "ListEnd": 106,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "id",
+                      "QuoteType": 1,
+                      "NamePos": 104,
+                      "NameEnd": 106
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Alias": null,
+            "Direction": ""
+          }
+        ]
+      }
+    },
+    "Destination": null,
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 111,
+        "StatementEnd": 135,
+        "With": null,
+        "Top": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "*",
+              "QuoteType": 0,
+              "NamePos": 118,
+              "NameEnd": 118
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": {
+          "FromPos": 120,
+          "Expr": {
+            "Table": {
+              "TablePos": 125,
+              "TableEnd": 135,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "test_table",
+                  "QuoteType": 1,
+                  "NamePos": 125,
+                  "NameEnd": 135
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 135,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": null
+  },
+  {
+    "CreatePos": 138,
+    "StatementEnd": 259,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "test_mv",
+        "QuoteType": 1,
+        "NamePos": 177,
+        "NameEnd": 184
+      }
+    },
+    "IfNotExists": true,
+    "OnCluster": null,
+    "Engine": {
+      "EnginePos": 185,
+      "EngineEnd": 230,
+      "Name": "ReplacingMergeTree",
+      "Params": {
+        "LeftParenPos": 212,
+        "RightParenPos": 213,
+        "Items": {
+          "ListPos": 213,
+          "ListEnd": 213,
+          "HasDistinct": false,
+          "Items": []
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": {
+        "PrimaryPos": 215,
+        "Expr": {
+          "LeftParenPos": 227,
+          "RightParenPos": 230,
+          "Items": {
+            "ListPos": 228,
+            "ListEnd": 230,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 228,
+                  "NameEnd": 230
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      },
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": null
+    },
+    "Destination": null,
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 235,
+        "StatementEnd": 259,
+        "With": null,
+        "Top": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "*",
+              "QuoteType": 0,
+              "NamePos": 242,
+              "NameEnd": 242
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": {
+          "FromPos": 244,
+          "Expr": {
+            "Table": {
+              "TablePos": 249,
+              "TableEnd": 259,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "test_table",
+                  "QuoteType": 1,
+                  "NamePos": 249,
+                  "NameEnd": 259
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 259,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": null
+  }
+]

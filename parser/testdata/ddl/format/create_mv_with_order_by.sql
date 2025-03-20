@@ -1,0 +1,17 @@
+-- Origin SQL:
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_mv
+ENGINE = ReplacingMergeTree()
+PRIMARY KEY (id)
+ORDER BY (id)
+AS
+SELECT * FROM test_table;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_mv
+ENGINE = ReplacingMergeTree()
+PRIMARY KEY (id)
+AS
+SELECT * FROM test_table;
+
+-- Format SQL:
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_mv ENGINE = ReplacingMergeTree() PRIMARY KEY (id) ORDER BY (id)  AS SELECT * FROM test_table;
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_mv ENGINE = ReplacingMergeTree() PRIMARY KEY (id) AS SELECT * FROM test_table;
