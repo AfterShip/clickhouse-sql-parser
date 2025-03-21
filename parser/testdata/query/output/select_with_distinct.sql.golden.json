@@ -1,0 +1,96 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 51,
+    "With": null,
+    "Top": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "count",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 12
+          },
+          "Params": {
+            "LeftParenPos": 12,
+            "RightParenPos": 32,
+            "Items": {
+              "ListPos": 13,
+              "ListEnd": 31,
+              "HasDistinct": true,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftParenPos": 21,
+                    "RightParenPos": 31,
+                    "Items": {
+                      "ListPos": 22,
+                      "ListEnd": 31,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "Name": "RECORD_ID",
+                            "QuoteType": 1,
+                            "NamePos": 22,
+                            "NameEnd": 31
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 34,
+      "Expr": {
+        "Table": {
+          "TablePos": 39,
+          "TableEnd": 51,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "RECORD_TABLE",
+              "QuoteType": 1,
+              "NamePos": 39,
+              "NameEnd": 51
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 51,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
