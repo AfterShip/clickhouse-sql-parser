@@ -2928,12 +2928,7 @@ func (f *ParamExprList) End() Pos {
 func (f *ParamExprList) String() string {
 	var builder strings.Builder
 	builder.WriteString("(")
-	for i, item := range f.Items.Items {
-		if i > 0 {
-			builder.WriteString(", ")
-		}
-		builder.WriteString(item.String())
-	}
+	builder.WriteString(f.Items.String())
 	builder.WriteString(")")
 	return builder.String()
 }
