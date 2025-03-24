@@ -3220,7 +3220,7 @@ type ColumnDef struct {
 	AliasExpr        Expr
 
 	Codec *CompressionCodec
-	TTL   Expr
+	TTL   *TTLClause
 
 	Comment          *StringLiteral
 	CompressionCodec *Ident
