@@ -482,6 +482,14 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	if codec != nil {
 		columnEnd = codec.End()
 	}
+	ttl, err := p.tryParseTTLClause(p.Pos(), false)
+	if err != nil {
+		return nil, err
+	}
+	if ttl != nil {
+		columnEnd = ttl.End()
+	}
+	column.TTL = ttl
 
 	column.ColumnEnd = columnEnd
 	column.Comment = comment
@@ -702,13 +710,13 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 	}, nil
 }
 
-func (p *Parser) tryParseTTLClause(pos Pos) (*TTLClause, error) {
+func (p *Parser) tryParseTTLClause(pos Pos, allowMultiValues bool) (*TTLClause, error) {
 	if p.tryConsumeKeyword(KeywordTtl) == nil {
 		return nil, nil // nolint
 	}
 	ttlExprList := &TTLClause{TTLPos: pos, ListEnd: pos}
 	// accept the TTL keyword
-	items, err := p.parseTTLClause(pos)
+	items, err := p.parseTTLClause(pos, allowMultiValues)
 	if err != nil {
 		return nil, err
 	}
@@ -719,14 +727,16 @@ func (p *Parser) tryParseTTLClause(pos Pos) (*TTLClause, error) {
 	return ttlExprList, nil
 }
 
-func (p *Parser) parseTTLClause(pos Pos) ([]*TTLExpr, error) {
+// parseTTLClause parses the TTL clause.
+// allowMultiValues is used to determine whether to allow multiple TTL values.
+func (p *Parser) parseTTLClause(pos Pos, allowMultiValues bool) ([]*TTLExpr, error) {
 	items := make([]*TTLExpr, 0)
 	expr, err := p.parseTTLExpr(pos)
 	if err != nil {
 		return nil, err
 	}
 	items = append(items, expr)
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for allowMultiValues && !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindComma) != nil {
 		expr, err = p.parseTTLExpr(pos)
 		if err != nil {
 			return nil, err
@@ -932,7 +942,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 			engineExpr.SampleBy = sampleBy
 			engineEnd = sampleBy.End()
 		case p.matchKeyword(KeywordTtl):
-			ttl, err := p.tryParseTTLClause(p.Pos())
+			ttl, err := p.tryParseTTLClause(p.Pos(), true)
 			if err != nil {
 				return nil, err
 			}
