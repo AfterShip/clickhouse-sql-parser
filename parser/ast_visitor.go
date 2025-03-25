@@ -61,6 +61,9 @@ type ASTVisitor interface {
 	VisitSampleByExpr(expr *SampleByClause) error
 	VisitTTLExpr(expr *TTLExpr) error
 	VisitTTLExprList(expr *TTLClause) error
+	VisitTTLPolicy(expr *TTLPolicy) error
+	VisitTTLPolicyRule(expr *TTLPolicyRule) error
+	VisitTTLPolicyItemAction(expr *TTLPolicyRuleAction) error
 	VisitOrderByExpr(expr *OrderExpr) error
 	VisitOrderByListExpr(expr *OrderByClause) error
 	VisitSettingsExpr(expr *SettingExprList) error
@@ -590,6 +593,27 @@ func (v *DefaultASTVisitor) VisitTTLExpr(expr *TTLExpr) error {
 }
 
 func (v *DefaultASTVisitor) VisitTTLExprList(expr *TTLClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTTLPolicy(expr *TTLPolicy) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTTLPolicyRule(expr *TTLPolicyRule) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTTLPolicyItemAction(expr *TTLPolicyRuleAction) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

@@ -561,7 +561,8 @@
               },
               "HasGlobal": false,
               "HasNot": false
-            }
+            },
+            "Policy": null
           },
           {
             "TTLPos": 535,
@@ -613,7 +614,8 @@
               },
               "HasGlobal": false,
               "HasNot": false
-            }
+            },
+            "Policy": null
           }
         ]
       },
@@ -757,7 +759,7 @@
               "ColumnArgList": null
             },
             "Alias": null,
-            "Direction": "None"
+            "Direction": ""
           }
         ]
       }
