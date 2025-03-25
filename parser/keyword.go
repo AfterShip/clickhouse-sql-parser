@@ -158,6 +158,7 @@ const (
 	KeywordQueues       = "QUEUES"
 	KeywordQuota        = "QUOTA"
 	KeywordRange        = "RANGE"
+	KeywordRecompress   = "RECOMPRESS"
 	KeywordRefresh      = "REFRESH"
 	KeywordRegexp       = "REGEXP"
 	KeywordReload       = "RELOAD"
@@ -385,6 +386,7 @@ var keywords = NewSet(
 	KeywordQueues,
 	KeywordQuota,
 	KeywordRange,
+	KeywordRecompress,
 	KeywordRefresh,
 	KeywordRegexp,
 	KeywordReload,

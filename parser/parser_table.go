@@ -691,6 +691,11 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 		if err != nil {
 			return nil, err
 		}
+	} else if p.matchKeyword(KeywordTtl) {
+		return &OrderExpr{
+			OrderPos: pos,
+			Expr:     columnExpr,
+		}, nil
 	}
 
 	direction := OrderDirectionNone
@@ -746,28 +751,70 @@ func (p *Parser) parseTTLClause(pos Pos, allowMultiValues bool) ([]*TTLExpr, err
 	return items, nil
 }
 
+func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
+	var rule *TTLPolicyRule
+	switch {
+	case p.tryConsumeKeyword(KeywordTo) != nil:
+		if p.tryConsumeKeyword(KeywordDisk) != nil {
+			if value, err := p.parseString(p.Pos()); err != nil {
+				return nil, err
+			} else {
+				rule = &TTLPolicyRule{RulePos: pos, ToDisk: value}
+			}
+		} else if p.tryConsumeKeyword(KeywordVolume) != nil {
+			if value, err := p.parseString(p.Pos()); err != nil {
+				return nil, err
+			} else {
+				rule = &TTLPolicyRule{RulePos: pos, ToVolume: value}
+			}
+		} else {
+			return nil, fmt.Errorf("unexpected token: %q, expected DISK or VOLUME", p.lastTokenKind())
+		}
+	case p.matchKeyword(KeywordDelete), p.matchKeyword(KeywordRecompress):
+		token := p.last()
+		_ = p.lexer.consumeToken()
+		action := &TTLPolicyRuleAction{
+			ActionPos: token.Pos,
+			ActionEnd: token.End,
+			Action:    token.ToString(),
+		}
+		if codec, err := p.tryParseCompressionCodecs(p.Pos()); err != nil {
+			return nil, err
+		} else {
+			action.Codec = codec
+			rule = &TTLPolicyRule{RulePos: pos, Action: action}
+		}
+	default:
+		return nil, nil // nolint
+	}
+
+	policy := &TTLPolicy{Item: rule}
+	if where, err := p.tryParseWhereClause(p.Pos()); err != nil {
+		return nil, err
+	} else {
+		policy.Where = where
+	}
+	if groupBy, err := p.tryParseGroupByClause(p.Pos()); err != nil {
+		return nil, err
+	} else {
+		policy.GroupBy = groupBy
+	}
+	return policy, nil
+}
+
 func (p *Parser) parseTTLExpr(pos Pos) (*TTLExpr, error) {
 	columnExpr, err := p.parseExpr(pos)
 	if err != nil {
 		return nil, err
 	}
-	switch {
-	case p.matchKeyword(KeywordDelete):
-		_ = p.lexer.consumeToken()
-	case p.matchKeyword(KeywordTo):
-		_ = p.lexer.consumeToken()
-		if p.tryConsumeKeyword(KeywordDisk) != nil || p.tryConsumeKeyword(KeywordVolume) != nil {
-			_, err := p.parseString(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			return nil, fmt.Errorf("expected keyword <DISK> or <VOLUME>, but got %q", p.last().String)
-		}
+	policy, err := p.tryParseTTLPolicy(p.Pos())
+	if err != nil {
+		return nil, err
 	}
 	return &TTLExpr{
 		TTLPos: pos,
 		Expr:   columnExpr,
+		Policy: policy,
 	}, nil
 }
 

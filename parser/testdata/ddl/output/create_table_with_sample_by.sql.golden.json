@@ -298,7 +298,7 @@
               "ColumnArgList": null
             },
             "Alias": null,
-            "Direction": "None"
+            "Direction": ""
           }
         ]
       }
