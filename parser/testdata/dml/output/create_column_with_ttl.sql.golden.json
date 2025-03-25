@@ -105,7 +105,8 @@
                   },
                   "HasGlobal": false,
                   "HasNot": false
-                }
+                },
+                "Policy": null
               }
             ]
           },
@@ -169,7 +170,8 @@
                   },
                   "HasGlobal": false,
                   "HasNot": false
-                }
+                },
+                "Policy": null
               }
             ]
           },
@@ -216,7 +218,7 @@
               }
             },
             "Alias": null,
-            "Direction": "None"
+            "Direction": ""
           }
         ]
       }
