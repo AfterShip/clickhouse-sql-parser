@@ -756,17 +756,17 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	switch {
 	case p.tryConsumeKeyword(KeywordTo) != nil:
 		if p.tryConsumeKeyword(KeywordDisk) != nil {
-			if value, err := p.parseString(p.Pos()); err != nil {
+			value, err := p.parseString(p.Pos())
+			if err != nil {
 				return nil, err
-			} else {
-				rule = &TTLPolicyRule{RulePos: pos, ToDisk: value}
 			}
+			rule = &TTLPolicyRule{RulePos: pos, ToDisk: value}
 		} else if p.tryConsumeKeyword(KeywordVolume) != nil {
-			if value, err := p.parseString(p.Pos()); err != nil {
+			value, err := p.parseString(p.Pos())
+			if err != nil {
 				return nil, err
-			} else {
-				rule = &TTLPolicyRule{RulePos: pos, ToVolume: value}
 			}
+			rule = &TTLPolicyRule{RulePos: pos, ToVolume: value}
 		} else {
 			return nil, fmt.Errorf("unexpected token: %q, expected DISK or VOLUME", p.lastTokenKind())
 		}
@@ -778,27 +778,28 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 			ActionEnd: token.End,
 			Action:    token.ToString(),
 		}
-		if codec, err := p.tryParseCompressionCodecs(p.Pos()); err != nil {
+		codec, err := p.tryParseCompressionCodecs(p.Pos())
+		if err != nil {
 			return nil, err
-		} else {
-			action.Codec = codec
-			rule = &TTLPolicyRule{RulePos: pos, Action: action}
 		}
+		action.Codec = codec
+		rule = &TTLPolicyRule{RulePos: pos, Action: action}
 	default:
 		return nil, nil // nolint
 	}
-
 	policy := &TTLPolicy{Item: rule}
-	if where, err := p.tryParseWhereClause(p.Pos()); err != nil {
+
+	where, err := p.tryParseWhereClause(p.Pos())
+	if err != nil {
 		return nil, err
-	} else {
-		policy.Where = where
 	}
-	if groupBy, err := p.tryParseGroupByClause(p.Pos()); err != nil {
+	policy.Where = where
+
+	groupBy, err := p.tryParseGroupByClause(p.Pos())
+	if err != nil {
 		return nil, err
-	} else {
-		policy.GroupBy = groupBy
 	}
+	policy.GroupBy = groupBy
 	return policy, nil
 }
 
