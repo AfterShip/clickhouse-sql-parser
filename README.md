@@ -91,7 +91,7 @@ go test -bench=. -benchmem ./parser
 Results
 
 ```
-orian@delik:~/workspace/clickhouse-sql-parser$ go test -bench=. -benchmem ./parser
+$ go test -bench=. -benchmem ./parser
 goos: linux
 goarch: amd64
 pkg: github.com/AfterShip/clickhouse-sql-parser/parser
