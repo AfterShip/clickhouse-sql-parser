@@ -128,7 +128,7 @@ BenchmarkParseSQLFiles/select_with_string_expr.sql-28                           
 BenchmarkParseSQLFiles/select_with_union_distinct.sql-28                                  147031              9601 ns/op            2352 B/op         47 allocs/op
 BenchmarkParseSQLFiles/select_with_variable.sql-28                                        179158              6669 ns/op            1880 B/op         36 allocs/op
 BenchmarkParseSQLFiles/select_with_window_function.sql-28                                  54925             31320 ns/op            6720 B/op        136 allocs/op
-BenchmarkParseSQLFiles/selelct_with_placeholder.sql-28                                    196771              5145 ns/op            1272 B/op         26 allocs/op
+BenchmarkParseSQLFiles/select_with_placeholder.sql-28                                    196771              5145 ns/op            1272 B/op         26 allocs/op
 BenchmarkParseSQLFiles/set_simple.sql-28                                                  172419              7062 ns/op            2480 B/op         49 allocs/op
 BenchmarkParseComplexQueries/testdata/query/select_with_multi_join.sql-28                  39056             36897 ns/op            8240 B/op        188 allocs/op
 BenchmarkParseComplexQueries/testdata/query/select_with_window_function.sql-28             47629             29916 ns/op            6720 B/op        136 allocs/op
