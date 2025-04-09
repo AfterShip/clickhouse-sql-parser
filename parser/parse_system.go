@@ -73,7 +73,7 @@ func (p *Parser) parseSystemReloadExpr(pos Pos) (*SystemReloadExpr, error) {
 			Type:         KeywordDictionary,
 			Dictionary:   dictionary,
 		}, nil
-	case p.tryConsumeKeywords("EMBEDDED"):
+	case p.tryConsumeKeywords(KeywordEmbedded):
 		lastToken := p.last()
 		if err := p.expectKeyword(KeywordDictionaries); err != nil {
 			return nil, err

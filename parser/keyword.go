@@ -61,6 +61,7 @@ const (
 	KeywordDrop         = "DROP"
 	KeywordDNS          = "DNS"
 	KeywordElse         = "ELSE"
+	KeywordEmbedded     = "EMBEDDED"
 	KeywordEnd          = "END"
 	KeywordEngine       = "ENGINE"
 	KeywordEstimate     = "ESTIMATE"
