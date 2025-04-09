@@ -40,8 +40,8 @@ func (p *Parser) matchTokenKind(kind TokenKind) bool {
 		(kind == TokenKindIdent && p.lastTokenKind() == TokenKindKeyword)
 }
 
-// consumeTokenKind consumes the last token if it is the given kind.
-func (p *Parser) consumeTokenKind(kind TokenKind) (*Token, error) {
+// expectTokenKind consumes the last token if it is the given kind.
+func (p *Parser) expectTokenKind(kind TokenKind) (*Token, error) {
 	if lastToken := p.tryConsumeTokenKind(kind); lastToken != nil {
 		return lastToken, nil
 	}
@@ -61,7 +61,7 @@ func (p *Parser) matchKeyword(keyword string) bool {
 	return p.matchTokenKind(TokenKindKeyword) && strings.EqualFold(p.last().String, keyword)
 }
 
-func (p *Parser) consumeKeyword(keyword string) error {
+func (p *Parser) expectKeyword(keyword string) error {
 	if !p.matchKeyword(keyword) {
 		return fmt.Errorf("expected keyword: %s, but got %s", keyword, p.lastTokenKind())
 	}
@@ -69,13 +69,16 @@ func (p *Parser) consumeKeyword(keyword string) error {
 	return nil
 }
 
-func (p *Parser) tryConsumeKeyword(keyword string) *Token {
-	if p.matchKeyword(keyword) {
-		lastToken := p.last()
+func (p *Parser) tryConsumeKeywords(keywords ...string) bool {
+	savedState := p.lexer.saveState()
+	for _, keyword := range keywords {
+		if !p.matchKeyword(keyword) {
+			p.lexer.restoreState(savedState)
+			return false
+		}
 		_ = p.lexer.consumeToken()
-		return lastToken
 	}
-	return nil
+	return true
 }
 
 func (p *Parser) tryParseIdent() *Ident {
@@ -93,7 +96,7 @@ func (p *Parser) tryParseIdent() *Ident {
 }
 
 func (p *Parser) parseIdent() (*Ident, error) {
-	lastToken, err := p.consumeTokenKind(TokenKindIdent)
+	lastToken, err := p.expectTokenKind(TokenKindIdent)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +134,7 @@ func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
 }
 
 func (p *Parser) parseUUID() (*UUID, error) {
-	if err := p.consumeKeyword(KeywordUuid); err != nil {
+	if err := p.expectKeyword(KeywordUuid); err != nil {
 		return nil, err
 	}
 
@@ -152,53 +155,53 @@ func (p *Parser) tryParseUUID() (*UUID, error) {
 }
 
 func (p *Parser) tryParseComment() (*StringLiteral, error) {
-	if p.tryConsumeKeyword(KeywordComment) == nil {
+	if !p.tryConsumeKeywords(KeywordComment) {
 		return nil, nil
 	}
 	return p.parseString(p.Pos())
 }
 
 func (p *Parser) tryParseIfExists() (bool, error) {
-	if p.tryConsumeKeyword(KeywordIf) == nil {
+	if !p.tryConsumeKeywords(KeywordIf) {
 		return false, nil
 	}
 
-	if err := p.consumeKeyword(KeywordExists); err != nil {
+	if err := p.expectKeyword(KeywordExists); err != nil {
 		return false, err
 	}
 	return true, nil
 }
 
 func (p *Parser) tryParseIfNotExists() (bool, error) {
-	if p.tryConsumeKeyword(KeywordIf) == nil {
+	if !p.tryConsumeKeywords(KeywordIf) {
 		return false, nil
 	}
 
-	if err := p.consumeKeyword(KeywordNot); err != nil {
+	if err := p.expectKeyword(KeywordNot); err != nil {
 		return false, err
 	}
 
-	if err := p.consumeKeyword(KeywordExists); err != nil {
+	if err := p.expectKeyword(KeywordExists); err != nil {
 		return false, err
 	}
 	return true, nil
 }
 
 func (p *Parser) tryParseNull(pos Pos) *NullLiteral {
-	if p.tryConsumeKeyword(KeywordNull) == nil {
+	if !p.tryConsumeKeywords(KeywordNull) {
 		return nil
 	}
 	return &NullLiteral{NullPos: pos}
 }
 
 func (p *Parser) tryParseNotNull(pos Pos) (*NotNullLiteral, error) {
-	if p.tryConsumeKeyword(KeywordNot) == nil {
+	if !p.tryConsumeKeywords(KeywordNot) {
 		return nil, nil // nolint
 	}
 	notNull := &NotNullLiteral{NotPos: pos}
 
 	nullPos := p.Pos()
-	if err := p.consumeKeyword(KeywordNull); err != nil {
+	if err := p.expectKeyword(KeywordNull); err != nil {
 		return notNull, err
 	}
 	notNull.NullLiteral = &NullLiteral{NullPos: nullPos}
@@ -222,12 +225,12 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 
 	switch {
 	case p.matchTokenKind(TokenKindInt):
-		lastToken, err = p.consumeTokenKind(TokenKindInt)
+		lastToken, err = p.expectTokenKind(TokenKindInt)
 	case p.matchTokenKind(TokenKindFloat):
-		lastToken, err = p.consumeTokenKind(TokenKindFloat)
+		lastToken, err = p.expectTokenKind(TokenKindFloat)
 	case p.matchTokenKind(TokenKindDot):
 		_ = p.lexer.consumeToken()
-		lastToken, err = p.consumeTokenKind(TokenKindInt)
+		lastToken, err = p.expectTokenKind(TokenKindInt)
 		if err != nil {
 			return nil, err
 		}
@@ -252,7 +255,7 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 }
 
 func (p *Parser) parseString(pos Pos) (*StringLiteral, error) {
-	lastToken, err := p.consumeTokenKind(TokenKindString)
+	lastToken, err := p.expectTokenKind(TokenKindString)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +309,7 @@ func (p *Parser) tryParseFormat(pos Pos) (*FormatClause, error) {
 }
 
 func (p *Parser) parseFormat(pos Pos) (*FormatClause, error) {
-	if err := p.consumeKeyword(KeywordFormat); err != nil {
+	if err := p.expectKeyword(KeywordFormat); err != nil {
 		return nil, err
 	}
 	formatIdent, err := p.parseIdent()

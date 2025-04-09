@@ -72,14 +72,27 @@ func (t *Token) ToString() string {
 	return t.String
 }
 
-type Lexer struct {
-	input     string
+type lexerState struct {
 	current   int
 	lastToken *Token
 }
 
+type Lexer struct {
+	lexerState
+
+	input string
+}
+
 func NewLexer(buf string) *Lexer {
 	return &Lexer{input: buf}
+}
+
+func (l *Lexer) saveState() lexerState {
+	return l.lexerState
+}
+
+func (l *Lexer) restoreState(state lexerState) {
+	l.lexerState = state
 }
 
 func (l *Lexer) skipN(n int) {
@@ -280,15 +293,13 @@ func (l *Lexer) skipComments() {
 }
 
 func (l *Lexer) peekToken() (*Token, error) {
-	saveToken := l.lastToken
-	saveCurrent := l.current
+	savedState := l.saveState()
 	if err := l.consumeToken(); err != nil {
 		return nil, err
 	}
 	token := l.lastToken
 
-	l.lastToken = saveToken
-	l.current = saveCurrent
+	l.restoreState(savedState)
 	return token, nil
 }
 
