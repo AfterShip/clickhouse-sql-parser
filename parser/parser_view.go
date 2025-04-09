@@ -80,12 +80,12 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 }
 
 // (ATTACH | CREATE) (OR REPLACE)? VIEW (IF NOT EXISTS)? tableIdentifier uuidClause? clusterClause? tableSchemaClause? subqueryClause
-func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
+func (p *Parser) parseCreateView(pos Pos, orReplace bool) (*CreateView, error) {
+	createView := &CreateView{CreatePos: pos, OrReplace: orReplace}
 	if err := p.expectKeyword(KeywordView); err != nil {
 		return nil, err
 	}
 
-	createView := &CreateView{CreatePos: pos}
 	var err error
 	createView.IfNotExists, err = p.tryParseIfNotExists()
 	if err != nil {

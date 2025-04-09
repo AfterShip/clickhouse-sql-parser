@@ -1516,6 +1516,7 @@ func (c *CreateDatabase) Accept(visitor ASTVisitor) error {
 type CreateTable struct {
 	CreatePos    Pos // position of CREATE|ATTACH keyword
 	StatementEnd Pos
+	OrReplace    bool
 	Name         *TableIdentifier
 	IfNotExists  bool
 	UUID         *UUID
@@ -1542,6 +1543,9 @@ func (c *CreateTable) Type() string {
 func (c *CreateTable) String() string {
 	var builder strings.Builder
 	builder.WriteString("CREATE")
+	if c.OrReplace {
+		builder.WriteString(" OR REPLACE")
+	}
 	if c.HasTemporary {
 		builder.WriteString(" TEMPORARY")
 	}
@@ -1706,6 +1710,7 @@ func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
 type CreateView struct {
 	CreatePos    Pos // position of CREATE|ATTACH keyword
 	StatementEnd Pos
+	OrReplace    bool
 	Name         *TableIdentifier
 	IfNotExists  bool
 	UUID         *UUID
@@ -1728,7 +1733,11 @@ func (c *CreateView) Type() string {
 
 func (c *CreateView) String() string {
 	var builder strings.Builder
-	builder.WriteString("CREATE VIEW ")
+	builder.WriteString("CREATE")
+	if c.OrReplace {
+		builder.WriteString(" OR REPLACE")
+	}
+	builder.WriteString(" VIEW ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}

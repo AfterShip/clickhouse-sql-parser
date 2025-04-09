@@ -9,12 +9,16 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 	case p.matchKeyword(KeywordCreate),
 		p.matchKeyword(KeywordAttach):
 		_ = p.lexer.consumeToken()
+		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
+		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView) {
+			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW, but got %q", p.last().String)
+		}
 		switch {
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseCreateDatabase(pos)
 		case p.matchKeyword(KeywordTable),
 			p.matchKeyword(KeywordTemporary):
-			return p.parseCreateTable(pos)
+			return p.parseCreateTable(pos, orReplace)
 		case p.matchKeyword(KeywordFunction):
 			return p.parseCreateFunction(pos)
 		case p.matchKeyword(KeywordMaterialized):
@@ -22,15 +26,11 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordLive):
 			return p.parseCreateLiveView(pos)
 		case p.matchKeyword(KeywordView):
-			return p.parseCreateView(pos)
+			return p.parseCreateView(pos, orReplace)
 		case p.matchKeyword(KeywordRole):
 			return p.parseCreateRole(pos)
-		case p.matchKeyword(KeywordDictionary):
-		case p.matchKeyword(KeywordFunction):
-		case p.matchKeyword(KeywordRow):
-		case p.matchKeyword(KeywordSettings):
 		default:
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|DICTIONARY|FUNCTION|ROW|QUOTA|SETTINGS, but got %q",
+			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW, but got %q",
 				p.last().String)
 		}
 	case p.matchKeyword(KeywordAlter):
@@ -108,9 +108,8 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 	}, nil
 }
 
-func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
-	createTable := &CreateTable{CreatePos: pos}
-
+func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error) {
+	createTable := &CreateTable{CreatePos: pos, OrReplace: orReplace}
 	createTable.HasTemporary = p.tryConsumeKeywords(KeywordTemporary)
 
 	if err := p.expectKeyword(KeywordTable); err != nil {
