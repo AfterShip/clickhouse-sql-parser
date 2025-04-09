@@ -69,6 +69,18 @@ func (p *Parser) consumeKeyword(keyword string) error {
 	return nil
 }
 
+func (p *Parser) parseKeywords(keywords ...string) bool {
+	savedState := p.lexer.saveState()
+	for _, keyword := range keywords {
+		if !p.matchKeyword(keyword) {
+			p.lexer.restoreState(savedState)
+			return false
+		}
+		_ = p.lexer.consumeToken()
+	}
+	return true
+}
+
 func (p *Parser) tryConsumeKeyword(keyword string) *Token {
 	if p.matchKeyword(keyword) {
 		lastToken := p.last()
