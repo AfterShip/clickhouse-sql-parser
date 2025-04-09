@@ -61,6 +61,15 @@ func (p *Parser) matchKeyword(keyword string) bool {
 	return p.matchTokenKind(TokenKindKeyword) && strings.EqualFold(p.last().String, keyword)
 }
 
+func (p *Parser) matchOneOfKeywords(keywords ...string) bool {
+	for _, keyword := range keywords {
+		if p.matchKeyword(keyword) {
+			return true
+		}
+	}
+	return false
+}
+
 func (p *Parser) expectKeyword(keyword string) error {
 	if !p.matchKeyword(keyword) {
 		return fmt.Errorf("expected keyword: %s, but got %s", keyword, p.lastTokenKind())

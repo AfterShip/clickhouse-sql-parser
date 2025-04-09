@@ -1,0 +1,479 @@
+[
+  {
+    "CreatePos": 122,
+    "StatementEnd": 361,
+    "OrReplace": true,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 160,
+        "NameEnd": 164
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 165,
+        "NameEnd": 177
+      }
+    },
+    "IfNotExists": true,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 178,
+      "SchemaEnd": 246,
+      "Columns": [
+        {
+          "NamePos": 184,
+          "ColumnEnd": 193,
+          "Name": {
+            "Ident": {
+              "Name": "f0",
+              "QuoteType": 1,
+              "NamePos": 184,
+              "NameEnd": 186
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 187,
+              "NameEnd": 193
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 199,
+          "ColumnEnd": 223,
+          "Name": {
+            "Ident": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 199,
+              "NameEnd": 201
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 202,
+              "NameEnd": 208
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 209,
+            "RightParenPos": 223,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 215,
+              "NameEnd": 219
+            },
+            "Level": {
+              "NumPos": 219,
+              "NumEnd": 221,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 229,
+          "ColumnEnd": 243,
+          "Name": {
+            "Ident": {
+              "Name": "f2",
+              "QuoteType": 1,
+              "NamePos": 229,
+              "NameEnd": 231
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 240,
+            "RightParenPos": 243,
+            "Name": {
+              "Name": "VARCHAR",
+              "QuoteType": 1,
+              "NamePos": 232,
+              "NameEnd": 239
+            },
+            "Params": [
+              {
+                "NumPos": 240,
+                "NumEnd": 243,
+                "Literal": "255",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 248,
+      "EngineEnd": 361,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": {
+        "PrimaryPos": 267,
+        "Expr": {
+          "LeftParenPos": 279,
+          "RightParenPos": 290,
+          "Items": {
+            "ListPos": 280,
+            "ListEnd": 290,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "f0",
+                  "QuoteType": 1,
+                  "NamePos": 280,
+                  "NameEnd": 282
+                },
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "f1",
+                  "QuoteType": 1,
+                  "NamePos": 284,
+                  "NameEnd": 286
+                },
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "f2",
+                  "QuoteType": 1,
+                  "NamePos": 288,
+                  "NameEnd": 290
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      },
+      "PartitionBy": {
+        "PartitionPos": 292,
+        "Expr": {
+          "ListPos": 305,
+          "ListEnd": 318,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "toYYYYMMDD",
+                  "QuoteType": 1,
+                  "NamePos": 305,
+                  "NameEnd": 315
+                },
+                "Params": {
+                  "LeftParenPos": 315,
+                  "RightParenPos": 318,
+                  "Items": {
+                    "ListPos": 316,
+                    "ListEnd": 318,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "f1",
+                          "QuoteType": 1,
+                          "NamePos": 316,
+                          "NameEnd": 318
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
+            }
+          ]
+        }
+      },
+      "SampleBy": null,
+      "TTL": {
+        "TTLPos": 320,
+        "ListEnd": 345,
+        "Items": [
+          {
+            "TTLPos": 320,
+            "Expr": {
+              "LeftExpr": {
+                "Name": "f1",
+                "QuoteType": 1,
+                "NamePos": 324,
+                "NameEnd": 326
+              },
+              "Operation": "+",
+              "RightExpr": {
+                "IntervalPos": 329,
+                "Expr": {
+                  "NumPos": 338,
+                  "NumEnd": 339,
+                  "Literal": "6",
+                  "Base": 10
+                },
+                "Unit": {
+                  "Name": "MONTH",
+                  "QuoteType": 1,
+                  "NamePos": 340,
+                  "NameEnd": 345
+                }
+              },
+              "HasGlobal": false,
+              "HasNot": false
+            },
+            "Policy": null
+          }
+        ]
+      },
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 346,
+        "ListEnd": 361,
+        "Items": [
+          {
+            "OrderPos": 346,
+            "Expr": {
+              "LeftParenPos": 355,
+              "RightParenPos": 361,
+              "Items": {
+                "ListPos": 356,
+                "ListEnd": 361,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "f1",
+                      "QuoteType": 1,
+                      "NamePos": 356,
+                      "NameEnd": 358
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 359,
+                      "NameEnd": 361
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Alias": null,
+            "Direction": ""
+          }
+        ]
+      }
+    },
+    "SubQuery": null,
+    "HasTemporary": false,
+    "Comment": {
+      "LiteralPos": 372,
+      "LiteralEnd": 389,
+      "Literal": "Comment for table"
+    }
+  },
+  {
+    "CreatePos": 393,
+    "StatementEnd": 508,
+    "OrReplace": true,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "my_view",
+        "QuoteType": 1,
+        "NamePos": 430,
+        "NameEnd": 437
+      }
+    },
+    "IfNotExists": true,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 437,
+      "SchemaEnd": 462,
+      "Columns": [
+        {
+          "NamePos": 438,
+          "ColumnEnd": 449,
+          "Name": {
+            "Ident": {
+              "Name": "col1",
+              "QuoteType": 1,
+              "NamePos": 438,
+              "NameEnd": 442
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 443,
+              "NameEnd": 449
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 451,
+          "ColumnEnd": 462,
+          "Name": {
+            "Ident": {
+              "Name": "col2",
+              "QuoteType": 1,
+              "NamePos": 451,
+              "NameEnd": 455
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 456,
+              "NameEnd": 462
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 467,
+        "StatementEnd": 508,
+        "With": null,
+        "Top": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 478,
+              "NameEnd": 480
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 486,
+              "NameEnd": 490
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": {
+          "FromPos": 491,
+          "Expr": {
+            "Table": {
+              "TablePos": 500,
+              "TableEnd": 508,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "my_table",
+                  "QuoteType": 1,
+                  "NamePos": 500,
+                  "NameEnd": 508
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 508,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    }
+  }
+]

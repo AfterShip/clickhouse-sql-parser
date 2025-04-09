@@ -2,6 +2,7 @@
   {
     "CreatePos": 0,
     "StatementEnd": 351,
+    "OrReplace": false,
     "Name": {
       "Database": {
         "Name": "default",

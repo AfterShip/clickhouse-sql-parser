@@ -2,6 +2,7 @@
   {
     "CreatePos": 0,
     "StatementEnd": 199,
+    "OrReplace": false,
     "Name": {
       "Database": {
         "Name": "cluster_name",
