@@ -81,15 +81,6 @@ func (p *Parser) tryConsumeKeywords(keywords ...string) bool {
 	return true
 }
 
-func (p *Parser) tryConsumeKeyword(keyword string) *Token {
-	if p.matchKeyword(keyword) {
-		lastToken := p.last()
-		_ = p.lexer.consumeToken()
-		return lastToken
-	}
-	return nil
-}
-
 func (p *Parser) tryParseIdent() *Ident {
 	if p.lastTokenKind() != TokenKindIdent {
 		return nil
@@ -164,14 +155,14 @@ func (p *Parser) tryParseUUID() (*UUID, error) {
 }
 
 func (p *Parser) tryParseComment() (*StringLiteral, error) {
-	if p.tryConsumeKeyword(KeywordComment) == nil {
+	if !p.tryConsumeKeywords(KeywordComment) {
 		return nil, nil
 	}
 	return p.parseString(p.Pos())
 }
 
 func (p *Parser) tryParseIfExists() (bool, error) {
-	if p.tryConsumeKeyword(KeywordIf) == nil {
+	if !p.tryConsumeKeywords(KeywordIf) {
 		return false, nil
 	}
 
@@ -182,7 +173,7 @@ func (p *Parser) tryParseIfExists() (bool, error) {
 }
 
 func (p *Parser) tryParseIfNotExists() (bool, error) {
-	if p.tryConsumeKeyword(KeywordIf) == nil {
+	if !p.tryConsumeKeywords(KeywordIf) {
 		return false, nil
 	}
 
@@ -197,14 +188,14 @@ func (p *Parser) tryParseIfNotExists() (bool, error) {
 }
 
 func (p *Parser) tryParseNull(pos Pos) *NullLiteral {
-	if p.tryConsumeKeyword(KeywordNull) == nil {
+	if !p.tryConsumeKeywords(KeywordNull) {
 		return nil
 	}
 	return &NullLiteral{NullPos: pos}
 }
 
 func (p *Parser) tryParseNotNull(pos Pos) (*NotNullLiteral, error) {
-	if p.tryConsumeKeyword(KeywordNot) == nil {
+	if !p.tryConsumeKeywords(KeywordNot) {
 		return nil, nil // nolint
 	}
 	notNull := &NotNullLiteral{NotPos: pos}

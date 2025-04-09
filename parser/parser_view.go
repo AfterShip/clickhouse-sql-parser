@@ -54,14 +54,15 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		}
 		createMaterializedView.Engine = engineExpr
 		createMaterializedView.StatementEnd = engineExpr.End()
-		if populate := p.tryConsumeKeyword(KeywordPopulate); populate != nil {
+
+		if p.tryConsumeKeywords(KeywordPopulate) {
 			createMaterializedView.Populate = true
-			createMaterializedView.StatementEnd = populate.End
+			createMaterializedView.StatementEnd = p.Pos()
 		}
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
 	}
-	if p.tryConsumeKeyword(KeywordAs) != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -117,7 +118,7 @@ func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
 		createView.TableSchema = tableSchema
 	}
 
-	if p.tryConsumeKeyword(KeywordAs) != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -190,7 +191,7 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 		createLiveView.TableSchema = tableSchema
 	}
 
-	if p.tryConsumeKeyword(KeywordAs) != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -203,7 +204,7 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 }
 
 func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutClause, error) {
-	if p.tryConsumeKeyword(KeywordWith) == nil {
+	if !p.tryConsumeKeywords(KeywordWith) {
 		return nil, nil // nolint
 	}
 	if err := p.expectKeyword(KeywordTimeout); err != nil {

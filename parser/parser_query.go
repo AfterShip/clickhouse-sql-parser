@@ -56,7 +56,7 @@ func (p *Parser) parseTopClause(pos Pos) (*TopClause, error) {
 	topEnd := number.End()
 
 	withTies := false
-	if p.tryConsumeKeyword(KeywordWith) != nil {
+	if p.tryConsumeKeywords(KeywordWith) {
 		topEnd = p.last().End
 		if err := p.expectKeyword(KeywordTies); err != nil {
 			return nil, err
@@ -95,7 +95,7 @@ func (p *Parser) parseFromClause(pos Pos) (*FromClause, error) {
 
 func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 	switch {
-	case p.tryConsumeKeyword(KeywordOn) != nil:
+	case p.tryConsumeKeywords(KeywordOn):
 		columnExprList, err := p.parseColumnExprList(p.Pos())
 		if err != nil {
 			return nil, err
@@ -104,7 +104,7 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 			OnPos: pos,
 			On:    columnExprList,
 		}, nil
-	case p.tryConsumeKeyword(KeywordUsing) != nil:
+	case p.tryConsumeKeywords(KeywordUsing):
 		hasParen := p.tryConsumeTokenKind(TokenKindLParen) != nil
 		columnExprList, err := p.parseColumnExprListWithLParen(p.Pos())
 		if err != nil {
@@ -126,7 +126,7 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 func (p *Parser) parseJoinOp(_ Pos) []string {
 	var modifiers []string
 	switch {
-	case p.tryConsumeKeyword(KeywordCross) != nil: // cross join
+	case p.tryConsumeKeywords(KeywordCross): // cross join
 		modifiers = append(modifiers, KeywordCross)
 	case p.matchKeyword(KeywordAny), p.matchKeyword(KeywordAll):
 		modifiers = append(modifiers, p.last().String)
@@ -222,8 +222,8 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	var rightExpr Expr
 	var modifiers []string
 	switch {
-	case p.tryConsumeKeyword(KeywordGlobal) != nil:
-	case p.tryConsumeKeyword(KeywordLocal) != nil:
+	case p.tryConsumeKeywords(KeywordGlobal):
+	case p.tryConsumeKeywords(KeywordLocal):
 	case p.tryConsumeTokenKind(TokenKindComma) != nil:
 		return p.parseJoinExpr(p.Pos())
 	default:
@@ -233,7 +233,7 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	if len(modifiers) != 0 && !p.matchKeyword(KeywordJoin) {
 		return nil, fmt.Errorf("expected JOIN, got %s", p.lastTokenKind())
 	}
-	if p.tryConsumeKeyword(KeywordJoin) == nil {
+	if !p.tryConsumeKeywords(KeywordJoin) {
 		return nil, nil
 	}
 
@@ -313,7 +313,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	}
 
 	tableEnd := expr.End()
-	if asToken := p.tryConsumeKeyword(KeywordAs); asToken != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -338,7 +338,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	}
 
 	isFinalExist := false
-	if asToken := p.tryConsumeKeyword(KeywordFinal); asToken != nil {
+	if p.tryConsumeKeywords(KeywordFinal) {
 		switch expr.(type) {
 		case *TableFunctionExpr:
 			return nil, errors.New("table function doesn't support FINAL")
@@ -437,13 +437,13 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	}
 
 	// parse WITH CUBE, ROLLUP, TOTALS
-	for p.tryConsumeKeyword(KeywordWith) != nil {
+	for p.tryConsumeKeywords(KeywordWith) {
 		switch {
-		case p.tryConsumeKeyword(KeywordCube) != nil:
+		case p.tryConsumeKeywords(KeywordCube):
 			groupBy.WithCube = true
-		case p.tryConsumeKeyword(KeywordRollup) != nil:
+		case p.tryConsumeKeywords(KeywordRollup):
 			groupBy.WithRollup = true
-		case p.tryConsumeKeyword(KeywordTotals) != nil:
+		case p.tryConsumeKeywords(KeywordTotals):
 			groupBy.WithTotals = true
 		default:
 			return nil, fmt.Errorf("expected CUBE, ROLLUP or TOTALS, got %s", p.lastTokenKind())
@@ -471,7 +471,7 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 	}
 
 	var offset Expr
-	if p.tryConsumeKeyword(KeywordOffset) != nil {
+	if p.tryConsumeKeywords(KeywordOffset) {
 		offset, err = p.parseExpr(p.Pos())
 	} else if p.tryConsumeTokenKind(TokenKindComma) != nil {
 		offset = limit
@@ -530,7 +530,7 @@ func (p *Parser) parseLimitByClause(pos Pos) (Expr, error) {
 	}
 
 	var by *ColumnExprList
-	if p.tryConsumeKeyword(KeywordBy) == nil {
+	if !p.tryConsumeKeywords(KeywordBy) {
 		return limit, nil
 	}
 	if by, err = p.parseColumnExprListWithLParen(p.Pos()); err != nil {
@@ -558,7 +558,7 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 
 	var expr Expr
 	switch {
-	case p.tryConsumeKeyword(KeywordBetween) != nil:
+	case p.tryConsumeKeywords(KeywordBetween):
 		betweenWindowFrame, err := p.parseWindowFrameClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -787,15 +787,15 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		return nil, err
 	}
 	switch {
-	case p.tryConsumeKeyword(KeywordUnion) != nil:
+	case p.tryConsumeKeywords(KeywordUnion):
 		switch {
-		case p.tryConsumeKeyword(KeywordAll) != nil:
+		case p.tryConsumeKeywords(KeywordAll):
 			unionAllExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
 				return nil, err
 			}
 			selectStmt.UnionAll = unionAllExpr
-		case p.tryConsumeKeyword(KeywordDistinct) != nil:
+		case p.tryConsumeKeywords(KeywordDistinct):
 			unionDistinctExpr, err := p.parseSelectStmt(p.Pos())
 			if err != nil {
 				return nil, err
@@ -804,7 +804,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		default:
 			return nil, fmt.Errorf("expected ALL or DISTINCT, got %s", p.lastTokenKind())
 		}
-	case p.tryConsumeKeyword(KeywordExcept) != nil:
+	case p.tryConsumeKeywords(KeywordExcept):
 		exceptExpr, err := p.parseSelectStmt(p.Pos())
 		if err != nil {
 			return nil, err
@@ -828,7 +828,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		return nil, err
 	}
 	// DISTINCT?
-	_ = p.tryConsumeKeyword(KeywordDistinct)
+	_ = p.tryConsumeKeywords(KeywordDistinct)
 
 	top, err := p.tryParseTopClause(p.Pos())
 	if err != nil {
@@ -889,7 +889,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 
 	withTotal := false
 	lastPos := p.Pos()
-	if p.tryConsumeKeyword(KeywordWith) != nil {
+	if p.tryConsumeKeywords(KeywordWith) {
 		if err := p.expectKeyword(KeywordTotals); err != nil {
 			return nil, err
 		}

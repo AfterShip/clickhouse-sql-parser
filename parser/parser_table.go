@@ -111,7 +111,7 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
 	createTable := &CreateTable{CreatePos: pos}
 
-	createTable.HasTemporary = p.tryConsumeKeyword(KeywordTemporary) != nil
+	createTable.HasTemporary = p.tryConsumeKeywords(KeywordTemporary)
 
 	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
@@ -158,7 +158,7 @@ func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
 		createTable.StatementEnd = engineExpr.End()
 	}
 
-	if p.tryConsumeKeyword(KeywordAs) != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -199,7 +199,9 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			Name:   ident,
 			Params: params,
 		}
-		if overToken := p.tryConsumeKeyword(KeywordOver); overToken != nil {
+
+		overPos := p.Pos()
+		if p.tryConsumeKeywords(KeywordOver) {
 			var overExpr Expr
 			switch {
 			case p.matchTokenKind(TokenKindIdent):
@@ -218,7 +220,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			}
 			return &WindowFunctionExpr{
 				Function: funcExpr,
-				OverPos:  overToken.Pos,
+				OverPos:  overPos,
 				OverExpr: overExpr,
 			}, nil
 		}
@@ -313,7 +315,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 			SchemaEnd: rightParenPos,
 			Columns:   columns,
 		}, nil
-	case p.tryConsumeKeyword(KeywordAs) != nil:
+	case p.tryConsumeKeywords(KeywordAs):
 		switch {
 		case p.matchTokenKind(TokenKindIdent):
 			ident, err := p.parseIdent()
@@ -453,13 +455,13 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	}
 
 	switch {
-	case p.tryConsumeKeyword(KeywordDefault) != nil:
+	case p.tryConsumeKeywords(KeywordDefault):
 		column.DefaultExpr, err = p.parseExpr(p.Pos())
 		columnEnd = column.DefaultExpr.End()
-	case p.tryConsumeKeyword(KeywordMaterialized) != nil:
+	case p.tryConsumeKeywords(KeywordMaterialized):
 		column.MaterializedExpr, err = p.parseExpr(p.Pos())
 		columnEnd = column.MaterializedExpr.End()
-	case p.tryConsumeKeyword(KeywordAlias) != nil:
+	case p.tryConsumeKeywords(KeywordAlias):
 		column.AliasExpr, err = p.parseExpr(p.Pos())
 		columnEnd = column.AliasExpr.End()
 	}
@@ -568,7 +570,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 }
 
 func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
-	if p.tryConsumeKeyword(KeywordOn) == nil {
+	if !p.tryConsumeKeywords(KeywordOn) {
 		return nil, nil // nolint
 	}
 	if err := p.expectKeyword(KeywordCluster); err != nil {
@@ -595,7 +597,7 @@ func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
 }
 
 func (p *Parser) tryParsePartitionByClause(pos Pos) (*PartitionByClause, error) {
-	if p.tryConsumeKeyword(KeywordPartition) == nil {
+	if !p.tryConsumeKeywords(KeywordPartition) {
 		return nil, nil // nolint
 	}
 
@@ -615,7 +617,7 @@ func (p *Parser) tryParsePartitionByClause(pos Pos) (*PartitionByClause, error) 
 }
 
 func (p *Parser) tryParsePrimaryKeyClause(pos Pos) (*PrimaryKeyClause, error) {
-	if p.tryConsumeKeyword(KeywordPrimary) == nil {
+	if !p.tryConsumeKeywords(KeywordPrimary) {
 		return nil, nil // nolint
 	}
 
@@ -635,7 +637,7 @@ func (p *Parser) tryParsePrimaryKeyClause(pos Pos) (*PrimaryKeyClause, error) {
 }
 
 func (p *Parser) tryParseOrderByClause(pos Pos) (*OrderByClause, error) {
-	if p.tryConsumeKeyword(KeywordOrder) == nil {
+	if !p.tryConsumeKeywords(KeywordOrder) {
 		return nil, nil // nolint
 	}
 
@@ -716,7 +718,7 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 }
 
 func (p *Parser) tryParseTTLClause(pos Pos, allowMultiValues bool) (*TTLClause, error) {
-	if p.tryConsumeKeyword(KeywordTtl) == nil {
+	if !p.tryConsumeKeywords(KeywordTtl) {
 		return nil, nil // nolint
 	}
 	ttlExprList := &TTLClause{TTLPos: pos, ListEnd: pos}
@@ -754,14 +756,14 @@ func (p *Parser) parseTTLClause(pos Pos, allowMultiValues bool) ([]*TTLExpr, err
 func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	var rule *TTLPolicyRule
 	switch {
-	case p.tryConsumeKeyword(KeywordTo) != nil:
-		if p.tryConsumeKeyword(KeywordDisk) != nil {
+	case p.tryConsumeKeywords(KeywordTo):
+		if p.tryConsumeKeywords(KeywordDisk) {
 			value, err := p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
 			}
 			rule = &TTLPolicyRule{RulePos: pos, ToDisk: value}
-		} else if p.tryConsumeKeyword(KeywordVolume) != nil {
+		} else if p.tryConsumeKeywords(KeywordVolume) {
 			value, err := p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
@@ -820,7 +822,7 @@ func (p *Parser) parseTTLExpr(pos Pos) (*TTLExpr, error) {
 }
 
 func (p *Parser) tryParseSampleByClause(pos Pos) (*SampleByClause, error) {
-	if p.tryConsumeKeyword(KeywordSample) == nil {
+	if !p.tryConsumeKeywords(KeywordSample) {
 		return nil, nil // nolint
 	}
 
@@ -840,7 +842,7 @@ func (p *Parser) tryParseSampleByClause(pos Pos) (*SampleByClause, error) {
 }
 
 func (p *Parser) tryParseSettingsClause(pos Pos) (*SettingsClause, error) {
-	if p.tryConsumeKeyword(KeywordSettings) == nil {
+	if !p.tryConsumeKeywords(KeywordSettings) {
 		return nil, nil // nolint
 	}
 	return p.parseSettingsClause(pos)
@@ -1104,7 +1106,7 @@ func (p *Parser) parseTruncateTable(pos Pos) (*TruncateTable, error) {
 		return nil, err
 	}
 
-	isTemporary := p.tryConsumeKeyword(KeywordTemporary) != nil
+	isTemporary := p.tryConsumeKeywords(KeywordTemporary)
 
 	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
@@ -1243,11 +1245,11 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 	if err := p.expectKeyword(KeywordInto); err != nil {
 		return nil, err
 	}
-	_ = p.tryConsumeKeyword(KeywordTable)
+	_ = p.tryConsumeKeywords(KeywordTable)
 
 	var table Expr
 	var err error
-	if p.tryConsumeKeyword(KeywordFunction) != nil {
+	if p.tryConsumeKeywords(KeywordFunction) {
 		table, err = p.parseFunctionExpr(p.Pos())
 	} else {
 		table, err = p.parseTableIdentifier(p.Pos())
@@ -1311,9 +1313,9 @@ func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
 
 	renameTarget := KeywordTable
 	switch {
-	case p.tryConsumeKeyword(KeywordDictionary) != nil:
+	case p.tryConsumeKeywords(KeywordDictionary):
 		renameTarget = KeywordDictionary
-	case p.tryConsumeKeyword(KeywordDatabase) != nil:
+	case p.tryConsumeKeywords(KeywordDatabase):
 		renameTarget = KeywordDatabase
 	default:
 		if err := p.expectKeyword(KeywordTable); err != nil {

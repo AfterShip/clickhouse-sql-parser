@@ -344,13 +344,13 @@ func (p *Parser) parsePartitionClause(pos Pos) (*PartitionClause, error) {
 	partition := &PartitionClause{
 		PartitionPos: pos,
 	}
-	if p.tryConsumeKeyword(KeywordId) != nil {
+	if p.tryConsumeKeywords(KeywordId) {
 		id, err := p.parseString(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		partition.ID = id
-	} else if p.tryConsumeKeyword(KeywordAll) != nil {
+	} else if p.tryConsumeKeywords(KeywordAll) {
 		partition.All = true
 	} else {
 		expr, err := p.parseExpr(p.Pos())
@@ -375,7 +375,7 @@ func (p *Parser) parseAlterTableAttachPartition(pos Pos) (AlterTableClause, erro
 	}
 	alterTable.Partition = partition
 	// FROM [db.]table?
-	if p.tryConsumeKeyword(KeywordFrom) != nil {
+	if p.tryConsumeKeywords(KeywordFrom) {
 		tableIdentifier, err := p.parseTableIdentifier(p.Pos())
 		if err != nil {
 			return nil, err
@@ -431,7 +431,7 @@ func (p *Parser) parseAlterTableDropClause(pos Pos) (AlterTableClause, error) {
 }
 
 func (p *Parser) tryParseAfterClause() (*NestedIdentifier, error) {
-	if p.tryConsumeKeyword(KeywordAfter) == nil {
+	if !p.tryConsumeKeywords(KeywordAfter) {
 		return nil, nil // nolint
 	}
 
@@ -540,7 +540,7 @@ func (p *Parser) parseAlterTableClearClause(pos Pos) (AlterTableClause, error) {
 	statementEnd := name.End()
 
 	var partition *PartitionClause
-	if p.tryConsumeKeyword(KeywordIn) != nil {
+	if p.tryConsumeKeywords(KeywordIn) {
 		partition, err = p.tryParsePartitionClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -745,7 +745,7 @@ func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableClause, error) {
 	}
 	statementEnd := name.End()
 	var partition *PartitionClause
-	if p.tryConsumeKeyword(KeywordIn) != nil {
+	if p.tryConsumeKeywords(KeywordIn) {
 		partition, err = p.tryParsePartitionClause(p.Pos())
 		if err != nil {
 			return nil, err

@@ -25,7 +25,7 @@ const (
 )
 
 func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
-	if p.tryConsumeKeyword(KeywordComment) == nil {
+	if !p.tryConsumeKeywords(KeywordComment) {
 		return nil, nil // nolint
 	}
 	return p.parseString(pos)
@@ -197,7 +197,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return p.parseTernaryExpr(expr)
 	case p.matchKeyword(KeywordIs):
 		_ = p.lexer.consumeToken()
-		isNotNull := p.tryConsumeKeyword(KeywordNot) != nil
+		isNotNull := p.tryConsumeKeywords(KeywordNot)
 		if err := p.expectKeyword(KeywordNull); err != nil {
 			return nil, err
 		}
@@ -458,7 +458,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 		ListPos: pos,
 		ListEnd: pos,
 	}
-	columnExprList.HasDistinct = p.tryConsumeKeyword(KeywordDistinct) != nil
+	columnExprList.HasDistinct = p.tryConsumeKeywords(KeywordDistinct)
 	columnList := make([]Expr, 0)
 	for !p.lexer.isEOF() || p.last() != nil {
 		if term != "" && p.matchTokenKind(term) {
@@ -549,10 +549,8 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
-	distinct := false
-	if p.tryConsumeKeyword(KeywordDistinct) != nil {
-		distinct = true
-	}
+	distinct := p.tryConsumeKeywords(KeywordDistinct)
+
 	var items []Expr
 	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
 		item, err := p.parseExpr(p.Pos())
@@ -698,7 +696,7 @@ func (p *Parser) parseColumnsExpr(pos Pos) (*ColumnExpr, error) {
 	}
 
 	var alias *Ident
-	if p.tryConsumeKeyword(KeywordAs) != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -730,7 +728,7 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	}
 
 	var alias *Ident
-	if p.tryConsumeKeyword(KeywordAs) != nil {
+	if p.tryConsumeKeywords(KeywordAs) {
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -791,12 +789,13 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 	caseExpr.Whens = whenClauses
 
 	// ELSE expr
-	if elseToken := p.tryConsumeKeyword(KeywordElse); elseToken != nil {
+	elsePos := p.Pos()
+	if p.tryConsumeKeywords(KeywordElse) {
 		elseExpr, err := p.parseExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		caseExpr.ElsePos = elseToken.Pos
+		caseExpr.ElsePos = elsePos
 		caseExpr.Else = elseExpr
 	}
 
@@ -951,8 +950,8 @@ func (p *Parser) parseJSONPath() (*JSONPath, error) {
 
 func (p *Parser) parseJSONOption() (*JSONOption, error) {
 	switch {
-	case p.tryConsumeKeyword(KeywordSkip) != nil:
-		if p.tryConsumeKeyword(KeywordRegexp) != nil {
+	case p.tryConsumeKeywords(KeywordSkip):
+		if p.tryConsumeKeywords(KeywordRegexp) {
 			regex, err := p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
@@ -1022,7 +1021,7 @@ func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedType, error) {
 }
 
 func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
-	if p.tryConsumeKeyword(KeywordCodec) == nil {
+	if !p.tryConsumeKeywords(KeywordCodec) {
 		return nil, nil // nolint
 	}
 
