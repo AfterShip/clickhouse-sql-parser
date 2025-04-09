@@ -69,7 +69,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 }
 
 func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
-	if err := p.consumeKeyword(KeywordDatabase); err != nil {
+	if err := p.expectKeyword(KeywordDatabase); err != nil {
 		return nil, err
 	}
 
@@ -113,7 +113,7 @@ func (p *Parser) parseCreateTable(pos Pos) (*CreateTable, error) {
 
 	createTable.HasTemporary = p.tryConsumeKeyword(KeywordTemporary) != nil
 
-	if err := p.consumeKeyword(KeywordTable); err != nil {
+	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
 
@@ -295,7 +295,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 	switch {
 	case p.matchTokenKind(TokenKindLParen):
 		// parse column definitions
-		if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+		if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 			return nil, err
 		}
 
@@ -305,7 +305,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 		}
 
 		rightParenPos := p.Pos()
-		if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+		if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 		return &TableSchemaClause{
@@ -383,7 +383,7 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 			if err != nil {
 				return nil, err
 			}
-			if err := p.consumeKeyword(KeywordCheck); err != nil {
+			if err := p.expectKeyword(KeywordCheck); err != nil {
 				return nil, err
 			}
 			expr, err := p.parseExpr(p.Pos())
@@ -539,7 +539,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 }
 
 func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -556,7 +556,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 	}
 
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -571,7 +571,7 @@ func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
 	if p.tryConsumeKeyword(KeywordOn) == nil {
 		return nil, nil // nolint
 	}
-	if err := p.consumeKeyword(KeywordCluster); err != nil {
+	if err := p.expectKeyword(KeywordCluster); err != nil {
 		return nil, err
 	}
 
@@ -599,7 +599,7 @@ func (p *Parser) tryParsePartitionByClause(pos Pos) (*PartitionByClause, error) 
 		return nil, nil // nolint
 	}
 
-	if err := p.consumeKeyword(KeywordBy); err != nil {
+	if err := p.expectKeyword(KeywordBy); err != nil {
 		return nil, err
 	}
 
@@ -619,7 +619,7 @@ func (p *Parser) tryParsePrimaryKeyClause(pos Pos) (*PrimaryKeyClause, error) {
 		return nil, nil // nolint
 	}
 
-	if err := p.consumeKeyword(KeywordKey); err != nil {
+	if err := p.expectKeyword(KeywordKey); err != nil {
 		return nil, err
 	}
 
@@ -639,7 +639,7 @@ func (p *Parser) tryParseOrderByClause(pos Pos) (*OrderByClause, error) {
 		return nil, nil // nolint
 	}
 
-	if err := p.consumeKeyword(KeywordBy); err != nil {
+	if err := p.expectKeyword(KeywordBy); err != nil {
 		return nil, err
 	}
 	return p.parseOrderByClause(pos)
@@ -824,7 +824,7 @@ func (p *Parser) tryParseSampleByClause(pos Pos) (*SampleByClause, error) {
 		return nil, nil // nolint
 	}
 
-	if err := p.consumeKeyword(KeywordBy); err != nil {
+	if err := p.expectKeyword(KeywordBy); err != nil {
 		return nil, err
 	}
 
@@ -874,7 +874,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(TokenKindSingleEQ); err != nil {
+	if _, err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
 		return nil, err
 	}
 
@@ -910,7 +910,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 }
 
 func (p *Parser) parseDestinationClause(pos Pos) (*DestinationClause, error) {
-	if err := p.consumeKeyword(KeywordTo); err != nil {
+	if err := p.expectKeyword(KeywordTo); err != nil {
 		return nil, err
 	}
 
@@ -932,7 +932,7 @@ func (p *Parser) tryParseEngineExpr(pos Pos) (*EngineExpr, error) {
 }
 
 func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
-	if err := p.consumeKeyword(KeywordEngine); err != nil {
+	if err := p.expectKeyword(KeywordEngine); err != nil {
 		return nil, err
 	}
 	_ = p.tryConsumeTokenKind(TokenKindSingleEQ)
@@ -1082,7 +1082,7 @@ func (p *Parser) ParseStmts() ([]Expr, error) {
 }
 
 func (p *Parser) parseUseStmt(pos Pos) (*UseStmt, error) {
-	if err := p.consumeKeyword(KeywordUse); err != nil {
+	if err := p.expectKeyword(KeywordUse); err != nil {
 		return nil, err
 	}
 
@@ -1100,13 +1100,13 @@ func (p *Parser) parseUseStmt(pos Pos) (*UseStmt, error) {
 
 // syntax: TRUNCATE TEMPORARY? TABLE (IF EXISTS)? tableIdentifier clusterClause?;
 func (p *Parser) parseTruncateTable(pos Pos) (*TruncateTable, error) {
-	if err := p.consumeKeyword(KeywordTruncate); err != nil {
+	if err := p.expectKeyword(KeywordTruncate); err != nil {
 		return nil, err
 	}
 
 	isTemporary := p.tryConsumeKeyword(KeywordTemporary) != nil
 
-	if err := p.consumeKeyword(KeywordTable); err != nil {
+	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
 
@@ -1142,10 +1142,10 @@ func (p *Parser) parseTruncateTable(pos Pos) (*TruncateTable, error) {
 }
 
 func (p *Parser) parseDeleteClause(pos Pos) (*DeleteClause, error) {
-	if err := p.consumeKeyword(KeywordDelete); err != nil {
+	if err := p.expectKeyword(KeywordDelete); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordFrom); err != nil {
+	if err := p.expectKeyword(KeywordFrom); err != nil {
 		return nil, err
 	}
 	tableIdentifier, err := p.parseTableIdentifier(p.Pos())
@@ -1157,7 +1157,7 @@ func (p *Parser) parseDeleteClause(pos Pos) (*DeleteClause, error) {
 		return nil, err
 	}
 
-	if err := p.consumeKeyword(KeywordWhere); err != nil {
+	if err := p.expectKeyword(KeywordWhere); err != nil {
 		return nil, err
 	}
 	whereExpr, err := p.parseExpr(p.Pos())
@@ -1174,7 +1174,7 @@ func (p *Parser) parseDeleteClause(pos Pos) (*DeleteClause, error) {
 }
 
 func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1191,7 +1191,7 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ColumnNamesExpr{
@@ -1202,7 +1202,7 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 }
 
 func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1225,7 +1225,7 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -1237,10 +1237,10 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 }
 
 func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
-	if err := p.consumeKeyword(KeywordInsert); err != nil {
+	if err := p.expectKeyword(KeywordInsert); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordInto); err != nil {
+	if err := p.expectKeyword(KeywordInto); err != nil {
 		return nil, err
 	}
 	_ = p.tryConsumeKeyword(KeywordTable)
@@ -1305,7 +1305,7 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 }
 
 func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
-	if err := p.consumeKeyword(KeywordRename); err != nil {
+	if err := p.expectKeyword(KeywordRename); err != nil {
 		return nil, err
 	}
 
@@ -1316,7 +1316,7 @@ func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
 	case p.tryConsumeKeyword(KeywordDatabase) != nil:
 		renameTarget = KeywordDatabase
 	default:
-		if err := p.consumeKeyword(KeywordTable); err != nil {
+		if err := p.expectKeyword(KeywordTable); err != nil {
 			return nil, err
 		}
 	}
@@ -1359,7 +1359,7 @@ func (p *Parser) parseTargetPair(_ Pos) (*TargetPair, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err = p.consumeKeyword(KeywordTo); err != nil {
+	if err = p.expectKeyword(KeywordTo); err != nil {
 		return nil, err
 	}
 	newTable, err := p.parseTableIdentifier(p.Pos())
@@ -1374,7 +1374,7 @@ func (p *Parser) parseTargetPair(_ Pos) (*TargetPair, error) {
 }
 
 func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
-	if err := p.consumeKeyword(KeywordFunction); err != nil {
+	if err := p.expectKeyword(KeywordFunction); err != nil {
 		return nil, err
 	}
 	ifNotExists, err := p.tryParseIfNotExists()
@@ -1389,14 +1389,14 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordAs); err != nil {
+	if err := p.expectKeyword(KeywordAs); err != nil {
 		return nil, err
 	}
 	params, err := p.parseFunctionParams(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(TokenKindArrow); err != nil {
+	if _, err := p.expectTokenKind(TokenKindArrow); err != nil {
 		return nil, err
 	}
 	expr, err := p.parseExpr(p.Pos())

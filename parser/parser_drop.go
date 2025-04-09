@@ -1,7 +1,7 @@
 package parser
 
 func (p *Parser) parseDropDatabase(pos Pos) (*DropDatabase, error) {
-	if err := p.consumeKeyword(KeywordDatabase); err != nil {
+	if err := p.expectKeyword(KeywordDatabase); err != nil {
 		return nil, err
 	}
 
@@ -44,7 +44,7 @@ func (p *Parser) parseDropStmt(pos Pos) (*DropStmt, error) {
 		dropTarget = KeywordView
 	default:
 		isTemporary = p.tryConsumeKeyword(KeywordTemporary) != nil
-		if err := p.consumeKeyword(KeywordTable); err != nil {
+		if err := p.expectKeyword(KeywordTable); err != nil {
 			return nil, err
 		}
 	}
@@ -86,7 +86,7 @@ func (p *Parser) tryParseModifier() (string, error) {
 	case p.tryConsumeKeyword(KeywordSync) != nil:
 		return "SYNC", nil
 	case p.tryConsumeKeyword(KeywordNo) != nil:
-		if err := p.consumeKeyword(KeywordDelay); err != nil {
+		if err := p.expectKeyword(KeywordDelay); err != nil {
 			return "", err
 		}
 		return "NO DELAY", nil

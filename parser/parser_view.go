@@ -3,10 +3,10 @@ package parser
 import "fmt"
 
 func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, error) {
-	if err := p.consumeKeyword(KeywordMaterialized); err != nil {
+	if err := p.expectKeyword(KeywordMaterialized); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordView); err != nil {
+	if err := p.expectKeyword(KeywordView); err != nil {
 		return nil, err
 	}
 
@@ -80,7 +80,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 
 // (ATTACH | CREATE) (OR REPLACE)? VIEW (IF NOT EXISTS)? tableIdentifier uuidClause? clusterClause? tableSchemaClause? subqueryClause
 func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
-	if err := p.consumeKeyword(KeywordView); err != nil {
+	if err := p.expectKeyword(KeywordView); err != nil {
 		return nil, err
 	}
 
@@ -133,11 +133,11 @@ func (p *Parser) parseCreateView(pos Pos) (*CreateView, error) {
 // (ATTACH | CREATE) LIVE VIEW (IF NOT EXISTS)? tableIdentifier uuidClause?
 // clusterClause? (WITH TIMEOUT DECIMAL_LITERAL?)? destinationClause? tableSchemaClause? subqueryClause
 func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
-	if err := p.consumeKeyword(KeywordLive); err != nil {
+	if err := p.expectKeyword(KeywordLive); err != nil {
 		return nil, err
 	}
 
-	if err := p.consumeKeyword(KeywordView); err != nil {
+	if err := p.expectKeyword(KeywordView); err != nil {
 		return nil, err
 	}
 
@@ -206,7 +206,7 @@ func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutClause, error) {
 	if p.tryConsumeKeyword(KeywordWith) == nil {
 		return nil, nil // nolint
 	}
-	if err := p.consumeKeyword(KeywordTimeout); err != nil {
+	if err := p.expectKeyword(KeywordTimeout); err != nil {
 		return nil, err
 	}
 

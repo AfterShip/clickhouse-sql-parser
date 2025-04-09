@@ -103,7 +103,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			if err != nil {
 				return nil, err
 			}
-			if _, err = p.consumeTokenKind(TokenKindLParen); err != nil {
+			if _, err = p.expectTokenKind(TokenKindLParen); err != nil {
 				return nil, err
 			}
 			// it's a tuple type definition after "::" operator
@@ -131,7 +131,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return p.parseBetweenClause(expr)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
-		if p.consumeKeyword(KeywordIn) != nil {
+		if p.expectKeyword(KeywordIn) != nil {
 			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.lastTokenKind())
 		}
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
@@ -198,7 +198,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 	case p.matchKeyword(KeywordIs):
 		_ = p.lexer.consumeToken()
 		isNotNull := p.tryConsumeKeyword(KeywordNot) != nil
-		if err := p.consumeKeyword(KeywordNull); err != nil {
+		if err := p.expectKeyword(KeywordNull); err != nil {
 			return nil, err
 		}
 		if isNotNull {
@@ -240,14 +240,14 @@ func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
 }
 
 func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
-	if _, err := p.consumeTokenKind(TokenKindQuestionMark); err != nil {
+	if _, err := p.expectTokenKind(TokenKindQuestionMark); err != nil {
 		return nil, err
 	}
 	trueExpr, err := p.parseExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(TokenKindColon); err != nil {
+	if _, err := p.expectTokenKind(TokenKindColon); err != nil {
 		return nil, err
 	}
 	falseExpr, err := p.parseExpr(p.Pos())
@@ -262,10 +262,10 @@ func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
 }
 
 func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
-	if err := p.consumeKeyword(KeywordExtract); err != nil {
+	if err := p.expectKeyword(KeywordExtract); err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -279,7 +279,7 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 	}
 
 	fromPos := p.Pos()
-	if err := p.consumeKeyword(KeywordFrom); err != nil {
+	if err := p.expectKeyword(KeywordFrom); err != nil {
 		return nil, err
 	}
 
@@ -287,7 +287,7 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ExtractExpr{
@@ -393,11 +393,11 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 }
 
 func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
-	if err := p.consumeKeyword(KeywordCast); err != nil {
+	if err := p.expectKeyword(KeywordCast); err != nil {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -428,7 +428,7 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -503,7 +503,7 @@ func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
 
 // Syntax: INTERVAL expr interval
 func (p *Parser) parseColumnExprInterval(pos Pos) (Expr, error) {
-	if err := p.consumeKeyword(KeywordInterval); err != nil {
+	if err := p.expectKeyword(KeywordInterval); err != nil {
 		return nil, err
 	}
 
@@ -546,7 +546,7 @@ func (p *Parser) parseFunctionExpr(_ Pos) (*FunctionExpr, error) {
 }
 
 func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 	distinct := false
@@ -565,7 +565,7 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ColumnArgList{
@@ -577,7 +577,7 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 }
 
 func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 	params, err := p.parseColumnExprListWithLParen(p.Pos())
@@ -585,7 +585,7 @@ func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {
 		return nil, err
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	paramExprList := &ParamExprList{
@@ -608,7 +608,7 @@ func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {
 }
 
 func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
-	if _, err := p.consumeTokenKind(TokenKindLBrace); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLBrace); err != nil {
 		return nil, err
 	}
 
@@ -618,7 +618,7 @@ func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
 		if err != nil {
 			return nil, err
 		}
-		if _, err := p.consumeTokenKind(TokenKindColon); err != nil {
+		if _, err := p.expectTokenKind(TokenKindColon); err != nil {
 			return nil, err
 		}
 		value, err := p.parseExpr(p.Pos())
@@ -634,7 +634,7 @@ func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
 		}
 	}
 	rightBracePos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRBrace); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRBrace); err != nil {
 		return nil, err
 	}
 	return &MapLiteral{
@@ -645,7 +645,7 @@ func (p *Parser) parseMapLiteral(pos Pos) (*MapLiteral, error) {
 }
 
 func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
-	if _, err := p.consumeTokenKind(TokenKindLBrace); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLBrace); err != nil {
 		return nil, err
 	}
 
@@ -653,7 +653,7 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.consumeTokenKind(TokenKindColon); err != nil {
+	if _, err := p.expectTokenKind(TokenKindColon); err != nil {
 		return nil, err
 	}
 	columnType, err := p.parseColumnType(p.Pos())
@@ -661,7 +661,7 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 		return nil, err
 	}
 	rightBracePos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRBrace); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRBrace); err != nil {
 		return nil, err
 	}
 	return &QueryParam{
@@ -673,7 +673,7 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 }
 
 func (p *Parser) parseArrayParams(pos Pos) (*ArrayParamList, error) {
-	if _, err := p.consumeTokenKind(TokenKindLBracket); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLBracket); err != nil {
 		return nil, err
 	}
 	params, err := p.parseColumnExprListWithSquareBracket(p.Pos())
@@ -681,7 +681,7 @@ func (p *Parser) parseArrayParams(pos Pos) (*ArrayParamList, error) {
 		return nil, err
 	}
 	rightBracketPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRBracket); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRBracket); err != nil {
 		return nil, err
 	}
 	return &ArrayParamList{
@@ -749,7 +749,7 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 	// CASE expr
 	caseExpr := &CaseExpr{CasePos: pos}
-	if err := p.consumeKeyword(KeywordCase); err != nil {
+	if err := p.expectKeyword(KeywordCase); err != nil {
 		return nil, err
 	}
 
@@ -773,7 +773,7 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 		}
 
 		thenPos := p.Pos()
-		if err := p.consumeKeyword(KeywordThen); err != nil {
+		if err := p.expectKeyword(KeywordThen); err != nil {
 			return nil, err
 		}
 		thenCondition, err := p.parseExpr(p.Pos())
@@ -800,7 +800,7 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 		caseExpr.Else = elseExpr
 	}
 
-	if err := p.consumeKeyword(KeywordEnd); err != nil {
+	if err := p.expectKeyword(KeywordEnd); err != nil {
 		return nil, err
 	}
 
@@ -863,7 +863,7 @@ func (p *Parser) parseComplexType(name *Ident, pos Pos) (*ComplexType, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ComplexType{
@@ -896,7 +896,7 @@ func (p *Parser) parseEnumType(name *Ident, pos Pos) (*EnumType, error) {
 	if len(enumType.Values) > 0 {
 		enumType.ListEnd = enumType.Values[len(enumType.Values)-1].Value.NumEnd
 	}
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return enumType, nil
@@ -918,7 +918,7 @@ func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParam
 	}
 
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &TypeWithParams{
@@ -991,7 +991,7 @@ func (p *Parser) parseJSONType(name *Ident, pos Pos) (*JSONType, error) {
 	}
 
 	rparenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &JSONType{
@@ -1010,7 +1010,7 @@ func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedType, error) {
 		return nil, err
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &NestedType{
@@ -1026,7 +1026,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 		return nil, nil // nolint
 	}
 
-	if _, err := p.consumeTokenKind(TokenKindLParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1048,7 +1048,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 			return nil, err
 		}
 		// consume comma
-		if _, err := p.consumeTokenKind(TokenKindComma); err != nil {
+		if _, err := p.expectTokenKind(TokenKindComma); err != nil {
 			return nil, err
 		}
 		name, err = p.parseIdent()
@@ -1068,7 +1068,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	}
 
 	rightParenPos := p.last().End
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -1088,7 +1088,7 @@ func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(TokenKindSingleEQ); err != nil {
+	if _, err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
 		return nil, err
 	}
 
@@ -1103,7 +1103,7 @@ func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
 }
 
 func (p *Parser) parseColumnStar(pos Pos) (*Ident, error) {
-	if _, err := p.consumeTokenKind("*"); err != nil {
+	if _, err := p.expectTokenKind("*"); err != nil {
 		return nil, err
 	}
 	return &Ident{
@@ -1123,7 +1123,7 @@ func (p *Parser) tryParseCompressionLevel(pos Pos) (*NumberLiteral, error) {
 		return nil, err
 	}
 
-	if _, err := p.consumeTokenKind(TokenKindRParen); err != nil {
+	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return num, nil

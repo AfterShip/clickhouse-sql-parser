@@ -6,7 +6,7 @@ import (
 )
 
 func (p *Parser) parseSetStmt(pos Pos) (*SetStmt, error) {
-	if err := p.consumeKeyword(KeywordSet); err != nil {
+	if err := p.expectKeyword(KeywordSet); err != nil {
 		return nil, err
 	}
 	settings, err := p.parseSettingsClause(p.Pos())
@@ -20,7 +20,7 @@ func (p *Parser) parseSetStmt(pos Pos) (*SetStmt, error) {
 }
 
 func (p *Parser) parseSystemFlushExpr(pos Pos) (*SystemFlushExpr, error) {
-	if err := p.consumeKeyword(KeywordFlush); err != nil {
+	if err := p.expectKeyword(KeywordFlush); err != nil {
 		return nil, err
 	}
 
@@ -49,7 +49,7 @@ func (p *Parser) parseSystemFlushExpr(pos Pos) (*SystemFlushExpr, error) {
 }
 
 func (p *Parser) parseSystemReloadExpr(pos Pos) (*SystemReloadExpr, error) {
-	if err := p.consumeKeyword(KeywordReload); err != nil {
+	if err := p.expectKeyword(KeywordReload); err != nil {
 		return nil, err
 	}
 
@@ -75,7 +75,7 @@ func (p *Parser) parseSystemReloadExpr(pos Pos) (*SystemReloadExpr, error) {
 		}, nil
 	case p.tryConsumeKeyword("EMBEDDED") != nil:
 		lastToken := p.last()
-		if err := p.consumeKeyword(KeywordDictionaries); err != nil {
+		if err := p.expectKeyword(KeywordDictionaries); err != nil {
 			return nil, err
 		}
 		return &SystemReloadExpr{
@@ -89,10 +89,10 @@ func (p *Parser) parseSystemReloadExpr(pos Pos) (*SystemReloadExpr, error) {
 }
 
 func (p *Parser) parseSystemSyncExpr(pos Pos) (*SystemSyncExpr, error) {
-	if err := p.consumeKeyword(KeywordSync); err != nil {
+	if err := p.expectKeyword(KeywordSync); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordReplica); err != nil {
+	if err := p.expectKeyword(KeywordReplica); err != nil {
 		return nil, err
 	}
 	cluster, err := p.parseTableIdentifier(p.Pos())
@@ -124,7 +124,7 @@ func (p *Parser) parseSystemCtrlExpr(pos Pos) (*SystemCtrlExpr, error) {
 			typ = "MERGES"
 		case p.matchKeyword(KeywordTtl):
 			typ = "TTL MERGES"
-			if err := p.consumeKeyword(KeywordMerges); err != nil {
+			if err := p.expectKeyword(KeywordMerges); err != nil {
 				return nil, err
 			}
 		default:
@@ -143,7 +143,7 @@ func (p *Parser) parseSystemCtrlExpr(pos Pos) (*SystemCtrlExpr, error) {
 		}, nil
 	case p.tryConsumeKeyword(KeywordReplicated) != nil:
 		lastToken := p.last()
-		if err := p.consumeKeyword(KeywordSends); err != nil {
+		if err := p.expectKeyword(KeywordSends); err != nil {
 			return nil, err
 		}
 		typ = "REPLICATED SENDS"
@@ -159,7 +159,7 @@ func (p *Parser) parseSystemCtrlExpr(pos Pos) (*SystemCtrlExpr, error) {
 }
 
 func (p *Parser) parseSystemDropExpr(pos Pos) (*SystemDropExpr, error) {
-	if err := p.consumeKeyword(KeywordDrop); err != nil {
+	if err := p.expectKeyword(KeywordDrop); err != nil {
 		return nil, err
 	}
 	switch {
@@ -171,7 +171,7 @@ func (p *Parser) parseSystemDropExpr(pos Pos) (*SystemDropExpr, error) {
 		prefixToken := p.last()
 		_ = p.lexer.consumeToken()
 		lastToken := p.last()
-		if err := p.consumeKeyword(KeywordCache); err != nil {
+		if err := p.expectKeyword(KeywordCache); err != nil {
 			return nil, err
 		}
 		return &SystemDropExpr{
@@ -181,11 +181,11 @@ func (p *Parser) parseSystemDropExpr(pos Pos) (*SystemDropExpr, error) {
 		}, nil
 	case p.matchKeyword(KeywordCompiled):
 		_ = p.lexer.consumeToken()
-		if err := p.consumeKeyword(KeywordExpression); err != nil {
+		if err := p.expectKeyword(KeywordExpression); err != nil {
 			return nil, err
 		}
 		lastToken := p.last()
-		if err := p.consumeKeyword(KeywordCache); err != nil {
+		if err := p.expectKeyword(KeywordCache); err != nil {
 			return nil, err
 		}
 		return &SystemDropExpr{
@@ -206,7 +206,7 @@ func (p *Parser) tryParseDeduplicateClause(pos Pos) (*DeduplicateClause, error) 
 }
 
 func (p *Parser) parseDeduplicateClause(pos Pos) (*DeduplicateClause, error) {
-	if err := p.consumeKeyword(KeywordDeduplicate); err != nil {
+	if err := p.expectKeyword(KeywordDeduplicate); err != nil {
 		return nil, err
 	}
 	if p.tryConsumeKeyword(KeywordBy) == nil {
@@ -234,10 +234,10 @@ func (p *Parser) parseDeduplicateClause(pos Pos) (*DeduplicateClause, error) {
 }
 
 func (p *Parser) parseOptimizeStmt(pos Pos) (*OptimizeStmt, error) {
-	if err := p.consumeKeyword(KeywordOptimize); err != nil {
+	if err := p.expectKeyword(KeywordOptimize); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordTable); err != nil {
+	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
 
@@ -290,7 +290,7 @@ func (p *Parser) parseOptimizeStmt(pos Pos) (*OptimizeStmt, error) {
 }
 
 func (p *Parser) parseSystemStmt(pos Pos) (*SystemStmt, error) {
-	if err := p.consumeKeyword(KeywordSystem); err != nil {
+	if err := p.expectKeyword(KeywordSystem); err != nil {
 		return nil, err
 	}
 
@@ -320,10 +320,10 @@ func (p *Parser) parseSystemStmt(pos Pos) (*SystemStmt, error) {
 }
 
 func (p *Parser) parseCheckStmt(pos Pos) (*CheckStmt, error) {
-	if err := p.consumeKeyword(KeywordCheck); err != nil {
+	if err := p.expectKeyword(KeywordCheck); err != nil {
 		return nil, err
 	}
-	if err := p.consumeKeyword(KeywordTable); err != nil {
+	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
 	table, err := p.parseTableIdentifier(p.Pos())
@@ -455,7 +455,7 @@ func (p *Parser) parseRoleSettings(_ Pos) ([]*RoleSetting, error) {
 }
 
 func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
-	if err := p.consumeKeyword(KeywordRole); err != nil {
+	if err := p.expectKeyword(KeywordRole); err != nil {
 		return nil, err
 	}
 
@@ -464,16 +464,16 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 	switch {
 	case p.matchKeyword(KeywordIf):
 		_ = p.lexer.consumeToken()
-		if err := p.consumeKeyword(KeywordNot); err != nil {
+		if err := p.expectKeyword(KeywordNot); err != nil {
 			return nil, err
 		}
-		if err := p.consumeKeyword(KeywordExists); err != nil {
+		if err := p.expectKeyword(KeywordExists); err != nil {
 			return nil, err
 		}
 		ifNotExists = true
 	case p.matchKeyword(KeywordOr):
 		_ = p.lexer.consumeToken()
-		if err := p.consumeKeyword(KeywordReplace); err != nil {
+		if err := p.expectKeyword(KeywordReplace); err != nil {
 			return nil, err
 		}
 		orReplace = true
@@ -633,12 +633,12 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 			return nil, fmt.Errorf("expected COLUMN|INDEX")
 		}
 	case p.tryConsumeKeyword(KeywordOrder) != nil:
-		if err := p.consumeKeyword(KeywordBy); err != nil {
+		if err := p.expectKeyword(KeywordBy); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordOrder, KeywordBy)
 	case p.tryConsumeKeyword(KeywordSample) != nil:
-		if err := p.consumeKeyword(KeywordBy); err != nil {
+		if err := p.expectKeyword(KeywordBy); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordSample, KeywordBy)
@@ -658,7 +658,7 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
-		if err := p.consumeKeyword(KeywordPartition); err != nil {
+		if err := p.expectKeyword(KeywordPartition); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordPartition)
@@ -681,12 +681,12 @@ func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeClause, error) {
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
 	case p.tryConsumeKeyword(KeywordTemporary) != nil:
-		if err := p.consumeKeyword(KeywordTable); err != nil {
+		if err := p.expectKeyword(KeywordTable); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordTemporary, KeywordTable)
 	case p.tryConsumeKeyword(KeywordRows) != nil:
-		if err := p.consumeKeyword(KeywordPolicy); err != nil {
+		if err := p.expectKeyword(KeywordPolicy); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordRows, KeywordPolicy)
@@ -751,7 +751,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
-			if err := p.consumeKeyword(KeywordCache); err != nil {
+			if err := p.expectKeyword(KeywordCache); err != nil {
 				return nil, err
 			}
 			keywords = append(keywords, KeywordCache)
@@ -781,7 +781,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 		}
 	case p.tryConsumeKeyword(KeywordTtl) != nil:
 		keywords = append(keywords, KeywordTtl)
-		if err := p.consumeKeyword(KeywordMerges); err != nil {
+		if err := p.expectKeyword(KeywordMerges); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordMerges)
@@ -789,13 +789,13 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
-		if err := p.consumeKeyword(KeywordReplica); err != nil {
+		if err := p.expectKeyword(KeywordReplica); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordReplica)
 	case p.tryConsumeKeyword(KeywordReplication) != nil:
 		keywords = append(keywords, KeywordReplication)
-		if err := p.consumeKeyword(KeywordQueues); err != nil {
+		if err := p.expectKeyword(KeywordQueues); err != nil {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordQueues)
@@ -836,7 +836,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 			Keywords:     []string{KeywordAll},
 		}, nil
 	case p.tryConsumeKeyword(KeywordKill) != nil:
-		if err := p.consumeKeyword(KeywordQuery); err != nil {
+		if err := p.expectKeyword(KeywordQuery); err != nil {
 			return nil, err
 		}
 		return &PrivilegeClause{
@@ -846,7 +846,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 	case p.tryConsumeKeyword(KeywordSystem) != nil:
 		return p.parsePrivilegeSystem(pos)
 	case p.tryConsumeKeyword(KeywordAdmin) != nil:
-		if err := p.consumeKeyword(KeywordOption); err != nil {
+		if err := p.expectKeyword(KeywordOption); err != nil {
 			return nil, err
 		}
 		return &PrivilegeClause{
@@ -861,7 +861,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 			Keywords:     []string{keyword},
 		}, nil
 	case p.tryConsumeKeyword(KeywordRole) != nil:
-		if err := p.consumeKeyword(KeywordAdmin); err != nil {
+		if err := p.expectKeyword(KeywordAdmin); err != nil {
 			return nil, err
 		}
 		return &PrivilegeClause{
@@ -902,14 +902,14 @@ func (p *Parser) parseGrantOptions(_ Pos) ([]string, error) {
 }
 
 func (p *Parser) parseGrantOption(_ Pos) (string, error) {
-	if err := p.consumeKeyword(KeywordWith); err != nil {
+	if err := p.expectKeyword(KeywordWith); err != nil {
 		return "", err
 	}
 	ident, err := p.parseIdent()
 	if err != nil {
 		return "", err
 	}
-	if err := p.consumeKeyword(KeywordOption); err != nil {
+	if err := p.expectKeyword(KeywordOption); err != nil {
 		return "", err
 	}
 	return ident.Name, nil
@@ -937,7 +937,7 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 }
 
 func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
-	if err := p.consumeKeyword(KeywordGrant); err != nil {
+	if err := p.expectKeyword(KeywordGrant); err != nil {
 		return nil, err
 	}
 	onCluster, err := p.tryParseClusterClause(p.Pos())
@@ -959,7 +959,7 @@ func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 	}
 	statementEnd := privileges[len(privileges)-1].End()
 
-	if err := p.consumeKeyword(KeywordOn); err != nil {
+	if err := p.expectKeyword(KeywordOn); err != nil {
 		return nil, err
 	}
 	on, err := p.parseGrantSource(p.Pos())
@@ -967,7 +967,7 @@ func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 		return nil, err
 	}
 
-	if err := p.consumeKeyword(KeywordTo); err != nil {
+	if err := p.expectKeyword(KeywordTo); err != nil {
 		return nil, err
 	}
 	toRoles, err := p.parsePrivilegeRoles(p.Pos())
@@ -997,7 +997,7 @@ func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 }
 
 func (p *Parser) parseAlterRole(pos Pos) (*AlterRole, error) {
-	if err := p.consumeKeyword(KeywordRole); err != nil {
+	if err := p.expectKeyword(KeywordRole); err != nil {
 		return nil, err
 	}
 
@@ -1048,7 +1048,7 @@ func (p *Parser) parseRoleRenamePair(_ Pos) (*RoleRenamePair, error) {
 		StatementEnd: roleName.End(),
 	}
 	if p.tryConsumeKeyword(KeywordRename) != nil {
-		if err := p.consumeKeyword(KeywordTo); err != nil {
+		if err := p.expectKeyword(KeywordTo); err != nil {
 			return nil, err
 		}
 		newName, err := p.parseIdent()
