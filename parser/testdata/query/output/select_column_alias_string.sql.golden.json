@@ -36,5 +36,59 @@
     "UnionAll": null,
     "UnionDistinct": null,
     "Except": null
+  },
+  {
+    "SelectPos": 27,
+    "StatementEnd": 52,
+    "With": null,
+    "Top": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "$abc",
+          "QuoteType": 1,
+          "NamePos": 34,
+          "NameEnd": 38
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "a$$bc",
+          "QuoteType": 1,
+          "NamePos": 40,
+          "NameEnd": 45
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "abc$$",
+          "QuoteType": 1,
+          "NamePos": 47,
+          "NameEnd": 52
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
   }
 ]
