@@ -13,5 +13,5 @@ func IsIdentStart(c byte) bool {
 }
 
 func IsIdentPart(c byte) bool {
-	return '0' <= c && c <= '9' || 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z' || c == '_'
+	return '0' <= c && c <= '9' || 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z' || c == '_' || c == '$'
 }

@@ -188,7 +188,7 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 
 	i := 0
 	if quoteType == Unquoted {
-		if l.peekN(i) == '$' {
+		if l.peekOk(i) && l.peekN(i) == '$' {
 			i++
 		}
 		for l.peekOk(i) && IsIdentPart(l.peekN(i)) {
