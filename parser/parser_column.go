@@ -333,7 +333,23 @@ func (p *Parser) peekTokenKind(kind TokenKind) bool {
 	return token.Kind == kind
 }
 
+func (p *Parser) peekKeyword(keyword string) bool {
+	if p.lexer.isEOF() {
+		return false
+	}
+	token, err := p.lexer.peekToken()
+	if err != nil || token == nil {
+		return false
+	}
+	return token.Kind == TokenKindKeyword && strings.EqualFold(token.String, keyword)
+}
+
 func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
+	// Should parse the keyword as an identifier if the keyword is followed by one of comma, `AS`.
+	// For example: `SELECT 1 as interval GROUP BY interval` is a valid syntax in ClickHouse.
+	if p.matchTokenKind(TokenKindKeyword) && (p.peekTokenKind(TokenKindComma) || p.peekKeyword(KeywordAs)) {
+		return p.parseIdent()
+	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
 		return p.parseColumnExprInterval(pos)
