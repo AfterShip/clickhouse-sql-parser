@@ -357,6 +357,7 @@
     },
     "GroupBy": {
       "GroupByPos": 239,
+      "GroupByEnd": 258,
       "AggregateType": "",
       "Expr": {
         "ListPos": 248,

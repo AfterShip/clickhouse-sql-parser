@@ -419,17 +419,22 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	var expr Expr
 	var err error
 	aggregateType := ""
-	if p.matchKeyword(KeywordCube) || p.matchKeyword(KeywordRollup) {
+	switch {
+	case p.matchKeyword(KeywordCube) || p.matchKeyword(KeywordRollup):
 		aggregateType = p.last().String
 		_ = p.lexer.consumeToken()
 		expr, err = p.parseFunctionParams(p.Pos())
-	} else {
+	case p.tryConsumeKeywords(KeywordGrouping, KeywordSets):
+		aggregateType = "GROUPING SETS"
+		expr, err = p.parseFunctionParams(p.Pos())
+	case p.tryConsumeKeywords(KeywordAll):
+		aggregateType = "ALL"
+	default:
 		expr, err = p.parseColumnExprListWithLParen(p.Pos())
 	}
 	if err != nil {
 		return nil, err
 	}
-
 	groupBy := &GroupByClause{
 		GroupByPos:    pos,
 		AggregateType: aggregateType,
@@ -449,6 +454,7 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 			return nil, fmt.Errorf("expected CUBE, ROLLUP or TOTALS, got %s", p.lastTokenKind())
 		}
 	}
+	groupBy.GroupByEnd = p.Pos()
 
 	return groupBy, nil
 }

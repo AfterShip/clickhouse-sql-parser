@@ -123,6 +123,7 @@
     },
     "GroupBy": {
       "GroupByPos": 112,
+      "GroupByEnd": 145,
       "AggregateType": "",
       "Expr": {
         "ListPos": 121,

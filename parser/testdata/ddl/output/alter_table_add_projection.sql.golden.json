@@ -50,6 +50,7 @@
             },
             "GroupBy": {
               "GroupByPos": 86,
+              "GroupByEnd": 105,
               "AggregateType": "",
               "Expr": {
                 "ListPos": 95,
