@@ -89,6 +89,7 @@ const (
 	KeywordGrant        = "GRANT"
 	KeywordGranularity  = "GRANULARITY"
 	KeywordGroup        = "GROUP"
+	KeywordGrouping     = "GROUPING"
 	KeywordHaving       = "HAVING"
 	KeywordHierarchical = "HIERARCHICAL"
 	KeywordHour         = "HOUR"
@@ -181,6 +182,7 @@ const (
 	KeywordSemi         = "SEMI"
 	KeywordSends        = "SENDS"
 	KeywordSet          = "SET"
+	KeywordSets         = "SETS"
 	KeywordSettings     = "SETTINGS"
 	KeywordShow         = "SHOW"
 	KeywordShutdown     = "SHUTDOWN"
@@ -317,6 +319,7 @@ var keywords = NewSet(
 	KeywordGrant,
 	KeywordGranularity,
 	KeywordGroup,
+	KeywordGrouping,
 	KeywordHaving,
 	KeywordHierarchical,
 	KeywordHour,
@@ -409,6 +412,7 @@ var keywords = NewSet(
 	KeywordSemi,
 	KeywordSends,
 	KeywordSet,
+	KeywordSets,
 	KeywordSettings,
 	KeywordShow,
 	KeywordShutdown,

@@ -5048,6 +5048,7 @@ func (w *PrewhereClause) Accept(visitor ASTVisitor) error {
 
 type GroupByClause struct {
 	GroupByPos    Pos
+	GroupByEnd    Pos
 	AggregateType string
 	Expr          Expr
 	WithCube      bool
@@ -5060,7 +5061,7 @@ func (g *GroupByClause) Pos() Pos {
 }
 
 func (g *GroupByClause) End() Pos {
-	return g.Expr.End()
+	return g.GroupByEnd
 }
 
 func (g *GroupByClause) String() string {
@@ -5069,7 +5070,9 @@ func (g *GroupByClause) String() string {
 	if g.AggregateType != "" {
 		builder.WriteString(g.AggregateType)
 	}
-	builder.WriteString(g.Expr.String())
+	if g.Expr != nil {
+		builder.WriteString(g.Expr.String())
+	}
 	if g.WithCube {
 		builder.WriteString(" WITH CUBE")
 	}
@@ -5085,8 +5088,10 @@ func (g *GroupByClause) String() string {
 func (g *GroupByClause) Accept(visitor ASTVisitor) error {
 	visitor.enter(g)
 	defer visitor.leave(g)
-	if err := g.Expr.Accept(visitor); err != nil {
-		return err
+	if g.Expr != nil {
+		if err := g.Expr.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitGroupByExpr(g)
 }
