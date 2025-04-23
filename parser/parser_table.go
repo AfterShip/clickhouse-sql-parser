@@ -296,7 +296,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 	switch {
 	case p.matchTokenKind(TokenKindLParen):
 		// parse column definitions
-		if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+		if err := p.expectTokenKind(TokenKindLParen); err != nil {
 			return nil, err
 		}
 
@@ -306,7 +306,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 		}
 
 		rightParenPos := p.Pos()
-		if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 		return &TableSchemaClause{
@@ -540,7 +540,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 }
 
 func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
-	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -557,7 +557,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 	}
 
 	rightParenPos := p.Pos()
-	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -875,7 +875,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		return nil, err
 	}
 
-	if _, err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
 		return nil, err
 	}
 
@@ -1175,7 +1175,7 @@ func (p *Parser) parseDeleteClause(pos Pos) (*DeleteClause, error) {
 }
 
 func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
-	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1192,7 +1192,7 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ColumnNamesExpr{
@@ -1203,7 +1203,7 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 }
 
 func (p *Parser) parseTypedPlaceholder(pos Pos) (Expr, error) {
-	if _, err := p.expectTokenKind(TokenKindLBrace); err != nil {
+	if err := p.expectTokenKind(TokenKindLBrace); err != nil {
 		return nil, err
 	}
 
@@ -1211,7 +1211,7 @@ func (p *Parser) parseTypedPlaceholder(pos Pos) (Expr, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.expectTokenKind(TokenKindColon); err != nil {
+	if err := p.expectTokenKind(TokenKindColon); err != nil {
 		return nil, err
 	}
 	columnType, err := p.parseColumnType(p.Pos())
@@ -1219,7 +1219,7 @@ func (p *Parser) parseTypedPlaceholder(pos Pos) (Expr, error) {
 		return nil, err
 	}
 
-	if _, err := p.expectTokenKind(TokenKindRBrace); err != nil {
+	if err := p.expectTokenKind(TokenKindRBrace); err != nil {
 		return nil, err
 	}
 	return &TypedPlaceholder{
@@ -1231,7 +1231,7 @@ func (p *Parser) parseTypedPlaceholder(pos Pos) (Expr, error) {
 }
 
 func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
-	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1257,7 +1257,7 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 		}
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 
@@ -1428,7 +1428,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := p.expectTokenKind(TokenKindArrow); err != nil {
+	if err := p.expectTokenKind(TokenKindArrow); err != nil {
 		return nil, err
 	}
 	expr, err := p.parseExpr(p.Pos())

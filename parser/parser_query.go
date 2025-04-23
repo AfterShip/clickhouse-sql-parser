@@ -111,7 +111,7 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 			return nil, err
 		}
 		if hasParen {
-			if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+			if err := p.expectTokenKind(TokenKindRParen); err != nil {
 				return nil, err
 			}
 		}
@@ -650,7 +650,7 @@ func (p *Parser) tryParseWindowClause(pos Pos) (*WindowClause, error) {
 }
 
 func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
-	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 	partitionBy, err := p.tryParsePartitionByClause(pos)
@@ -666,7 +666,7 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 		return nil, err
 	}
 	rightParenPos := p.Pos()
-	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &WindowExpr{
@@ -771,7 +771,7 @@ func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 		return nil, err
 	}
 	if hasParen {
-		if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 	}
@@ -818,7 +818,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		selectStmt.Except = exceptExpr
 	}
 	if hasParen {
-		if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 	}
@@ -1013,7 +1013,7 @@ func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
 	if !p.matchTokenKind(TokenKindLParen) {
 		return nil, nil
 	}
-	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 
@@ -1027,11 +1027,11 @@ func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
 		if p.matchTokenKind(TokenKindRParen) {
 			break
 		}
-		if _, err := p.expectTokenKind(TokenKindComma); err != nil {
+		if err := p.expectTokenKind(TokenKindComma); err != nil {
 			return nil, err
 		}
 	}
-	if _, err := p.expectTokenKind(TokenKindRParen); err != nil {
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return aliasList, nil

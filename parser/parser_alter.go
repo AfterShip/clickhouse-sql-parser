@@ -169,7 +169,7 @@ func (p *Parser) parseProjectionOrderBy(pos Pos) (*ProjectionOrderByClause, erro
 }
 
 func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelectStmt, error) {
-	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
 	with, err := p.tryParseWithClause(p.Pos())
@@ -191,13 +191,14 @@ func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelectStmt, error) {
 	if err != nil {
 		return nil, err
 	}
-	rightParen, err := p.expectTokenKind(TokenKindRParen)
-	if err != nil {
+
+	lastToken := p.last()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ProjectionSelectStmt{
 		LeftParenPos:  pos,
-		RightParenPos: rightParen.Pos,
+		RightParenPos: lastToken.Pos,
 		With:          with,
 		SelectColumns: columns,
 		GroupBy:       groupBy,
