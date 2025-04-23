@@ -41,11 +41,11 @@ func (p *Parser) matchTokenKind(kind TokenKind) bool {
 }
 
 // expectTokenKind consumes the last token if it is the given kind.
-func (p *Parser) expectTokenKind(kind TokenKind) (*Token, error) {
+func (p *Parser) expectTokenKind(kind TokenKind) error {
 	if lastToken := p.tryConsumeTokenKind(kind); lastToken != nil {
-		return lastToken, nil
+		return nil
 	}
-	return nil, fmt.Errorf("expected the last token kind is: %s, but got %s", kind, p.lastTokenKind())
+	return fmt.Errorf("expected the last token kind is: %s, but got %s", kind, p.lastTokenKind())
 }
 
 func (p *Parser) tryConsumeTokenKind(kind TokenKind) *Token {
@@ -105,8 +105,8 @@ func (p *Parser) tryParseIdent() *Ident {
 }
 
 func (p *Parser) parseIdent() (*Ident, error) {
-	lastToken, err := p.expectTokenKind(TokenKindIdent)
-	if err != nil {
+	lastToken := p.last()
+	if err := p.expectTokenKind(TokenKindIdent); err != nil {
 		return nil, err
 	}
 	ident := &Ident{
@@ -229,18 +229,18 @@ func (p *Parser) parseDecimal(pos Pos) (*NumberLiteral, error) {
 }
 
 func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
-	var lastToken *Token
 	var err error
 
+	lastToken := p.last()
 	switch {
 	case p.matchTokenKind(TokenKindInt):
-		lastToken, err = p.expectTokenKind(TokenKindInt)
+		err = p.expectTokenKind(TokenKindInt)
 	case p.matchTokenKind(TokenKindFloat):
-		lastToken, err = p.expectTokenKind(TokenKindFloat)
+		err = p.expectTokenKind(TokenKindFloat)
 	case p.matchTokenKind(TokenKindDot):
 		_ = p.lexer.consumeToken()
-		lastToken, err = p.expectTokenKind(TokenKindInt)
-		if err != nil {
+		lastToken = p.last()
+		if err := p.expectTokenKind(TokenKindInt); err != nil {
 			return nil, err
 		}
 		if lastToken.Base != 10 {
@@ -264,10 +264,11 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 }
 
 func (p *Parser) parseString(pos Pos) (*StringLiteral, error) {
-	lastToken, err := p.expectTokenKind(TokenKindString)
-	if err != nil {
+	lastToken := p.last()
+	if err := p.expectTokenKind(TokenKindString); err != nil {
 		return nil, err
 	}
+
 	str := &StringLiteral{
 		LiteralPos: pos,
 		LiteralEnd: lastToken.End,
