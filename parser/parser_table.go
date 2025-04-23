@@ -1202,6 +1202,34 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 	}, nil
 }
 
+func (p *Parser) parseTypedPlaceholder(pos Pos) (Expr, error) {
+	if _, err := p.expectTokenKind(TokenKindLBrace); err != nil {
+		return nil, err
+	}
+
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	if _, err := p.expectTokenKind(TokenKindColon); err != nil {
+		return nil, err
+	}
+	columnType, err := p.parseColumnType(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err := p.expectTokenKind(TokenKindRBrace); err != nil {
+		return nil, err
+	}
+	return &TypedPlaceholder{
+		LeftBracePos:  pos,
+		RightBracePos: p.Pos(),
+		Name:          name,
+		Type:          columnType,
+	}, nil
+}
+
 func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 	if _, err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
@@ -1214,6 +1242,9 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 		switch {
 		case p.matchTokenKind(TokenKindLParen):
 			value, err = p.parseAssignmentValues(p.Pos())
+		case p.matchTokenKind(TokenKindLBrace):
+			// placeholder with type, e.g. {a :Int32}, {b :DateTime(6)}
+			value, err = p.parseTypedPlaceholder(p.Pos())
 		default:
 			value, err = p.parseExpr(p.Pos())
 		}
