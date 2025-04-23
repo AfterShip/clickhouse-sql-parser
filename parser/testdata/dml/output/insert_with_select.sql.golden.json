@@ -2,6 +2,7 @@
   {
     "InsertPos": 0,
     "Format": null,
+    "HasTableKeyword": false,
     "Table": {
       "Database": {
         "Name": "test",

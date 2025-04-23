@@ -6730,12 +6730,13 @@ func (v *AssignmentValues) Accept(visitor ASTVisitor) error {
 }
 
 type InsertStmt struct {
-	InsertPos   Pos
-	Format      *FormatClause
-	Table       Expr
-	ColumnNames *ColumnNamesExpr
-	Values      []*AssignmentValues
-	SelectExpr  *SelectQuery
+	InsertPos       Pos
+	Format          *FormatClause
+	HasTableKeyword bool
+	Table           Expr
+	ColumnNames     *ColumnNamesExpr
+	Values          []*AssignmentValues
+	SelectExpr      *SelectQuery
 }
 
 func (i *InsertStmt) Pos() Pos {
@@ -6751,7 +6752,10 @@ func (i *InsertStmt) End() Pos {
 
 func (i *InsertStmt) String() string {
 	var builder strings.Builder
-	builder.WriteString("INSERT INTO TABLE ")
+	builder.WriteString("INSERT INTO ")
+	if i.HasTableKeyword {
+		builder.WriteString("TABLE ")
+	}
 	builder.WriteString(i.Table.String())
 	if i.ColumnNames != nil {
 		builder.WriteString(" ")
@@ -6762,11 +6766,11 @@ func (i *InsertStmt) String() string {
 		builder.WriteString(i.Format.String())
 	}
 
-	builder.WriteString(" ")
 	if i.SelectExpr != nil {
+		builder.WriteString(" ")
 		builder.WriteString(i.SelectExpr.String())
-	} else {
-		builder.WriteString("VALUES ")
+	} else if len(i.Values) > 0 {
+		builder.WriteString(" VALUES ")
 		for j, value := range i.Values {
 			if j > 0 {
 				builder.WriteString(", ")

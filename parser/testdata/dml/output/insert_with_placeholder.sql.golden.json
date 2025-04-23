@@ -2,6 +2,7 @@
   {
     "InsertPos": 0,
     "Format": null,
+    "HasTableKeyword": false,
     "Table": {
       "Database": null,
       "Table": {
@@ -164,6 +165,7 @@
   {
     "InsertPos": 133,
     "Format": null,
+    "HasTableKeyword": false,
     "Table": {
       "Database": null,
       "Table": {
