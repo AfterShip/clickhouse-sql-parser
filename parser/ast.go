@@ -3359,10 +3359,8 @@ func (t *TypedPlaceholder) String() string {
 	var builder strings.Builder
 	builder.WriteString("{")
 	builder.WriteString(t.Name.String())
-	if t.Type != nil {
-		builder.WriteByte(':')
-		builder.WriteString(t.Type.String())
-	}
+	builder.WriteByte(':')
+	builder.WriteString(t.Type.String())
 	builder.WriteString("}")
 	return builder.String()
 }
@@ -3373,10 +3371,8 @@ func (t *TypedPlaceholder) Accept(visitor ASTVisitor) error {
 	if err := t.Name.Accept(visitor); err != nil {
 		return err
 	}
-	if t.Type != nil {
-		if err := t.Type.Accept(visitor); err != nil {
-			return err
-		}
+	if err := t.Type.Accept(visitor); err != nil {
+		return err
 	}
 	return visitor.VisitTypedPlaceholder(t)
 }
