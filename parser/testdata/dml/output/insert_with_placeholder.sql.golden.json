@@ -160,5 +160,97 @@
       }
     ],
     "SelectExpr": null
+  },
+  {
+    "InsertPos": 133,
+    "Format": null,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "test_with_typed_columns",
+        "QuoteType": 1,
+        "NamePos": 145,
+        "NameEnd": 168
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 169,
+      "RightParenPos": 184,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "id",
+            "QuoteType": 1,
+            "NamePos": 170,
+            "NameEnd": 172
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "created_at",
+            "QuoteType": 1,
+            "NamePos": 174,
+            "NameEnd": 184
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": [
+      {
+        "LeftParenPos": 193,
+        "RightParenPos": 234,
+        "Values": [
+          {
+            "LeftBracePos": 194,
+            "RightBracePos": 205,
+            "Name": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 195,
+              "NameEnd": 197
+            },
+            "Type": {
+              "Name": {
+                "Name": "Int32",
+                "QuoteType": 1,
+                "NamePos": 199,
+                "NameEnd": 204
+              }
+            }
+          },
+          {
+            "LeftBracePos": 207,
+            "RightBracePos": 234,
+            "Name": {
+              "Name": "created_at",
+              "QuoteType": 1,
+              "NamePos": 208,
+              "NameEnd": 218
+            },
+            "Type": {
+              "LeftParenPos": 231,
+              "RightParenPos": 232,
+              "Name": {
+                "Name": "DateTime64",
+                "QuoteType": 1,
+                "NamePos": 220,
+                "NameEnd": 230
+              },
+              "Params": [
+                {
+                  "NumPos": 231,
+                  "NumEnd": 232,
+                  "Literal": "6",
+                  "Base": 10
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "SelectExpr": null
   }
 ]
