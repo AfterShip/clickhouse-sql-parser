@@ -1275,7 +1275,9 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 	if err := p.expectKeyword(KeywordInto); err != nil {
 		return nil, err
 	}
-	_ = p.tryConsumeKeywords(KeywordTable)
+
+	insertExpr := &InsertStmt{InsertPos: pos}
+	insertExpr.HasTableKeyword = p.tryConsumeKeywords(KeywordTable)
 
 	var table Expr
 	var err error
@@ -1287,52 +1289,43 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 	if err != nil {
 		return nil, err
 	}
+	insertExpr.Table = table
 
-	insertExpr := &InsertStmt{
-		InsertPos: pos,
-		Table:     table,
-	}
-
-	for i := 0; i < 1; i++ {
-		switch {
-		case p.matchKeyword(KeywordFormat):
-			insertExpr.Format, err = p.parseFormat(p.Pos())
-		case p.matchKeyword(KeywordValues):
-			// consume VALUES keyword
-			_ = p.lexer.consumeToken()
-		case p.matchKeyword(KeywordSelect):
-			insertExpr.SelectExpr, err = p.parseSelectQuery(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			return insertExpr, nil
-		default:
-			if insertExpr.ColumnNames == nil {
-				// columns
-				insertExpr.ColumnNames, err = p.parseColumnNamesExpr(p.Pos())
-				// need another pass to parse keywords
-				i--
-			}
-		}
-	}
-
-	if err != nil {
-		return nil, err
-	}
-
-	values := make([]*AssignmentValues, 0)
-	for !p.lexer.isEOF() {
-		value, err := p.parseAssignmentValues(p.Pos())
+	if p.matchTokenKind(TokenKindLParen) {
+		// parse column names
+		insertExpr.ColumnNames, err = p.parseColumnNamesExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		values = append(values, value)
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
-			break
-		}
 	}
-	insertExpr.Values = values
 
+	switch {
+	case p.matchKeyword(KeywordFormat):
+		insertExpr.Format, err = p.parseFormat(p.Pos())
+	case p.matchKeyword(KeywordValues):
+		// consume VALUES keyword
+		_ = p.lexer.consumeToken()
+		values := make([]*AssignmentValues, 0)
+		for !p.lexer.isEOF() {
+			value, err := p.parseAssignmentValues(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			values = append(values, value)
+			if p.tryConsumeTokenKind(TokenKindComma) == nil {
+				break
+			}
+		}
+		insertExpr.Values = values
+	case p.matchKeyword(KeywordSelect):
+		insertExpr.SelectExpr, err = p.parseSelectQuery(p.Pos())
+	default:
+		// do nothing
+	}
+	
+	if err != nil {
+		return nil, err
+	}
 	return insertExpr, nil
 }
 

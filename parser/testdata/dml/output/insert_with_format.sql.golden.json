@@ -1,0 +1,192 @@
+[
+  {
+    "InsertPos": 0,
+    "Format": null,
+    "HasTableKeyword": false,
+    "Table": {
+      "Database": {
+        "Name": "_test_1345# $.ДБ",
+        "QuoteType": 3,
+        "NamePos": 13,
+        "NameEnd": 31
+      },
+      "Table": {
+        "Name": "2. Таблица №2",
+        "QuoteType": 3,
+        "NamePos": 34,
+        "NameEnd": 56
+      }
+    },
+    "ColumnNames": null,
+    "Values": null,
+    "SelectExpr": null
+  },
+  {
+    "InsertPos": 59,
+    "Format": null,
+    "HasTableKeyword": false,
+    "Table": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 2,
+        "NamePos": 72,
+        "NameEnd": 74
+      },
+      "Table": {
+        "Name": "table_name",
+        "QuoteType": 2,
+        "NamePos": 77,
+        "NameEnd": 87
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 89,
+      "RightParenPos": 100,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "col1",
+            "QuoteType": 1,
+            "NamePos": 90,
+            "NameEnd": 94
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "col2",
+            "QuoteType": 1,
+            "NamePos": 96,
+            "NameEnd": 100
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": [
+      {
+        "LeftParenPos": 109,
+        "RightParenPos": 114,
+        "Values": [
+          {
+            "NumPos": 110,
+            "NumEnd": 111,
+            "Literal": "1",
+            "Base": 10
+          },
+          {
+            "NumPos": 113,
+            "NumEnd": 114,
+            "Literal": "2",
+            "Base": 10
+          }
+        ]
+      }
+    ],
+    "SelectExpr": null
+  },
+  {
+    "InsertPos": 117,
+    "Format": null,
+    "HasTableKeyword": false,
+    "Table": {
+      "Database": {
+        "Name": "_test_1345# $.ДБ",
+        "QuoteType": 3,
+        "NamePos": 130,
+        "NameEnd": 148
+      },
+      "Table": {
+        "Name": "2. Таблица №2",
+        "QuoteType": 3,
+        "NamePos": 151,
+        "NameEnd": 173
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 175,
+      "RightParenPos": 186,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "col1",
+            "QuoteType": 1,
+            "NamePos": 176,
+            "NameEnd": 180
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "col2",
+            "QuoteType": 1,
+            "NamePos": 182,
+            "NameEnd": 186
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": null,
+    "SelectExpr": null
+  },
+  {
+    "InsertPos": 189,
+    "Format": null,
+    "HasTableKeyword": false,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "table_name",
+        "QuoteType": 1,
+        "NamePos": 201,
+        "NameEnd": 211
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 212,
+      "RightParenPos": 223,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "col1",
+            "QuoteType": 1,
+            "NamePos": 213,
+            "NameEnd": 217
+          },
+          "DotIdent": null
+        },
+        {
+          "Ident": {
+            "Name": "col2",
+            "QuoteType": 1,
+            "NamePos": 219,
+            "NameEnd": 223
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": [
+      {
+        "LeftParenPos": 232,
+        "RightParenPos": 237,
+        "Values": [
+          {
+            "NumPos": 233,
+            "NumEnd": 234,
+            "Literal": "1",
+            "Base": 10
+          },
+          {
+            "NumPos": 236,
+            "NumEnd": 237,
+            "Literal": "2",
+            "Base": 10
+          }
+        ]
+      }
+    ],
+    "SelectExpr": null
+  }
+]
