@@ -1,4 +1,3 @@
-
 name: CI Actions
 on:
   push:
@@ -14,10 +13,13 @@ jobs:
     strategy:
       matrix:
         go-version: [1.18.x]
-        os: [ ubuntu-latest ]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
+      - name: Echo
+        run: echo "Running on ${{ matrix.os }} with Go version ${{ matrix.go-version }}"
+
       - name: Install Go
         uses: actions/setup-go@v2
         with:
@@ -26,7 +28,7 @@ jobs:
       - name: Checkout Code Base
         uses: actions/checkout@v3
         with:
-          fetch-depth: '0'
+          fetch-depth: "0"
 
       - name: Restore Go Module Cache
         uses: actions/cache@v4
