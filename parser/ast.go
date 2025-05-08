@@ -1617,7 +1617,13 @@ type CreateMaterializedView struct {
 	Name         *TableIdentifier
 	IfNotExists  bool
 	OnCluster    *ClusterClause
+	Refresh      *RefreshExpr
+	RandomizeFor *IntervalExpr
+	DependsOn    []*TableIdentifier
+	Settings     *SettingsClause
+	HasAppend    bool
 	Engine       *EngineExpr
+	HasEmpty     bool
 	Destination  *DestinationClause
 	SubQuery     *SubQuery
 	Populate     bool
@@ -1647,6 +1653,30 @@ func (c *CreateMaterializedView) String() string {
 		builder.WriteString(" ")
 		builder.WriteString(c.OnCluster.String())
 	}
+	if c.Refresh != nil {
+		builder.WriteString(" ")
+		builder.WriteString(c.Refresh.String())
+	}
+	if c.RandomizeFor != nil {
+		builder.WriteString(" RANDOMIZE FOR ")
+		builder.WriteString(c.RandomizeFor.String())
+	}
+	if c.DependsOn != nil {
+		builder.WriteString(" DEPENDS ON ")
+		for i, dep := range c.DependsOn {
+			if i > 0 {
+				builder.WriteString(", ")
+			}
+			builder.WriteString(dep.String())
+		}
+	}
+	if c.Settings != nil {
+		builder.WriteString(" ")
+		builder.WriteString(c.Settings.String())
+	}
+	if c.HasAppend {
+		builder.WriteString(" APPEND")
+	}
 	if c.Engine != nil {
 		builder.WriteString(c.Engine.String())
 	}
@@ -1657,6 +1687,9 @@ func (c *CreateMaterializedView) String() string {
 			builder.WriteString(" ")
 			builder.WriteString(c.Destination.TableSchema.String())
 		}
+	}
+	if c.HasEmpty {
+		builder.WriteString(" EMPTY")
 	}
 	if c.Populate {
 		builder.WriteString(" POPULATE ")
@@ -1681,6 +1714,28 @@ func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
 	}
 	if c.OnCluster != nil {
 		if err := c.OnCluster.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Refresh != nil {
+		if err := c.Refresh.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.RandomizeFor != nil {
+		if err := c.RandomizeFor.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.DependsOn != nil {
+		for _, dep := range c.DependsOn {
+			if err := dep.Accept(visitor); err != nil {
+				return err
+			}
+		}
+	}
+	if c.Settings != nil {
+		if err := c.Settings.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -2736,6 +2791,55 @@ func (t *TTLPolicyRuleAction) Accept(visitor ASTVisitor) error {
 		}
 	}
 	return visitor.VisitTTLPolicyItemAction(t)
+}
+
+type RefreshExpr struct {
+	RefreshPos Pos
+	Frequency  string // EVERY|AFTER
+	Interval   *IntervalExpr
+	Offset     *IntervalExpr
+}
+
+func (r *RefreshExpr) Pos() Pos {
+	return r.RefreshPos
+}
+
+func (r *RefreshExpr) End() Pos {
+	if r.Offset != nil {
+		return r.Offset.End()
+	}
+	return r.Interval.End()
+}
+
+func (r *RefreshExpr) String() string {
+	var builder strings.Builder
+	builder.WriteString("REFRESH ")
+	builder.WriteString(r.Frequency)
+	if r.Interval != nil {
+		builder.WriteString(" ")
+		builder.WriteString(r.Interval.String())
+	}
+	if r.Offset != nil {
+		builder.WriteString(" OFFSET ")
+		builder.WriteString(r.Offset.String())
+	}
+	return builder.String()
+}
+
+func (r *RefreshExpr) Accept(visitor ASTVisitor) error {
+	visitor.enter(r)
+	defer visitor.leave(r)
+	if r.Interval != nil {
+		if err := r.Interval.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if r.Offset != nil {
+		if err := r.Offset.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitRefreshExpr(r)
 }
 
 type TTLPolicyRule struct {
@@ -4102,13 +4206,18 @@ func (e *EnumType) Type() string {
 }
 
 type IntervalExpr struct {
+	// INTERVAL keyword position which might be omitted(IntervalPos = 0)
 	IntervalPos Pos
-	Expr        Expr
-	Unit        *Ident
+
+	Expr Expr
+	Unit *Ident
 }
 
 func (i *IntervalExpr) Pos() Pos {
-	return i.IntervalPos
+	if i.IntervalPos != 0 {
+		return i.IntervalPos
+	}
+	return i.Expr.Pos()
 }
 
 func (i *IntervalExpr) End() Pos {
@@ -4117,7 +4226,9 @@ func (i *IntervalExpr) End() Pos {
 
 func (i *IntervalExpr) String() string {
 	var builder strings.Builder
-	builder.WriteString("INTERVAL ")
+	if i.IntervalPos != 0 {
+		builder.WriteString("INTERVAL ")
+	}
 	builder.WriteString(i.Expr.String())
 	builder.WriteByte(' ')
 	builder.WriteString(i.Unit.String())

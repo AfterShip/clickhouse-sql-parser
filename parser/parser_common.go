@@ -70,6 +70,15 @@ func (p *Parser) matchOneOfKeywords(keywords ...string) bool {
 	return false
 }
 
+func (p *Parser) expectOneOfKeywords(keywords ...string) error {
+	if !p.matchOneOfKeywords(keywords...) {
+		expectedKeywords := strings.Join(keywords, ", ")
+		return fmt.Errorf("expected one of keywords: %s, but got %s", expectedKeywords, p.lastTokenKind())
+	}
+	_ = p.lexer.consumeToken()
+	return nil
+}
+
 func (p *Parser) expectKeyword(keyword string) error {
 	if !p.matchKeyword(keyword) {
 		return fmt.Errorf("expected keyword: %s, but got %s", keyword, p.lastTokenKind())

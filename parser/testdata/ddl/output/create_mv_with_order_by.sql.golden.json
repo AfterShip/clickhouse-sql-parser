@@ -13,6 +13,11 @@
     },
     "IfNotExists": true,
     "OnCluster": null,
+    "Refresh": null,
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
     "Engine": {
       "EnginePos": 47,
       "EngineEnd": 106,
@@ -89,6 +94,7 @@
         ]
       }
     },
+    "HasEmpty": false,
     "Destination": null,
     "SubQuery": {
       "HasParen": false,
@@ -166,6 +172,11 @@
     },
     "IfNotExists": true,
     "OnCluster": null,
+    "Refresh": null,
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
     "Engine": {
       "EnginePos": 185,
       "EngineEnd": 230,
@@ -211,6 +222,7 @@
       "Settings": null,
       "OrderBy": null
     },
+    "HasEmpty": false,
     "Destination": null,
     "SubQuery": {
       "HasParen": false,

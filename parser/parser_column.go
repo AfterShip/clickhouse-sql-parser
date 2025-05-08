@@ -274,7 +274,7 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !intervalType.Contains(strings.ToUpper(ident.Name)) {
+	if !intervalUnits.Contains(strings.ToUpper(ident.Name)) {
 		return nil, fmt.Errorf("unknown interval type: <%q>", ident.Name)
 	}
 
@@ -352,7 +352,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
-		return p.parseColumnExprInterval(pos)
+		return p.parseInterval(true)
 	case p.matchKeyword(KeywordDate), p.matchKeyword(KeywordTimestamp):
 		nextToken, err := p.lexer.peekToken()
 		if err != nil {
@@ -517,30 +517,30 @@ func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
 	return selectItems, nil
 }
 
-// Syntax: INTERVAL expr interval
-func (p *Parser) parseColumnExprInterval(pos Pos) (Expr, error) {
-	if err := p.expectKeyword(KeywordInterval); err != nil {
-		return nil, err
+func (p *Parser) parseInterval(requireKeyword bool) (*IntervalExpr, error) {
+	var intervalPos Pos
+	if requireKeyword {
+		intervalPos = p.Pos()
+		if err := p.expectKeyword(KeywordInterval); err != nil {
+			return nil, err
+		}
 	}
-
-	// store the column expr if it needs
-	columnExpr, err := p.parseExpr(p.Pos())
+	expr, err := p.parseExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 
-	// parse interval
-	ident, err := p.parseIdent()
+	unit, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}
-	if !intervalType.Contains(strings.ToUpper(ident.Name)) {
-		return nil, fmt.Errorf("unknown interval type: <%q>", ident.Name)
+	if !intervalUnits.Contains(strings.ToUpper(unit.Name)) {
+		return nil, fmt.Errorf("unknown interval type: <%q>", unit.Name)
 	}
 	return &IntervalExpr{
-		IntervalPos: pos,
-		Expr:        columnExpr,
-		Unit:        ident,
+		IntervalPos: intervalPos,
+		Expr:        expr,
+		Unit:        unit,
 	}, nil
 }
 

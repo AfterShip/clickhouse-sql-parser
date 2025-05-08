@@ -2,6 +2,20 @@ package parser
 
 import "fmt"
 
+// parseCreateMaterializedView parses a CREATE MATERIALIZED VIEW statement.
+//
+// The syntax is as follows:
+// CREATE MATERIALIZED VIEW [IF NOT EXISTS] [db.]table_name [ON CLUSTER cluster]
+// REFRESH EVERY|AFTER interval [OFFSET interval]
+// [RANDOMIZE FOR interval]
+// [DEPENDS ON [db.]name [, [db.]name [, ...]]]
+// [SETTINGS name = value [, name = value [, ...]]]
+// [APPEND]
+// [TO[db.]name] [(columns)] [ENGINE = engine]
+// [EMPTY]
+// [DEFINER = { user | CURRENT_USER }] [SQL SECURITY { DEFINER | NONE }]
+// AS SELECT ...
+// [COMMENT 'comment']
 func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, error) {
 	if err := p.expectKeyword(KeywordMaterialized); err != nil {
 		return nil, err
@@ -25,12 +39,47 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	}
 	createMaterializedView.Name = tableIdentifier
 
-	// parse ON CLUSTER clause if exists
 	onCluster, err := p.tryParseClusterClause(p.Pos())
 	if err != nil {
 		return nil, err
 	}
 	createMaterializedView.OnCluster = onCluster
+
+	refreshExpr, err := p.tryParseRefreshExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createMaterializedView.Refresh = refreshExpr
+
+	if p.tryConsumeKeywords(KeywordRandomize, KeywordFor) {
+		randomizeFor, err := p.parseInterval(false)
+		if err != nil {
+			return nil, err
+		}
+		createMaterializedView.RandomizeFor = randomizeFor
+	}
+	if p.tryConsumeKeywords(KeywordDepends, KeywordOn) {
+		dependsOnTables := make([]*TableIdentifier, 0)
+		table, err := p.parseTableIdentifier(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		dependsOnTables = append(dependsOnTables, table)
+		for p.matchTokenKind(TokenKindComma) {
+			table, err := p.parseTableIdentifier(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			dependsOnTables = append(dependsOnTables, table)
+		}
+		createMaterializedView.DependsOn = dependsOnTables
+	}
+	settings, err := p.tryParseSettingsClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createMaterializedView.Settings = settings
+	createMaterializedView.HasAppend = p.tryConsumeKeywords(KeywordAppend)
 
 	switch {
 	case p.matchKeyword(KeywordTo):
@@ -62,6 +111,8 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
 	}
+	createMaterializedView.HasEmpty = p.tryConsumeKeywords(KeywordEmpty)
+
 	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
@@ -77,6 +128,37 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	}
 	createMaterializedView.Comment = comment
 	return createMaterializedView, nil
+}
+
+func (p *Parser) tryParseRefreshExpr(pos Pos) (*RefreshExpr, error) {
+	if !p.tryConsumeKeywords(KeywordRefresh) {
+		return nil, nil // nolint
+	}
+
+	// REFRESH EVERY|AFTER interval
+	refreshExpr := &RefreshExpr{RefreshPos: pos}
+	if !p.matchOneOfKeywords(KeywordEvery, KeywordAfter) {
+		return nil, fmt.Errorf("expected EVERY or AFTER, but got %q", p.lastTokenKind())
+	}
+	refreshExpr.Frequency = p.last().String
+	_ = p.lexer.consumeToken()
+
+	interval, err := p.parseInterval(false)
+	if err != nil {
+		return nil, err
+	}
+	refreshExpr.Interval = interval
+
+	// [OFFSET interval]
+	if p.tryConsumeKeywords(KeywordOffset) {
+		offset, err := p.parseInterval(false)
+		if err != nil {
+			return nil, err
+		}
+		refreshExpr.Offset = offset
+	}
+
+	return refreshExpr, nil
 }
 
 // (ATTACH | CREATE) (OR REPLACE)? VIEW (IF NOT EXISTS)? tableIdentifier uuidClause? clusterClause? tableSchemaClause? subqueryClause
