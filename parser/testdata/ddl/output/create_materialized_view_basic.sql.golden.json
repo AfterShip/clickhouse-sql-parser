@@ -542,6 +542,8 @@
       "LiteralPos": 548,
       "LiteralEnd": 565,
       "Literal": "Comment for table"
-    }
+    },
+    "Definer": null,
+    "SQLSecurity": ""
   }
 ]

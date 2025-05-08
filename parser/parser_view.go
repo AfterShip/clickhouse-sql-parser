@@ -103,15 +103,43 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		}
 		createMaterializedView.Engine = engineExpr
 		createMaterializedView.StatementEnd = engineExpr.End()
-
-		if p.tryConsumeKeywords(KeywordPopulate) {
-			createMaterializedView.Populate = true
-			createMaterializedView.StatementEnd = p.Pos()
-		}
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
 	}
 	createMaterializedView.HasEmpty = p.tryConsumeKeywords(KeywordEmpty)
+
+	// Parse DEFINER clause
+	if p.tryConsumeKeywords(KeywordDefiner) {
+		if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+			return nil, err
+		}
+		definer, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		createMaterializedView.Definer = definer
+	}
+
+	// Parse SQL SECURITY clause
+	if p.tryConsumeKeywords(KeywordSQL, KeywordSecurity) {
+		if !p.matchOneOfKeywords(KeywordDefiner, KeywordNone) {
+			return nil, fmt.Errorf("expected DEFINER or NONE after SQL SECURITY, got %q", p.lastTokenKind())
+		}
+		createMaterializedView.SQLSecurity = p.last().String
+		_ = p.lexer.consumeToken()
+	}
+
+	// Check for POPULATE before AS SELECT - only valid with ENGINE and no Destination
+	if p.tryConsumeKeywords(KeywordPopulate) {
+		if createMaterializedView.Destination != nil {
+			return nil, fmt.Errorf("POPULATE is only allowed when using ENGINE, not with TO clause")
+		}
+		if createMaterializedView.Engine == nil {
+			return nil, fmt.Errorf("POPULATE requires ENGINE to be specified")
+		}
+		createMaterializedView.Populate = true
+		createMaterializedView.StatementEnd = p.Pos()
+	}
 
 	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())

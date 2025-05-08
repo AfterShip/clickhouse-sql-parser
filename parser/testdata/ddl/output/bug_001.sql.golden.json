@@ -571,6 +571,8 @@
       }
     },
     "Populate": false,
-    "Comment": null
+    "Comment": null,
+    "Definer": null,
+    "SQLSecurity": ""
   }
 ]
