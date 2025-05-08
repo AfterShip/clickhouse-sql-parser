@@ -307,6 +307,9 @@ func (a *AlterTable) String() string {
 func (a *AlterTable) Accept(visitor ASTVisitor) error {
 	visitor.enter(a)
 	defer visitor.leave(a)
+	if err := a.TableIdentifier.Accept(visitor); err != nil {
+		return err
+	}
 	if a.OnCluster != nil {
 		if err := a.OnCluster.Accept(visitor); err != nil {
 			return err
@@ -1583,6 +1586,9 @@ func (c *CreateTable) String() string {
 func (c *CreateTable) Accept(visitor ASTVisitor) error {
 	visitor.enter(c)
 	defer visitor.leave(c)
+	if err := c.Name.Accept(visitor); err != nil {
+		return err
+	}
 	if c.UUID != nil {
 		if err := c.UUID.Accept(visitor); err != nil {
 			return err
