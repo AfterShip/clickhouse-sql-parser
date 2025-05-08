@@ -1634,8 +1634,8 @@ type CreateMaterializedView struct {
 	SubQuery     *SubQuery
 	Populate     bool
 	Comment      *StringLiteral
-	Definer      *Ident // New field for DEFINER
-	SQLSecurity  string // New field for SQL SECURITY
+	Definer      *Ident
+	SQLSecurity  string
 }
 
 func (c *CreateMaterializedView) Pos() Pos {

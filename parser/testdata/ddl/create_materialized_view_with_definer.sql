@@ -12,4 +12,4 @@ AS (SELECT
     field_2,
 FROM event_table
 WHERE toStartOfHour(timestamp) = toStartOfHour(now() - toIntervalHour(1)))
-COMMENT 'Test comment' 
+COMMENT 'Test comment'
