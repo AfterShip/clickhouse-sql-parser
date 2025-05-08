@@ -5434,6 +5434,11 @@ func (f *BetweenClause) String() string {
 func (f *BetweenClause) Accept(visitor ASTVisitor) error {
 	visitor.enter(f)
 	defer visitor.leave(f)
+	if f.Expr != nil {
+		if err := f.Expr.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if err := f.Between.Accept(visitor); err != nil {
 		return err
 	}
