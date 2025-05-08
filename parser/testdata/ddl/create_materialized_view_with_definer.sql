@@ -1,5 +1,5 @@
 CREATE MATERIALIZED VIEW fresh_mv
-REFRESH EVERY 1 HOUR OFFSET 10 MINUTE APPEND TO error_analytics.events_export
+REFRESH EVERY 1 HOUR OFFSET 10 MINUTE APPEND TO events_export
 (
     `timestamp` DateTime64(9),
     `field_1` String,

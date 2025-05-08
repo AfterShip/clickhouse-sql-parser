@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 371,
+    "StatementEnd": 355,
     "Name": {
       "Database": null,
       "Table": {
@@ -56,48 +56,43 @@
     "Destination": {
       "ToPos": 79,
       "TableIdentifier": {
-        "Database": {
-          "Name": "error_analytics",
-          "QuoteType": 1,
-          "NamePos": 82,
-          "NameEnd": 97
-        },
+        "Database": null,
         "Table": {
           "Name": "events_export",
           "QuoteType": 1,
-          "NamePos": 98,
-          "NameEnd": 111
+          "NamePos": 82,
+          "NameEnd": 95
         }
       },
       "TableSchema": {
-        "SchemaPos": 112,
-        "SchemaEnd": 189,
+        "SchemaPos": 96,
+        "SchemaEnd": 173,
         "Columns": [
           {
-            "NamePos": 119,
-            "ColumnEnd": 142,
+            "NamePos": 103,
+            "ColumnEnd": 126,
             "Name": {
               "Ident": {
                 "Name": "timestamp",
                 "QuoteType": 3,
-                "NamePos": 119,
-                "NameEnd": 128
+                "NamePos": 103,
+                "NameEnd": 112
               },
               "DotIdent": null
             },
             "Type": {
-              "LeftParenPos": 141,
-              "RightParenPos": 142,
+              "LeftParenPos": 125,
+              "RightParenPos": 126,
               "Name": {
                 "Name": "DateTime64",
                 "QuoteType": 1,
-                "NamePos": 130,
-                "NameEnd": 140
+                "NamePos": 114,
+                "NameEnd": 124
               },
               "Params": [
                 {
-                  "NumPos": 141,
-                  "NumEnd": 142,
+                  "NumPos": 125,
+                  "NumEnd": 126,
                   "Literal": "9",
                   "Base": 10
                 }
@@ -114,14 +109,14 @@
             "CompressionCodec": null
           },
           {
-            "NamePos": 150,
-            "ColumnEnd": 165,
+            "NamePos": 134,
+            "ColumnEnd": 149,
             "Name": {
               "Ident": {
                 "Name": "field_1",
                 "QuoteType": 3,
-                "NamePos": 150,
-                "NameEnd": 157
+                "NamePos": 134,
+                "NameEnd": 141
               },
               "DotIdent": null
             },
@@ -129,8 +124,8 @@
               "Name": {
                 "Name": "String",
                 "QuoteType": 1,
-                "NamePos": 159,
-                "NameEnd": 165
+                "NamePos": 143,
+                "NameEnd": 149
               }
             },
             "NotNull": null,
@@ -144,14 +139,14 @@
             "CompressionCodec": null
           },
           {
-            "NamePos": 172,
-            "ColumnEnd": 187,
+            "NamePos": 156,
+            "ColumnEnd": 171,
             "Name": {
               "Ident": {
                 "Name": "field_2",
                 "QuoteType": 3,
-                "NamePos": 172,
-                "NameEnd": 179
+                "NamePos": 156,
+                "NameEnd": 163
               },
               "DotIdent": null
             },
@@ -159,8 +154,8 @@
               "Name": {
                 "Name": "String",
                 "QuoteType": 1,
-                "NamePos": 181,
-                "NameEnd": 187
+                "NamePos": 165,
+                "NameEnd": 171
               }
             },
             "NotNull": null,
@@ -181,8 +176,8 @@
     "SubQuery": {
       "HasParen": true,
       "Select": {
-        "SelectPos": 234,
-        "StatementEnd": 371,
+        "SelectPos": 218,
+        "StatementEnd": 355,
         "With": null,
         "Top": null,
         "SelectItems": [
@@ -190,8 +185,8 @@
             "Expr": {
               "Name": "timestamp",
               "QuoteType": 1,
-              "NamePos": 245,
-              "NameEnd": 254
+              "NamePos": 229,
+              "NameEnd": 238
             },
             "Modifiers": [],
             "Alias": null
@@ -200,8 +195,8 @@
             "Expr": {
               "Name": "field_1",
               "QuoteType": 1,
-              "NamePos": 260,
-              "NameEnd": 267
+              "NamePos": 244,
+              "NameEnd": 251
             },
             "Modifiers": [],
             "Alias": null
@@ -210,8 +205,8 @@
             "Expr": {
               "Name": "field_2",
               "QuoteType": 1,
-              "NamePos": 273,
-              "NameEnd": 280
+              "NamePos": 257,
+              "NameEnd": 264
             },
             "Modifiers": [],
             "Alias": null
@@ -220,15 +215,15 @@
             "Expr": {
               "Name": "FROM",
               "QuoteType": 1,
-              "NamePos": 282,
-              "NameEnd": 286
+              "NamePos": 266,
+              "NameEnd": 270
             },
             "Modifiers": [],
             "Alias": {
               "Name": "event_table",
               "QuoteType": 1,
-              "NamePos": 287,
-              "NameEnd": 298
+              "NamePos": 271,
+              "NameEnd": 282
             }
           }
         ],
@@ -237,29 +232,29 @@
         "Window": null,
         "Prewhere": null,
         "Where": {
-          "WherePos": 299,
+          "WherePos": 283,
           "Expr": {
             "LeftExpr": {
               "Name": {
                 "Name": "toStartOfHour",
                 "QuoteType": 1,
-                "NamePos": 305,
-                "NameEnd": 318
+                "NamePos": 289,
+                "NameEnd": 302
               },
               "Params": {
-                "LeftParenPos": 318,
-                "RightParenPos": 328,
+                "LeftParenPos": 302,
+                "RightParenPos": 312,
                 "Items": {
-                  "ListPos": 319,
-                  "ListEnd": 328,
+                  "ListPos": 303,
+                  "ListEnd": 312,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
                         "Name": "timestamp",
                         "QuoteType": 1,
-                        "NamePos": 319,
-                        "NameEnd": 328
+                        "NamePos": 303,
+                        "NameEnd": 312
                       },
                       "Alias": null
                     }
@@ -273,15 +268,15 @@
               "Name": {
                 "Name": "toStartOfHour",
                 "QuoteType": 1,
-                "NamePos": 332,
-                "NameEnd": 345
+                "NamePos": 316,
+                "NameEnd": 329
               },
               "Params": {
-                "LeftParenPos": 345,
-                "RightParenPos": 371,
+                "LeftParenPos": 329,
+                "RightParenPos": 355,
                 "Items": {
-                  "ListPos": 346,
-                  "ListEnd": 370,
+                  "ListPos": 330,
+                  "ListEnd": 354,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -290,15 +285,15 @@
                           "Name": {
                             "Name": "now",
                             "QuoteType": 1,
-                            "NamePos": 346,
-                            "NameEnd": 349
+                            "NamePos": 330,
+                            "NameEnd": 333
                           },
                           "Params": {
-                            "LeftParenPos": 349,
-                            "RightParenPos": 350,
+                            "LeftParenPos": 333,
+                            "RightParenPos": 334,
                             "Items": {
-                              "ListPos": 350,
-                              "ListEnd": 350,
+                              "ListPos": 334,
+                              "ListEnd": 334,
                               "HasDistinct": false,
                               "Items": []
                             },
@@ -310,21 +305,21 @@
                           "Name": {
                             "Name": "toIntervalHour",
                             "QuoteType": 1,
-                            "NamePos": 354,
-                            "NameEnd": 368
+                            "NamePos": 338,
+                            "NameEnd": 352
                           },
                           "Params": {
-                            "LeftParenPos": 368,
-                            "RightParenPos": 370,
+                            "LeftParenPos": 352,
+                            "RightParenPos": 354,
                             "Items": {
-                              "ListPos": 369,
-                              "ListEnd": 370,
+                              "ListPos": 353,
+                              "ListEnd": 354,
                               "HasDistinct": false,
                               "Items": [
                                 {
                                   "Expr": {
-                                    "NumPos": 369,
-                                    "NumEnd": 370,
+                                    "NumPos": 353,
+                                    "NumEnd": 354,
                                     "Literal": "1",
                                     "Base": 10
                                   },
@@ -364,15 +359,15 @@
     },
     "Populate": false,
     "Comment": {
-      "LiteralPos": 383,
-      "LiteralEnd": 395,
+      "LiteralPos": 367,
+      "LiteralEnd": 379,
       "Literal": "Test comment"
     },
     "Definer": {
       "Name": "default",
       "QuoteType": 1,
-      "NamePos": 201,
-      "NameEnd": 208
+      "NamePos": 185,
+      "NameEnd": 192
     },
     "SQLSecurity": "DEFINER"
   }
