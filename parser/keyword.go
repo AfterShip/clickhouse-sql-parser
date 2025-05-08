@@ -10,6 +10,7 @@ const (
 	KeywordAnd          = "AND"
 	KeywordAnti         = "ANTI"
 	KeywordAny          = "ANY"
+	KeywordAppend       = "APPEND"
 	KeywordApply        = "APPLY"
 	KeywordArray        = "ARRAY"
 	KeywordAs           = "AS"
@@ -48,6 +49,7 @@ const (
 	KeywordDefault      = "DEFAULT"
 	KeywordDelay        = "DELAY"
 	KeywordDelete       = "DELETE"
+	KeywordDepends      = "DEPENDS"
 	KeywordDesc         = "DESC"
 	KeywordDescending   = "DESCENDING"
 	KeywordDescribe     = "DESCRIBE"
@@ -62,10 +64,12 @@ const (
 	KeywordDNS          = "DNS"
 	KeywordElse         = "ELSE"
 	KeywordEmbedded     = "EMBEDDED"
+	KeywordEmpty        = "EMPTY"
 	KeywordEnd          = "END"
 	KeywordEngine       = "ENGINE"
 	KeywordEstimate     = "ESTIMATE"
 	KeywordEvents       = "EVENTS"
+	KeywordEvery        = "EVERY"
 	KeywordExcept       = "EXCEPT"
 	KeywordExists       = "EXISTS"
 	KeywordExplain      = "EXPLAIN"
@@ -159,6 +163,7 @@ const (
 	KeywordQuery        = "QUERY"
 	KeywordQueues       = "QUEUES"
 	KeywordQuota        = "QUOTA"
+	KeywordRandomize    = "RANDOMIZE"
 	KeywordRange        = "RANGE"
 	KeywordRecompress   = "RECOMPRESS"
 	KeywordRefresh      = "REFRESH"
@@ -241,6 +246,7 @@ var keywords = NewSet(
 	KeywordAnd,
 	KeywordAnti,
 	KeywordAny,
+	KeywordAppend,
 	KeywordApply,
 	KeywordArray,
 	KeywordAs,
@@ -279,6 +285,7 @@ var keywords = NewSet(
 	KeywordDefault,
 	KeywordDelay,
 	KeywordDelete,
+	KeywordDepends,
 	KeywordDesc,
 	KeywordDescending,
 	KeywordDescribe,
@@ -295,7 +302,10 @@ var keywords = NewSet(
 	KeywordEnd,
 	KeywordEngine,
 	KeywordEstimate,
+	KeywordEmbedded,
+	KeywordEmpty,
 	KeywordEvents,
+	KeywordEvery,
 	KeywordExcept,
 	KeywordExists,
 	KeywordExplain,
@@ -389,6 +399,7 @@ var keywords = NewSet(
 	KeywordQuery,
 	KeywordQueues,
 	KeywordQuota,
+	KeywordRandomize,
 	KeywordRange,
 	KeywordRecompress,
 	KeywordRefresh,

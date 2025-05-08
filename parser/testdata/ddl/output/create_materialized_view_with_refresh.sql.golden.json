@@ -1,0 +1,218 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 302,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "fresh_mv",
+        "QuoteType": 1,
+        "NamePos": 25,
+        "NameEnd": 33
+      }
+    },
+    "IfNotExists": false,
+    "OnCluster": null,
+    "Refresh": {
+      "RefreshPos": 34,
+      "Frequency": "EVERY",
+      "Interval": {
+        "IntervalPos": 0,
+        "Expr": {
+          "NumPos": 48,
+          "NumEnd": 49,
+          "Literal": "1",
+          "Base": 10
+        },
+        "Unit": {
+          "Name": "HOUR",
+          "QuoteType": 1,
+          "NamePos": 50,
+          "NameEnd": 54
+        }
+      },
+      "Offset": {
+        "IntervalPos": 0,
+        "Expr": {
+          "NumPos": 62,
+          "NumEnd": 64,
+          "Literal": "10",
+          "Base": 10
+        },
+        "Unit": {
+          "Name": "MINUTE",
+          "QuoteType": 1,
+          "NamePos": 65,
+          "NameEnd": 71
+        }
+      }
+    },
+    "RandomizeFor": {
+      "IntervalPos": 0,
+      "Expr": {
+        "NumPos": 86,
+        "NumEnd": 87,
+        "Literal": "1",
+        "Base": 10
+      },
+      "Unit": {
+        "Name": "SECOND",
+        "QuoteType": 1,
+        "NamePos": 88,
+        "NameEnd": 94
+      }
+    },
+    "DependsOn": [
+      {
+        "Database": null,
+        "Table": {
+          "Name": "table_v5",
+          "QuoteType": 1,
+          "NamePos": 107,
+          "NameEnd": 115
+        }
+      }
+    ],
+    "Settings": {
+      "SettingsPos": 116,
+      "ListEnd": 199,
+      "Items": [
+        {
+          "SettingsPos": 129,
+          "Name": {
+            "Name": "randomize_for",
+            "QuoteType": 1,
+            "NamePos": 129,
+            "NameEnd": 142
+          },
+          "Expr": {
+            "NumPos": 145,
+            "NumEnd": 146,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 152,
+          "Name": {
+            "Name": "randomize_offset",
+            "QuoteType": 1,
+            "NamePos": 152,
+            "NameEnd": 168
+          },
+          "Expr": {
+            "NumPos": 171,
+            "NumEnd": 173,
+            "Literal": "10",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 179,
+          "Name": {
+            "Name": "randomize_period",
+            "QuoteType": 1,
+            "NamePos": 179,
+            "NameEnd": 195
+          },
+          "Expr": {
+            "NumPos": 198,
+            "NumEnd": 199,
+            "Literal": "1",
+            "Base": 10
+          }
+        }
+      ]
+    },
+    "HasAppend": true,
+    "Engine": null,
+    "HasEmpty": true,
+    "Destination": {
+      "ToPos": 207,
+      "TableIdentifier": {
+        "Database": null,
+        "Table": {
+          "Name": "target_table_name",
+          "QuoteType": 1,
+          "NamePos": 210,
+          "NameEnd": 227
+        }
+      },
+      "TableSchema": null
+    },
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 237,
+        "StatementEnd": 302,
+        "With": null,
+        "Top": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "field_1",
+              "QuoteType": 3,
+              "NamePos": 249,
+              "NameEnd": 256
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "field_2",
+              "QuoteType": 3,
+              "NamePos": 264,
+              "NameEnd": 271
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "field_3",
+              "QuoteType": 3,
+              "NamePos": 279,
+              "NameEnd": 286
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "FROM",
+              "QuoteType": 1,
+              "NamePos": 289,
+              "NameEnd": 293
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "table_v5",
+              "QuoteType": 1,
+              "NamePos": 294,
+              "NameEnd": 302
+            }
+          }
+        ],
+        "From": null,
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": null
+  }
+]

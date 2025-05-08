@@ -26,6 +26,11 @@
         "NameEnd": 59
       }
     },
+    "Refresh": null,
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
     "Engine": {
       "EnginePos": 60,
       "EngineEnd": 190,
@@ -137,6 +142,7 @@
         ]
       }
     },
+    "HasEmpty": false,
     "Destination": null,
     "SubQuery": {
       "HasParen": false,

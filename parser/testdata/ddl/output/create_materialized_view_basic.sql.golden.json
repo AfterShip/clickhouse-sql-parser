@@ -25,7 +25,13 @@
         "Literal": "default_cluster"
       }
     },
+    "Refresh": null,
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
     "Engine": null,
+    "HasEmpty": false,
     "Destination": {
       "ToPos": 78,
       "TableIdentifier": {
