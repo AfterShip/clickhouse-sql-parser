@@ -234,6 +234,9 @@ const (
 	KeywordWindow       = "WINDOW"
 	KeywordWith         = "WITH"
 	KeywordYear         = "YEAR"
+	KeywordDefiner      = "DEFINER"
+	KeywordSQL          = "SQL"
+	KeywordSecurity     = "SECURITY"
 )
 
 var keywords = NewSet(
@@ -470,4 +473,7 @@ var keywords = NewSet(
 	KeywordWindow,
 	KeywordWith,
 	KeywordYear,
+	KeywordDefiner,
+	KeywordSQL,
+	KeywordSecurity,
 )

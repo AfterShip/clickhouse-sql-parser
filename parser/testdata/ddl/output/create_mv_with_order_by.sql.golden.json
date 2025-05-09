@@ -156,7 +156,9 @@
       }
     },
     "Populate": false,
-    "Comment": null
+    "Comment": null,
+    "Definer": null,
+    "SQLSecurity": ""
   },
   {
     "CreatePos": 138,
@@ -284,6 +286,8 @@
       }
     },
     "Populate": false,
-    "Comment": null
+    "Comment": null,
+    "Definer": null,
+    "SQLSecurity": ""
   }
 ]
