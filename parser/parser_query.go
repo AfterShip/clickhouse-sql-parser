@@ -834,7 +834,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		return nil, err
 	}
 	// DISTINCT?
-	_ = p.tryConsumeKeywords(KeywordDistinct)
+	hasDistinct := p.tryConsumeKeywords(KeywordDistinct)
 
 	top, err := p.tryParseTopClause(p.Pos())
 	if err != nil {
@@ -961,6 +961,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		SelectPos:    pos,
 		StatementEnd: statementEnd,
 		Top:          top,
+		HasDistinct:  hasDistinct,
 		SelectItems:  selectItems,
 		From:         from,
 		ArrayJoin:    arrayJoin,

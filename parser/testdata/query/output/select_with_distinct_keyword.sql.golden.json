@@ -1,41 +1,41 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 47,
+    "StatementEnd": 38,
     "With": null,
     "Top": null,
-    "HasDistinct": false,
+    "HasDistinct": true,
     "SelectItems": [
       {
         "Expr": {
-          "Name": "Timestamp",
+          "Name": "record_id",
           "QuoteType": 1,
-          "NamePos": 7,
-          "NameEnd": 16
+          "NamePos": 16,
+          "NameEnd": 25
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 17,
+      "FromPos": 26,
       "Expr": {
         "Table": {
-          "TablePos": 22,
-          "TableEnd": 28,
+          "TablePos": 31,
+          "TableEnd": 38,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
-              "Name": "events",
+              "Name": "records",
               "QuoteType": 1,
-              "NamePos": 22,
-              "NameEnd": 28
+              "NamePos": 31,
+              "NameEnd": 38
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 28,
+        "StatementEnd": 38,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -47,23 +47,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
-    "OrderBy": {
-      "OrderPos": 29,
-      "ListEnd": 47,
-      "Items": [
-        {
-          "OrderPos": 29,
-          "Expr": {
-            "Name": "Timestamp",
-            "QuoteType": 1,
-            "NamePos": 38,
-            "NameEnd": 47
-          },
-          "Alias": null,
-          "Direction": ""
-        }
-      ]
-    },
+    "OrderBy": null,
     "LimitBy": null,
     "Limit": null,
     "Settings": null,

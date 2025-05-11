@@ -5694,6 +5694,7 @@ type SelectQuery struct {
 	StatementEnd  Pos
 	With          *WithClause
 	Top           *TopClause
+	HasDistinct   bool
 	SelectItems   []*SelectItem
 	From          *FromClause
 	ArrayJoin     *ArrayJoinClause
@@ -5735,6 +5736,9 @@ func (s *SelectQuery) String() string { // nolint: funlen
 		builder.WriteString(" ")
 	}
 	builder.WriteString("SELECT ")
+	if s.HasDistinct {
+		builder.WriteString("DISTINCT ")
+	}
 	if s.Top != nil {
 		builder.WriteString(s.Top.String())
 		builder.WriteString(" ")

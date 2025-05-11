@@ -254,6 +254,7 @@
         "StatementEnd": 537,
         "With": null,
         "Top": null,
+        "HasDistinct": false,
         "SelectItems": [
           {
             "Expr": {
