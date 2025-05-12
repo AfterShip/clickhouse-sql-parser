@@ -1,0 +1,1 @@
+SELECT DISTINCT record_id FROM records 

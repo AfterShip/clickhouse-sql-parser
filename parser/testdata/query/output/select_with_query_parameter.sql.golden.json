@@ -170,6 +170,7 @@
     "StatementEnd": 218,
     "With": null,
     "Top": null,
+    "HasDistinct": false,
     "SelectItems": [
       {
         "Expr": {
@@ -314,6 +315,7 @@
     "StatementEnd": 283,
     "With": null,
     "Top": null,
+    "HasDistinct": false,
     "SelectItems": [
       {
         "Expr": {

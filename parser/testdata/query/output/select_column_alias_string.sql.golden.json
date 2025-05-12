@@ -4,6 +4,7 @@
     "StatementEnd": 23,
     "With": null,
     "Top": null,
+    "HasDistinct": false,
     "SelectItems": [
       {
         "Expr": {
@@ -42,6 +43,7 @@
     "StatementEnd": 52,
     "With": null,
     "Top": null,
+    "HasDistinct": false,
     "SelectItems": [
       {
         "Expr": {
