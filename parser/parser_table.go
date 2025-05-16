@@ -344,7 +344,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 				}
 				return &TableSchemaClause{
 					SchemaPos: pos,
-					SchemaEnd: p.last().End,
+					SchemaEnd: p.End(),
 					TableFunction: &TableFunctionExpr{
 						Name: ident,
 						Args: argsExpr,
@@ -353,7 +353,7 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 			default:
 				return &TableSchemaClause{
 					SchemaPos: pos,
-					SchemaEnd: p.last().End,
+					SchemaEnd: p.End(),
 					AliasTable: &TableIdentifier{
 						Table: ident,
 					},
@@ -1322,7 +1322,7 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 	default:
 		// do nothing
 	}
-	
+
 	if err != nil {
 		return nil, err
 	}

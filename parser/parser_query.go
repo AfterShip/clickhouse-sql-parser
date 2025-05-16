@@ -57,7 +57,7 @@ func (p *Parser) parseTopClause(pos Pos) (*TopClause, error) {
 
 	withTies := false
 	if p.tryConsumeKeywords(KeywordWith) {
-		topEnd = p.last().End
+		topEnd = p.End()
 		if err := p.expectKeyword(KeywordTies); err != nil {
 			return nil, err
 		}
@@ -196,7 +196,7 @@ func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 
 		hasFinal := p.matchKeyword(KeywordFinal)
 		if hasFinal {
-			statementEnd = p.last().End
+			statementEnd = p.End()
 			_ = p.lexer.consumeToken()
 		}
 
@@ -587,7 +587,7 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 	case p.matchKeyword(KeywordCurrent):
 		currentPos := p.Pos()
 		_ = p.lexer.consumeToken()
-		rowEnd := p.last().End
+		rowEnd := p.End()
 		if err := p.expectKeyword(KeywordRow); err != nil {
 			return nil, err
 		}
@@ -622,7 +622,7 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 		switch {
 		case p.matchKeyword(KeywordPreceding), p.matchKeyword(KeywordFollowing):
 			direction = p.last().String
-			unboundedEnd = p.last().End
+			unboundedEnd = p.End()
 			_ = p.lexer.consumeToken()
 		default:
 			return nil, fmt.Errorf("expected PRECEDING or FOLLOWING, got %s", p.lastTokenKind())

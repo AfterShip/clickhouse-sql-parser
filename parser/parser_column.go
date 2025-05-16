@@ -1082,7 +1082,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 		}
 	}
 
-	rightParenPos := p.last().End
+	rightParenPos := p.End()
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
