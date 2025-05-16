@@ -981,7 +981,7 @@ func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 		return nil, err
 	}
 	if len(options) != 0 {
-		statementEnd = p.last().End
+		statementEnd = p.End()
 	}
 
 	return &GrantPrivilegeStmt{

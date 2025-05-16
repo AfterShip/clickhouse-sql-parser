@@ -27,6 +27,13 @@ func (p *Parser) last() *Token {
 	return p.lexer.lastToken
 }
 
+func (p *Parser) End() Pos {
+	if p.last() == nil {
+		return Pos(p.lexer.current + 1)
+	}
+	return p.last().End
+}
+
 func (p *Parser) Pos() Pos {
 	last := p.last()
 	if last == nil {
