@@ -974,17 +974,17 @@ func (p *Parser) parseJSONMaxDynamicOptions(pos Pos) (*JSONOption, error) {
 		return nil, err
 	}
 
-	switch {
-	case ident.Name == "max_dynamic_types":
+	switch ident.Name {
+	case "max_dynamic_types":
 		number, err := p.parseNumber(pos)
 		if err != nil {
-			return nil, fmt.Errorf("unexpected token: %q, expected <number>", p.last().String)
+			return nil, err
 		}
 		return &JSONOption{MaxDynamicTypes: number}, nil
-	case ident.Name == "max_dynamic_paths":
+	case "max_dynamic_paths":
 		number, err := p.parseNumber(pos)
 		if err != nil {
-			return nil, fmt.Errorf("unexpected token: %q, expected <number>", p.last().String)
+			return nil, err
 		}
 		return &JSONOption{MaxDynamicPaths: number}, nil
 	default:
