@@ -694,13 +694,13 @@
                 {
                   "SkipPath": null,
                   "SkipRegex": null,
-                  "MaxDynamicPaths": null,
-                  "MaxDynamicTypes": {
+                  "MaxDynamicPaths": {
                     "NumPos": 593,
                     "NumEnd": 612,
                     "Literal": "3",
                     "Base": 10
-                  }
+                  },
+                  "MaxDynamicTypes": null
                 },
                 {
                   "SkipPath": {

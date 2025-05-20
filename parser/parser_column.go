@@ -986,7 +986,7 @@ func (p *Parser) parseJSONMaxDynamicOptions(pos Pos) (*JSONOption, error) {
 		if err != nil {
 			return nil, fmt.Errorf("unexpected token: %q, expected <number>", p.last().String)
 		}
-		return &JSONOption{MaxDynamicTypes: number}, nil
+		return &JSONOption{MaxDynamicPaths: number}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}
