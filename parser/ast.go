@@ -3716,8 +3716,10 @@ func (j *JSONPath) String() string {
 }
 
 type JSONOption struct {
-	SkipPath  *JSONPath
-	SkipRegex *StringLiteral
+	SkipPath        *JSONPath
+	SkipRegex       *StringLiteral
+	MaxDynamicPaths *NumberLiteral
+	MaxDynamicTypes *NumberLiteral
 }
 
 func (j *JSONOption) String() string {
@@ -3729,6 +3731,16 @@ func (j *JSONOption) String() string {
 	if j.SkipRegex != nil {
 		builder.WriteString(" SKIP REGEXP ")
 		builder.WriteString(j.SkipRegex.String())
+	}
+	if j.MaxDynamicPaths != nil {
+		builder.WriteString("max_dynamic_paths")
+		builder.WriteByte('=')
+		builder.WriteString(j.MaxDynamicPaths.String())
+	}
+	if j.MaxDynamicTypes != nil {
+		builder.WriteString("max_dynamic_types")
+		builder.WriteByte('=')
+		builder.WriteString(j.MaxDynamicTypes.String())
 	}
 	return builder.String()
 }
