@@ -964,6 +964,34 @@ func (p *Parser) parseJSONPath() (*JSONPath, error) {
 	}, nil
 }
 
+func (p *Parser) parseJSONMaxDynamicOptions(pos Pos) (*JSONOption, error) {
+	ident, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+		return nil, err
+	}
+
+	switch ident.Name {
+	case "max_dynamic_types":
+		number, err := p.parseNumber(pos)
+		if err != nil {
+			return nil, err
+		}
+		return &JSONOption{MaxDynamicTypes: number}, nil
+	case "max_dynamic_paths":
+		number, err := p.parseNumber(pos)
+		if err != nil {
+			return nil, err
+		}
+		return &JSONOption{MaxDynamicPaths: number}, nil
+	default:
+		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+	}
+}
+
 func (p *Parser) parseJSONOption() (*JSONOption, error) {
 	switch {
 	case p.tryConsumeKeywords(KeywordSkip):
@@ -983,6 +1011,8 @@ func (p *Parser) parseJSONOption() (*JSONOption, error) {
 		return &JSONOption{
 			SkipPath: jsonPath,
 		}, nil
+	case p.matchTokenKind(TokenKindIdent):
+		return p.parseJSONMaxDynamicOptions(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}
