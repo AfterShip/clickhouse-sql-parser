@@ -770,6 +770,13 @@ func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 	if err != nil {
 		return nil, err
 	}
+	window, err := p.tryParseWindowClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if window != nil {
+		selectQuery.Window = window
+	}
 	if hasParen {
 		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
