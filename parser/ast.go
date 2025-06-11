@@ -1220,8 +1220,7 @@ func (a *AlterTableModifyQuery) AlterType() string {
 
 func (a *AlterTableModifyQuery) String() string {
 	var builder strings.Builder
-	builder.WriteString("MODIFY ")
-	builder.WriteString("QUERY ")
+	builder.WriteString("MODIFY QUERY ")
 	builder.WriteString(a.SelectExpr.String())
 	return builder.String()
 }
