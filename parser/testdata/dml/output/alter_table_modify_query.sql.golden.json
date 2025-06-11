@@ -1,0 +1,126 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 116,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "some_mv",
+        "QuoteType": 1,
+        "NamePos": 17,
+        "NameEnd": 24
+      }
+    },
+    "OnCluster": {
+      "OnPos": 25,
+      "Expr": {
+        "Name": "cluster",
+        "QuoteType": 1,
+        "NamePos": 36,
+        "NameEnd": 43
+      }
+    },
+    "AlterExprs": [
+      {
+        "ModifyPos": 44,
+        "StatementEnd": 116,
+        "SelectExpr": {
+          "SelectPos": 57,
+          "StatementEnd": 116,
+          "With": null,
+          "Top": null,
+          "HasDistinct": false,
+          "SelectItems": [
+            {
+              "Expr": {
+                "Name": "field1",
+                "QuoteType": 1,
+                "NamePos": 64,
+                "NameEnd": 70
+              },
+              "Modifiers": [],
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "Name": "field2",
+                "QuoteType": 1,
+                "NamePos": 72,
+                "NameEnd": 78
+              },
+              "Modifiers": [],
+              "Alias": null
+            }
+          ],
+          "From": {
+            "FromPos": 79,
+            "Expr": {
+              "Table": {
+                "TablePos": 84,
+                "TableEnd": 99,
+                "Alias": null,
+                "Expr": {
+                  "Database": {
+                    "Name": "test",
+                    "QuoteType": 1,
+                    "NamePos": 84,
+                    "NameEnd": 88
+                  },
+                  "Table": {
+                    "Name": "some_table",
+                    "QuoteType": 1,
+                    "NamePos": 89,
+                    "NameEnd": 99
+                  }
+                },
+                "HasFinal": false
+              },
+              "StatementEnd": 99,
+              "SampleRatio": null,
+              "HasFinal": false
+            }
+          },
+          "ArrayJoin": null,
+          "Window": null,
+          "Prewhere": null,
+          "Where": {
+            "WherePos": 100,
+            "Expr": {
+              "LeftExpr": {
+                "Name": "count",
+                "QuoteType": 1,
+                "NamePos": 106,
+                "NameEnd": 111
+              },
+              "Operation": "\u003e=",
+              "RightExpr": {
+                "NumPos": 115,
+                "NumEnd": 116,
+                "Literal": "3",
+                "Base": 10
+              },
+              "HasGlobal": false,
+              "HasNot": false
+            }
+          },
+          "GroupBy": null,
+          "WithTotal": false,
+          "Having": null,
+          "OrderBy": null,
+          "LimitBy": null,
+          "Limit": null,
+          "Settings": null,
+          "Format": null,
+          "UnionAll": null,
+          "UnionDistinct": null,
+          "Except": null
+        }
+      }
+    ]
+  }
+]

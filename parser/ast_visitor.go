@@ -27,6 +27,7 @@ type ASTVisitor interface {
 	VisitAlterTableMaterializeProjection(expr *AlterTableMaterializeProjection) error
 	VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) error
 	VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) error
+	VisitAlterTableModifyQuery(expr *AlterTableModifyQuery) error
 	VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) error
 	VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) error
 	VisitRemovePropertyType(expr *RemovePropertyType) error
@@ -350,6 +351,13 @@ func (v *DefaultASTVisitor) VisitAlterTableMaterializeIndex(expr *AlterTableMate
 }
 
 func (v *DefaultASTVisitor) VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableModifyQuery(expr *AlterTableModifyQuery) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

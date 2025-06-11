@@ -1200,6 +1200,40 @@ func (a *AlterTableRenameColumn) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableRenameColumn(a)
 }
 
+type AlterTableModifyQuery struct {
+	ModifyPos    Pos
+	StatementEnd Pos
+	SelectExpr   *SelectQuery
+}
+
+func (a *AlterTableModifyQuery) Pos() Pos {
+	return a.ModifyPos
+}
+
+func (a *AlterTableModifyQuery) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableModifyQuery) AlterType() string {
+	return "MODIFY_QUERY"
+}
+
+func (a *AlterTableModifyQuery) String() string {
+	var builder strings.Builder
+	builder.WriteString("MODIFY QUERY ")
+	builder.WriteString(a.SelectExpr.String())
+	return builder.String()
+}
+
+func (a *AlterTableModifyQuery) Accept(visitor ASTVisitor) error {
+	visitor.enter(a)
+	defer visitor.leave(a)
+	if err := a.SelectExpr.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitAlterTableModifyQuery(a)
+}
+
 type AlterTableModifyTTL struct {
 	ModifyPos    Pos
 	StatementEnd Pos
