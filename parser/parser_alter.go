@@ -634,8 +634,16 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			StatementEnd: ttlExpr.End(),
 			TTL:          ttlExpr,
 		}, nil
+	case p.matchKeyword(KeywordQuery):
+		_ = p.lexer.consumeToken()
+		selectQuery, _ := p.parseSelectQuery(pos)
+		return &AlterTableModifyQuery{
+			ModifyPos:    pos,
+			StatementEnd: selectQuery.End(),
+			SelectExpr:   selectQuery,
+		}, nil
 	default:
-		return nil, fmt.Errorf("expected keyword: COLUMN, but got %q",
+		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY, but got %q",
 			p.last().String)
 	}
 
