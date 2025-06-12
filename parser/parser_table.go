@@ -98,6 +98,10 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 	if engineExpr != nil {
 		StatementEnd = onCluster.End()
 	}
+	commentExpr, err := p.tryParseComment()
+	if err != nil {
+		return nil, err
+	}
 	return &CreateDatabase{
 		CreatePos:    pos,
 		StatementEnd: StatementEnd,
@@ -105,6 +109,7 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 		IfNotExists:  ifNotExists,
 		OnCluster:    onCluster,
 		Engine:       engineExpr,
+		Comment:      commentExpr,
 	}, nil
 }
 
