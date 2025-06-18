@@ -3266,6 +3266,9 @@ func (f *ParamExprList) String() string {
 	builder.WriteString("(")
 	builder.WriteString(f.Items.String())
 	builder.WriteString(")")
+	if f.ColumnArgList != nil {
+	    builder.WriteString(f.ColumnArgList.String())
+	}
 	return builder.String()
 }
 
