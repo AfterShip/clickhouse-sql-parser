@@ -1502,6 +1502,7 @@ type CreateDatabase struct {
 	IfNotExists  bool // true if 'IF NOT EXISTS' is specified
 	OnCluster    *ClusterClause
 	Engine       *EngineExpr
+	Comment      *StringLiteral
 }
 
 func (c *CreateDatabase) Pos() Pos {
@@ -1530,6 +1531,10 @@ func (c *CreateDatabase) String() string {
 	if c.Engine != nil {
 		builder.WriteString(" ")
 		builder.WriteString(c.Engine.String())
+	}
+	if c.Comment != nil {
+		builder.WriteString(" COMMENT ")
+		builder.WriteString(c.Comment.String())
 	}
 	return builder.String()
 }
