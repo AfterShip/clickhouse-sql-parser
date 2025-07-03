@@ -1914,6 +1914,7 @@ func (c *CreateView) Accept(visitor ASTVisitor) error {
 
 type CreateFunction struct {
 	CreatePos    Pos
+	OrReplace    bool
 	IfNotExists  bool
 	FunctionName *Ident
 	OnCluster    *ClusterClause
@@ -1935,7 +1936,11 @@ func (c *CreateFunction) End() Pos {
 
 func (c *CreateFunction) String() string {
 	var builder strings.Builder
-	builder.WriteString("CREATE FUNCTION ")
+	builder.WriteString("CREATE")
+	if c.OrReplace {
+		builder.WriteString(" OR REPLACE")
+	}
+	builder.WriteString(" FUNCTION ")
 	if c.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}

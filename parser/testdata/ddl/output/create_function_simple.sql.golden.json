@@ -1,6 +1,7 @@
 [
   {
     "CreatePos": 0,
+    "OrReplace": false,
     "IfNotExists": false,
     "FunctionName": {
       "Name": "linear_equation",
