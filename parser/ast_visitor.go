@@ -43,6 +43,11 @@ type ASTVisitor interface {
 	VisitSettingPair(expr *SettingPair) error
 	VisitRoleSetting(expr *RoleSetting) error
 	VisitCreateRole(expr *CreateRole) error
+	VisitCreateUser(expr *CreateUser) error
+	VisitAuthenticationClause(expr *AuthenticationClause) error
+	VisitHostClause(expr *HostClause) error
+	VisitDefaultRoleClause(expr *DefaultRoleClause) error
+	VisitGranteesClause(expr *GranteesClause) error
 	VisitAlterRole(expr *AlterRole) error
 	VisitRoleRenamePair(expr *RoleRenamePair) error
 	VisitDestinationExpr(expr *DestinationClause) error
@@ -470,6 +475,41 @@ func (v *DefaultASTVisitor) VisitRoleSetting(expr *RoleSetting) error {
 }
 
 func (v *DefaultASTVisitor) VisitCreateRole(expr *CreateRole) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitCreateUser(expr *CreateUser) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAuthenticationClause(expr *AuthenticationClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitHostClause(expr *HostClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDefaultRoleClause(expr *DefaultRoleClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitGranteesClause(expr *GranteesClause) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

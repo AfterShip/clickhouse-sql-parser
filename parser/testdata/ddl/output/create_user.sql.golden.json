@@ -1,0 +1,1290 @@
+[
+  {
+    "CreatePos": 28,
+    "StatementEnd": 45,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user1",
+          "QuoteType": 1,
+          "NamePos": 40,
+          "NameEnd": 45
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 47,
+    "StatementEnd": 78,
+    "IfNotExists": true,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user2",
+          "QuoteType": 1,
+          "NamePos": 73,
+          "NameEnd": 78
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 80,
+    "StatementEnd": 108,
+    "IfNotExists": false,
+    "OrReplace": true,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user3",
+          "QuoteType": 1,
+          "NamePos": 103,
+          "NameEnd": 108
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 110,
+    "StatementEnd": 134,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user4",
+          "QuoteType": 1,
+          "NamePos": 122,
+          "NameEnd": 127
+        },
+        "Scope": null,
+        "OnCluster": null
+      },
+      {
+        "Name": {
+          "Name": "user5",
+          "QuoteType": 1,
+          "NamePos": 129,
+          "NameEnd": 134
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 172,
+    "StatementEnd": 205,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user6",
+          "QuoteType": 1,
+          "NamePos": 184,
+          "NameEnd": 189
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 190,
+      "AuthEnd": 205,
+      "NotIdentified": true,
+      "AuthType": "",
+      "AuthValue": null,
+      "LdapServer": null,
+      "KerberosRealm": null,
+      "IsKerberos": false
+    },
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 206,
+    "StatementEnd": 274,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user7",
+          "QuoteType": 1,
+          "NamePos": 218,
+          "NameEnd": 223
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 224,
+      "AuthEnd": 274,
+      "NotIdentified": false,
+      "AuthType": "plaintext_password",
+      "AuthValue": {
+        "LiteralPos": 263,
+        "LiteralEnd": 274,
+        "Literal": "password123"
+      },
+      "LdapServer": null,
+      "KerberosRealm": null,
+      "IsKerberos": false
+    },
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 277,
+    "StatementEnd": 338,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user8",
+          "QuoteType": 1,
+          "NamePos": 289,
+          "NameEnd": 294
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 295,
+      "AuthEnd": 338,
+      "NotIdentified": false,
+      "AuthType": "sha256_password",
+      "AuthValue": {
+        "LiteralPos": 331,
+        "LiteralEnd": 338,
+        "Literal": "hash123"
+      },
+      "LdapServer": null,
+      "KerberosRealm": null,
+      "IsKerberos": false
+    },
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 341,
+    "StatementEnd": 399,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user9",
+          "QuoteType": 1,
+          "NamePos": 353,
+          "NameEnd": 358
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 359,
+      "AuthEnd": 399,
+      "NotIdentified": false,
+      "AuthType": "",
+      "AuthValue": null,
+      "LdapServer": {
+        "LiteralPos": 388,
+        "LiteralEnd": 399,
+        "Literal": "ldap_server"
+      },
+      "KerberosRealm": null,
+      "IsKerberos": false
+    },
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 402,
+    "StatementEnd": 446,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user10",
+          "QuoteType": 1,
+          "NamePos": 414,
+          "NameEnd": 420
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 421,
+      "AuthEnd": 446,
+      "NotIdentified": false,
+      "AuthType": "",
+      "AuthValue": null,
+      "LdapServer": null,
+      "KerberosRealm": null,
+      "IsKerberos": true
+    },
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 447,
+    "StatementEnd": 509,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user11",
+          "QuoteType": 1,
+          "NamePos": 459,
+          "NameEnd": 465
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 466,
+      "AuthEnd": 509,
+      "NotIdentified": false,
+      "AuthType": "",
+      "AuthValue": null,
+      "LdapServer": null,
+      "KerberosRealm": {
+        "LiteralPos": 498,
+        "LiteralEnd": 509,
+        "Literal": "EXAMPLE.COM"
+      },
+      "IsKerberos": true
+    },
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 551,
+    "StatementEnd": 581,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user12",
+          "QuoteType": 1,
+          "NamePos": 563,
+          "NameEnd": 569
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 570,
+        "HostEnd": 581,
+        "HostType": "LOCAL",
+        "HostValue": null
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 582,
+    "StatementEnd": 610,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user13",
+          "QuoteType": 1,
+          "NamePos": 594,
+          "NameEnd": 600
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 601,
+        "HostEnd": 610,
+        "HostType": "ANY",
+        "HostValue": null
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 611,
+    "StatementEnd": 640,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user14",
+          "QuoteType": 1,
+          "NamePos": 623,
+          "NameEnd": 629
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 630,
+        "HostEnd": 640,
+        "HostType": "NONE",
+        "HostValue": null
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 641,
+    "StatementEnd": 680,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user15",
+          "QuoteType": 1,
+          "NamePos": 653,
+          "NameEnd": 659
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 660,
+        "HostEnd": 680,
+        "HostType": "NAME",
+        "HostValue": {
+          "LiteralPos": 671,
+          "LiteralEnd": 680,
+          "Literal": "localhost"
+        }
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 683,
+    "StatementEnd": 731,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user16",
+          "QuoteType": 1,
+          "NamePos": 695,
+          "NameEnd": 701
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 702,
+        "HostEnd": 731,
+        "HostType": "REGEXP",
+        "HostValue": {
+          "LiteralPos": 715,
+          "LiteralEnd": 731,
+          "Literal": ".*\\.example\\.com"
+        }
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 734,
+    "StatementEnd": 773,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user17",
+          "QuoteType": 1,
+          "NamePos": 746,
+          "NameEnd": 752
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 753,
+        "HostEnd": 773,
+        "HostType": "IP",
+        "HostValue": {
+          "LiteralPos": 762,
+          "LiteralEnd": 773,
+          "Literal": "192.168.1.1"
+        }
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 776,
+    "StatementEnd": 811,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user18",
+          "QuoteType": 1,
+          "NamePos": 788,
+          "NameEnd": 794
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": [
+      {
+        "HostPos": 795,
+        "HostEnd": 811,
+        "HostType": "LIKE",
+        "HostValue": {
+          "LiteralPos": 806,
+          "LiteralEnd": 811,
+          "Literal": "test%"
+        }
+      }
+    ],
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 849,
+    "StatementEnd": 886,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user19",
+          "QuoteType": 1,
+          "NamePos": 861,
+          "NameEnd": 867
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": {
+      "DefaultPos": 868,
+      "DefaultEnd": 886,
+      "Roles": [
+        {
+          "Name": {
+            "Name": "role1",
+            "QuoteType": 1,
+            "NamePos": 881,
+            "NameEnd": 886
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "None": false
+    },
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 888,
+    "StatementEnd": 932,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user20",
+          "QuoteType": 1,
+          "NamePos": 900,
+          "NameEnd": 906
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": {
+      "DefaultPos": 907,
+      "DefaultEnd": 932,
+      "Roles": [
+        {
+          "Name": {
+            "Name": "role1",
+            "QuoteType": 1,
+            "NamePos": 920,
+            "NameEnd": 925
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        {
+          "Name": {
+            "Name": "role2",
+            "QuoteType": 1,
+            "NamePos": 927,
+            "NameEnd": 932
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "None": false
+    },
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 934,
+    "StatementEnd": 971,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user21",
+          "QuoteType": 1,
+          "NamePos": 946,
+          "NameEnd": 952
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": {
+      "DefaultPos": 953,
+      "DefaultEnd": 971,
+      "Roles": null,
+      "None": true
+    },
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 1010,
+    "StatementEnd": 1053,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user22",
+          "QuoteType": 1,
+          "NamePos": 1022,
+          "NameEnd": 1028
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": {
+      "Name": "test_db",
+      "QuoteType": 1,
+      "NamePos": 1046,
+      "NameEnd": 1053
+    },
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 1055,
+    "StatementEnd": 1096,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user23",
+          "QuoteType": 1,
+          "NamePos": 1067,
+          "NameEnd": 1073
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": true,
+    "Grantees": null,
+    "Settings": null
+  },
+  {
+    "CreatePos": 1127,
+    "StatementEnd": 1160,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user24",
+          "QuoteType": 1,
+          "NamePos": 1139,
+          "NameEnd": 1145
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": {
+      "GranteesPos": 1146,
+      "GranteesEnd": 1160,
+      "Grantees": [
+        {
+          "Name": {
+            "Name": "user1",
+            "QuoteType": 1,
+            "NamePos": 1155,
+            "NameEnd": 1160
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "ExceptUsers": null,
+      "Any": false,
+      "None": false
+    },
+    "Settings": null
+  },
+  {
+    "CreatePos": 1162,
+    "StatementEnd": 1202,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user25",
+          "QuoteType": 1,
+          "NamePos": 1174,
+          "NameEnd": 1180
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": {
+      "GranteesPos": 1181,
+      "GranteesEnd": 1202,
+      "Grantees": [
+        {
+          "Name": {
+            "Name": "user1",
+            "QuoteType": 1,
+            "NamePos": 1190,
+            "NameEnd": 1195
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        {
+          "Name": {
+            "Name": "user2",
+            "QuoteType": 1,
+            "NamePos": 1197,
+            "NameEnd": 1202
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "ExceptUsers": null,
+      "Any": false,
+      "None": false
+    },
+    "Settings": null
+  },
+  {
+    "CreatePos": 1204,
+    "StatementEnd": 1236,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user26",
+          "QuoteType": 1,
+          "NamePos": 1216,
+          "NameEnd": 1222
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": {
+      "GranteesPos": 1223,
+      "GranteesEnd": 1236,
+      "Grantees": null,
+      "ExceptUsers": null,
+      "Any": true,
+      "None": false
+    },
+    "Settings": null
+  },
+  {
+    "CreatePos": 1237,
+    "StatementEnd": 1270,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user27",
+          "QuoteType": 1,
+          "NamePos": 1249,
+          "NameEnd": 1255
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": {
+      "GranteesPos": 1256,
+      "GranteesEnd": 1270,
+      "Grantees": null,
+      "ExceptUsers": null,
+      "Any": false,
+      "None": true
+    },
+    "Settings": null
+  },
+  {
+    "CreatePos": 1271,
+    "StatementEnd": 1324,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user28",
+          "QuoteType": 1,
+          "NamePos": 1283,
+          "NameEnd": 1289
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": {
+      "GranteesPos": 1290,
+      "GranteesEnd": 1324,
+      "Grantees": [
+        {
+          "Name": {
+            "Name": "user1",
+            "QuoteType": 1,
+            "NamePos": 1299,
+            "NameEnd": 1304
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        {
+          "Name": {
+            "Name": "user2",
+            "QuoteType": 1,
+            "NamePos": 1306,
+            "NameEnd": 1311
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "ExceptUsers": [
+        {
+          "Name": {
+            "Name": "user3",
+            "QuoteType": 1,
+            "NamePos": 1319,
+            "NameEnd": 1324
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "Any": false,
+      "None": false
+    },
+    "Settings": null
+  },
+  {
+    "CreatePos": 1356,
+    "StatementEnd": 1408,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user29",
+          "QuoteType": 1,
+          "NamePos": 1368,
+          "NameEnd": 1374
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "QuoteType": 1,
+              "NamePos": 1384,
+              "NameEnd": 1400
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 1401,
+              "NumEnd": 1408,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 1410,
+    "StatementEnd": 1454,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user30",
+          "QuoteType": 1,
+          "NamePos": 1422,
+          "NameEnd": 1428
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "QuoteType": 1,
+              "NamePos": 1438,
+              "NameEnd": 1445
+            },
+            "Operation": "",
+            "Value": {
+              "LiteralPos": 1447,
+              "LiteralEnd": 1454,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 1457,
+    "StatementEnd": 1521,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user31",
+          "QuoteType": 1,
+          "NamePos": 1469,
+          "NameEnd": 1475
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": null,
+    "Hosts": null,
+    "DefaultRole": null,
+    "DefaultDatabase": null,
+    "DefaultDbNone": false,
+    "Grantees": null,
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "readonly",
+              "QuoteType": 1,
+              "NamePos": 1485,
+              "NameEnd": 1493
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 1494,
+              "NumEnd": 1495,
+              "Literal": "1",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      },
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "QuoteType": 1,
+              "NamePos": 1497,
+              "NameEnd": 1513
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 1514,
+              "NumEnd": 1521,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "CreatePos": 1569,
+    "StatementEnd": 1815,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "UserNames": [
+      {
+        "Name": {
+          "Name": "user32",
+          "QuoteType": 1,
+          "NamePos": 1581,
+          "NameEnd": 1587
+        },
+        "Scope": null,
+        "OnCluster": null
+      }
+    ],
+    "Authentication": {
+      "AuthPos": 1593,
+      "AuthEnd": 1640,
+      "NotIdentified": false,
+      "AuthType": "plaintext_password",
+      "AuthValue": {
+        "LiteralPos": 1632,
+        "LiteralEnd": 1640,
+        "Literal": "password"
+      },
+      "LdapServer": null,
+      "KerberosRealm": null,
+      "IsKerberos": false
+    },
+    "Hosts": [
+      {
+        "HostPos": 1646,
+        "HostEnd": 1666,
+        "HostType": "NAME",
+        "HostValue": {
+          "LiteralPos": 1657,
+          "LiteralEnd": 1666,
+          "Literal": "localhost"
+        }
+      }
+    ],
+    "DefaultRole": {
+      "DefaultPos": 1672,
+      "DefaultEnd": 1697,
+      "Roles": [
+        {
+          "Name": {
+            "Name": "role1",
+            "QuoteType": 1,
+            "NamePos": 1685,
+            "NameEnd": 1690
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        {
+          "Name": {
+            "Name": "role2",
+            "QuoteType": 1,
+            "NamePos": 1692,
+            "NameEnd": 1697
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "None": false
+    },
+    "DefaultDatabase": {
+      "Name": "test_db",
+      "QuoteType": 1,
+      "NamePos": 1719,
+      "NameEnd": 1726
+    },
+    "DefaultDbNone": false,
+    "Grantees": {
+      "GranteesPos": 1731,
+      "GranteesEnd": 1765,
+      "Grantees": [
+        {
+          "Name": {
+            "Name": "user1",
+            "QuoteType": 1,
+            "NamePos": 1740,
+            "NameEnd": 1745
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        {
+          "Name": {
+            "Name": "user2",
+            "QuoteType": 1,
+            "NamePos": 1747,
+            "NameEnd": 1752
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "ExceptUsers": [
+        {
+          "Name": {
+            "Name": "user3",
+            "QuoteType": 1,
+            "NamePos": 1760,
+            "NameEnd": 1765
+          },
+          "Scope": null,
+          "OnCluster": null
+        }
+      ],
+      "Any": false,
+      "None": false
+    },
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "QuoteType": 1,
+              "NamePos": 1779,
+              "NameEnd": 1795
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 1796,
+              "NumEnd": 1803,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      },
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "readonly",
+              "QuoteType": 1,
+              "NamePos": 1805,
+              "NameEnd": 1813
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 1814,
+              "NumEnd": 1815,
+              "Literal": "1",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  }
+]

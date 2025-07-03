@@ -522,6 +522,332 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 	}, nil
 }
 
+func (p *Parser) parseAuthenticationClause(pos Pos) (*AuthenticationClause, error) {
+	auth := &AuthenticationClause{AuthPos: pos}
+
+	if p.tryConsumeKeywords(KeywordNot) {
+		if err := p.expectKeyword(KeywordIdentified); err != nil {
+			return nil, err
+		}
+		auth.NotIdentified = true
+		auth.AuthEnd = p.last().End
+		return auth, nil
+	}
+
+	if err := p.expectKeyword(KeywordIdentified); err != nil {
+		return nil, err
+	}
+	auth.AuthEnd = p.last().End
+
+	if p.tryConsumeKeywords(KeywordWith) {
+		if p.matchKeyword(KeywordLdap) {
+			_ = p.lexer.consumeToken()
+			if err := p.expectKeyword(KeywordServer); err != nil {
+				return nil, err
+			}
+			server, err := p.parseString(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			auth.LdapServer = server
+			auth.AuthEnd = server.End()
+		} else if p.matchKeyword(KeywordKerberos) {
+			_ = p.lexer.consumeToken()
+			auth.IsKerberos = true
+			auth.AuthEnd = p.last().End
+			if p.tryConsumeKeywords(KeywordRealm) {
+				realm, err := p.parseString(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				auth.KerberosRealm = realm
+				auth.AuthEnd = realm.End()
+			}
+		} else if p.matchTokenKind(TokenKindIdent) {
+			// Auth types like no_password, plaintext_password, etc.
+			authType := p.last().String
+			_ = p.lexer.consumeToken()
+			auth.AuthType = authType
+			auth.AuthEnd = p.last().End
+
+			if p.tryConsumeKeywords(KeywordBy) {
+				value, err := p.parseString(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				auth.AuthValue = value
+				auth.AuthEnd = value.End()
+			}
+		}
+	}
+
+	return auth, nil
+}
+
+func (p *Parser) parseHostClause(pos Pos) (*HostClause, error) {
+	if err := p.expectKeyword(KeywordHost); err != nil {
+		return nil, err
+	}
+
+	host := &HostClause{HostPos: pos}
+
+	switch {
+	case p.matchKeyword(KeywordLocal):
+		_ = p.lexer.consumeToken()
+		host.HostType = KeywordLocal
+		host.HostEnd = p.last().End
+	case p.matchKeyword(KeywordAny):
+		_ = p.lexer.consumeToken()
+		host.HostType = KeywordAny
+		host.HostEnd = p.last().End
+	case p.matchKeyword(KeywordNone):
+		_ = p.lexer.consumeToken()
+		host.HostType = KeywordNone
+		host.HostEnd = p.last().End
+	case p.matchKeyword(KeywordName), p.matchKeyword(KeywordRegexp), p.matchKeyword(KeywordIp), p.matchKeyword(KeywordLike):
+		hostType := p.last().String
+		_ = p.lexer.consumeToken()
+		host.HostType = hostType
+		value, err := p.parseString(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		host.HostValue = value
+		host.HostEnd = value.End()
+	default:
+		return nil, fmt.Errorf("expected LOCAL|NAME|REGEXP|IP|LIKE|ANY|NONE")
+	}
+
+	return host, nil
+}
+
+func (p *Parser) parseDefaultRoleClause(pos Pos) (*DefaultRoleClause, error) {
+	if err := p.expectKeyword(KeywordDefault); err != nil {
+		return nil, err
+	}
+	if err := p.expectKeyword(KeywordRole); err != nil {
+		return nil, err
+	}
+
+	defaultRole := &DefaultRoleClause{DefaultPos: pos}
+
+	if p.tryConsumeKeywords(KeywordNone) {
+		defaultRole.None = true
+		defaultRole.DefaultEnd = p.last().End
+		return defaultRole, nil
+	}
+
+	roles := make([]*RoleName, 0)
+	role, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	roles = append(roles, role)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		role, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		roles = append(roles, role)
+	}
+
+	defaultRole.Roles = roles
+	defaultRole.DefaultEnd = roles[len(roles)-1].End()
+	return defaultRole, nil
+}
+
+func (p *Parser) parseGranteesClause(pos Pos) (*GranteesClause, error) {
+	if err := p.expectKeyword(KeywordGrantees); err != nil {
+		return nil, err
+	}
+
+	grantees := &GranteesClause{GranteesPos: pos}
+
+	if p.tryConsumeKeywords(KeywordAny) {
+		grantees.Any = true
+		grantees.GranteesEnd = p.last().End
+	} else if p.tryConsumeKeywords(KeywordNone) {
+		grantees.None = true
+		grantees.GranteesEnd = p.last().End
+	} else {
+		// Parse list of grantees
+		granteeList := make([]*RoleName, 0)
+		grantee, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		granteeList = append(granteeList, grantee)
+
+		for p.tryConsumeTokenKind(TokenKindComma) != nil {
+			grantee, err := p.parseRoleName(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			granteeList = append(granteeList, grantee)
+		}
+
+		grantees.Grantees = granteeList
+		grantees.GranteesEnd = granteeList[len(granteeList)-1].End()
+	}
+
+	// Check for EXCEPT clause
+	if p.tryConsumeKeywords(KeywordExcept) {
+		exceptList := make([]*RoleName, 0)
+		except, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		exceptList = append(exceptList, except)
+
+		for p.tryConsumeTokenKind(TokenKindComma) != nil {
+			except, err := p.parseRoleName(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			exceptList = append(exceptList, except)
+		}
+
+		grantees.ExceptUsers = exceptList
+		grantees.GranteesEnd = exceptList[len(exceptList)-1].End()
+	}
+
+	return grantees, nil
+}
+
+func (p *Parser) parseCreateUser(pos Pos) (*CreateUser, error) {
+	if err := p.expectKeyword(KeywordUser); err != nil {
+		return nil, err
+	}
+
+	createUser := &CreateUser{CreatePos: pos}
+
+	// Handle IF NOT EXISTS or OR REPLACE
+	switch {
+	case p.matchKeyword(KeywordIf):
+		_ = p.lexer.consumeToken()
+		if err := p.expectKeyword(KeywordNot); err != nil {
+			return nil, err
+		}
+		if err := p.expectKeyword(KeywordExists); err != nil {
+			return nil, err
+		}
+		createUser.IfNotExists = true
+	case p.matchKeyword(KeywordOr):
+		_ = p.lexer.consumeToken()
+		if err := p.expectKeyword(KeywordReplace); err != nil {
+			return nil, err
+		}
+		createUser.OrReplace = true
+	}
+
+	// Parse user names
+	userNames := make([]*RoleName, 0)
+	userName, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	userNames = append(userNames, userName)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		userName, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		userNames = append(userNames, userName)
+	}
+
+	createUser.UserNames = userNames
+	createUser.StatementEnd = userNames[len(userNames)-1].End()
+
+	// Parse optional clauses
+	for {
+		switch {
+		case p.matchKeyword(KeywordNot) || p.matchKeyword(KeywordIdentified):
+			auth, err := p.parseAuthenticationClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			createUser.Authentication = auth
+			createUser.StatementEnd = auth.End()
+
+		case p.matchKeyword(KeywordHost):
+			hosts := make([]*HostClause, 0)
+			host, err := p.parseHostClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			hosts = append(hosts, host)
+
+			for p.tryConsumeTokenKind(TokenKindComma) != nil {
+				host, err := p.parseHostClause(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				hosts = append(hosts, host)
+			}
+
+			createUser.Hosts = hosts
+			createUser.StatementEnd = hosts[len(hosts)-1].End()
+
+		case p.matchKeyword(KeywordDefault):
+			nextToken, err := p.lexer.peekToken()
+			if err != nil {
+				goto end_parse
+			}
+			if nextToken.String == KeywordRole {
+				defaultRole, err := p.parseDefaultRoleClause(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				createUser.DefaultRole = defaultRole
+				createUser.StatementEnd = defaultRole.End()
+			} else if nextToken.String == KeywordDatabase {
+				_ = p.lexer.consumeToken() // consume DEFAULT
+				_ = p.lexer.consumeToken() // consume DATABASE
+				if p.tryConsumeKeywords(KeywordNone) {
+					createUser.DefaultDbNone = true
+					createUser.StatementEnd = p.last().End
+				} else {
+					db, err := p.parseIdent()
+					if err != nil {
+						return nil, err
+					}
+					createUser.DefaultDatabase = db
+					createUser.StatementEnd = db.End()
+				}
+			} else {
+				goto end_parse
+			}
+
+		case p.matchKeyword(KeywordGrantees):
+			grantees, err := p.parseGranteesClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			createUser.Grantees = grantees
+			createUser.StatementEnd = grantees.End()
+
+		case p.matchKeyword(KeywordSettings):
+			_ = p.lexer.consumeToken() // consume SETTINGS keyword
+			settings, err := p.parseRoleSettings(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			createUser.Settings = settings
+			if len(settings) > 0 {
+				createUser.StatementEnd = settings[len(settings)-1].End()
+			}
+
+		default:
+			goto end_parse
+		}
+	}
+
+end_parse:
+	return createUser, nil
+}
+
 func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 	var target string
 	switch {

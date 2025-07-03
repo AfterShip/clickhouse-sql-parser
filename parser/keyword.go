@@ -91,13 +91,16 @@ const (
 	KeywordFunctions    = "FUNCTIONS"
 	KeywordGlobal       = "GLOBAL"
 	KeywordGrant        = "GRANT"
+	KeywordGrantees     = "GRANTEES"
 	KeywordGranularity  = "GRANULARITY"
 	KeywordGroup        = "GROUP"
 	KeywordGrouping     = "GROUPING"
 	KeywordHaving       = "HAVING"
 	KeywordHierarchical = "HIERARCHICAL"
+	KeywordHost         = "HOST"
 	KeywordHour         = "HOUR"
 	KeywordId           = "ID"
+	KeywordIdentified   = "IDENTIFIED"
 	KeywordIf           = "IF"
 	KeywordIlike        = "ILIKE"
 	KeywordIn           = "IN"
@@ -108,14 +111,17 @@ const (
 	KeywordInsert       = "INSERT"
 	KeywordInterval     = "INTERVAL"
 	KeywordInto         = "INTO"
+	KeywordIp           = "IP"
 	KeywordIs           = "IS"
 	KeywordIs_object_id = "IS_OBJECT_ID"
 	KeywordJoin         = "JOIN"
 	KeywordJSON         = "JSON"
 	KeywordKey          = "KEY"
 	KeywordKill         = "KILL"
+	KeywordKerberos     = "KERBEROS"
 	KeywordLast         = "LAST"
 	KeywordLayout       = "LAYOUT"
+	KeywordLdap         = "LDAP"
 	KeywordLeading      = "LEADING"
 	KeywordLeft         = "LEFT"
 	KeywordLifetime     = "LIFETIME"
@@ -136,6 +142,7 @@ const (
 	KeywordMove         = "MOVE"
 	KeywordMoves        = "MOVES"
 	KeywordMutation     = "MUTATION"
+	KeywordName         = "NAME"
 	KeywordNan_sql      = "NAN_SQL"
 	KeywordNo           = "NO"
 	KeywordNone         = "NONE"
@@ -165,6 +172,7 @@ const (
 	KeywordQuota        = "QUOTA"
 	KeywordRandomize    = "RANDOMIZE"
 	KeywordRange        = "RANGE"
+	KeywordRealm        = "REALM"
 	KeywordRecompress   = "RECOMPRESS"
 	KeywordRefresh      = "REFRESH"
 	KeywordRegexp       = "REGEXP"
@@ -186,6 +194,7 @@ const (
 	KeywordSelect       = "SELECT"
 	KeywordSemi         = "SEMI"
 	KeywordSends        = "SENDS"
+	KeywordServer       = "SERVER"
 	KeywordSet          = "SET"
 	KeywordSets         = "SETS"
 	KeywordSettings     = "SETTINGS"
@@ -330,13 +339,16 @@ var keywords = NewSet(
 	KeywordFunctions,
 	KeywordGlobal,
 	KeywordGrant,
+	KeywordGrantees,
 	KeywordGranularity,
 	KeywordGroup,
 	KeywordGrouping,
 	KeywordHaving,
 	KeywordHierarchical,
+	KeywordHost,
 	KeywordHour,
 	KeywordId,
+	KeywordIdentified,
 	KeywordIf,
 	KeywordIlike,
 	KeywordIn,
@@ -347,14 +359,17 @@ var keywords = NewSet(
 	KeywordInsert,
 	KeywordInterval,
 	KeywordInto,
+	KeywordIp,
 	KeywordIs,
 	KeywordIs_object_id,
 	KeywordJoin,
 	KeywordJSON,
 	KeywordKey,
 	KeywordKill,
+	KeywordKerberos,
 	KeywordLast,
 	KeywordLayout,
+	KeywordLdap,
 	KeywordLeading,
 	KeywordLeft,
 	KeywordLifetime,
@@ -375,6 +390,7 @@ var keywords = NewSet(
 	KeywordMove,
 	KeywordMoves,
 	KeywordMutation,
+	KeywordName,
 	KeywordNan_sql,
 	KeywordNo,
 	KeywordNone,
@@ -404,6 +420,7 @@ var keywords = NewSet(
 	KeywordQuota,
 	KeywordRandomize,
 	KeywordRange,
+	KeywordRealm,
 	KeywordRecompress,
 	KeywordRefresh,
 	KeywordRegexp,
@@ -425,6 +442,7 @@ var keywords = NewSet(
 	KeywordSelect,
 	KeywordSemi,
 	KeywordSends,
+	KeywordServer,
 	KeywordSet,
 	KeywordSets,
 	KeywordSettings,

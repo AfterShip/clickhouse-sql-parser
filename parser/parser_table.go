@@ -29,8 +29,14 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			return p.parseCreateView(pos, orReplace)
 		case p.matchKeyword(KeywordRole):
 			return p.parseCreateRole(pos)
+		case p.matchKeyword(KeywordUser):
+			return p.parseCreateUser(pos)
 		default:
+<<<<<<< HEAD
 			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|FUNCTION, but got %q",
+=======
+			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|ROLE|USER, but got %q",
+>>>>>>> 49bdb95 (Implement CREATE USER statement support with AST nodes, parser, and tests)
 				p.last().String)
 		}
 	case p.matchKeyword(KeywordAlter):
