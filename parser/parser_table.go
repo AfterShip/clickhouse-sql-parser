@@ -29,9 +29,11 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			return p.parseCreateView(pos, orReplace)
 		case p.matchKeyword(KeywordRole):
 			return p.parseCreateRole(pos)
+		case p.matchKeyword(KeywordUser):
+			return p.parseCreateUser(pos)
 		default:
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|FUNCTION, but got %q",
-				p.last().String)
+			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
+				p.lastTokenKind())
 		}
 	case p.matchKeyword(KeywordAlter):
 		_ = p.lexer.consumeToken()

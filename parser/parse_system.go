@@ -522,10 +522,369 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 	}, nil
 }
 
+func (p *Parser) parseAuthenticationClause(pos Pos) (*AuthenticationClause, error) {
+	auth := &AuthenticationClause{AuthPos: pos}
+
+	if p.tryConsumeKeywords(KeywordNot) {
+		if err := p.expectKeyword(KeywordIdentified); err != nil {
+			return nil, err
+		}
+		auth.NotIdentified = true
+		auth.AuthEnd = p.last().End
+		return auth, nil
+	}
+
+	if err := p.expectKeyword(KeywordIdentified); err != nil {
+		return nil, err
+	}
+	auth.AuthEnd = p.last().End
+
+	if p.tryConsumeKeywords(KeywordWith) {
+		if p.matchKeyword(KeywordLdap) {
+			_ = p.lexer.consumeToken()
+			if err := p.expectKeyword(KeywordServer); err != nil {
+				return nil, err
+			}
+			server, err := p.parseString(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			auth.LdapServer = server
+			auth.AuthEnd = server.End()
+		} else if p.matchKeyword(KeywordKerberos) {
+			_ = p.lexer.consumeToken()
+			auth.IsKerberos = true
+			auth.AuthEnd = p.last().End
+			if p.tryConsumeKeywords(KeywordRealm) {
+				realm, err := p.parseString(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				auth.KerberosRealm = realm
+				auth.AuthEnd = realm.End()
+			}
+		} else if p.matchTokenKind(TokenKindIdent) {
+			// Auth types like no_password, plaintext_password, etc.
+			authType := p.last().String
+			_ = p.lexer.consumeToken()
+			auth.AuthType = authType
+			auth.AuthEnd = p.last().End
+
+			if p.tryConsumeKeywords(KeywordBy) {
+				value, err := p.parseString(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				auth.AuthValue = value
+				auth.AuthEnd = value.End()
+			}
+		}
+	}
+
+	return auth, nil
+}
+
+func (p *Parser) parseHostClause(pos Pos) (*HostClause, error) {
+	if err := p.expectKeyword(KeywordHost); err != nil {
+		return nil, err
+	}
+
+	host := &HostClause{HostPos: pos}
+
+	switch {
+	case p.matchOneOfKeywords(KeywordLocal, KeywordAny, KeywordNone):
+		hostType := p.last().String
+		_ = p.lexer.consumeToken()
+		host.HostType = hostType
+		host.HostEnd = p.last().End
+	case p.matchOneOfKeywords(KeywordName, KeywordRegexp, KeywordIp, KeywordLike):
+		hostType := p.last().String
+		_ = p.lexer.consumeToken()
+		host.HostType = hostType
+		value, err := p.parseString(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		host.HostValue = value
+		host.HostEnd = value.End()
+	default:
+		return nil, fmt.Errorf("expected LOCAL|NAME|REGEXP|IP|LIKE|ANY|NONE")
+	}
+
+	return host, nil
+}
+
+func (p *Parser) parseDefaultRoleClause(pos Pos) (*DefaultRoleClause, error) {
+	if err := p.expectKeyword(KeywordDefault); err != nil {
+		return nil, err
+	}
+	if err := p.expectKeyword(KeywordRole); err != nil {
+		return nil, err
+	}
+
+	defaultRole := &DefaultRoleClause{DefaultPos: pos}
+
+	if p.tryConsumeKeywords(KeywordNone) {
+		defaultRole.None = true
+		defaultRole.DefaultEnd = p.last().End
+		return defaultRole, nil
+	}
+
+	roles := make([]*RoleName, 0)
+	role, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	roles = append(roles, role)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		role, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		roles = append(roles, role)
+	}
+
+	defaultRole.Roles = roles
+	defaultRole.DefaultEnd = roles[len(roles)-1].End()
+	return defaultRole, nil
+}
+
+func (p *Parser) parseGranteesClause(pos Pos) (*GranteesClause, error) {
+	if err := p.expectKeyword(KeywordGrantees); err != nil {
+		return nil, err
+	}
+
+	grantees := &GranteesClause{GranteesPos: pos}
+
+	if p.tryConsumeKeywords(KeywordAny) {
+		grantees.Any = true
+		grantees.GranteesEnd = p.last().End
+	} else if p.tryConsumeKeywords(KeywordNone) {
+		grantees.None = true
+		grantees.GranteesEnd = p.last().End
+	} else {
+		// Parse list of grantees
+		granteeList := make([]*RoleName, 0)
+		grantee, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		granteeList = append(granteeList, grantee)
+
+		for p.tryConsumeTokenKind(TokenKindComma) != nil {
+			grantee, err := p.parseRoleName(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			granteeList = append(granteeList, grantee)
+		}
+
+		grantees.Grantees = granteeList
+		grantees.GranteesEnd = granteeList[len(granteeList)-1].End()
+	}
+
+	// Check for EXCEPT clause
+	if p.tryConsumeKeywords(KeywordExcept) {
+		exceptList := make([]*RoleName, 0)
+		except, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		exceptList = append(exceptList, except)
+
+		for p.tryConsumeTokenKind(TokenKindComma) != nil {
+			except, err := p.parseRoleName(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			exceptList = append(exceptList, except)
+		}
+
+		grantees.ExceptUsers = exceptList
+		grantees.GranteesEnd = exceptList[len(exceptList)-1].End()
+	}
+
+	return grantees, nil
+}
+
+func (p *Parser) parseCreateUserModifiers(createUser *CreateUser) error {
+	switch {
+	case p.matchKeyword(KeywordIf):
+		_ = p.lexer.consumeToken()
+		if err := p.expectKeyword(KeywordNot); err != nil {
+			return err
+		}
+		if err := p.expectKeyword(KeywordExists); err != nil {
+			return err
+		}
+		createUser.IfNotExists = true
+	case p.matchKeyword(KeywordOr):
+		_ = p.lexer.consumeToken()
+		if err := p.expectKeyword(KeywordReplace); err != nil {
+			return err
+		}
+		createUser.OrReplace = true
+	}
+	return nil
+}
+
+func (p *Parser) parseUserNames() ([]*RoleName, error) {
+	userNames := make([]*RoleName, 0)
+	userName, err := p.parseRoleName(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	userNames = append(userNames, userName)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		userName, err := p.parseRoleName(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		userNames = append(userNames, userName)
+	}
+	return userNames, nil
+}
+
+func (p *Parser) parseHostClauses() ([]*HostClause, error) {
+	hosts := make([]*HostClause, 0)
+	host, err := p.parseHostClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	hosts = append(hosts, host)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		host, err := p.parseHostClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		hosts = append(hosts, host)
+	}
+	return hosts, nil
+}
+
+func (p *Parser) parseDefaultClause(createUser *CreateUser) (bool, error) {
+	nextToken, err := p.lexer.peekToken()
+	if err != nil {
+		return false, err
+	}
+
+	if nextToken.String == KeywordRole {
+		defaultRole, err := p.parseDefaultRoleClause(p.Pos())
+		if err != nil {
+			return false, err
+		}
+		createUser.DefaultRole = defaultRole
+		createUser.StatementEnd = defaultRole.End()
+		return true, nil
+	} else if nextToken.String == KeywordDatabase {
+		_ = p.lexer.consumeToken() // consume DEFAULT
+		_ = p.lexer.consumeToken() // consume DATABASE
+		if p.tryConsumeKeywords(KeywordNone) {
+			createUser.DefaultDbNone = true
+			createUser.StatementEnd = p.last().End
+		} else {
+			db, err := p.parseIdent()
+			if err != nil {
+				return false, err
+			}
+			createUser.DefaultDatabase = db
+			createUser.StatementEnd = db.End()
+		}
+		return true, nil
+	}
+	return false, nil
+}
+
+func (p *Parser) parseOptionalClauses(createUser *CreateUser) error {
+	continueParsing := true
+	for continueParsing {
+		switch {
+		case p.matchOneOfKeywords(KeywordNot, KeywordIdentified):
+			auth, err := p.parseAuthenticationClause(p.Pos())
+			if err != nil {
+				return err
+			}
+			createUser.Authentication = auth
+			createUser.StatementEnd = auth.End()
+
+		case p.matchKeyword(KeywordHost):
+			hosts, err := p.parseHostClauses()
+			if err != nil {
+				return err
+			}
+			createUser.Hosts = hosts
+			createUser.StatementEnd = hosts[len(hosts)-1].End()
+
+		case p.matchKeyword(KeywordDefault):
+			parsed, err := p.parseDefaultClause(createUser)
+			if err != nil {
+				return err
+			}
+			if !parsed {
+				continueParsing = false
+			}
+
+		case p.matchKeyword(KeywordGrantees):
+			grantees, err := p.parseGranteesClause(p.Pos())
+			if err != nil {
+				return err
+			}
+			createUser.Grantees = grantees
+			createUser.StatementEnd = grantees.End()
+
+		case p.matchKeyword(KeywordSettings):
+			_ = p.lexer.consumeToken() // consume SETTINGS keyword
+			settings, err := p.parseRoleSettings(p.Pos())
+			if err != nil {
+				return err
+			}
+			createUser.Settings = settings
+			if len(settings) > 0 {
+				createUser.StatementEnd = settings[len(settings)-1].End()
+			}
+
+		default:
+			continueParsing = false
+		}
+	}
+	return nil
+}
+
+func (p *Parser) parseCreateUser(pos Pos) (*CreateUser, error) {
+	if err := p.expectKeyword(KeywordUser); err != nil {
+		return nil, err
+	}
+
+	createUser := &CreateUser{CreatePos: pos}
+
+	// Handle IF NOT EXISTS or OR REPLACE
+	if err := p.parseCreateUserModifiers(createUser); err != nil {
+		return nil, err
+	}
+
+	// Parse user names
+	userNames, err := p.parseUserNames()
+	if err != nil {
+		return nil, err
+	}
+	createUser.UserNames = userNames
+	createUser.StatementEnd = userNames[len(userNames)-1].End()
+
+	// Parse optional clauses
+	if err := p.parseOptionalClauses(createUser); err != nil {
+		return nil, err
+	}
+
+	return createUser, nil
+}
+
 func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 	var target string
 	switch {
-	case p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole):
+	case p.matchOneOfKeywords(KeywordUser, KeywordRole):
 		target = p.last().String
 		_ = p.lexer.consumeToken()
 	default:
@@ -608,15 +967,11 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 	switch {
 	case p.tryConsumeKeywords(KeywordIndex):
 		keywords = append(keywords, KeywordIndex)
-	case p.matchKeyword(KeywordUpdate), p.matchKeyword(KeywordDelete),
-		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota):
+	case p.matchOneOfKeywords(KeywordUpdate, KeywordDelete, KeywordUser, KeywordRole, KeywordQuota):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
-	case p.matchKeyword(KeywordAdd), p.matchKeyword(KeywordDrop),
-		p.matchKeyword(KeywordModify), p.matchKeyword(KeywordClear),
-		p.matchKeyword(KeywordComment), p.matchKeyword(KeywordRename),
-		p.matchKeyword(KeywordMaterialized):
+	case p.matchOneOfKeywords(KeywordAdd, KeywordDrop, KeywordModify, KeywordClear, KeywordComment, KeywordRename, KeywordMaterialized):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -653,7 +1008,7 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 		default:
 			return nil, fmt.Errorf("expected MODIFY|REFRESH")
 		}
-	case p.matchKeyword(KeywordMove), p.matchKeyword(KeywordFreeze):
+	case p.matchOneOfKeywords(KeywordMove, KeywordFreeze):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -673,9 +1028,7 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordCreate}
 	switch {
-	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
-		p.matchKeyword(KeywordTable), p.matchKeyword(KeywordFunction), p.matchKeyword(KeywordView),
-		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota):
+	case p.matchOneOfKeywords(KeywordDatabase, KeywordDictionary, KeywordTable, KeywordFunction, KeywordView, KeywordUser, KeywordRole, KeywordQuota):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -701,9 +1054,7 @@ func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordDrop}
 	switch {
-	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
-		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota),
-		p.matchKeyword(KeywordTable), p.matchKeyword(KeywordFunction), p.matchKeyword(KeywordView):
+	case p.matchOneOfKeywords(KeywordDatabase, KeywordDictionary, KeywordUser, KeywordRole, KeywordQuota, KeywordTable, KeywordFunction, KeywordView):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -719,8 +1070,7 @@ func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordShow}
 	switch {
-	case p.matchKeyword(KeywordDatabases), p.matchKeyword(KeywordDictionaries),
-		p.matchKeyword(KeywordTables), p.matchKeyword(KeywordColumns):
+	case p.matchOneOfKeywords(KeywordDatabases, KeywordDictionaries, KeywordTables, KeywordColumns):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -736,8 +1086,7 @@ func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordShow}
 	switch {
-	case p.matchKeyword(KeywordShutdown), p.matchKeyword(KeywordMerges), p.matchKeyword(KeywordFetches),
-		p.matchKeyword(KeywordSends), p.matchKeyword(KeywordMoves), p.matchKeyword(KeywordCluster):
+	case p.matchOneOfKeywords(KeywordShutdown, KeywordMerges, KeywordFetches, KeywordSends, KeywordMoves, KeywordCluster):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -746,7 +1095,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 		switch {
 		case p.tryConsumeKeywords(KeywordCache):
 			keywords = append(keywords, KeywordCache)
-		case p.matchKeyword(KeywordMark), p.matchKeyword(KeywordDNS), p.matchKeyword(KeywordUncompressed):
+		case p.matchOneOfKeywords(KeywordMark, KeywordDNS, KeywordUncompressed):
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
@@ -760,8 +1109,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	case p.tryConsumeKeywords(KeywordReload):
 		keywords = append(keywords, KeywordReload)
 		switch {
-		case p.matchKeyword(KeywordDictionary), p.matchKeyword(KeywordFunction),
-			p.matchKeyword(KeywordFunctions), p.matchKeyword(KeywordConfig):
+		case p.matchOneOfKeywords(KeywordDictionary, KeywordFunction, KeywordFunctions, KeywordConfig):
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
@@ -771,7 +1119,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	case p.tryConsumeKeywords(KeywordFlush):
 		keywords = append(keywords, KeywordFlush)
 		switch {
-		case p.matchKeyword(KeywordLogs), p.matchKeyword(KeywordDistributed):
+		case p.matchOneOfKeywords(KeywordLogs, KeywordDistributed):
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
@@ -784,7 +1132,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordMerges)
-	case p.matchKeyword(KeywordSync), p.matchKeyword(KeywordRestart):
+	case p.matchOneOfKeywords(KeywordSync, KeywordRestart):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -818,7 +1166,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 		}
 	}
 	switch {
-	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordInsert):
+	case p.matchOneOfKeywords(KeywordSelect, KeywordInsert):
 		return p.parsePrivilegeSelectOrInsert(pos)
 	case p.tryConsumeKeywords(KeywordAlter):
 		return p.parsePrivilegeAlter(pos)
@@ -852,7 +1200,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordAdmin, KeywordOption},
 		}, nil
-	case p.matchKeyword(KeywordOptimize), p.matchKeyword(KeywordTruncate):
+	case p.matchOneOfKeywords(KeywordOptimize, KeywordTruncate):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		return &PrivilegeClause{
