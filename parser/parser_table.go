@@ -10,8 +10,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		p.matchKeyword(KeywordAttach):
 		_ = p.lexer.consumeToken()
 		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
-		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView) {
-			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW, but got %q", p.last().String)
+		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction) {
+			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION, but got %q", p.last().String)
 		}
 		switch {
 		case p.matchKeyword(KeywordDatabase):
@@ -20,7 +20,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			p.matchKeyword(KeywordTemporary):
 			return p.parseCreateTable(pos, orReplace)
 		case p.matchKeyword(KeywordFunction):
-			return p.parseCreateFunction(pos)
+			return p.parseCreateFunction(pos, orReplace)
 		case p.matchKeyword(KeywordMaterialized):
 			return p.parseCreateMaterializedView(pos)
 		case p.matchKeyword(KeywordLive):
@@ -30,7 +30,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordRole):
 			return p.parseCreateRole(pos)
 		default:
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW, but got %q",
+			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|FUNCTION, but got %q",
 				p.last().String)
 		}
 	case p.matchKeyword(KeywordAlter):
@@ -1403,7 +1403,7 @@ func (p *Parser) parseTargetPair(_ Pos) (*TargetPair, error) {
 	}, nil
 }
 
-func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
+func (p *Parser) parseCreateFunction(pos Pos, orReplace bool) (*CreateFunction, error) {
 	if err := p.expectKeyword(KeywordFunction); err != nil {
 		return nil, err
 	}
@@ -1435,6 +1435,7 @@ func (p *Parser) parseCreateFunction(pos Pos) (*CreateFunction, error) {
 	}
 	return &CreateFunction{
 		CreatePos:    pos,
+		OrReplace:    orReplace,
 		IfNotExists:  ifNotExists,
 		FunctionName: functionName,
 		OnCluster:    onCluster,

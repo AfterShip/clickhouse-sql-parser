@@ -21,3 +21,5 @@ SELECT
     name
 FROM
     my_table;
+
+CREATE OR REPLACE FUNCTION IF NOT EXISTS my_function AS (x, y) -> x + y;

@@ -476,5 +476,64 @@
         "Except": null
       }
     }
+  },
+  {
+    "CreatePos": 511,
+    "OrReplace": true,
+    "IfNotExists": true,
+    "FunctionName": {
+      "Name": "my_function",
+      "QuoteType": 1,
+      "NamePos": 552,
+      "NameEnd": 563
+    },
+    "OnCluster": null,
+    "Params": {
+      "LeftParenPos": 567,
+      "RightParenPos": 572,
+      "Items": {
+        "ListPos": 568,
+        "ListEnd": 572,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Expr": {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 568,
+              "NameEnd": 569
+            },
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "y",
+              "QuoteType": 1,
+              "NamePos": 571,
+              "NameEnd": 572
+            },
+            "Alias": null
+          }
+        ]
+      },
+      "ColumnArgList": null
+    },
+    "Expr": {
+      "LeftExpr": {
+        "Name": "x",
+        "QuoteType": 1,
+        "NamePos": 577,
+        "NameEnd": 578
+      },
+      "Operation": "+",
+      "RightExpr": {
+        "Name": "y",
+        "QuoteType": 1,
+        "NamePos": 581,
+        "NameEnd": 582
+      },
+      "HasGlobal": false,
+      "HasNot": false
+    }
   }
 ]
