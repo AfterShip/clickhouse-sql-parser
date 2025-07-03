@@ -592,19 +592,12 @@ func (p *Parser) parseHostClause(pos Pos) (*HostClause, error) {
 	host := &HostClause{HostPos: pos}
 
 	switch {
-	case p.matchKeyword(KeywordLocal):
+	case p.matchOneOfKeywords(KeywordLocal, KeywordAny, KeywordNone):
+		hostType := p.last().String
 		_ = p.lexer.consumeToken()
-		host.HostType = KeywordLocal
+		host.HostType = hostType
 		host.HostEnd = p.last().End
-	case p.matchKeyword(KeywordAny):
-		_ = p.lexer.consumeToken()
-		host.HostType = KeywordAny
-		host.HostEnd = p.last().End
-	case p.matchKeyword(KeywordNone):
-		_ = p.lexer.consumeToken()
-		host.HostType = KeywordNone
-		host.HostEnd = p.last().End
-	case p.matchKeyword(KeywordName), p.matchKeyword(KeywordRegexp), p.matchKeyword(KeywordIp), p.matchKeyword(KeywordLike):
+	case p.matchOneOfKeywords(KeywordName, KeywordRegexp, KeywordIp, KeywordLike):
 		hostType := p.last().String
 		_ = p.lexer.consumeToken()
 		host.HostType = hostType
@@ -775,7 +768,7 @@ func (p *Parser) parseHostClauses() ([]*HostClause, error) {
 func (p *Parser) parseDefaultClause(createUser *CreateUser) (bool, error) {
 	nextToken, err := p.lexer.peekToken()
 	if err != nil {
-		return false, nil
+		return false, err
 	}
 
 	if nextToken.String == KeywordRole {
@@ -809,7 +802,7 @@ func (p *Parser) parseOptionalClauses(createUser *CreateUser) error {
 	continueParsing := true
 	for continueParsing {
 		switch {
-		case p.matchKeyword(KeywordNot) || p.matchKeyword(KeywordIdentified):
+		case p.matchOneOfKeywords(KeywordNot, KeywordIdentified):
 			auth, err := p.parseAuthenticationClause(p.Pos())
 			if err != nil {
 				return err
@@ -891,7 +884,7 @@ func (p *Parser) parseCreateUser(pos Pos) (*CreateUser, error) {
 func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 	var target string
 	switch {
-	case p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole):
+	case p.matchOneOfKeywords(KeywordUser, KeywordRole):
 		target = p.last().String
 		_ = p.lexer.consumeToken()
 	default:
@@ -974,15 +967,11 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 	switch {
 	case p.tryConsumeKeywords(KeywordIndex):
 		keywords = append(keywords, KeywordIndex)
-	case p.matchKeyword(KeywordUpdate), p.matchKeyword(KeywordDelete),
-		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota):
+	case p.matchOneOfKeywords(KeywordUpdate, KeywordDelete, KeywordUser, KeywordRole, KeywordQuota):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
-	case p.matchKeyword(KeywordAdd), p.matchKeyword(KeywordDrop),
-		p.matchKeyword(KeywordModify), p.matchKeyword(KeywordClear),
-		p.matchKeyword(KeywordComment), p.matchKeyword(KeywordRename),
-		p.matchKeyword(KeywordMaterialized):
+	case p.matchOneOfKeywords(KeywordAdd, KeywordDrop, KeywordModify, KeywordClear, KeywordComment, KeywordRename, KeywordMaterialized):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1019,7 +1008,7 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 		default:
 			return nil, fmt.Errorf("expected MODIFY|REFRESH")
 		}
-	case p.matchKeyword(KeywordMove), p.matchKeyword(KeywordFreeze):
+	case p.matchOneOfKeywords(KeywordMove, KeywordFreeze):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1039,9 +1028,7 @@ func (p *Parser) parsePrivilegeAlter(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordCreate}
 	switch {
-	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
-		p.matchKeyword(KeywordTable), p.matchKeyword(KeywordFunction), p.matchKeyword(KeywordView),
-		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota):
+	case p.matchOneOfKeywords(KeywordDatabase, KeywordDictionary, KeywordTable, KeywordFunction, KeywordView, KeywordUser, KeywordRole, KeywordQuota):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1067,9 +1054,7 @@ func (p *Parser) parsePrivilegeCreate(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordDrop}
 	switch {
-	case p.matchKeyword(KeywordDatabase), p.matchKeyword(KeywordDictionary),
-		p.matchKeyword(KeywordUser), p.matchKeyword(KeywordRole), p.matchKeyword(KeywordQuota),
-		p.matchKeyword(KeywordTable), p.matchKeyword(KeywordFunction), p.matchKeyword(KeywordView):
+	case p.matchOneOfKeywords(KeywordDatabase, KeywordDictionary, KeywordUser, KeywordRole, KeywordQuota, KeywordTable, KeywordFunction, KeywordView):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1085,8 +1070,7 @@ func (p *Parser) parsePrivilegeDrop(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordShow}
 	switch {
-	case p.matchKeyword(KeywordDatabases), p.matchKeyword(KeywordDictionaries),
-		p.matchKeyword(KeywordTables), p.matchKeyword(KeywordColumns):
+	case p.matchOneOfKeywords(KeywordDatabases, KeywordDictionaries, KeywordTables, KeywordColumns):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1102,8 +1086,7 @@ func (p *Parser) parsePrivilegeShow(pos Pos) (*PrivilegeClause, error) {
 func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	keywords := []string{KeywordShow}
 	switch {
-	case p.matchKeyword(KeywordShutdown), p.matchKeyword(KeywordMerges), p.matchKeyword(KeywordFetches),
-		p.matchKeyword(KeywordSends), p.matchKeyword(KeywordMoves), p.matchKeyword(KeywordCluster):
+	case p.matchOneOfKeywords(KeywordShutdown, KeywordMerges, KeywordFetches, KeywordSends, KeywordMoves, KeywordCluster):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1112,7 +1095,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 		switch {
 		case p.tryConsumeKeywords(KeywordCache):
 			keywords = append(keywords, KeywordCache)
-		case p.matchKeyword(KeywordMark), p.matchKeyword(KeywordDNS), p.matchKeyword(KeywordUncompressed):
+		case p.matchOneOfKeywords(KeywordMark, KeywordDNS, KeywordUncompressed):
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
@@ -1126,8 +1109,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	case p.tryConsumeKeywords(KeywordReload):
 		keywords = append(keywords, KeywordReload)
 		switch {
-		case p.matchKeyword(KeywordDictionary), p.matchKeyword(KeywordFunction),
-			p.matchKeyword(KeywordFunctions), p.matchKeyword(KeywordConfig):
+		case p.matchOneOfKeywords(KeywordDictionary, KeywordFunction, KeywordFunctions, KeywordConfig):
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
@@ -1137,7 +1119,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 	case p.tryConsumeKeywords(KeywordFlush):
 		keywords = append(keywords, KeywordFlush)
 		switch {
-		case p.matchKeyword(KeywordLogs), p.matchKeyword(KeywordDistributed):
+		case p.matchOneOfKeywords(KeywordLogs, KeywordDistributed):
 			keyword := p.last().String
 			_ = p.lexer.consumeToken()
 			keywords = append(keywords, keyword)
@@ -1150,7 +1132,7 @@ func (p *Parser) parsePrivilegeSystem(pos Pos) (*PrivilegeClause, error) {
 			return nil, err
 		}
 		keywords = append(keywords, KeywordMerges)
-	case p.matchKeyword(KeywordSync), p.matchKeyword(KeywordRestart):
+	case p.matchOneOfKeywords(KeywordSync, KeywordRestart):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		keywords = append(keywords, keyword)
@@ -1184,7 +1166,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 		}
 	}
 	switch {
-	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordInsert):
+	case p.matchOneOfKeywords(KeywordSelect, KeywordInsert):
 		return p.parsePrivilegeSelectOrInsert(pos)
 	case p.tryConsumeKeywords(KeywordAlter):
 		return p.parsePrivilegeAlter(pos)
@@ -1218,7 +1200,7 @@ func (p *Parser) parsePrivilegeClause(pos Pos) (*PrivilegeClause, error) {
 			PrivilegePos: pos,
 			Keywords:     []string{KeywordAdmin, KeywordOption},
 		}, nil
-	case p.matchKeyword(KeywordOptimize), p.matchKeyword(KeywordTruncate):
+	case p.matchOneOfKeywords(KeywordOptimize, KeywordTruncate):
 		keyword := p.last().String
 		_ = p.lexer.consumeToken()
 		return &PrivilegeClause{
