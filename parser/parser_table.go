@@ -32,12 +32,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordUser):
 			return p.parseCreateUser(pos)
 		default:
-<<<<<<< HEAD
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|FUNCTION, but got %q",
-=======
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|ROLE|USER, but got %q",
->>>>>>> 49bdb95 (Implement CREATE USER statement support with AST nodes, parser, and tests)
-				p.last().String)
+			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
+				p.lastTokenKind())
 		}
 	case p.matchKeyword(KeywordAlter):
 		_ = p.lexer.consumeToken()

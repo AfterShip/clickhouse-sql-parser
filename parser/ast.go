@@ -2246,8 +2246,8 @@ func (a *AuthenticationClause) String() string {
 }
 
 func (a *AuthenticationClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if a.AuthValue != nil {
 		if err := a.AuthValue.Accept(visitor); err != nil {
 			return err
@@ -2267,9 +2267,9 @@ func (a *AuthenticationClause) Accept(visitor ASTVisitor) error {
 }
 
 type HostClause struct {
-	HostPos  Pos
-	HostEnd  Pos
-	HostType string // "LOCAL", "NAME", "REGEXP", "IP", "LIKE", "ANY", "NONE"
+	HostPos   Pos
+	HostEnd   Pos
+	HostType  string // "LOCAL", "NAME", "REGEXP", "IP", "LIKE", "ANY", "NONE"
 	HostValue *StringLiteral
 }
 
@@ -2293,8 +2293,8 @@ func (h *HostClause) String() string {
 }
 
 func (h *HostClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(h)
-	defer visitor.leave(h)
+	visitor.Enter(h)
+	defer visitor.Leave(h)
 	if h.HostValue != nil {
 		if err := h.HostValue.Accept(visitor); err != nil {
 			return err
@@ -2335,8 +2335,8 @@ func (d *DefaultRoleClause) String() string {
 }
 
 func (d *DefaultRoleClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	for _, role := range d.Roles {
 		if err := role.Accept(visitor); err != nil {
 			return err
@@ -2390,8 +2390,8 @@ func (g *GranteesClause) String() string {
 }
 
 func (g *GranteesClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(g)
-	defer visitor.leave(g)
+	visitor.Enter(g)
+	defer visitor.Leave(g)
 	for _, grantee := range g.Grantees {
 		if err := grantee.Accept(visitor); err != nil {
 			return err
@@ -2406,18 +2406,18 @@ func (g *GranteesClause) Accept(visitor ASTVisitor) error {
 }
 
 type CreateUser struct {
-	CreatePos         Pos
-	StatementEnd      Pos
-	IfNotExists       bool
-	OrReplace         bool
-	UserNames         []*RoleName
-	Authentication    *AuthenticationClause
-	Hosts             []*HostClause
-	DefaultRole       *DefaultRoleClause
-	DefaultDatabase   *Ident
-	DefaultDbNone     bool
-	Grantees          *GranteesClause
-	Settings          []*RoleSetting
+	CreatePos       Pos
+	StatementEnd    Pos
+	IfNotExists     bool
+	OrReplace       bool
+	UserNames       []*RoleName
+	Authentication  *AuthenticationClause
+	Hosts           []*HostClause
+	DefaultRole     *DefaultRoleClause
+	DefaultDatabase *Ident
+	DefaultDbNone   bool
+	Grantees        *GranteesClause
+	Settings        []*RoleSetting
 }
 
 func (c *CreateUser) Pos() Pos {
@@ -2487,8 +2487,8 @@ func (c *CreateUser) String() string {
 }
 
 func (c *CreateUser) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	for _, userName := range c.UserNames {
 		if err := userName.Accept(visitor); err != nil {
 			return err
