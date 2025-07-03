@@ -165,8 +165,8 @@ type ASTVisitor interface {
 	VisitGrantPrivilegeExpr(expr *GrantPrivilegeStmt) error
 	VisitSelectItem(expr *SelectItem) error
 
-	enter(expr Expr)
-	leave(expr Expr)
+	Enter(expr Expr)
+	Leave(expr Expr)
 }
 
 type VisitFunc func(expr Expr) error
@@ -1316,6 +1316,6 @@ func (v *DefaultASTVisitor) VisitSelectItem(expr *SelectItem) error {
 	return nil
 }
 
-func (v *DefaultASTVisitor) enter(expr Expr) {}
+func (v *DefaultASTVisitor) Enter(expr Expr) {}
 
-func (v *DefaultASTVisitor) leave(expr Expr) {}
+func (v *DefaultASTVisitor) Leave(expr Expr) {}
