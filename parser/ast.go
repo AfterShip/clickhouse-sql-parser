@@ -60,8 +60,8 @@ func (s *SelectItem) String() string {
 }
 
 func (s *SelectItem) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -96,8 +96,8 @@ func (o *OperationExpr) String() string {
 }
 
 func (o *OperationExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	return visitor.VisitOperationExpr(o)
 }
 
@@ -126,8 +126,8 @@ func (t *TernaryOperation) String() string {
 }
 
 func (t *TernaryOperation) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.TrueExpr.Accept(visitor); err != nil {
 		return err
 	}
@@ -176,8 +176,8 @@ func (p *BinaryOperation) String() string {
 }
 
 func (p *BinaryOperation) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	if err := p.LeftExpr.Accept(visitor); err != nil {
 		return err
 	}
@@ -194,8 +194,8 @@ type IndexOperation struct {
 }
 
 func (i *IndexOperation) Accept(visitor ASTVisitor) error {
-	visitor.enter(i)
-	defer visitor.leave(i)
+	visitor.Enter(i)
+	defer visitor.Leave(i)
 	if err := i.Object.Accept(visitor); err != nil {
 		return err
 	}
@@ -229,8 +229,8 @@ type JoinTableExpr struct {
 }
 
 func (j *JoinTableExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(j)
-	defer visitor.leave(j)
+	visitor.Enter(j)
+	defer visitor.Leave(j)
 	if err := j.Table.Accept(visitor); err != nil {
 		return err
 	}
@@ -305,8 +305,8 @@ func (a *AlterTable) String() string {
 }
 
 func (a *AlterTable) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.TableIdentifier.Accept(visitor); err != nil {
 		return err
 	}
@@ -358,8 +358,8 @@ func (a *AlterTableAttachPartition) String() string {
 }
 
 func (a *AlterTableAttachPartition) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Partition.Accept(visitor); err != nil {
 		return err
 	}
@@ -401,8 +401,8 @@ func (a *AlterTableDetachPartition) String() string {
 }
 
 func (a *AlterTableDetachPartition) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Partition.Accept(visitor); err != nil {
 		return err
 	}
@@ -451,8 +451,8 @@ func (a *AlterTableDropPartition) String() string {
 }
 
 func (a *AlterTableDropPartition) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Partition.Accept(visitor); err != nil {
 		return err
 	}
@@ -496,8 +496,8 @@ func (a *AlterTableMaterializeProjection) String() string {
 }
 
 func (a *AlterTableMaterializeProjection) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.ProjectionName.Accept(visitor); err != nil {
 		return err
 	}
@@ -546,8 +546,8 @@ func (a *AlterTableMaterializeIndex) String() string {
 }
 
 func (a *AlterTableMaterializeIndex) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.IndexName.Accept(visitor); err != nil {
 		return err
 	}
@@ -588,8 +588,8 @@ func (a *AlterTableFreezePartition) String() string {
 }
 
 func (a *AlterTableFreezePartition) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if a.Partition != nil {
 		if err := a.Partition.Accept(visitor); err != nil {
 			return err
@@ -634,8 +634,8 @@ func (a *AlterTableAddColumn) String() string {
 }
 
 func (a *AlterTableAddColumn) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Column.Accept(visitor); err != nil {
 		return err
 	}
@@ -683,8 +683,8 @@ func (a *AlterTableAddIndex) String() string {
 }
 
 func (a *AlterTableAddIndex) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Index.Accept(visitor); err != nil {
 		return err
 	}
@@ -717,8 +717,8 @@ func (p *ProjectionOrderByClause) String() string {
 }
 
 func (p *ProjectionOrderByClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	return visitor.VisitProjectionOrderBy(p)
 }
 
@@ -762,8 +762,8 @@ func (p *ProjectionSelectStmt) String() string {
 }
 
 func (p *ProjectionSelectStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	if p.With != nil {
 		if err := p.With.Accept(visitor); err != nil {
 			return err
@@ -808,8 +808,8 @@ func (t *TableProjection) String() string {
 }
 
 func (t *TableProjection) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Identifier.Accept(visitor); err != nil {
 		return err
 	}
@@ -855,8 +855,8 @@ func (a *AlterTableAddProjection) String() string {
 }
 
 func (a *AlterTableAddProjection) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.TableProjection.Accept(visitor); err != nil {
 		return err
 	}
@@ -897,8 +897,8 @@ func (a *AlterTableDropColumn) String() string {
 }
 
 func (a *AlterTableDropColumn) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.ColumnName.Accept(visitor); err != nil {
 		return err
 	}
@@ -934,8 +934,8 @@ func (a *AlterTableDropIndex) String() string {
 }
 
 func (a *AlterTableDropIndex) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.IndexName.Accept(visitor); err != nil {
 		return err
 	}
@@ -971,8 +971,8 @@ func (a *AlterTableDropProjection) String() string {
 }
 
 func (a *AlterTableDropProjection) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.ProjectionName.Accept(visitor); err != nil {
 		return err
 	}
@@ -1001,8 +1001,8 @@ func (a *AlterTableRemoveTTL) String() string {
 }
 
 func (a *AlterTableRemoveTTL) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	return visitor.VisitAlterTableRemoveTTL(a)
 }
 
@@ -1043,8 +1043,8 @@ func (a *AlterTableClearColumn) String() string {
 }
 
 func (a *AlterTableClearColumn) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.ColumnName.Accept(visitor); err != nil {
 		return err
 	}
@@ -1093,8 +1093,8 @@ func (a *AlterTableClearIndex) String() string {
 }
 
 func (a *AlterTableClearIndex) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.IndexName.Accept(visitor); err != nil {
 		return err
 	}
@@ -1143,8 +1143,8 @@ func (a *AlterTableClearProjection) String() string {
 }
 
 func (a *AlterTableClearProjection) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.ProjectionName.Accept(visitor); err != nil {
 		return err
 	}
@@ -1189,8 +1189,8 @@ func (a *AlterTableRenameColumn) String() string {
 }
 
 func (a *AlterTableRenameColumn) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.OldColumnName.Accept(visitor); err != nil {
 		return err
 	}
@@ -1226,8 +1226,8 @@ func (a *AlterTableModifyQuery) String() string {
 }
 
 func (a *AlterTableModifyQuery) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.SelectExpr.Accept(visitor); err != nil {
 		return err
 	}
@@ -1261,8 +1261,8 @@ func (a *AlterTableModifyTTL) String() string {
 }
 
 func (a *AlterTableModifyTTL) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.TTL.Accept(visitor); err != nil {
 		return err
 	}
@@ -1304,8 +1304,8 @@ func (a *AlterTableModifyColumn) String() string {
 }
 
 func (a *AlterTableModifyColumn) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Column.Accept(visitor); err != nil {
 		return err
 	}
@@ -1345,8 +1345,8 @@ func (a *AlterTableReplacePartition) String() string {
 }
 
 func (a *AlterTableReplacePartition) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Partition.Accept(visitor); err != nil {
 		return err
 	}
@@ -1378,8 +1378,8 @@ func (a *RemovePropertyType) String() string {
 }
 
 func (a *RemovePropertyType) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.PropertyType.Accept(visitor); err != nil {
 		return err
 	}
@@ -1426,8 +1426,8 @@ func (a *TableIndex) String() string {
 }
 
 func (a *TableIndex) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -1468,8 +1468,8 @@ func (i *Ident) String() string {
 }
 
 func (i *Ident) Accept(visitor ASTVisitor) error {
-	visitor.enter(i)
-	defer visitor.leave(i)
+	visitor.Enter(i)
+	defer visitor.Leave(i)
 	return visitor.VisitIdent(i)
 }
 
@@ -1490,8 +1490,8 @@ func (u *UUID) String() string {
 }
 
 func (u *UUID) Accept(visitor ASTVisitor) error {
-	visitor.enter(u)
-	defer visitor.leave(u)
+	visitor.Enter(u)
+	defer visitor.Leave(u)
 	return visitor.VisitUUID(u)
 }
 
@@ -1540,8 +1540,8 @@ func (c *CreateDatabase) String() string {
 }
 
 func (c *CreateDatabase) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if c.OnCluster != nil {
 		if err := c.OnCluster.Accept(visitor); err != nil {
 			return err
@@ -1623,8 +1623,8 @@ func (c *CreateTable) String() string {
 }
 
 func (c *CreateTable) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -1761,8 +1761,8 @@ func (c *CreateMaterializedView) String() string {
 }
 
 func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -1884,8 +1884,8 @@ func (c *CreateView) String() string {
 }
 
 func (c *CreateView) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -1957,8 +1957,8 @@ func (c *CreateFunction) String() string {
 }
 
 func (c *CreateFunction) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.FunctionName.Accept(visitor); err != nil {
 		return err
 	}
@@ -2011,8 +2011,8 @@ func (r *RoleName) String() string {
 }
 
 func (r *RoleName) Accept(visitor ASTVisitor) error {
-	visitor.enter(r)
-	defer visitor.leave(r)
+	visitor.Enter(r)
+	defer visitor.Leave(r)
 	if err := r.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -2058,8 +2058,8 @@ func (s *SettingPair) String() string {
 }
 
 func (s *SettingPair) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -2108,8 +2108,8 @@ func (r *RoleSetting) String() string {
 }
 
 func (r *RoleSetting) Accept(visitor ASTVisitor) error {
-	visitor.enter(r)
-	defer visitor.leave(r)
+	visitor.Enter(r)
+	defer visitor.Leave(r)
 	for _, settingPair := range r.SettingPairs {
 		if err := settingPair.Accept(visitor); err != nil {
 			return err
@@ -2177,8 +2177,8 @@ func (c *CreateRole) String() string {
 }
 
 func (c *CreateRole) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	for _, roleName := range c.RoleNames {
 		if err := roleName.Accept(visitor); err != nil {
 			return err
@@ -2242,8 +2242,8 @@ func (a *AlterRole) String() string {
 }
 
 func (a *AlterRole) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	for _, roleRenamePair := range a.RoleRenamePairs {
 		if err := roleRenamePair.Accept(visitor); err != nil {
 			return err
@@ -2282,8 +2282,8 @@ func (r *RoleRenamePair) String() string {
 }
 
 func (r *RoleRenamePair) Accept(visitor ASTVisitor) error {
-	visitor.enter(r)
-	defer visitor.leave(r)
+	visitor.Enter(r)
+	defer visitor.Leave(r)
 	if err := r.RoleName.Accept(visitor); err != nil {
 		return err
 	}
@@ -2317,8 +2317,8 @@ func (d *DestinationClause) String() string {
 }
 
 func (d *DestinationClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	if err := d.TableIdentifier.Accept(visitor); err != nil {
 		return err
 	}
@@ -2348,8 +2348,8 @@ func (c *ConstraintClause) String() string {
 }
 
 func (c *ConstraintClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Constraint.Accept(visitor); err != nil {
 		return err
 	}
@@ -2376,8 +2376,8 @@ func (n *NullLiteral) String() string {
 }
 
 func (n *NullLiteral) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	return visitor.VisitNullLiteral(n)
 }
 
@@ -2399,8 +2399,8 @@ func (n *NotNullLiteral) String() string {
 }
 
 func (n *NotNullLiteral) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.NullLiteral.Accept(visitor); err != nil {
 		return err
 	}
@@ -2431,8 +2431,8 @@ func (n *NestedIdentifier) String() string {
 }
 
 func (n *NestedIdentifier) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Ident.Accept(visitor); err != nil {
 		return err
 	}
@@ -2475,8 +2475,8 @@ func (c *ColumnIdentifier) String() string {
 }
 
 func (c *ColumnIdentifier) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if c.Database != nil {
 		if err := c.Database.Accept(visitor); err != nil {
 			return err
@@ -2517,8 +2517,8 @@ func (t *TableIdentifier) String() string {
 }
 
 func (t *TableIdentifier) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if t.Database != nil {
 		if err := t.Database.Accept(visitor); err != nil {
 			return err
@@ -2570,8 +2570,8 @@ func (t *TableSchemaClause) String() string {
 }
 
 func (t *TableSchemaClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	for _, column := range t.Columns {
 		if err := column.Accept(visitor); err != nil {
 			return err
@@ -2618,8 +2618,8 @@ func (t *TableArgListExpr) String() string {
 }
 
 func (t *TableArgListExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	for _, arg := range t.Args {
 		if err := arg.Accept(visitor); err != nil {
 			return err
@@ -2649,8 +2649,8 @@ func (t *TableFunctionExpr) String() string {
 }
 
 func (t *TableFunctionExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -2681,8 +2681,8 @@ func (o *ClusterClause) String() string {
 }
 
 func (o *ClusterClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	if err := o.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -2721,8 +2721,8 @@ func (p *PartitionClause) String() string {
 }
 
 func (p *PartitionClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	if p.Expr != nil {
 		if err := p.Expr.Accept(visitor); err != nil {
 			return err
@@ -2757,8 +2757,8 @@ func (p *PartitionByClause) String() string {
 }
 
 func (p *PartitionByClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	if err := p.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -2786,8 +2786,8 @@ func (p *PrimaryKeyClause) String() string {
 }
 
 func (p *PrimaryKeyClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	if err := p.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -2815,8 +2815,8 @@ func (s *SampleByClause) String() string {
 }
 
 func (s *SampleByClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -2852,8 +2852,8 @@ func (t *TTLPolicyRuleAction) String() string {
 }
 
 func (t *TTLPolicyRuleAction) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if t.Codec != nil {
 		if err := t.Codec.Accept(visitor); err != nil {
 			return err
@@ -2896,8 +2896,8 @@ func (r *RefreshExpr) String() string {
 }
 
 func (r *RefreshExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(r)
-	defer visitor.leave(r)
+	visitor.Enter(r)
+	defer visitor.Leave(r)
 	if r.Interval != nil {
 		if err := r.Interval.Accept(visitor); err != nil {
 			return err
@@ -2947,8 +2947,8 @@ func (t *TTLPolicyRule) String() string {
 }
 
 func (t *TTLPolicyRule) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if t.ToVolume != nil {
 		if err := t.ToVolume.Accept(visitor); err != nil {
 			return err
@@ -3006,8 +3006,8 @@ func (t *TTLPolicy) String() string {
 }
 
 func (t *TTLPolicy) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if t.Item != nil {
 		if err := t.Item.Accept(visitor); err != nil {
 			return err
@@ -3051,8 +3051,8 @@ func (t *TTLExpr) String() string {
 }
 
 func (t *TTLExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -3091,8 +3091,8 @@ func (t *TTLClause) String() string {
 }
 
 func (t *TTLClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	for _, item := range t.Items {
 		if err := item.Accept(visitor); err != nil {
 			return err
@@ -3134,8 +3134,8 @@ func (o *OrderExpr) String() string {
 }
 
 func (o *OrderExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	if err := o.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -3175,8 +3175,8 @@ func (o *OrderByClause) String() string {
 }
 
 func (o *OrderByClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	for _, item := range o.Items {
 		if err := item.Accept(visitor); err != nil {
 			return err
@@ -3208,8 +3208,8 @@ func (s *SettingExprList) String() string {
 }
 
 func (s *SettingExprList) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3246,8 +3246,8 @@ func (s *SettingsClause) String() string {
 }
 
 func (s *SettingsClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	for _, item := range s.Items {
 		if err := item.Accept(visitor); err != nil {
 			return err
@@ -3277,14 +3277,14 @@ func (f *ParamExprList) String() string {
 	builder.WriteString(f.Items.String())
 	builder.WriteString(")")
 	if f.ColumnArgList != nil {
-	    builder.WriteString(f.ColumnArgList.String())
+		builder.WriteString(f.ColumnArgList.String())
 	}
 	return builder.String()
 }
 
 func (f *ParamExprList) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Items.Accept(visitor); err != nil {
 		return err
 	}
@@ -3332,8 +3332,8 @@ func (m *MapLiteral) String() string {
 }
 
 func (m *MapLiteral) Accept(visitor ASTVisitor) error {
-	visitor.enter(m)
-	defer visitor.leave(m)
+	visitor.Enter(m)
+	defer visitor.Leave(m)
 	for _, kv := range m.KeyValues {
 		if err := kv.Key.Accept(visitor); err != nil {
 			return err
@@ -3371,8 +3371,8 @@ func (q *QueryParam) String() string {
 }
 
 func (q *QueryParam) Accept(visitor ASTVisitor) error {
-	visitor.enter(q)
-	defer visitor.leave(q)
+	visitor.Enter(q)
+	defer visitor.Leave(q)
 	if err := q.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3410,8 +3410,8 @@ func (a *ArrayParamList) String() string {
 }
 
 func (a *ArrayParamList) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Items.Accept(visitor); err != nil {
 		return err
 	}
@@ -3439,8 +3439,8 @@ func (o *ObjectParams) String() string {
 }
 
 func (o *ObjectParams) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	if err := o.Object.Accept(visitor); err != nil {
 		return err
 	}
@@ -3471,8 +3471,8 @@ func (f *FunctionExpr) String() string {
 }
 
 func (f *FunctionExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3505,8 +3505,8 @@ func (w *WindowFunctionExpr) String() string {
 }
 
 func (w *WindowFunctionExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if err := w.Function.Accept(visitor); err != nil {
 		return err
 	}
@@ -3542,8 +3542,8 @@ func (t *TypedPlaceholder) String() string {
 }
 
 func (t *TypedPlaceholder) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3580,8 +3580,8 @@ func (c *ColumnExpr) String() string {
 }
 
 func (c *ColumnExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -3660,8 +3660,8 @@ func (c *ColumnDef) String() string {
 }
 
 func (c *ColumnDef) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3735,8 +3735,8 @@ func (s *ScalarType) String() string {
 }
 
 func (s *ScalarType) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3849,8 +3849,8 @@ func (j *JSONType) Type() string {
 }
 
 func (j *JSONType) Accept(visitor ASTVisitor) error {
-	visitor.enter(j)
-	defer visitor.leave(j)
+	visitor.Enter(j)
+	defer visitor.Leave(j)
 	if err := j.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3874,8 +3874,8 @@ func (c *PropertyType) String() string {
 }
 
 func (c *PropertyType) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3916,8 +3916,8 @@ func (s *TypeWithParams) String() string {
 }
 
 func (s *TypeWithParams) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -3963,8 +3963,8 @@ func (c *ComplexType) String() string {
 }
 
 func (c *ComplexType) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -4012,8 +4012,8 @@ func (n *NestedType) String() string {
 }
 
 func (n *NestedType) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -4070,8 +4070,8 @@ func (c *CompressionCodec) String() string {
 }
 
 func (c *CompressionCodec) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Type.Accept(visitor); err != nil {
 		return err
 	}
@@ -4115,8 +4115,8 @@ func (n *NumberLiteral) String() string {
 }
 
 func (n *NumberLiteral) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	return visitor.VisitNumberLiteral(n)
 }
 
@@ -4139,8 +4139,8 @@ func (s *StringLiteral) String() string {
 }
 
 func (s *StringLiteral) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	return visitor.VisitStringLiteral(s)
 }
 
@@ -4163,8 +4163,8 @@ func (p *PlaceHolder) String() string {
 }
 
 func (p *PlaceHolder) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	return visitor.VisitPlaceHolderExpr(p)
 }
 
@@ -4196,8 +4196,8 @@ func (r *RatioExpr) String() string {
 }
 
 func (r *RatioExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(r)
-	defer visitor.leave(r)
+	visitor.Enter(r)
+	defer visitor.Leave(r)
 	if err := r.Numerator.Accept(visitor); err != nil {
 		return err
 	}
@@ -4231,8 +4231,8 @@ func (e *EnumValue) String() string {
 }
 
 func (e *EnumValue) Accept(visitor ASTVisitor) error {
-	visitor.enter(e)
-	defer visitor.leave(e)
+	visitor.Enter(e)
+	defer visitor.Leave(e)
 	if err := e.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -4272,8 +4272,8 @@ func (e *EnumType) String() string {
 }
 
 func (e *EnumType) Accept(visitor ASTVisitor) error {
-	visitor.enter(e)
-	defer visitor.leave(e)
+	visitor.Enter(e)
+	defer visitor.Leave(e)
 	if err := e.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -4320,8 +4320,8 @@ func (i *IntervalExpr) String() string {
 }
 
 func (i *IntervalExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(i)
-	defer visitor.leave(i)
+	visitor.Enter(i)
+	defer visitor.Leave(i)
 	if err := i.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -4389,8 +4389,8 @@ func (e *EngineExpr) String() string {
 }
 
 func (e *EngineExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(e)
-	defer visitor.leave(e)
+	visitor.Enter(e)
+	defer visitor.Leave(e)
 	if e.Params != nil {
 		if err := e.Params.Accept(visitor); err != nil {
 			return err
@@ -4446,8 +4446,8 @@ func (c *ColumnTypeExpr) String() string {
 }
 
 func (c *ColumnTypeExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -4483,8 +4483,8 @@ func (c *ColumnArgList) String() string {
 }
 
 func (c *ColumnArgList) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	for _, item := range c.Items {
 		if err := item.Accept(visitor); err != nil {
 			return err
@@ -4523,8 +4523,8 @@ func (c *ColumnExprList) String() string {
 }
 
 func (c *ColumnExprList) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	for _, item := range c.Items {
 		if err := item.Accept(visitor); err != nil {
 			return err
@@ -4567,8 +4567,8 @@ func (w *WhenClause) String() string {
 }
 
 func (w *WhenClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if err := w.When.Accept(visitor); err != nil {
 		return err
 	}
@@ -4618,8 +4618,8 @@ func (c *CaseExpr) String() string {
 }
 
 func (c *CaseExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if c.Expr != nil {
 		if err := c.Expr.Accept(visitor); err != nil {
 			return err
@@ -4669,8 +4669,8 @@ func (c *CastExpr) String() string {
 }
 
 func (c *CastExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -4707,8 +4707,8 @@ func (w *WithClause) String() string {
 }
 
 func (w *WithClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	for _, cte := range w.CTEs {
 		if err := cte.Accept(visitor); err != nil {
 			return err
@@ -4743,8 +4743,8 @@ func (t *TopClause) String() string {
 }
 
 func (t *TopClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Number.Accept(visitor); err != nil {
 		return err
 	}
@@ -4813,8 +4813,8 @@ func (c *CreateLiveView) String() string {
 }
 
 func (c *CreateLiveView) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -4873,8 +4873,8 @@ func (w *WithTimeoutClause) String() string {
 }
 
 func (w *WithTimeoutClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if err := w.Number.Accept(visitor); err != nil {
 		return err
 	}
@@ -4911,8 +4911,8 @@ func (t *TableExpr) String() string {
 }
 
 func (t *TableExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -4945,8 +4945,8 @@ func (o *OnClause) String() string {
 }
 
 func (o *OnClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	if err := o.On.Accept(visitor); err != nil {
 		return err
 	}
@@ -4974,8 +4974,8 @@ func (u *UsingClause) String() string {
 }
 
 func (u *UsingClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(u)
-	defer visitor.leave(u)
+	visitor.Enter(u)
+	defer visitor.Leave(u)
 	if err := u.Using.Accept(visitor); err != nil {
 		return err
 	}
@@ -5033,8 +5033,8 @@ func (j *JoinExpr) String() string {
 }
 
 func (j *JoinExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(j)
-	defer visitor.leave(j)
+	visitor.Enter(j)
+	defer visitor.Leave(j)
 	if err := j.Left.Accept(visitor); err != nil {
 		return err
 	}
@@ -5081,8 +5081,8 @@ func (j *JoinConstraintClause) String() string {
 }
 
 func (j *JoinConstraintClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(j)
-	defer visitor.leave(j)
+	visitor.Enter(j)
+	defer visitor.Leave(j)
 	if j.On != nil {
 		if err := j.On.Accept(visitor); err != nil {
 			return err
@@ -5117,8 +5117,8 @@ func (f *FromClause) String() string {
 }
 
 func (f *FromClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5146,8 +5146,8 @@ func (n *IsNullExpr) String() string {
 }
 
 func (n *IsNullExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5175,8 +5175,8 @@ func (n *IsNotNullExpr) String() string {
 }
 
 func (n *IsNotNullExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5212,8 +5212,8 @@ func (a *AliasExpr) String() string {
 }
 
 func (a *AliasExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5244,8 +5244,8 @@ func (w *WhereClause) String() string {
 }
 
 func (w *WhereClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if err := w.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5270,8 +5270,8 @@ func (w *PrewhereClause) String() string {
 }
 
 func (w *PrewhereClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if err := w.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5318,8 +5318,8 @@ func (g *GroupByClause) String() string {
 }
 
 func (g *GroupByClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(g)
-	defer visitor.leave(g)
+	visitor.Enter(g)
+	defer visitor.Leave(g)
 	if g.Expr != nil {
 		if err := g.Expr.Accept(visitor); err != nil {
 			return err
@@ -5346,8 +5346,8 @@ func (h *HavingClause) String() string {
 }
 
 func (h *HavingClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(h)
-	defer visitor.leave(h)
+	visitor.Enter(h)
+	defer visitor.Leave(h)
 	if err := h.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5383,8 +5383,8 @@ func (l *LimitClause) String() string {
 }
 
 func (l *LimitClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(l)
-	defer visitor.leave(l)
+	visitor.Enter(l)
+	defer visitor.Leave(l)
 	if err := l.Limit.Accept(visitor); err != nil {
 		return err
 	}
@@ -5428,8 +5428,8 @@ func (l *LimitByClause) String() string {
 }
 
 func (l *LimitByClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(l)
-	defer visitor.leave(l)
+	visitor.Enter(l)
+	defer visitor.Leave(l)
 	if l.Limit != nil {
 		if err := l.Limit.Accept(visitor); err != nil {
 			return err
@@ -5479,8 +5479,8 @@ func (w *WindowExpr) String() string {
 }
 
 func (w *WindowExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if w.PartitionBy != nil {
 		if err := w.PartitionBy.Accept(visitor); err != nil {
 			return err
@@ -5525,8 +5525,8 @@ func (w *WindowClause) String() string {
 }
 
 func (w *WindowClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(w)
-	defer visitor.leave(w)
+	visitor.Enter(w)
+	defer visitor.Leave(w)
 	if w.WindowExpr != nil {
 		if err := w.WindowExpr.Accept(visitor); err != nil {
 			return err
@@ -5563,8 +5563,8 @@ func (f *WindowFrameClause) String() string {
 }
 
 func (f *WindowFrameClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Extend.Accept(visitor); err != nil {
 		return err
 	}
@@ -5588,8 +5588,8 @@ func (f *WindowFrameExtendExpr) String() string {
 }
 
 func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5627,8 +5627,8 @@ func (f *BetweenClause) String() string {
 }
 
 func (f *BetweenClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if f.Expr != nil {
 		if err := f.Expr.Accept(visitor); err != nil {
 			return err
@@ -5661,8 +5661,8 @@ func (f *WindowFrameCurrentRow) String() string {
 }
 
 func (f *WindowFrameCurrentRow) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	return visitor.VisitWindowFrameCurrentRow(f)
 }
 
@@ -5685,8 +5685,8 @@ func (f *WindowFrameUnbounded) String() string {
 }
 
 func (f *WindowFrameUnbounded) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	return visitor.VisitWindowFrameUnbounded(f)
 }
 
@@ -5713,8 +5713,8 @@ func (f *WindowFrameNumber) String() string {
 }
 
 func (f *WindowFrameNumber) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Number.Accept(visitor); err != nil {
 		return err
 	}
@@ -5740,8 +5740,8 @@ func (a *ArrayJoinClause) String() string {
 }
 
 func (a *ArrayJoinClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(a)
-	defer visitor.leave(a)
+	visitor.Enter(a)
+	defer visitor.Leave(a)
 	if err := a.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5870,8 +5870,8 @@ func (s *SelectQuery) String() string { // nolint: funlen
 }
 
 func (s *SelectQuery) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if s.With != nil {
 		if err := s.With.Accept(visitor); err != nil {
 			return err
@@ -5992,8 +5992,8 @@ func (s *SubQuery) String() string {
 }
 
 func (s *SubQuery) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if s.Select != nil {
 		if err := s.Select.Accept(visitor); err != nil {
 			return err
@@ -6020,8 +6020,8 @@ func (n *NotExpr) String() string {
 }
 
 func (n *NotExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -6046,8 +6046,8 @@ func (n *NegateExpr) String() string {
 }
 
 func (n *NegateExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -6072,8 +6072,8 @@ func (g *GlobalInOperation) String() string {
 }
 
 func (g *GlobalInOperation) Accept(visitor ASTVisitor) error {
-	visitor.enter(g)
-	defer visitor.leave(g)
+	visitor.Enter(g)
+	defer visitor.Leave(g)
 	if err := g.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -6106,8 +6106,8 @@ func (e *ExtractExpr) String() string {
 }
 
 func (e *ExtractExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(e)
-	defer visitor.leave(e)
+	visitor.Enter(e)
+	defer visitor.Leave(e)
 	if err := e.FromExpr.Accept(visitor); err != nil {
 		return err
 	}
@@ -6149,8 +6149,8 @@ func (d *DropDatabase) String() string {
 }
 
 func (d *DropDatabase) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	if err := d.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -6208,8 +6208,8 @@ func (d *DropStmt) String() string {
 }
 
 func (d *DropStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	if err := d.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -6267,8 +6267,8 @@ func (d *DropUserOrRole) String() string {
 }
 
 func (d *DropUserOrRole) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	for _, name := range d.Names {
 		if err := name.Accept(visitor); err != nil {
 			return err
@@ -6301,8 +6301,8 @@ func (u *UseStmt) String() string {
 }
 
 func (u *UseStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(u)
-	defer visitor.leave(u)
+	visitor.Enter(u)
+	defer visitor.Leave(u)
 	if err := u.Database.Accept(visitor); err != nil {
 		return err
 	}
@@ -6338,8 +6338,8 @@ func (c *CTEStmt) String() string {
 }
 
 func (c *CTEStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -6375,8 +6375,8 @@ func (s *SetStmt) String() string {
 }
 
 func (s *SetStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Settings.Accept(visitor); err != nil {
 		return err
 	}
@@ -6401,8 +6401,8 @@ func (f *FormatClause) String() string {
 }
 
 func (f *FormatClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(f)
-	defer visitor.leave(f)
+	visitor.Enter(f)
+	defer visitor.Leave(f)
 	if err := f.Format.Accept(visitor); err != nil {
 		return err
 	}
@@ -6449,8 +6449,8 @@ func (o *OptimizeStmt) String() string {
 }
 
 func (o *OptimizeStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(o)
-	defer visitor.leave(o)
+	visitor.Enter(o)
+	defer visitor.Leave(o)
 	if err := o.Table.Accept(visitor); err != nil {
 		return err
 	}
@@ -6506,8 +6506,8 @@ func (d *DeduplicateClause) String() string {
 }
 
 func (d *DeduplicateClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	if d.By != nil {
 		if err := d.By.Accept(visitor); err != nil {
 			return err
@@ -6539,8 +6539,8 @@ func (s *SystemStmt) String() string {
 }
 
 func (s *SystemStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -6574,8 +6574,8 @@ func (s *SystemFlushExpr) String() string {
 }
 
 func (s *SystemFlushExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if s.Distributed != nil {
 		if err := s.Distributed.Accept(visitor); err != nil {
 			return err
@@ -6611,8 +6611,8 @@ func (s *SystemReloadExpr) String() string {
 }
 
 func (s *SystemReloadExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if s.Dictionary != nil {
 		if err := s.Dictionary.Accept(visitor); err != nil {
 			return err
@@ -6642,8 +6642,8 @@ func (s *SystemSyncExpr) String() string {
 }
 
 func (s *SystemSyncExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Cluster.Accept(visitor); err != nil {
 		return err
 	}
@@ -6679,8 +6679,8 @@ func (s *SystemCtrlExpr) String() string {
 }
 
 func (s *SystemCtrlExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if s.Cluster != nil {
 		if err := s.Cluster.Accept(visitor); err != nil {
 			return err
@@ -6708,8 +6708,8 @@ func (s *SystemDropExpr) String() string {
 }
 
 func (s *SystemDropExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	return visitor.VisitSystemDropExpr(s)
 }
 
@@ -6753,8 +6753,8 @@ func (t *TruncateTable) String() string {
 }
 
 func (t *TruncateTable) Accept(visitor ASTVisitor) error {
-	visitor.enter(t)
-	defer visitor.leave(t)
+	visitor.Enter(t)
+	defer visitor.Leave(t)
 	if err := t.Name.Accept(visitor); err != nil {
 		return err
 	}
@@ -6795,8 +6795,8 @@ func (s *SampleClause) String() string {
 }
 
 func (s *SampleClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(s)
-	defer visitor.leave(s)
+	visitor.Enter(s)
+	defer visitor.Leave(s)
 	if err := s.Ratio.Accept(visitor); err != nil {
 		return err
 	}
@@ -6839,8 +6839,8 @@ func (d *DeleteClause) String() string {
 }
 
 func (d *DeleteClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(d)
-	defer visitor.leave(d)
+	visitor.Enter(d)
+	defer visitor.Leave(d)
 	if err := d.Table.Accept(visitor); err != nil {
 		return err
 	}
@@ -6885,8 +6885,8 @@ func (c *ColumnNamesExpr) String() string {
 }
 
 func (c *ColumnNamesExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	for i := range c.ColumnNames {
 		if err := c.ColumnNames[i].Accept(visitor); err != nil {
 			return err
@@ -6923,8 +6923,8 @@ func (v *AssignmentValues) String() string {
 }
 
 func (v *AssignmentValues) Accept(visitor ASTVisitor) error {
-	visitor.enter(v)
-	defer visitor.leave(v)
+	visitor.Enter(v)
+	defer visitor.Leave(v)
 	for _, value := range v.Values {
 		if err := value.Accept(visitor); err != nil {
 			return err
@@ -6986,8 +6986,8 @@ func (i *InsertStmt) String() string {
 }
 
 func (i *InsertStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(i)
-	defer visitor.leave(i)
+	visitor.Enter(i)
+	defer visitor.Leave(i)
 	if i.Format != nil {
 		if err := i.Format.Accept(visitor); err != nil {
 			return err
@@ -7040,8 +7040,8 @@ func (c *CheckStmt) String() string {
 }
 
 func (c *CheckStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(c)
-	defer visitor.leave(c)
+	visitor.Enter(c)
+	defer visitor.Leave(c)
 	if err := c.Table.Accept(visitor); err != nil {
 		return err
 	}
@@ -7072,8 +7072,8 @@ func (n *UnaryExpr) String() string {
 }
 
 func (n *UnaryExpr) Accept(visitor ASTVisitor) error {
-	visitor.enter(n)
-	defer visitor.leave(n)
+	visitor.Enter(n)
+	defer visitor.Leave(n)
 	if err := n.Expr.Accept(visitor); err != nil {
 		return err
 	}
@@ -7120,8 +7120,8 @@ func (r *RenameStmt) String() string {
 }
 
 func (r *RenameStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(r)
-	defer visitor.leave(r)
+	visitor.Enter(r)
+	defer visitor.Leave(r)
 	for _, pair := range r.TargetPairList {
 		if err := pair.Old.Accept(visitor); err != nil {
 			return err
@@ -7179,8 +7179,8 @@ func (e *ExplainStmt) String() string {
 }
 
 func (e *ExplainStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(e)
-	defer visitor.leave(e)
+	visitor.Enter(e)
+	defer visitor.Leave(e)
 	if err := e.Statement.Accept(visitor); err != nil {
 		return err
 	}
@@ -7217,8 +7217,8 @@ func (p *PrivilegeClause) String() string {
 }
 
 func (p *PrivilegeClause) Accept(visitor ASTVisitor) error {
-	visitor.enter(p)
-	defer visitor.leave(p)
+	visitor.Enter(p)
+	defer visitor.Leave(p)
 	if p.Params != nil {
 		if err := p.Params.Accept(visitor); err != nil {
 			return err
@@ -7279,8 +7279,8 @@ func (g *GrantPrivilegeStmt) String() string {
 }
 
 func (g *GrantPrivilegeStmt) Accept(visitor ASTVisitor) error {
-	visitor.enter(g)
-	defer visitor.leave(g)
+	visitor.Enter(g)
+	defer visitor.Leave(g)
 	if g.OnCluster != nil {
 		if err := g.OnCluster.Accept(visitor); err != nil {
 			return err

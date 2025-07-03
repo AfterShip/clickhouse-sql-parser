@@ -103,13 +103,13 @@ func (v *nestedRewriteVisitor) VisitTableIdentifier(expr *TableIdentifier) error
 	return nil
 }
 
-func (v *nestedRewriteVisitor) enter(expr Expr) {
+func (v *nestedRewriteVisitor) Enter(expr Expr) {
 	if s, ok := expr.(*SelectQuery); ok {
 		v.stack = append(v.stack, s)
 	}
 }
 
-func (v *nestedRewriteVisitor) leave(expr Expr) {
+func (v *nestedRewriteVisitor) Leave(expr Expr) {
 	if _, ok := expr.(*SelectQuery); ok {
 		v.stack = v.stack[1:]
 	}
@@ -132,4 +132,39 @@ func TestVisitor_NestRewrite(t *testing.T) {
 
 	require.NotSame(t, sql, newSql)
 	require.Less(t, strings.Index(newSql, "table1"), strings.Index(newSql, "table2"))
+}
+
+// exportedMethodVisitor is used to test that Enter and Leave methods are exported
+type exportedMethodVisitor struct {
+	DefaultASTVisitor
+	enterCount int
+	leaveCount int
+}
+
+// These method definitions would fail to compile if Enter/Leave were not exported
+func (v *exportedMethodVisitor) Enter(expr Expr) {
+	v.enterCount++
+}
+
+func (v *exportedMethodVisitor) Leave(expr Expr) {
+	v.leaveCount++
+}
+
+// TestVisitor_ExportedMethods verifies that Enter and Leave methods are exported
+// and can be overridden from external packages
+func TestVisitor_ExportedMethods(t *testing.T) {
+	visitor := &exportedMethodVisitor{}
+
+	sql := `SELECT a FROM table1`
+	parser := NewParser(sql)
+	stmts, err := parser.ParseStmts()
+	require.NoError(t, err)
+
+	err = stmts[0].Accept(visitor)
+	require.NoError(t, err)
+
+	// Verify that our overridden methods were called
+	require.Greater(t, visitor.enterCount, 0, "Enter method should have been called")
+	require.Greater(t, visitor.leaveCount, 0, "Leave method should have been called")
+	require.Equal(t, visitor.enterCount, visitor.leaveCount, "Enter and Leave calls should be balanced")
 }
