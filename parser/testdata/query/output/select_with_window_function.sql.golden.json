@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 348,
+    "StatementEnd": 508,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -222,33 +222,158 @@
           "NamePos": 332,
           "NameEnd": 340
         }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "min",
+              "QuoteType": 1,
+              "NamePos": 346,
+              "NameEnd": 349
+            },
+            "Params": {
+              "LeftParenPos": 349,
+              "RightParenPos": 358,
+              "Items": {
+                "ListPos": 350,
+                "ListEnd": 358,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "latest_1",
+                      "QuoteType": 1,
+                      "NamePos": 350,
+                      "NameEnd": 358
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 360,
+          "OverExpr": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 365,
+            "NameEnd": 366
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "latest_1",
+          "QuoteType": 1,
+          "NamePos": 370,
+          "NameEnd": 378
+        }
       }
     ],
     "From": {
-      "FromPos": 341,
+      "FromPos": 379,
       "Expr": {
         "Table": {
-          "TablePos": 346,
-          "TableEnd": 348,
+          "TablePos": 384,
+          "TableEnd": 386,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t0",
               "QuoteType": 1,
-              "NamePos": 346,
-              "NameEnd": 348
+              "NamePos": 384,
+              "NameEnd": 386
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 348,
+        "StatementEnd": 386,
         "SampleRatio": null,
         "HasFinal": false
       }
     },
     "ArrayJoin": null,
-    "Window": null,
+    "Window": {
+      "LeftParenPos": 399,
+      "RightParenPos": 508,
+      "PartitionBy": {
+        "PartitionPos": 399,
+        "Expr": {
+          "ListPos": 413,
+          "ListEnd": 431,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": "aggregation_target",
+                "QuoteType": 1,
+                "NamePos": 413,
+                "NameEnd": 431
+              },
+              "Alias": null
+            }
+          ]
+        }
+      },
+      "OrderBy": {
+        "OrderPos": 436,
+        "ListEnd": 454,
+        "Items": [
+          {
+            "OrderPos": 436,
+            "Expr": {
+              "Name": "timestamp",
+              "QuoteType": 1,
+              "NamePos": 445,
+              "NameEnd": 454
+            },
+            "Alias": null,
+            "Direction": "DESC"
+          }
+        ]
+      },
+      "Frame": {
+        "FramePos": 460,
+        "Type": "ROWS",
+        "Extend": {
+          "Expr": null,
+          "Between": {
+            "FramePos": 473,
+            "Type": "",
+            "Extend": {
+              "UnboundedPos": 473,
+              "UnboundedEnd": 0,
+              "Direction": "PRECEDING"
+            }
+          },
+          "AndPos": 493,
+          "And": {
+            "FramePos": 497,
+            "Type": "",
+            "Extend": {
+              "Number": {
+                "NumPos": 497,
+                "NumEnd": 498,
+                "Literal": "0",
+                "Base": 10
+              },
+              "UnboundedEnd": 508,
+              "Direction": "PRECEDING"
+            }
+          }
+        }
+      },
+      "WindowPos": 387,
+      "Name": {
+        "Name": "w",
+        "QuoteType": 1,
+        "NamePos": 394,
+        "NameEnd": 395
+      },
+      "AsPos": 0
+    },
     "Prewhere": null,
     "Where": null,
     "GroupBy": null,

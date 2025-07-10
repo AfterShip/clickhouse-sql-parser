@@ -5849,7 +5849,7 @@ func (w *WindowClause) String() string {
 	var builder strings.Builder
 	builder.WriteString("WINDOW ")
 	builder.WriteString(w.Name.String())
-	builder.WriteString(" ")
+	builder.WriteString(" AS ")
 	builder.WriteString(w.WindowExpr.String())
 	return builder.String()
 }

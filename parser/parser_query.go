@@ -864,13 +864,6 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if arrayJoin != nil {
 		statementEnd = arrayJoin.End()
 	}
-	window, err := p.tryParseWindowClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if window != nil {
-		statementEnd = window.End()
-	}
 	prewhere, err := p.tryParsePrewhereClause(p.Pos())
 	if err != nil {
 		return nil, err
@@ -892,7 +885,6 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if groupBy != nil {
 		statementEnd = groupBy.End()
 	}
-
 	withTotal := false
 	lastPos := p.Pos()
 	if p.tryConsumeKeywords(KeywordWith) {
@@ -908,6 +900,13 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	}
 	if having != nil {
 		statementEnd = having.End()
+	}
+	window, err := p.tryParseWindowClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if window != nil {
+		statementEnd = window.End()
 	}
 	orderBy, err := p.tryParseOrderByClause(p.Pos())
 	if err != nil {
