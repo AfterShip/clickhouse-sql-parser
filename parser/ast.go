@@ -5790,20 +5790,20 @@ func (w *WindowExpr) End() Pos {
 }
 
 func (w *WindowExpr) String() string {
-	var builder strings.Builder
-	builder.WriteByte('(')
+	parts := make([]string, 0)
 	if w.PartitionBy != nil {
-		builder.WriteString(" ")
-		builder.WriteString(w.PartitionBy.String())
+		parts = append(parts, w.PartitionBy.String())
 	}
 	if w.OrderBy != nil {
-		builder.WriteString(" ")
-		builder.WriteString(w.OrderBy.String())
+		parts = append(parts, w.OrderBy.String())
 	}
 	if w.Frame != nil {
-		builder.WriteString(" ")
-		builder.WriteString(w.Frame.String())
+		parts = append(parts, w.Frame.String())
 	}
+
+	var builder strings.Builder
+	builder.WriteByte('(')
+	builder.WriteString(strings.Join(parts, " "))
 	builder.WriteByte(')')
 	return builder.String()
 }
