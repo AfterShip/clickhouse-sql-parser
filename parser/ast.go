@@ -5792,16 +5792,23 @@ func (w *WindowExpr) End() Pos {
 func (w *WindowExpr) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
+	// We need to add spaces between the clauses, but not at the beginning or end.
+	requireSpace := false
 	if w.PartitionBy != nil {
-		builder.WriteString(" ")
 		builder.WriteString(w.PartitionBy.String())
+		requireSpace = true
 	}
 	if w.OrderBy != nil {
-		builder.WriteString(" ")
+		if requireSpace {
+			builder.WriteString(" ")
+		}
 		builder.WriteString(w.OrderBy.String())
+		requireSpace = true
 	}
 	if w.Frame != nil {
-		builder.WriteString(" ")
+		if requireSpace {
+			builder.WriteString(" ")
+		}
 		builder.WriteString(w.Frame.String())
 	}
 	builder.WriteByte(')')
