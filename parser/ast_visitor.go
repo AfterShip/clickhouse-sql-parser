@@ -108,6 +108,16 @@ type ASTVisitor interface {
 	VisitWithExpr(expr *WithClause) error
 	VisitTopExpr(expr *TopClause) error
 	VisitCreateLiveView(expr *CreateLiveView) error
+	VisitCreateDictionary(expr *CreateDictionary) error
+	VisitDictionarySchemaClause(expr *DictionarySchemaClause) error
+	VisitDictionaryAttribute(expr *DictionaryAttribute) error
+	VisitDictionaryEngineClause(expr *DictionaryEngineClause) error
+	VisitDictionaryPrimaryKeyClause(expr *DictionaryPrimaryKeyClause) error
+	VisitDictionarySourceClause(expr *DictionarySourceClause) error
+	VisitDictionaryArgExpr(expr *DictionaryArgExpr) error
+	VisitDictionaryLifetimeClause(expr *DictionaryLifetimeClause) error
+	VisitDictionaryLayoutClause(expr *DictionaryLayoutClause) error
+	VisitDictionaryRangeClause(expr *DictionaryRangeClause) error
 	VisitWithTimeoutExpr(expr *WithTimeoutClause) error
 	VisitTableExpr(expr *TableExpr) error
 	VisitOnExpr(expr *OnClause) error
@@ -930,6 +940,76 @@ func (v *DefaultASTVisitor) VisitTopExpr(expr *TopClause) error {
 }
 
 func (v *DefaultASTVisitor) VisitCreateLiveView(expr *CreateLiveView) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitCreateDictionary(expr *CreateDictionary) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionarySchemaClause(expr *DictionarySchemaClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryAttribute(expr *DictionaryAttribute) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryEngineClause(expr *DictionaryEngineClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryPrimaryKeyClause(expr *DictionaryPrimaryKeyClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionarySourceClause(expr *DictionarySourceClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryArgExpr(expr *DictionaryArgExpr) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryLifetimeClause(expr *DictionaryLifetimeClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryLayoutClause(expr *DictionaryLayoutClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDictionaryRangeClause(expr *DictionaryRangeClause) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

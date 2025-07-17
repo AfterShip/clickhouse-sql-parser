@@ -10,12 +10,14 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		p.matchKeyword(KeywordAttach):
 		_ = p.lexer.consumeToken()
 		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
-		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction) {
-			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION, but got %q", p.last().String)
+		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary) {
+			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY, but got %q", p.last().String)
 		}
 		switch {
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseCreateDatabase(pos)
+		case p.matchKeyword(KeywordDictionary):
+			return p.parseCreateDictionary(pos, orReplace)
 		case p.matchKeyword(KeywordTable),
 			p.matchKeyword(KeywordTemporary):
 			return p.parseCreateTable(pos, orReplace)
@@ -32,7 +34,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordUser):
 			return p.parseCreateUser(pos)
 		default:
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
+			return nil, fmt.Errorf("expected keyword: DATABASE|DICTIONARY|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
 				p.lastTokenKind())
 		}
 	case p.matchKeyword(KeywordAlter):
@@ -113,6 +115,62 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 		Engine:       engineExpr,
 		Comment:      commentExpr,
 	}, nil
+}
+
+func (p *Parser) parseCreateDictionary(pos Pos, orReplace bool) (*CreateDictionary, error) {
+	if err := p.expectKeyword(KeywordDictionary); err != nil {
+		return nil, err
+	}
+
+	createDict := &CreateDictionary{
+		CreatePos: pos,
+		OrReplace: orReplace,
+	}
+
+	// parse IF NOT EXISTS clause if exists
+	var err error
+	createDict.IfNotExists, err = p.tryParseIfNotExists()
+	if err != nil {
+		return nil, err
+	}
+
+	// parse dictionary name
+	name, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createDict.Name = name
+
+	// try parse UUID clause if exists
+	uuid, err := p.tryParseUUID()
+	if err != nil {
+		return nil, err
+	}
+	createDict.UUID = uuid
+
+	// parse ON CLUSTER clause if exists
+	onCluster, err := p.tryParseClusterClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createDict.OnCluster = onCluster
+
+	// parse dictionary schema clause (required)
+	schema, err := p.parseDictionarySchemaClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createDict.Schema = schema
+
+	// parse dictionary engine clause (required)
+	engine, err := p.parseDictionaryEngineClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createDict.Engine = engine
+	createDict.StatementEnd = engine.End()
+
+	return createDict, nil
 }
 
 func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error) {
@@ -1444,4 +1502,506 @@ func (p *Parser) parseCreateFunction(pos Pos, orReplace bool) (*CreateFunction, 
 		Params:       params,
 		Expr:         expr,
 	}, nil
+}
+
+// Dictionary parsing functions
+
+func (p *Parser) parseDictionarySchemaClause(pos Pos) (*DictionarySchemaClause, error) {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	schema := &DictionarySchemaClause{
+		SchemaPos: pos,
+	}
+
+	// Parse first attribute
+	attr, err := p.parseDictionaryAttribute(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	schema.Attributes = append(schema.Attributes, attr)
+
+	// Parse additional attributes
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		attr, err := p.parseDictionaryAttribute(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		schema.Attributes = append(schema.Attributes, attr)
+	}
+
+	rParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+	schema.RParenPos = rParenPos
+
+	return schema, nil
+}
+
+func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error) {
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	columnType, err := p.parseColumnType(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	attr := &DictionaryAttribute{
+		NamePos: pos,
+		Name:    name,
+		Type:    columnType,
+	}
+
+	// Parse optional attribute properties
+	for {
+		switch {
+		case p.tryConsumeKeywords(KeywordDefault):
+			if attr.Default != nil {
+				return nil, fmt.Errorf("duplicate DEFAULT clause")
+			}
+			literal, err := p.parseLiteral(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			attr.Default = literal
+		case p.tryConsumeKeywords(KeywordExpression):
+			if attr.Expression != nil {
+				return nil, fmt.Errorf("duplicate EXPRESSION clause")
+			}
+			expr, err := p.parseExpr(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			attr.Expression = expr
+		case p.tryConsumeKeywords(KeywordHierarchical):
+			if attr.Hierarchical {
+				return nil, fmt.Errorf("duplicate HIERARCHICAL clause")
+			}
+			attr.Hierarchical = true
+		case p.tryConsumeKeywords(KeywordInjective):
+			if attr.Injective {
+				return nil, fmt.Errorf("duplicate INJECTIVE clause")
+			}
+			attr.Injective = true
+		case p.tryConsumeKeywords(KeywordIs_object_id):
+			if attr.IsObjectId {
+				return nil, fmt.Errorf("duplicate IS_OBJECT_ID clause")
+			}
+			attr.IsObjectId = true
+		default:
+			// No more attribute properties
+			return attr, nil
+		}
+	}
+}
+
+func (p *Parser) parseDictionaryEngineClause(pos Pos) (*DictionaryEngineClause, error) {
+	engine := &DictionaryEngineClause{
+		EnginePos: pos,
+	}
+
+	// Parse PRIMARY KEY clause (optional)
+	if p.matchKeyword(KeywordPrimary) {
+		primaryKey, err := p.parseDictionaryPrimaryKeyClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		engine.PrimaryKey = primaryKey
+	}
+
+	// Parse engine clauses (SOURCE, LIFETIME, LAYOUT, RANGE, SETTINGS)
+	for {
+		switch {
+		case p.matchKeyword(KeywordSource):
+			if engine.Source != nil {
+				return nil, fmt.Errorf("duplicate SOURCE clause")
+			}
+			source, err := p.parseDictionarySourceClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			engine.Source = source
+		case p.matchKeyword(KeywordLifetime):
+			if engine.Lifetime != nil {
+				return nil, fmt.Errorf("duplicate LIFETIME clause")
+			}
+			lifetime, err := p.parseDictionaryLifetimeClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			engine.Lifetime = lifetime
+		case p.matchKeyword(KeywordLayout):
+			if engine.Layout != nil {
+				return nil, fmt.Errorf("duplicate LAYOUT clause")
+			}
+			layout, err := p.parseDictionaryLayoutClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			engine.Layout = layout
+		case p.matchKeyword(KeywordRange):
+			if engine.Range != nil {
+				return nil, fmt.Errorf("duplicate RANGE clause")
+			}
+			rangeClause, err := p.parseDictionaryRangeClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			engine.Range = rangeClause
+		case p.matchKeyword(KeywordSettings):
+			if engine.Settings != nil {
+				return nil, fmt.Errorf("duplicate SETTINGS clause")
+			}
+			settings, err := p.parseDictionarySettingsClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			engine.Settings = settings
+		default:
+			// No more engine clauses
+			if engine.Source == nil {
+				return nil, fmt.Errorf("SOURCE clause is required for dictionary")
+			}
+			return engine, nil
+		}
+	}
+}
+
+func (p *Parser) parseDictionaryPrimaryKeyClause(pos Pos) (*DictionaryPrimaryKeyClause, error) {
+	if err := p.expectKeyword(KeywordPrimary); err != nil {
+		return nil, err
+	}
+	if err := p.expectKeyword(KeywordKey); err != nil {
+		return nil, err
+	}
+
+	keys, err := p.parseColumnExprList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &DictionaryPrimaryKeyClause{
+		PrimaryKeyPos: pos,
+		Keys:          keys,
+		RParenPos:     keys.End() - 1,
+	}, nil
+}
+
+func (p *Parser) parseDictionarySourceClause(pos Pos) (*DictionarySourceClause, error) {
+	if err := p.expectKeyword(KeywordSource); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	sourceName, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	var args []*DictionaryArgExpr
+	// Parse optional arguments
+	for !p.matchTokenKind(TokenKindRParen) {
+		arg, err := p.parseDictionaryArgExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, arg)
+
+		// If there's no right paren, we expect another arg (no comma needed)
+		if p.matchTokenKind(TokenKindRParen) {
+			break
+		}
+	}
+
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	rParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	return &DictionarySourceClause{
+		SourcePos: pos,
+		Source:    sourceName,
+		Args:      args,
+		RParenPos: rParenPos,
+	}, nil
+}
+
+func (p *Parser) parseDictionaryArgExpr(pos Pos) (*DictionaryArgExpr, error) {
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	var value Expr
+	// Parse the value part
+	switch {
+	case p.matchTokenKind(TokenKindString):
+		literal, err := p.parseLiteral(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		value = literal
+	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat):
+		literal, err := p.parseLiteral(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		value = literal
+	case p.matchTokenKind(TokenKindIdent):
+		ident, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		// Check if it's followed by optional parentheses
+		if p.matchTokenKind(TokenKindLParen) {
+			_ = p.lexer.consumeToken() // consume (
+			if err := p.expectTokenKind(TokenKindRParen); err != nil {
+				return nil, err
+			}
+			value = &FunctionExpr{
+				Name: ident,
+			}
+		} else {
+			value = ident
+		}
+	default:
+		return nil, fmt.Errorf("expected identifier, string or number in dictionary argument, got %s", p.lastTokenKind())
+	}
+
+	return &DictionaryArgExpr{
+		ArgPos: pos,
+		Name:   name,
+		Value:  value,
+	}, nil
+}
+
+func (p *Parser) parseDictionaryLifetimeClause(pos Pos) (*DictionaryLifetimeClause, error) {
+	if err := p.expectKeyword(KeywordLifetime); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	lifetime := &DictionaryLifetimeClause{
+		LifetimePos: pos,
+	}
+
+	// Check for MIN/MAX form
+	if p.matchKeyword(KeywordMin) || p.matchKeyword(KeywordMax) {
+		isMinFirst := p.matchKeyword(KeywordMin)
+		_ = p.lexer.consumeToken() // consume MIN or MAX
+
+		first, err := p.parseNumber(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		// Expect the other keyword
+		if isMinFirst {
+			if err := p.expectKeyword(KeywordMax); err != nil {
+				return nil, err
+			}
+		} else {
+			if err := p.expectKeyword(KeywordMin); err != nil {
+				return nil, err
+			}
+		}
+
+		second, err := p.parseNumber(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		if isMinFirst {
+			lifetime.Min = first
+			lifetime.Max = second
+		} else {
+			lifetime.Min = second
+			lifetime.Max = first
+		}
+	} else {
+		// Simple form: LIFETIME(value)
+		value, err := p.parseNumber(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		lifetime.Value = value
+	}
+
+	rParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+	lifetime.RParenPos = rParenPos
+
+	return lifetime, nil
+}
+
+func (p *Parser) parseDictionaryLayoutClause(pos Pos) (*DictionaryLayoutClause, error) {
+	if err := p.expectKeyword(KeywordLayout); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	layoutName, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	var args []*DictionaryArgExpr
+	// Parse optional arguments
+	for !p.matchTokenKind(TokenKindRParen) {
+		arg, err := p.parseDictionaryArgExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, arg)
+
+		// If there's no right paren, we expect another arg (no comma needed)
+		if p.matchTokenKind(TokenKindRParen) {
+			break
+		}
+	}
+
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	rParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	return &DictionaryLayoutClause{
+		LayoutPos: pos,
+		Layout:    layoutName,
+		Args:      args,
+		RParenPos: rParenPos,
+	}, nil
+}
+
+func (p *Parser) parseDictionaryRangeClause(pos Pos) (*DictionaryRangeClause, error) {
+	if err := p.expectKeyword(KeywordRange); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	rangeClause := &DictionaryRangeClause{
+		RangePos: pos,
+	}
+
+	// Parse MIN identifier MAX identifier or MAX identifier MIN identifier
+	if p.matchKeyword(KeywordMin) {
+		if err := p.expectKeyword(KeywordMin); err != nil {
+			return nil, err
+		}
+		min, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		if err := p.expectKeyword(KeywordMax); err != nil {
+			return nil, err
+		}
+		max, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		rangeClause.Min = min
+		rangeClause.Max = max
+	} else if p.matchKeyword(KeywordMax) {
+		if err := p.expectKeyword(KeywordMax); err != nil {
+			return nil, err
+		}
+		max, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		if err := p.expectKeyword(KeywordMin); err != nil {
+			return nil, err
+		}
+		min, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		rangeClause.Min = min
+		rangeClause.Max = max
+	} else {
+		return nil, fmt.Errorf("expected MIN or MAX in RANGE clause")
+	}
+
+	rParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+	rangeClause.RParenPos = rParenPos
+
+	return rangeClause, nil
+}
+
+func (p *Parser) parseDictionarySettingsClause(pos Pos) (*SettingsClause, error) {
+	if err := p.expectKeyword(KeywordSettings); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
+	items := make([]*SettingExprList, 0)
+	
+	// Parse first setting
+	expr, err := p.parseSettingsExprList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	items = append(items, expr)
+
+	// Parse additional settings
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		expr, err := p.parseSettingsExprList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, expr)
+	}
+
+	if len(items) > 0 {
+		settings.ListEnd = items[len(items)-1].End()
+	}
+	settings.Items = items
+
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	return settings, nil
 }
