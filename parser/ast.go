@@ -5181,6 +5181,584 @@ func (c *CreateLiveView) Accept(visitor ASTVisitor) error {
 	return visitor.VisitCreateLiveView(c)
 }
 
+type CreateDictionary struct {
+	CreatePos       Pos
+	StatementEnd    Pos
+	OrReplace       bool
+	Name            *TableIdentifier
+	IfNotExists     bool
+	UUID            *UUID
+	OnCluster       *ClusterClause
+	Schema          *DictionarySchemaClause
+	Engine          *DictionaryEngineClause
+}
+
+func (c *CreateDictionary) Type() string {
+	return "DICTIONARY"
+}
+
+func (c *CreateDictionary) Pos() Pos {
+	return c.CreatePos
+}
+
+func (c *CreateDictionary) End() Pos {
+	return c.StatementEnd
+}
+
+func (c *CreateDictionary) String() string {
+	var builder strings.Builder
+	builder.WriteString("CREATE ")
+	if c.OrReplace {
+		builder.WriteString("OR REPLACE ")
+	}
+	builder.WriteString("DICTIONARY ")
+	if c.IfNotExists {
+		builder.WriteString("IF NOT EXISTS ")
+	}
+	builder.WriteString(c.Name.String())
+
+	if c.UUID != nil {
+		builder.WriteString(" ")
+		builder.WriteString(c.UUID.String())
+	}
+
+	if c.OnCluster != nil {
+		builder.WriteString(" ")
+		builder.WriteString(c.OnCluster.String())
+	}
+
+	if c.Schema != nil {
+		builder.WriteString(" ")
+		builder.WriteString(c.Schema.String())
+	}
+
+	if c.Engine != nil {
+		builder.WriteString(" ")
+		builder.WriteString(c.Engine.String())
+	}
+
+	return builder.String()
+}
+
+func (c *CreateDictionary) Accept(visitor ASTVisitor) error {
+	visitor.Enter(c)
+	defer visitor.Leave(c)
+	if err := c.Name.Accept(visitor); err != nil {
+		return err
+	}
+	if c.UUID != nil {
+		if err := c.UUID.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.OnCluster != nil {
+		if err := c.OnCluster.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Schema != nil {
+		if err := c.Schema.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Engine != nil {
+		if err := c.Engine.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitCreateDictionary(c)
+}
+
+type DictionarySchemaClause struct {
+	SchemaPos  Pos
+	Attributes []*DictionaryAttribute
+	RParenPos  Pos
+}
+
+func (d *DictionarySchemaClause) Pos() Pos {
+	return d.SchemaPos
+}
+
+func (d *DictionarySchemaClause) End() Pos {
+	return d.RParenPos + 1
+}
+
+func (d *DictionarySchemaClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("(")
+	for i, attr := range d.Attributes {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(attr.String())
+	}
+	builder.WriteString(")")
+	return builder.String()
+}
+
+func (d *DictionarySchemaClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	for _, attr := range d.Attributes {
+		if err := attr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitDictionarySchemaClause(d)
+}
+
+type DictionaryAttribute struct {
+	NamePos      Pos
+	Name         *Ident
+	Type         ColumnType
+	Default      Literal
+	Expression   Expr
+	Hierarchical bool
+	Injective    bool
+	IsObjectId   bool
+}
+
+func (d *DictionaryAttribute) Pos() Pos {
+	return d.NamePos
+}
+
+func (d *DictionaryAttribute) End() Pos {
+	if d.IsObjectId {
+		return d.NamePos + Pos(len("IS_OBJECT_ID"))
+	}
+	if d.Injective {
+		return d.NamePos + Pos(len("INJECTIVE"))
+	}
+	if d.Hierarchical {
+		return d.NamePos + Pos(len("HIERARCHICAL"))
+	}
+	if d.Expression != nil {
+		return d.Expression.End()
+	}
+	if d.Default != nil {
+		return d.Default.End()
+	}
+	return d.Type.End()
+}
+
+func (d *DictionaryAttribute) String() string {
+	var builder strings.Builder
+	builder.WriteString(d.Name.String())
+	builder.WriteString(" ")
+	builder.WriteString(d.Type.String())
+
+	if d.Default != nil {
+		builder.WriteString(" DEFAULT ")
+		builder.WriteString(d.Default.String())
+	}
+
+	if d.Expression != nil {
+		builder.WriteString(" EXPRESSION ")
+		builder.WriteString(d.Expression.String())
+	}
+
+	if d.Hierarchical {
+		builder.WriteString(" HIERARCHICAL")
+	}
+
+	if d.Injective {
+		builder.WriteString(" INJECTIVE")
+	}
+
+	if d.IsObjectId {
+		builder.WriteString(" IS_OBJECT_ID")
+	}
+
+	return builder.String()
+}
+
+func (d *DictionaryAttribute) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Name.Accept(visitor); err != nil {
+		return err
+	}
+	if err := d.Type.Accept(visitor); err != nil {
+		return err
+	}
+	if d.Default != nil {
+		if err := d.Default.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Expression != nil {
+		if err := d.Expression.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitDictionaryAttribute(d)
+}
+
+type DictionaryEngineClause struct {
+	EnginePos   Pos
+	PrimaryKey  *DictionaryPrimaryKeyClause
+	Source      *DictionarySourceClause
+	Lifetime    *DictionaryLifetimeClause
+	Layout      *DictionaryLayoutClause
+	Range       *DictionaryRangeClause
+	Settings    *SettingsClause
+}
+
+func (d *DictionaryEngineClause) Pos() Pos {
+	return d.EnginePos
+}
+
+func (d *DictionaryEngineClause) End() Pos {
+	if d.Settings != nil {
+		return d.Settings.End()
+	}
+	if d.Range != nil {
+		return d.Range.End()
+	}
+	if d.Layout != nil {
+		return d.Layout.End()
+	}
+	if d.Lifetime != nil {
+		return d.Lifetime.End()
+	}
+	if d.Source != nil {
+		return d.Source.End()
+	}
+	if d.PrimaryKey != nil {
+		return d.PrimaryKey.End()
+	}
+	return d.EnginePos
+}
+
+func (d *DictionaryEngineClause) String() string {
+	var builder strings.Builder
+	
+	if d.PrimaryKey != nil {
+		builder.WriteString(d.PrimaryKey.String())
+	}
+
+	if d.Source != nil {
+		if builder.Len() > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(d.Source.String())
+	}
+
+	if d.Lifetime != nil {
+		if builder.Len() > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(d.Lifetime.String())
+	}
+
+	if d.Layout != nil {
+		if builder.Len() > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(d.Layout.String())
+	}
+
+	if d.Range != nil {
+		if builder.Len() > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(d.Range.String())
+	}
+
+	if d.Settings != nil {
+		if builder.Len() > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString("SETTINGS(")
+		for i, item := range d.Settings.Items {
+			if i > 0 {
+				builder.WriteString(", ")
+			}
+			builder.WriteString(item.String())
+		}
+		builder.WriteString(")")
+	}
+
+	return builder.String()
+}
+
+func (d *DictionaryEngineClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if d.PrimaryKey != nil {
+		if err := d.PrimaryKey.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Source != nil {
+		if err := d.Source.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Lifetime != nil {
+		if err := d.Lifetime.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Layout != nil {
+		if err := d.Layout.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Range != nil {
+		if err := d.Range.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Settings != nil {
+		if err := d.Settings.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitDictionaryEngineClause(d)
+}
+
+type DictionaryPrimaryKeyClause struct {
+	PrimaryKeyPos Pos
+	Keys          *ColumnExprList
+	RParenPos     Pos
+}
+
+func (d *DictionaryPrimaryKeyClause) Pos() Pos {
+	return d.PrimaryKeyPos
+}
+
+func (d *DictionaryPrimaryKeyClause) End() Pos {
+	return d.RParenPos + 1
+}
+
+func (d *DictionaryPrimaryKeyClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("PRIMARY KEY ")
+	builder.WriteString(d.Keys.String())
+	return builder.String()
+}
+
+func (d *DictionaryPrimaryKeyClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Keys.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitDictionaryPrimaryKeyClause(d)
+}
+
+type DictionarySourceClause struct {
+	SourcePos Pos
+	Source    *Ident
+	Args      []*DictionaryArgExpr
+	RParenPos Pos
+}
+
+func (d *DictionarySourceClause) Pos() Pos {
+	return d.SourcePos
+}
+
+func (d *DictionarySourceClause) End() Pos {
+	return d.RParenPos + 1
+}
+
+func (d *DictionarySourceClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("SOURCE(")
+	builder.WriteString(d.Source.String())
+	builder.WriteString("(")
+	for i, arg := range d.Args {
+		if i > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(arg.String())
+	}
+	builder.WriteString("))")
+	return builder.String()
+}
+
+func (d *DictionarySourceClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Source.Accept(visitor); err != nil {
+		return err
+	}
+	for _, arg := range d.Args {
+		if err := arg.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitDictionarySourceClause(d)
+}
+
+type DictionaryArgExpr struct {
+	ArgPos Pos
+	Name   *Ident
+	Value  Expr  // can be Ident with optional parentheses or literal
+}
+
+func (d *DictionaryArgExpr) Pos() Pos {
+	return d.ArgPos
+}
+
+func (d *DictionaryArgExpr) End() Pos {
+	return d.Value.End()
+}
+
+func (d *DictionaryArgExpr) String() string {
+	var builder strings.Builder
+	builder.WriteString(d.Name.String())
+	builder.WriteString(" ")
+	builder.WriteString(d.Value.String())
+	return builder.String()
+}
+
+func (d *DictionaryArgExpr) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Name.Accept(visitor); err != nil {
+		return err
+	}
+	if err := d.Value.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitDictionaryArgExpr(d)
+}
+
+type DictionaryLifetimeClause struct {
+	LifetimePos Pos
+	Min         *NumberLiteral
+	Max         *NumberLiteral
+	Value       *NumberLiteral  // for simple LIFETIME(value) form
+	RParenPos   Pos
+}
+
+func (d *DictionaryLifetimeClause) Pos() Pos {
+	return d.LifetimePos
+}
+
+func (d *DictionaryLifetimeClause) End() Pos {
+	return d.RParenPos + 1
+}
+
+func (d *DictionaryLifetimeClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("LIFETIME(")
+	if d.Value != nil {
+		builder.WriteString(d.Value.String())
+	} else if d.Min != nil && d.Max != nil {
+		builder.WriteString("MIN ")
+		builder.WriteString(d.Min.String())
+		builder.WriteString(" MAX ")
+		builder.WriteString(d.Max.String())
+	}
+	builder.WriteString(")")
+	return builder.String()
+}
+
+func (d *DictionaryLifetimeClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if d.Value != nil {
+		if err := d.Value.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Min != nil {
+		if err := d.Min.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if d.Max != nil {
+		if err := d.Max.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitDictionaryLifetimeClause(d)
+}
+
+type DictionaryLayoutClause struct {
+	LayoutPos Pos
+	Layout    *Ident
+	Args      []*DictionaryArgExpr
+	RParenPos Pos
+}
+
+func (d *DictionaryLayoutClause) Pos() Pos {
+	return d.LayoutPos
+}
+
+func (d *DictionaryLayoutClause) End() Pos {
+	return d.RParenPos + 1
+}
+
+func (d *DictionaryLayoutClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("LAYOUT(")
+	builder.WriteString(d.Layout.String())
+	builder.WriteString("(")
+	for i, arg := range d.Args {
+		if i > 0 {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(arg.String())
+	}
+	builder.WriteString("))")
+	return builder.String()
+}
+
+func (d *DictionaryLayoutClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Layout.Accept(visitor); err != nil {
+		return err
+	}
+	for _, arg := range d.Args {
+		if err := arg.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitDictionaryLayoutClause(d)
+}
+
+type DictionaryRangeClause struct {
+	RangePos  Pos
+	Min       *Ident
+	Max       *Ident
+	RParenPos Pos
+}
+
+func (d *DictionaryRangeClause) Pos() Pos {
+	return d.RangePos
+}
+
+func (d *DictionaryRangeClause) End() Pos {
+	return d.RParenPos + 1
+}
+
+func (d *DictionaryRangeClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("RANGE(MIN ")
+	builder.WriteString(d.Min.String())
+	builder.WriteString(" MAX ")
+	builder.WriteString(d.Max.String())
+	builder.WriteString(")")
+	return builder.String()
+}
+
+func (d *DictionaryRangeClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Min.Accept(visitor); err != nil {
+		return err
+	}
+	if err := d.Max.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitDictionaryRangeClause(d)
+}
+
 type WithTimeoutClause struct {
 	WithTimeoutPos Pos
 	Expr           Expr
