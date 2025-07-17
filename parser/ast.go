@@ -5469,7 +5469,14 @@ func (d *DictionaryEngineClause) String() string {
 		if builder.Len() > 0 {
 			builder.WriteString(" ")
 		}
-		builder.WriteString(d.Settings.String())
+		builder.WriteString("SETTINGS(")
+		for i, item := range d.Settings.Items {
+			if i > 0 {
+				builder.WriteString(", ")
+			}
+			builder.WriteString(item.String())
+		}
+		builder.WriteString(")")
 	}
 
 	return builder.String()
