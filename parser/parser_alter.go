@@ -208,7 +208,6 @@ func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelectStmt, error) {
 
 func (p *Parser) parseTableProjection(pos Pos, includeProjectionKeyword bool) (*TableProjection, error) {
 	if includeProjectionKeyword {
-		pos = p.Pos()
 		if err := p.expectKeyword(KeywordProjection); err != nil {
 			return nil, err
 		}
