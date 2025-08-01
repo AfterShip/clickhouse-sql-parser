@@ -206,7 +206,12 @@ func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelectStmt, error) {
 	}, nil
 }
 
-func (p *Parser) parseTableProjection(pos Pos) (*TableProjection, error) {
+func (p *Parser) parseTableProjection(pos Pos, includeProjectionKeyword bool) (*TableProjection, error) {
+	if includeProjectionKeyword {
+		if err := p.expectKeyword(KeywordProjection); err != nil {
+			return nil, err
+		}
+	}
 	identifier, err := p.ParseNestedIdentifier(pos)
 	if err != nil {
 		return nil, err
@@ -216,9 +221,10 @@ func (p *Parser) parseTableProjection(pos Pos) (*TableProjection, error) {
 		return nil, err
 	}
 	return &TableProjection{
-		ProjectionPos: pos,
-		Identifier:    identifier,
-		Select:        selectExpr,
+		IncludeProjectionKeyword: includeProjectionKeyword,
+		ProjectionPos:            pos,
+		Identifier:               identifier,
+		Select:                   selectExpr,
 	}, nil
 }
 
@@ -231,7 +237,7 @@ func (p *Parser) parseAlterTableAddProjection(pos Pos) (*AlterTableAddProjection
 	if err != nil {
 		return nil, err
 	}
-	tableProjection, err := p.parseTableProjection(p.Pos())
+	tableProjection, err := p.parseTableProjection(p.Pos(), false)
 	if err != nil {
 		return nil, err
 	}

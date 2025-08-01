@@ -18,6 +18,7 @@
         "StatementEnd": 140,
         "IfNotExists": true,
         "TableProjection": {
+          "IncludeProjectionKeyword": false,
           "ProjectionPos": 55,
           "Identifier": {
             "Ident": {

@@ -786,9 +786,10 @@ func (p *ProjectionSelectStmt) Accept(visitor ASTVisitor) error {
 }
 
 type TableProjection struct {
-	ProjectionPos Pos
-	Identifier    *NestedIdentifier
-	Select        *ProjectionSelectStmt
+	IncludeProjectionKeyword bool
+	ProjectionPos            Pos
+	Identifier               *NestedIdentifier
+	Select                   *ProjectionSelectStmt
 }
 
 func (t *TableProjection) Pos() Pos {
@@ -801,6 +802,9 @@ func (t *TableProjection) End() Pos {
 
 func (t *TableProjection) String() string {
 	var builder strings.Builder
+	if t.IncludeProjectionKeyword {
+		builder.WriteString("PROJECTION ")
+	}
 	builder.WriteString(t.Identifier.String())
 	builder.WriteString(" ")
 	builder.WriteString(t.Select.String())
@@ -5182,15 +5186,15 @@ func (c *CreateLiveView) Accept(visitor ASTVisitor) error {
 }
 
 type CreateDictionary struct {
-	CreatePos       Pos
-	StatementEnd    Pos
-	OrReplace       bool
-	Name            *TableIdentifier
-	IfNotExists     bool
-	UUID            *UUID
-	OnCluster       *ClusterClause
-	Schema          *DictionarySchemaClause
-	Engine          *DictionaryEngineClause
+	CreatePos    Pos
+	StatementEnd Pos
+	OrReplace    bool
+	Name         *TableIdentifier
+	IfNotExists  bool
+	UUID         *UUID
+	OnCluster    *ClusterClause
+	Schema       *DictionarySchemaClause
+	Engine       *DictionaryEngineClause
 }
 
 func (c *CreateDictionary) Type() string {
@@ -5395,13 +5399,13 @@ func (d *DictionaryAttribute) Accept(visitor ASTVisitor) error {
 }
 
 type DictionaryEngineClause struct {
-	EnginePos   Pos
-	PrimaryKey  *DictionaryPrimaryKeyClause
-	Source      *DictionarySourceClause
-	Lifetime    *DictionaryLifetimeClause
-	Layout      *DictionaryLayoutClause
-	Range       *DictionaryRangeClause
-	Settings    *SettingsClause
+	EnginePos  Pos
+	PrimaryKey *DictionaryPrimaryKeyClause
+	Source     *DictionarySourceClause
+	Lifetime   *DictionaryLifetimeClause
+	Layout     *DictionaryLayoutClause
+	Range      *DictionaryRangeClause
+	Settings   *SettingsClause
 }
 
 func (d *DictionaryEngineClause) Pos() Pos {
@@ -5432,7 +5436,7 @@ func (d *DictionaryEngineClause) End() Pos {
 
 func (d *DictionaryEngineClause) String() string {
 	var builder strings.Builder
-	
+
 	if d.PrimaryKey != nil {
 		builder.WriteString(d.PrimaryKey.String())
 	}
@@ -5595,7 +5599,7 @@ func (d *DictionarySourceClause) Accept(visitor ASTVisitor) error {
 type DictionaryArgExpr struct {
 	ArgPos Pos
 	Name   *Ident
-	Value  Expr  // can be Ident with optional parentheses or literal
+	Value  Expr // can be Ident with optional parentheses or literal
 }
 
 func (d *DictionaryArgExpr) Pos() Pos {
@@ -5630,7 +5634,7 @@ type DictionaryLifetimeClause struct {
 	LifetimePos Pos
 	Min         *NumberLiteral
 	Max         *NumberLiteral
-	Value       *NumberLiteral  // for simple LIFETIME(value) form
+	Value       *NumberLiteral // for simple LIFETIME(value) form
 	RParenPos   Pos
 }
 

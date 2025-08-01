@@ -461,6 +461,12 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 				Constraint:    ident,
 				Expr:          expr,
 			})
+		case p.matchKeyword(KeywordProjection):
+			projection, err := p.parseTableProjection(p.Pos(), true)
+			if err != nil {
+				return nil, err
+			}
+			columns = append(columns, projection)
 		default:
 			column, err := p.tryParseTableColumnExpr(p.Pos())
 			if err != nil {
@@ -1977,7 +1983,6 @@ func (p *Parser) parseDictionarySettingsClause(pos Pos) (*SettingsClause, error)
 
 	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
 	items := make([]*SettingExprList, 0)
-	
 	// Parse first setting
 	expr, err := p.parseSettingsExprList(p.Pos())
 	if err != nil {
