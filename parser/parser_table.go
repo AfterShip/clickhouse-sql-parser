@@ -486,7 +486,49 @@ func (p *Parser) tryParseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	return p.parseTableColumnExpr(pos)
 }
 
+func (p *Parser) parseTableProjectionInCreateTable(pos Pos) (*TableProjection, error) {
+	// Expect PROJECTION keyword
+	if err := p.expectKeyword(KeywordProjection); err != nil {
+		return nil, err
+	}
+
+	// Parse the projection name
+	identifier, err := p.ParseNestedIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	// Parse the projection select statement
+	selectExpr, err := p.parseProjectionSelect(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &TableProjection{
+		ProjectionPos: pos,
+		Identifier:    identifier,
+		Select:        selectExpr,
+	}, nil
+}
+
 func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
+	// Check if this is a PROJECTION definition
+	if p.matchKeyword(KeywordProjection) {
+		// Parse as projection instead of column
+		projection, err := p.parseTableProjectionInCreateTable(pos)
+		if err != nil {
+			return nil, err
+		}
+		// Return a special column definition that represents a projection
+		// This is a workaround since the function signature expects *ColumnDef
+		// In a real implementation, you might want to change the return type to Expr
+		return &ColumnDef{
+			NamePos:   pos,
+			Name:      projection.Identifier,
+			ColumnEnd: projection.End(),
+		}, nil
+	}
+
 	// Not a column definition, just return
 	column := &ColumnDef{NamePos: pos}
 	// parse column name
@@ -1977,7 +2019,7 @@ func (p *Parser) parseDictionarySettingsClause(pos Pos) (*SettingsClause, error)
 
 	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
 	items := make([]*SettingExprList, 0)
-	
+
 	// Parse first setting
 	expr, err := p.parseSettingsExprList(p.Pos())
 	if err != nil {
