@@ -1,0 +1,257 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 270,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "events",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 19
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 20,
+      "SchemaEnd": 229,
+      "Columns": [
+        {
+          "NamePos": 27,
+          "ColumnEnd": 47,
+          "Name": {
+            "Ident": {
+              "Name": "event_time",
+              "QuoteType": 3,
+              "NamePos": 27,
+              "NameEnd": 37
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "QuoteType": 1,
+              "NamePos": 39,
+              "NameEnd": 47
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 54,
+          "ColumnEnd": 70,
+          "Name": {
+            "Ident": {
+              "Name": "event_id",
+              "QuoteType": 3,
+              "NamePos": 54,
+              "NameEnd": 62
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 64,
+              "NameEnd": 70
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 77,
+          "ColumnEnd": 92,
+          "Name": {
+            "Ident": {
+              "Name": "user_id",
+              "QuoteType": 3,
+              "NamePos": 77,
+              "NameEnd": 84
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 86,
+              "NameEnd": 92
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 99,
+          "ColumnEnd": 118,
+          "Name": {
+            "Ident": {
+              "Name": "huge_string",
+              "QuoteType": 3,
+              "NamePos": 99,
+              "NameEnd": 110
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 112,
+              "NameEnd": 118
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "IncludeProjectionKeyword": true,
+          "ProjectionPos": 124,
+          "Identifier": {
+            "Ident": {
+              "Name": "order_by_user_id",
+              "QuoteType": 1,
+              "NamePos": 135,
+              "NameEnd": 151
+            },
+            "DotIdent": null
+          },
+          "Select": {
+            "LeftParenPos": 156,
+            "RightParenPos": 227,
+            "With": null,
+            "SelectColumns": {
+              "ListPos": 185,
+              "ListEnd": 197,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "_part_offset",
+                    "QuoteType": 1,
+                    "NamePos": 185,
+                    "NameEnd": 197
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "GroupBy": null,
+            "OrderBy": {
+              "OrderByPos": 206,
+              "Columns": {
+                "ListPos": 215,
+                "ListEnd": 222,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "user_id",
+                      "QuoteType": 1,
+                      "NamePos": 215,
+                      "NameEnd": 222
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 231,
+      "EngineEnd": 270,
+      "Name": "MergeTree",
+      "Params": {
+        "LeftParenPos": 249,
+        "RightParenPos": 250,
+        "Items": {
+          "ListPos": 250,
+          "ListEnd": 250,
+          "HasDistinct": false,
+          "Items": []
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 252,
+        "ListEnd": 270,
+        "Items": [
+          {
+            "OrderPos": 252,
+            "Expr": {
+              "LeftParenPos": 261,
+              "RightParenPos": 270,
+              "Items": {
+                "ListPos": 262,
+                "ListEnd": 270,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "event_id",
+                      "QuoteType": 1,
+                      "NamePos": 262,
+                      "NameEnd": 270
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Alias": null,
+            "Direction": ""
+          }
+        ]
+      }
+    },
+    "SubQuery": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
