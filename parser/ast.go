@@ -8067,6 +8067,18 @@ func (t *TargetPair) String() string {
 	return t.Old.String() + " TO " + t.New.String()
 }
 
+func (t *TargetPair) Accept(visitor ASTVisitor) error {
+	visitor.Enter(t)
+	defer visitor.Leave(t)
+	if err := t.Old.Accept(visitor); err != nil {
+		return err
+	}
+	if err := t.New.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitTargetPairExpr(t)
+}
+
 type ExplainStmt struct {
 	ExplainPos Pos
 	Type       string

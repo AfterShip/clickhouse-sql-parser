@@ -179,6 +179,7 @@ type ASTVisitor interface {
 	VisitPrivilegeExpr(expr *PrivilegeClause) error
 	VisitGrantPrivilegeExpr(expr *GrantPrivilegeStmt) error
 	VisitSelectItem(expr *SelectItem) error
+	VisitTargetPairExpr(expr *TargetPair) error
 
 	Enter(expr Expr)
 	Leave(expr Expr)
@@ -1430,6 +1431,13 @@ func (v *DefaultASTVisitor) VisitGrantPrivilegeExpr(expr *GrantPrivilegeStmt) er
 }
 
 func (v *DefaultASTVisitor) VisitSelectItem(expr *SelectItem) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTargetPairExpr(expr *TargetPair) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
