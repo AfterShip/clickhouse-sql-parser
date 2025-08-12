@@ -8231,12 +8231,12 @@ type ShowStmt struct {
 	StatementEnd Pos
 	ShowType     string           // e.g., "CREATE TABLE", "DATABASES", "TABLES"
 	Target       *TableIdentifier // for SHOW CREATE TABLE table_name
-	
+
 	// Optional clauses for SHOW DATABASES
-	NotLike     bool   // true if NOT LIKE/ILIKE
-	LikeType    string // "LIKE" or "ILIKE", empty if not used
-	LikePattern Expr   // pattern expression for LIKE/ILIKE
-	Limit       Expr   // limit expression
+	NotLike     bool           // true if NOT LIKE/ILIKE
+	LikeType    string         // "LIKE" or "ILIKE", empty if not used
+	LikePattern Expr           // pattern expression for LIKE/ILIKE
+	Limit       Expr           // limit expression
 	OutFile     *StringLiteral // filename for INTO OUTFILE
 	Format      *StringLiteral // format specification
 }
@@ -8273,7 +8273,7 @@ func (s *ShowStmt) String() string {
 		builder.WriteString(" ")
 		builder.WriteString(s.Target.String())
 	}
-	
+
 	// Add optional clauses for SHOW DATABASES
 	if s.LikeType != "" && s.LikePattern != nil {
 		if s.NotLike {
@@ -8285,22 +8285,22 @@ func (s *ShowStmt) String() string {
 		builder.WriteString(" ")
 		builder.WriteString(s.LikePattern.String())
 	}
-	
+
 	if s.Limit != nil {
 		builder.WriteString(" LIMIT ")
 		builder.WriteString(s.Limit.String())
 	}
-	
+
 	if s.OutFile != nil {
 		builder.WriteString(" INTO OUTFILE ")
 		builder.WriteString(s.OutFile.String())
 	}
-	
+
 	if s.Format != nil {
 		builder.WriteString(" FORMAT ")
 		builder.WriteString(s.Format.String())
 	}
-	
+
 	return builder.String()
 }
 

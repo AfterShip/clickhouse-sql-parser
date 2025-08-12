@@ -1272,7 +1272,7 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 		// Parse [FORMAT format]
 		if p.matchKeyword(KeywordFormat) {
 			_ = p.lexer.consumeToken()
-			
+
 			// Format can be an identifier or a string
 			if p.matchTokenKind(TokenKindString) {
 				format, err := p.parseString(p.Pos())
