@@ -8225,3 +8225,73 @@ func (g *GrantPrivilegeStmt) Accept(visitor ASTVisitor) error {
 	}
 	return visitor.VisitGrantPrivilegeExpr(g)
 }
+
+type ShowStmt struct {
+	ShowPos      Pos
+	StatementEnd Pos
+	ShowType     string           // e.g., "CREATE TABLE", "DATABASES", "TABLES"
+	Target       *TableIdentifier // for SHOW CREATE TABLE table_name
+}
+
+func (s *ShowStmt) Pos() Pos {
+	return s.ShowPos
+}
+
+func (s *ShowStmt) End() Pos {
+	if s.Target != nil {
+		return s.Target.End()
+	}
+	return s.StatementEnd
+}
+
+func (s *ShowStmt) String() string {
+	var builder strings.Builder
+	builder.WriteString("SHOW ")
+	builder.WriteString(s.ShowType)
+	if s.Target != nil {
+		builder.WriteString(" ")
+		builder.WriteString(s.Target.String())
+	}
+	return builder.String()
+}
+
+func (s *ShowStmt) Accept(visitor ASTVisitor) error {
+	visitor.Enter(s)
+	defer visitor.Leave(s)
+	if s.Target != nil {
+		if err := s.Target.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitShowExpr(s)
+}
+
+type DescribeStmt struct {
+	DescribePos  Pos
+	StatementEnd Pos
+	Target       *TableIdentifier
+}
+
+func (d *DescribeStmt) Pos() Pos {
+	return d.DescribePos
+}
+
+func (d *DescribeStmt) End() Pos {
+	return d.Target.End()
+}
+
+func (d *DescribeStmt) String() string {
+	var builder strings.Builder
+	builder.WriteString("DESCRIBE ")
+	builder.WriteString(d.Target.String())
+	return builder.String()
+}
+
+func (d *DescribeStmt) Accept(visitor ASTVisitor) error {
+	visitor.Enter(d)
+	defer visitor.Leave(d)
+	if err := d.Target.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitDescribeExpr(d)
+}

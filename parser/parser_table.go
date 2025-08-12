@@ -1116,6 +1116,10 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 		expr, err = p.parseExplainStmt(pos)
 	case p.matchKeyword(KeywordGrant):
 		expr, err = p.parseGrantPrivilegeStmt(pos)
+	case p.matchKeyword(KeywordShow):
+		expr, err = p.parseShowStmt(pos)
+	case p.matchKeyword(KeywordDesc), p.matchKeyword(KeywordDescribe):
+		expr, err = p.parseDescribeStmt(pos)
 	default:
 		return nil, fmt.Errorf("unexpected token: %q", p.last().String)
 	}
@@ -1167,6 +1171,80 @@ func (p *Parser) parseUseStmt(pos Pos) (*UseStmt, error) {
 		UsePos:       pos,
 		Database:     database,
 		StatementEnd: database.End(),
+	}, nil
+}
+
+func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
+	if err := p.expectKeyword(KeywordShow); err != nil {
+		return nil, err
+	}
+
+	var showType string
+	var target *TableIdentifier
+
+	// Parse the type of SHOW statement
+	switch {
+	case p.matchKeyword(KeywordCreate):
+		// SHOW CREATE TABLE table_name
+		showType = "CREATE"
+		_ = p.lexer.consumeToken()
+
+		if err := p.expectKeyword(KeywordTable); err != nil {
+			return nil, err
+		}
+		showType += " TABLE"
+
+		tableIdent, err := p.parseTableIdentifier(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		target = tableIdent
+
+	case p.matchKeyword(KeywordDatabases):
+		// SHOW DATABASES
+		showType = "DATABASES"
+		_ = p.lexer.consumeToken()
+
+	case p.matchKeyword(KeywordTables):
+		// SHOW TABLES
+		showType = "TABLES"
+		_ = p.lexer.consumeToken()
+
+	default:
+		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.last().String)
+	}
+
+	var statementEnd Pos
+	if target != nil {
+		statementEnd = target.End()
+	} else {
+		statementEnd = p.End()
+	}
+
+	return &ShowStmt{
+		ShowPos:      pos,
+		StatementEnd: statementEnd,
+		ShowType:     showType,
+		Target:       target,
+	}, nil
+}
+
+func (p *Parser) parseDescribeStmt(pos Pos) (*DescribeStmt, error) {
+	// DESC and DESCRIBE are both supported
+	if !p.matchKeyword(KeywordDesc) && !p.matchKeyword(KeywordDescribe) {
+		return nil, fmt.Errorf("expected DESC or DESCRIBE")
+	}
+	_ = p.lexer.consumeToken()
+
+	tableIdent, err := p.parseTableIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &DescribeStmt{
+		DescribePos:  pos,
+		StatementEnd: tableIdent.End(),
+		Target:       tableIdent,
 	}, nil
 }
 

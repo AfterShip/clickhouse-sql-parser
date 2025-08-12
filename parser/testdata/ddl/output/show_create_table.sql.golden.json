@@ -1,0 +1,16 @@
+[
+  {
+    "ShowPos": 0,
+    "StatementEnd": 25,
+    "ShowType": "CREATE TABLE",
+    "Target": {
+      "Database": null,
+      "Table": {
+        "Name": "mytable",
+        "QuoteType": 1,
+        "NamePos": 18,
+        "NameEnd": 25
+      }
+    }
+  }
+]

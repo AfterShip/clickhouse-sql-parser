@@ -1,0 +1,5 @@
+-- Origin SQL:
+SHOW DATABASES
+
+-- Format SQL:
+SHOW DATABASES;

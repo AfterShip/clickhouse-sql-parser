@@ -78,7 +78,7 @@ func TestVisitor_SimpleRewrite(t *testing.T) {
 		}
 		return true // Continue traversal
 	})
-	
+
 	newSql := stmt.String()
 
 	require.NotSame(t, sql, newSql)
@@ -97,22 +97,22 @@ func TestVisitor_NestRewrite(t *testing.T) {
 
 	// Track nesting depth with closure variables
 	var stack []Expr
-	
+
 	Walk(stmt, func(node Expr) bool {
 		// Simulate Enter behavior
 		if s, ok := node.(*SelectQuery); ok {
 			stack = append(stack, s)
 		}
-		
+
 		// Process TableIdentifier nodes
 		if expr, ok := node.(*TableIdentifier); ok {
 			expr.Table = &Ident{Name: fmt.Sprintf("table%d", len(stack))}
 		}
-		
+
 		// Continue with children
 		return true
 	})
-	
+
 	newSql := stmt.String()
 
 	require.NotSame(t, sql, newSql)
