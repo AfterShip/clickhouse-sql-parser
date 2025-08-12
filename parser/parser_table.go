@@ -1181,40 +1181,40 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 
 	var showType string
 	var target *TableIdentifier
-	
+
 	// Parse the type of SHOW statement
 	switch {
 	case p.matchKeyword(KeywordCreate):
 		// SHOW CREATE TABLE table_name
 		showType = "CREATE"
 		_ = p.lexer.consumeToken()
-		
+
 		if err := p.expectKeyword(KeywordTable); err != nil {
 			return nil, err
 		}
 		showType += " TABLE"
-		
+
 		tableIdent, err := p.parseTableIdentifier(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		target = tableIdent
-		
+
 	case p.matchKeyword(KeywordDatabases):
 		// SHOW DATABASES
 		showType = "DATABASES"
 		_ = p.lexer.consumeToken()
-		
+
 	case p.matchKeyword(KeywordTables):
 		// SHOW TABLES
 		showType = "TABLES"
 		_ = p.lexer.consumeToken()
-		
+
 	default:
 		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.last().String)
 	}
 
-	statementEnd := pos
+	var statementEnd Pos
 	if target != nil {
 		statementEnd = target.End()
 	} else {

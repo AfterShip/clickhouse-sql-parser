@@ -8229,7 +8229,7 @@ func (g *GrantPrivilegeStmt) Accept(visitor ASTVisitor) error {
 type ShowStmt struct {
 	ShowPos      Pos
 	StatementEnd Pos
-	ShowType     string      // e.g., "CREATE TABLE", "DATABASES", "TABLES"
+	ShowType     string           // e.g., "CREATE TABLE", "DATABASES", "TABLES"
 	Target       *TableIdentifier // for SHOW CREATE TABLE table_name
 }
 
