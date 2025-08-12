@@ -1682,6 +1682,14 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.New, fn) {
 			return false
 		}
+	case *ShowStmt:
+		if n.Target != nil && !Walk(n.Target, fn) {
+			return false
+		}
+	case *DescribeStmt:
+		if n.Target != nil && !Walk(n.Target, fn) {
+			return false
+		}
 	}
 	return true
 }
