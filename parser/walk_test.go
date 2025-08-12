@@ -197,3 +197,55 @@ func TestFindAll_EmptyResult(t *testing.T) {
 
 	require.Empty(t, results, "Should return empty slice when no matches found")
 }
+
+func TestWalk_ShowStmtNewFields(t *testing.T) {
+	// Test that Walk properly traverses all new fields in ShowStmt
+	sql := `SHOW DATABASES LIKE 'prod%' LIMIT 5 INTO OUTFILE '/tmp/prod_dbs.txt' FORMAT JSON`
+	parser := NewParser(sql)
+	stmts, err := parser.ParseStmts()
+	require.NoError(t, err)
+	require.Equal(t, 1, len(stmts))
+
+	_, ok := stmts[0].(*ShowStmt)
+	require.True(t, ok, "Statement should be ShowStmt")
+
+	// Collect all nodes during walk
+	var foundNodes []Expr
+	Walk(stmts[0], func(node Expr) bool {
+		foundNodes = append(foundNodes, node)
+		return true
+	})
+
+	// Should find the ShowStmt itself plus all its expression fields
+	require.Greater(t, len(foundNodes), 4, "Should visit at least ShowStmt + 4 expression fields")
+
+	// Find specific types of expressions that should be walked
+	var stringLiterals []*StringLiteral
+	var numberLiterals []*NumberLiteral
+
+	for _, node := range foundNodes {
+		switch n := node.(type) {
+		case *StringLiteral:
+			stringLiterals = append(stringLiterals, n)
+		case *NumberLiteral:
+			numberLiterals = append(numberLiterals, n)
+		}
+	}
+
+	// Should find exactly 3 string literals: LIKE pattern, OUTFILE path, FORMAT type
+	require.Equal(t, 3, len(stringLiterals), "Should find exactly 3 StringLiteral nodes")
+	
+	// Should find exactly 1 number literal: LIMIT value
+	require.Equal(t, 1, len(numberLiterals), "Should find exactly 1 NumberLiteral node")
+
+	// Verify the specific values
+	stringValues := make([]string, len(stringLiterals))
+	for i, sl := range stringLiterals {
+		stringValues[i] = sl.Literal
+	}
+	require.Contains(t, stringValues, "prod%", "Should contain LIKE pattern")
+	require.Contains(t, stringValues, "/tmp/prod_dbs.txt", "Should contain OUTFILE path")
+	require.Contains(t, stringValues, "JSON", "Should contain FORMAT type")
+
+	require.Equal(t, "5", numberLiterals[0].Literal, "Should contain LIMIT value")
+}

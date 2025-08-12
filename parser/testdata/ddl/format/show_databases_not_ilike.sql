@@ -1,0 +1,5 @@
+-- Origin SQL:
+SHOW DATABASES NOT ILIKE 'Temp%'
+
+-- Format SQL:
+SHOW DATABASES NOT ILIKE 'Temp%';

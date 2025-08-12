@@ -8231,6 +8231,14 @@ type ShowStmt struct {
 	StatementEnd Pos
 	ShowType     string           // e.g., "CREATE TABLE", "DATABASES", "TABLES"
 	Target       *TableIdentifier // for SHOW CREATE TABLE table_name
+
+	// Optional clauses for SHOW DATABASES
+	NotLike     bool           // true if NOT LIKE/ILIKE
+	LikeType    string         // "LIKE" or "ILIKE", empty if not used
+	LikePattern Expr           // pattern expression for LIKE/ILIKE
+	Limit       Expr           // limit expression
+	OutFile     *StringLiteral // filename for INTO OUTFILE
+	Format      *StringLiteral // format specification
 }
 
 func (s *ShowStmt) Pos() Pos {
@@ -8238,6 +8246,19 @@ func (s *ShowStmt) Pos() Pos {
 }
 
 func (s *ShowStmt) End() Pos {
+	// Find the rightmost element to determine the end position
+	if s.Format != nil {
+		return s.Format.End()
+	}
+	if s.OutFile != nil {
+		return s.OutFile.End()
+	}
+	if s.Limit != nil {
+		return s.Limit.End()
+	}
+	if s.LikePattern != nil {
+		return s.LikePattern.End()
+	}
 	if s.Target != nil {
 		return s.Target.End()
 	}
@@ -8252,6 +8273,34 @@ func (s *ShowStmt) String() string {
 		builder.WriteString(" ")
 		builder.WriteString(s.Target.String())
 	}
+
+	// Add optional clauses for SHOW DATABASES
+	if s.LikeType != "" && s.LikePattern != nil {
+		if s.NotLike {
+			builder.WriteString(" NOT ")
+		} else {
+			builder.WriteString(" ")
+		}
+		builder.WriteString(s.LikeType)
+		builder.WriteString(" ")
+		builder.WriteString(s.LikePattern.String())
+	}
+
+	if s.Limit != nil {
+		builder.WriteString(" LIMIT ")
+		builder.WriteString(s.Limit.String())
+	}
+
+	if s.OutFile != nil {
+		builder.WriteString(" INTO OUTFILE ")
+		builder.WriteString(s.OutFile.String())
+	}
+
+	if s.Format != nil {
+		builder.WriteString(" FORMAT ")
+		builder.WriteString(s.Format.String())
+	}
+
 	return builder.String()
 }
 
@@ -8260,6 +8309,26 @@ func (s *ShowStmt) Accept(visitor ASTVisitor) error {
 	defer visitor.Leave(s)
 	if s.Target != nil {
 		if err := s.Target.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.LikePattern != nil {
+		if err := s.LikePattern.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Limit != nil {
+		if err := s.Limit.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.OutFile != nil {
+		if err := s.OutFile.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Format != nil {
+		if err := s.Format.Accept(visitor); err != nil {
 			return err
 		}
 	}

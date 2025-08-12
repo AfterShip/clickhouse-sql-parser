@@ -1,0 +1,5 @@
+-- Origin SQL:
+SHOW DATABASES ILIKE 'Test%'
+
+-- Format SQL:
+SHOW DATABASES ILIKE 'Test%';

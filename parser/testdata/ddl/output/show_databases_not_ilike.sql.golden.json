@@ -1,0 +1,18 @@
+[
+  {
+    "ShowPos": 0,
+    "StatementEnd": 33,
+    "ShowType": "DATABASES",
+    "Target": null,
+    "NotLike": true,
+    "LikeType": "ILIKE",
+    "LikePattern": {
+      "LiteralPos": 26,
+      "LiteralEnd": 31,
+      "Literal": "Temp%"
+    },
+    "Limit": null,
+    "OutFile": null,
+    "Format": null
+  }
+]

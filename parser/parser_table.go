@@ -1201,7 +1201,7 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 		target = tableIdent
 
 	case p.matchKeyword(KeywordDatabases):
-		// SHOW DATABASES
+		// SHOW DATABASES [optional clauses]
 		showType = "DATABASES"
 		_ = p.lexer.consumeToken()
 
@@ -1214,19 +1214,91 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.last().String)
 	}
 
-	var statementEnd Pos
-	if target != nil {
-		statementEnd = target.End()
-	} else {
-		statementEnd = p.End()
+	stmt := &ShowStmt{
+		ShowPos:  pos,
+		ShowType: showType,
+		Target:   target,
 	}
 
-	return &ShowStmt{
-		ShowPos:      pos,
-		StatementEnd: statementEnd,
-		ShowType:     showType,
-		Target:       target,
-	}, nil
+	// Parse optional clauses for SHOW DATABASES
+	if showType == "DATABASES" {
+		// Parse [[NOT] LIKE | ILIKE '<pattern>']
+		if p.matchKeyword(KeywordNot) {
+			stmt.NotLike = true
+			_ = p.lexer.consumeToken()
+		}
+
+		if p.matchKeyword(KeywordLike) || p.matchKeyword(KeywordIlike) {
+			if p.matchKeyword(KeywordLike) {
+				stmt.LikeType = "LIKE"
+			} else {
+				stmt.LikeType = "ILIKE"
+			}
+			_ = p.lexer.consumeToken()
+
+			// Parse pattern expression
+			pattern, err := p.parseExpr(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			stmt.LikePattern = pattern
+		}
+
+		// Parse [LIMIT <N>]
+		if p.matchKeyword(KeywordLimit) {
+			_ = p.lexer.consumeToken()
+			limit, err := p.parseExpr(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			stmt.Limit = limit
+		}
+
+		// Parse [INTO OUTFILE filename]
+		if p.matchKeyword(KeywordInto) {
+			_ = p.lexer.consumeToken()
+			if err := p.expectKeyword(KeywordOutfile); err != nil {
+				return nil, err
+			}
+
+			// Parse filename as a string literal
+			outFile, err := p.parseString(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			stmt.OutFile = outFile
+		}
+
+		// Parse [FORMAT format]
+		if p.matchKeyword(KeywordFormat) {
+			_ = p.lexer.consumeToken()
+
+			// Format can be an identifier or a string
+			if p.matchTokenKind(TokenKindString) {
+				format, err := p.parseString(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				stmt.Format = format
+			} else if p.matchTokenKind(TokenKindIdent) {
+				// Handle format as identifier (like JSON, CSV, etc.)
+				token := p.last()
+				_ = p.lexer.consumeToken()
+				stmt.Format = &StringLiteral{
+					LiteralPos: token.Pos,
+					LiteralEnd: token.End,
+					Literal:    token.String,
+				}
+			} else {
+				return nil, fmt.Errorf("expected format specification after FORMAT, got %q", p.last().String)
+			}
+		}
+	}
+
+	// Set statement end position
+	stmt.StatementEnd = p.End()
+
+	return stmt, nil
 }
 
 func (p *Parser) parseDescribeStmt(pos Pos) (*DescribeStmt, error) {

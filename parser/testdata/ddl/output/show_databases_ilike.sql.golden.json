@@ -1,12 +1,16 @@
 [
   {
     "ShowPos": 0,
-    "StatementEnd": 15,
+    "StatementEnd": 29,
     "ShowType": "DATABASES",
     "Target": null,
     "NotLike": false,
-    "LikeType": "",
-    "LikePattern": null,
+    "LikeType": "ILIKE",
+    "LikePattern": {
+      "LiteralPos": 22,
+      "LiteralEnd": 27,
+      "Literal": "Test%"
+    },
     "Limit": null,
     "OutFile": null,
     "Format": null
