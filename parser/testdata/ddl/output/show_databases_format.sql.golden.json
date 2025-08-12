@@ -1,7 +1,7 @@
 [
   {
     "ShowPos": 0,
-    "StatementEnd": 15,
+    "StatementEnd": 27,
     "ShowType": "DATABASES",
     "Target": null,
     "NotLike": false,
@@ -9,6 +9,10 @@
     "LikePattern": null,
     "Limit": null,
     "OutFile": null,
-    "Format": null
+    "Format": {
+      "LiteralPos": 22,
+      "LiteralEnd": 26,
+      "Literal": "JSON"
+    }
   }
 ]

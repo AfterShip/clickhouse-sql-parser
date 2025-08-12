@@ -1,0 +1,1 @@
+SHOW DATABASES INTO OUTFILE '/tmp/databases.txt'
