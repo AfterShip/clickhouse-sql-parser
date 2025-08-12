@@ -1,0 +1,15 @@
+[
+  {
+    "DescribePos": 0,
+    "StatementEnd": 16,
+    "Target": {
+      "Database": null,
+      "Table": {
+        "Name": "mytable",
+        "QuoteType": 1,
+        "NamePos": 9,
+        "NameEnd": 16
+      }
+    }
+  }
+]
