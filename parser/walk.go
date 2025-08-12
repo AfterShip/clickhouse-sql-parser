@@ -1686,6 +1686,18 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if n.Target != nil && !Walk(n.Target, fn) {
 			return false
 		}
+		if n.LikePattern != nil && !Walk(n.LikePattern, fn) {
+			return false
+		}
+		if n.Limit != nil && !Walk(n.Limit, fn) {
+			return false
+		}
+		if n.OutFile != nil && !Walk(n.OutFile, fn) {
+			return false
+		}
+		if n.Format != nil && !Walk(n.Format, fn) {
+			return false
+		}
 	case *DescribeStmt:
 		if n.Target != nil && !Walk(n.Target, fn) {
 			return false
