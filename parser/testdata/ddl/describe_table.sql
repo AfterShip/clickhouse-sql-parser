@@ -1,1 +1,1 @@
-DESCRIBE mytable
+DESCRIBE TABLE mytable

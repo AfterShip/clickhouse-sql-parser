@@ -1308,6 +1308,12 @@ func (p *Parser) parseDescribeStmt(pos Pos) (*DescribeStmt, error) {
 	}
 	_ = p.lexer.consumeToken()
 
+	// TABLE keyword is required after DESC/DESCRIBE
+	if !p.matchKeyword(KeywordTable) {
+		return nil, fmt.Errorf("expected TABLE after DESC/DESCRIBE")
+	}
+	_ = p.lexer.consumeToken()
+
 	tableIdent, err := p.parseTableIdentifier(p.Pos())
 	if err != nil {
 		return nil, err
@@ -1316,6 +1322,7 @@ func (p *Parser) parseDescribeStmt(pos Pos) (*DescribeStmt, error) {
 	return &DescribeStmt{
 		DescribePos:  pos,
 		StatementEnd: tableIdent.End(),
+		DescribeType: "TABLE",
 		Target:       tableIdent,
 	}, nil
 }

@@ -1,1 +1,1 @@
-DESC mytable
+DESC TABLE mytable
