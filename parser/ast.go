@@ -8338,7 +8338,7 @@ func (s *ShowStmt) Accept(visitor ASTVisitor) error {
 type DescribeStmt struct {
 	DescribePos  Pos
 	StatementEnd Pos
-	DescribeType string //  e.g., "TABLE", empty if not used
+	DescribeType string // e.g., "TABLE", empty if not used
 	Target       *TableIdentifier
 }
 
