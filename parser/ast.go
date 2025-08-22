@@ -8338,6 +8338,7 @@ func (s *ShowStmt) Accept(visitor ASTVisitor) error {
 type DescribeStmt struct {
 	DescribePos  Pos
 	StatementEnd Pos
+	DescribeType string // e.g., "TABLE", empty if not used
 	Target       *TableIdentifier
 }
 
@@ -8352,6 +8353,10 @@ func (d *DescribeStmt) End() Pos {
 func (d *DescribeStmt) String() string {
 	var builder strings.Builder
 	builder.WriteString("DESCRIBE ")
+	if d.DescribeType != "" {
+		builder.WriteString(d.DescribeType)
+		builder.WriteString(" ")
+	}
 	builder.WriteString(d.Target.String())
 	return builder.String()
 }

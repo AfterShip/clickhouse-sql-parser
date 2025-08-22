@@ -1,0 +1,1 @@
+DESC TABLE mytable
