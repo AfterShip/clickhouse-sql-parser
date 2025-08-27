@@ -807,23 +807,7 @@ func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
 		return nil, err
 	}
 
-	// Parse comma-separated setting names using consistent approach
-	settings, err := p.parseIdentifierList(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
-	statementEnd := settings[len(settings)-1].End()
-
-	return &AlterTableResetSetting{
-		ResetPos:     pos,
-		StatementEnd: statementEnd,
-		Settings:     settings,
-	}, nil
-}
-
-// parseIdentifierList parses comma-separated identifiers using consistent approach
-func (p *Parser) parseIdentifierList(pos Pos) ([]*Ident, error) {
+	// Parse comma-separated setting names inline
 	var settings []*Ident
 	setting, err := p.parseIdent()
 	if err != nil {
@@ -838,5 +822,13 @@ func (p *Parser) parseIdentifierList(pos Pos) ([]*Ident, error) {
 		}
 		settings = append(settings, setting)
 	}
-	return settings, nil
+
+	statementEnd := settings[len(settings)-1].End()
+
+	return &AlterTableResetSetting{
+		ResetPos:     pos,
+		StatementEnd: statementEnd,
+		Settings:     settings,
+	}, nil
 }
+
