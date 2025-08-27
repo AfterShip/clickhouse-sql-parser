@@ -264,7 +264,7 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-	case *SettingExprList:
+	case *SettingExpr:
 		if !Walk(n.Name, fn) {
 			return false
 		}
@@ -1051,8 +1051,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 			}
 		}
 	case *AlterTableModifySetting:
-		if !Walk(n.Settings, fn) {
-			return false
+		for _, setting := range n.Settings {
+			if !Walk(setting, fn) {
+				return false
+			}
 		}
 	case *AlterTableResetSetting:
 		for _, setting := range n.Settings {

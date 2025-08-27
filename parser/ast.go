@@ -1324,7 +1324,7 @@ func (a *AlterTableModifyColumn) Accept(visitor ASTVisitor) error {
 type AlterTableModifySetting struct {
 	ModifyPos    Pos
 	StatementEnd Pos
-	Settings     *SettingsClause
+	Settings     []*SettingExpr
 }
 
 func (a *AlterTableModifySetting) Pos() Pos {
@@ -1341,16 +1341,23 @@ func (a *AlterTableModifySetting) AlterType() string {
 
 func (a *AlterTableModifySetting) String() string {
 	var builder strings.Builder
-	builder.WriteString("MODIFY ")
-	builder.WriteString(a.Settings.String())
+	builder.WriteString("MODIFY SETTING ")
+	for i, setting := range a.Settings {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(setting.String())
+	}
 	return builder.String()
 }
 
 func (a *AlterTableModifySetting) Accept(visitor ASTVisitor) error {
 	visitor.Enter(a)
 	defer visitor.Leave(a)
-	if err := a.Settings.Accept(visitor); err != nil {
-		return err
+	for _, setting := range a.Settings {
+		if err := setting.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitAlterTableModifySetting(a)
 }
@@ -3594,21 +3601,21 @@ func (o *OrderByClause) Accept(visitor ASTVisitor) error {
 	return visitor.VisitOrderByListExpr(o)
 }
 
-type SettingExprList struct {
+type SettingExpr struct {
 	SettingsPos Pos
 	Name        *Ident
 	Expr        Expr
 }
 
-func (s *SettingExprList) Pos() Pos {
+func (s *SettingExpr) Pos() Pos {
 	return s.SettingsPos
 }
 
-func (s *SettingExprList) End() Pos {
+func (s *SettingExpr) End() Pos {
 	return s.Expr.End()
 }
 
-func (s *SettingExprList) String() string {
+func (s *SettingExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString(s.Name.String())
 	builder.WriteByte('=')
@@ -3616,7 +3623,7 @@ func (s *SettingExprList) String() string {
 	return builder.String()
 }
 
-func (s *SettingExprList) Accept(visitor ASTVisitor) error {
+func (s *SettingExpr) Accept(visitor ASTVisitor) error {
 	visitor.Enter(s)
 	defer visitor.Leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
@@ -3631,7 +3638,7 @@ func (s *SettingExprList) Accept(visitor ASTVisitor) error {
 type SettingsClause struct {
 	SettingsPos Pos
 	ListEnd     Pos
-	Items       []*SettingExprList
+	Items       []*SettingExpr
 }
 
 func (s *SettingsClause) Pos() Pos {
@@ -8444,4 +8451,3 @@ func (d *DescribeStmt) Accept(visitor ASTVisitor) error {
 	}
 	return visitor.VisitDescribeExpr(d)
 }
-

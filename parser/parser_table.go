@@ -920,27 +920,37 @@ func (p *Parser) tryParseSettingsClause(pos Pos) (*SettingsClause, error) {
 
 func (p *Parser) parseSettingsClause(pos Pos) (*SettingsClause, error) {
 	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
-	items := make([]*SettingExprList, 0)
-	expr, err := p.parseSettingsExprList(p.Pos())
+	items, err := p.parseSettingsList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	if len(items) == 0 {
+		return nil, fmt.Errorf("settings list is empty")
+	}
+	settings.ListEnd = items[len(items)-1].End()
+	settings.Items = items
+	return settings, nil
+}
+
+func (p *Parser) parseSettingsList(pos Pos) ([]*SettingExpr, error) {
+	items := make([]*SettingExpr, 0)
+	expr, err := p.parseSettingsExpr(pos)
 	if err != nil {
 		return nil, err
 	}
 	items = append(items, expr)
 	for p.tryConsumeTokenKind(TokenKindComma) != nil {
-		expr, err = p.parseSettingsExprList(p.Pos())
+		expr, err = p.parseSettingsExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		items = append(items, expr)
 	}
-	if len(items) > 0 {
-		settings.ListEnd = items[len(items)-1].End()
-	}
-	settings.Items = items
-	return settings, nil
+	return items, nil
 }
 
-func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
+func (p *Parser) parseSettingsExpr(pos Pos) (*SettingExpr, error) {
 	ident, err := p.parseIdent()
 	if err != nil {
 		return nil, err
@@ -974,7 +984,7 @@ func (p *Parser) parseSettingsExprList(pos Pos) (*SettingExprList, error) {
 		return nil, fmt.Errorf("unexpected token: %q, expected <number> or <string>", p.last().String)
 	}
 
-	return &SettingExprList{
+	return &SettingExpr{
 		SettingsPos: pos,
 		Name:        ident,
 		Expr:        expr,
@@ -2140,9 +2150,9 @@ func (p *Parser) parseDictionarySettingsClause(pos Pos) (*SettingsClause, error)
 	}
 
 	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
-	items := make([]*SettingExprList, 0)
+	items := make([]*SettingExpr, 0)
 	// Parse first setting
-	expr, err := p.parseSettingsExprList(p.Pos())
+	expr, err := p.parseSettingsExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -2150,7 +2160,7 @@ func (p *Parser) parseDictionarySettingsClause(pos Pos) (*SettingsClause, error)
 
 	// Parse additional settings
 	for p.tryConsumeTokenKind(TokenKindComma) != nil {
-		expr, err := p.parseSettingsExprList(p.Pos())
+		expr, err := p.parseSettingsExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}

@@ -1,0 +1,54 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 93,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "example_table",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 25
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 26,
+        "StatementEnd": 93,
+        "Settings": [
+          {
+            "SettingsPos": 41,
+            "Name": {
+              "Name": "max_part_loading_threads",
+              "QuoteType": 1,
+              "NamePos": 41,
+              "NameEnd": 65
+            },
+            "Expr": {
+              "NumPos": 66,
+              "NumEnd": 67,
+              "Literal": "8",
+              "Base": 10
+            }
+          },
+          {
+            "SettingsPos": 69,
+            "Name": {
+              "Name": "max_parts_in_total",
+              "QuoteType": 1,
+              "NamePos": 69,
+              "NameEnd": 87
+            },
+            "Expr": {
+              "NumPos": 88,
+              "NumEnd": 93,
+              "Literal": "50000",
+              "Base": 10
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

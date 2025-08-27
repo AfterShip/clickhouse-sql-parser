@@ -75,7 +75,7 @@ type ASTVisitor interface {
 	VisitRefreshExpr(expr *RefreshExpr) error
 	VisitOrderByExpr(expr *OrderExpr) error
 	VisitOrderByListExpr(expr *OrderByClause) error
-	VisitSettingsExpr(expr *SettingExprList) error
+	VisitSettingsExpr(expr *SettingExpr) error
 	VisitSettingsExprList(expr *SettingsClause) error
 	VisitParamExprList(expr *ParamExprList) error
 	VisitMapLiteral(expr *MapLiteral) error
@@ -720,7 +720,7 @@ func (v *DefaultASTVisitor) VisitOrderByListExpr(expr *OrderByClause) error {
 	return nil
 }
 
-func (v *DefaultASTVisitor) VisitSettingsExpr(expr *SettingExprList) error {
+func (v *DefaultASTVisitor) VisitSettingsExpr(expr *SettingExpr) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

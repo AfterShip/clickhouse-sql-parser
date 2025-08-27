@@ -1,0 +1,30 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 64,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "example_table",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 25
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ResetPos": 26,
+        "StatementEnd": 64,
+        "Settings": [
+          {
+            "Name": "max_part_loading_threads",
+            "QuoteType": 1,
+            "NamePos": 40,
+            "NameEnd": 64
+          }
+        ]
+      }
+    ]
+  }
+]

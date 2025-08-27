@@ -652,14 +652,16 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 		}, nil
 	case p.matchKeyword(KeywordSetting):
 		_ = p.lexer.consumeToken() // consume "SETTING"
-		settingsClause, err := p.parseSettingsClause(p.Pos())
+		settings, err := p.parseSettingsList(p.Pos())
 		if err != nil {
 			return nil, err
 		}
+		// settings must not be empty
+		statementEnd := settings[len(settings)-1].End()
 		return &AlterTableModifySetting{
 			ModifyPos:    pos,
-			StatementEnd: settingsClause.End(),
-			Settings:     settingsClause,
+			StatementEnd: statementEnd,
+			Settings:     settings,
 		}, nil
 	default:
 		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY|SETTING, but got %q",
@@ -831,4 +833,3 @@ func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
 		Settings:     settings,
 	}, nil
 }
-
