@@ -1,0 +1,1 @@
+ALTER TABLE example_table RESET SETTING max_part_loading_threads;

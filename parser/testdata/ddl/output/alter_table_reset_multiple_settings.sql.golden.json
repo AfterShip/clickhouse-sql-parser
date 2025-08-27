@@ -1,0 +1,42 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 101,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "example_table",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 25
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ResetPos": 26,
+        "StatementEnd": 101,
+        "Settings": [
+          {
+            "Name": "max_part_loading_threads",
+            "QuoteType": 1,
+            "NamePos": 40,
+            "NameEnd": 64
+          },
+          {
+            "Name": "max_parts_in_total",
+            "QuoteType": 1,
+            "NamePos": 66,
+            "NameEnd": 84
+          },
+          {
+            "Name": "another_setting",
+            "QuoteType": 1,
+            "NamePos": 86,
+            "NameEnd": 101
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -51,8 +51,10 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			alter, err = p.parseAlterTableReplacePartition(p.Pos())
 		case p.matchKeyword(KeywordMaterialize):
 			alter, err = p.parseAlterTableMaterialize(p.Pos())
+		case p.matchKeyword(KeywordReset):
+			alter, err = p.parseAlterTableReset(p.Pos())
 		default:
-			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR")
+			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR|MODIFY|REPLACE|MATERIALIZE|RESET")
 		}
 		if err != nil {
 			return nil, err
@@ -648,8 +650,21 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			StatementEnd: selectQuery.End(),
 			SelectExpr:   selectQuery,
 		}, nil
+	case p.matchKeyword(KeywordSetting):
+		_ = p.lexer.consumeToken() // consume "SETTING"
+		settings, err := p.parseSettingsList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		// settings must not be empty
+		statementEnd := settings[len(settings)-1].End()
+		return &AlterTableModifySetting{
+			ModifyPos:    pos,
+			StatementEnd: statementEnd,
+			Settings:     settings,
+		}, nil
 	default:
-		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY, but got %q",
+		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY|SETTING, but got %q",
 			p.last().String)
 	}
 
@@ -782,5 +797,39 @@ func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableClause, error) {
 		IfExists:        ifExists,
 		ProjectionName:  name,
 		Partition:       partition,
+	}, nil
+}
+
+func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
+	if err := p.expectKeyword(KeywordReset); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectKeyword(KeywordSetting); err != nil {
+		return nil, err
+	}
+
+	// Parse comma-separated setting names inline
+	var settings []*Ident
+	setting, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	settings = append(settings, setting)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		setting, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		settings = append(settings, setting)
+	}
+
+	statementEnd := settings[len(settings)-1].End()
+
+	return &AlterTableResetSetting{
+		ResetPos:     pos,
+		StatementEnd: statementEnd,
+		Settings:     settings,
 	}, nil
 }

@@ -1321,6 +1321,88 @@ func (a *AlterTableModifyColumn) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableModifyColumn(a)
 }
 
+type AlterTableModifySetting struct {
+	ModifyPos    Pos
+	StatementEnd Pos
+	Settings     []*SettingExpr
+}
+
+func (a *AlterTableModifySetting) Pos() Pos {
+	return a.ModifyPos
+}
+
+func (a *AlterTableModifySetting) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableModifySetting) AlterType() string {
+	return "MODIFY_SETTING"
+}
+
+func (a *AlterTableModifySetting) String() string {
+	var builder strings.Builder
+	builder.WriteString("MODIFY SETTING ")
+	for i, setting := range a.Settings {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(setting.String())
+	}
+	return builder.String()
+}
+
+func (a *AlterTableModifySetting) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	for _, setting := range a.Settings {
+		if err := setting.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableModifySetting(a)
+}
+
+type AlterTableResetSetting struct {
+	ResetPos     Pos
+	StatementEnd Pos
+	Settings     []*Ident
+}
+
+func (a *AlterTableResetSetting) Pos() Pos {
+	return a.ResetPos
+}
+
+func (a *AlterTableResetSetting) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableResetSetting) AlterType() string {
+	return "RESET_SETTING"
+}
+
+func (a *AlterTableResetSetting) String() string {
+	var builder strings.Builder
+	builder.WriteString("RESET SETTING ")
+	for i, setting := range a.Settings {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(setting.String())
+	}
+	return builder.String()
+}
+
+func (a *AlterTableResetSetting) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	for _, setting := range a.Settings {
+		if err := setting.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableResetSetting(a)
+}
+
 type AlterTableReplacePartition struct {
 	ReplacePos Pos
 	Partition  *PartitionClause
@@ -3519,21 +3601,21 @@ func (o *OrderByClause) Accept(visitor ASTVisitor) error {
 	return visitor.VisitOrderByListExpr(o)
 }
 
-type SettingExprList struct {
+type SettingExpr struct {
 	SettingsPos Pos
 	Name        *Ident
 	Expr        Expr
 }
 
-func (s *SettingExprList) Pos() Pos {
+func (s *SettingExpr) Pos() Pos {
 	return s.SettingsPos
 }
 
-func (s *SettingExprList) End() Pos {
+func (s *SettingExpr) End() Pos {
 	return s.Expr.End()
 }
 
-func (s *SettingExprList) String() string {
+func (s *SettingExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString(s.Name.String())
 	builder.WriteByte('=')
@@ -3541,7 +3623,7 @@ func (s *SettingExprList) String() string {
 	return builder.String()
 }
 
-func (s *SettingExprList) Accept(visitor ASTVisitor) error {
+func (s *SettingExpr) Accept(visitor ASTVisitor) error {
 	visitor.Enter(s)
 	defer visitor.Leave(s)
 	if err := s.Name.Accept(visitor); err != nil {
@@ -3556,7 +3638,7 @@ func (s *SettingExprList) Accept(visitor ASTVisitor) error {
 type SettingsClause struct {
 	SettingsPos Pos
 	ListEnd     Pos
-	Items       []*SettingExprList
+	Items       []*SettingExpr
 }
 
 func (s *SettingsClause) Pos() Pos {
