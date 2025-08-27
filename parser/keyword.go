@@ -180,6 +180,7 @@ const (
 	KeywordRemove       = "REMOVE"
 	KeywordRename       = "RENAME"
 	KeywordReplace      = "REPLACE"
+	KeywordReset        = "RESET"
 	KeywordReplica      = "REPLICA"
 	KeywordReplicated   = "REPLICATED"
 	KeywordReplication  = "REPLICATION"
@@ -197,6 +198,7 @@ const (
 	KeywordServer       = "SERVER"
 	KeywordSet          = "SET"
 	KeywordSets         = "SETS"
+	KeywordSetting      = "SETTING"
 	KeywordSettings     = "SETTINGS"
 	KeywordShow         = "SHOW"
 	KeywordShutdown     = "SHUTDOWN"
@@ -428,6 +430,7 @@ var keywords = NewSet(
 	KeywordRemove,
 	KeywordRename,
 	KeywordReplace,
+	KeywordReset,
 	KeywordReplica,
 	KeywordReplicated,
 	KeywordReplication,
@@ -445,6 +448,7 @@ var keywords = NewSet(
 	KeywordServer,
 	KeywordSet,
 	KeywordSets,
+	KeywordSetting,
 	KeywordSettings,
 	KeywordShow,
 	KeywordShutdown,

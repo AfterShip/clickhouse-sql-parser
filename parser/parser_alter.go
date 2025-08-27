@@ -51,8 +51,10 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			alter, err = p.parseAlterTableReplacePartition(p.Pos())
 		case p.matchKeyword(KeywordMaterialize):
 			alter, err = p.parseAlterTableMaterialize(p.Pos())
+		case p.matchKeyword(KeywordReset):
+			alter, err = p.parseAlterTableReset(p.Pos())
 		default:
-			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR")
+			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR|MODIFY|REPLACE|MATERIALIZE|RESET")
 		}
 		if err != nil {
 			return nil, err
@@ -648,8 +650,19 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			StatementEnd: selectQuery.End(),
 			SelectExpr:   selectQuery,
 		}, nil
+	case p.matchKeyword(KeywordSetting):
+		_ = p.lexer.consumeToken() // consume "SETTING"
+		settingsClause, err := p.parseSettingsExprOnly(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &AlterTableModifySetting{
+			ModifyPos:    pos,
+			StatementEnd: settingsClause.End(),
+			Settings:     settingsClause,
+		}, nil
 	default:
-		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY, but got %q",
+		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY|SETTING, but got %q",
 			p.last().String)
 	}
 
@@ -783,4 +796,61 @@ func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableClause, error) {
 		ProjectionName:  name,
 		Partition:       partition,
 	}, nil
+}
+
+func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
+	if err := p.expectKeyword(KeywordReset); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectKeyword(KeywordSetting); err != nil {
+		return nil, err
+	}
+
+	// Parse comma-separated setting names
+	var settings []*Ident
+	setting, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	settings = append(settings, setting)
+
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		setting, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		settings = append(settings, setting)
+	}
+
+	statementEnd := settings[len(settings)-1].End()
+
+	return &AlterTableResetSetting{
+		ResetPos:     pos,
+		StatementEnd: statementEnd,
+		Settings:     settings,
+	}, nil
+}
+
+// parseSettingsExprOnly parses settings expressions without the SETTINGS keyword
+func (p *Parser) parseSettingsExprOnly(pos Pos) (*SettingsClause, error) {
+	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
+	items := make([]*SettingExprList, 0)
+	expr, err := p.parseSettingsExprList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	items = append(items, expr)
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		expr, err = p.parseSettingsExprList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, expr)
+	}
+	settings.Items = items
+	if len(items) > 0 {
+		settings.ListEnd = items[len(items)-1].End()
+	}
+	return settings, nil
 }

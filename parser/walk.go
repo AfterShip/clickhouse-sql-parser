@@ -1050,6 +1050,16 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
+	case *AlterTableModifySetting:
+		if !Walk(n.Settings, fn) {
+			return false
+		}
+	case *AlterTableResetSetting:
+		for _, setting := range n.Settings {
+			if !Walk(setting, fn) {
+				return false
+			}
+		}
 	case *AlterTableReplacePartition:
 		if !Walk(n.Partition, fn) {
 			return false

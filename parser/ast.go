@@ -1321,6 +1321,81 @@ func (a *AlterTableModifyColumn) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableModifyColumn(a)
 }
 
+type AlterTableModifySetting struct {
+	ModifyPos    Pos
+	StatementEnd Pos
+	Settings     *SettingsClause
+}
+
+func (a *AlterTableModifySetting) Pos() Pos {
+	return a.ModifyPos
+}
+
+func (a *AlterTableModifySetting) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableModifySetting) AlterType() string {
+	return "MODIFY_SETTING"
+}
+
+func (a *AlterTableModifySetting) String() string {
+	var builder strings.Builder
+	builder.WriteString("MODIFY ")
+	builder.WriteString(a.Settings.String())
+	return builder.String()
+}
+
+func (a *AlterTableModifySetting) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	if err := a.Settings.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitAlterTableModifySetting(a)
+}
+
+type AlterTableResetSetting struct {
+	ResetPos     Pos
+	StatementEnd Pos
+	Settings     []*Ident
+}
+
+func (a *AlterTableResetSetting) Pos() Pos {
+	return a.ResetPos
+}
+
+func (a *AlterTableResetSetting) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableResetSetting) AlterType() string {
+	return "RESET_SETTING"
+}
+
+func (a *AlterTableResetSetting) String() string {
+	var builder strings.Builder
+	builder.WriteString("RESET SETTING ")
+	for i, setting := range a.Settings {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(setting.String())
+	}
+	return builder.String()
+}
+
+func (a *AlterTableResetSetting) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	for _, setting := range a.Settings {
+		if err := setting.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitAlterTableResetSetting(a)
+}
+
 type AlterTableReplacePartition struct {
 	ReplacePos Pos
 	Partition  *PartitionClause
