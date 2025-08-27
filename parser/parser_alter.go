@@ -652,7 +652,7 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 		}, nil
 	case p.matchKeyword(KeywordSetting):
 		_ = p.lexer.consumeToken() // consume "SETTING"
-		settingsClause, err := p.parseSettingsExprOnly(p.Pos())
+		settingsClause, err := p.parseSettingsClause(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -807,7 +807,23 @@ func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
 		return nil, err
 	}
 
-	// Parse comma-separated setting names
+	// Parse comma-separated setting names using consistent approach
+	settings, err := p.parseIdentifierList(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	statementEnd := settings[len(settings)-1].End()
+
+	return &AlterTableResetSetting{
+		ResetPos:     pos,
+		StatementEnd: statementEnd,
+		Settings:     settings,
+	}, nil
+}
+
+// parseIdentifierList parses comma-separated identifiers using consistent approach
+func (p *Parser) parseIdentifierList(pos Pos) ([]*Ident, error) {
 	var settings []*Ident
 	setting, err := p.parseIdent()
 	if err != nil {
@@ -821,36 +837,6 @@ func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
 			return nil, err
 		}
 		settings = append(settings, setting)
-	}
-
-	statementEnd := settings[len(settings)-1].End()
-
-	return &AlterTableResetSetting{
-		ResetPos:     pos,
-		StatementEnd: statementEnd,
-		Settings:     settings,
-	}, nil
-}
-
-// parseSettingsExprOnly parses settings expressions without the SETTINGS keyword
-func (p *Parser) parseSettingsExprOnly(pos Pos) (*SettingsClause, error) {
-	settings := &SettingsClause{SettingsPos: pos, ListEnd: pos}
-	items := make([]*SettingExprList, 0)
-	expr, err := p.parseSettingsExprList(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	items = append(items, expr)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
-		expr, err = p.parseSettingsExprList(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		items = append(items, expr)
-	}
-	settings.Items = items
-	if len(items) > 0 {
-		settings.ListEnd = items[len(items)-1].End()
 	}
 	return settings, nil
 }
