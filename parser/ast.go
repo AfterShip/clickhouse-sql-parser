@@ -1376,7 +1376,12 @@ func (a *AlterTableResetSetting) AlterType() string {
 func (a *AlterTableResetSetting) String() string {
 	var builder strings.Builder
 	builder.WriteString("RESET SETTING ")
-	builder.WriteString(joinIdents(a.Settings))
+	for i, setting := range a.Settings {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(setting.String())
+	}
 	return builder.String()
 }
 
@@ -8440,14 +8445,3 @@ func (d *DescribeStmt) Accept(visitor ASTVisitor) error {
 	return visitor.VisitDescribeExpr(d)
 }
 
-// joinIdents joins a slice of identifiers with commas
-func joinIdents(idents []*Ident) string {
-	var builder strings.Builder
-	for i, ident := range idents {
-		if i > 0 {
-			builder.WriteString(", ")
-		}
-		builder.WriteString(ident.String())
-	}
-	return builder.String()
-}
