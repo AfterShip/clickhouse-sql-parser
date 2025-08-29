@@ -1,6 +1,6 @@
 module github.com/AfterShip/clickhouse-sql-parser
 
-go 1.24.5
+go 1.18
 
 require (
 	github.com/sebdah/goldie/v2 v2.5.3
