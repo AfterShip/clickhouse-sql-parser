@@ -1,10 +1,12 @@
 CREATE TABLE IF NOT EXISTS test_local
 (
+ `common.id` String CODEC(ZSTD(1)),
  `id` UInt64 CODEC(Delta, ZSTD(1)),
  `api_id` UInt64 CODEC(ZSTD(1)),
  `arr` Array(Int64),
  `content` String CODEC(ZSTD(1)),
  `output` String,
+ INDEX id_common_id_bloom_filter common.id TYPE bloom_filter(0.001) GRANULARITY 1,
  INDEX id_idx id TYPE minmax GRANULARITY 10,
  INDEX api_id_idx api_id TYPE set(100) GRANULARITY 2,
  INDEX arr_idx arr TYPE bloom_filter(0.01) GRANULARITY 3,
