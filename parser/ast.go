@@ -1494,12 +1494,12 @@ func (a *TableIndex) String() string {
 	builder.WriteString("INDEX")
 	builder.WriteByte(' ')
 	builder.WriteString(a.Name.String())
-	// a.ColumnDef = *Name --- e.g. INDEX idx column TYPE ...
-	// a.ColumnDef = *ParamExprList --- e.g. INDEX idx(column) TYPE ...
-	if _, ok := a.ColumnExpr.Expr.(*Ident); ok {
+	// Add space only if column expression doesn't start with '('
+	columnExprStr := a.ColumnExpr.String()
+	if len(columnExprStr) > 0 && columnExprStr[0] != '(' {
 		builder.WriteByte(' ')
 	}
-	builder.WriteString(a.ColumnExpr.String())
+	builder.WriteString(columnExprStr)
 	builder.WriteByte(' ')
 	builder.WriteString("TYPE")
 	builder.WriteByte(' ')
