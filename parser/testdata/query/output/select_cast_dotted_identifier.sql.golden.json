@@ -1,0 +1,366 @@
+[
+  {
+    "SelectPos": 52,
+    "StatementEnd": 96,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 59,
+          "Expr": {
+            "Name": "column",
+            "QuoteType": 1,
+            "NamePos": 64,
+            "NameEnd": 70
+          },
+          "Separator": ",",
+          "AsPos": 70,
+          "AsType": {
+            "LiteralPos": 73,
+            "LiteralEnd": 79,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "single_part",
+          "QuoteType": 1,
+          "NamePos": 85,
+          "NameEnd": 96
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 98,
+    "StatementEnd": 146,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 105,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "table",
+              "QuoteType": 1,
+              "NamePos": 110,
+              "NameEnd": 115
+            },
+            "Column": {
+              "Name": "column",
+              "QuoteType": 1,
+              "NamePos": 116,
+              "NameEnd": 122
+            }
+          },
+          "Separator": ",",
+          "AsPos": 122,
+          "AsType": {
+            "LiteralPos": 125,
+            "LiteralEnd": 131,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "two_parts",
+          "QuoteType": 1,
+          "NamePos": 137,
+          "NameEnd": 146
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 148,
+    "StatementEnd": 201,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 155,
+          "Expr": {
+            "Database": {
+              "Name": "db",
+              "QuoteType": 1,
+              "NamePos": 160,
+              "NameEnd": 162
+            },
+            "Table": {
+              "Name": "table",
+              "QuoteType": 1,
+              "NamePos": 163,
+              "NameEnd": 168
+            },
+            "Column": {
+              "Name": "column",
+              "QuoteType": 1,
+              "NamePos": 169,
+              "NameEnd": 175
+            }
+          },
+          "Separator": ",",
+          "AsPos": 175,
+          "AsType": {
+            "LiteralPos": 178,
+            "LiteralEnd": 184,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "three_parts",
+          "QuoteType": 1,
+          "NamePos": 190,
+          "NameEnd": 201
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 203,
+    "StatementEnd": 259,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 210,
+          "Expr": {
+            "Object": {
+              "Database": {
+                "Name": "some",
+                "QuoteType": 1,
+                "NamePos": 215,
+                "NameEnd": 219
+              },
+              "Table": {
+                "Name": "long",
+                "QuoteType": 1,
+                "NamePos": 220,
+                "NameEnd": 224
+              },
+              "Column": {
+                "Name": "json",
+                "QuoteType": 1,
+                "NamePos": 225,
+                "NameEnd": 229
+              }
+            },
+            "Operation": ".",
+            "Index": {
+              "Name": "path",
+              "QuoteType": 1,
+              "NamePos": 230,
+              "NameEnd": 234
+            }
+          },
+          "Separator": ",",
+          "AsPos": 234,
+          "AsType": {
+            "LiteralPos": 237,
+            "LiteralEnd": 243,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "four_parts",
+          "QuoteType": 1,
+          "NamePos": 249,
+          "NameEnd": 259
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 261,
+    "StatementEnd": 342,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 268,
+          "Expr": {
+            "Object": {
+              "Object": {
+                "Object": {
+                  "Object": {
+                    "Object": {
+                      "Object": {
+                        "Database": {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 273,
+                          "NameEnd": 274
+                        },
+                        "Table": {
+                          "Name": "very",
+                          "QuoteType": 1,
+                          "NamePos": 275,
+                          "NameEnd": 279
+                        },
+                        "Column": {
+                          "Name": "long",
+                          "QuoteType": 1,
+                          "NamePos": 280,
+                          "NameEnd": 284
+                        }
+                      },
+                      "Operation": ".",
+                      "Index": {
+                        "Name": "nested",
+                        "QuoteType": 1,
+                        "NamePos": 285,
+                        "NameEnd": 291
+                      }
+                    },
+                    "Operation": ".",
+                    "Index": {
+                      "Name": "json",
+                      "QuoteType": 1,
+                      "NamePos": 292,
+                      "NameEnd": 296
+                    }
+                  },
+                  "Operation": ".",
+                  "Index": {
+                    "Name": "path",
+                    "QuoteType": 1,
+                    "NamePos": 297,
+                    "NameEnd": 301
+                  }
+                },
+                "Operation": ".",
+                "Index": {
+                  "Name": "with",
+                  "QuoteType": 1,
+                  "NamePos": 302,
+                  "NameEnd": 306
+                }
+              },
+              "Operation": ".",
+              "Index": {
+                "Name": "many",
+                "QuoteType": 1,
+                "NamePos": 307,
+                "NameEnd": 311
+              }
+            },
+            "Operation": ".",
+            "Index": {
+              "Name": "parts",
+              "QuoteType": 1,
+              "NamePos": 312,
+              "NameEnd": 317
+            }
+          },
+          "Separator": ",",
+          "AsPos": 317,
+          "AsType": {
+            "LiteralPos": 320,
+            "LiteralEnd": 326,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "many_parts",
+          "QuoteType": 1,
+          "NamePos": 332,
+          "NameEnd": 342
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
