@@ -329,20 +329,6 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-	case *ColumnIdentifier:
-		if n.Database != nil {
-			if !Walk(n.Database, fn) {
-				return false
-			}
-		}
-		if n.Table != nil {
-			if !Walk(n.Table, fn) {
-				return false
-			}
-		}
-		if !Walk(n.Column, fn) {
-			return false
-		}
 	case *NestedIdentifier:
 		if !Walk(n.Ident, fn) {
 			return false

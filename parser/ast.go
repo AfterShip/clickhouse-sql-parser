@@ -2900,55 +2900,6 @@ func (p *Path) Accept(visitor ASTVisitor) error {
 	return visitor.VisitPath(p)
 }
 
-type ColumnIdentifier struct {
-	Database *Ident
-	Table    *Ident
-	Column   *Ident
-}
-
-func (c *ColumnIdentifier) Pos() Pos {
-	if c.Database != nil {
-		return c.Database.NamePos
-	} else if c.Table != nil {
-		return c.Table.NamePos
-	} else {
-		return c.Column.NamePos
-	}
-}
-
-func (c *ColumnIdentifier) End() Pos {
-	return c.Column.NameEnd
-}
-
-func (c *ColumnIdentifier) String() string {
-	if c.Database != nil {
-		return c.Database.String() + "." + c.Table.String() + "." + c.Column.String()
-	} else if c.Table != nil {
-		return c.Table.String() + "." + c.Column.String()
-	} else {
-		return c.Column.String()
-	}
-}
-
-func (c *ColumnIdentifier) Accept(visitor ASTVisitor) error {
-	visitor.Enter(c)
-	defer visitor.Leave(c)
-	if c.Database != nil {
-		if err := c.Database.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	if c.Table != nil {
-		if err := c.Table.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	if err := c.Column.Accept(visitor); err != nil {
-		return err
-	}
-	return visitor.VisitColumnIdentifier(c)
-}
-
 type TableIdentifier struct {
 	Database *Ident
 	Table    *Ident
