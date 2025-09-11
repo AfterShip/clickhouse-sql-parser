@@ -297,19 +297,20 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Database": null,
-              "Table": {
-                "Name": "common",
-                "QuoteType": 1,
-                "NamePos": 251,
-                "NameEnd": 257
-              },
-              "Column": {
-                "Name": "id",
-                "QuoteType": 1,
-                "NamePos": 258,
-                "NameEnd": 260
-              }
+              "Fields": [
+                {
+                  "Name": "common",
+                  "QuoteType": 1,
+                  "NamePos": 251,
+                  "NameEnd": 257
+                },
+                {
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 258,
+                  "NameEnd": 260
+                }
+              ]
             },
             "Alias": null
           },

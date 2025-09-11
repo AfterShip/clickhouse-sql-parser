@@ -496,24 +496,26 @@
           "WherePos": 487,
           "Expr": {
             "LeftExpr": {
-              "Database": {
-                "Name": "infra_bm",
-                "QuoteType": 1,
-                "NamePos": 497,
-                "NameEnd": 505
-              },
-              "Table": {
-                "Name": "table_name1",
-                "QuoteType": 1,
-                "NamePos": 506,
-                "NameEnd": 517
-              },
-              "Column": {
-                "Name": "event",
-                "QuoteType": 1,
-                "NamePos": 518,
-                "NameEnd": 523
-              }
+              "Fields": [
+                {
+                  "Name": "infra_bm",
+                  "QuoteType": 1,
+                  "NamePos": 497,
+                  "NameEnd": 505
+                },
+                {
+                  "Name": "table_name1",
+                  "QuoteType": 1,
+                  "NamePos": 506,
+                  "NameEnd": 517
+                },
+                {
+                  "Name": "event",
+                  "QuoteType": 1,
+                  "NamePos": 518,
+                  "NameEnd": 523
+                }
+              ]
             },
             "Operation": "=",
             "RightExpr": {

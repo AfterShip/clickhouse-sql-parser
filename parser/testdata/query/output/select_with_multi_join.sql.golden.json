@@ -157,19 +157,20 @@
     "SelectItems": [
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "t1",
-            "QuoteType": 1,
-            "NamePos": 139,
-            "NameEnd": 141
-          },
-          "Column": {
-            "Name": "value",
-            "QuoteType": 1,
-            "NamePos": 142,
-            "NameEnd": 147
-          }
+          "Fields": [
+            {
+              "Name": "t1",
+              "QuoteType": 1,
+              "NamePos": 139,
+              "NameEnd": 141
+            },
+            {
+              "Name": "value",
+              "QuoteType": 1,
+              "NamePos": 142,
+              "NameEnd": 147
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": {
@@ -181,19 +182,20 @@
       },
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "t2",
-            "QuoteType": 1,
-            "NamePos": 163,
-            "NameEnd": 165
-          },
-          "Column": {
-            "Name": "value",
-            "QuoteType": 1,
-            "NamePos": 166,
-            "NameEnd": 171
-          }
+          "Fields": [
+            {
+              "Name": "t2",
+              "QuoteType": 1,
+              "NamePos": 163,
+              "NameEnd": 165
+            },
+            {
+              "Name": "value",
+              "QuoteType": 1,
+              "NamePos": 166,
+              "NameEnd": 171
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": {
@@ -205,19 +207,20 @@
       },
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "t3",
-            "QuoteType": 1,
-            "NamePos": 187,
-            "NameEnd": 189
-          },
-          "Column": {
-            "Name": "value",
-            "QuoteType": 1,
-            "NamePos": 190,
-            "NameEnd": 195
-          }
+          "Fields": [
+            {
+              "Name": "t3",
+              "QuoteType": 1,
+              "NamePos": 187,
+              "NameEnd": 189
+            },
+            {
+              "Name": "value",
+              "QuoteType": 1,
+              "NamePos": 190,
+              "NameEnd": 195
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": {

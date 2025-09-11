@@ -8,19 +8,20 @@
     "SelectItems": [
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "t1",
-            "QuoteType": 1,
-            "NamePos": 7,
-            "NameEnd": 9
-          },
-          "Column": {
-            "Name": "Timestamp",
-            "QuoteType": 1,
-            "NamePos": 10,
-            "NameEnd": 19
-          }
+          "Fields": [
+            {
+              "Name": "t1",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 9
+            },
+            {
+              "Name": "Timestamp",
+              "QuoteType": 1,
+              "NamePos": 10,
+              "NameEnd": 19
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
@@ -105,35 +106,37 @@
                 {
                   "Expr": {
                     "LeftExpr": {
-                      "Database": null,
-                      "Table": {
-                        "Name": "t1",
-                        "QuoteType": 1,
-                        "NamePos": 69,
-                        "NameEnd": 71
-                      },
-                      "Column": {
-                        "Name": "a",
-                        "QuoteType": 1,
-                        "NamePos": 72,
-                        "NameEnd": 73
-                      }
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 69,
+                          "NameEnd": 71
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 72,
+                          "NameEnd": 73
+                        }
+                      ]
                     },
                     "Operation": "=",
                     "RightExpr": {
-                      "Database": null,
-                      "Table": {
-                        "Name": "t2",
-                        "QuoteType": 1,
-                        "NamePos": 74,
-                        "NameEnd": 76
-                      },
-                      "Column": {
-                        "Name": "b",
-                        "QuoteType": 1,
-                        "NamePos": 77,
-                        "NameEnd": 78
-                      }
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 74,
+                          "NameEnd": 76
+                        },
+                        {
+                          "Name": "b",
+                          "QuoteType": 1,
+                          "NamePos": 77,
+                          "NameEnd": 78
+                        }
+                      ]
                     },
                     "HasGlobal": false,
                     "HasNot": false

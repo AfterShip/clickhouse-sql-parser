@@ -163,6 +163,12 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.AsType, fn) {
 			return false
 		}
+	case *Path:
+		for _, field := range n.Fields {
+			if !Walk(field, fn) {
+				return false
+			}
+		}
 	case *WithClause:
 		for _, cte := range n.CTEs {
 			if !Walk(cte, fn) {
@@ -322,20 +328,6 @@ func Walk(node Expr, fn WalkFunc) bool {
 			if !Walk(arg, fn) {
 				return false
 			}
-		}
-	case *ColumnIdentifier:
-		if n.Database != nil {
-			if !Walk(n.Database, fn) {
-				return false
-			}
-		}
-		if n.Table != nil {
-			if !Walk(n.Table, fn) {
-				return false
-			}
-		}
-		if !Walk(n.Column, fn) {
-			return false
 		}
 	case *NestedIdentifier:
 		if !Walk(n.Ident, fn) {
