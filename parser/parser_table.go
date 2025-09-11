@@ -292,25 +292,18 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 	case p.tryConsumeTokenKind(TokenKindDot) != nil:
 		switch {
 		case p.matchTokenKind(TokenKindIdent):
-			nextIdent, err := p.parseIdent()
-			if err != nil {
-				return nil, err
-			}
-			if p.tryConsumeTokenKind(TokenKindDot) != nil {
-				thirdIdent, err := p.parseIdent()
+			fields := []*Ident{ident}
+			for {
+				child, err := p.parseIdent()
 				if err != nil {
 					return nil, err
 				}
-				return &ColumnIdentifier{
-					Database: ident,
-					Table:    nextIdent,
-					Column:   thirdIdent,
-				}, nil
+				fields = append(fields, child)
+				if p.tryConsumeTokenKind(TokenKindDot) == nil {
+					break
+				}
 			}
-			return &ColumnIdentifier{
-				Table:  ident,
-				Column: nextIdent,
-			}, nil
+			return &Path{Fields: fields}, nil
 		case p.matchTokenKind("*"):
 			nextIdent, err := p.parseColumnStar(p.Pos())
 			if err != nil {
@@ -334,7 +327,8 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			return nil, fmt.Errorf("expected IDENT, NUMBER or *, but got %q", p.lastTokenKind())
 		}
 	}
-	return ident, nil
+	// Simple identifier without any suffix
+	return &Path{Fields: []*Ident{ident}}, nil
 }
 
 func (p *Parser) parseTableIdentifier(_ Pos) (*TableIdentifier, error) {

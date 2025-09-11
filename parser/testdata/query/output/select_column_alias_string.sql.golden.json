@@ -47,30 +47,42 @@
     "SelectItems": [
       {
         "Expr": {
-          "Name": "$abc",
-          "QuoteType": 1,
-          "NamePos": 34,
-          "NameEnd": 38
+          "Fields": [
+            {
+              "Name": "$abc",
+              "QuoteType": 1,
+              "NamePos": 34,
+              "NameEnd": 38
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "Name": "a$$bc",
-          "QuoteType": 1,
-          "NamePos": 40,
-          "NameEnd": 45
+          "Fields": [
+            {
+              "Name": "a$$bc",
+              "QuoteType": 1,
+              "NamePos": 40,
+              "NameEnd": 45
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "Name": "abc$$",
-          "QuoteType": 1,
-          "NamePos": 47,
-          "NameEnd": 52
+          "Fields": [
+            {
+              "Name": "abc$$",
+              "QuoteType": 1,
+              "NamePos": 47,
+              "NameEnd": 52
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null

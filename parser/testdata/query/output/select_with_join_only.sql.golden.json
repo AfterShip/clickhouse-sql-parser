@@ -76,10 +76,14 @@
               "Items": [
                 {
                   "Expr": {
-                    "Name": "true",
-                    "QuoteType": 1,
-                    "NamePos": 32,
-                    "NameEnd": 36
+                    "Fields": [
+                      {
+                        "Name": "true",
+                        "QuoteType": 1,
+                        "NamePos": 32,
+                        "NameEnd": 36
+                      }
+                    ]
                   },
                   "Alias": null
                 }

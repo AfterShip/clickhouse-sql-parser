@@ -163,6 +163,12 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.AsType, fn) {
 			return false
 		}
+	case *Path:
+		for _, field := range n.Fields {
+			if !Walk(field, fn) {
+				return false
+			}
+		}
 	case *WithClause:
 		for _, cte := range n.CTEs {
 			if !Walk(cte, fn) {

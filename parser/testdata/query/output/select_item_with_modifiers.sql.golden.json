@@ -8,10 +8,14 @@
     "SelectItems": [
       {
         "Expr": {
-          "Name": "c0",
-          "QuoteType": 1,
-          "NamePos": 7,
-          "NameEnd": 9
+          "Fields": [
+            {
+              "Name": "c0",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 9
+            }
+          ]
         },
         "Modifiers": [
           {
@@ -31,10 +35,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "c0",
-                      "QuoteType": 1,
-                      "NamePos": 18,
-                      "NameEnd": 20
+                      "Fields": [
+                        {
+                          "Name": "c0",
+                          "QuoteType": 1,
+                          "NamePos": 18,
+                          "NameEnd": 20
+                        }
+                      ]
                     },
                     "Alias": {
                       "Name": "c1",
@@ -124,10 +132,14 @@
                   {
                     "Expr": {
                       "LeftExpr": {
-                        "Name": "i",
-                        "QuoteType": 1,
-                        "NamePos": 54,
-                        "NameEnd": 55
+                        "Fields": [
+                          {
+                            "Name": "i",
+                            "QuoteType": 1,
+                            "NamePos": 54,
+                            "NameEnd": 55
+                          }
+                        ]
                       },
                       "Operation": "+",
                       "RightExpr": {
@@ -227,10 +239,14 @@
                   {
                     "Expr": {
                       "LeftExpr": {
-                        "Name": "i",
-                        "QuoteType": 1,
-                        "NamePos": 92,
-                        "NameEnd": 93
+                        "Fields": [
+                          {
+                            "Name": "i",
+                            "QuoteType": 1,
+                            "NamePos": 92,
+                            "NameEnd": 93
+                          }
+                        ]
                       },
                       "Operation": "+",
                       "RightExpr": {
@@ -271,10 +287,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "j",
-                      "QuoteType": 1,
-                      "NamePos": 112,
-                      "NameEnd": 113
+                      "Fields": [
+                        {
+                          "Name": "j",
+                          "QuoteType": 1,
+                          "NamePos": 112,
+                          "NameEnd": 113
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -300,10 +320,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "sum",
-                      "QuoteType": 1,
-                      "NamePos": 121,
-                      "NameEnd": 124
+                      "Fields": [
+                        {
+                          "Name": "sum",
+                          "QuoteType": 1,
+                          "NamePos": 121,
+                          "NameEnd": 124
+                        }
+                      ]
                     },
                     "Alias": null
                   }

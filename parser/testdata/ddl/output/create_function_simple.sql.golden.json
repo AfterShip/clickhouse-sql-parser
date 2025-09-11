@@ -20,28 +20,40 @@
         "Items": [
           {
             "Expr": {
-              "Name": "x",
-              "QuoteType": 1,
-              "NamePos": 36,
-              "NameEnd": 37
+              "Fields": [
+                {
+                  "Name": "x",
+                  "QuoteType": 1,
+                  "NamePos": 36,
+                  "NameEnd": 37
+                }
+              ]
             },
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "k",
-              "QuoteType": 1,
-              "NamePos": 39,
-              "NameEnd": 40
+              "Fields": [
+                {
+                  "Name": "k",
+                  "QuoteType": 1,
+                  "NamePos": 39,
+                  "NameEnd": 40
+                }
+              ]
             },
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "b",
-              "QuoteType": 1,
-              "NamePos": 42,
-              "NameEnd": 43
+              "Fields": [
+                {
+                  "Name": "b",
+                  "QuoteType": 1,
+                  "NamePos": 42,
+                  "NameEnd": 43
+                }
+              ]
             },
             "Alias": null
           }
@@ -52,27 +64,39 @@
     "Expr": {
       "LeftExpr": {
         "LeftExpr": {
-          "Name": "k",
-          "QuoteType": 1,
-          "NamePos": 48,
-          "NameEnd": 49
+          "Fields": [
+            {
+              "Name": "k",
+              "QuoteType": 1,
+              "NamePos": 48,
+              "NameEnd": 49
+            }
+          ]
         },
         "Operation": "*",
         "RightExpr": {
-          "Name": "x",
-          "QuoteType": 1,
-          "NamePos": 50,
-          "NameEnd": 51
+          "Fields": [
+            {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 50,
+              "NameEnd": 51
+            }
+          ]
         },
         "HasGlobal": false,
         "HasNot": false
       },
       "Operation": "+",
       "RightExpr": {
-        "Name": "b",
-        "QuoteType": 1,
-        "NamePos": 54,
-        "NameEnd": 55
+        "Fields": [
+          {
+            "Name": "b",
+            "QuoteType": 1,
+            "NamePos": 54,
+            "NameEnd": 55
+          }
+        ]
       },
       "HasGlobal": false,
       "HasNot": false

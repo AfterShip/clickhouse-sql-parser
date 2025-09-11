@@ -61,10 +61,14 @@
           "Items": [
             {
               "Expr": {
-                "Name": "default_cluster",
-                "QuoteType": 1,
-                "NamePos": 104,
-                "NameEnd": 119
+                "Fields": [
+                  {
+                    "Name": "default_cluster",
+                    "QuoteType": 1,
+                    "NamePos": 104,
+                    "NameEnd": 119
+                  }
+                ]
               },
               "Alias": null
             },
@@ -79,10 +83,14 @@
             },
             {
               "Expr": {
-                "Name": "events_local",
-                "QuoteType": 1,
-                "NamePos": 135,
-                "NameEnd": 147
+                "Fields": [
+                  {
+                    "Name": "events_local",
+                    "QuoteType": 1,
+                    "NamePos": 135,
+                    "NameEnd": 147
+                  }
+                ]
               },
               "Alias": null
             },

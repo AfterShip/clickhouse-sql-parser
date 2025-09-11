@@ -358,10 +358,14 @@
       "WherePos": 247,
       "Expr": {
         "LeftExpr": {
-          "Name": "tenant_id",
-          "QuoteType": 1,
-          "NamePos": 253,
-          "NameEnd": 262
+          "Fields": [
+            {
+              "Name": "tenant_id",
+              "QuoteType": 1,
+              "NamePos": 253,
+              "NameEnd": 262
+            }
+          ]
         },
         "Operation": "=",
         "RightExpr": {

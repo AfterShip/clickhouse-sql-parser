@@ -258,20 +258,28 @@
         "SelectItems": [
           {
             "Expr": {
-              "Name": "f1",
-              "QuoteType": 1,
-              "NamePos": 215,
-              "NameEnd": 217
+              "Fields": [
+                {
+                  "Name": "f1",
+                  "QuoteType": 1,
+                  "NamePos": 215,
+                  "NameEnd": 217
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "f2",
-              "QuoteType": 1,
-              "NamePos": 226,
-              "NameEnd": 228
+              "Fields": [
+                {
+                  "Name": "f2",
+                  "QuoteType": 1,
+                  "NamePos": 226,
+                  "NameEnd": 228
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
@@ -294,10 +302,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 261,
-                        "NameEnd": 271
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 261,
+                            "NameEnd": 271
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -340,10 +352,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 319,
-                        "NameEnd": 329
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 319,
+                            "NameEnd": 329
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -386,10 +402,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 380,
-                        "NameEnd": 390
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 380,
+                            "NameEnd": 390
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -432,10 +452,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 433,
-                        "NameEnd": 443
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 433,
+                            "NameEnd": 443
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -496,24 +520,26 @@
           "WherePos": 487,
           "Expr": {
             "LeftExpr": {
-              "Database": {
-                "Name": "infra_bm",
-                "QuoteType": 1,
-                "NamePos": 497,
-                "NameEnd": 505
-              },
-              "Table": {
-                "Name": "table_name1",
-                "QuoteType": 1,
-                "NamePos": 506,
-                "NameEnd": 517
-              },
-              "Column": {
-                "Name": "event",
-                "QuoteType": 1,
-                "NamePos": 518,
-                "NameEnd": 523
-              }
+              "Fields": [
+                {
+                  "Name": "infra_bm",
+                  "QuoteType": 1,
+                  "NamePos": 497,
+                  "NameEnd": 505
+                },
+                {
+                  "Name": "table_name1",
+                  "QuoteType": 1,
+                  "NamePos": 506,
+                  "NameEnd": 517
+                },
+                {
+                  "Name": "event",
+                  "QuoteType": 1,
+                  "NamePos": 518,
+                  "NameEnd": 523
+                }
+              ]
             },
             "Operation": "=",
             "RightExpr": {

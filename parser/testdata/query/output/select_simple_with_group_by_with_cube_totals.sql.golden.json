@@ -8,10 +8,14 @@
     "SelectItems": [
       {
         "Expr": {
-          "Name": "a",
-          "QuoteType": 1,
-          "NamePos": 7,
-          "NameEnd": 8
+          "Fields": [
+            {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 8
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
@@ -34,10 +38,14 @@
               "Items": [
                 {
                   "Expr": {
-                    "Name": "b",
-                    "QuoteType": 1,
-                    "NamePos": 16,
-                    "NameEnd": 17
+                    "Fields": [
+                      {
+                        "Name": "b",
+                        "QuoteType": 1,
+                        "NamePos": 16,
+                        "NameEnd": 17
+                      }
+                    ]
                   },
                   "Alias": null
                 }
@@ -91,10 +99,14 @@
           "Items": [
             {
               "Expr": {
-                "Name": "a",
-                "QuoteType": 1,
-                "NamePos": 51,
-                "NameEnd": 52
+                "Fields": [
+                  {
+                    "Name": "a",
+                    "QuoteType": 1,
+                    "NamePos": 51,
+                    "NameEnd": 52
+                  }
+                ]
               },
               "Alias": null
             }
@@ -115,10 +127,14 @@
         {
           "OrderPos": 76,
           "Expr": {
-            "Name": "a",
-            "QuoteType": 1,
-            "NamePos": 85,
-            "NameEnd": 86
+            "Fields": [
+              {
+                "Name": "a",
+                "QuoteType": 1,
+                "NamePos": 85,
+                "NameEnd": 86
+              }
+            ]
           },
           "Alias": null,
           "Direction": ""

@@ -8,10 +8,14 @@
     "SelectItems": [
       {
         "Expr": {
-          "Name": "table_name",
-          "QuoteType": 1,
-          "NamePos": 7,
-          "NameEnd": 17
+          "Fields": [
+            {
+              "Name": "table_name",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 17
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null

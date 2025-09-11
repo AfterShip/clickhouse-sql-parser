@@ -297,19 +297,20 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Database": null,
-              "Table": {
-                "Name": "common",
-                "QuoteType": 1,
-                "NamePos": 251,
-                "NameEnd": 257
-              },
-              "Column": {
-                "Name": "id",
-                "QuoteType": 1,
-                "NamePos": 258,
-                "NameEnd": 260
-              }
+              "Fields": [
+                {
+                  "Name": "common",
+                  "QuoteType": 1,
+                  "NamePos": 251,
+                  "NameEnd": 257
+                },
+                {
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 258,
+                  "NameEnd": 260
+                }
+              ]
             },
             "Alias": null
           },
@@ -351,10 +352,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "id",
-              "QuoteType": 1,
-              "NamePos": 315,
-              "NameEnd": 317
+              "Fields": [
+                {
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 315,
+                  "NameEnd": 317
+                }
+              ]
             },
             "Alias": null
           },
@@ -386,10 +391,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "api_id",
-              "QuoteType": 1,
-              "NamePos": 364,
-              "NameEnd": 370
+              "Fields": [
+                {
+                  "Name": "api_id",
+                  "QuoteType": 1,
+                  "NamePos": 364,
+                  "NameEnd": 370
+                }
+              ]
             },
             "Alias": null
           },
@@ -431,10 +440,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "arr",
-              "QuoteType": 1,
-              "NamePos": 415,
-              "NameEnd": 418
+              "Fields": [
+                {
+                  "Name": "arr",
+                  "QuoteType": 1,
+                  "NamePos": 415,
+                  "NameEnd": 418
+                }
+              ]
             },
             "Alias": null
           },
@@ -476,10 +489,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "content",
-              "QuoteType": 1,
-              "NamePos": 477,
-              "NameEnd": 484
+              "Fields": [
+                {
+                  "Name": "content",
+                  "QuoteType": 1,
+                  "NamePos": 477,
+                  "NameEnd": 484
+                }
+              ]
             },
             "Alias": null
           },
@@ -533,10 +550,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "output",
-              "QuoteType": 1,
-              "NamePos": 547,
-              "NameEnd": 553
+              "Fields": [
+                {
+                  "Name": "output",
+                  "QuoteType": 1,
+                  "NamePos": 547,
+                  "NameEnd": 553
+                }
+              ]
             },
             "Alias": null
           },
@@ -645,10 +666,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "timestamp",
-                          "QuoteType": 3,
-                          "NamePos": 692,
-                          "NameEnd": 701
+                          "Fields": [
+                            {
+                              "Name": "timestamp",
+                              "QuoteType": 3,
+                              "NamePos": 692,
+                              "NameEnd": 701
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -687,10 +712,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "timestamp",
-                          "QuoteType": 3,
-                          "NamePos": 779,
-                          "NameEnd": 788
+                          "Fields": [
+                            {
+                              "Name": "timestamp",
+                              "QuoteType": 3,
+                              "NamePos": 779,
+                              "NameEnd": 788
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -740,10 +769,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "timestamp",
-                          "QuoteType": 3,
-                          "NamePos": 823,
-                          "NameEnd": 832
+                          "Fields": [
+                            {
+                              "Name": "timestamp",
+                              "QuoteType": 3,
+                              "NamePos": 823,
+                              "NameEnd": 832
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -887,10 +920,14 @@
                           "Items": [
                             {
                               "Expr": {
-                                "Name": "timestamp",
-                                "QuoteType": 3,
-                                "NamePos": 737,
-                                "NameEnd": 746
+                                "Fields": [
+                                  {
+                                    "Name": "timestamp",
+                                    "QuoteType": 3,
+                                    "NamePos": 737,
+                                    "NameEnd": 746
+                                  }
+                                ]
                               },
                               "Alias": null
                             }
@@ -903,10 +940,14 @@
                   },
                   {
                     "Expr": {
-                      "Name": "api_id",
-                      "QuoteType": 3,
-                      "NamePos": 751,
-                      "NameEnd": 757
+                      "Fields": [
+                        {
+                          "Name": "api_id",
+                          "QuoteType": 3,
+                          "NamePos": 751,
+                          "NameEnd": 757
+                        }
+                      ]
                     },
                     "Alias": null
                   }

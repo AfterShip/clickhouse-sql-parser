@@ -56,6 +56,7 @@ type ASTVisitor interface {
 	VisitConstraintExpr(expr *ConstraintClause) error
 	VisitNullLiteral(expr *NullLiteral) error
 	VisitNotNullLiteral(expr *NotNullLiteral) error
+	VisitPath(expr *Path) error
 	VisitNestedIdentifier(expr *NestedIdentifier) error
 	VisitColumnIdentifier(expr *ColumnIdentifier) error
 	VisitTableIdentifier(expr *TableIdentifier) error
@@ -588,6 +589,13 @@ func (v *DefaultASTVisitor) VisitNotNullLiteral(expr *NotNullLiteral) error {
 }
 
 func (v *DefaultASTVisitor) VisitNestedIdentifier(expr *NestedIdentifier) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitPath(expr *Path) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

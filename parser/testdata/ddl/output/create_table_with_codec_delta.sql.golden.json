@@ -400,10 +400,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "timestamp",
-                      "QuoteType": 1,
-                      "NamePos": 338,
-                      "NameEnd": 347
+                      "Fields": [
+                        {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 338,
+                          "NameEnd": 347
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -490,10 +494,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "timestamp",
-                          "QuoteType": 3,
-                          "NamePos": 467,
-                          "NameEnd": 476
+                          "Fields": [
+                            {
+                              "Name": "timestamp",
+                              "QuoteType": 3,
+                              "NamePos": 467,
+                              "NameEnd": 476
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -532,10 +540,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "timestamp",
-                          "QuoteType": 3,
-                          "NamePos": 554,
-                          "NameEnd": 563
+                          "Fields": [
+                            {
+                              "Name": "timestamp",
+                              "QuoteType": 3,
+                              "NamePos": 554,
+                              "NameEnd": 563
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -585,10 +597,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "timestamp",
-                          "QuoteType": 3,
-                          "NamePos": 598,
-                          "NameEnd": 607
+                          "Fields": [
+                            {
+                              "Name": "timestamp",
+                              "QuoteType": 3,
+                              "NamePos": 598,
+                              "NameEnd": 607
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -732,10 +748,14 @@
                           "Items": [
                             {
                               "Expr": {
-                                "Name": "timestamp",
-                                "QuoteType": 3,
-                                "NamePos": 512,
-                                "NameEnd": 521
+                                "Fields": [
+                                  {
+                                    "Name": "timestamp",
+                                    "QuoteType": 3,
+                                    "NamePos": 512,
+                                    "NameEnd": 521
+                                  }
+                                ]
                               },
                               "Alias": null
                             }
@@ -748,10 +768,14 @@
                   },
                   {
                     "Expr": {
-                      "Name": "api_id",
-                      "QuoteType": 3,
-                      "NamePos": 526,
-                      "NameEnd": 532
+                      "Fields": [
+                        {
+                          "Name": "api_id",
+                          "QuoteType": 3,
+                          "NamePos": 526,
+                          "NameEnd": 532
+                        }
+                      ]
                     },
                     "Alias": null
                   }

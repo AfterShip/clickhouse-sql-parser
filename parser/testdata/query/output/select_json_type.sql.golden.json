@@ -1,0 +1,416 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 24,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 8
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 10,
+              "NameEnd": 11
+            },
+            {
+              "Name": "b",
+              "QuoteType": 1,
+              "NamePos": 12,
+              "NameEnd": 13
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 15,
+              "NameEnd": 16
+            },
+            {
+              "Name": "b",
+              "QuoteType": 1,
+              "NamePos": 17,
+              "NameEnd": 18
+            },
+            {
+              "Name": "c",
+              "QuoteType": 1,
+              "NamePos": 19,
+              "NameEnd": 20
+            },
+            {
+              "Name": "d",
+              "QuoteType": 1,
+              "NamePos": 21,
+              "NameEnd": 22
+            },
+            {
+              "Name": "e",
+              "QuoteType": 1,
+              "NamePos": 23,
+              "NameEnd": 24
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 26,
+    "StatementEnd": 75,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "JSON_TYPE",
+            "QuoteType": 1,
+            "NamePos": 33,
+            "NameEnd": 42
+          },
+          "Params": {
+            "LeftParenPos": 42,
+            "RightParenPos": 75,
+            "Items": {
+              "ListPos": 44,
+              "ListEnd": 74,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 44,
+                    "LiteralEnd": 67,
+                    "Literal": "{\"a\": 1, \"b\": {\"c\": 2}}"
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "LiteralPos": 71,
+                    "LiteralEnd": 74,
+                    "Literal": "$.b"
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 78,
+    "StatementEnd": 114,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 85,
+          "Expr": {
+            "Fields": [
+              {
+                "Name": "some",
+                "QuoteType": 1,
+                "NamePos": 90,
+                "NameEnd": 94
+              }
+            ]
+          },
+          "Separator": ",",
+          "AsPos": 94,
+          "AsType": {
+            "LiteralPos": 97,
+            "LiteralEnd": 103,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 109,
+          "NameEnd": 114
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 116,
+    "StatementEnd": 157,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 123,
+          "Expr": {
+            "Fields": [
+              {
+                "Name": "some",
+                "QuoteType": 1,
+                "NamePos": 128,
+                "NameEnd": 132
+              },
+              {
+                "Name": "long",
+                "QuoteType": 1,
+                "NamePos": 133,
+                "NameEnd": 137
+              }
+            ]
+          },
+          "Separator": ",",
+          "AsPos": 137,
+          "AsType": {
+            "LiteralPos": 140,
+            "LiteralEnd": 146,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 152,
+          "NameEnd": 157
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 159,
+    "StatementEnd": 205,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 166,
+          "Expr": {
+            "Fields": [
+              {
+                "Name": "some",
+                "QuoteType": 1,
+                "NamePos": 171,
+                "NameEnd": 175
+              },
+              {
+                "Name": "long",
+                "QuoteType": 1,
+                "NamePos": 176,
+                "NameEnd": 180
+              },
+              {
+                "Name": "json",
+                "QuoteType": 1,
+                "NamePos": 181,
+                "NameEnd": 185
+              }
+            ]
+          },
+          "Separator": ",",
+          "AsPos": 185,
+          "AsType": {
+            "LiteralPos": 188,
+            "LiteralEnd": 194,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 200,
+          "NameEnd": 205
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 207,
+    "StatementEnd": 258,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 214,
+          "Expr": {
+            "Fields": [
+              {
+                "Name": "some",
+                "QuoteType": 1,
+                "NamePos": 219,
+                "NameEnd": 223
+              },
+              {
+                "Name": "long",
+                "QuoteType": 1,
+                "NamePos": 224,
+                "NameEnd": 228
+              },
+              {
+                "Name": "json",
+                "QuoteType": 1,
+                "NamePos": 229,
+                "NameEnd": 233
+              },
+              {
+                "Name": "path",
+                "QuoteType": 1,
+                "NamePos": 234,
+                "NameEnd": 238
+              }
+            ]
+          },
+          "Separator": ",",
+          "AsPos": 238,
+          "AsType": {
+            "LiteralPos": 241,
+            "LiteralEnd": 247,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 253,
+          "NameEnd": 258
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

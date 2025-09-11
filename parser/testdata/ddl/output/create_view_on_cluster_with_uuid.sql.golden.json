@@ -45,20 +45,28 @@
         "SelectItems": [
           {
             "Expr": {
-              "Name": "column1",
-              "QuoteType": 1,
-              "NamePos": 151,
-              "NameEnd": 158
+              "Fields": [
+                {
+                  "Name": "column1",
+                  "QuoteType": 1,
+                  "NamePos": 151,
+                  "NameEnd": 158
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "column2",
-              "QuoteType": 1,
-              "NamePos": 164,
-              "NameEnd": 171
+              "Fields": [
+                {
+                  "Name": "column2",
+                  "QuoteType": 1,
+                  "NamePos": 164,
+                  "NameEnd": 171
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null

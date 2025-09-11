@@ -89,10 +89,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "f0",
-                          "QuoteType": 1,
-                          "NamePos": 174,
-                          "NameEnd": 176
+                          "Fields": [
+                            {
+                              "Name": "f0",
+                              "QuoteType": 1,
+                              "NamePos": 174,
+                              "NameEnd": 176
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -125,10 +129,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "f0",
-                      "QuoteType": 1,
-                      "NamePos": 188,
-                      "NameEnd": 190
+                      "Fields": [
+                        {
+                          "Name": "f0",
+                          "QuoteType": 1,
+                          "NamePos": 188,
+                          "NameEnd": 190
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -155,30 +163,42 @@
         "SelectItems": [
           {
             "Expr": {
-              "Name": "f0",
-              "QuoteType": 1,
-              "NamePos": 211,
-              "NameEnd": 213
+              "Fields": [
+                {
+                  "Name": "f0",
+                  "QuoteType": 1,
+                  "NamePos": 211,
+                  "NameEnd": 213
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "f1",
-              "QuoteType": 1,
-              "NamePos": 214,
-              "NameEnd": 216
+              "Fields": [
+                {
+                  "Name": "f1",
+                  "QuoteType": 1,
+                  "NamePos": 214,
+                  "NameEnd": 216
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "f2",
-              "QuoteType": 1,
-              "NamePos": 217,
-              "NameEnd": 219
+              "Fields": [
+                {
+                  "Name": "f2",
+                  "QuoteType": 1,
+                  "NamePos": 217,
+                  "NameEnd": 219
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
@@ -201,19 +221,27 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "f0",
-                        "QuoteType": 1,
-                        "NamePos": 229,
-                        "NameEnd": 231
+                        "Fields": [
+                          {
+                            "Name": "f0",
+                            "QuoteType": 1,
+                            "NamePos": 229,
+                            "NameEnd": 231
+                          }
+                        ]
                       },
                       "Alias": null
                     },
                     {
                       "Expr": {
-                        "Name": "f1",
-                        "QuoteType": 1,
-                        "NamePos": 232,
-                        "NameEnd": 234
+                        "Fields": [
+                          {
+                            "Name": "f1",
+                            "QuoteType": 1,
+                            "NamePos": 232,
+                            "NameEnd": 234
+                          }
+                        ]
                       },
                       "Alias": null
                     }
@@ -250,30 +278,42 @@
                     "SelectItems": [
                       {
                         "Expr": {
-                          "Name": "f0",
-                          "QuoteType": 1,
-                          "NamePos": 270,
-                          "NameEnd": 272
+                          "Fields": [
+                            {
+                              "Name": "f0",
+                              "QuoteType": 1,
+                              "NamePos": 270,
+                              "NameEnd": 272
+                            }
+                          ]
                         },
                         "Modifiers": [],
                         "Alias": null
                       },
                       {
                         "Expr": {
-                          "Name": "f1",
-                          "QuoteType": 1,
-                          "NamePos": 273,
-                          "NameEnd": 275
+                          "Fields": [
+                            {
+                              "Name": "f1",
+                              "QuoteType": 1,
+                              "NamePos": 273,
+                              "NameEnd": 275
+                            }
+                          ]
                         },
                         "Modifiers": [],
                         "Alias": null
                       },
                       {
                         "Expr": {
-                          "Name": "f2",
-                          "QuoteType": 1,
-                          "NamePos": 276,
-                          "NameEnd": 278
+                          "Fields": [
+                            {
+                              "Name": "f2",
+                              "QuoteType": 1,
+                              "NamePos": 276,
+                              "NameEnd": 278
+                            }
+                          ]
                         },
                         "Modifiers": [],
                         "Alias": null
@@ -312,10 +352,14 @@
                                 "Items": [
                                   {
                                     "Expr": {
-                                      "Name": "f0",
-                                      "QuoteType": 1,
-                                      "NamePos": 320,
-                                      "NameEnd": 322
+                                      "Fields": [
+                                        {
+                                          "Name": "f0",
+                                          "QuoteType": 1,
+                                          "NamePos": 320,
+                                          "NameEnd": 322
+                                        }
+                                      ]
                                     },
                                     "Alias": null
                                   }
@@ -345,19 +389,27 @@
                                         "Items": [
                                           {
                                             "Expr": {
-                                              "Name": "f1",
-                                              "QuoteType": 1,
-                                              "NamePos": 341,
-                                              "NameEnd": 343
+                                              "Fields": [
+                                                {
+                                                  "Name": "f1",
+                                                  "QuoteType": 1,
+                                                  "NamePos": 341,
+                                                  "NameEnd": 343
+                                                }
+                                              ]
                                             },
                                             "Alias": null
                                           },
                                           {
                                             "Expr": {
-                                              "Name": "f2",
-                                              "QuoteType": 1,
-                                              "NamePos": 344,
-                                              "NameEnd": 346
+                                              "Fields": [
+                                                {
+                                                  "Name": "f2",
+                                                  "QuoteType": 1,
+                                                  "NamePos": 344,
+                                                  "NameEnd": 346
+                                                }
+                                              ]
                                             },
                                             "Alias": null
                                           }
@@ -419,10 +471,14 @@
                       "Expr": {
                         "LeftExpr": {
                           "LeftExpr": {
-                            "Name": "f3",
-                            "QuoteType": 1,
-                            "NamePos": 383,
-                            "NameEnd": 385
+                            "Fields": [
+                              {
+                                "Name": "f3",
+                                "QuoteType": 1,
+                                "NamePos": 383,
+                                "NameEnd": 385
+                              }
+                            ]
                           },
                           "Operation": "IN",
                           "RightExpr": {
@@ -467,10 +523,14 @@
                         "Operation": "AND",
                         "RightExpr": {
                           "LeftExpr": {
-                            "Name": "env",
-                            "QuoteType": 1,
-                            "NamePos": 423,
-                            "NameEnd": 426
+                            "Fields": [
+                              {
+                                "Name": "env",
+                                "QuoteType": 1,
+                                "NamePos": 423,
+                                "NameEnd": 426
+                              }
+                            ]
                           },
                           "Operation": "=",
                           "RightExpr": {
@@ -520,10 +580,14 @@
           "WherePos": 448,
           "Expr": {
             "LeftExpr": {
-              "Name": "rn",
-              "QuoteType": 1,
-              "NamePos": 454,
-              "NameEnd": 456
+              "Fields": [
+                {
+                  "Name": "rn",
+                  "QuoteType": 1,
+                  "NamePos": 454,
+                  "NameEnd": 456
+                }
+              ]
             },
             "Operation": "=",
             "RightExpr": {

@@ -194,30 +194,42 @@
           },
           {
             "Expr": {
-              "Name": "field_1",
-              "QuoteType": 1,
-              "NamePos": 244,
-              "NameEnd": 251
+              "Fields": [
+                {
+                  "Name": "field_1",
+                  "QuoteType": 1,
+                  "NamePos": 244,
+                  "NameEnd": 251
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "field_2",
-              "QuoteType": 1,
-              "NamePos": 257,
-              "NameEnd": 264
+              "Fields": [
+                {
+                  "Name": "field_2",
+                  "QuoteType": 1,
+                  "NamePos": 257,
+                  "NameEnd": 264
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "FROM",
-              "QuoteType": 1,
-              "NamePos": 266,
-              "NameEnd": 270
+              "Fields": [
+                {
+                  "Name": "FROM",
+                  "QuoteType": 1,
+                  "NamePos": 266,
+                  "NameEnd": 270
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": {
@@ -252,10 +264,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "timestamp",
-                        "QuoteType": 1,
-                        "NamePos": 303,
-                        "NameEnd": 312
+                        "Fields": [
+                          {
+                            "Name": "timestamp",
+                            "QuoteType": 1,
+                            "NamePos": 303,
+                            "NameEnd": 312
+                          }
+                        ]
                       },
                       "Alias": null
                     }

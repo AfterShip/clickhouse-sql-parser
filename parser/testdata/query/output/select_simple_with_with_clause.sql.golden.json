@@ -9,10 +9,14 @@
         {
           "CTEPos": 9,
           "Expr": {
-            "Name": "cte1",
-            "QuoteType": 1,
-            "NamePos": 9,
-            "NameEnd": 13
+            "Fields": [
+              {
+                "Name": "cte1",
+                "QuoteType": 1,
+                "NamePos": 9,
+                "NameEnd": 13
+              }
+            ]
           },
           "Alias": {
             "SelectPos": 18,
@@ -23,10 +27,14 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "Name": "f1",
-                  "QuoteType": 1,
-                  "NamePos": 25,
-                  "NameEnd": 27
+                  "Fields": [
+                    {
+                      "Name": "f1",
+                      "QuoteType": 1,
+                      "NamePos": 25,
+                      "NameEnd": 27
+                    }
+                  ]
                 },
                 "Modifiers": [],
                 "Alias": null
@@ -75,10 +83,14 @@
         {
           "CTEPos": 42,
           "Expr": {
-            "Name": "cte2",
-            "QuoteType": 1,
-            "NamePos": 42,
-            "NameEnd": 46
+            "Fields": [
+              {
+                "Name": "cte2",
+                "QuoteType": 1,
+                "NamePos": 42,
+                "NameEnd": 46
+              }
+            ]
           },
           "Alias": {
             "SelectPos": 51,
@@ -89,10 +101,14 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "Name": "f2",
-                  "QuoteType": 1,
-                  "NamePos": 58,
-                  "NameEnd": 60
+                  "Fields": [
+                    {
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 58,
+                      "NameEnd": 60
+                    }
+                  ]
                 },
                 "Modifiers": [],
                 "Alias": null
@@ -145,57 +161,60 @@
     "SelectItems": [
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "cte1",
-            "QuoteType": 1,
-            "NamePos": 81,
-            "NameEnd": 85
-          },
-          "Column": {
-            "Name": "f1",
-            "QuoteType": 1,
-            "NamePos": 86,
-            "NameEnd": 88
-          }
+          "Fields": [
+            {
+              "Name": "cte1",
+              "QuoteType": 1,
+              "NamePos": 81,
+              "NameEnd": 85
+            },
+            {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 86,
+              "NameEnd": 88
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "cte2",
-            "QuoteType": 1,
-            "NamePos": 94,
-            "NameEnd": 98
-          },
-          "Column": {
-            "Name": "f2",
-            "QuoteType": 1,
-            "NamePos": 99,
-            "NameEnd": 101
-          }
+          "Fields": [
+            {
+              "Name": "cte2",
+              "QuoteType": 1,
+              "NamePos": 94,
+              "NameEnd": 98
+            },
+            {
+              "Name": "f2",
+              "QuoteType": 1,
+              "NamePos": 99,
+              "NameEnd": 101
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "Database": null,
-          "Table": {
-            "Name": "t3",
-            "QuoteType": 1,
-            "NamePos": 107,
-            "NameEnd": 109
-          },
-          "Column": {
-            "Name": "f3",
-            "QuoteType": 1,
-            "NamePos": 110,
-            "NameEnd": 112
-          }
+          "Fields": [
+            {
+              "Name": "t3",
+              "QuoteType": 1,
+              "NamePos": 107,
+              "NameEnd": 109
+            },
+            {
+              "Name": "f3",
+              "QuoteType": 1,
+              "NamePos": 110,
+              "NameEnd": 112
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null

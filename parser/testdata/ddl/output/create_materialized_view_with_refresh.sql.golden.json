@@ -151,40 +151,56 @@
         "SelectItems": [
           {
             "Expr": {
-              "Name": "field_1",
-              "QuoteType": 3,
-              "NamePos": 249,
-              "NameEnd": 256
+              "Fields": [
+                {
+                  "Name": "field_1",
+                  "QuoteType": 3,
+                  "NamePos": 249,
+                  "NameEnd": 256
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "field_2",
-              "QuoteType": 3,
-              "NamePos": 264,
-              "NameEnd": 271
+              "Fields": [
+                {
+                  "Name": "field_2",
+                  "QuoteType": 3,
+                  "NamePos": 264,
+                  "NameEnd": 271
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "field_3",
-              "QuoteType": 3,
-              "NamePos": 279,
-              "NameEnd": 286
+              "Fields": [
+                {
+                  "Name": "field_3",
+                  "QuoteType": 3,
+                  "NamePos": 279,
+                  "NameEnd": 286
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "FROM",
-              "QuoteType": 1,
-              "NamePos": 289,
-              "NameEnd": 293
+              "Fields": [
+                {
+                  "Name": "FROM",
+                  "QuoteType": 1,
+                  "NamePos": 289,
+                  "NameEnd": 293
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": {

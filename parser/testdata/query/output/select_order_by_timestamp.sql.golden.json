@@ -8,10 +8,14 @@
     "SelectItems": [
       {
         "Expr": {
-          "Name": "Timestamp",
-          "QuoteType": 1,
-          "NamePos": 7,
-          "NameEnd": 16
+          "Fields": [
+            {
+              "Name": "Timestamp",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 16
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
@@ -54,10 +58,14 @@
         {
           "OrderPos": 29,
           "Expr": {
-            "Name": "Timestamp",
-            "QuoteType": 1,
-            "NamePos": 38,
-            "NameEnd": 47
+            "Fields": [
+              {
+                "Name": "Timestamp",
+                "QuoteType": 1,
+                "NamePos": 38,
+                "NameEnd": 47
+              }
+            ]
           },
           "Alias": null,
           "Direction": ""

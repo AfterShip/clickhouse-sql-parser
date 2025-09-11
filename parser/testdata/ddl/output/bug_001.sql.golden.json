@@ -61,20 +61,28 @@
         "SelectItems": [
           {
             "Expr": {
-              "Name": "event_ts",
-              "QuoteType": 1,
-              "NamePos": 118,
-              "NameEnd": 126
+              "Fields": [
+                {
+                  "Name": "event_ts",
+                  "QuoteType": 1,
+                  "NamePos": 118,
+                  "NameEnd": 126
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "org_id",
-              "QuoteType": 1,
-              "NamePos": 132,
-              "NameEnd": 138
+              "Fields": [
+                {
+                  "Name": "org_id",
+                  "QuoteType": 1,
+                  "NamePos": 132,
+                  "NameEnd": 138
+                }
+              ]
             },
             "Modifiers": [],
             "Alias": null
@@ -97,10 +105,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 168,
-                        "NameEnd": 178
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 168,
+                            "NameEnd": 178
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -143,10 +155,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 219,
-                        "NameEnd": 229
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 219,
+                            "NameEnd": 229
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -189,10 +205,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 270,
-                        "NameEnd": 280
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 270,
+                            "NameEnd": 280
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -235,10 +255,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 321,
-                        "NameEnd": 331
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 321,
+                            "NameEnd": 331
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -281,10 +305,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 372,
-                        "NameEnd": 382
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 372,
+                            "NameEnd": 382
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -327,10 +355,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 423,
-                        "NameEnd": 433
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 423,
+                            "NameEnd": 433
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -373,10 +405,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 474,
-                        "NameEnd": 484
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 474,
+                            "NameEnd": 484
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -419,10 +455,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 522,
-                        "NameEnd": 532
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 522,
+                            "NameEnd": 532
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -465,10 +505,14 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Name": "properties",
-                        "QuoteType": 1,
-                        "NamePos": 570,
-                        "NameEnd": 580
+                        "Fields": [
+                          {
+                            "Name": "properties",
+                            "QuoteType": 1,
+                            "NamePos": 570,
+                            "NameEnd": 580
+                          }
+                        ]
                       },
                       "Alias": null
                     },
@@ -529,24 +573,26 @@
           "WherePos": 606,
           "Expr": {
             "LeftExpr": {
-              "Database": {
-                "Name": "db",
-                "QuoteType": 1,
-                "NamePos": 612,
-                "NameEnd": 614
-              },
-              "Table": {
-                "Name": "table",
-                "QuoteType": 1,
-                "NamePos": 615,
-                "NameEnd": 620
-              },
-              "Column": {
-                "Name": "event",
-                "QuoteType": 1,
-                "NamePos": 621,
-                "NameEnd": 626
-              }
+              "Fields": [
+                {
+                  "Name": "db",
+                  "QuoteType": 1,
+                  "NamePos": 612,
+                  "NameEnd": 614
+                },
+                {
+                  "Name": "table",
+                  "QuoteType": 1,
+                  "NamePos": 615,
+                  "NameEnd": 620
+                },
+                {
+                  "Name": "event",
+                  "QuoteType": 1,
+                  "NamePos": 621,
+                  "NameEnd": 626
+                }
+              ]
             },
             "Operation": "=",
             "RightExpr": {

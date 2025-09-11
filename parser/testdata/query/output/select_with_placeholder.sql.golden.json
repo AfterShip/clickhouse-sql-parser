@@ -47,10 +47,14 @@
       "WherePos": 17,
       "Expr": {
         "LeftExpr": {
-          "Name": "id",
-          "QuoteType": 1,
-          "NamePos": 23,
-          "NameEnd": 25
+          "Fields": [
+            {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 23,
+              "NameEnd": 25
+            }
+          ]
         },
         "Operation": "=",
         "RightExpr": {

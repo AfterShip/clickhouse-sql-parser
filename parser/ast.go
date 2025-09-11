@@ -2860,6 +2860,46 @@ func (n *NestedIdentifier) Accept(visitor ASTVisitor) error {
 	return visitor.VisitNestedIdentifier(n)
 }
 
+type Path struct {
+	Fields []*Ident
+}
+
+func (p *Path) Pos() Pos {
+	if len(p.Fields) > 0 {
+		return p.Fields[0].Pos()
+	}
+	return 0
+}
+
+func (p *Path) End() Pos {
+	if len(p.Fields) > 0 {
+		return p.Fields[len(p.Fields)-1].End()
+	}
+	return 0
+}
+
+func (p *Path) String() string {
+	var builder strings.Builder
+	for i, ident := range p.Fields {
+		if i > 0 {
+			builder.WriteByte('.')
+		}
+		builder.WriteString(ident.String())
+	}
+	return builder.String()
+}
+
+func (p *Path) Accept(visitor ASTVisitor) error {
+	visitor.Enter(p)
+	defer visitor.Leave(p)
+	for _, ident := range p.Fields {
+		if err := ident.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitPath(p)
+}
+
 type ColumnIdentifier struct {
 	Database *Ident
 	Table    *Ident

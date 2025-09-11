@@ -50,10 +50,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "f0",
-                      "QuoteType": 1,
-                      "NamePos": 78,
-                      "NameEnd": 80
+                      "Fields": [
+                        {
+                          "Name": "f0",
+                          "QuoteType": 1,
+                          "NamePos": 78,
+                          "NameEnd": 80
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -125,10 +129,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "api_id",
-              "QuoteType": 1,
-              "NamePos": 192,
-              "NameEnd": 198
+              "Fields": [
+                {
+                  "Name": "api_id",
+                  "QuoteType": 1,
+                  "NamePos": 192,
+                  "NameEnd": 198
+                }
+              ]
             },
             "Alias": null
           },
@@ -204,10 +212,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "arr",
-              "QuoteType": 1,
-              "NamePos": 305,
-              "NameEnd": 308
+              "Fields": [
+                {
+                  "Name": "arr",
+                  "QuoteType": 1,
+                  "NamePos": 305,
+                  "NameEnd": 308
+                }
+              ]
             },
             "Alias": null
           },
@@ -283,10 +295,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "content",
-              "QuoteType": 1,
-              "NamePos": 429,
-              "NameEnd": 436
+              "Fields": [
+                {
+                  "Name": "content",
+                  "QuoteType": 1,
+                  "NamePos": 429,
+                  "NameEnd": 436
+                }
+              ]
             },
             "Alias": null
           },
@@ -374,10 +390,14 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Name": "output",
-              "QuoteType": 1,
-              "NamePos": 561,
-              "NameEnd": 567
+              "Fields": [
+                {
+                  "Name": "output",
+                  "QuoteType": 1,
+                  "NamePos": 561,
+                  "NameEnd": 567
+                }
+              ]
             },
             "Alias": null
           },

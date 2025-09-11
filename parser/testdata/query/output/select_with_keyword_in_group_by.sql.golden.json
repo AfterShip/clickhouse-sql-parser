@@ -78,10 +78,14 @@
       },
       {
         "Expr": {
-          "Name": "column_name",
-          "QuoteType": 1,
-          "NamePos": 78,
-          "NameEnd": 89
+          "Fields": [
+            {
+              "Name": "column_name",
+              "QuoteType": 1,
+              "NamePos": 78,
+              "NameEnd": 89
+            }
+          ]
         },
         "Modifiers": [],
         "Alias": null
@@ -116,10 +120,14 @@
     "Where": {
       "WherePos": 101,
       "Expr": {
-        "Name": "true",
-        "QuoteType": 1,
-        "NamePos": 107,
-        "NameEnd": 111
+        "Fields": [
+          {
+            "Name": "true",
+            "QuoteType": 1,
+            "NamePos": 107,
+            "NameEnd": 111
+          }
+        ]
       }
     },
     "GroupBy": {
@@ -151,10 +159,14 @@
                   },
                   {
                     "Expr": {
-                      "Name": "column_name",
-                      "QuoteType": 1,
-                      "NamePos": 132,
-                      "NameEnd": 143
+                      "Fields": [
+                        {
+                          "Name": "column_name",
+                          "QuoteType": 1,
+                          "NamePos": 132,
+                          "NameEnd": 143
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -202,10 +214,14 @@
                 },
                 {
                   "Expr": {
-                    "Name": "column_name",
-                    "QuoteType": 1,
-                    "NamePos": 170,
-                    "NameEnd": 181
+                    "Fields": [
+                      {
+                        "Name": "column_name",
+                        "QuoteType": 1,
+                        "NamePos": 170,
+                        "NameEnd": 181
+                      }
+                    ]
                   },
                   "Alias": null
                 }

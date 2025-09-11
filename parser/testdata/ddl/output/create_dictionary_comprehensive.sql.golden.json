@@ -119,10 +119,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "name",
-                      "QuoteType": 1,
-                      "NamePos": 218,
-                      "NameEnd": 222
+                      "Fields": [
+                        {
+                          "Name": "name",
+                          "QuoteType": 1,
+                          "NamePos": 218,
+                          "NameEnd": 222
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -215,10 +219,14 @@
           "Items": [
             {
               "Expr": {
-                "Name": "id",
-                "QuoteType": 1,
-                "NamePos": 339,
-                "NameEnd": 341
+                "Fields": [
+                  {
+                    "Name": "id",
+                    "QuoteType": 1,
+                    "NamePos": 339,
+                    "NameEnd": 341
+                  }
+                ]
               },
               "Alias": null
             }

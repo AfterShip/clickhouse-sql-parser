@@ -80,28 +80,40 @@
         "Items": [
           {
             "Expr": {
-              "Name": "colX",
-              "QuoteType": 1,
-              "NamePos": 167,
-              "NameEnd": 171
+              "Fields": [
+                {
+                  "Name": "colX",
+                  "QuoteType": 1,
+                  "NamePos": 167,
+                  "NameEnd": 171
+                }
+              ]
             },
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "colY",
-              "QuoteType": 1,
-              "NamePos": 172,
-              "NameEnd": 176
+              "Fields": [
+                {
+                  "Name": "colY",
+                  "QuoteType": 1,
+                  "NamePos": 172,
+                  "NameEnd": 176
+                }
+              ]
             },
             "Alias": null
           },
           {
             "Expr": {
-              "Name": "colZ",
-              "QuoteType": 1,
-              "NamePos": 177,
-              "NameEnd": 181
+              "Fields": [
+                {
+                  "Name": "colZ",
+                  "QuoteType": 1,
+                  "NamePos": 177,
+                  "NameEnd": 181
+                }
+              ]
             },
             "Alias": null
           }
@@ -150,10 +162,14 @@
         "Items": [
           {
             "Expr": {
-              "Name": "colX",
-              "QuoteType": 1,
-              "NamePos": 228,
-              "NameEnd": 232
+              "Fields": [
+                {
+                  "Name": "colX",
+                  "QuoteType": 1,
+                  "NamePos": 228,
+                  "NameEnd": 232
+                }
+              ]
             },
             "Alias": null
           }
@@ -210,19 +226,27 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "colX",
-                      "QuoteType": 1,
-                      "NamePos": 280,
-                      "NameEnd": 284
+                      "Fields": [
+                        {
+                          "Name": "colX",
+                          "QuoteType": 1,
+                          "NamePos": 280,
+                          "NameEnd": 284
+                        }
+                      ]
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "Name": "colY",
-                      "QuoteType": 1,
-                      "NamePos": 286,
-                      "NameEnd": 290
+                      "Fields": [
+                        {
+                          "Name": "colY",
+                          "QuoteType": 1,
+                          "NamePos": 286,
+                          "NameEnd": 290
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -356,10 +380,14 @@
         "Items": [
           {
             "Expr": {
-              "Name": "colX",
-              "QuoteType": 1,
-              "NamePos": 443,
-              "NameEnd": 447
+              "Fields": [
+                {
+                  "Name": "colX",
+                  "QuoteType": 1,
+                  "NamePos": 443,
+                  "NameEnd": 447
+                }
+              ]
             },
             "Alias": null
           }
@@ -438,19 +466,27 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "colX",
-                      "QuoteType": 1,
-                      "NamePos": 528,
-                      "NameEnd": 532
+                      "Fields": [
+                        {
+                          "Name": "colX",
+                          "QuoteType": 1,
+                          "NamePos": 528,
+                          "NameEnd": 532
+                        }
+                      ]
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "Name": "colY",
-                      "QuoteType": 1,
-                      "NamePos": 534,
-                      "NameEnd": 538
+                      "Fields": [
+                        {
+                          "Name": "colY",
+                          "QuoteType": 1,
+                          "NamePos": 534,
+                          "NameEnd": 538
+                        }
+                      ]
                     },
                     "Alias": null
                   }

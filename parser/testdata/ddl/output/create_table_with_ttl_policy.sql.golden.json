@@ -114,10 +114,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "d",
-                          "QuoteType": 1,
-                          "NamePos": 92,
-                          "NameEnd": 93
+                          "Fields": [
+                            {
+                              "Name": "d",
+                              "QuoteType": 1,
+                              "NamePos": 92,
+                              "NameEnd": 93
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -140,10 +144,14 @@
             "TTLPos": 106,
             "Expr": {
               "LeftExpr": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 110,
-                "NameEnd": 111
+                "Fields": [
+                  {
+                    "Name": "d",
+                    "QuoteType": 1,
+                    "NamePos": 110,
+                    "NameEnd": 111
+                  }
+                ]
               },
               "Operation": "+",
               "RightExpr": {
@@ -184,10 +192,14 @@
             "TTLPos": 106,
             "Expr": {
               "LeftExpr": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 143,
-                "NameEnd": 144
+                "Fields": [
+                  {
+                    "Name": "d",
+                    "QuoteType": 1,
+                    "NamePos": 143,
+                    "NameEnd": 144
+                  }
+                ]
               },
               "Operation": "+",
               "RightExpr": {
@@ -227,10 +239,14 @@
             "TTLPos": 106,
             "Expr": {
               "LeftExpr": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 184,
-                "NameEnd": 185
+                "Fields": [
+                  {
+                    "Name": "d",
+                    "QuoteType": 1,
+                    "NamePos": 184,
+                    "NameEnd": 185
+                  }
+                ]
               },
               "Operation": "+",
               "RightExpr": {
@@ -276,10 +292,14 @@
           {
             "OrderPos": 95,
             "Expr": {
-              "Name": "d",
-              "QuoteType": 1,
-              "NamePos": 104,
-              "NameEnd": 105
+              "Fields": [
+                {
+                  "Name": "d",
+                  "QuoteType": 1,
+                  "NamePos": 104,
+                  "NameEnd": 105
+                }
+              ]
             },
             "Alias": null,
             "Direction": ""
@@ -406,10 +426,14 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Name": "d",
-                          "QuoteType": 1,
-                          "NamePos": 326,
-                          "NameEnd": 327
+                          "Fields": [
+                            {
+                              "Name": "d",
+                              "QuoteType": 1,
+                              "NamePos": 326,
+                              "NameEnd": 327
+                            }
+                          ]
                         },
                         "Alias": null
                       }
@@ -432,10 +456,14 @@
             "TTLPos": 340,
             "Expr": {
               "LeftExpr": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 344,
-                "NameEnd": 345
+                "Fields": [
+                  {
+                    "Name": "d",
+                    "QuoteType": 1,
+                    "NamePos": 344,
+                    "NameEnd": 345
+                  }
+                ]
               },
               "Operation": "+",
               "RightExpr": {
@@ -488,10 +516,14 @@
                         "Items": [
                           {
                             "Expr": {
-                              "Name": "d",
-                              "QuoteType": 1,
-                              "NamePos": 390,
-                              "NameEnd": 391
+                              "Fields": [
+                                {
+                                  "Name": "d",
+                                  "QuoteType": 1,
+                                  "NamePos": 390,
+                                  "NameEnd": 391
+                                }
+                              ]
                             },
                             "Alias": null
                           }
@@ -524,10 +556,14 @@
           {
             "OrderPos": 329,
             "Expr": {
-              "Name": "d",
-              "QuoteType": 1,
-              "NamePos": 338,
-              "NameEnd": 339
+              "Fields": [
+                {
+                  "Name": "d",
+                  "QuoteType": 1,
+                  "NamePos": 338,
+                  "NameEnd": 339
+                }
+              ]
             },
             "Alias": null,
             "Direction": ""
@@ -678,10 +714,14 @@
           "Items": [
             {
               "Expr": {
-                "Name": "key",
-                "QuoteType": 1,
-                "NamePos": 538,
-                "NameEnd": 541
+                "Fields": [
+                  {
+                    "Name": "key",
+                    "QuoteType": 1,
+                    "NamePos": 538,
+                    "NameEnd": 541
+                  }
+                ]
               },
               "Alias": null
             }
@@ -697,10 +737,14 @@
             "TTLPos": 542,
             "Expr": {
               "LeftExpr": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 546,
-                "NameEnd": 547
+                "Fields": [
+                  {
+                    "Name": "d",
+                    "QuoteType": 1,
+                    "NamePos": 546,
+                    "NameEnd": 547
+                  }
+                ]
               },
               "Operation": "+",
               "RightExpr": {
@@ -758,10 +802,14 @@
             "TTLPos": 542,
             "Expr": {
               "LeftExpr": {
-                "Name": "d",
-                "QuoteType": 1,
-                "NamePos": 595,
-                "NameEnd": 596
+                "Fields": [
+                  {
+                    "Name": "d",
+                    "QuoteType": 1,
+                    "NamePos": 595,
+                    "NameEnd": 596
+                  }
+                ]
               },
               "Operation": "+",
               "RightExpr": {

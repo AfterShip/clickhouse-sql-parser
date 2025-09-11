@@ -39,10 +39,14 @@
               "RightParenPos": 22,
               "Items": [
                 {
-                  "Name": "x",
-                  "QuoteType": 1,
-                  "NamePos": 21,
-                  "NameEnd": 22
+                  "Fields": [
+                    {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 21,
+                      "NameEnd": 22
+                    }
+                  ]
                 }
               ]
             }
@@ -93,10 +97,14 @@
               "RightParenPos": 46,
               "Items": [
                 {
-                  "Name": "x",
-                  "QuoteType": 1,
-                  "NamePos": 45,
-                  "NameEnd": 46
+                  "Fields": [
+                    {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 45,
+                      "NameEnd": 46
+                    }
+                  ]
                 }
               ]
             }

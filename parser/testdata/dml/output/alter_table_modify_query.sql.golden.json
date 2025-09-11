@@ -38,20 +38,28 @@
           "SelectItems": [
             {
               "Expr": {
-                "Name": "field1",
-                "QuoteType": 1,
-                "NamePos": 64,
-                "NameEnd": 70
+                "Fields": [
+                  {
+                    "Name": "field1",
+                    "QuoteType": 1,
+                    "NamePos": 64,
+                    "NameEnd": 70
+                  }
+                ]
               },
               "Modifiers": [],
               "Alias": null
             },
             {
               "Expr": {
-                "Name": "field2",
-                "QuoteType": 1,
-                "NamePos": 72,
-                "NameEnd": 78
+                "Fields": [
+                  {
+                    "Name": "field2",
+                    "QuoteType": 1,
+                    "NamePos": 72,
+                    "NameEnd": 78
+                  }
+                ]
               },
               "Modifiers": [],
               "Alias": null
@@ -92,10 +100,14 @@
             "WherePos": 100,
             "Expr": {
               "LeftExpr": {
-                "Name": "count",
-                "QuoteType": 1,
-                "NamePos": 106,
-                "NameEnd": 111
+                "Fields": [
+                  {
+                    "Name": "count",
+                    "QuoteType": 1,
+                    "NamePos": 106,
+                    "NameEnd": 111
+                  }
+                ]
               },
               "Operation": "\u003e=",
               "RightExpr": {

@@ -29,10 +29,14 @@
         "PartitionExpr": {
           "PartitionPos": 50,
           "Expr": {
-            "Name": "partition_name",
-            "QuoteType": 1,
-            "NamePos": 60,
-            "NameEnd": 74
+            "Fields": [
+              {
+                "Name": "partition_name",
+                "QuoteType": 1,
+                "NamePos": 60,
+                "NameEnd": 74
+              }
+            ]
           },
           "ID": null,
           "All": false

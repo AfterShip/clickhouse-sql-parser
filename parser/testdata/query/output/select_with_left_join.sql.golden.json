@@ -9,10 +9,14 @@
         {
           "CTEPos": 9,
           "Expr": {
-            "Name": "t1",
-            "QuoteType": 1,
-            "NamePos": 9,
-            "NameEnd": 11
+            "Fields": [
+              {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 9,
+                "NameEnd": 11
+              }
+            ]
           },
           "Alias": {
             "SelectPos": 37,
@@ -58,10 +62,14 @@
         {
           "CTEPos": 66,
           "Expr": {
-            "Name": "t2",
-            "QuoteType": 1,
-            "NamePos": 66,
-            "NameEnd": 68
+            "Fields": [
+              {
+                "Name": "t2",
+                "QuoteType": 1,
+                "NamePos": 66,
+                "NameEnd": 68
+              }
+            ]
           },
           "Alias": {
             "SelectPos": 81,
@@ -180,10 +188,14 @@
               "Items": [
                 {
                   "Expr": {
-                    "Name": "true",
-                    "QuoteType": 1,
-                    "NamePos": 147,
-                    "NameEnd": 151
+                    "Fields": [
+                      {
+                        "Name": "true",
+                        "QuoteType": 1,
+                        "NamePos": 147,
+                        "NameEnd": 151
+                      }
+                    ]
                   },
                   "Alias": null
                 }

@@ -162,10 +162,14 @@
               "Items": [
                 {
                   "Expr": {
-                    "Name": "_part_offset",
-                    "QuoteType": 1,
-                    "NamePos": 185,
-                    "NameEnd": 197
+                    "Fields": [
+                      {
+                        "Name": "_part_offset",
+                        "QuoteType": 1,
+                        "NamePos": 185,
+                        "NameEnd": 197
+                      }
+                    ]
                   },
                   "Alias": null
                 }
@@ -181,10 +185,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "user_id",
-                      "QuoteType": 1,
-                      "NamePos": 215,
-                      "NameEnd": 222
+                      "Fields": [
+                        {
+                          "Name": "user_id",
+                          "QuoteType": 1,
+                          "NamePos": 215,
+                          "NameEnd": 222
+                        }
+                      ]
                     },
                     "Alias": null
                   }
@@ -233,10 +241,14 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Name": "event_id",
-                      "QuoteType": 1,
-                      "NamePos": 262,
-                      "NameEnd": 270
+                      "Fields": [
+                        {
+                          "Name": "event_id",
+                          "QuoteType": 1,
+                          "NamePos": 262,
+                          "NameEnd": 270
+                        }
+                      ]
                     },
                     "Alias": null
                   }

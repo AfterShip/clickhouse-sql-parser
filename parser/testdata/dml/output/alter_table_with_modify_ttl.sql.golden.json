@@ -33,10 +33,14 @@
           "TTLPos": 84,
           "Expr": {
             "LeftExpr": {
-              "Name": "created_at",
-              "QuoteType": 1,
-              "NamePos": 84,
-              "NameEnd": 94
+              "Fields": [
+                {
+                  "Name": "created_at",
+                  "QuoteType": 1,
+                  "NamePos": 84,
+                  "NameEnd": 94
+                }
+              ]
             },
             "Operation": "+",
             "RightExpr": {
