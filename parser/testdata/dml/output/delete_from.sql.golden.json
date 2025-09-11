@@ -13,14 +13,10 @@
     "OnCluster": null,
     "WhereExpr": {
       "LeftExpr": {
-        "Fields": [
-          {
-            "Name": "Title",
-            "QuoteType": 1,
-            "NamePos": 23,
-            "NameEnd": 28
-          }
-        ]
+        "Name": "Title",
+        "QuoteType": 1,
+        "NamePos": 23,
+        "NameEnd": 28
       },
       "Operation": "LIKE",
       "RightExpr": {

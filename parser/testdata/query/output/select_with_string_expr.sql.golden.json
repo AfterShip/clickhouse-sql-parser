@@ -9,14 +9,10 @@
         {
           "CTEPos": 6,
           "Expr": {
-            "Fields": [
-              {
-                "Name": "abc",
-                "QuoteType": 2,
-                "NamePos": 6,
-                "NameEnd": 9
-              }
-            ]
+            "Name": "abc",
+            "QuoteType": 2,
+            "NamePos": 6,
+            "NameEnd": 9
           },
           "Alias": {
             "SelectPos": 15,

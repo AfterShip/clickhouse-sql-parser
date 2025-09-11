@@ -86,14 +86,10 @@
         "SelectItems": [
           {
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "id",
-                  "QuoteType": 1,
-                  "NamePos": 85,
-                  "NameEnd": 87
-                }
-              ]
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 85,
+              "NameEnd": 87
             },
             "Modifiers": [],
             "Alias": null

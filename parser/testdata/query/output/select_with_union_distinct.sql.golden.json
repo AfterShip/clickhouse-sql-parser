@@ -8,14 +8,10 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "replica_name",
-              "QuoteType": 1,
-              "NamePos": 7,
-              "NameEnd": 19
-            }
-          ]
+          "Name": "replica_name",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 19
         },
         "Modifiers": [],
         "Alias": null
@@ -71,14 +67,10 @@
       "SelectItems": [
         {
           "Expr": {
-            "Fields": [
-              {
-                "Name": "replica_name",
-                "QuoteType": 1,
-                "NamePos": 66,
-                "NameEnd": 78
-              }
-            ]
+            "Name": "replica_name",
+            "QuoteType": 1,
+            "NamePos": 66,
+            "NameEnd": 78
           },
           "Modifiers": [],
           "Alias": null

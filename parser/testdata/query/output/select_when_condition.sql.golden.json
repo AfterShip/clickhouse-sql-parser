@@ -16,14 +16,10 @@
               "WhenPos": 12,
               "ThenPos": 23,
               "When": {
-                "Fields": [
-                  {
-                    "Name": "false",
-                    "QuoteType": 1,
-                    "NamePos": 17,
-                    "NameEnd": 22
-                  }
-                ]
+                "Name": "false",
+                "QuoteType": 1,
+                "NamePos": 17,
+                "NameEnd": 22
               },
               "Then": {
                 "LiteralPos": 29,

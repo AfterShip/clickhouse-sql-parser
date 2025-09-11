@@ -162,40 +162,28 @@
             "Items": [
               {
                 "Expr": {
-                  "Fields": [
-                    {
-                      "Name": "f0",
-                      "QuoteType": 1,
-                      "NamePos": 280,
-                      "NameEnd": 282
-                    }
-                  ]
+                  "Name": "f0",
+                  "QuoteType": 1,
+                  "NamePos": 280,
+                  "NameEnd": 282
                 },
                 "Alias": null
               },
               {
                 "Expr": {
-                  "Fields": [
-                    {
-                      "Name": "f1",
-                      "QuoteType": 1,
-                      "NamePos": 284,
-                      "NameEnd": 286
-                    }
-                  ]
+                  "Name": "f1",
+                  "QuoteType": 1,
+                  "NamePos": 284,
+                  "NameEnd": 286
                 },
                 "Alias": null
               },
               {
                 "Expr": {
-                  "Fields": [
-                    {
-                      "Name": "f2",
-                      "QuoteType": 1,
-                      "NamePos": 288,
-                      "NameEnd": 290
-                    }
-                  ]
+                  "Name": "f2",
+                  "QuoteType": 1,
+                  "NamePos": 288,
+                  "NameEnd": 290
                 },
                 "Alias": null
               }
@@ -229,14 +217,10 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Fields": [
-                            {
-                              "Name": "f1",
-                              "QuoteType": 1,
-                              "NamePos": 316,
-                              "NameEnd": 318
-                            }
-                          ]
+                          "Name": "f1",
+                          "QuoteType": 1,
+                          "NamePos": 316,
+                          "NameEnd": 318
                         },
                         "Alias": null
                       }
@@ -259,14 +243,10 @@
             "TTLPos": 320,
             "Expr": {
               "LeftExpr": {
-                "Fields": [
-                  {
-                    "Name": "f1",
-                    "QuoteType": 1,
-                    "NamePos": 324,
-                    "NameEnd": 326
-                  }
-                ]
+                "Name": "f1",
+                "QuoteType": 1,
+                "NamePos": 324,
+                "NameEnd": 326
               },
               "Operation": "+",
               "RightExpr": {
@@ -308,27 +288,19 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "f1",
-                          "QuoteType": 1,
-                          "NamePos": 356,
-                          "NameEnd": 358
-                        }
-                      ]
+                      "Name": "f1",
+                      "QuoteType": 1,
+                      "NamePos": 356,
+                      "NameEnd": 358
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "f2",
-                          "QuoteType": 1,
-                          "NamePos": 359,
-                          "NameEnd": 361
-                        }
-                      ]
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 359,
+                      "NameEnd": 361
                     },
                     "Alias": null
                   }
@@ -455,14 +427,10 @@
           },
           {
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "name",
-                  "QuoteType": 1,
-                  "NamePos": 486,
-                  "NameEnd": 490
-                }
-              ]
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 486,
+              "NameEnd": 490
             },
             "Modifiers": [],
             "Alias": null
@@ -530,27 +498,19 @@
         "Items": [
           {
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "x",
-                  "QuoteType": 1,
-                  "NamePos": 568,
-                  "NameEnd": 569
-                }
-              ]
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 568,
+              "NameEnd": 569
             },
             "Alias": null
           },
           {
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "y",
-                  "QuoteType": 1,
-                  "NamePos": 571,
-                  "NameEnd": 572
-                }
-              ]
+              "Name": "y",
+              "QuoteType": 1,
+              "NamePos": 571,
+              "NameEnd": 572
             },
             "Alias": null
           }
@@ -560,25 +520,17 @@
     },
     "Expr": {
       "LeftExpr": {
-        "Fields": [
-          {
-            "Name": "x",
-            "QuoteType": 1,
-            "NamePos": 577,
-            "NameEnd": 578
-          }
-        ]
+        "Name": "x",
+        "QuoteType": 1,
+        "NamePos": 577,
+        "NameEnd": 578
       },
       "Operation": "+",
       "RightExpr": {
-        "Fields": [
-          {
-            "Name": "y",
-            "QuoteType": 1,
-            "NamePos": 581,
-            "NameEnd": 582
-          }
-        ]
+        "Name": "y",
+        "QuoteType": 1,
+        "NamePos": 581,
+        "NameEnd": 582
       },
       "HasGlobal": false,
       "HasNot": false

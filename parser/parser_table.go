@@ -327,8 +327,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			return nil, fmt.Errorf("expected IDENT, NUMBER or *, but got %q", p.lastTokenKind())
 		}
 	}
-	// Simple identifier without any suffix
-	return &Path{Fields: []*Ident{ident}}, nil
+	return ident, nil
 }
 
 func (p *Parser) parseTableIdentifier(_ Pos) (*TableIdentifier, error) {

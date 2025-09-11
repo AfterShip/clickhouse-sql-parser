@@ -179,14 +179,10 @@
           },
           "Operation": "::",
           "RightExpr": {
-            "Fields": [
-              {
-                "Name": "Float64",
-                "QuoteType": 1,
-                "NamePos": 114,
-                "NameEnd": 121
-              }
-            ]
+            "Name": "Float64",
+            "QuoteType": 1,
+            "NamePos": 114,
+            "NameEnd": 121
           },
           "HasGlobal": false,
           "HasNot": false

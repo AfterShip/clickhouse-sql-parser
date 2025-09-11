@@ -28,56 +28,40 @@
       "SelectItems": [
         {
           "Expr": {
-            "Fields": [
-              {
-                "Name": "CounterID",
-                "QuoteType": 1,
-                "NamePos": 40,
-                "NameEnd": 49
-              }
-            ]
+            "Name": "CounterID",
+            "QuoteType": 1,
+            "NamePos": 40,
+            "NameEnd": 49
           },
           "Modifiers": [],
           "Alias": null
         },
         {
           "Expr": {
-            "Fields": [
-              {
-                "Name": "StartDate",
-                "QuoteType": 1,
-                "NamePos": 55,
-                "NameEnd": 64
-              }
-            ]
+            "Name": "StartDate",
+            "QuoteType": 1,
+            "NamePos": 55,
+            "NameEnd": 64
           },
           "Modifiers": [],
           "Alias": null
         },
         {
           "Expr": {
-            "Fields": [
-              {
-                "Name": "Sign",
-                "QuoteType": 1,
-                "NamePos": 70,
-                "NameEnd": 74
-              }
-            ]
+            "Name": "Sign",
+            "QuoteType": 1,
+            "NamePos": 70,
+            "NameEnd": 74
           },
           "Modifiers": [],
           "Alias": null
         },
         {
           "Expr": {
-            "Fields": [
-              {
-                "Name": "UserID",
-                "QuoteType": 1,
-                "NamePos": 80,
-                "NameEnd": 86
-              }
-            ]
+            "Name": "UserID",
+            "QuoteType": 1,
+            "NamePos": 80,
+            "NameEnd": 86
           },
           "Modifiers": [],
           "Alias": null

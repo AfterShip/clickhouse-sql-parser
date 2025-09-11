@@ -169,14 +169,10 @@
           "Items": [
             {
               "Expr": {
-                "Fields": [
-                  {
-                    "Name": "date",
-                    "QuoteType": 1,
-                    "NamePos": 195,
-                    "NameEnd": 199
-                  }
-                ]
+                "Name": "date",
+                "QuoteType": 1,
+                "NamePos": 195,
+                "NameEnd": 199
               },
               "Alias": null
             }
@@ -222,27 +218,19 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "f1",
-                          "QuoteType": 1,
-                          "NamePos": 214,
-                          "NameEnd": 216
-                        }
-                      ]
+                      "Name": "f1",
+                      "QuoteType": 1,
+                      "NamePos": 214,
+                      "NameEnd": 216
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "f2",
-                          "QuoteType": 1,
-                          "NamePos": 218,
-                          "NameEnd": 220
-                        }
-                      ]
+                      "Name": "f2",
+                      "QuoteType": 1,
+                      "NamePos": 218,
+                      "NameEnd": 220
                     },
                     "Alias": null
                   }

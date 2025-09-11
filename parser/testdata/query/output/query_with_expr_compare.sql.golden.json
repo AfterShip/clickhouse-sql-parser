@@ -18,14 +18,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "path",
-              "QuoteType": 1,
-              "NamePos": 13,
-              "NameEnd": 17
-            }
-          ]
+          "Name": "path",
+          "QuoteType": 1,
+          "NamePos": 13,
+          "NameEnd": 17
         },
         "Modifiers": [],
         "Alias": null
@@ -57,14 +53,10 @@
                   },
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "path",
-                          "QuoteType": 1,
-                          "NamePos": 36,
-                          "NameEnd": 40
-                        }
-                      ]
+                      "Name": "path",
+                      "QuoteType": 1,
+                      "NamePos": 36,
+                      "NameEnd": 40
                     },
                     "Alias": null
                   }
@@ -197,14 +189,10 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "date",
-                          "QuoteType": 1,
-                          "NamePos": 141,
-                          "NameEnd": 145
-                        }
-                      ]
+                      "Name": "date",
+                      "QuoteType": 1,
+                      "NamePos": 141,
+                      "NameEnd": 145
                     },
                     "Alias": null
                   }
@@ -253,14 +241,10 @@
                     },
                     {
                       "Expr": {
-                        "Fields": [
-                          {
-                            "Name": "path",
-                            "QuoteType": 1,
-                            "NamePos": 208,
-                            "NameEnd": 212
-                          }
-                        ]
+                        "Name": "path",
+                        "QuoteType": 1,
+                        "NamePos": 208,
+                        "NameEnd": 212
                       },
                       "Alias": null
                     }

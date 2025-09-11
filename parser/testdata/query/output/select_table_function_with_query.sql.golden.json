@@ -65,14 +65,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "number",
-              "QuoteType": 1,
-              "NamePos": 34,
-              "NameEnd": 40
-            }
-          ]
+          "Name": "number",
+          "QuoteType": 1,
+          "NamePos": 34,
+          "NameEnd": 40
         },
         "Modifiers": [],
         "Alias": null

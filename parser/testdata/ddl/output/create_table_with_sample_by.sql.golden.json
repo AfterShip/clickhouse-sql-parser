@@ -182,14 +182,10 @@
                     "Items": [
                       {
                         "Expr": {
-                          "Fields": [
-                            {
-                              "Name": "timestamp",
-                              "QuoteType": 1,
-                              "NamePos": 241,
-                              "NameEnd": 250
-                            }
-                          ]
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 241,
+                          "NameEnd": 250
                         },
                         "Alias": null
                       }
@@ -206,14 +202,10 @@
       "SampleBy": {
         "SamplePos": 301,
         "Expr": {
-          "Fields": [
-            {
-              "Name": "userid",
-              "QuoteType": 1,
-              "NamePos": 311,
-              "NameEnd": 317
-            }
-          ]
+          "Name": "userid",
+          "QuoteType": 1,
+          "NamePos": 311,
+          "NameEnd": 317
         }
       },
       "TTL": null,
@@ -254,14 +246,10 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "contractid",
-                          "QuoteType": 1,
-                          "NamePos": 262,
-                          "NameEnd": 272
-                        }
-                      ]
+                      "Name": "contractid",
+                      "QuoteType": 1,
+                      "NamePos": 262,
+                      "NameEnd": 272
                     },
                     "Alias": null
                   },
@@ -283,14 +271,10 @@
                           "Items": [
                             {
                               "Expr": {
-                                "Fields": [
-                                  {
-                                    "Name": "timestamp",
-                                    "QuoteType": 1,
-                                    "NamePos": 281,
-                                    "NameEnd": 290
-                                  }
-                                ]
+                                "Name": "timestamp",
+                                "QuoteType": 1,
+                                "NamePos": 281,
+                                "NameEnd": 290
                               },
                               "Alias": null
                             }
@@ -303,14 +287,10 @@
                   },
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "userid",
-                          "QuoteType": 1,
-                          "NamePos": 293,
-                          "NameEnd": 299
-                        }
-                      ]
+                      "Name": "userid",
+                      "QuoteType": 1,
+                      "NamePos": 293,
+                      "NameEnd": 299
                     },
                     "Alias": null
                   }

@@ -45,14 +45,10 @@
             "Items": [
               {
                 "Expr": {
-                  "Fields": [
-                    {
-                      "Name": "id",
-                      "QuoteType": 1,
-                      "NamePos": 90,
-                      "NameEnd": 92
-                    }
-                  ]
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 90,
+                  "NameEnd": 92
                 },
                 "Alias": null
               }
@@ -81,14 +77,10 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "id",
-                          "QuoteType": 1,
-                          "NamePos": 104,
-                          "NameEnd": 106
-                        }
-                      ]
+                      "Name": "id",
+                      "QuoteType": 1,
+                      "NamePos": 104,
+                      "NameEnd": 106
                     },
                     "Alias": null
                   }
@@ -215,14 +207,10 @@
             "Items": [
               {
                 "Expr": {
-                  "Fields": [
-                    {
-                      "Name": "id",
-                      "QuoteType": 1,
-                      "NamePos": 228,
-                      "NameEnd": 230
-                    }
-                  ]
+                  "Name": "id",
+                  "QuoteType": 1,
+                  "NamePos": 228,
+                  "NameEnd": 230
                 },
                 "Alias": null
               }

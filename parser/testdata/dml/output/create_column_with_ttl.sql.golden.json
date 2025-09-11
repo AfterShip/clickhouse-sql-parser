@@ -83,14 +83,10 @@
                 "TTLPos": 61,
                 "Expr": {
                   "LeftExpr": {
-                    "Fields": [
-                      {
-                        "Name": "timestamp",
-                        "QuoteType": 1,
-                        "NamePos": 65,
-                        "NameEnd": 74
-                      }
-                    ]
+                    "Name": "timestamp",
+                    "QuoteType": 1,
+                    "NamePos": 65,
+                    "NameEnd": 74
                   },
                   "Operation": "+",
                   "RightExpr": {
@@ -152,14 +148,10 @@
                 "TTLPos": 108,
                 "Expr": {
                   "LeftExpr": {
-                    "Fields": [
-                      {
-                        "Name": "timestamp",
-                        "QuoteType": 1,
-                        "NamePos": 112,
-                        "NameEnd": 121
-                      }
-                    ]
+                    "Name": "timestamp",
+                    "QuoteType": 1,
+                    "NamePos": 112,
+                    "NameEnd": 121
                   },
                   "Operation": "+",
                   "RightExpr": {

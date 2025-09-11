@@ -18,14 +18,10 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "my_column",
-              "QuoteType": 1,
-              "NamePos": 14,
-              "NameEnd": 23
-            }
-          ]
+          "Name": "my_column",
+          "QuoteType": 1,
+          "NamePos": 14,
+          "NameEnd": 23
         },
         "Modifiers": [],
         "Alias": null

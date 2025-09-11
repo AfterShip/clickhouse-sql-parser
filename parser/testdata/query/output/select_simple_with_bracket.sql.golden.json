@@ -149,14 +149,10 @@
               "Items": [
                 {
                   "Expr": {
-                    "Fields": [
-                      {
-                        "Name": "abc",
-                        "QuoteType": 2,
-                        "NamePos": 55,
-                        "NameEnd": 58
-                      }
-                    ]
+                    "Name": "abc",
+                    "QuoteType": 2,
+                    "NamePos": 55,
+                    "NameEnd": 58
                   },
                   "Alias": null
                 }

@@ -8,14 +8,10 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "record_id",
-              "QuoteType": 1,
-              "NamePos": 16,
-              "NameEnd": 25
-            }
-          ]
+          "Name": "record_id",
+          "QuoteType": 1,
+          "NamePos": 16,
+          "NameEnd": 25
         },
         "Modifiers": [],
         "Alias": null

@@ -8,28 +8,20 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "datacenter",
-              "QuoteType": 1,
-              "NamePos": 11,
-              "NameEnd": 21
-            }
-          ]
+          "Name": "datacenter",
+          "QuoteType": 1,
+          "NamePos": 11,
+          "NameEnd": 21
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "distro",
-              "QuoteType": 1,
-              "NamePos": 27,
-              "NameEnd": 33
-            }
-          ]
+          "Name": "distro",
+          "QuoteType": 1,
+          "NamePos": 27,
+          "NameEnd": 33
         },
         "Modifiers": [],
         "Alias": null
@@ -52,14 +44,10 @@
               "Items": [
                 {
                   "Expr": {
-                    "Fields": [
-                      {
-                        "Name": "quantity",
-                        "QuoteType": 1,
-                        "NamePos": 44,
-                        "NameEnd": 52
-                      }
-                    ]
+                    "Name": "quantity",
+                    "QuoteType": 1,
+                    "NamePos": 44,
+                    "NameEnd": 52
                   },
                   "Alias": null
                 }
@@ -127,27 +115,19 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Fields": [
-                          {
-                            "Name": "datacenter",
-                            "QuoteType": 1,
-                            "NamePos": 111,
-                            "NameEnd": 121
-                          }
-                        ]
+                        "Name": "datacenter",
+                        "QuoteType": 1,
+                        "NamePos": 111,
+                        "NameEnd": 121
                       },
                       "Alias": null
                     },
                     {
                       "Expr": {
-                        "Fields": [
-                          {
-                            "Name": "distro",
-                            "QuoteType": 1,
-                            "NamePos": 122,
-                            "NameEnd": 128
-                          }
-                        ]
+                        "Name": "distro",
+                        "QuoteType": 1,
+                        "NamePos": 122,
+                        "NameEnd": 128
                       },
                       "Alias": null
                     }
@@ -168,14 +148,10 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Fields": [
-                          {
-                            "Name": "datacenter",
-                            "QuoteType": 1,
-                            "NamePos": 136,
-                            "NameEnd": 146
-                          }
-                        ]
+                        "Name": "datacenter",
+                        "QuoteType": 1,
+                        "NamePos": 136,
+                        "NameEnd": 146
                       },
                       "Alias": null
                     }
@@ -196,14 +172,10 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Fields": [
-                          {
-                            "Name": "distro",
-                            "QuoteType": 1,
-                            "NamePos": 154,
-                            "NameEnd": 160
-                          }
-                        ]
+                        "Name": "distro",
+                        "QuoteType": 1,
+                        "NamePos": 154,
+                        "NameEnd": 160
                       },
                       "Alias": null
                     }
@@ -255,28 +227,20 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "datacenter",
-              "QuoteType": 1,
-              "NamePos": 185,
-              "NameEnd": 195
-            }
-          ]
+          "Name": "datacenter",
+          "QuoteType": 1,
+          "NamePos": 185,
+          "NameEnd": 195
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "distro",
-              "QuoteType": 1,
-              "NamePos": 201,
-              "NameEnd": 207
-            }
-          ]
+          "Name": "distro",
+          "QuoteType": 1,
+          "NamePos": 201,
+          "NameEnd": 207
         },
         "Modifiers": [],
         "Alias": null
@@ -299,14 +263,10 @@
               "Items": [
                 {
                   "Expr": {
-                    "Fields": [
-                      {
-                        "Name": "quantity",
-                        "QuoteType": 1,
-                        "NamePos": 218,
-                        "NameEnd": 226
-                      }
-                    ]
+                    "Name": "quantity",
+                    "QuoteType": 1,
+                    "NamePos": 218,
+                    "NameEnd": 226
                   },
                   "Alias": null
                 }

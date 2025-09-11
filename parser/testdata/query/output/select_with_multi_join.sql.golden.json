@@ -9,14 +9,10 @@
         {
           "CTEPos": 5,
           "Expr": {
-            "Fields": [
-              {
-                "Name": "t1",
-                "QuoteType": 1,
-                "NamePos": 5,
-                "NameEnd": 7
-              }
-            ]
+            "Name": "t1",
+            "QuoteType": 1,
+            "NamePos": 5,
+            "NameEnd": 7
           },
           "Alias": {
             "SelectPos": 17,
@@ -61,14 +57,10 @@
         {
           "CTEPos": 49,
           "Expr": {
-            "Fields": [
-              {
-                "Name": "t2",
-                "QuoteType": 1,
-                "NamePos": 49,
-                "NameEnd": 51
-              }
-            ]
+            "Name": "t2",
+            "QuoteType": 1,
+            "NamePos": 49,
+            "NameEnd": 51
           },
           "Alias": {
             "SelectPos": 57,
@@ -113,14 +105,10 @@
         {
           "CTEPos": 89,
           "Expr": {
-            "Fields": [
-              {
-                "Name": "t3",
-                "QuoteType": 1,
-                "NamePos": 89,
-                "NameEnd": 91
-              }
-            ]
+            "Name": "t3",
+            "QuoteType": 1,
+            "NamePos": 89,
+            "NameEnd": 91
           },
           "Alias": {
             "SelectPos": 97,
@@ -373,14 +361,10 @@
                   "Items": [
                     {
                       "Expr": {
-                        "Fields": [
-                          {
-                            "Name": "true",
-                            "QuoteType": 1,
-                            "NamePos": 277,
-                            "NameEnd": 281
-                          }
-                        ]
+                        "Name": "true",
+                        "QuoteType": 1,
+                        "NamePos": 277,
+                        "NameEnd": 281
                       },
                       "Alias": null
                     }
@@ -405,14 +389,10 @@
               "Items": [
                 {
                   "Expr": {
-                    "Fields": [
-                      {
-                        "Name": "true",
-                        "QuoteType": 1,
-                        "NamePos": 237,
-                        "NameEnd": 241
-                      }
-                    ]
+                    "Name": "true",
+                    "QuoteType": 1,
+                    "NamePos": 237,
+                    "NameEnd": 241
                   },
                   "Alias": null
                 }

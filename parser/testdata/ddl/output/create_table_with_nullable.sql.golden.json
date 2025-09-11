@@ -354,14 +354,10 @@
                       "Items": [
                         {
                           "Expr": {
-                            "Fields": [
-                              {
-                                "Name": "tag_id",
-                                "QuoteType": 1,
-                                "NamePos": 356,
-                                "NameEnd": 362
-                              }
-                            ]
+                            "Name": "tag_id",
+                            "QuoteType": 1,
+                            "NamePos": 356,
+                            "NameEnd": 362
                           },
                           "Alias": null
                         }
@@ -415,14 +411,10 @@
           {
             "OrderPos": 369,
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "label_id",
-                  "QuoteType": 1,
-                  "NamePos": 378,
-                  "NameEnd": 386
-                }
-              ]
+              "Name": "label_id",
+              "QuoteType": 1,
+              "NamePos": 378,
+              "NameEnd": 386
             },
             "Alias": null,
             "Direction": ""

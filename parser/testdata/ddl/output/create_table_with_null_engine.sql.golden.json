@@ -92,14 +92,10 @@
           },
           "ColumnExpr": {
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "trace_id",
-                  "QuoteType": 1,
-                  "NamePos": 109,
-                  "NameEnd": 117
-                }
-              ]
+              "Name": "trace_id",
+              "QuoteType": 1,
+              "NamePos": 109,
+              "NameEnd": 117
             },
             "Alias": null
           },

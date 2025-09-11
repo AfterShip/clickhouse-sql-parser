@@ -8,14 +8,10 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "aggregation_target",
-              "QuoteType": 1,
-              "NamePos": 7,
-              "NameEnd": 25
-            }
-          ]
+          "Name": "aggregation_target",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 25
         },
         "Modifiers": [],
         "Alias": {
@@ -42,14 +38,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "step_0",
-              "QuoteType": 1,
-              "NamePos": 81,
-              "NameEnd": 87
-            }
-          ]
+          "Name": "step_0",
+          "QuoteType": 1,
+          "NamePos": 81,
+          "NameEnd": 87
         },
         "Modifiers": [],
         "Alias": {
@@ -61,14 +53,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "latest_0",
-              "QuoteType": 1,
-              "NamePos": 103,
-              "NameEnd": 111
-            }
-          ]
+          "Name": "latest_0",
+          "QuoteType": 1,
+          "NamePos": 103,
+          "NameEnd": 111
         },
         "Modifiers": [],
         "Alias": {
@@ -80,14 +68,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "step_1",
-              "QuoteType": 1,
-              "NamePos": 129,
-              "NameEnd": 135
-            }
-          ]
+          "Name": "step_1",
+          "QuoteType": 1,
+          "NamePos": 129,
+          "NameEnd": 135
         },
         "Modifiers": [],
         "Alias": {
@@ -99,14 +83,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "latest_1",
-              "QuoteType": 1,
-              "NamePos": 151,
-              "NameEnd": 159
-            }
-          ]
+          "Name": "latest_1",
+          "QuoteType": 1,
+          "NamePos": 151,
+          "NameEnd": 159
         },
         "Modifiers": [],
         "Alias": {
@@ -118,14 +98,10 @@
       },
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "step_2",
-              "QuoteType": 1,
-              "NamePos": 177,
-              "NameEnd": 183
-            }
-          ]
+          "Name": "step_2",
+          "QuoteType": 1,
+          "NamePos": 177,
+          "NameEnd": 183
         },
         "Modifiers": [],
         "Alias": {
@@ -154,14 +130,10 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "latest_2",
-                          "QuoteType": 1,
-                          "NamePos": 203,
-                          "NameEnd": 211
-                        }
-                      ]
+                      "Name": "latest_2",
+                      "QuoteType": 1,
+                      "NamePos": 203,
+                      "NameEnd": 211
                     },
                     "Alias": null
                   }
@@ -183,14 +155,10 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "aggregation_target",
-                          "QuoteType": 1,
-                          "NamePos": 232,
-                          "NameEnd": 250
-                        }
-                      ]
+                      "Name": "aggregation_target",
+                      "QuoteType": 1,
+                      "NamePos": 232,
+                      "NameEnd": 250
                     },
                     "Alias": null
                   }
@@ -204,14 +172,10 @@
                 {
                   "OrderPos": 255,
                   "Expr": {
-                    "Fields": [
-                      {
-                        "Name": "timestamp",
-                        "QuoteType": 1,
-                        "NamePos": 264,
-                        "NameEnd": 273
-                      }
-                    ]
+                    "Name": "timestamp",
+                    "QuoteType": 1,
+                    "NamePos": 264,
+                    "NameEnd": 273
                   },
                   "Alias": null,
                   "Direction": "DESC"
@@ -278,14 +242,10 @@
                 "Items": [
                   {
                     "Expr": {
-                      "Fields": [
-                        {
-                          "Name": "latest_1",
-                          "QuoteType": 1,
-                          "NamePos": 350,
-                          "NameEnd": 358
-                        }
-                      ]
+                      "Name": "latest_1",
+                      "QuoteType": 1,
+                      "NamePos": 350,
+                      "NameEnd": 358
                     },
                     "Alias": null
                   }
@@ -347,14 +307,10 @@
           "Items": [
             {
               "Expr": {
-                "Fields": [
-                  {
-                    "Name": "aggregation_target",
-                    "QuoteType": 1,
-                    "NamePos": 413,
-                    "NameEnd": 431
-                  }
-                ]
+                "Name": "aggregation_target",
+                "QuoteType": 1,
+                "NamePos": 413,
+                "NameEnd": 431
               },
               "Alias": null
             }
@@ -368,14 +324,10 @@
           {
             "OrderPos": 436,
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "timestamp",
-                  "QuoteType": 1,
-                  "NamePos": 445,
-                  "NameEnd": 454
-                }
-              ]
+              "Name": "timestamp",
+              "QuoteType": 1,
+              "NamePos": 445,
+              "NameEnd": 454
             },
             "Alias": null,
             "Direction": "DESC"

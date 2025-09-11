@@ -8,14 +8,10 @@
     "SelectItems": [
       {
         "Expr": {
-          "Fields": [
-            {
-              "Name": "foo",
-              "QuoteType": 1,
-              "NamePos": 7,
-              "NameEnd": 10
-            }
-          ]
+          "Name": "foo",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 10
         },
         "Modifiers": [],
         "Alias": null
@@ -92,14 +88,10 @@
         "Items": [
           {
             "Expr": {
-              "Fields": [
-                {
-                  "Name": "m",
-                  "QuoteType": 1,
-                  "NamePos": 45,
-                  "NameEnd": 46
-                }
-              ]
+              "Name": "m",
+              "QuoteType": 1,
+              "NamePos": 45,
+              "NameEnd": 46
             },
             "Alias": {
               "Name": "bar",

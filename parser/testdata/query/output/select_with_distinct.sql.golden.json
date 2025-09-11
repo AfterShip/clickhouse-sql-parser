@@ -33,14 +33,10 @@
                       "Items": [
                         {
                           "Expr": {
-                            "Fields": [
-                              {
-                                "Name": "RECORD_ID",
-                                "QuoteType": 1,
-                                "NamePos": 22,
-                                "NameEnd": 31
-                              }
-                            ]
+                            "Name": "RECORD_ID",
+                            "QuoteType": 1,
+                            "NamePos": 22,
+                            "NameEnd": 31
                           },
                           "Alias": null
                         }
