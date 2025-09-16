@@ -23,6 +23,24 @@ func TestWalk_BasicTraversal(t *testing.T) {
 	require.Greater(t, nodeCount, 10, "Should have visited more than 10 nodes")
 }
 
+func TestWalk_JoinExpr(t *testing.T) {
+	sql := `SELECT a, COUNT(b) FROM table1 JOIN table2 ON table1.id = table2.id;`
+	parser := NewParser(sql)
+	stmts, err := parser.ParseStmts()
+	require.NoError(t, err)
+	require.Equal(t, 1, len(stmts))
+
+	var onClauses int
+	Walk(stmts[0], func(node Expr) bool {
+		if _, ok := node.(*OnClause); ok {
+			onClauses++
+		}
+		return true
+	})
+
+	require.Equal(t, 1, onClauses, "Should have visited exactly 1 OnClause")
+}
+
 func TestWalkWithBreak_EarlyTermination(t *testing.T) {
 	sql := `SELECT a, COUNT(b) FROM table1 WHERE id > 10 ORDER BY a;`
 	parser := NewParser(sql)
@@ -234,7 +252,7 @@ func TestWalk_ShowStmtNewFields(t *testing.T) {
 
 	// Should find exactly 3 string literals: LIKE pattern, OUTFILE path, FORMAT type
 	require.Equal(t, 3, len(stringLiterals), "Should find exactly 3 StringLiteral nodes")
-	
+
 	// Should find exactly 1 number literal: LIMIT value
 	require.Equal(t, 1, len(numberLiterals), "Should find exactly 1 NumberLiteral node")
 

@@ -1,5 +1,7 @@
 package parser
 
+import "reflect"
+
 // WalkFunc is a function type for walking AST nodes.
 // It receives the current node and returns a boolean indicating whether to continue walking.
 // If the function returns false, the walking stops for the current subtree.
@@ -8,16 +10,19 @@ type WalkFunc func(node Expr) bool
 // Walk traverses an AST in depth-first order, calling the provided function
 // for each node. If the function returns false, traversal stops for that subtree.
 func Walk(node Expr, fn WalkFunc) bool {
-	if node == nil || !fn(node) {
+	if node == nil || reflect.ValueOf(node).IsNil() {
+		return true
+	}
+	if !fn(node) {
 		return false
 	}
 
 	switch n := node.(type) {
 	case *SelectQuery:
-		if n.With != nil && !Walk(n.With, fn) {
+		if !Walk(n.With, fn) {
 			return false
 		}
-		if n.Top != nil && !Walk(n.Top, fn) {
+		if !Walk(n.Top, fn) {
 			return false
 		}
 		for _, item := range n.SelectItems {
@@ -25,46 +30,46 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.From != nil && !Walk(n.From, fn) {
+		if !Walk(n.From, fn) {
 			return false
 		}
-		if n.ArrayJoin != nil && !Walk(n.ArrayJoin, fn) {
+		if !Walk(n.ArrayJoin, fn) {
 			return false
 		}
-		if n.Window != nil && !Walk(n.Window, fn) {
+		if !Walk(n.Window, fn) {
 			return false
 		}
-		if n.Prewhere != nil && !Walk(n.Prewhere, fn) {
+		if !Walk(n.Prewhere, fn) {
 			return false
 		}
-		if n.Where != nil && !Walk(n.Where, fn) {
+		if !Walk(n.Where, fn) {
 			return false
 		}
-		if n.GroupBy != nil && !Walk(n.GroupBy, fn) {
+		if !Walk(n.GroupBy, fn) {
 			return false
 		}
-		if n.Having != nil && !Walk(n.Having, fn) {
+		if !Walk(n.Having, fn) {
 			return false
 		}
-		if n.OrderBy != nil && !Walk(n.OrderBy, fn) {
+		if !Walk(n.OrderBy, fn) {
 			return false
 		}
-		if n.LimitBy != nil && !Walk(n.LimitBy, fn) {
+		if !Walk(n.LimitBy, fn) {
 			return false
 		}
-		if n.Limit != nil && !Walk(n.Limit, fn) {
+		if !Walk(n.Limit, fn) {
 			return false
 		}
-		if n.Settings != nil && !Walk(n.Settings, fn) {
+		if !Walk(n.Settings, fn) {
 			return false
 		}
-		if n.UnionAll != nil && !Walk(n.UnionAll, fn) {
+		if !Walk(n.UnionAll, fn) {
 			return false
 		}
-		if n.UnionDistinct != nil && !Walk(n.UnionDistinct, fn) {
+		if !Walk(n.UnionDistinct, fn) {
 			return false
 		}
-		if n.Format != nil && !Walk(n.Format, fn) {
+		if !Walk(n.Format, fn) {
 			return false
 		}
 	case *SubQuery:
@@ -80,14 +85,14 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.Alias != nil && !Walk(n.Alias, fn) {
+		if !Walk(n.Alias, fn) {
 			return false
 		}
 	case *TableExpr:
 		if !Walk(n.Expr, fn) {
 			return false
 		}
-		if n.Alias != nil && !Walk(n.Alias, fn) {
+		if !Walk(n.Alias, fn) {
 			return false
 		}
 	case *AliasExpr:
@@ -101,11 +106,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.Params != nil && !Walk(n.Params, fn) {
+		if !Walk(n.Params, fn) {
 			return false
 		}
 	case *TableIdentifier:
-		if n.Database != nil && !Walk(n.Database, fn) {
+		if !Walk(n.Database, fn) {
 			return false
 		}
 		if !Walk(n.Table, fn) {
@@ -127,7 +132,7 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Expr, fn) {
 			return false
 		}
-		if n.Alias != nil && !Walk(n.Alias, fn) {
+		if !Walk(n.Alias, fn) {
 			return false
 		}
 	case *BinaryOperation:
@@ -145,7 +150,7 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *CaseExpr:
-		if n.Expr != nil && !Walk(n.Expr, fn) {
+		if !Walk(n.Expr, fn) {
 			return false
 		}
 		for _, when := range n.Whens {
@@ -153,7 +158,7 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.Else != nil && !Walk(n.Else, fn) {
+		if !Walk(n.Else, fn) {
 			return false
 		}
 	case *CastExpr:
@@ -193,19 +198,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Right, fn) {
 			return false
 		}
-		if n.Constraints != nil {
-			if !Walk(n.Constraints, fn) {
-				return false
-			}
+		if !Walk(n.Constraints, fn) {
+			return false
 		}
 	case *JoinTableExpr:
 		if !Walk(n.Table, fn) {
 			return false
 		}
-		if n.SampleRatio != nil {
-			if !Walk(n.SampleRatio, fn) {
-				return false
-			}
+		if !Walk(n.SampleRatio, fn) {
+			return false
 		}
 	case *OnClause:
 		if !Walk(n.On, fn) {
@@ -224,10 +225,8 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *GroupByClause:
-		if n.Expr != nil {
-			if !Walk(n.Expr, fn) {
-				return false
-			}
+		if !Walk(n.Expr, fn) {
+			return false
 		}
 	case *HavingClause:
 		if !Walk(n.Expr, fn) {
@@ -243,19 +242,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Expr, fn) {
 			return false
 		}
-		if n.Alias != nil {
-			if !Walk(n.Alias, fn) {
-				return false
-			}
+		if !Walk(n.Alias, fn) {
+			return false
 		}
 	case *LimitClause:
 		if !Walk(n.Limit, fn) {
 			return false
 		}
-		if n.Offset != nil {
-			if !Walk(n.Offset, fn) {
-				return false
-			}
+		if !Walk(n.Offset, fn) {
+			return false
 		}
 	case *LimitByClause:
 		if !Walk(n.Limit, fn) {
@@ -282,25 +277,17 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *InsertStmt:
-		if n.Table != nil {
-			if !Walk(n.Table, fn) {
-				return false
-			}
+		if !Walk(n.Table, fn) {
+			return false
 		}
-		if n.ColumnNames != nil {
-			if !Walk(n.ColumnNames, fn) {
-				return false
-			}
+		if !Walk(n.ColumnNames, fn) {
+			return false
 		}
-		if n.Format != nil {
-			if !Walk(n.Format, fn) {
-				return false
-			}
+		if !Walk(n.Format, fn) {
+			return false
 		}
-		if n.SelectExpr != nil {
-			if !Walk(n.SelectExpr, fn) {
-				return false
-			}
+		if !Walk(n.SelectExpr, fn) {
+			return false
 		}
 	case *ColumnNamesExpr:
 		for i := range n.ColumnNames {
@@ -318,10 +305,8 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.Args != nil {
-			if !Walk(n.Args, fn) {
-				return false
-			}
+		if !Walk(n.Args, fn) {
+			return false
 		}
 	case *TableArgListExpr:
 		for _, arg := range n.Args {
@@ -333,35 +318,25 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Ident, fn) {
 			return false
 		}
-		if n.DotIdent != nil {
-			if !Walk(n.DotIdent, fn) {
-				return false
-			}
+		if !Walk(n.DotIdent, fn) {
+			return false
 		}
 	case *ArrayParamList:
-		if n.Items != nil {
-			if !Walk(n.Items, fn) {
-				return false
-			}
+		if !Walk(n.Items, fn) {
+			return false
 		}
 	case *ColumnExprList:
-		if n != nil {
-			for _, item := range n.Items {
-				if !Walk(item, fn) {
-					return false
-				}
+		for _, item := range n.Items {
+			if !Walk(item, fn) {
+				return false
 			}
 		}
 	case *ParamExprList:
-		if n.Items != nil {
-			if !Walk(n.Items, fn) {
-				return false
-			}
+		if !Walk(n.Items, fn) {
+			return false
 		}
-		if n.ColumnArgList != nil {
-			if !Walk(n.ColumnArgList, fn) {
-				return false
-			}
+		if !Walk(n.ColumnArgList, fn) {
+			return false
 		}
 	case *ColumnArgList:
 		for _, item := range n.Items {
@@ -377,20 +352,14 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *WindowExpr:
-		if n.PartitionBy != nil {
-			if !Walk(n.PartitionBy, fn) {
-				return false
-			}
+		if !Walk(n.PartitionBy, fn) {
+			return false
 		}
-		if n.OrderBy != nil {
-			if !Walk(n.OrderBy, fn) {
-				return false
-			}
+		if !Walk(n.OrderBy, fn) {
+			return false
 		}
-		if n.Frame != nil {
-			if !Walk(n.Frame, fn) {
-				return false
-			}
+		if !Walk(n.Frame, fn) {
+			return false
 		}
 	case *PartitionByClause:
 		if !Walk(n.Expr, fn) {
@@ -434,19 +403,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Ratio, fn) {
 			return false
 		}
-		if n.Offset != nil {
-			if !Walk(n.Offset, fn) {
-				return false
-			}
+		if !Walk(n.Offset, fn) {
+			return false
 		}
 	case *RatioExpr:
 		if !Walk(n.Numerator, fn) {
 			return false
 		}
-		if n.Denominator != nil {
-			if !Walk(n.Denominator, fn) {
-				return false
-			}
+		if !Walk(n.Denominator, fn) {
+			return false
 		}
 	case *IntervalExpr:
 		if !Walk(n.Expr, fn) {
@@ -459,19 +424,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 	case *DropDatabase:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 	case *DropUserOrRole:
 		for _, name := range n.Names {
@@ -479,82 +440,62 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.From != nil {
-			if !Walk(n.From, fn) {
-				return false
-			}
+		if !Walk(n.From, fn) {
+			return false
 		}
 	case *TruncateTable:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 	case *CheckStmt:
 		if !Walk(n.Table, fn) {
 			return false
 		}
-		if n.Partition != nil {
-			if !Walk(n.Partition, fn) {
-				return false
-			}
+		if !Walk(n.Partition, fn) {
+			return false
 		}
 	case *OptimizeStmt:
 		if !Walk(n.Table, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
-		if n.Partition != nil {
-			if !Walk(n.Partition, fn) {
-				return false
-			}
+		if !Walk(n.Partition, fn) {
+			return false
 		}
-		if n.Deduplicate != nil {
-			if !Walk(n.Deduplicate, fn) {
-				return false
-			}
+		if !Walk(n.Deduplicate, fn) {
+			return false
 		}
 	case *DeduplicateClause:
 		if !Walk(n.By, fn) {
 			return false
 		}
-		if n.Except != nil {
-			if !Walk(n.Except, fn) {
-				return false
-			}
+		if !Walk(n.Except, fn) {
+			return false
 		}
 	case *SystemStmt:
 		if !Walk(n.Expr, fn) {
 			return false
 		}
 	case *SystemFlushExpr:
-		if n.Distributed != nil {
-			if !Walk(n.Distributed, fn) {
-				return false
-			}
+		if !Walk(n.Distributed, fn) {
+			return false
 		}
 	case *SystemReloadExpr:
-		if n.Dictionary != nil {
-			if !Walk(n.Dictionary, fn) {
-				return false
-			}
+		if !Walk(n.Dictionary, fn) {
+			return false
 		}
 	case *SystemSyncExpr:
 		if !Walk(n.Cluster, fn) {
 			return false
 		}
 	case *SystemCtrlExpr:
-		if n.Cluster != nil {
-			if !Walk(n.Cluster, fn) {
-				return false
-			}
+		if !Walk(n.Cluster, fn) {
+			return false
 		}
 	case *SystemDropExpr:
 		// Leaf node
@@ -576,26 +517,20 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.On != nil {
-			if !Walk(n.On, fn) {
-				return false
-			}
+		if !Walk(n.On, fn) {
+			return false
 		}
 		for _, role := range n.To {
 			if !Walk(role, fn) {
 				return false
 			}
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 	case *PrivilegeClause:
-		if n.Params != nil {
-			if !Walk(n.Params, fn) {
-				return false
-			}
+		if !Walk(n.Params, fn) {
+			return false
 		}
 	case *RenameStmt:
 		for _, pair := range n.TargetPairList {
@@ -606,19 +541,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 	case *DeleteClause:
 		if !Walk(n.Table, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 		if !Walk(n.WhereExpr, fn) {
 			return false
@@ -627,201 +558,133 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
-		if n.Engine != nil {
-			if !Walk(n.Engine, fn) {
-				return false
-			}
+		if !Walk(n.Engine, fn) {
+			return false
 		}
-		if n.Comment != nil {
-			if !Walk(n.Comment, fn) {
-				return false
-			}
+		if !Walk(n.Comment, fn) {
+			return false
 		}
 	case *CreateTable:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.UUID != nil {
-			if !Walk(n.UUID, fn) {
-				return false
-			}
+		if !Walk(n.UUID, fn) {
+			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
-		if n.TableSchema != nil {
-			if !Walk(n.TableSchema, fn) {
-				return false
-			}
+		if !Walk(n.TableSchema, fn) {
+			return false
 		}
-		if n.Engine != nil {
-			if !Walk(n.Engine, fn) {
-				return false
-			}
+		if !Walk(n.Engine, fn) {
+			return false
 		}
-		if n.SubQuery != nil {
-			if !Walk(n.SubQuery, fn) {
-				return false
-			}
+		if !Walk(n.SubQuery, fn) {
+			return false
 		}
-		if n.Comment != nil {
-			if !Walk(n.Comment, fn) {
-				return false
-			}
+		if !Walk(n.Comment, fn) {
+			return false
 		}
 	case *CreateView:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.UUID != nil {
-			if !Walk(n.UUID, fn) {
-				return false
-			}
+		if !Walk(n.UUID, fn) {
+			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
-		if n.TableSchema != nil {
-			if !Walk(n.TableSchema, fn) {
-				return false
-			}
+		if !Walk(n.TableSchema, fn) {
+			return false
 		}
-		if n.SubQuery != nil {
-			if !Walk(n.SubQuery, fn) {
-				return false
-			}
+		if !Walk(n.SubQuery, fn) {
+			return false
 		}
 	case *CreateMaterializedView:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
+		if !Walk(n.OnCluster, fn) {
+			return false
+		}
+		if !Walk(n.Refresh, fn) {
+			return false
+		}
+		if !Walk(n.RandomizeFor, fn) {
+			return false
+		}
+		for _, dep := range n.DependsOn {
+			if !Walk(dep, fn) {
 				return false
 			}
 		}
-		if n.Refresh != nil {
-			if !Walk(n.Refresh, fn) {
-				return false
-			}
+		if !Walk(n.Settings, fn) {
+			return false
 		}
-		if n.RandomizeFor != nil {
-			if !Walk(n.RandomizeFor, fn) {
-				return false
-			}
+		if !Walk(n.Engine, fn) {
+			return false
 		}
-		if n.DependsOn != nil {
-			for _, dep := range n.DependsOn {
-				if !Walk(dep, fn) {
-					return false
-				}
-			}
+		if !Walk(n.Destination, fn) {
+			return false
 		}
-		if n.Settings != nil {
-			if !Walk(n.Settings, fn) {
-				return false
-			}
+		if !Walk(n.SubQuery, fn) {
+			return false
 		}
-		if n.Engine != nil {
-			if !Walk(n.Engine, fn) {
-				return false
-			}
+		if !Walk(n.Comment, fn) {
+			return false
 		}
-		if n.Destination != nil {
-			if !Walk(n.Destination, fn) {
-				return false
-			}
-		}
-		if n.SubQuery != nil {
-			if !Walk(n.SubQuery, fn) {
-				return false
-			}
-		}
-		if n.Comment != nil {
-			if !Walk(n.Comment, fn) {
-				return false
-			}
-		}
-		if n.Definer != nil {
-			if !Walk(n.Definer, fn) {
-				return false
-			}
+		if !Walk(n.Definer, fn) {
+			return false
 		}
 	case *CreateLiveView:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.UUID != nil {
-			if !Walk(n.UUID, fn) {
-				return false
-			}
+		if !Walk(n.UUID, fn) {
+			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
-		if n.Destination != nil {
-			if !Walk(n.Destination, fn) {
-				return false
-			}
+		if !Walk(n.Destination, fn) {
+			return false
 		}
-		if n.TableSchema != nil {
-			if !Walk(n.TableSchema, fn) {
-				return false
-			}
+		if !Walk(n.TableSchema, fn) {
+			return false
 		}
-		if n.WithTimeout != nil {
-			if !Walk(n.WithTimeout, fn) {
-				return false
-			}
+		if !Walk(n.WithTimeout, fn) {
+			return false
 		}
-		if n.SubQuery != nil {
-			if !Walk(n.SubQuery, fn) {
-				return false
-			}
+		if !Walk(n.SubQuery, fn) {
+			return false
 		}
 	case *CreateDictionary:
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.UUID != nil {
-			if !Walk(n.UUID, fn) {
-				return false
-			}
+		if !Walk(n.UUID, fn) {
+			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
-		if n.Schema != nil {
-			if !Walk(n.Schema, fn) {
-				return false
-			}
+		if !Walk(n.Schema, fn) {
+			return false
 		}
-		if n.Engine != nil {
-			if !Walk(n.Engine, fn) {
-				return false
-			}
+		if !Walk(n.Engine, fn) {
+			return false
 		}
 	case *CreateFunction:
 		if !Walk(n.FunctionName, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 		if !Walk(n.Params, fn) {
 			return false
@@ -835,16 +698,12 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.AccessStorageType != nil {
-			if !Walk(n.AccessStorageType, fn) {
-				return false
-			}
+		if !Walk(n.AccessStorageType, fn) {
+			return false
 		}
-		if n.Settings != nil {
-			for _, setting := range n.Settings {
-				if !Walk(setting, fn) {
-					return false
-				}
+		for _, setting := range n.Settings {
+			if !Walk(setting, fn) {
+				return false
 			}
 		}
 	case *CreateUser:
@@ -853,46 +712,34 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.Authentication != nil {
-			if !Walk(n.Authentication, fn) {
-				return false
-			}
+		if !Walk(n.Authentication, fn) {
+			return false
 		}
 		for _, host := range n.Hosts {
 			if !Walk(host, fn) {
 				return false
 			}
 		}
-		if n.DefaultRole != nil {
-			if !Walk(n.DefaultRole, fn) {
-				return false
-			}
+		if !Walk(n.DefaultRole, fn) {
+			return false
 		}
-		if n.DefaultDatabase != nil {
-			if !Walk(n.DefaultDatabase, fn) {
-				return false
-			}
+		if !Walk(n.DefaultDatabase, fn) {
+			return false
 		}
-		if n.Grantees != nil {
-			if !Walk(n.Grantees, fn) {
-				return false
-			}
+		if !Walk(n.Grantees, fn) {
+			return false
 		}
-		if n.Settings != nil {
-			for _, setting := range n.Settings {
-				if !Walk(setting, fn) {
-					return false
-				}
+		for _, setting := range n.Settings {
+			if !Walk(setting, fn) {
+				return false
 			}
 		}
 	case *AlterTable:
 		if !Walk(n.TableIdentifier, fn) {
 			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 		for _, expr := range n.AlterExprs {
 			if !Walk(expr, fn) {
@@ -903,79 +750,61 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Partition, fn) {
 			return false
 		}
-		if n.From != nil {
-			if !Walk(n.From, fn) {
-				return false
-			}
+		if !Walk(n.From, fn) {
+			return false
 		}
 	case *AlterTableDetachPartition:
 		if !Walk(n.Partition, fn) {
 			return false
 		}
-		if n.Settings != nil {
-			if !Walk(n.Settings, fn) {
-				return false
-			}
+		if !Walk(n.Settings, fn) {
+			return false
 		}
 	case *AlterTableDropPartition:
 		if !Walk(n.Partition, fn) {
 			return false
 		}
-		if n.Settings != nil {
-			if !Walk(n.Settings, fn) {
-				return false
-			}
+		if !Walk(n.Settings, fn) {
+			return false
 		}
 	case *AlterTableMaterializeProjection:
 		if !Walk(n.ProjectionName, fn) {
 			return false
 		}
-		if n.Partition != nil {
-			if !Walk(n.Partition, fn) {
-				return false
-			}
+		if !Walk(n.Partition, fn) {
+			return false
 		}
 	case *AlterTableMaterializeIndex:
 		if !Walk(n.IndexName, fn) {
 			return false
 		}
-		if n.Partition != nil {
-			if !Walk(n.Partition, fn) {
-				return false
-			}
+		if !Walk(n.Partition, fn) {
+			return false
 		}
 	case *AlterTableFreezePartition:
-		if n.Partition != nil {
-			if !Walk(n.Partition, fn) {
-				return false
-			}
+		if !Walk(n.Partition, fn) {
+			return false
 		}
 	case *AlterTableAddColumn:
 		if !Walk(n.Column, fn) {
 			return false
 		}
-		if n.After != nil {
-			if !Walk(n.After, fn) {
-				return false
-			}
+		if !Walk(n.After, fn) {
+			return false
 		}
 	case *AlterTableAddIndex:
 		if !Walk(n.Index, fn) {
 			return false
 		}
-		if n.After != nil {
-			if !Walk(n.After, fn) {
-				return false
-			}
+		if !Walk(n.After, fn) {
+			return false
 		}
 	case *AlterTableAddProjection:
 		if !Walk(n.TableProjection, fn) {
 			return false
 		}
-		if n.After != nil {
-			if !Walk(n.After, fn) {
-				return false
-			}
+		if !Walk(n.After, fn) {
+			return false
 		}
 	case *AlterTableDropColumn:
 		if !Walk(n.ColumnName, fn) {
@@ -995,28 +824,22 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.ColumnName, fn) {
 			return false
 		}
-		if n.PartitionExpr != nil {
-			if !Walk(n.PartitionExpr, fn) {
-				return false
-			}
+		if !Walk(n.PartitionExpr, fn) {
+			return false
 		}
 	case *AlterTableClearIndex:
 		if !Walk(n.IndexName, fn) {
 			return false
 		}
-		if n.PartitionExpr != nil {
-			if !Walk(n.PartitionExpr, fn) {
-				return false
-			}
+		if !Walk(n.PartitionExpr, fn) {
+			return false
 		}
 	case *AlterTableClearProjection:
 		if !Walk(n.ProjectionName, fn) {
 			return false
 		}
-		if n.PartitionExpr != nil {
-			if !Walk(n.PartitionExpr, fn) {
-				return false
-			}
+		if !Walk(n.PartitionExpr, fn) {
+			return false
 		}
 	case *AlterTableRenameColumn:
 		if !Walk(n.OldColumnName, fn) {
@@ -1037,10 +860,8 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Column, fn) {
 			return false
 		}
-		if n.RemovePropertyType != nil {
-			if !Walk(n.RemovePropertyType, fn) {
-				return false
-			}
+		if !Walk(n.RemovePropertyType, fn) {
+			return false
 		}
 	case *AlterTableModifySetting:
 		for _, setting := range n.Settings {
@@ -1067,11 +888,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.Settings != nil {
-			for _, setting := range n.Settings {
-				if !Walk(setting, fn) {
-					return false
-				}
+		for _, setting := range n.Settings {
+			if !Walk(setting, fn) {
+				return false
 			}
 		}
 	case *RoleRenamePair:
@@ -1087,15 +906,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.AliasTable != nil {
-			if !Walk(n.AliasTable, fn) {
-				return false
-			}
+		if !Walk(n.AliasTable, fn) {
+			return false
 		}
-		if n.TableFunction != nil {
-			if !Walk(n.TableFunction, fn) {
-				return false
-			}
+		if !Walk(n.TableFunction, fn) {
+			return false
 		}
 	case *ColumnDef:
 		if !Walk(n.Name, fn) {
@@ -1104,45 +919,29 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Type, fn) {
 			return false
 		}
-		if n.NotNull != nil {
-			if !Walk(n.NotNull, fn) {
-				return false
-			}
+		if !Walk(n.NotNull, fn) {
+			return false
 		}
-		if n.Nullable != nil {
-			if !Walk(n.Nullable, fn) {
-				return false
-			}
+		if !Walk(n.Nullable, fn) {
+			return false
 		}
-		if n.DefaultExpr != nil {
-			if !Walk(n.DefaultExpr, fn) {
-				return false
-			}
+		if !Walk(n.DefaultExpr, fn) {
+			return false
 		}
-		if n.MaterializedExpr != nil {
-			if !Walk(n.MaterializedExpr, fn) {
-				return false
-			}
+		if !Walk(n.MaterializedExpr, fn) {
+			return false
 		}
-		if n.AliasExpr != nil {
-			if !Walk(n.AliasExpr, fn) {
-				return false
-			}
+		if !Walk(n.AliasExpr, fn) {
+			return false
 		}
-		if n.Codec != nil {
-			if !Walk(n.Codec, fn) {
-				return false
-			}
+		if !Walk(n.Codec, fn) {
+			return false
 		}
-		if n.TTL != nil {
-			if !Walk(n.TTL, fn) {
-				return false
-			}
+		if !Walk(n.TTL, fn) {
+			return false
 		}
-		if n.Comment != nil {
-			if !Walk(n.Comment, fn) {
-				return false
-			}
+		if !Walk(n.Comment, fn) {
+			return false
 		}
 	case *ScalarType:
 		if !Walk(n.Name, fn) {
@@ -1184,61 +983,39 @@ func Walk(node Expr, fn WalkFunc) bool {
 			}
 		}
 	case *CompressionCodec:
-		if n.Type != nil {
-			if !Walk(n.Type, fn) {
-				return false
-			}
+		if !Walk(n.Type, fn) {
+			return false
 		}
-		if n.TypeLevel != nil {
-			if !Walk(n.TypeLevel, fn) {
-				return false
-			}
+		if !Walk(n.TypeLevel, fn) {
+			return false
 		}
-		if n.Name != nil {
-			if !Walk(n.Name, fn) {
-				return false
-			}
+		if !Walk(n.Name, fn) {
+			return false
 		}
-		if n.Level != nil {
-			if !Walk(n.Level, fn) {
-				return false
-			}
+		if !Walk(n.Level, fn) {
+			return false
 		}
 	case *EngineExpr:
-		if n.Params != nil {
-			if !Walk(n.Params, fn) {
-				return false
-			}
+		if !Walk(n.Params, fn) {
+			return false
 		}
-		if n.PrimaryKey != nil {
-			if !Walk(n.PrimaryKey, fn) {
-				return false
-			}
+		if !Walk(n.PrimaryKey, fn) {
+			return false
 		}
-		if n.PartitionBy != nil {
-			if !Walk(n.PartitionBy, fn) {
-				return false
-			}
+		if !Walk(n.PartitionBy, fn) {
+			return false
 		}
-		if n.SampleBy != nil {
-			if !Walk(n.SampleBy, fn) {
-				return false
-			}
+		if !Walk(n.SampleBy, fn) {
+			return false
 		}
-		if n.TTL != nil {
-			if !Walk(n.TTL, fn) {
-				return false
-			}
+		if !Walk(n.TTL, fn) {
+			return false
 		}
-		if n.Settings != nil {
-			if !Walk(n.Settings, fn) {
-				return false
-			}
+		if !Walk(n.Settings, fn) {
+			return false
 		}
-		if n.OrderBy != nil {
-			if !Walk(n.OrderBy, fn) {
-				return false
-			}
+		if !Walk(n.OrderBy, fn) {
+			return false
 		}
 	case *PrimaryKeyClause:
 		if !Walk(n.Expr, fn) {
@@ -1258,59 +1035,43 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Expr, fn) {
 			return false
 		}
-		if n.Policy != nil {
-			if !Walk(n.Policy, fn) {
-				return false
-			}
+		if !Walk(n.Policy, fn) {
+			return false
 		}
 	case *TTLPolicy:
 		if !Walk(n.Item, fn) {
 			return false
 		}
-		if n.Where != nil {
-			if !Walk(n.Where, fn) {
-				return false
-			}
+		if !Walk(n.Where, fn) {
+			return false
 		}
-		if n.GroupBy != nil {
-			if !Walk(n.GroupBy, fn) {
-				return false
-			}
+		if !Walk(n.GroupBy, fn) {
+			return false
 		}
 	case *TTLPolicyRule:
-		if n.ToVolume != nil {
-			if !Walk(n.ToVolume, fn) {
-				return false
-			}
+		if !Walk(n.ToVolume, fn) {
+			return false
 		}
-		if n.ToDisk != nil {
-			if !Walk(n.ToDisk, fn) {
-				return false
-			}
+		if !Walk(n.ToDisk, fn) {
+			return false
 		}
 	case *TTLPolicyRuleAction:
-		if n.Codec != nil {
-			if !Walk(n.Codec, fn) {
-				return false
-			}
+		if !Walk(n.Codec, fn) {
+			return false
 		}
 	case *RefreshExpr:
 		if !Walk(n.Interval, fn) {
 			return false
 		}
-		if n.Offset != nil {
-			if !Walk(n.Offset, fn) {
-				return false
-			}
+		if !Walk(n.Offset, fn) {
+			return false
 		}
 	case *DestinationClause:
 		if !Walk(n.TableIdentifier, fn) {
 			return false
 		}
-		if n.TableSchema != nil {
-			if !Walk(n.TableSchema, fn) {
-				return false
-			}
+		if !Walk(n.TableSchema, fn) {
+			return false
 		}
 	case *ConstraintClause:
 		if !Walk(n.Constraint, fn) {
@@ -1323,15 +1084,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Name, fn) {
 			return false
 		}
-		if n.Scope != nil {
-			if !Walk(n.Scope, fn) {
-				return false
-			}
+		if !Walk(n.Scope, fn) {
+			return false
 		}
-		if n.OnCluster != nil {
-			if !Walk(n.OnCluster, fn) {
-				return false
-			}
+		if !Walk(n.OnCluster, fn) {
+			return false
 		}
 	case *SettingPair:
 		if !Walk(n.Name, fn) {
@@ -1346,32 +1103,22 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
-		if n.Modifier != nil {
-			if !Walk(n.Modifier, fn) {
-				return false
-			}
+		if !Walk(n.Modifier, fn) {
+			return false
 		}
 	case *AuthenticationClause:
-		if n.AuthValue != nil {
-			if !Walk(n.AuthValue, fn) {
-				return false
-			}
+		if !Walk(n.AuthValue, fn) {
+			return false
 		}
-		if n.LdapServer != nil {
-			if !Walk(n.LdapServer, fn) {
-				return false
-			}
+		if !Walk(n.LdapServer, fn) {
+			return false
 		}
-		if n.KerberosRealm != nil {
-			if !Walk(n.KerberosRealm, fn) {
-				return false
-			}
+		if !Walk(n.KerberosRealm, fn) {
+			return false
 		}
 	case *HostClause:
-		if n.HostValue != nil {
-			if !Walk(n.HostValue, fn) {
-				return false
-			}
+		if !Walk(n.HostValue, fn) {
+			return false
 		}
 	case *DefaultRoleClause:
 		for _, role := range n.Roles {
@@ -1407,46 +1154,30 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Type, fn) {
 			return false
 		}
-		if n.Default != nil {
-			if !Walk(n.Default, fn) {
-				return false
-			}
+		if !Walk(n.Default, fn) {
+			return false
 		}
-		if n.Expression != nil {
-			if !Walk(n.Expression, fn) {
-				return false
-			}
+		if !Walk(n.Expression, fn) {
+			return false
 		}
 	case *DictionaryEngineClause:
-		if n.PrimaryKey != nil {
-			if !Walk(n.PrimaryKey, fn) {
-				return false
-			}
+		if !Walk(n.PrimaryKey, fn) {
+			return false
 		}
-		if n.Source != nil {
-			if !Walk(n.Source, fn) {
-				return false
-			}
+		if !Walk(n.Source, fn) {
+			return false
 		}
-		if n.Lifetime != nil {
-			if !Walk(n.Lifetime, fn) {
-				return false
-			}
+		if !Walk(n.Lifetime, fn) {
+			return false
 		}
-		if n.Layout != nil {
-			if !Walk(n.Layout, fn) {
-				return false
-			}
+		if !Walk(n.Layout, fn) {
+			return false
 		}
-		if n.Range != nil {
-			if !Walk(n.Range, fn) {
-				return false
-			}
+		if !Walk(n.Range, fn) {
+			return false
 		}
-		if n.Settings != nil {
-			if !Walk(n.Settings, fn) {
-				return false
-			}
+		if !Walk(n.Settings, fn) {
+			return false
 		}
 	case *DictionaryPrimaryKeyClause:
 		if !Walk(n.Keys, fn) {
@@ -1469,20 +1200,14 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *DictionaryLifetimeClause:
-		if n.Value != nil {
-			if !Walk(n.Value, fn) {
-				return false
-			}
+		if !Walk(n.Value, fn) {
+			return false
 		}
-		if n.Min != nil {
-			if !Walk(n.Min, fn) {
-				return false
-			}
+		if !Walk(n.Min, fn) {
+			return false
 		}
-		if n.Max != nil {
-			if !Walk(n.Max, fn) {
-				return false
-			}
+		if !Walk(n.Max, fn) {
+			return false
 		}
 	case *DictionaryLayoutClause:
 		if !Walk(n.Layout, fn) {
@@ -1600,23 +1325,17 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *ProjectionSelectStmt:
-		if n.With != nil {
-			if !Walk(n.With, fn) {
-				return false
-			}
+		if !Walk(n.With, fn) {
+			return false
 		}
 		if !Walk(n.SelectColumns, fn) {
 			return false
 		}
-		if n.GroupBy != nil {
-			if !Walk(n.GroupBy, fn) {
-				return false
-			}
+		if !Walk(n.GroupBy, fn) {
+			return false
 		}
-		if n.OrderBy != nil {
-			if !Walk(n.OrderBy, fn) {
-				return false
-			}
+		if !Walk(n.OrderBy, fn) {
+			return false
 		}
 	case *TableProjection:
 		if !Walk(n.Identifier, fn) {
@@ -1650,15 +1369,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *PartitionClause:
-		if n.Expr != nil {
-			if !Walk(n.Expr, fn) {
-				return false
-			}
+		if !Walk(n.Expr, fn) {
+			return false
 		}
-		if n.ID != nil {
-			if !Walk(n.ID, fn) {
-				return false
-			}
+		if !Walk(n.ID, fn) {
+			return false
 		}
 	case *UUID:
 		if !Walk(n.Value, fn) {
@@ -1673,10 +1388,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *JoinConstraintClause:
-		if n.On != nil && !Walk(n.On, fn) {
+		if !Walk(n.On, fn) {
 			return false
 		}
-		if n.Using != nil && !Walk(n.Using, fn) {
+		if !Walk(n.Using, fn) {
 			return false
 		}
 	case *TargetPair:
@@ -1687,23 +1402,23 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *ShowStmt:
-		if n.Target != nil && !Walk(n.Target, fn) {
+		if !Walk(n.Target, fn) {
 			return false
 		}
-		if n.LikePattern != nil && !Walk(n.LikePattern, fn) {
+		if !Walk(n.LikePattern, fn) {
 			return false
 		}
-		if n.Limit != nil && !Walk(n.Limit, fn) {
+		if !Walk(n.Limit, fn) {
 			return false
 		}
-		if n.OutFile != nil && !Walk(n.OutFile, fn) {
+		if !Walk(n.OutFile, fn) {
 			return false
 		}
-		if n.Format != nil && !Walk(n.Format, fn) {
+		if !Walk(n.Format, fn) {
 			return false
 		}
 	case *DescribeStmt:
-		if n.Target != nil && !Walk(n.Target, fn) {
+		if !Walk(n.Target, fn) {
 			return false
 		}
 	}
