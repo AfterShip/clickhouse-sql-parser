@@ -802,7 +802,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 			}
 			selectStmt.UnionAll = unionAllExpr
 		case p.tryConsumeKeywords(KeywordDistinct):
-			unionDistinctExpr, err := p.parseSelectStmt(p.Pos())
+			unionDistinctExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
 				return nil, err
 			}
@@ -811,7 +811,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 			return nil, fmt.Errorf("expected ALL or DISTINCT, got %s", p.lastTokenKind())
 		}
 	case p.tryConsumeKeywords(KeywordExcept):
-		exceptExpr, err := p.parseSelectStmt(p.Pos())
+		exceptExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
 			return nil, err
 		}
