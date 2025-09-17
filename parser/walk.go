@@ -143,7 +143,7 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *WhenClause:
-		if Walk(n.When, fn) {
+		if !Walk(n.When, fn) {
 			return false
 		}
 		if !Walk(n.Then, fn) {
