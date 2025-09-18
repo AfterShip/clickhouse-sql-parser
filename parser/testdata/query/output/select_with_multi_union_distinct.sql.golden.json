@@ -1,0 +1,120 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 14,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "NumPos": 7,
+          "NumEnd": 8,
+          "Literal": "1",
+          "Base": 10
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "v1",
+          "QuoteType": 1,
+          "NamePos": 12,
+          "NameEnd": 14
+        }
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": {
+      "SelectPos": 30,
+      "StatementEnd": 44,
+      "With": null,
+      "Top": null,
+      "HasDistinct": false,
+      "SelectItems": [
+        {
+          "Expr": {
+            "NumPos": 37,
+            "NumEnd": 38,
+            "Literal": "2",
+            "Base": 10
+          },
+          "Modifiers": [],
+          "Alias": {
+            "Name": "v2",
+            "QuoteType": 1,
+            "NamePos": 42,
+            "NameEnd": 44
+          }
+        }
+      ],
+      "From": null,
+      "ArrayJoin": null,
+      "Window": null,
+      "Prewhere": null,
+      "Where": null,
+      "GroupBy": null,
+      "WithTotal": false,
+      "Having": null,
+      "OrderBy": null,
+      "LimitBy": null,
+      "Limit": null,
+      "Settings": null,
+      "Format": null,
+      "UnionAll": null,
+      "UnionDistinct": {
+        "SelectPos": 60,
+        "StatementEnd": 74,
+        "With": null,
+        "Top": null,
+        "HasDistinct": false,
+        "SelectItems": [
+          {
+            "Expr": {
+              "NumPos": 67,
+              "NumEnd": 68,
+              "Literal": "3",
+              "Base": 10
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "v3",
+              "QuoteType": 1,
+              "NamePos": 72,
+              "NameEnd": 74
+            }
+          }
+        ],
+        "From": null,
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      },
+      "Except": null
+    },
+    "Except": null
+  }
+]
