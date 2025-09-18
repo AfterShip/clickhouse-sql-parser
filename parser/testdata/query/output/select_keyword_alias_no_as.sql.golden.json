@@ -1,0 +1,63 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 28,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "SelectItems": [
+      {
+        "Expr": {
+          "LiteralPos": 8,
+          "LiteralEnd": 11,
+          "Literal": "Joe"
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "name",
+          "QuoteType": 1,
+          "NamePos": 13,
+          "NameEnd": 17
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 18,
+      "Expr": {
+        "Table": {
+          "TablePos": 23,
+          "TableEnd": 28,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "users",
+              "QuoteType": 1,
+              "NamePos": 23,
+              "NameEnd": 28
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 28,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

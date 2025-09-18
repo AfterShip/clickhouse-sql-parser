@@ -744,12 +744,18 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	}
 
 	var alias *Ident
-	if p.tryConsumeKeywords(KeywordAs) {
+	switch {
+	case p.tryConsumeKeywords(KeywordAs):
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
-	} else {
+	case p.lastTokenKind() == TokenKindKeyword && !p.matchKeyword(KeywordFrom):
+		alias, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	default:
 		alias = p.tryParseIdent()
 	}
 
