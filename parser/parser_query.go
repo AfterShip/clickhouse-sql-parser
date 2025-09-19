@@ -1009,34 +1009,6 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 	}, nil
 }
 
-func (p *Parser) tryParseColumnAliases() ([]*Ident, error) {
-	if !p.matchTokenKind(TokenKindLParen) {
-		return nil, nil
-	}
-	if err := p.expectTokenKind(TokenKindLParen); err != nil {
-		return nil, err
-	}
-
-	aliasList := make([]*Ident, 0)
-	for {
-		ident, err := p.parseIdent()
-		if err != nil {
-			return nil, err
-		}
-		aliasList = append(aliasList, ident)
-		if p.matchTokenKind(TokenKindRParen) {
-			break
-		}
-		if err := p.expectTokenKind(TokenKindComma); err != nil {
-			return nil, err
-		}
-	}
-	if err := p.expectTokenKind(TokenKindRParen); err != nil {
-		return nil, err
-	}
-	return aliasList, nil
-}
-
 func (p *Parser) tryParseSampleClause(pos Pos) (*SampleClause, error) {
 	if !p.matchKeyword(KeywordSample) {
 		return nil, nil
