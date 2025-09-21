@@ -71,6 +71,49 @@ func (p *Parser) parseTopClause(pos Pos) (*TopClause, error) {
 	}, nil
 }
 
+func (p *Parser) tryParseDistinctOn(pos Pos) (*DistinctOn, error) {
+	if !p.matchKeyword(KeywordOn) {
+		return nil, nil
+	}
+	return p.parseDistinctOn(pos)
+}
+
+func (p *Parser) parseDistinctOn(pos Pos) (*DistinctOn, error) {
+	if err := p.expectKeyword(KeywordOn); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	ident, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	idents := []*Ident{ident}
+
+	for p.matchTokenKind(TokenKindComma) {
+		_ = p.lexer.consumeToken()
+
+		ident, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		idents = append(idents, ident)
+	}
+
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	return &DistinctOn{
+		Idents:        idents,
+		DistinctOnPos: pos,
+		DistinctOnEnd: p.Pos(),
+	}, nil
+}
+
 func (p *Parser) tryParseFromClause(pos Pos) (*FromClause, error) {
 	if !p.matchKeyword(KeywordFrom) {
 		return nil, nil
@@ -835,6 +878,10 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	}
 	// DISTINCT?
 	hasDistinct := p.tryConsumeKeywords(KeywordDistinct)
+	distinctOn, err := p.tryParseDistinctOn(p.Pos())
+	if err != nil {
+		return nil, err
+	}
 
 	top, err := p.tryParseTopClause(p.Pos())
 	if err != nil {
@@ -961,6 +1008,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		StatementEnd: statementEnd,
 		Top:          top,
 		HasDistinct:  hasDistinct,
+		DistinctOn:   distinctOn,
 		SelectItems:  selectItems,
 		From:         from,
 		ArrayJoin:    arrayJoin,
