@@ -15,6 +15,7 @@
       "WithTies": false
     },
     "HasDistinct": false,
+    "DistinctOn": null,
     "SelectItems": [
       {
         "Expr": {

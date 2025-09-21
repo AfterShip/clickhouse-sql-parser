@@ -184,6 +184,7 @@ type ASTVisitor interface {
 	VisitDescribeExpr(expr *DescribeStmt) error
 	VisitSelectItem(expr *SelectItem) error
 	VisitTargetPairExpr(expr *TargetPair) error
+	VisitDistinctOn(expr *DistinctOn) error
 
 	Enter(expr Expr)
 	Leave(expr Expr)
@@ -1470,6 +1471,13 @@ func (v *DefaultASTVisitor) VisitSelectItem(expr *SelectItem) error {
 }
 
 func (v *DefaultASTVisitor) VisitTargetPairExpr(expr *TargetPair) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDistinctOn(expr *DistinctOn) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

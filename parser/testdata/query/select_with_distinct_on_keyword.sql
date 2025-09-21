@@ -1,0 +1,1 @@
+SELECT DISTINCT ON(album,artist) record_id FROM records
