@@ -5,6 +5,7 @@
     "With": null,
     "Top": null,
     "HasDistinct": true,
+    "DistinctOn": null,
     "SelectItems": [
       {
         "Expr": {

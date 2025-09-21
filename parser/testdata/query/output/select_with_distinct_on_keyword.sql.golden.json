@@ -1,72 +1,59 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 48,
+    "StatementEnd": 55,
     "With": null,
     "Top": null,
-    "HasDistinct": false,
-    "DistinctOn": null,
+    "HasDistinct": true,
+    "DistinctOn": {
+      "Idents": [
+        {
+          "Name": "album",
+          "QuoteType": 1,
+          "NamePos": 19,
+          "NameEnd": 24
+        },
+        {
+          "Name": "artist",
+          "QuoteType": 1,
+          "NamePos": 25,
+          "NameEnd": 31
+        }
+      ],
+      "DistinctOnPos": 16,
+      "DistinctOnEnd": 33
+    },
     "SelectItems": [
       {
         "Expr": {
-          "Name": "field0",
+          "Name": "record_id",
           "QuoteType": 1,
-          "NamePos": 7,
-          "NameEnd": 13
+          "NamePos": 33,
+          "NameEnd": 42
         },
         "Modifiers": [],
         "Alias": null
-      },
-      {
-        "Expr": {
-          "Name": "field1",
-          "QuoteType": 1,
-          "NamePos": 15,
-          "NameEnd": 21
-        },
-        "Modifiers": [],
-        "Alias": {
-          "Name": "x",
-          "QuoteType": 1,
-          "NamePos": 25,
-          "NameEnd": 26
-        }
-      },
-      {
-        "Expr": {
-          "Name": "field2",
-          "QuoteType": 1,
-          "NamePos": 28,
-          "NameEnd": 34
-        },
-        "Modifiers": [],
-        "Alias": {
-          "Name": "y",
-          "QuoteType": 1,
-          "NamePos": 35,
-          "NameEnd": 36
-        }
       }
     ],
     "From": {
-      "FromPos": 37,
+      "FromPos": 43,
       "Expr": {
         "Table": {
-          "TablePos": 42,
-          "TableEnd": 48,
+          "TablePos": 48,
+          "TableEnd": 55,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
-              "Name": "events",
+              "Name": "records",
               "QuoteType": 1,
-              "NamePos": 42,
-              "NameEnd": 48
+              "NamePos": 48,
+              "NameEnd": 55
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 48,
+        "StatementEnd": 55,
         "SampleRatio": null,
         "HasFinal": false
       }

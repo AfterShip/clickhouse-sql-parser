@@ -5,6 +5,7 @@
     "With": null,
     "Top": null,
     "HasDistinct": false,
+    "DistinctOn": null,
     "SelectItems": [
       {
         "Expr": {
@@ -64,6 +65,7 @@
       "With": null,
       "Top": null,
       "HasDistinct": false,
+      "DistinctOn": null,
       "SelectItems": [
         {
           "Expr": {
