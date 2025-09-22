@@ -22,6 +22,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.With, fn) {
 			return false
 		}
+		if !Walk(n.DistinctOn, fn) {
+			return false
+		}
 		if !Walk(n.Top, fn) {
 			return false
 		}
@@ -1420,6 +1423,12 @@ func Walk(node Expr, fn WalkFunc) bool {
 	case *DescribeStmt:
 		if !Walk(n.Target, fn) {
 			return false
+		}
+	case *DistinctOn:
+		for _, ident := range n.Idents {
+			if !Walk(ident, fn) {
+				return false
+			}
 		}
 	}
 	return true
