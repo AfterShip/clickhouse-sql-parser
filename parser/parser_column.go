@@ -1018,7 +1018,51 @@ func (p *Parser) parseJSONOption() (*JSONOption, error) {
 			SkipPath: jsonPath,
 		}, nil
 	case p.matchTokenKind(TokenKindIdent):
-		return p.parseJSONMaxDynamicOptions(p.Pos())
+		// Could be max_dynamic_* option OR a type hint like: a.b String
+		// Lookahead to see if there's an '=' following the identifier path (max_dynamic_*)
+		// or if it's a path followed by a ColumnType.
+		// We'll parse a JSONPath first, then decide.
+		// Save lexer state by consuming as path greedily using existing helpers.
+		// Try: if single ident and next is '=' -> max_dynamic_*; else treat as path + type
+
+		// Peek next token after current ident without consuming type; we need to
+		// attempt to parse as max_dynamic_* first as it's existing behavior for a single ident.
+		// To support dotted paths, we need to capture path, then if '=' exists, it's option; otherwise parse type.
+		path, err := p.parseJSONPath()
+		if err != nil {
+			return nil, err
+		}
+		if p.tryConsumeTokenKind(TokenKindSingleEQ) != nil {
+			// This is a max_dynamic_* option; only valid when path is a single ident of that name
+			// Reconstruct handling similar to parseJSONMaxDynamicOptions but we already consumed ident and '='
+			// Determine which option based on the first ident name
+			if len(path.Idents) != 1 {
+				return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+			}
+			name := path.Idents[0].Name
+			switch name {
+			case "max_dynamic_types":
+				number, err := p.parseNumber(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				return &JSONOption{MaxDynamicTypes: number}, nil
+			case "max_dynamic_paths":
+				number, err := p.parseNumber(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				return &JSONOption{MaxDynamicPaths: number}, nil
+			default:
+				return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+			}
+		}
+		// Otherwise, expect a ColumnType as a type hint for the JSON subpath
+		colType, err := p.parseColumnType(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &JSONOption{Column: &JSONTypeHint{Path: path, Type: colType}}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
 	}

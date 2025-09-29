@@ -4169,11 +4169,18 @@ func (j *JSONPath) String() string {
 	return builder.String()
 }
 
+type JSONTypeHint struct {
+	Path *JSONPath
+	Type ColumnType
+}
+
 type JSONOption struct {
 	SkipPath        *JSONPath
 	SkipRegex       *StringLiteral
 	MaxDynamicPaths *NumberLiteral
 	MaxDynamicTypes *NumberLiteral
+	// Type hint for specific JSON subcolumn path, e.g., "message String" or "a.b UInt64"
+	Column *JSONTypeHint
 }
 
 func (j *JSONOption) String() string {
@@ -4196,6 +4203,16 @@ func (j *JSONOption) String() string {
 		builder.WriteByte('=')
 		builder.WriteString(j.MaxDynamicTypes.String())
 	}
+	if j.Column != nil && j.Column.Path != nil && j.Column.Type != nil {
+		// add a leading space if there is already content
+		if builder.Len() > 0 {
+			builder.WriteByte(' ')
+		}
+		builder.WriteString(j.Column.Path.String())
+		builder.WriteByte(' ')
+		builder.WriteString(j.Column.Type.String())
+	}
+
 	return builder.String()
 }
 
@@ -4216,12 +4233,41 @@ func (j *JSONOptions) End() Pos {
 func (j *JSONOptions) String() string {
 	var builder strings.Builder
 	builder.WriteByte('(')
-	for i, item := range j.Items {
-		if i > 0 {
-			builder.WriteString(", ")
+	// Ensure stable, readable ordering:
+	// 1) numeric options (max_dynamic_*), 2) type-hint items, 3) skip options (SKIP, SKIP REGEXP)
+	// Preserve original relative order within each group.
+	numericOptionItems := make([]*JSONOption, 0, len(j.Items))
+	columnItems := make([]*JSONOption, 0, len(j.Items))
+	skipOptionItems := make([]*JSONOption, 0, len(j.Items))
+	for _, item := range j.Items {
+		if item.MaxDynamicPaths != nil || item.MaxDynamicTypes != nil {
+			numericOptionItems = append(numericOptionItems, item)
+			continue
 		}
-		builder.WriteString(item.String())
+		if item.Column != nil {
+			columnItems = append(columnItems, item)
+			continue
+		}
+		if item.SkipPath != nil || item.SkipRegex != nil {
+			skipOptionItems = append(skipOptionItems, item)
+			continue
+		}
+		// Fallback: treat as numeric option to avoid dropping unknown future fields
+		numericOptionItems = append(numericOptionItems, item)
 	}
+
+	writeItems := func(items []*JSONOption) {
+		for _, item := range items {
+			if builder.Len() > 1 { // account for the initial '('
+				builder.WriteString(", ")
+			}
+			builder.WriteString(item.String())
+		}
+	}
+
+	writeItems(numericOptionItems)
+	writeItems(columnItems)
+	writeItems(skipOptionItems)
 	builder.WriteByte(')')
 	return builder.String()
 }
