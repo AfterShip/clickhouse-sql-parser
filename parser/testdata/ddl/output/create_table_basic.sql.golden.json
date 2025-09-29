@@ -685,22 +685,24 @@
                   "SkipRegex": null,
                   "MaxDynamicPaths": null,
                   "MaxDynamicTypes": {
-                    "NumPos": 571,
+                    "NumPos": 589,
                     "NumEnd": 591,
                     "Literal": "10",
                     "Base": 10
-                  }
+                  },
+                  "Column": null
                 },
                 {
                   "SkipPath": null,
                   "SkipRegex": null,
                   "MaxDynamicPaths": {
-                    "NumPos": 593,
+                    "NumPos": 611,
                     "NumEnd": 612,
                     "Literal": "3",
                     "Base": 10
                   },
-                  "MaxDynamicTypes": null
+                  "MaxDynamicTypes": null,
+                  "Column": null
                 },
                 {
                   "SkipPath": {
@@ -715,7 +717,8 @@
                   },
                   "SkipRegex": null,
                   "MaxDynamicPaths": null,
-                  "MaxDynamicTypes": null
+                  "MaxDynamicTypes": null,
+                  "Column": null
                 },
                 {
                   "SkipPath": {
@@ -742,7 +745,8 @@
                   },
                   "SkipRegex": null,
                   "MaxDynamicPaths": null,
-                  "MaxDynamicTypes": null
+                  "MaxDynamicTypes": null,
+                  "Column": null
                 },
                 {
                   "SkipPath": null,
@@ -752,7 +756,8 @@
                     "Literal": "hello"
                   },
                   "MaxDynamicPaths": null,
-                  "MaxDynamicTypes": null
+                  "MaxDynamicTypes": null,
+                  "Column": null
                 }
               ]
             }

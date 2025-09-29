@@ -1,0 +1,204 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 139,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 14
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 15,
+      "SchemaEnd": 103,
+      "Columns": [
+        {
+          "NamePos": 21,
+          "ColumnEnd": 101,
+          "Name": {
+            "Ident": {
+              "Name": "j",
+              "QuoteType": 1,
+              "NamePos": 21,
+              "NameEnd": 22
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "JSON",
+              "QuoteType": 1,
+              "NamePos": 23,
+              "NameEnd": 27
+            },
+            "Options": {
+              "LParen": 28,
+              "RParen": 101,
+              "Items": [
+                {
+                  "SkipPath": null,
+                  "SkipRegex": null,
+                  "MaxDynamicPaths": null,
+                  "MaxDynamicTypes": null,
+                  "Column": {
+                    "Path": {
+                      "Idents": [
+                        {
+                          "Name": "message",
+                          "QuoteType": 1,
+                          "NamePos": 28,
+                          "NameEnd": 35
+                        }
+                      ]
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "String",
+                        "QuoteType": 1,
+                        "NamePos": 36,
+                        "NameEnd": 42
+                      }
+                    }
+                  }
+                },
+                {
+                  "SkipPath": null,
+                  "SkipRegex": null,
+                  "MaxDynamicPaths": null,
+                  "MaxDynamicTypes": null,
+                  "Column": {
+                    "Path": {
+                      "Idents": [
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 44,
+                          "NameEnd": 45
+                        },
+                        {
+                          "Name": "b",
+                          "QuoteType": 1,
+                          "NamePos": 46,
+                          "NameEnd": 47
+                        }
+                      ]
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "UInt64",
+                        "QuoteType": 1,
+                        "NamePos": 48,
+                        "NameEnd": 54
+                      }
+                    }
+                  }
+                },
+                {
+                  "SkipPath": null,
+                  "SkipRegex": null,
+                  "MaxDynamicPaths": {
+                    "NumPos": 74,
+                    "NumEnd": 75,
+                    "Literal": "0",
+                    "Base": 10
+                  },
+                  "MaxDynamicTypes": null,
+                  "Column": null
+                },
+                {
+                  "SkipPath": {
+                    "Idents": [
+                      {
+                        "Name": "x",
+                        "QuoteType": 1,
+                        "NamePos": 82,
+                        "NameEnd": 83
+                      }
+                    ]
+                  },
+                  "SkipRegex": null,
+                  "MaxDynamicPaths": null,
+                  "MaxDynamicTypes": null,
+                  "Column": null
+                },
+                {
+                  "SkipPath": null,
+                  "SkipRegex": {
+                    "LiteralPos": 98,
+                    "LiteralEnd": 100,
+                    "Literal": "re"
+                  },
+                  "MaxDynamicPaths": null,
+                  "MaxDynamicTypes": null,
+                  "Column": null
+                }
+              ]
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 105,
+      "EngineEnd": 139,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 124,
+        "ListEnd": 139,
+        "Items": [
+          {
+            "OrderPos": 124,
+            "Expr": {
+              "Name": {
+                "Name": "tuple",
+                "QuoteType": 1,
+                "NamePos": 133,
+                "NameEnd": 138
+              },
+              "Params": {
+                "LeftParenPos": 138,
+                "RightParenPos": 139,
+                "Items": {
+                  "ListPos": 139,
+                  "ListEnd": 139,
+                  "HasDistinct": false,
+                  "Items": []
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Alias": null,
+            "Direction": ""
+          }
+        ]
+      }
+    },
+    "SubQuery": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
