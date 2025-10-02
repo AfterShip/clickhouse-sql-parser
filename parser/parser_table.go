@@ -331,11 +331,11 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 }
 
 func (p *Parser) parseTableIdentifier(_ Pos) (*TableIdentifier, error) {
-	ident, err := p.parseIdent()
+	ident, err := p.parseIdentOrString()
 	if err != nil {
 		return nil, err
 	}
-	dotIdent, err := p.tryParseDotIdent(p.Pos())
+	dotIdent, err := p.tryParseDotIdentOrString(p.Pos())
 	if err != nil {
 		return nil, err
 	}

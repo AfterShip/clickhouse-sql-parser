@@ -230,7 +230,7 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 
 func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	switch {
-	case p.matchTokenKind(TokenKindIdent), p.matchTokenKind(TokenKindLParen):
+	case p.matchTokenKind(TokenKindIdent), p.matchTokenKind(TokenKindString), p.matchTokenKind(TokenKindLParen):
 		tableExpr, err := p.parseTableExpr(p.Pos())
 		if err != nil {
 			return nil, err

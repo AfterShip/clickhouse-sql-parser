@@ -142,11 +142,36 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 	}
 }
 
+func (p *Parser) parseIdentOrString() (*Ident, error) {
+	switch {
+	case p.matchTokenKind(TokenKindIdent):
+		return p.parseIdent()
+	case p.matchTokenKind(TokenKindString):
+		lastToken := p.last()
+		_ = p.lexer.consumeToken()
+		return &Ident{
+			NamePos:   lastToken.Pos,
+			NameEnd:   lastToken.End,
+			Name:      lastToken.String,
+			QuoteType: SingleQuote, // Treat string literals as single-quoted identifiers
+		}, nil
+	default:
+		return nil, fmt.Errorf("expected <ident> or <string>, but got %q", p.lastTokenKind())
+	}
+}
+
 func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
 	if p.tryConsumeTokenKind(TokenKindDot) == nil {
 		return nil, nil // nolint
 	}
 	return p.parseIdent()
+}
+
+func (p *Parser) tryParseDotIdentOrString(_ Pos) (*Ident, error) {
+	if p.tryConsumeTokenKind(TokenKindDot) == nil {
+		return nil, nil // nolint
+	}
+	return p.parseIdentOrString()
 }
 
 func (p *Parser) parseUUID() (*UUID, error) {
