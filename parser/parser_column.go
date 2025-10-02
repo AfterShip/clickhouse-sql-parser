@@ -1142,13 +1142,15 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 		if err != nil {
 			return nil, err
 		}
-		// consume comma
-		if err := p.expectTokenKind(TokenKindComma); err != nil {
-			return nil, err
-		}
-		name, err = p.parseIdent()
-		if err != nil {
-			return nil, err
+
+		if p.matchTokenKind(TokenKindComma) {
+			if err := p.expectTokenKind(TokenKindComma); err != nil {
+				return nil, err
+			}
+			name, err = p.parseIdent()
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
