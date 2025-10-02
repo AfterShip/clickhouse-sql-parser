@@ -1545,10 +1545,13 @@ func (i *Ident) End() Pos {
 }
 
 func (i *Ident) String() string {
-	if i.QuoteType == BackTicks {
+	switch i.QuoteType {
+	case BackTicks:
 		return "`" + i.Name + "`"
-	} else if i.QuoteType == DoubleQuote {
+	case DoubleQuote:
 		return `"` + i.Name + `"`
+	case SingleQuote:
+		return `'` + i.Name + `'`
 	}
 	return i.Name
 }

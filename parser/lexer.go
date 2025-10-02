@@ -50,6 +50,7 @@ const (
 	Unquoted = iota + 1
 	DoubleQuote
 	BackTicks
+	SingleQuote
 )
 
 type Pos int
