@@ -366,6 +366,8 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseColumnCastExpr(pos)
 	case p.matchKeyword(KeywordCase):
 		return p.parseColumnCaseExpr(pos)
+	case p.matchKeyword(KeywordSelect):
+		return p.parseSelectQuery(pos)
 	case p.matchKeyword(KeywordExtract):
 		return p.parseColumnExtractExpr(pos)
 	case p.matchTokenKind(TokenKindIdent):
