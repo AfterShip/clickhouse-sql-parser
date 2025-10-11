@@ -13,21 +13,21 @@
     "Partition": null
   },
   {
-    "CheckPos": 25,
+    "CheckPos": 24,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "test_table",
         "QuoteType": 1,
-        "NamePos": 37,
-        "NameEnd": 47
+        "NamePos": 36,
+        "NameEnd": 46
       }
     },
     "Partition": {
-      "PartitionPos": 48,
+      "PartitionPos": 47,
       "Expr": {
-        "LiteralPos": 59,
-        "LiteralEnd": 62,
+        "LiteralPos": 58,
+        "LiteralEnd": 61,
         "Literal": "col"
       },
       "ID": null,

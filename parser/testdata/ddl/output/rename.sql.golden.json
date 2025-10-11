@@ -1,7 +1,7 @@
 [
   {
-    "RenamePos": 17,
-    "StatementEnd": 39,
+    "RenamePos": 16,
+    "StatementEnd": 38,
     "RenameTarget": "TABLE",
     "TargetPairList": [
       {
@@ -10,8 +10,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 30,
-            "NameEnd": 32
+            "NamePos": 29,
+            "NameEnd": 31
           }
         },
         "New": {
@@ -19,8 +19,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 36,
-            "NameEnd": 39
+            "NamePos": 35,
+            "NameEnd": 38
           }
         }
       }
@@ -28,8 +28,8 @@
     "OnCluster": null
   },
   {
-    "RenamePos": 42,
-    "StatementEnd": 92,
+    "RenamePos": 40,
+    "StatementEnd": 90,
     "RenameTarget": "TABLE",
     "TargetPairList": [
       {
@@ -38,8 +38,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 55,
-            "NameEnd": 57
+            "NamePos": 53,
+            "NameEnd": 55
           }
         },
         "New": {
@@ -47,24 +47,24 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 61,
-            "NameEnd": 64
+            "NamePos": 59,
+            "NameEnd": 62
           }
         }
       }
     ],
     "OnCluster": {
-      "OnPos": 65,
+      "OnPos": 63,
       "Expr": {
-        "LiteralPos": 77,
-        "LiteralEnd": 92,
+        "LiteralPos": 75,
+        "LiteralEnd": 90,
         "Literal": "default_cluster"
       }
     }
   },
   {
-    "RenamePos": 96,
-    "StatementEnd": 129,
+    "RenamePos": 93,
+    "StatementEnd": 126,
     "RenameTarget": "TABLE",
     "TargetPairList": [
       {
@@ -73,8 +73,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 109,
-            "NameEnd": 111
+            "NamePos": 106,
+            "NameEnd": 108
           }
         },
         "New": {
@@ -82,8 +82,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 115,
-            "NameEnd": 118
+            "NamePos": 112,
+            "NameEnd": 115
           }
         }
       },
@@ -93,8 +93,8 @@
           "Table": {
             "Name": "t2",
             "QuoteType": 1,
-            "NamePos": 120,
-            "NameEnd": 122
+            "NamePos": 117,
+            "NameEnd": 119
           }
         },
         "New": {
@@ -102,8 +102,8 @@
           "Table": {
             "Name": "t22",
             "QuoteType": 1,
-            "NamePos": 126,
-            "NameEnd": 129
+            "NamePos": 123,
+            "NameEnd": 126
           }
         }
       }
@@ -111,8 +111,8 @@
     "OnCluster": null
   },
   {
-    "RenamePos": 132,
-    "StatementEnd": 193,
+    "RenamePos": 128,
+    "StatementEnd": 189,
     "RenameTarget": "TABLE",
     "TargetPairList": [
       {
@@ -121,8 +121,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 145,
-            "NameEnd": 147
+            "NamePos": 141,
+            "NameEnd": 143
           }
         },
         "New": {
@@ -130,44 +130,44 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 151,
+            "NamePos": 147,
+            "NameEnd": 150
+          }
+        }
+      },
+      {
+        "Old": {
+          "Database": null,
+          "Table": {
+            "Name": "t2",
+            "QuoteType": 1,
+            "NamePos": 152,
             "NameEnd": 154
           }
-        }
-      },
-      {
-        "Old": {
-          "Database": null,
-          "Table": {
-            "Name": "t2",
-            "QuoteType": 1,
-            "NamePos": 156,
-            "NameEnd": 158
-          }
         },
         "New": {
           "Database": null,
           "Table": {
             "Name": "t22",
             "QuoteType": 1,
-            "NamePos": 162,
-            "NameEnd": 165
+            "NamePos": 158,
+            "NameEnd": 161
           }
         }
       }
     ],
     "OnCluster": {
-      "OnPos": 166,
+      "OnPos": 162,
       "Expr": {
-        "LiteralPos": 178,
-        "LiteralEnd": 193,
+        "LiteralPos": 174,
+        "LiteralEnd": 189,
         "Literal": "default_cluster"
       }
     }
   },
   {
-    "RenamePos": 222,
-    "StatementEnd": 249,
+    "RenamePos": 216,
+    "StatementEnd": 243,
     "RenameTarget": "DICTIONARY",
     "TargetPairList": [
       {
@@ -175,18 +175,18 @@
           "Database": null,
           "Table": {
             "Name": "t1",
+            "QuoteType": 1,
+            "NamePos": 234,
+            "NameEnd": 236
+          }
+        },
+        "New": {
+          "Database": null,
+          "Table": {
+            "Name": "t11",
             "QuoteType": 1,
             "NamePos": 240,
-            "NameEnd": 242
-          }
-        },
-        "New": {
-          "Database": null,
-          "Table": {
-            "Name": "t11",
-            "QuoteType": 1,
-            "NamePos": 246,
-            "NameEnd": 249
+            "NameEnd": 243
           }
         }
       }
@@ -194,8 +194,8 @@
     "OnCluster": null
   },
   {
-    "RenamePos": 252,
-    "StatementEnd": 307,
+    "RenamePos": 245,
+    "StatementEnd": 300,
     "RenameTarget": "DICTIONARY",
     "TargetPairList": [
       {
@@ -204,33 +204,33 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 270,
+            "NamePos": 263,
+            "NameEnd": 265
+          }
+        },
+        "New": {
+          "Database": null,
+          "Table": {
+            "Name": "t11",
+            "QuoteType": 1,
+            "NamePos": 269,
             "NameEnd": 272
           }
-        },
-        "New": {
-          "Database": null,
-          "Table": {
-            "Name": "t11",
-            "QuoteType": 1,
-            "NamePos": 276,
-            "NameEnd": 279
-          }
         }
       }
     ],
     "OnCluster": {
-      "OnPos": 280,
+      "OnPos": 273,
       "Expr": {
-        "LiteralPos": 292,
-        "LiteralEnd": 307,
+        "LiteralPos": 285,
+        "LiteralEnd": 300,
         "Literal": "default_cluster"
       }
     }
   },
   {
-    "RenamePos": 311,
-    "StatementEnd": 349,
+    "RenamePos": 303,
+    "StatementEnd": 341,
     "RenameTarget": "DICTIONARY",
     "TargetPairList": [
       {
@@ -239,8 +239,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 329,
-            "NameEnd": 331
+            "NamePos": 321,
+            "NameEnd": 323
           }
         },
         "New": {
@@ -248,8 +248,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 335,
-            "NameEnd": 338
+            "NamePos": 327,
+            "NameEnd": 330
           }
         }
       },
@@ -259,8 +259,8 @@
           "Table": {
             "Name": "t2",
             "QuoteType": 1,
-            "NamePos": 340,
-            "NameEnd": 342
+            "NamePos": 332,
+            "NameEnd": 334
           }
         },
         "New": {
@@ -268,8 +268,8 @@
           "Table": {
             "Name": "t22",
             "QuoteType": 1,
-            "NamePos": 346,
-            "NameEnd": 349
+            "NamePos": 338,
+            "NameEnd": 341
           }
         }
       }
@@ -277,8 +277,8 @@
     "OnCluster": null
   },
   {
-    "RenamePos": 352,
-    "StatementEnd": 418,
+    "RenamePos": 343,
+    "StatementEnd": 409,
     "RenameTarget": "DICTIONARY",
     "TargetPairList": [
       {
@@ -287,8 +287,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 370,
-            "NameEnd": 372
+            "NamePos": 361,
+            "NameEnd": 363
           }
         },
         "New": {
@@ -296,8 +296,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 376,
-            "NameEnd": 379
+            "NamePos": 367,
+            "NameEnd": 370
           }
         }
       },
@@ -307,8 +307,8 @@
           "Table": {
             "Name": "t2",
             "QuoteType": 1,
-            "NamePos": 381,
-            "NameEnd": 383
+            "NamePos": 372,
+            "NameEnd": 374
           }
         },
         "New": {
@@ -316,24 +316,24 @@
           "Table": {
             "Name": "t22",
             "QuoteType": 1,
-            "NamePos": 387,
-            "NameEnd": 390
+            "NamePos": 378,
+            "NameEnd": 381
           }
         }
       }
     ],
     "OnCluster": {
-      "OnPos": 391,
+      "OnPos": 382,
       "Expr": {
-        "LiteralPos": 403,
-        "LiteralEnd": 418,
+        "LiteralPos": 394,
+        "LiteralEnd": 409,
         "Literal": "default_cluster"
       }
     }
   },
   {
-    "RenamePos": 442,
-    "StatementEnd": 467,
+    "RenamePos": 431,
+    "StatementEnd": 456,
     "RenameTarget": "DATABASE",
     "TargetPairList": [
       {
@@ -342,8 +342,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 458,
-            "NameEnd": 460
+            "NamePos": 447,
+            "NameEnd": 449
           }
         },
         "New": {
@@ -351,8 +351,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 464,
-            "NameEnd": 467
+            "NamePos": 453,
+            "NameEnd": 456
           }
         }
       }
@@ -360,8 +360,8 @@
     "OnCluster": null
   },
   {
-    "RenamePos": 470,
-    "StatementEnd": 523,
+    "RenamePos": 458,
+    "StatementEnd": 511,
     "RenameTarget": "DATABASE",
     "TargetPairList": [
       {
@@ -370,8 +370,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 486,
-            "NameEnd": 488
+            "NamePos": 474,
+            "NameEnd": 476
           }
         },
         "New": {
@@ -379,24 +379,24 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 492,
-            "NameEnd": 495
+            "NamePos": 480,
+            "NameEnd": 483
           }
         }
       }
     ],
     "OnCluster": {
-      "OnPos": 496,
+      "OnPos": 484,
       "Expr": {
-        "LiteralPos": 508,
-        "LiteralEnd": 523,
+        "LiteralPos": 496,
+        "LiteralEnd": 511,
         "Literal": "default_cluster"
       }
     }
   },
   {
-    "RenamePos": 527,
-    "StatementEnd": 563,
+    "RenamePos": 514,
+    "StatementEnd": 550,
     "RenameTarget": "DATABASE",
     "TargetPairList": [
       {
@@ -405,8 +405,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 543,
-            "NameEnd": 545
+            "NamePos": 530,
+            "NameEnd": 532
           }
         },
         "New": {
@@ -414,8 +414,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 549,
-            "NameEnd": 552
+            "NamePos": 536,
+            "NameEnd": 539
           }
         }
       },
@@ -425,8 +425,8 @@
           "Table": {
             "Name": "t2",
             "QuoteType": 1,
-            "NamePos": 554,
-            "NameEnd": 556
+            "NamePos": 541,
+            "NameEnd": 543
           }
         },
         "New": {
@@ -434,8 +434,8 @@
           "Table": {
             "Name": "t22",
             "QuoteType": 1,
-            "NamePos": 560,
-            "NameEnd": 563
+            "NamePos": 547,
+            "NameEnd": 550
           }
         }
       }
@@ -443,8 +443,8 @@
     "OnCluster": null
   },
   {
-    "RenamePos": 566,
-    "StatementEnd": 630,
+    "RenamePos": 552,
+    "StatementEnd": 616,
     "RenameTarget": "DATABASE",
     "TargetPairList": [
       {
@@ -453,8 +453,8 @@
           "Table": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 582,
-            "NameEnd": 584
+            "NamePos": 568,
+            "NameEnd": 570
           }
         },
         "New": {
@@ -462,8 +462,8 @@
           "Table": {
             "Name": "t11",
             "QuoteType": 1,
-            "NamePos": 588,
-            "NameEnd": 591
+            "NamePos": 574,
+            "NameEnd": 577
           }
         }
       },
@@ -473,8 +473,8 @@
           "Table": {
             "Name": "t2",
             "QuoteType": 1,
-            "NamePos": 593,
-            "NameEnd": 595
+            "NamePos": 579,
+            "NameEnd": 581
           }
         },
         "New": {
@@ -482,17 +482,17 @@
           "Table": {
             "Name": "t22",
             "QuoteType": 1,
-            "NamePos": 599,
-            "NameEnd": 602
+            "NamePos": 585,
+            "NameEnd": 588
           }
         }
       }
     ],
     "OnCluster": {
-      "OnPos": 603,
+      "OnPos": 589,
       "Expr": {
-        "LiteralPos": 615,
-        "LiteralEnd": 630,
+        "LiteralPos": 601,
+        "LiteralEnd": 616,
         "Literal": "default_cluster"
       }
     }

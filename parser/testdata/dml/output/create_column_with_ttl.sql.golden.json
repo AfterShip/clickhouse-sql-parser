@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 182,
+    "StatementEnd": 176,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -17,17 +17,17 @@
     "OnCluster": null,
     "TableSchema": {
       "SchemaPos": 22,
-      "SchemaEnd": 144,
+      "SchemaEnd": 140,
       "Columns": [
         {
-          "NamePos": 29,
-          "ColumnEnd": 47,
+          "NamePos": 28,
+          "ColumnEnd": 46,
           "Name": {
             "Ident": {
               "Name": "timestamp",
               "QuoteType": 1,
-              "NamePos": 29,
-              "NameEnd": 38
+              "NamePos": 28,
+              "NameEnd": 37
             },
             "DotIdent": null
           },
@@ -35,8 +35,8 @@
             "Name": {
               "Name": "DateTime",
               "QuoteType": 1,
-              "NamePos": 39,
-              "NameEnd": 47
+              "NamePos": 38,
+              "NameEnd": 46
             }
           },
           "NotNull": null,
@@ -50,14 +50,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 54,
-          "ColumnEnd": 95,
+          "NamePos": 52,
+          "ColumnEnd": 93,
           "Name": {
             "Ident": {
               "Name": "x",
               "QuoteType": 1,
-              "NamePos": 54,
-              "NameEnd": 55
+              "NamePos": 52,
+              "NameEnd": 53
             },
             "DotIdent": null
           },
@@ -65,8 +65,8 @@
             "Name": {
               "Name": "UInt32",
               "QuoteType": 1,
-              "NamePos": 56,
-              "NameEnd": 62
+              "NamePos": 54,
+              "NameEnd": 60
             }
           },
           "NotNull": null,
@@ -76,32 +76,32 @@
           "AliasExpr": null,
           "Codec": null,
           "TTL": {
-            "TTLPos": 63,
-            "ListEnd": 95,
+            "TTLPos": 61,
+            "ListEnd": 93,
             "Items": [
               {
-                "TTLPos": 63,
+                "TTLPos": 61,
                 "Expr": {
                   "LeftExpr": {
                     "Name": "timestamp",
                     "QuoteType": 1,
-                    "NamePos": 67,
-                    "NameEnd": 76
+                    "NamePos": 65,
+                    "NameEnd": 74
                   },
                   "Operation": "+",
                   "RightExpr": {
-                    "IntervalPos": 79,
+                    "IntervalPos": 77,
                     "Expr": {
-                      "NumPos": 88,
-                      "NumEnd": 89,
+                      "NumPos": 86,
+                      "NumEnd": 87,
                       "Literal": "1",
                       "Base": 10
                     },
                     "Unit": {
                       "Name": "MONTH",
                       "QuoteType": 1,
-                      "NamePos": 90,
-                      "NameEnd": 95
+                      "NamePos": 88,
+                      "NameEnd": 93
                     }
                   },
                   "HasGlobal": false,
@@ -115,14 +115,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 102,
-          "ColumnEnd": 142,
+          "NamePos": 99,
+          "ColumnEnd": 139,
           "Name": {
             "Ident": {
               "Name": "y",
               "QuoteType": 1,
-              "NamePos": 102,
-              "NameEnd": 103
+              "NamePos": 99,
+              "NameEnd": 100
             },
             "DotIdent": null
           },
@@ -130,8 +130,8 @@
             "Name": {
               "Name": "UInt32",
               "QuoteType": 1,
-              "NamePos": 104,
-              "NameEnd": 110
+              "NamePos": 101,
+              "NameEnd": 107
             }
           },
           "NotNull": null,
@@ -141,32 +141,32 @@
           "AliasExpr": null,
           "Codec": null,
           "TTL": {
-            "TTLPos": 111,
-            "ListEnd": 142,
+            "TTLPos": 108,
+            "ListEnd": 139,
             "Items": [
               {
-                "TTLPos": 111,
+                "TTLPos": 108,
                 "Expr": {
                   "LeftExpr": {
                     "Name": "timestamp",
                     "QuoteType": 1,
-                    "NamePos": 115,
-                    "NameEnd": 124
+                    "NamePos": 112,
+                    "NameEnd": 121
                   },
                   "Operation": "+",
                   "RightExpr": {
-                    "IntervalPos": 127,
+                    "IntervalPos": 124,
                     "Expr": {
-                      "NumPos": 136,
-                      "NumEnd": 137,
+                      "NumPos": 133,
+                      "NumEnd": 134,
                       "Literal": "1",
                       "Base": 10
                     },
                     "Unit": {
                       "Name": "WEEK",
                       "QuoteType": 1,
-                      "NamePos": 138,
-                      "NameEnd": 142
+                      "NamePos": 135,
+                      "NameEnd": 139
                     }
                   },
                   "HasGlobal": false,
@@ -184,8 +184,8 @@
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 147,
-      "EngineEnd": 182,
+      "EnginePos": 142,
+      "EngineEnd": 176,
       "Name": "MergeTree",
       "Params": null,
       "PrimaryKey": null,
@@ -194,24 +194,24 @@
       "TTL": null,
       "Settings": null,
       "OrderBy": {
-        "OrderPos": 167,
-        "ListEnd": 182,
+        "OrderPos": 161,
+        "ListEnd": 176,
         "Items": [
           {
-            "OrderPos": 167,
+            "OrderPos": 161,
             "Expr": {
               "Name": {
                 "Name": "tuple",
                 "QuoteType": 1,
-                "NamePos": 176,
-                "NameEnd": 181
+                "NamePos": 170,
+                "NameEnd": 175
               },
               "Params": {
-                "LeftParenPos": 181,
-                "RightParenPos": 182,
+                "LeftParenPos": 175,
+                "RightParenPos": 176,
                 "Items": {
-                  "ListPos": 182,
-                  "ListEnd": 182,
+                  "ListPos": 176,
+                  "ListEnd": 176,
                   "HasDistinct": false,
                   "Items": []
                 },

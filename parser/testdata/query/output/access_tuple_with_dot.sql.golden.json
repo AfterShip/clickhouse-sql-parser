@@ -93,8 +93,8 @@
     "Except": null
   },
   {
-    "SelectPos": 39,
-    "StatementEnd": 341,
+    "SelectPos": 37,
+    "StatementEnd": 336,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -105,15 +105,15 @@
           "Name": {
             "Name": "toTypeName",
             "QuoteType": 1,
-            "NamePos": 46,
-            "NameEnd": 56
+            "NamePos": 44,
+            "NameEnd": 54
           },
           "Params": {
-            "LeftParenPos": 56,
-            "RightParenPos": 153,
+            "LeftParenPos": 54,
+            "RightParenPos": 151,
             "Items": {
-              "ListPos": 58,
-              "ListEnd": 152,
+              "ListPos": 56,
+              "ListEnd": 150,
               "HasDistinct": false,
               "Items": [
                 {
@@ -122,54 +122,54 @@
                       "Name": {
                         "Name": "tuple",
                         "QuoteType": 1,
-                        "NamePos": 58,
-                        "NameEnd": 63
+                        "NamePos": 56,
+                        "NameEnd": 61
                       },
                       "Params": {
-                        "LeftParenPos": 63,
-                        "RightParenPos": 104,
+                        "LeftParenPos": 61,
+                        "RightParenPos": 102,
                         "Items": {
-                          "ListPos": 65,
-                          "ListEnd": 104,
+                          "ListPos": 63,
+                          "ListEnd": 102,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 65,
-                                "LiteralEnd": 66,
+                                "LiteralPos": 63,
+                                "LiteralEnd": 64,
                                 "Literal": "a"
                               },
                               "Alias": {
                                 "Name": "first",
                                 "QuoteType": 1,
-                                "NamePos": 71,
-                                "NameEnd": 76
+                                "NamePos": 69,
+                                "NameEnd": 74
                               }
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 78,
-                                "LiteralEnd": 79,
+                                "LiteralPos": 76,
+                                "LiteralEnd": 77,
                                 "Literal": "b"
                               },
                               "Alias": {
                                 "Name": "second",
                                 "QuoteType": 1,
-                                "NamePos": 84,
-                                "NameEnd": 90
+                                "NamePos": 82,
+                                "NameEnd": 88
                               }
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 93,
-                                "LiteralEnd": 94,
+                                "LiteralPos": 91,
+                                "LiteralEnd": 92,
                                 "Literal": "c"
                               },
                               "Alias": {
                                 "Name": "third",
                                 "QuoteType": 1,
-                                "NamePos": 99,
-                                "NameEnd": 104
+                                "NamePos": 97,
+                                "NameEnd": 102
                               }
                             }
                           ]
@@ -179,24 +179,24 @@
                     },
                     "Operation": "::",
                     "RightExpr": {
-                      "LeftParenPos": 113,
-                      "RightParenPos": 152,
+                      "LeftParenPos": 111,
+                      "RightParenPos": 150,
                       "Name": {
                         "Name": "Tuple",
                         "QuoteType": 1,
-                        "NamePos": 107,
-                        "NameEnd": 112
+                        "NamePos": 105,
+                        "NameEnd": 110
                       },
                       "Columns": [
                         {
-                          "NamePos": 113,
-                          "ColumnEnd": 125,
+                          "NamePos": 111,
+                          "ColumnEnd": 123,
                           "Name": {
                             "Ident": {
                               "Name": "first",
                               "QuoteType": 1,
-                              "NamePos": 113,
-                              "NameEnd": 118
+                              "NamePos": 111,
+                              "NameEnd": 116
                             },
                             "DotIdent": null
                           },
@@ -204,8 +204,8 @@
                             "Name": {
                               "Name": "String",
                               "QuoteType": 1,
-                              "NamePos": 119,
-                              "NameEnd": 125
+                              "NamePos": 117,
+                              "NameEnd": 123
                             }
                           },
                           "NotNull": null,
@@ -219,14 +219,14 @@
                           "CompressionCodec": null
                         },
                         {
-                          "NamePos": 126,
-                          "ColumnEnd": 139,
+                          "NamePos": 124,
+                          "ColumnEnd": 137,
                           "Name": {
                             "Ident": {
                               "Name": "second",
                               "QuoteType": 1,
-                              "NamePos": 126,
-                              "NameEnd": 132
+                              "NamePos": 124,
+                              "NameEnd": 130
                             },
                             "DotIdent": null
                           },
@@ -234,8 +234,8 @@
                             "Name": {
                               "Name": "String",
                               "QuoteType": 1,
-                              "NamePos": 133,
-                              "NameEnd": 139
+                              "NamePos": 131,
+                              "NameEnd": 137
                             }
                           },
                           "NotNull": null,
@@ -249,14 +249,14 @@
                           "CompressionCodec": null
                         },
                         {
-                          "NamePos": 140,
-                          "ColumnEnd": 152,
+                          "NamePos": 138,
+                          "ColumnEnd": 150,
                           "Name": {
                             "Ident": {
                               "Name": "third",
                               "QuoteType": 1,
-                              "NamePos": 140,
-                              "NameEnd": 145
+                              "NamePos": 138,
+                              "NameEnd": 143
                             },
                             "DotIdent": null
                           },
@@ -264,8 +264,8 @@
                             "Name": {
                               "Name": "String",
                               "QuoteType": 1,
-                              "NamePos": 146,
-                              "NameEnd": 152
+                              "NamePos": 144,
+                              "NameEnd": 150
                             }
                           },
                           "NotNull": null,
@@ -296,11 +296,11 @@
       {
         "Expr": {
           "Object": {
-            "LeftParenPos": 164,
-            "RightParenPos": 260,
+            "LeftParenPos": 161,
+            "RightParenPos": 257,
             "Items": {
-              "ListPos": 165,
-              "ListEnd": 259,
+              "ListPos": 162,
+              "ListEnd": 256,
               "HasDistinct": false,
               "Items": [
                 {
@@ -309,54 +309,54 @@
                       "Name": {
                         "Name": "tuple",
                         "QuoteType": 1,
-                        "NamePos": 165,
-                        "NameEnd": 170
+                        "NamePos": 162,
+                        "NameEnd": 167
                       },
                       "Params": {
-                        "LeftParenPos": 170,
-                        "RightParenPos": 211,
+                        "LeftParenPos": 167,
+                        "RightParenPos": 208,
                         "Items": {
-                          "ListPos": 172,
-                          "ListEnd": 211,
+                          "ListPos": 169,
+                          "ListEnd": 208,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 172,
-                                "LiteralEnd": 173,
+                                "LiteralPos": 169,
+                                "LiteralEnd": 170,
                                 "Literal": "a"
                               },
                               "Alias": {
                                 "Name": "first",
                                 "QuoteType": 1,
-                                "NamePos": 178,
-                                "NameEnd": 183
+                                "NamePos": 175,
+                                "NameEnd": 180
                               }
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 185,
-                                "LiteralEnd": 186,
+                                "LiteralPos": 182,
+                                "LiteralEnd": 183,
                                 "Literal": "b"
                               },
                               "Alias": {
                                 "Name": "second",
                                 "QuoteType": 1,
-                                "NamePos": 191,
-                                "NameEnd": 197
+                                "NamePos": 188,
+                                "NameEnd": 194
                               }
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 200,
-                                "LiteralEnd": 201,
+                                "LiteralPos": 197,
+                                "LiteralEnd": 198,
                                 "Literal": "c"
                               },
                               "Alias": {
                                 "Name": "third",
                                 "QuoteType": 1,
-                                "NamePos": 206,
-                                "NameEnd": 211
+                                "NamePos": 203,
+                                "NameEnd": 208
                               }
                             }
                           ]
@@ -366,24 +366,24 @@
                     },
                     "Operation": "::",
                     "RightExpr": {
-                      "LeftParenPos": 220,
-                      "RightParenPos": 259,
+                      "LeftParenPos": 217,
+                      "RightParenPos": 256,
                       "Name": {
                         "Name": "Tuple",
                         "QuoteType": 1,
-                        "NamePos": 214,
-                        "NameEnd": 219
+                        "NamePos": 211,
+                        "NameEnd": 216
                       },
                       "Columns": [
                         {
-                          "NamePos": 220,
-                          "ColumnEnd": 232,
+                          "NamePos": 217,
+                          "ColumnEnd": 229,
                           "Name": {
                             "Ident": {
                               "Name": "first",
                               "QuoteType": 1,
-                              "NamePos": 220,
-                              "NameEnd": 225
+                              "NamePos": 217,
+                              "NameEnd": 222
                             },
                             "DotIdent": null
                           },
@@ -391,8 +391,8 @@
                             "Name": {
                               "Name": "String",
                               "QuoteType": 1,
-                              "NamePos": 226,
-                              "NameEnd": 232
+                              "NamePos": 223,
+                              "NameEnd": 229
                             }
                           },
                           "NotNull": null,
@@ -406,14 +406,14 @@
                           "CompressionCodec": null
                         },
                         {
-                          "NamePos": 233,
-                          "ColumnEnd": 246,
+                          "NamePos": 230,
+                          "ColumnEnd": 243,
                           "Name": {
                             "Ident": {
                               "Name": "second",
                               "QuoteType": 1,
-                              "NamePos": 233,
-                              "NameEnd": 239
+                              "NamePos": 230,
+                              "NameEnd": 236
                             },
                             "DotIdent": null
                           },
@@ -421,8 +421,8 @@
                             "Name": {
                               "Name": "String",
                               "QuoteType": 1,
-                              "NamePos": 240,
-                              "NameEnd": 246
+                              "NamePos": 237,
+                              "NameEnd": 243
                             }
                           },
                           "NotNull": null,
@@ -436,14 +436,14 @@
                           "CompressionCodec": null
                         },
                         {
-                          "NamePos": 247,
-                          "ColumnEnd": 259,
+                          "NamePos": 244,
+                          "ColumnEnd": 256,
                           "Name": {
                             "Ident": {
                               "Name": "third",
                               "QuoteType": 1,
-                              "NamePos": 247,
-                              "NameEnd": 252
+                              "NamePos": 244,
+                              "NameEnd": 249
                             },
                             "DotIdent": null
                           },
@@ -451,8 +451,8 @@
                             "Name": {
                               "Name": "String",
                               "QuoteType": 1,
-                              "NamePos": 253,
-                              "NameEnd": 259
+                              "NamePos": 250,
+                              "NameEnd": 256
                             }
                           },
                           "NotNull": null,
@@ -480,8 +480,8 @@
           "Index": {
             "Name": "second",
             "QuoteType": 1,
-            "NamePos": 262,
-            "NameEnd": 268
+            "NamePos": 259,
+            "NameEnd": 265
           }
         },
         "Modifiers": [],
@@ -493,22 +493,30 @@
             "Name": {
               "Name": "tuple",
               "QuoteType": 1,
-              "NamePos": 278,
-              "NameEnd": 283
+              "NamePos": 274,
+              "NameEnd": 279
             },
             "Params": {
-              "LeftParenPos": 283,
-              "RightParenPos": 295,
+              "LeftParenPos": 279,
+              "RightParenPos": 291,
               "Items": {
-                "ListPos": 285,
-                "ListEnd": 294,
+                "ListPos": 281,
+                "ListEnd": 290,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
+                      "LiteralPos": 281,
+                      "LiteralEnd": 282,
+                      "Literal": "a"
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
                       "LiteralPos": 285,
                       "LiteralEnd": 286,
-                      "Literal": "a"
+                      "Literal": "b"
                     },
                     "Alias": null
                   },
@@ -516,14 +524,6 @@
                     "Expr": {
                       "LiteralPos": 289,
                       "LiteralEnd": 290,
-                      "Literal": "b"
-                    },
-                    "Alias": null
-                  },
-                  {
-                    "Expr": {
-                      "LiteralPos": 293,
-                      "LiteralEnd": 294,
                       "Literal": "c"
                     },
                     "Alias": null
@@ -535,8 +535,8 @@
           },
           "Operation": ".",
           "Index": {
-            "NumPos": 297,
-            "NumEnd": 298,
+            "NumPos": 293,
+            "NumEnd": 294,
             "Literal": "3",
             "Base": 10
           }
@@ -549,15 +549,15 @@
           "Name": {
             "Name": "tupleElement",
             "QuoteType": 1,
-            "NamePos": 308,
-            "NameEnd": 320
+            "NamePos": 303,
+            "NameEnd": 315
           },
           "Params": {
-            "LeftParenPos": 320,
-            "RightParenPos": 341,
+            "LeftParenPos": 315,
+            "RightParenPos": 336,
             "Items": {
-              "ListPos": 321,
-              "ListEnd": 341,
+              "ListPos": 316,
+              "ListEnd": 336,
               "HasDistinct": false,
               "Items": [
                 {
@@ -565,37 +565,37 @@
                     "Name": {
                       "Name": "tuple",
                       "QuoteType": 1,
-                      "NamePos": 321,
-                      "NameEnd": 326
+                      "NamePos": 316,
+                      "NameEnd": 321
                     },
                     "Params": {
-                      "LeftParenPos": 326,
-                      "RightParenPos": 338,
+                      "LeftParenPos": 321,
+                      "RightParenPos": 333,
                       "Items": {
-                        "ListPos": 328,
-                        "ListEnd": 337,
+                        "ListPos": 323,
+                        "ListEnd": 332,
                         "HasDistinct": false,
                         "Items": [
                           {
                             "Expr": {
-                              "LiteralPos": 328,
-                              "LiteralEnd": 329,
+                              "LiteralPos": 323,
+                              "LiteralEnd": 324,
                               "Literal": "a"
                             },
                             "Alias": null
                           },
                           {
                             "Expr": {
-                              "LiteralPos": 332,
-                              "LiteralEnd": 333,
+                              "LiteralPos": 327,
+                              "LiteralEnd": 328,
                               "Literal": "b"
                             },
                             "Alias": null
                           },
                           {
                             "Expr": {
-                              "LiteralPos": 336,
-                              "LiteralEnd": 337,
+                              "LiteralPos": 331,
+                              "LiteralEnd": 332,
                               "Literal": "c"
                             },
                             "Alias": null
@@ -609,8 +609,8 @@
                 },
                 {
                   "Expr": {
-                    "NumPos": 340,
-                    "NumEnd": 341,
+                    "NumPos": 335,
+                    "NumEnd": 336,
                     "Literal": "1",
                     "Base": 10
                   },

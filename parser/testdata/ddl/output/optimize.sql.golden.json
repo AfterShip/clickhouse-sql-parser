@@ -21,33 +21,33 @@
     }
   },
   {
-    "OptimizePos": 50,
-    "StatementEnd": 86,
+    "OptimizePos": 49,
+    "StatementEnd": 85,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 65,
-        "NameEnd": 70
+        "NamePos": 64,
+        "NameEnd": 69
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 71,
+      "DeduplicatePos": 70,
       "By": {
-        "ListPos": 86,
-        "ListEnd": 86,
+        "ListPos": 85,
+        "ListEnd": 85,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
               "Name": "*",
               "QuoteType": 0,
-              "NamePos": 86,
-              "NameEnd": 86
+              "NamePos": 85,
+              "NameEnd": 85
             },
             "Alias": null
           }
@@ -57,33 +57,33 @@
     }
   },
   {
-    "OptimizePos": 133,
-    "StatementEnd": 183,
+    "OptimizePos": 131,
+    "StatementEnd": 181,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 148,
-        "NameEnd": 153
+        "NamePos": 146,
+        "NameEnd": 151
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 154,
+      "DeduplicatePos": 152,
       "By": {
-        "ListPos": 169,
-        "ListEnd": 183,
+        "ListPos": 167,
+        "ListEnd": 181,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
               "Name": "colX",
               "QuoteType": 1,
-              "NamePos": 169,
-              "NameEnd": 173
+              "NamePos": 167,
+              "NameEnd": 171
             },
             "Alias": null
           },
@@ -91,8 +91,8 @@
             "Expr": {
               "Name": "colY",
               "QuoteType": 1,
-              "NamePos": 174,
-              "NameEnd": 178
+              "NamePos": 172,
+              "NameEnd": 176
             },
             "Alias": null
           },
@@ -100,8 +100,8 @@
             "Expr": {
               "Name": "colZ",
               "QuoteType": 1,
-              "NamePos": 179,
-              "NameEnd": 183
+              "NamePos": 177,
+              "NameEnd": 181
             },
             "Alias": null
           }
@@ -111,49 +111,49 @@
     }
   },
   {
-    "OptimizePos": 186,
-    "StatementEnd": 222,
+    "OptimizePos": 183,
+    "StatementEnd": 219,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 201,
-        "NameEnd": 206
+        "NamePos": 198,
+        "NameEnd": 203
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 207,
+      "DeduplicatePos": 204,
       "By": {
-        "ListPos": 222,
-        "ListEnd": 222,
+        "ListPos": 219,
+        "ListEnd": 219,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
               "Name": "*",
               "QuoteType": 0,
-              "NamePos": 222,
-              "NameEnd": 222
+              "NamePos": 219,
+              "NameEnd": 219
             },
             "Alias": null
           }
         ]
       },
       "Except": {
-        "ListPos": 231,
-        "ListEnd": 235,
+        "ListPos": 228,
+        "ListEnd": 232,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
               "Name": "colX",
               "QuoteType": 1,
-              "NamePos": 231,
-              "NameEnd": 235
+              "NamePos": 228,
+              "NameEnd": 232
             },
             "Alias": null
           }
@@ -162,58 +162,58 @@
     }
   },
   {
-    "OptimizePos": 238,
-    "StatementEnd": 274,
+    "OptimizePos": 234,
+    "StatementEnd": 270,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 253,
-        "NameEnd": 258
+        "NamePos": 249,
+        "NameEnd": 254
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 259,
+      "DeduplicatePos": 255,
       "By": {
-        "ListPos": 274,
-        "ListEnd": 274,
+        "ListPos": 270,
+        "ListEnd": 270,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
               "Name": "*",
               "QuoteType": 0,
-              "NamePos": 274,
-              "NameEnd": 274
+              "NamePos": 270,
+              "NameEnd": 270
             },
             "Alias": null
           }
         ]
       },
       "Except": {
-        "ListPos": 283,
-        "ListEnd": 294,
+        "ListPos": 279,
+        "ListEnd": 290,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
-              "LeftParenPos": 283,
-              "RightParenPos": 294,
+              "LeftParenPos": 279,
+              "RightParenPos": 290,
               "Items": {
-                "ListPos": 284,
-                "ListEnd": 294,
+                "ListPos": 280,
+                "ListEnd": 290,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "colX",
                       "QuoteType": 1,
-                      "NamePos": 284,
-                      "NameEnd": 288
+                      "NamePos": 280,
+                      "NameEnd": 284
                     },
                     "Alias": null
                   },
@@ -221,8 +221,8 @@
                     "Expr": {
                       "Name": "colY",
                       "QuoteType": 1,
-                      "NamePos": 290,
-                      "NameEnd": 294
+                      "NamePos": 286,
+                      "NameEnd": 290
                     },
                     "Alias": null
                   }
@@ -237,25 +237,25 @@
     }
   },
   {
-    "OptimizePos": 298,
-    "StatementEnd": 367,
+    "OptimizePos": 293,
+    "StatementEnd": 362,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 313,
-        "NameEnd": 318
+        "NamePos": 308,
+        "NameEnd": 313
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 319,
+      "DeduplicatePos": 314,
       "By": {
-        "ListPos": 334,
-        "ListEnd": 367,
+        "ListPos": 329,
+        "ListEnd": 362,
         "HasDistinct": false,
         "Items": [
           {
@@ -263,21 +263,21 @@
               "Name": {
                 "Name": "COLUMNS",
                 "QuoteType": 1,
-                "NamePos": 334,
-                "NameEnd": 341
+                "NamePos": 329,
+                "NameEnd": 336
               },
               "Params": {
-                "LeftParenPos": 341,
-                "RightParenPos": 367,
+                "LeftParenPos": 336,
+                "RightParenPos": 362,
                 "Items": {
-                  "ListPos": 343,
-                  "ListEnd": 366,
+                  "ListPos": 338,
+                  "ListEnd": 361,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
-                        "LiteralPos": 343,
-                        "LiteralEnd": 366,
+                        "LiteralPos": 338,
+                        "LiteralEnd": 361,
                         "Literal": "column-matched-by-regex"
                       },
                       "Alias": null
@@ -295,25 +295,25 @@
     }
   },
   {
-    "OptimizePos": 371,
-    "StatementEnd": 440,
+    "OptimizePos": 365,
+    "StatementEnd": 434,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 386,
-        "NameEnd": 391
+        "NamePos": 380,
+        "NameEnd": 385
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 392,
+      "DeduplicatePos": 386,
       "By": {
-        "ListPos": 407,
-        "ListEnd": 440,
+        "ListPos": 401,
+        "ListEnd": 434,
         "HasDistinct": false,
         "Items": [
           {
@@ -321,21 +321,21 @@
               "Name": {
                 "Name": "COLUMNS",
                 "QuoteType": 1,
-                "NamePos": 407,
-                "NameEnd": 414
+                "NamePos": 401,
+                "NameEnd": 408
               },
               "Params": {
-                "LeftParenPos": 414,
-                "RightParenPos": 440,
+                "LeftParenPos": 408,
+                "RightParenPos": 434,
                 "Items": {
-                  "ListPos": 416,
-                  "ListEnd": 439,
+                  "ListPos": 410,
+                  "ListEnd": 433,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
-                        "LiteralPos": 416,
-                        "LiteralEnd": 439,
+                        "LiteralPos": 410,
+                        "LiteralEnd": 433,
                         "Literal": "column-matched-by-regex"
                       },
                       "Alias": null
@@ -350,16 +350,16 @@
         ]
       },
       "Except": {
-        "ListPos": 449,
-        "ListEnd": 453,
+        "ListPos": 443,
+        "ListEnd": 447,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
               "Name": "colX",
               "QuoteType": 1,
-              "NamePos": 449,
-              "NameEnd": 453
+              "NamePos": 443,
+              "NameEnd": 447
             },
             "Alias": null
           }
@@ -368,25 +368,25 @@
     }
   },
   {
-    "OptimizePos": 456,
-    "StatementEnd": 525,
+    "OptimizePos": 449,
+    "StatementEnd": 518,
     "Table": {
       "Database": null,
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 471,
-        "NameEnd": 476
+        "NamePos": 464,
+        "NameEnd": 469
       }
     },
     "OnCluster": null,
     "Partition": null,
     "HasFinal": false,
     "Deduplicate": {
-      "DeduplicatePos": 477,
+      "DeduplicatePos": 470,
       "By": {
-        "ListPos": 492,
-        "ListEnd": 525,
+        "ListPos": 485,
+        "ListEnd": 518,
         "HasDistinct": false,
         "Items": [
           {
@@ -394,21 +394,21 @@
               "Name": {
                 "Name": "COLUMNS",
                 "QuoteType": 1,
-                "NamePos": 492,
-                "NameEnd": 499
+                "NamePos": 485,
+                "NameEnd": 492
               },
               "Params": {
-                "LeftParenPos": 499,
-                "RightParenPos": 525,
+                "LeftParenPos": 492,
+                "RightParenPos": 518,
                 "Items": {
-                  "ListPos": 501,
-                  "ListEnd": 524,
+                  "ListPos": 494,
+                  "ListEnd": 517,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
-                        "LiteralPos": 501,
-                        "LiteralEnd": 524,
+                        "LiteralPos": 494,
+                        "LiteralEnd": 517,
                         "Literal": "column-matched-by-regex"
                       },
                       "Alias": null
@@ -423,25 +423,25 @@
         ]
       },
       "Except": {
-        "ListPos": 534,
-        "ListEnd": 545,
+        "ListPos": 527,
+        "ListEnd": 538,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
-              "LeftParenPos": 534,
-              "RightParenPos": 545,
+              "LeftParenPos": 527,
+              "RightParenPos": 538,
               "Items": {
-                "ListPos": 535,
-                "ListEnd": 545,
+                "ListPos": 528,
+                "ListEnd": 538,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "colX",
                       "QuoteType": 1,
-                      "NamePos": 535,
-                      "NameEnd": 539
+                      "NamePos": 528,
+                      "NameEnd": 532
                     },
                     "Alias": null
                   },
@@ -449,8 +449,8 @@
                     "Expr": {
                       "Name": "colY",
                       "QuoteType": 1,
-                      "NamePos": 541,
-                      "NameEnd": 545
+                      "NamePos": 534,
+                      "NameEnd": 538
                     },
                     "Alias": null
                   }

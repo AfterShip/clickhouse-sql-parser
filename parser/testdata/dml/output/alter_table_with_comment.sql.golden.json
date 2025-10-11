@@ -77,43 +77,43 @@
     ]
   },
   {
-    "AlterPos": 111,
-    "StatementEnd": 203,
+    "AlterPos": 110,
+    "StatementEnd": 202,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 123,
-        "NameEnd": 127
+        "NamePos": 122,
+        "NameEnd": 126
       },
       "Table": {
         "Name": "events_local",
         "QuoteType": 1,
-        "NamePos": 128,
-        "NameEnd": 140
+        "NamePos": 127,
+        "NameEnd": 139
       }
     },
     "OnCluster": {
-      "OnPos": 141,
+      "OnPos": 140,
       "Expr": {
-        "LiteralPos": 153,
-        "LiteralEnd": 168,
+        "LiteralPos": 152,
+        "LiteralEnd": 167,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
-        "AddPos": 170,
-        "StatementEnd": 203,
+        "AddPos": 169,
+        "StatementEnd": 202,
         "Column": {
-          "NamePos": 181,
-          "ColumnEnd": 203,
+          "NamePos": 180,
+          "ColumnEnd": 202,
           "Name": {
             "Ident": {
               "Name": "hello",
               "QuoteType": 1,
-              "NamePos": 181,
-              "NameEnd": 186
+              "NamePos": 180,
+              "NameEnd": 185
             },
             "DotIdent": null
           },
@@ -121,15 +121,15 @@
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 187,
-              "NameEnd": 193
+              "NamePos": 186,
+              "NameEnd": 192
             }
           },
           "NotNull": null,
           "Nullable": null,
           "DefaultExpr": {
-            "LiteralPos": 203,
-            "LiteralEnd": 203,
+            "LiteralPos": 202,
+            "LiteralEnd": 202,
             "Literal": ""
           },
           "MaterializedExpr": null,

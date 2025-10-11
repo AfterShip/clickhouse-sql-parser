@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 142,
+    "StatementEnd": 139,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -17,17 +17,17 @@
     "OnCluster": null,
     "TableSchema": {
       "SchemaPos": 15,
-      "SchemaEnd": 105,
+      "SchemaEnd": 103,
       "Columns": [
         {
-          "NamePos": 22,
-          "ColumnEnd": 102,
+          "NamePos": 21,
+          "ColumnEnd": 101,
           "Name": {
             "Ident": {
               "Name": "j",
               "QuoteType": 1,
-              "NamePos": 22,
-              "NameEnd": 23
+              "NamePos": 21,
+              "NameEnd": 22
             },
             "DotIdent": null
           },
@@ -35,12 +35,12 @@
             "Name": {
               "Name": "JSON",
               "QuoteType": 1,
-              "NamePos": 24,
-              "NameEnd": 28
+              "NamePos": 23,
+              "NameEnd": 27
             },
             "Options": {
-              "LParen": 29,
-              "RParen": 102,
+              "LParen": 28,
+              "RParen": 101,
               "Items": [
                 {
                   "SkipPath": null,
@@ -53,8 +53,8 @@
                         {
                           "Name": "message",
                           "QuoteType": 1,
-                          "NamePos": 29,
-                          "NameEnd": 36
+                          "NamePos": 28,
+                          "NameEnd": 35
                         }
                       ]
                     },
@@ -62,8 +62,8 @@
                       "Name": {
                         "Name": "String",
                         "QuoteType": 1,
-                        "NamePos": 37,
-                        "NameEnd": 43
+                        "NamePos": 36,
+                        "NameEnd": 42
                       }
                     }
                   }
@@ -79,14 +79,14 @@
                         {
                           "Name": "a",
                           "QuoteType": 1,
-                          "NamePos": 45,
-                          "NameEnd": 46
+                          "NamePos": 44,
+                          "NameEnd": 45
                         },
                         {
                           "Name": "b",
                           "QuoteType": 1,
-                          "NamePos": 47,
-                          "NameEnd": 48
+                          "NamePos": 46,
+                          "NameEnd": 47
                         }
                       ]
                     },
@@ -94,8 +94,8 @@
                       "Name": {
                         "Name": "UInt64",
                         "QuoteType": 1,
-                        "NamePos": 49,
-                        "NameEnd": 55
+                        "NamePos": 48,
+                        "NameEnd": 54
                       }
                     }
                   }
@@ -104,8 +104,8 @@
                   "SkipPath": null,
                   "SkipRegex": null,
                   "MaxDynamicPaths": {
-                    "NumPos": 75,
-                    "NumEnd": 76,
+                    "NumPos": 74,
+                    "NumEnd": 75,
                     "Literal": "0",
                     "Base": 10
                   },
@@ -118,8 +118,8 @@
                       {
                         "Name": "x",
                         "QuoteType": 1,
-                        "NamePos": 83,
-                        "NameEnd": 84
+                        "NamePos": 82,
+                        "NameEnd": 83
                       }
                     ]
                   },
@@ -131,8 +131,8 @@
                 {
                   "SkipPath": null,
                   "SkipRegex": {
-                    "LiteralPos": 99,
-                    "LiteralEnd": 101,
+                    "LiteralPos": 98,
+                    "LiteralEnd": 100,
                     "Literal": "re"
                   },
                   "MaxDynamicPaths": null,
@@ -157,8 +157,8 @@
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 107,
-      "EngineEnd": 142,
+      "EnginePos": 105,
+      "EngineEnd": 139,
       "Name": "MergeTree",
       "Params": null,
       "PrimaryKey": null,
@@ -167,24 +167,24 @@
       "TTL": null,
       "Settings": null,
       "OrderBy": {
-        "OrderPos": 127,
-        "ListEnd": 142,
+        "OrderPos": 124,
+        "ListEnd": 139,
         "Items": [
           {
-            "OrderPos": 127,
+            "OrderPos": 124,
             "Expr": {
               "Name": {
                 "Name": "tuple",
                 "QuoteType": 1,
-                "NamePos": 136,
-                "NameEnd": 141
+                "NamePos": 133,
+                "NameEnd": 138
               },
               "Params": {
-                "LeftParenPos": 141,
-                "RightParenPos": 142,
+                "LeftParenPos": 138,
+                "RightParenPos": 139,
                 "Items": {
-                  "ListPos": 142,
-                  "ListEnd": 142,
+                  "ListPos": 139,
+                  "ListEnd": 139,
                   "HasDistinct": false,
                   "Items": []
                 },

@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 132,
+    "StatementEnd": 125,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -77,50 +77,50 @@
       }
     ],
     "From": {
-      "FromPos": 42,
+      "FromPos": 41,
       "Expr": {
         "Table": {
-          "TablePos": 48,
-          "TableEnd": 132,
+          "TablePos": 46,
+          "TableEnd": 125,
           "Alias": null,
           "Expr": {
             "Name": {
               "Name": "numbers",
               "QuoteType": 1,
-              "NamePos": 48,
-              "NameEnd": 55
+              "NamePos": 46,
+              "NameEnd": 53
             },
             "Args": {
-              "LeftParenPos": 55,
-              "RightParenPos": 132,
+              "LeftParenPos": 53,
+              "RightParenPos": 125,
               "Args": [
                 {
                   "Name": {
                     "Name": "plus",
                     "QuoteType": 1,
-                    "NamePos": 62,
-                    "NameEnd": 66
+                    "NamePos": 59,
+                    "NameEnd": 63
                   },
                   "Args": {
-                    "LeftParenPos": 62,
-                    "RightParenPos": 129,
+                    "LeftParenPos": 59,
+                    "RightParenPos": 123,
                     "Args": [
                       {
                         "Name": {
                           "Name": "ifNull",
                           "QuoteType": 1,
-                          "NamePos": 77,
-                          "NameEnd": 83
+                          "NamePos": 73,
+                          "NameEnd": 79
                         },
                         "Args": {
-                          "LeftParenPos": 77,
-                          "RightParenPos": 122,
+                          "LeftParenPos": 73,
+                          "RightParenPos": 117,
                           "Args": [
                             {
                               "HasParen": true,
                               "Select": {
-                                "SelectPos": 85,
-                                "StatementEnd": 109,
+                                "SelectPos": 81,
+                                "StatementEnd": 105,
                                 "With": null,
                                 "Top": null,
                                 "HasDistinct": false,
@@ -128,8 +128,8 @@
                                 "SelectItems": [
                                   {
                                     "Expr": {
-                                      "NumPos": 92,
-                                      "NumEnd": 93,
+                                      "NumPos": 88,
+                                      "NumEnd": 89,
                                       "Literal": "1",
                                       "Base": 10
                                     },
@@ -137,14 +137,14 @@
                                     "Alias": {
                                       "Name": "bin_count",
                                       "QuoteType": 1,
-                                      "NamePos": 97,
-                                      "NameEnd": 106
+                                      "NamePos": 93,
+                                      "NameEnd": 102
                                     }
                                   },
                                   {
                                     "Expr": {
-                                      "NumPos": 108,
-                                      "NumEnd": 109,
+                                      "NumPos": 104,
+                                      "NumEnd": 105,
                                       "Literal": "1",
                                       "Base": 10
                                     },
@@ -171,8 +171,8 @@
                               }
                             },
                             {
-                              "NumPos": 121,
-                              "NumEnd": 122,
+                              "NumPos": 116,
+                              "NumEnd": 117,
                               "Literal": "1",
                               "Base": 10
                             }
@@ -187,7 +187,7 @@
           },
           "HasFinal": false
         },
-        "StatementEnd": 132,
+        "StatementEnd": 125,
         "SampleRatio": null,
         "HasFinal": false
       }

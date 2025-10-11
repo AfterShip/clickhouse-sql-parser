@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 207,
+    "StatementEnd": 199,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -20,16 +20,16 @@
     "IfNotExists": true,
     "UUID": {
       "Value": {
-        "LiteralPos": 62,
-        "LiteralEnd": 98,
+        "LiteralPos": 61,
+        "LiteralEnd": 97,
         "Literal": "3493e374-e2bb-481b-b493-e374e2bb981b"
       }
     },
     "OnCluster": {
-      "OnPos": 109,
+      "OnPos": 107,
       "Expr": {
-        "LiteralPos": 121,
-        "LiteralEnd": 131,
+        "LiteralPos": 119,
+        "LiteralEnd": 129,
         "Literal": "my_cluster"
       }
     },
@@ -37,8 +37,8 @@
     "SubQuery": {
       "HasParen": true,
       "Select": {
-        "SelectPos": 144,
-        "StatementEnd": 207,
+        "SelectPos": 140,
+        "StatementEnd": 199,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -48,8 +48,8 @@
             "Expr": {
               "Name": "column1",
               "QuoteType": 1,
-              "NamePos": 156,
-              "NameEnd": 163
+              "NamePos": 151,
+              "NameEnd": 158
             },
             "Modifiers": [],
             "Alias": null
@@ -58,32 +58,32 @@
             "Expr": {
               "Name": "column2",
               "QuoteType": 1,
-              "NamePos": 170,
-              "NameEnd": 177
+              "NamePos": 164,
+              "NameEnd": 171
             },
             "Modifiers": [],
             "Alias": null
           }
         ],
         "From": {
-          "FromPos": 183,
+          "FromPos": 176,
           "Expr": {
             "Table": {
-              "TablePos": 193,
-              "TableEnd": 207,
+              "TablePos": 185,
+              "TableEnd": 199,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "my_other_table",
                   "QuoteType": 1,
-                  "NamePos": 193,
-                  "NameEnd": 207
+                  "NamePos": 185,
+                  "NameEnd": 199
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 207,
+            "StatementEnd": 199,
             "SampleRatio": null,
             "HasFinal": false
           }

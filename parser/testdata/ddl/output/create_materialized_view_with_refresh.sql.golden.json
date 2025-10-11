@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 316,
+    "StatementEnd": 302,
     "Name": {
       "Database": null,
       "Table": {
@@ -14,52 +14,52 @@
     "IfNotExists": false,
     "OnCluster": null,
     "Refresh": {
-      "RefreshPos": 35,
+      "RefreshPos": 34,
       "Frequency": "EVERY",
       "Interval": {
         "IntervalPos": 0,
         "Expr": {
-          "NumPos": 49,
-          "NumEnd": 50,
+          "NumPos": 48,
+          "NumEnd": 49,
           "Literal": "1",
           "Base": 10
         },
         "Unit": {
           "Name": "HOUR",
           "QuoteType": 1,
-          "NamePos": 51,
-          "NameEnd": 55
+          "NamePos": 50,
+          "NameEnd": 54
         }
       },
       "Offset": {
         "IntervalPos": 0,
         "Expr": {
-          "NumPos": 63,
-          "NumEnd": 65,
+          "NumPos": 62,
+          "NumEnd": 64,
           "Literal": "10",
           "Base": 10
         },
         "Unit": {
           "Name": "MINUTE",
           "QuoteType": 1,
-          "NamePos": 66,
-          "NameEnd": 72
+          "NamePos": 65,
+          "NameEnd": 71
         }
       }
     },
     "RandomizeFor": {
       "IntervalPos": 0,
       "Expr": {
-        "NumPos": 88,
-        "NumEnd": 89,
+        "NumPos": 86,
+        "NumEnd": 87,
         "Literal": "1",
         "Base": 10
       },
       "Unit": {
         "Name": "SECOND",
         "QuoteType": 1,
-        "NamePos": 90,
-        "NameEnd": 96
+        "NamePos": 88,
+        "NameEnd": 94
       }
     },
     "DependsOn": [
@@ -68,56 +68,56 @@
         "Table": {
           "Name": "table_v5",
           "QuoteType": 1,
-          "NamePos": 110,
-          "NameEnd": 118
+          "NamePos": 107,
+          "NameEnd": 115
         }
       }
     ],
     "Settings": {
-      "SettingsPos": 120,
-      "ListEnd": 206,
+      "SettingsPos": 116,
+      "ListEnd": 199,
       "Items": [
         {
-          "SettingsPos": 134,
+          "SettingsPos": 129,
           "Name": {
             "Name": "randomize_for",
             "QuoteType": 1,
-            "NamePos": 134,
-            "NameEnd": 147
+            "NamePos": 129,
+            "NameEnd": 142
           },
           "Expr": {
-            "NumPos": 150,
-            "NumEnd": 151,
+            "NumPos": 145,
+            "NumEnd": 146,
             "Literal": "1",
             "Base": 10
           }
         },
         {
-          "SettingsPos": 158,
+          "SettingsPos": 152,
           "Name": {
             "Name": "randomize_offset",
             "QuoteType": 1,
-            "NamePos": 158,
-            "NameEnd": 174
+            "NamePos": 152,
+            "NameEnd": 168
           },
           "Expr": {
-            "NumPos": 177,
-            "NumEnd": 179,
+            "NumPos": 171,
+            "NumEnd": 173,
             "Literal": "10",
             "Base": 10
           }
         },
         {
-          "SettingsPos": 186,
+          "SettingsPos": 179,
           "Name": {
             "Name": "randomize_period",
             "QuoteType": 1,
-            "NamePos": 186,
-            "NameEnd": 202
+            "NamePos": 179,
+            "NameEnd": 195
           },
           "Expr": {
-            "NumPos": 205,
-            "NumEnd": 206,
+            "NumPos": 198,
+            "NumEnd": 199,
             "Literal": "1",
             "Base": 10
           }
@@ -128,14 +128,14 @@
     "Engine": null,
     "HasEmpty": true,
     "Destination": {
-      "ToPos": 215,
+      "ToPos": 207,
       "TableIdentifier": {
         "Database": null,
         "Table": {
           "Name": "target_table_name",
           "QuoteType": 1,
-          "NamePos": 218,
-          "NameEnd": 235
+          "NamePos": 210,
+          "NameEnd": 227
         }
       },
       "TableSchema": null
@@ -143,8 +143,8 @@
     "SubQuery": {
       "HasParen": false,
       "Select": {
-        "SelectPos": 247,
-        "StatementEnd": 316,
+        "SelectPos": 237,
+        "StatementEnd": 302,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -154,8 +154,8 @@
             "Expr": {
               "Name": "field_1",
               "QuoteType": 3,
-              "NamePos": 260,
-              "NameEnd": 267
+              "NamePos": 249,
+              "NameEnd": 256
             },
             "Modifiers": [],
             "Alias": null
@@ -164,8 +164,8 @@
             "Expr": {
               "Name": "field_2",
               "QuoteType": 3,
-              "NamePos": 276,
-              "NameEnd": 283
+              "NamePos": 264,
+              "NameEnd": 271
             },
             "Modifiers": [],
             "Alias": null
@@ -174,8 +174,8 @@
             "Expr": {
               "Name": "field_3",
               "QuoteType": 3,
-              "NamePos": 292,
-              "NameEnd": 299
+              "NamePos": 279,
+              "NameEnd": 286
             },
             "Modifiers": [],
             "Alias": null
@@ -184,15 +184,15 @@
             "Expr": {
               "Name": "FROM",
               "QuoteType": 1,
-              "NamePos": 303,
-              "NameEnd": 307
+              "NamePos": 289,
+              "NameEnd": 293
             },
             "Modifiers": [],
             "Alias": {
               "Name": "table_v5",
               "QuoteType": 1,
-              "NamePos": 308,
-              "NameEnd": 316
+              "NamePos": 294,
+              "NameEnd": 302
             }
           }
         ],

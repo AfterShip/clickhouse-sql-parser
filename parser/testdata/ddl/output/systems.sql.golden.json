@@ -9,18 +9,18 @@
     }
   },
   {
-    "SystemPos": 20,
+    "SystemPos": 19,
     "Expr": {
-      "DropPos": 27,
-      "StatementEnd": 50,
+      "DropPos": 26,
+      "StatementEnd": 49,
       "Type": "UNCOMPRESSED CACHE"
     }
   },
   {
-    "SystemPos": 53,
+    "SystemPos": 51,
     "Expr": {
-      "DropPos": 60,
-      "StatementEnd": 81,
+      "DropPos": 58,
+      "StatementEnd": 79,
       "Type": "FILESYSTEM CACHE"
     }
   }

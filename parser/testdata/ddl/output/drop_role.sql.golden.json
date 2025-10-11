@@ -100,16 +100,16 @@
     "From": null
   },
   {
-    "DropPos": 111,
+    "DropPos": 110,
     "Target": "ROLE",
-    "StatementEnd": 147,
+    "StatementEnd": 146,
     "Names": [
       {
         "Name": {
           "Name": "r2_01293_renamed",
           "QuoteType": 1,
-          "NamePos": 131,
-          "NameEnd": 147
+          "NamePos": 130,
+          "NameEnd": 146
         },
         "Scope": null,
         "OnCluster": null
@@ -120,28 +120,28 @@
     "From": null
   },
   {
-    "DropPos": 150,
+    "DropPos": 148,
     "Target": "ROLE",
-    "StatementEnd": 206,
+    "StatementEnd": 204,
     "Names": [
       {
         "Name": {
           "Name": "r1_01293",
           "QuoteType": 1,
-          "NamePos": 170,
-          "NameEnd": 178
+          "NamePos": 168,
+          "NameEnd": 176
         },
         "Scope": {
-          "LiteralPos": 180,
-          "LiteralEnd": 181,
+          "LiteralPos": 178,
+          "LiteralEnd": 179,
           "Literal": "%"
         },
         "OnCluster": null
       },
       {
         "Name": {
-          "LiteralPos": 185,
-          "LiteralEnd": 206,
+          "LiteralPos": 183,
+          "LiteralEnd": 204,
           "Literal": "r2_01293@%.myhost.com"
         },
         "Scope": null,

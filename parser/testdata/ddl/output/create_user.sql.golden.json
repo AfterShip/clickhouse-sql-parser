@@ -1,7 +1,7 @@
 [
   {
-    "CreatePos": 30,
-    "StatementEnd": 47,
+    "CreatePos": 28,
+    "StatementEnd": 45,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -9,8 +9,8 @@
         "Name": {
           "Name": "user1",
           "QuoteType": 1,
-          "NamePos": 42,
-          "NameEnd": 47
+          "NamePos": 40,
+          "NameEnd": 45
         },
         "Scope": null,
         "OnCluster": null
@@ -25,8 +25,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 50,
-    "StatementEnd": 81,
+    "CreatePos": 47,
+    "StatementEnd": 78,
     "IfNotExists": true,
     "OrReplace": false,
     "UserNames": [
@@ -34,8 +34,8 @@
         "Name": {
           "Name": "user2",
           "QuoteType": 1,
-          "NamePos": 76,
-          "NameEnd": 81
+          "NamePos": 73,
+          "NameEnd": 78
         },
         "Scope": null,
         "OnCluster": null
@@ -50,8 +50,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 84,
-    "StatementEnd": 112,
+    "CreatePos": 80,
+    "StatementEnd": 108,
     "IfNotExists": false,
     "OrReplace": true,
     "UserNames": [
@@ -59,8 +59,8 @@
         "Name": {
           "Name": "user3",
           "QuoteType": 1,
-          "NamePos": 107,
-          "NameEnd": 112
+          "NamePos": 103,
+          "NameEnd": 108
         },
         "Scope": null,
         "OnCluster": null
@@ -75,8 +75,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 115,
-    "StatementEnd": 139,
+    "CreatePos": 110,
+    "StatementEnd": 134,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -84,8 +84,8 @@
         "Name": {
           "Name": "user4",
           "QuoteType": 1,
-          "NamePos": 127,
-          "NameEnd": 132
+          "NamePos": 122,
+          "NameEnd": 127
         },
         "Scope": null,
         "OnCluster": null
@@ -94,8 +94,8 @@
         "Name": {
           "Name": "user5",
           "QuoteType": 1,
-          "NamePos": 134,
-          "NameEnd": 139
+          "NamePos": 129,
+          "NameEnd": 134
         },
         "Scope": null,
         "OnCluster": null
@@ -110,8 +110,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 180,
-    "StatementEnd": 213,
+    "CreatePos": 172,
+    "StatementEnd": 205,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -119,16 +119,16 @@
         "Name": {
           "Name": "user6",
           "QuoteType": 1,
-          "NamePos": 192,
-          "NameEnd": 197
+          "NamePos": 184,
+          "NameEnd": 189
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 198,
-      "AuthEnd": 213,
+      "AuthPos": 190,
+      "AuthEnd": 205,
       "NotIdentified": true,
       "AuthType": "",
       "AuthValue": null,
@@ -144,8 +144,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 215,
-    "StatementEnd": 283,
+    "CreatePos": 206,
+    "StatementEnd": 274,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -153,21 +153,21 @@
         "Name": {
           "Name": "user7",
           "QuoteType": 1,
-          "NamePos": 227,
-          "NameEnd": 232
+          "NamePos": 218,
+          "NameEnd": 223
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 233,
-      "AuthEnd": 283,
+      "AuthPos": 224,
+      "AuthEnd": 274,
       "NotIdentified": false,
       "AuthType": "plaintext_password",
       "AuthValue": {
-        "LiteralPos": 272,
-        "LiteralEnd": 283,
+        "LiteralPos": 263,
+        "LiteralEnd": 274,
         "Literal": "password123"
       },
       "LdapServer": null,
@@ -182,8 +182,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 287,
-    "StatementEnd": 348,
+    "CreatePos": 277,
+    "StatementEnd": 338,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -191,21 +191,21 @@
         "Name": {
           "Name": "user8",
           "QuoteType": 1,
-          "NamePos": 299,
-          "NameEnd": 304
+          "NamePos": 289,
+          "NameEnd": 294
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 305,
-      "AuthEnd": 348,
+      "AuthPos": 295,
+      "AuthEnd": 338,
       "NotIdentified": false,
       "AuthType": "sha256_password",
       "AuthValue": {
-        "LiteralPos": 341,
-        "LiteralEnd": 348,
+        "LiteralPos": 331,
+        "LiteralEnd": 338,
         "Literal": "hash123"
       },
       "LdapServer": null,
@@ -220,8 +220,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 352,
-    "StatementEnd": 410,
+    "CreatePos": 341,
+    "StatementEnd": 399,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -229,22 +229,22 @@
         "Name": {
           "Name": "user9",
           "QuoteType": 1,
-          "NamePos": 364,
-          "NameEnd": 369
+          "NamePos": 353,
+          "NameEnd": 358
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 370,
-      "AuthEnd": 410,
+      "AuthPos": 359,
+      "AuthEnd": 399,
       "NotIdentified": false,
       "AuthType": "",
       "AuthValue": null,
       "LdapServer": {
-        "LiteralPos": 399,
-        "LiteralEnd": 410,
+        "LiteralPos": 388,
+        "LiteralEnd": 399,
         "Literal": "ldap_server"
       },
       "KerberosRealm": null,
@@ -258,8 +258,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 414,
-    "StatementEnd": 458,
+    "CreatePos": 402,
+    "StatementEnd": 446,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -267,16 +267,16 @@
         "Name": {
           "Name": "user10",
           "QuoteType": 1,
-          "NamePos": 426,
-          "NameEnd": 432
+          "NamePos": 414,
+          "NameEnd": 420
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 433,
-      "AuthEnd": 458,
+      "AuthPos": 421,
+      "AuthEnd": 446,
       "NotIdentified": false,
       "AuthType": "",
       "AuthValue": null,
@@ -292,8 +292,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 460,
-    "StatementEnd": 522,
+    "CreatePos": 447,
+    "StatementEnd": 509,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -301,23 +301,23 @@
         "Name": {
           "Name": "user11",
           "QuoteType": 1,
-          "NamePos": 472,
-          "NameEnd": 478
+          "NamePos": 459,
+          "NameEnd": 465
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 479,
-      "AuthEnd": 522,
+      "AuthPos": 466,
+      "AuthEnd": 509,
       "NotIdentified": false,
       "AuthType": "",
       "AuthValue": null,
       "LdapServer": null,
       "KerberosRealm": {
-        "LiteralPos": 511,
-        "LiteralEnd": 522,
+        "LiteralPos": 498,
+        "LiteralEnd": 509,
         "Literal": "EXAMPLE.COM"
       },
       "IsKerberos": true
@@ -330,8 +330,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 567,
-    "StatementEnd": 597,
+    "CreatePos": 551,
+    "StatementEnd": 581,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -339,8 +339,8 @@
         "Name": {
           "Name": "user12",
           "QuoteType": 1,
-          "NamePos": 579,
-          "NameEnd": 585
+          "NamePos": 563,
+          "NameEnd": 569
         },
         "Scope": null,
         "OnCluster": null
@@ -349,8 +349,8 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 586,
-        "HostEnd": 597,
+        "HostPos": 570,
+        "HostEnd": 581,
         "HostType": "LOCAL",
         "HostValue": null
       }
@@ -362,8 +362,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 599,
-    "StatementEnd": 627,
+    "CreatePos": 582,
+    "StatementEnd": 610,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -371,8 +371,8 @@
         "Name": {
           "Name": "user13",
           "QuoteType": 1,
-          "NamePos": 611,
-          "NameEnd": 617
+          "NamePos": 594,
+          "NameEnd": 600
         },
         "Scope": null,
         "OnCluster": null
@@ -381,8 +381,8 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 618,
-        "HostEnd": 627,
+        "HostPos": 601,
+        "HostEnd": 610,
         "HostType": "ANY",
         "HostValue": null
       }
@@ -394,8 +394,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 629,
-    "StatementEnd": 658,
+    "CreatePos": 611,
+    "StatementEnd": 640,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -403,8 +403,8 @@
         "Name": {
           "Name": "user14",
           "QuoteType": 1,
-          "NamePos": 641,
-          "NameEnd": 647
+          "NamePos": 623,
+          "NameEnd": 629
         },
         "Scope": null,
         "OnCluster": null
@@ -413,8 +413,8 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 648,
-        "HostEnd": 658,
+        "HostPos": 630,
+        "HostEnd": 640,
         "HostType": "NONE",
         "HostValue": null
       }
@@ -426,8 +426,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 660,
-    "StatementEnd": 699,
+    "CreatePos": 641,
+    "StatementEnd": 680,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -435,8 +435,8 @@
         "Name": {
           "Name": "user15",
           "QuoteType": 1,
-          "NamePos": 672,
-          "NameEnd": 678
+          "NamePos": 653,
+          "NameEnd": 659
         },
         "Scope": null,
         "OnCluster": null
@@ -445,12 +445,12 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 679,
-        "HostEnd": 699,
+        "HostPos": 660,
+        "HostEnd": 680,
         "HostType": "NAME",
         "HostValue": {
-          "LiteralPos": 690,
-          "LiteralEnd": 699,
+          "LiteralPos": 671,
+          "LiteralEnd": 680,
           "Literal": "localhost"
         }
       }
@@ -462,8 +462,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 703,
-    "StatementEnd": 751,
+    "CreatePos": 683,
+    "StatementEnd": 731,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -471,8 +471,8 @@
         "Name": {
           "Name": "user16",
           "QuoteType": 1,
-          "NamePos": 715,
-          "NameEnd": 721
+          "NamePos": 695,
+          "NameEnd": 701
         },
         "Scope": null,
         "OnCluster": null
@@ -481,12 +481,12 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 722,
-        "HostEnd": 751,
+        "HostPos": 702,
+        "HostEnd": 731,
         "HostType": "REGEXP",
         "HostValue": {
-          "LiteralPos": 735,
-          "LiteralEnd": 751,
+          "LiteralPos": 715,
+          "LiteralEnd": 731,
           "Literal": ".*\\.example\\.com"
         }
       }
@@ -498,8 +498,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 755,
-    "StatementEnd": 794,
+    "CreatePos": 734,
+    "StatementEnd": 773,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -507,8 +507,8 @@
         "Name": {
           "Name": "user17",
           "QuoteType": 1,
-          "NamePos": 767,
-          "NameEnd": 773
+          "NamePos": 746,
+          "NameEnd": 752
         },
         "Scope": null,
         "OnCluster": null
@@ -517,12 +517,12 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 774,
-        "HostEnd": 794,
+        "HostPos": 753,
+        "HostEnd": 773,
         "HostType": "IP",
         "HostValue": {
-          "LiteralPos": 783,
-          "LiteralEnd": 794,
+          "LiteralPos": 762,
+          "LiteralEnd": 773,
           "Literal": "192.168.1.1"
         }
       }
@@ -534,8 +534,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 798,
-    "StatementEnd": 833,
+    "CreatePos": 776,
+    "StatementEnd": 811,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -543,8 +543,8 @@
         "Name": {
           "Name": "user18",
           "QuoteType": 1,
-          "NamePos": 810,
-          "NameEnd": 816
+          "NamePos": 788,
+          "NameEnd": 794
         },
         "Scope": null,
         "OnCluster": null
@@ -553,12 +553,12 @@
     "Authentication": null,
     "Hosts": [
       {
-        "HostPos": 817,
-        "HostEnd": 833,
+        "HostPos": 795,
+        "HostEnd": 811,
         "HostType": "LIKE",
         "HostValue": {
-          "LiteralPos": 828,
-          "LiteralEnd": 833,
+          "LiteralPos": 806,
+          "LiteralEnd": 811,
           "Literal": "test%"
         }
       }
@@ -570,8 +570,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 874,
-    "StatementEnd": 911,
+    "CreatePos": 849,
+    "StatementEnd": 886,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -579,8 +579,8 @@
         "Name": {
           "Name": "user19",
           "QuoteType": 1,
-          "NamePos": 886,
-          "NameEnd": 892
+          "NamePos": 861,
+          "NameEnd": 867
         },
         "Scope": null,
         "OnCluster": null
@@ -589,15 +589,15 @@
     "Authentication": null,
     "Hosts": null,
     "DefaultRole": {
-      "DefaultPos": 893,
-      "DefaultEnd": 911,
+      "DefaultPos": 868,
+      "DefaultEnd": 886,
       "Roles": [
         {
           "Name": {
             "Name": "role1",
             "QuoteType": 1,
-            "NamePos": 906,
-            "NameEnd": 911
+            "NamePos": 881,
+            "NameEnd": 886
           },
           "Scope": null,
           "OnCluster": null
@@ -611,8 +611,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 914,
-    "StatementEnd": 958,
+    "CreatePos": 888,
+    "StatementEnd": 932,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -620,8 +620,8 @@
         "Name": {
           "Name": "user20",
           "QuoteType": 1,
-          "NamePos": 926,
-          "NameEnd": 932
+          "NamePos": 900,
+          "NameEnd": 906
         },
         "Scope": null,
         "OnCluster": null
@@ -630,15 +630,15 @@
     "Authentication": null,
     "Hosts": null,
     "DefaultRole": {
-      "DefaultPos": 933,
-      "DefaultEnd": 958,
+      "DefaultPos": 907,
+      "DefaultEnd": 932,
       "Roles": [
         {
           "Name": {
             "Name": "role1",
             "QuoteType": 1,
-            "NamePos": 946,
-            "NameEnd": 951
+            "NamePos": 920,
+            "NameEnd": 925
           },
           "Scope": null,
           "OnCluster": null
@@ -647,8 +647,8 @@
           "Name": {
             "Name": "role2",
             "QuoteType": 1,
-            "NamePos": 953,
-            "NameEnd": 958
+            "NamePos": 927,
+            "NameEnd": 932
           },
           "Scope": null,
           "OnCluster": null
@@ -662,8 +662,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 961,
-    "StatementEnd": 998,
+    "CreatePos": 934,
+    "StatementEnd": 971,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -671,8 +671,8 @@
         "Name": {
           "Name": "user21",
           "QuoteType": 1,
-          "NamePos": 973,
-          "NameEnd": 979
+          "NamePos": 946,
+          "NameEnd": 952
         },
         "Scope": null,
         "OnCluster": null
@@ -681,8 +681,8 @@
     "Authentication": null,
     "Hosts": null,
     "DefaultRole": {
-      "DefaultPos": 980,
-      "DefaultEnd": 998,
+      "DefaultPos": 953,
+      "DefaultEnd": 971,
       "Roles": null,
       "None": true
     },
@@ -692,8 +692,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1040,
-    "StatementEnd": 1083,
+    "CreatePos": 1010,
+    "StatementEnd": 1053,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -701,8 +701,8 @@
         "Name": {
           "Name": "user22",
           "QuoteType": 1,
-          "NamePos": 1052,
-          "NameEnd": 1058
+          "NamePos": 1022,
+          "NameEnd": 1028
         },
         "Scope": null,
         "OnCluster": null
@@ -714,16 +714,16 @@
     "DefaultDatabase": {
       "Name": "test_db",
       "QuoteType": 1,
-      "NamePos": 1076,
-      "NameEnd": 1083
+      "NamePos": 1046,
+      "NameEnd": 1053
     },
     "DefaultDbNone": false,
     "Grantees": null,
     "Settings": null
   },
   {
-    "CreatePos": 1086,
-    "StatementEnd": 1127,
+    "CreatePos": 1055,
+    "StatementEnd": 1096,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -731,8 +731,8 @@
         "Name": {
           "Name": "user23",
           "QuoteType": 1,
-          "NamePos": 1098,
-          "NameEnd": 1104
+          "NamePos": 1067,
+          "NameEnd": 1073
         },
         "Scope": null,
         "OnCluster": null
@@ -747,8 +747,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1161,
-    "StatementEnd": 1194,
+    "CreatePos": 1127,
+    "StatementEnd": 1160,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -756,8 +756,8 @@
         "Name": {
           "Name": "user24",
           "QuoteType": 1,
-          "NamePos": 1173,
-          "NameEnd": 1179
+          "NamePos": 1139,
+          "NameEnd": 1145
         },
         "Scope": null,
         "OnCluster": null
@@ -769,15 +769,15 @@
     "DefaultDatabase": null,
     "DefaultDbNone": false,
     "Grantees": {
-      "GranteesPos": 1180,
-      "GranteesEnd": 1194,
+      "GranteesPos": 1146,
+      "GranteesEnd": 1160,
       "Grantees": [
         {
           "Name": {
             "Name": "user1",
             "QuoteType": 1,
-            "NamePos": 1189,
-            "NameEnd": 1194
+            "NamePos": 1155,
+            "NameEnd": 1160
           },
           "Scope": null,
           "OnCluster": null
@@ -790,8 +790,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1197,
-    "StatementEnd": 1237,
+    "CreatePos": 1162,
+    "StatementEnd": 1202,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -799,8 +799,8 @@
         "Name": {
           "Name": "user25",
           "QuoteType": 1,
-          "NamePos": 1209,
-          "NameEnd": 1215
+          "NamePos": 1174,
+          "NameEnd": 1180
         },
         "Scope": null,
         "OnCluster": null
@@ -812,15 +812,15 @@
     "DefaultDatabase": null,
     "DefaultDbNone": false,
     "Grantees": {
-      "GranteesPos": 1216,
-      "GranteesEnd": 1237,
+      "GranteesPos": 1181,
+      "GranteesEnd": 1202,
       "Grantees": [
         {
           "Name": {
             "Name": "user1",
             "QuoteType": 1,
-            "NamePos": 1225,
-            "NameEnd": 1230
+            "NamePos": 1190,
+            "NameEnd": 1195
           },
           "Scope": null,
           "OnCluster": null
@@ -829,8 +829,8 @@
           "Name": {
             "Name": "user2",
             "QuoteType": 1,
-            "NamePos": 1232,
-            "NameEnd": 1237
+            "NamePos": 1197,
+            "NameEnd": 1202
           },
           "Scope": null,
           "OnCluster": null
@@ -843,8 +843,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1240,
-    "StatementEnd": 1272,
+    "CreatePos": 1204,
+    "StatementEnd": 1236,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -852,8 +852,8 @@
         "Name": {
           "Name": "user26",
           "QuoteType": 1,
-          "NamePos": 1252,
-          "NameEnd": 1258
+          "NamePos": 1216,
+          "NameEnd": 1222
         },
         "Scope": null,
         "OnCluster": null
@@ -865,8 +865,8 @@
     "DefaultDatabase": null,
     "DefaultDbNone": false,
     "Grantees": {
-      "GranteesPos": 1259,
-      "GranteesEnd": 1272,
+      "GranteesPos": 1223,
+      "GranteesEnd": 1236,
       "Grantees": null,
       "ExceptUsers": null,
       "Any": true,
@@ -875,8 +875,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1274,
-    "StatementEnd": 1307,
+    "CreatePos": 1237,
+    "StatementEnd": 1270,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -884,8 +884,8 @@
         "Name": {
           "Name": "user27",
           "QuoteType": 1,
-          "NamePos": 1286,
-          "NameEnd": 1292
+          "NamePos": 1249,
+          "NameEnd": 1255
         },
         "Scope": null,
         "OnCluster": null
@@ -897,8 +897,8 @@
     "DefaultDatabase": null,
     "DefaultDbNone": false,
     "Grantees": {
-      "GranteesPos": 1293,
-      "GranteesEnd": 1307,
+      "GranteesPos": 1256,
+      "GranteesEnd": 1270,
       "Grantees": null,
       "ExceptUsers": null,
       "Any": false,
@@ -907,8 +907,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1309,
-    "StatementEnd": 1362,
+    "CreatePos": 1271,
+    "StatementEnd": 1324,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -916,8 +916,8 @@
         "Name": {
           "Name": "user28",
           "QuoteType": 1,
-          "NamePos": 1321,
-          "NameEnd": 1327
+          "NamePos": 1283,
+          "NameEnd": 1289
         },
         "Scope": null,
         "OnCluster": null
@@ -929,15 +929,15 @@
     "DefaultDatabase": null,
     "DefaultDbNone": false,
     "Grantees": {
-      "GranteesPos": 1328,
-      "GranteesEnd": 1362,
+      "GranteesPos": 1290,
+      "GranteesEnd": 1324,
       "Grantees": [
         {
           "Name": {
             "Name": "user1",
             "QuoteType": 1,
-            "NamePos": 1337,
-            "NameEnd": 1342
+            "NamePos": 1299,
+            "NameEnd": 1304
           },
           "Scope": null,
           "OnCluster": null
@@ -946,8 +946,8 @@
           "Name": {
             "Name": "user2",
             "QuoteType": 1,
-            "NamePos": 1344,
-            "NameEnd": 1349
+            "NamePos": 1306,
+            "NameEnd": 1311
           },
           "Scope": null,
           "OnCluster": null
@@ -958,8 +958,8 @@
           "Name": {
             "Name": "user3",
             "QuoteType": 1,
-            "NamePos": 1357,
-            "NameEnd": 1362
+            "NamePos": 1319,
+            "NameEnd": 1324
           },
           "Scope": null,
           "OnCluster": null
@@ -971,8 +971,8 @@
     "Settings": null
   },
   {
-    "CreatePos": 1397,
-    "StatementEnd": 1449,
+    "CreatePos": 1356,
+    "StatementEnd": 1408,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -980,8 +980,8 @@
         "Name": {
           "Name": "user29",
           "QuoteType": 1,
-          "NamePos": 1409,
-          "NameEnd": 1415
+          "NamePos": 1368,
+          "NameEnd": 1374
         },
         "Scope": null,
         "OnCluster": null
@@ -1000,13 +1000,13 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 1425,
-              "NameEnd": 1441
+              "NamePos": 1384,
+              "NameEnd": 1400
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 1442,
-              "NumEnd": 1449,
+              "NumPos": 1401,
+              "NumEnd": 1408,
               "Literal": "5000000",
               "Base": 10
             }
@@ -1017,8 +1017,8 @@
     ]
   },
   {
-    "CreatePos": 1452,
-    "StatementEnd": 1496,
+    "CreatePos": 1410,
+    "StatementEnd": 1454,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -1026,8 +1026,8 @@
         "Name": {
           "Name": "user30",
           "QuoteType": 1,
-          "NamePos": 1464,
-          "NameEnd": 1470
+          "NamePos": 1422,
+          "NameEnd": 1428
         },
         "Scope": null,
         "OnCluster": null
@@ -1046,13 +1046,13 @@
             "Name": {
               "Name": "PROFILE",
               "QuoteType": 1,
-              "NamePos": 1480,
-              "NameEnd": 1487
+              "NamePos": 1438,
+              "NameEnd": 1445
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 1489,
-              "LiteralEnd": 1496,
+              "LiteralPos": 1447,
+              "LiteralEnd": 1454,
               "Literal": "default"
             }
           }
@@ -1062,8 +1062,8 @@
     ]
   },
   {
-    "CreatePos": 1500,
-    "StatementEnd": 1564,
+    "CreatePos": 1457,
+    "StatementEnd": 1521,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -1071,8 +1071,8 @@
         "Name": {
           "Name": "user31",
           "QuoteType": 1,
-          "NamePos": 1512,
-          "NameEnd": 1518
+          "NamePos": 1469,
+          "NameEnd": 1475
         },
         "Scope": null,
         "OnCluster": null
@@ -1091,13 +1091,13 @@
             "Name": {
               "Name": "readonly",
               "QuoteType": 1,
-              "NamePos": 1528,
-              "NameEnd": 1536
+              "NamePos": 1485,
+              "NameEnd": 1493
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 1537,
-              "NumEnd": 1538,
+              "NumPos": 1494,
+              "NumEnd": 1495,
               "Literal": "1",
               "Base": 10
             }
@@ -1111,13 +1111,13 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 1540,
-              "NameEnd": 1556
+              "NamePos": 1497,
+              "NameEnd": 1513
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 1557,
-              "NumEnd": 1564,
+              "NumPos": 1514,
+              "NumEnd": 1521,
               "Literal": "5000000",
               "Base": 10
             }
@@ -1128,8 +1128,8 @@
     ]
   },
   {
-    "CreatePos": 1615,
-    "StatementEnd": 1867,
+    "CreatePos": 1569,
+    "StatementEnd": 1815,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -1137,21 +1137,21 @@
         "Name": {
           "Name": "user32",
           "QuoteType": 1,
-          "NamePos": 1627,
-          "NameEnd": 1633
+          "NamePos": 1581,
+          "NameEnd": 1587
         },
         "Scope": null,
         "OnCluster": null
       }
     ],
     "Authentication": {
-      "AuthPos": 1640,
-      "AuthEnd": 1687,
+      "AuthPos": 1593,
+      "AuthEnd": 1640,
       "NotIdentified": false,
       "AuthType": "plaintext_password",
       "AuthValue": {
-        "LiteralPos": 1679,
-        "LiteralEnd": 1687,
+        "LiteralPos": 1632,
+        "LiteralEnd": 1640,
         "Literal": "password"
       },
       "LdapServer": null,
@@ -1160,26 +1160,26 @@
     },
     "Hosts": [
       {
-        "HostPos": 1694,
-        "HostEnd": 1714,
+        "HostPos": 1646,
+        "HostEnd": 1666,
         "HostType": "NAME",
         "HostValue": {
-          "LiteralPos": 1705,
-          "LiteralEnd": 1714,
+          "LiteralPos": 1657,
+          "LiteralEnd": 1666,
           "Literal": "localhost"
         }
       }
     ],
     "DefaultRole": {
-      "DefaultPos": 1721,
-      "DefaultEnd": 1746,
+      "DefaultPos": 1672,
+      "DefaultEnd": 1697,
       "Roles": [
         {
           "Name": {
             "Name": "role1",
             "QuoteType": 1,
-            "NamePos": 1734,
-            "NameEnd": 1739
+            "NamePos": 1685,
+            "NameEnd": 1690
           },
           "Scope": null,
           "OnCluster": null
@@ -1188,8 +1188,8 @@
           "Name": {
             "Name": "role2",
             "QuoteType": 1,
-            "NamePos": 1741,
-            "NameEnd": 1746
+            "NamePos": 1692,
+            "NameEnd": 1697
           },
           "Scope": null,
           "OnCluster": null
@@ -1200,20 +1200,20 @@
     "DefaultDatabase": {
       "Name": "test_db",
       "QuoteType": 1,
-      "NamePos": 1769,
-      "NameEnd": 1776
+      "NamePos": 1719,
+      "NameEnd": 1726
     },
     "DefaultDbNone": false,
     "Grantees": {
-      "GranteesPos": 1782,
-      "GranteesEnd": 1816,
+      "GranteesPos": 1731,
+      "GranteesEnd": 1765,
       "Grantees": [
         {
           "Name": {
             "Name": "user1",
             "QuoteType": 1,
-            "NamePos": 1791,
-            "NameEnd": 1796
+            "NamePos": 1740,
+            "NameEnd": 1745
           },
           "Scope": null,
           "OnCluster": null
@@ -1222,8 +1222,8 @@
           "Name": {
             "Name": "user2",
             "QuoteType": 1,
-            "NamePos": 1798,
-            "NameEnd": 1803
+            "NamePos": 1747,
+            "NameEnd": 1752
           },
           "Scope": null,
           "OnCluster": null
@@ -1234,8 +1234,8 @@
           "Name": {
             "Name": "user3",
             "QuoteType": 1,
-            "NamePos": 1811,
-            "NameEnd": 1816
+            "NamePos": 1760,
+            "NameEnd": 1765
           },
           "Scope": null,
           "OnCluster": null
@@ -1251,13 +1251,13 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 1831,
-              "NameEnd": 1847
+              "NamePos": 1779,
+              "NameEnd": 1795
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 1848,
-              "NumEnd": 1855,
+              "NumPos": 1796,
+              "NumEnd": 1803,
               "Literal": "5000000",
               "Base": 10
             }
@@ -1271,13 +1271,13 @@
             "Name": {
               "Name": "readonly",
               "QuoteType": 1,
-              "NamePos": 1857,
-              "NameEnd": 1865
+              "NamePos": 1805,
+              "NameEnd": 1813
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 1866,
-              "NumEnd": 1867,
+              "NumPos": 1814,
+              "NumEnd": 1815,
               "Literal": "1",
               "Base": 10
             }

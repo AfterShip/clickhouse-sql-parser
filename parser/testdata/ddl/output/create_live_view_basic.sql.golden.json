@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 103,
+    "StatementEnd": 101,
     "Name": {
       "Database": null,
       "Table": {
@@ -15,31 +15,31 @@
     "UUID": null,
     "OnCluster": null,
     "Destination": {
-      "ToPos": 47,
+      "ToPos": 46,
       "TableIdentifier": {
         "Database": null,
         "Table": {
           "Name": "my_destination",
           "QuoteType": 1,
-          "NamePos": 50,
-          "NameEnd": 64
+          "NamePos": 49,
+          "NameEnd": 63
         }
       },
       "TableSchema": null
     },
     "TableSchema": {
-      "SchemaPos": 64,
-      "SchemaEnd": 74,
+      "SchemaPos": 63,
+      "SchemaEnd": 73,
       "Columns": [
         {
-          "NamePos": 65,
-          "ColumnEnd": 74,
+          "NamePos": 64,
+          "ColumnEnd": 73,
           "Name": {
             "Ident": {
               "Name": "id",
               "QuoteType": 1,
-              "NamePos": 65,
-              "NameEnd": 67
+              "NamePos": 64,
+              "NameEnd": 66
             },
             "DotIdent": null
           },
@@ -47,8 +47,8 @@
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 68,
-              "NameEnd": 74
+              "NamePos": 67,
+              "NameEnd": 73
             }
           },
           "NotNull": null,
@@ -66,11 +66,11 @@
       "TableFunction": null
     },
     "WithTimeout": {
-      "WithTimeoutPos": 31,
+      "WithTimeoutPos": 30,
       "Expr": null,
       "Number": {
-        "NumPos": 44,
-        "NumEnd": 46,
+        "NumPos": 43,
+        "NumEnd": 45,
         "Literal": "10",
         "Base": 10
       }
@@ -78,8 +78,8 @@
     "SubQuery": {
       "HasParen": false,
       "Select": {
-        "SelectPos": 80,
-        "StatementEnd": 103,
+        "SelectPos": 78,
+        "StatementEnd": 101,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -89,32 +89,32 @@
             "Expr": {
               "Name": "id",
               "QuoteType": 1,
-              "NamePos": 87,
-              "NameEnd": 89
+              "NamePos": 85,
+              "NameEnd": 87
             },
             "Modifiers": [],
             "Alias": null
           }
         ],
         "From": {
-          "FromPos": 90,
+          "FromPos": 88,
           "Expr": {
             "Table": {
-              "TablePos": 95,
-              "TableEnd": 103,
+              "TablePos": 93,
+              "TableEnd": 101,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "my_table",
                   "QuoteType": 1,
-                  "NamePos": 95,
-                  "NameEnd": 103
+                  "NamePos": 93,
+                  "NameEnd": 101
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 103,
+            "StatementEnd": 101,
             "SampleRatio": null,
             "HasFinal": false
           }

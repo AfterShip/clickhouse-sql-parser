@@ -20,8 +20,8 @@
     "ColumnNames": null,
     "Values": null,
     "SelectExpr": {
-      "SelectPos": 30,
-      "StatementEnd": 109,
+      "SelectPos": 29,
+      "StatementEnd": 103,
       "With": null,
       "Top": null,
       "HasDistinct": false,
@@ -31,8 +31,8 @@
           "Expr": {
             "Name": "CounterID",
             "QuoteType": 1,
-            "NamePos": 42,
-            "NameEnd": 51
+            "NamePos": 40,
+            "NameEnd": 49
           },
           "Modifiers": [],
           "Alias": null
@@ -41,8 +41,8 @@
           "Expr": {
             "Name": "StartDate",
             "QuoteType": 1,
-            "NamePos": 58,
-            "NameEnd": 67
+            "NamePos": 55,
+            "NameEnd": 64
           },
           "Modifiers": [],
           "Alias": null
@@ -51,8 +51,8 @@
           "Expr": {
             "Name": "Sign",
             "QuoteType": 1,
-            "NamePos": 74,
-            "NameEnd": 78
+            "NamePos": 70,
+            "NameEnd": 74
           },
           "Modifiers": [],
           "Alias": null
@@ -61,37 +61,37 @@
           "Expr": {
             "Name": "UserID",
             "QuoteType": 1,
-            "NamePos": 85,
-            "NameEnd": 91
+            "NamePos": 80,
+            "NameEnd": 86
           },
           "Modifiers": [],
           "Alias": null
         }
       ],
       "From": {
-        "FromPos": 93,
+        "FromPos": 87,
         "Expr": {
           "Table": {
-            "TablePos": 98,
-            "TableEnd": 109,
+            "TablePos": 92,
+            "TableEnd": 103,
             "Alias": null,
             "Expr": {
               "Database": {
                 "Name": "test",
                 "QuoteType": 1,
-                "NamePos": 98,
-                "NameEnd": 102
+                "NamePos": 92,
+                "NameEnd": 96
               },
               "Table": {
                 "Name": "visits",
                 "QuoteType": 1,
-                "NamePos": 103,
-                "NameEnd": 109
+                "NamePos": 97,
+                "NameEnd": 103
               }
             },
             "HasFinal": false
           },
-          "StatementEnd": 109,
+          "StatementEnd": 103,
           "SampleRatio": null,
           "HasFinal": false
         }
