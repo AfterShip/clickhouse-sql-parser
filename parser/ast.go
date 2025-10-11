@@ -4817,13 +4817,17 @@ func (e *EngineExpr) String() string {
 	if e.Params != nil {
 		builder.WriteString(e.Params.String())
 	}
-	if e.PrimaryKey != nil {
+	if e.OrderBy != nil {
 		builder.WriteString(" ")
-		builder.WriteString(e.PrimaryKey.String())
+		builder.WriteString(e.OrderBy.String())
 	}
 	if e.PartitionBy != nil {
 		builder.WriteString(" ")
 		builder.WriteString(e.PartitionBy.String())
+	}
+	if e.PrimaryKey != nil {
+		builder.WriteString(" ")
+		builder.WriteString(e.PrimaryKey.String())
 	}
 	if e.SampleBy != nil {
 		builder.WriteString(" ")
@@ -4836,10 +4840,6 @@ func (e *EngineExpr) String() string {
 	if e.Settings != nil {
 		builder.WriteString(" ")
 		builder.WriteString(e.Settings.String())
-	}
-	if e.OrderBy != nil {
-		builder.WriteString(" ")
-		builder.WriteString(e.OrderBy.String())
 	}
 	return builder.String()
 }
