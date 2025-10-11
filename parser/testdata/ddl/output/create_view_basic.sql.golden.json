@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 104,
+    "StatementEnd": 110,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -86,8 +86,8 @@
     "SubQuery": {
       "HasParen": false,
       "Select": {
-        "SelectPos": 63,
-        "StatementEnd": 104,
+        "SelectPos": 65,
+        "StatementEnd": 110,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -97,8 +97,8 @@
             "Expr": {
               "Name": "id",
               "QuoteType": 1,
-              "NamePos": 74,
-              "NameEnd": 76
+              "NamePos": 77,
+              "NameEnd": 79
             },
             "Modifiers": [],
             "Alias": null
@@ -107,32 +107,32 @@
             "Expr": {
               "Name": "name",
               "QuoteType": 1,
-              "NamePos": 82,
-              "NameEnd": 86
+              "NamePos": 86,
+              "NameEnd": 90
             },
             "Modifiers": [],
             "Alias": null
           }
         ],
         "From": {
-          "FromPos": 87,
+          "FromPos": 92,
           "Expr": {
             "Table": {
-              "TablePos": 96,
-              "TableEnd": 104,
+              "TablePos": 102,
+              "TableEnd": 110,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "my_table",
                   "QuoteType": 1,
-                  "NamePos": 96,
-                  "NameEnd": 104
+                  "NamePos": 102,
+                  "NameEnd": 110
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 104,
+            "StatementEnd": 110,
             "SampleRatio": null,
             "HasFinal": false
           }

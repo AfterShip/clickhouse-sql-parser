@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 191,
+    "StatementEnd": 199,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -20,51 +20,51 @@
     "IfNotExists": false,
     "UUID": null,
     "OnCluster": {
-      "OnPos": 28,
+      "OnPos": 29,
       "Expr": {
-        "LiteralPos": 40,
-        "LiteralEnd": 55,
+        "LiteralPos": 41,
+        "LiteralEnd": 56,
         "Literal": "default_cluster"
       }
     },
     "TableSchema": {
-      "SchemaPos": 57,
-      "SchemaEnd": 77,
+      "SchemaPos": 59,
+      "SchemaEnd": 79,
       "Columns": null,
       "AliasTable": {
         "Database": {
           "Name": "test",
           "QuoteType": 1,
-          "NamePos": 60,
-          "NameEnd": 64
+          "NamePos": 62,
+          "NameEnd": 66
         },
         "Table": {
           "Name": "evnets_local",
           "QuoteType": 1,
-          "NamePos": 65,
-          "NameEnd": 77
+          "NamePos": 67,
+          "NameEnd": 79
         }
       },
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 78,
-      "EngineEnd": 191,
+      "EnginePos": 81,
+      "EngineEnd": 199,
       "Name": "Distributed",
       "Params": {
-        "LeftParenPos": 98,
-        "RightParenPos": 160,
+        "LeftParenPos": 101,
+        "RightParenPos": 168,
         "Items": {
-          "ListPos": 104,
-          "ListEnd": 158,
+          "ListPos": 108,
+          "ListEnd": 165,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
                 "Name": "default_cluster",
                 "QuoteType": 1,
-                "NamePos": 104,
-                "NameEnd": 119
+                "NamePos": 108,
+                "NameEnd": 123
               },
               "Alias": null
             },
@@ -72,8 +72,8 @@
               "Expr": {
                 "Name": "test",
                 "QuoteType": 1,
-                "NamePos": 125,
-                "NameEnd": 129
+                "NamePos": 130,
+                "NameEnd": 134
               },
               "Alias": null
             },
@@ -81,8 +81,8 @@
               "Expr": {
                 "Name": "events_local",
                 "QuoteType": 1,
-                "NamePos": 135,
-                "NameEnd": 147
+                "NamePos": 141,
+                "NameEnd": 153
               },
               "Alias": null
             },
@@ -91,15 +91,15 @@
                 "Name": {
                   "Name": "rand",
                   "QuoteType": 1,
-                  "NamePos": 153,
-                  "NameEnd": 157
+                  "NamePos": 160,
+                  "NameEnd": 164
                 },
                 "Params": {
-                  "LeftParenPos": 157,
-                  "RightParenPos": 158,
+                  "LeftParenPos": 164,
+                  "RightParenPos": 165,
                   "Items": {
-                    "ListPos": 158,
-                    "ListEnd": 158,
+                    "ListPos": 165,
+                    "ListEnd": 165,
                     "HasDistinct": false,
                     "Items": []
                   },
@@ -117,20 +117,20 @@
       "SampleBy": null,
       "TTL": null,
       "Settings": {
-        "SettingsPos": 162,
-        "ListEnd": 191,
+        "SettingsPos": 170,
+        "ListEnd": 199,
         "Items": [
           {
-            "SettingsPos": 171,
+            "SettingsPos": 179,
             "Name": {
               "Name": "fsync_after_insert",
               "QuoteType": 1,
-              "NamePos": 171,
-              "NameEnd": 189
+              "NamePos": 179,
+              "NameEnd": 197
             },
             "Expr": {
-              "NumPos": 190,
-              "NumEnd": 191,
+              "NumPos": 198,
+              "NumEnd": 199,
               "Literal": "0",
               "Base": 10
             }

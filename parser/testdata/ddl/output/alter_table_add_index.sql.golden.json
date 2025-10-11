@@ -84,42 +84,42 @@
     ]
   },
   {
-    "AlterPos": 112,
-    "StatementEnd": 226,
+    "AlterPos": 113,
+    "StatementEnd": 227,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 124,
-        "NameEnd": 128
+        "NamePos": 125,
+        "NameEnd": 129
       },
       "Table": {
         "Name": "events_local",
         "QuoteType": 1,
-        "NamePos": 129,
-        "NameEnd": 141
+        "NamePos": 130,
+        "NameEnd": 142
       }
     },
     "OnCluster": {
-      "OnPos": 142,
+      "OnPos": 143,
       "Expr": {
-        "LiteralPos": 154,
-        "LiteralEnd": 169,
+        "LiteralPos": 155,
+        "LiteralEnd": 170,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
-        "AddPos": 171,
-        "StatementEnd": 226,
+        "AddPos": 172,
+        "StatementEnd": 227,
         "Index": {
-          "IndexPos": 175,
+          "IndexPos": 176,
           "Name": {
             "Ident": {
               "Name": "api_id_idx",
               "QuoteType": 1,
-              "NamePos": 181,
-              "NameEnd": 191
+              "NamePos": 182,
+              "NameEnd": 192
             },
             "DotIdent": null
           },
@@ -127,32 +127,32 @@
             "Expr": {
               "Name": "api_id",
               "QuoteType": 1,
-              "NamePos": 192,
-              "NameEnd": 198
+              "NamePos": 193,
+              "NameEnd": 199
             },
             "Alias": null
           },
           "ColumnType": {
-            "LeftParenPos": 208,
-            "RightParenPos": 211,
+            "LeftParenPos": 209,
+            "RightParenPos": 212,
             "Name": {
               "Name": "set",
               "QuoteType": 1,
-              "NamePos": 204,
-              "NameEnd": 207
+              "NamePos": 205,
+              "NameEnd": 208
             },
             "Params": [
               {
-                "NumPos": 208,
-                "NumEnd": 211,
+                "NumPos": 209,
+                "NumEnd": 212,
                 "Literal": "100",
                 "Base": 10
               }
             ]
           },
           "Granularity": {
-            "NumPos": 225,
-            "NumEnd": 226,
+            "NumPos": 226,
+            "NumEnd": 227,
             "Literal": "2",
             "Base": 10
           }
@@ -163,42 +163,42 @@
     ]
   },
   {
-    "AlterPos": 228,
-    "StatementEnd": 346,
+    "AlterPos": 230,
+    "StatementEnd": 348,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 240,
-        "NameEnd": 244
+        "NamePos": 242,
+        "NameEnd": 246
       },
       "Table": {
         "Name": "events_local",
         "QuoteType": 1,
-        "NamePos": 245,
-        "NameEnd": 257
+        "NamePos": 247,
+        "NameEnd": 259
       }
     },
     "OnCluster": {
-      "OnPos": 258,
+      "OnPos": 260,
       "Expr": {
-        "LiteralPos": 270,
-        "LiteralEnd": 285,
+        "LiteralPos": 272,
+        "LiteralEnd": 287,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
-        "AddPos": 287,
-        "StatementEnd": 346,
+        "AddPos": 289,
+        "StatementEnd": 348,
         "Index": {
-          "IndexPos": 291,
+          "IndexPos": 293,
           "Name": {
             "Ident": {
               "Name": "arr_idx",
               "QuoteType": 1,
-              "NamePos": 297,
-              "NameEnd": 304
+              "NamePos": 299,
+              "NameEnd": 306
             },
             "DotIdent": null
           },
@@ -206,32 +206,32 @@
             "Expr": {
               "Name": "arr",
               "QuoteType": 1,
-              "NamePos": 305,
-              "NameEnd": 308
+              "NamePos": 307,
+              "NameEnd": 310
             },
             "Alias": null
           },
           "ColumnType": {
-            "LeftParenPos": 327,
-            "RightParenPos": 331,
+            "LeftParenPos": 329,
+            "RightParenPos": 333,
             "Name": {
               "Name": "bloom_filter",
               "QuoteType": 1,
-              "NamePos": 314,
-              "NameEnd": 326
+              "NamePos": 316,
+              "NameEnd": 328
             },
             "Params": [
               {
-                "NumPos": 327,
-                "NumEnd": 331,
+                "NumPos": 329,
+                "NumEnd": 333,
                 "Literal": "0.01",
                 "Base": 10
               }
             ]
           },
           "Granularity": {
-            "NumPos": 345,
-            "NumEnd": 346,
+            "NumPos": 347,
+            "NumEnd": 348,
             "Literal": "3",
             "Base": 10
           }
@@ -242,42 +242,42 @@
     ]
   },
   {
-    "AlterPos": 348,
-    "StatementEnd": 479,
+    "AlterPos": 351,
+    "StatementEnd": 482,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 360,
-        "NameEnd": 364
+        "NamePos": 363,
+        "NameEnd": 367
       },
       "Table": {
         "Name": "events_local",
         "QuoteType": 1,
-        "NamePos": 365,
-        "NameEnd": 377
+        "NamePos": 368,
+        "NameEnd": 380
       }
     },
     "OnCluster": {
-      "OnPos": 378,
+      "OnPos": 381,
       "Expr": {
-        "LiteralPos": 390,
-        "LiteralEnd": 405,
+        "LiteralPos": 393,
+        "LiteralEnd": 408,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
-        "AddPos": 407,
-        "StatementEnd": 479,
+        "AddPos": 410,
+        "StatementEnd": 482,
         "Index": {
-          "IndexPos": 411,
+          "IndexPos": 414,
           "Name": {
             "Ident": {
               "Name": "content_idx",
               "QuoteType": 1,
-              "NamePos": 417,
-              "NameEnd": 428
+              "NamePos": 420,
+              "NameEnd": 431
             },
             "DotIdent": null
           },
@@ -285,44 +285,44 @@
             "Expr": {
               "Name": "content",
               "QuoteType": 1,
-              "NamePos": 429,
-              "NameEnd": 436
+              "NamePos": 432,
+              "NameEnd": 439
             },
             "Alias": null
           },
           "ColumnType": {
-            "LeftParenPos": 453,
-            "RightParenPos": 464,
+            "LeftParenPos": 456,
+            "RightParenPos": 467,
             "Name": {
               "Name": "tokenbf_v1",
               "QuoteType": 1,
-              "NamePos": 442,
-              "NameEnd": 452
+              "NamePos": 445,
+              "NameEnd": 455
             },
             "Params": [
               {
-                "NumPos": 453,
-                "NumEnd": 458,
-                "Literal": "30720",
-                "Base": 10
-              },
-              {
-                "NumPos": 460,
+                "NumPos": 456,
                 "NumEnd": 461,
-                "Literal": "2",
+                "Literal": "30720",
                 "Base": 10
               },
               {
                 "NumPos": 463,
                 "NumEnd": 464,
+                "Literal": "2",
+                "Base": 10
+              },
+              {
+                "NumPos": 466,
+                "NumEnd": 467,
                 "Literal": "0",
                 "Base": 10
               }
             ]
           },
           "Granularity": {
-            "NumPos": 478,
-            "NumEnd": 479,
+            "NumPos": 481,
+            "NumEnd": 482,
             "Literal": "1",
             "Base": 10
           }
@@ -333,42 +333,42 @@
     ]
   },
   {
-    "AlterPos": 481,
-    "StatementEnd": 613,
+    "AlterPos": 485,
+    "StatementEnd": 617,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 493,
-        "NameEnd": 497
+        "NamePos": 497,
+        "NameEnd": 501
       },
       "Table": {
         "Name": "events_local",
         "QuoteType": 1,
-        "NamePos": 498,
-        "NameEnd": 510
+        "NamePos": 502,
+        "NameEnd": 514
       }
     },
     "OnCluster": {
-      "OnPos": 511,
+      "OnPos": 515,
       "Expr": {
-        "LiteralPos": 523,
-        "LiteralEnd": 538,
+        "LiteralPos": 527,
+        "LiteralEnd": 542,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
-        "AddPos": 540,
-        "StatementEnd": 613,
+        "AddPos": 544,
+        "StatementEnd": 617,
         "Index": {
-          "IndexPos": 544,
+          "IndexPos": 548,
           "Name": {
             "Ident": {
               "Name": "output_idx",
               "QuoteType": 1,
-              "NamePos": 550,
-              "NameEnd": 560
+              "NamePos": 554,
+              "NameEnd": 564
             },
             "DotIdent": null
           },
@@ -376,50 +376,50 @@
             "Expr": {
               "Name": "output",
               "QuoteType": 1,
-              "NamePos": 561,
-              "NameEnd": 567
+              "NamePos": 565,
+              "NameEnd": 571
             },
             "Alias": null
           },
           "ColumnType": {
-            "LeftParenPos": 584,
-            "RightParenPos": 598,
+            "LeftParenPos": 588,
+            "RightParenPos": 602,
             "Name": {
               "Name": "ngrambf_v1",
               "QuoteType": 1,
-              "NamePos": 573,
-              "NameEnd": 583
+              "NamePos": 577,
+              "NameEnd": 587
             },
             "Params": [
               {
-                "NumPos": 584,
-                "NumEnd": 585,
+                "NumPos": 588,
+                "NumEnd": 589,
                 "Literal": "3",
                 "Base": 10
               },
               {
-                "NumPos": 587,
-                "NumEnd": 592,
+                "NumPos": 591,
+                "NumEnd": 596,
                 "Literal": "10000",
                 "Base": 10
               },
               {
-                "NumPos": 594,
-                "NumEnd": 595,
+                "NumPos": 598,
+                "NumEnd": 599,
                 "Literal": "2",
                 "Base": 10
               },
               {
-                "NumPos": 597,
-                "NumEnd": 598,
+                "NumPos": 601,
+                "NumEnd": 602,
                 "Literal": "1",
                 "Base": 10
               }
             ]
           },
           "Granularity": {
-            "NumPos": 612,
-            "NumEnd": 613,
+            "NumPos": 616,
+            "NumEnd": 617,
             "Literal": "2",
             "Base": 10
           }

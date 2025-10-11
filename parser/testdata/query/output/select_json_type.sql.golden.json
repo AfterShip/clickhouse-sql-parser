@@ -94,8 +94,8 @@
     "Except": null
   },
   {
-    "SelectPos": 26,
-    "StatementEnd": 75,
+    "SelectPos": 27,
+    "StatementEnd": 76,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -106,29 +106,29 @@
           "Name": {
             "Name": "JSON_TYPE",
             "QuoteType": 1,
-            "NamePos": 33,
-            "NameEnd": 42
+            "NamePos": 34,
+            "NameEnd": 43
           },
           "Params": {
-            "LeftParenPos": 42,
-            "RightParenPos": 75,
+            "LeftParenPos": 43,
+            "RightParenPos": 76,
             "Items": {
-              "ListPos": 44,
-              "ListEnd": 74,
+              "ListPos": 45,
+              "ListEnd": 75,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
-                    "LiteralPos": 44,
-                    "LiteralEnd": 67,
+                    "LiteralPos": 45,
+                    "LiteralEnd": 68,
                     "Literal": "{\"a\": 1, \"b\": {\"c\": 2}}"
                   },
                   "Alias": null
                 },
                 {
                   "Expr": {
-                    "LiteralPos": 71,
-                    "LiteralEnd": 74,
+                    "LiteralPos": 72,
+                    "LiteralEnd": 75,
                     "Literal": "$.b"
                   },
                   "Alias": null
@@ -160,8 +160,8 @@
     "Except": null
   },
   {
-    "SelectPos": 78,
-    "StatementEnd": 114,
+    "SelectPos": 80,
+    "StatementEnd": 116,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -169,18 +169,18 @@
     "SelectItems": [
       {
         "Expr": {
-          "CastPos": 85,
+          "CastPos": 87,
           "Expr": {
             "Name": "some",
             "QuoteType": 1,
-            "NamePos": 90,
-            "NameEnd": 94
+            "NamePos": 92,
+            "NameEnd": 96
           },
           "Separator": ",",
-          "AsPos": 94,
+          "AsPos": 96,
           "AsType": {
-            "LiteralPos": 97,
-            "LiteralEnd": 103,
+            "LiteralPos": 99,
+            "LiteralEnd": 105,
             "Literal": "String"
           }
         },
@@ -188,8 +188,8 @@
         "Alias": {
           "Name": "value",
           "QuoteType": 1,
-          "NamePos": 109,
-          "NameEnd": 114
+          "NamePos": 111,
+          "NameEnd": 116
         }
       }
     ],
@@ -211,8 +211,8 @@
     "Except": null
   },
   {
-    "SelectPos": 116,
-    "StatementEnd": 157,
+    "SelectPos": 119,
+    "StatementEnd": 160,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -220,28 +220,28 @@
     "SelectItems": [
       {
         "Expr": {
-          "CastPos": 123,
+          "CastPos": 126,
           "Expr": {
             "Fields": [
               {
                 "Name": "some",
                 "QuoteType": 1,
-                "NamePos": 128,
-                "NameEnd": 132
+                "NamePos": 131,
+                "NameEnd": 135
               },
               {
                 "Name": "long",
                 "QuoteType": 1,
-                "NamePos": 133,
-                "NameEnd": 137
+                "NamePos": 136,
+                "NameEnd": 140
               }
             ]
           },
           "Separator": ",",
-          "AsPos": 137,
+          "AsPos": 140,
           "AsType": {
-            "LiteralPos": 140,
-            "LiteralEnd": 146,
+            "LiteralPos": 143,
+            "LiteralEnd": 149,
             "Literal": "String"
           }
         },
@@ -249,8 +249,8 @@
         "Alias": {
           "Name": "value",
           "QuoteType": 1,
-          "NamePos": 152,
-          "NameEnd": 157
+          "NamePos": 155,
+          "NameEnd": 160
         }
       }
     ],
@@ -272,8 +272,8 @@
     "Except": null
   },
   {
-    "SelectPos": 159,
-    "StatementEnd": 205,
+    "SelectPos": 163,
+    "StatementEnd": 209,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -281,34 +281,34 @@
     "SelectItems": [
       {
         "Expr": {
-          "CastPos": 166,
+          "CastPos": 170,
           "Expr": {
             "Fields": [
               {
                 "Name": "some",
                 "QuoteType": 1,
-                "NamePos": 171,
-                "NameEnd": 175
+                "NamePos": 175,
+                "NameEnd": 179
               },
               {
                 "Name": "long",
                 "QuoteType": 1,
-                "NamePos": 176,
-                "NameEnd": 180
+                "NamePos": 180,
+                "NameEnd": 184
               },
               {
                 "Name": "json",
                 "QuoteType": 1,
-                "NamePos": 181,
-                "NameEnd": 185
+                "NamePos": 185,
+                "NameEnd": 189
               }
             ]
           },
           "Separator": ",",
-          "AsPos": 185,
+          "AsPos": 189,
           "AsType": {
-            "LiteralPos": 188,
-            "LiteralEnd": 194,
+            "LiteralPos": 192,
+            "LiteralEnd": 198,
             "Literal": "String"
           }
         },
@@ -316,8 +316,8 @@
         "Alias": {
           "Name": "value",
           "QuoteType": 1,
-          "NamePos": 200,
-          "NameEnd": 205
+          "NamePos": 204,
+          "NameEnd": 209
         }
       }
     ],
@@ -339,8 +339,8 @@
     "Except": null
   },
   {
-    "SelectPos": 207,
-    "StatementEnd": 258,
+    "SelectPos": 212,
+    "StatementEnd": 263,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -348,40 +348,40 @@
     "SelectItems": [
       {
         "Expr": {
-          "CastPos": 214,
+          "CastPos": 219,
           "Expr": {
             "Fields": [
               {
                 "Name": "some",
-                "QuoteType": 1,
-                "NamePos": 219,
-                "NameEnd": 223
-              },
-              {
-                "Name": "long",
                 "QuoteType": 1,
                 "NamePos": 224,
                 "NameEnd": 228
               },
               {
-                "Name": "json",
+                "Name": "long",
                 "QuoteType": 1,
                 "NamePos": 229,
                 "NameEnd": 233
               },
               {
-                "Name": "path",
+                "Name": "json",
                 "QuoteType": 1,
                 "NamePos": 234,
                 "NameEnd": 238
+              },
+              {
+                "Name": "path",
+                "QuoteType": 1,
+                "NamePos": 239,
+                "NameEnd": 243
               }
             ]
           },
           "Separator": ",",
-          "AsPos": 238,
+          "AsPos": 243,
           "AsType": {
-            "LiteralPos": 241,
-            "LiteralEnd": 247,
+            "LiteralPos": 246,
+            "LiteralEnd": 252,
             "Literal": "String"
           }
         },
@@ -389,8 +389,8 @@
         "Alias": {
           "Name": "value",
           "QuoteType": 1,
-          "NamePos": 253,
-          "NameEnd": 258
+          "NamePos": 258,
+          "NameEnd": 263
         }
       }
     ],

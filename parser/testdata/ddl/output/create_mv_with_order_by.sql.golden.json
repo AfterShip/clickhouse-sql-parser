@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 135,
+    "StatementEnd": 140,
     "Name": {
       "Database": null,
       "Table": {
@@ -19,36 +19,36 @@
     "Settings": null,
     "HasAppend": false,
     "Engine": {
-      "EnginePos": 47,
-      "EngineEnd": 106,
+      "EnginePos": 48,
+      "EngineEnd": 109,
       "Name": "ReplacingMergeTree",
       "Params": {
-        "LeftParenPos": 74,
-        "RightParenPos": 75,
+        "LeftParenPos": 75,
+        "RightParenPos": 76,
         "Items": {
-          "ListPos": 75,
-          "ListEnd": 75,
+          "ListPos": 76,
+          "ListEnd": 76,
           "HasDistinct": false,
           "Items": []
         },
         "ColumnArgList": null
       },
       "PrimaryKey": {
-        "PrimaryPos": 77,
+        "PrimaryPos": 79,
         "Expr": {
-          "LeftParenPos": 89,
-          "RightParenPos": 92,
+          "LeftParenPos": 91,
+          "RightParenPos": 94,
           "Items": {
-            "ListPos": 90,
-            "ListEnd": 92,
+            "ListPos": 92,
+            "ListEnd": 94,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "id",
                   "QuoteType": 1,
-                  "NamePos": 90,
-                  "NameEnd": 92
+                  "NamePos": 92,
+                  "NameEnd": 94
                 },
                 "Alias": null
               }
@@ -62,25 +62,25 @@
       "TTL": null,
       "Settings": null,
       "OrderBy": {
-        "OrderPos": 94,
-        "ListEnd": 106,
+        "OrderPos": 97,
+        "ListEnd": 109,
         "Items": [
           {
-            "OrderPos": 94,
+            "OrderPos": 97,
             "Expr": {
-              "LeftParenPos": 103,
-              "RightParenPos": 106,
+              "LeftParenPos": 106,
+              "RightParenPos": 109,
               "Items": {
-                "ListPos": 104,
-                "ListEnd": 106,
+                "ListPos": 107,
+                "ListEnd": 109,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "id",
                       "QuoteType": 1,
-                      "NamePos": 104,
-                      "NameEnd": 106
+                      "NamePos": 107,
+                      "NameEnd": 109
                     },
                     "Alias": null
                   }
@@ -99,8 +99,8 @@
     "SubQuery": {
       "HasParen": false,
       "Select": {
-        "SelectPos": 111,
-        "StatementEnd": 135,
+        "SelectPos": 116,
+        "StatementEnd": 140,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -110,32 +110,32 @@
             "Expr": {
               "Name": "*",
               "QuoteType": 0,
-              "NamePos": 118,
-              "NameEnd": 118
+              "NamePos": 123,
+              "NameEnd": 123
             },
             "Modifiers": [],
             "Alias": null
           }
         ],
         "From": {
-          "FromPos": 120,
+          "FromPos": 125,
           "Expr": {
             "Table": {
-              "TablePos": 125,
-              "TableEnd": 135,
+              "TablePos": 130,
+              "TableEnd": 140,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "test_table",
                   "QuoteType": 1,
-                  "NamePos": 125,
-                  "NameEnd": 135
+                  "NamePos": 130,
+                  "NameEnd": 140
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 135,
+            "StatementEnd": 140,
             "SampleRatio": null,
             "HasFinal": false
           }
@@ -163,15 +163,15 @@
     "SQLSecurity": ""
   },
   {
-    "CreatePos": 138,
-    "StatementEnd": 259,
+    "CreatePos": 145,
+    "StatementEnd": 270,
     "Name": {
       "Database": null,
       "Table": {
         "Name": "test_mv",
         "QuoteType": 1,
-        "NamePos": 177,
-        "NameEnd": 184
+        "NamePos": 184,
+        "NameEnd": 191
       }
     },
     "IfNotExists": true,
@@ -182,36 +182,36 @@
     "Settings": null,
     "HasAppend": false,
     "Engine": {
-      "EnginePos": 185,
-      "EngineEnd": 230,
+      "EnginePos": 193,
+      "EngineEnd": 239,
       "Name": "ReplacingMergeTree",
       "Params": {
-        "LeftParenPos": 212,
-        "RightParenPos": 213,
+        "LeftParenPos": 220,
+        "RightParenPos": 221,
         "Items": {
-          "ListPos": 213,
-          "ListEnd": 213,
+          "ListPos": 221,
+          "ListEnd": 221,
           "HasDistinct": false,
           "Items": []
         },
         "ColumnArgList": null
       },
       "PrimaryKey": {
-        "PrimaryPos": 215,
+        "PrimaryPos": 224,
         "Expr": {
-          "LeftParenPos": 227,
-          "RightParenPos": 230,
+          "LeftParenPos": 236,
+          "RightParenPos": 239,
           "Items": {
-            "ListPos": 228,
-            "ListEnd": 230,
+            "ListPos": 237,
+            "ListEnd": 239,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "id",
                   "QuoteType": 1,
-                  "NamePos": 228,
-                  "NameEnd": 230
+                  "NamePos": 237,
+                  "NameEnd": 239
                 },
                 "Alias": null
               }
@@ -231,8 +231,8 @@
     "SubQuery": {
       "HasParen": false,
       "Select": {
-        "SelectPos": 235,
-        "StatementEnd": 259,
+        "SelectPos": 246,
+        "StatementEnd": 270,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -242,32 +242,32 @@
             "Expr": {
               "Name": "*",
               "QuoteType": 0,
-              "NamePos": 242,
-              "NameEnd": 242
+              "NamePos": 253,
+              "NameEnd": 253
             },
             "Modifiers": [],
             "Alias": null
           }
         ],
         "From": {
-          "FromPos": 244,
+          "FromPos": 255,
           "Expr": {
             "Table": {
-              "TablePos": 249,
-              "TableEnd": 259,
+              "TablePos": 260,
+              "TableEnd": 270,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "test_table",
                   "QuoteType": 1,
-                  "NamePos": 249,
-                  "NameEnd": 259
+                  "NamePos": 260,
+                  "NameEnd": 270
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 259,
+            "StatementEnd": 270,
             "SampleRatio": null,
             "HasFinal": false
           }

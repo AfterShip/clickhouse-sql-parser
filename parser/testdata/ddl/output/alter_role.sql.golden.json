@@ -1,7 +1,7 @@
 [
   {
-    "AlterPos": 22,
-    "StatementEnd": 41,
+    "AlterPos": 24,
+    "StatementEnd": 43,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -9,21 +9,21 @@
           "Name": {
             "Name": "r1_01293",
             "QuoteType": 1,
-            "NamePos": 33,
-            "NameEnd": 41
+            "NamePos": 35,
+            "NameEnd": 43
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 41
+        "StatementEnd": 43
       }
     ],
     "Settings": null
   },
   {
-    "AlterPos": 43,
-    "StatementEnd": 102,
+    "AlterPos": 46,
+    "StatementEnd": 105,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -31,34 +31,34 @@
           "Name": {
             "Name": "r1_01293",
             "QuoteType": 1,
-            "NamePos": 54,
-            "NameEnd": 62
+            "NamePos": 57,
+            "NameEnd": 65
           },
           "Scope": null,
           "OnCluster": {
-            "OnPos": 63,
+            "OnPos": 66,
             "Expr": {
               "Name": "cluster_1",
               "QuoteType": 1,
-              "NamePos": 74,
-              "NameEnd": 83
+              "NamePos": 77,
+              "NameEnd": 86
             }
           }
         },
         "NewName": {
           "Name": "r2_01293",
           "QuoteType": 1,
-          "NamePos": 94,
-          "NameEnd": 102
+          "NamePos": 97,
+          "NameEnd": 105
         },
-        "StatementEnd": 102
+        "StatementEnd": 105
       }
     ],
     "Settings": null
   },
   {
-    "AlterPos": 104,
-    "StatementEnd": 171,
+    "AlterPos": 108,
+    "StatementEnd": 175,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -66,8 +66,8 @@
           "Name": {
             "Name": "r1_01293",
             "QuoteType": 1,
-            "NamePos": 115,
-            "NameEnd": 123
+            "NamePos": 119,
+            "NameEnd": 127
           },
           "Scope": null,
           "OnCluster": null
@@ -75,18 +75,18 @@
         "NewName": {
           "Name": "r2_01293",
           "QuoteType": 1,
-          "NamePos": 134,
-          "NameEnd": 142
+          "NamePos": 138,
+          "NameEnd": 146
         },
-        "StatementEnd": 142
+        "StatementEnd": 146
       },
       {
         "RoleName": {
           "Name": {
             "Name": "r3_01293",
             "QuoteType": 1,
-            "NamePos": 144,
-            "NameEnd": 152
+            "NamePos": 148,
+            "NameEnd": 156
           },
           "Scope": null,
           "OnCluster": null
@@ -94,17 +94,17 @@
         "NewName": {
           "Name": "r4_01293",
           "QuoteType": 1,
-          "NamePos": 163,
-          "NameEnd": 171
+          "NamePos": 167,
+          "NameEnd": 175
         },
-        "StatementEnd": 171
+        "StatementEnd": 175
       }
     ],
     "Settings": null
   },
   {
-    "AlterPos": 173,
-    "StatementEnd": 206,
+    "AlterPos": 178,
+    "StatementEnd": 211,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -112,14 +112,14 @@
           "Name": {
             "Name": "r1_01293",
             "QuoteType": 1,
-            "NamePos": 184,
-            "NameEnd": 192
+            "NamePos": 189,
+            "NameEnd": 197
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 192
+        "StatementEnd": 197
       }
     ],
     "Settings": [
@@ -128,15 +128,15 @@
         "Modifier": {
           "Name": "NONE",
           "QuoteType": 1,
-          "NamePos": 202,
-          "NameEnd": 206
+          "NamePos": 207,
+          "NameEnd": 211
         }
       }
     ]
   },
   {
-    "AlterPos": 208,
-    "StatementEnd": 253,
+    "AlterPos": 214,
+    "StatementEnd": 259,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -144,14 +144,14 @@
           "Name": {
             "Name": "r2_01293",
             "QuoteType": 1,
-            "NamePos": 219,
-            "NameEnd": 227
+            "NamePos": 225,
+            "NameEnd": 233
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 227
+        "StatementEnd": 233
       }
     ],
     "Settings": [
@@ -161,13 +161,13 @@
             "Name": {
               "Name": "PROFILE",
               "QuoteType": 1,
-              "NamePos": 237,
-              "NameEnd": 244
+              "NamePos": 243,
+              "NameEnd": 250
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 246,
-              "LiteralEnd": 253,
+              "LiteralPos": 252,
+              "LiteralEnd": 259,
               "Literal": "default"
             }
           }
@@ -177,8 +177,8 @@
     ]
   },
   {
-    "AlterPos": 256,
-    "StatementEnd": 309,
+    "AlterPos": 263,
+    "StatementEnd": 316,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -186,14 +186,14 @@
           "Name": {
             "Name": "r3_01293",
             "QuoteType": 1,
-            "NamePos": 267,
-            "NameEnd": 275
+            "NamePos": 274,
+            "NameEnd": 282
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 275
+        "StatementEnd": 282
       }
     ],
     "Settings": [
@@ -203,13 +203,13 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 285,
-              "NameEnd": 301
+              "NamePos": 292,
+              "NameEnd": 308
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 302,
-              "NumEnd": 309,
+              "NumPos": 309,
+              "NumEnd": 316,
               "Literal": "5000000",
               "Base": 10
             }
@@ -220,8 +220,8 @@
     ]
   },
   {
-    "AlterPos": 311,
-    "StatementEnd": 368,
+    "AlterPos": 319,
+    "StatementEnd": 376,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -229,14 +229,14 @@
           "Name": {
             "Name": "r4_01293",
             "QuoteType": 1,
-            "NamePos": 322,
-            "NameEnd": 330
+            "NamePos": 330,
+            "NameEnd": 338
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 330
+        "StatementEnd": 338
       }
     ],
     "Settings": [
@@ -246,8 +246,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 340,
-              "NameEnd": 356
+              "NamePos": 348,
+              "NameEnd": 364
             },
             "Operation": "",
             "Value": null
@@ -256,13 +256,13 @@
             "Name": {
               "Name": "MIN",
               "QuoteType": 1,
-              "NamePos": 357,
-              "NameEnd": 360
+              "NamePos": 365,
+              "NameEnd": 368
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 361,
-              "NumEnd": 368,
+              "NumPos": 369,
+              "NumEnd": 376,
               "Literal": "5000000",
               "Base": 10
             }
@@ -273,8 +273,8 @@
     ]
   },
   {
-    "AlterPos": 370,
-    "StatementEnd": 427,
+    "AlterPos": 379,
+    "StatementEnd": 436,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -282,14 +282,14 @@
           "Name": {
             "Name": "r5_01293",
             "QuoteType": 1,
-            "NamePos": 381,
-            "NameEnd": 389
+            "NamePos": 390,
+            "NameEnd": 398
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 389
+        "StatementEnd": 398
       }
     ],
     "Settings": [
@@ -299,8 +299,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 399,
-              "NameEnd": 415
+              "NamePos": 408,
+              "NameEnd": 424
             },
             "Operation": "",
             "Value": null
@@ -309,13 +309,13 @@
             "Name": {
               "Name": "MAX",
               "QuoteType": 1,
-              "NamePos": 416,
-              "NameEnd": 419
+              "NamePos": 425,
+              "NameEnd": 428
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 420,
-              "NumEnd": 427,
+              "NumPos": 429,
+              "NumEnd": 436,
               "Literal": "5000000",
               "Base": 10
             }
@@ -326,8 +326,8 @@
     ]
   },
   {
-    "AlterPos": 429,
-    "StatementEnd": 480,
+    "AlterPos": 439,
+    "StatementEnd": 490,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -335,14 +335,14 @@
           "Name": {
             "Name": "r6_01293",
             "QuoteType": 1,
-            "NamePos": 440,
-            "NameEnd": 448
+            "NamePos": 450,
+            "NameEnd": 458
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 448
+        "StatementEnd": 458
       }
     ],
     "Settings": [
@@ -352,8 +352,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 458,
-              "NameEnd": 474
+              "NamePos": 468,
+              "NameEnd": 484
             },
             "Operation": "",
             "Value": null
@@ -362,15 +362,15 @@
         "Modifier": {
           "Name": "CONST",
           "QuoteType": 1,
-          "NamePos": 475,
-          "NameEnd": 480
+          "NamePos": 485,
+          "NameEnd": 490
         }
       }
     ]
   },
   {
-    "AlterPos": 482,
-    "StatementEnd": 536,
+    "AlterPos": 493,
+    "StatementEnd": 547,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -378,14 +378,14 @@
           "Name": {
             "Name": "r7_01293",
             "QuoteType": 1,
-            "NamePos": 493,
-            "NameEnd": 501
+            "NamePos": 504,
+            "NameEnd": 512
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 501
+        "StatementEnd": 512
       }
     ],
     "Settings": [
@@ -395,8 +395,8 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 511,
-              "NameEnd": 527
+              "NamePos": 522,
+              "NameEnd": 538
             },
             "Operation": "",
             "Value": null
@@ -405,15 +405,15 @@
         "Modifier": {
           "Name": "WRITABLE",
           "QuoteType": 1,
-          "NamePos": 528,
-          "NameEnd": 536
+          "NamePos": 539,
+          "NameEnd": 547
         }
       }
     ]
   },
   {
-    "AlterPos": 538,
-    "StatementEnd": 621,
+    "AlterPos": 550,
+    "StatementEnd": 633,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -421,14 +421,14 @@
           "Name": {
             "Name": "r8_01293",
             "QuoteType": 1,
-            "NamePos": 549,
-            "NameEnd": 557
+            "NamePos": 561,
+            "NameEnd": 569
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 557
+        "StatementEnd": 569
       }
     ],
     "Settings": [
@@ -438,13 +438,13 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 567,
-              "NameEnd": 583
+              "NamePos": 579,
+              "NameEnd": 595
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 584,
-              "NumEnd": 591,
+              "NumPos": 596,
+              "NumEnd": 603,
               "Literal": "5000000",
               "Base": 10
             }
@@ -452,21 +452,6 @@
           {
             "Name": {
               "Name": "MIN",
-              "QuoteType": 1,
-              "NamePos": 592,
-              "NameEnd": 595
-            },
-            "Operation": "",
-            "Value": {
-              "NumPos": 596,
-              "NumEnd": 603,
-              "Literal": "4000000",
-              "Base": 10
-            }
-          },
-          {
-            "Name": {
-              "Name": "MAX",
               "QuoteType": 1,
               "NamePos": 604,
               "NameEnd": 607
@@ -475,257 +460,6 @@
             "Value": {
               "NumPos": 608,
               "NumEnd": 615,
-              "Literal": "6000000",
-              "Base": 10
-            }
-          }
-        ],
-        "Modifier": {
-          "Name": "CONST",
-          "QuoteType": 1,
-          "NamePos": 616,
-          "NameEnd": 621
-        }
-      }
-    ]
-  },
-  {
-    "AlterPos": 623,
-    "StatementEnd": 704,
-    "IfExists": false,
-    "RoleRenamePairs": [
-      {
-        "RoleName": {
-          "Name": {
-            "Name": "r9_01293",
-            "QuoteType": 1,
-            "NamePos": 634,
-            "NameEnd": 642
-          },
-          "Scope": null,
-          "OnCluster": null
-        },
-        "NewName": null,
-        "StatementEnd": 642
-      }
-    ],
-    "Settings": [
-      {
-        "SettingPairs": [
-          {
-            "Name": {
-              "Name": "PROFILE",
-              "QuoteType": 1,
-              "NamePos": 652,
-              "NameEnd": 659
-            },
-            "Operation": "",
-            "Value": {
-              "LiteralPos": 661,
-              "LiteralEnd": 668,
-              "Literal": "default"
-            }
-          }
-        ],
-        "Modifier": null
-      },
-      {
-        "SettingPairs": [
-          {
-            "Name": {
-              "Name": "max_memory_usage",
-              "QuoteType": 1,
-              "NamePos": 671,
-              "NameEnd": 687
-            },
-            "Operation": "=",
-            "Value": {
-              "NumPos": 688,
-              "NumEnd": 695,
-              "Literal": "5000000",
-              "Base": 10
-            }
-          }
-        ],
-        "Modifier": {
-          "Name": "WRITABLE",
-          "QuoteType": 1,
-          "NamePos": 696,
-          "NameEnd": 704
-        }
-      }
-    ]
-  },
-  {
-    "AlterPos": 706,
-    "StatementEnd": 735,
-    "IfExists": false,
-    "RoleRenamePairs": [
-      {
-        "RoleName": {
-          "Name": {
-            "Name": "r1_01293",
-            "QuoteType": 1,
-            "NamePos": 717,
-            "NameEnd": 725
-          },
-          "Scope": null,
-          "OnCluster": null
-        },
-        "NewName": null,
-        "StatementEnd": 725
-      },
-      {
-        "RoleName": {
-          "Name": {
-            "Name": "r2_01293",
-            "QuoteType": 1,
-            "NamePos": 727,
-            "NameEnd": 735
-          },
-          "Scope": null,
-          "OnCluster": null
-        },
-        "NewName": null,
-        "StatementEnd": 735
-      }
-    ],
-    "Settings": null
-  },
-  {
-    "AlterPos": 737,
-    "StatementEnd": 776,
-    "IfExists": false,
-    "RoleRenamePairs": [
-      {
-        "RoleName": {
-          "Name": {
-            "Name": "r1_01293",
-            "QuoteType": 1,
-            "NamePos": 748,
-            "NameEnd": 756
-          },
-          "Scope": null,
-          "OnCluster": null
-        },
-        "NewName": null,
-        "StatementEnd": 756
-      }
-    ],
-    "Settings": [
-      {
-        "SettingPairs": [
-          {
-            "Name": {
-              "Name": "readonly",
-              "QuoteType": 1,
-              "NamePos": 766,
-              "NameEnd": 774
-            },
-            "Operation": "=",
-            "Value": {
-              "NumPos": 775,
-              "NumEnd": 776,
-              "Literal": "1",
-              "Base": 10
-            }
-          }
-        ],
-        "Modifier": null
-      }
-    ]
-  },
-  {
-    "AlterPos": 778,
-    "StatementEnd": 823,
-    "IfExists": false,
-    "RoleRenamePairs": [
-      {
-        "RoleName": {
-          "Name": {
-            "Name": "r2_01293",
-            "QuoteType": 1,
-            "NamePos": 789,
-            "NameEnd": 797
-          },
-          "Scope": null,
-          "OnCluster": null
-        },
-        "NewName": null,
-        "StatementEnd": 797
-      }
-    ],
-    "Settings": [
-      {
-        "SettingPairs": [
-          {
-            "Name": {
-              "Name": "PROFILE",
-              "QuoteType": 1,
-              "NamePos": 807,
-              "NameEnd": 814
-            },
-            "Operation": "",
-            "Value": {
-              "LiteralPos": 816,
-              "LiteralEnd": 823,
-              "Literal": "default"
-            }
-          }
-        ],
-        "Modifier": null
-      }
-    ]
-  },
-  {
-    "AlterPos": 826,
-    "StatementEnd": 912,
-    "IfExists": false,
-    "RoleRenamePairs": [
-      {
-        "RoleName": {
-          "Name": {
-            "Name": "r3_01293",
-            "QuoteType": 1,
-            "NamePos": 837,
-            "NameEnd": 845
-          },
-          "Scope": null,
-          "OnCluster": null
-        },
-        "NewName": null,
-        "StatementEnd": 845
-      }
-    ],
-    "Settings": [
-      {
-        "SettingPairs": [
-          {
-            "Name": {
-              "Name": "max_memory_usage",
-              "QuoteType": 1,
-              "NamePos": 855,
-              "NameEnd": 871
-            },
-            "Operation": "=",
-            "Value": {
-              "NumPos": 872,
-              "NumEnd": 879,
-              "Literal": "5000000",
-              "Base": 10
-            }
-          },
-          {
-            "Name": {
-              "Name": "MIN",
-              "QuoteType": 1,
-              "NamePos": 880,
-              "NameEnd": 883
-            },
-            "Operation": "",
-            "Value": {
-              "NumPos": 884,
-              "NumEnd": 891,
               "Literal": "4000000",
               "Base": 10
             }
@@ -734,45 +468,45 @@
             "Name": {
               "Name": "MAX",
               "QuoteType": 1,
-              "NamePos": 892,
-              "NameEnd": 895
+              "NamePos": 616,
+              "NameEnd": 619
             },
             "Operation": "",
             "Value": {
-              "NumPos": 896,
-              "NumEnd": 903,
+              "NumPos": 620,
+              "NumEnd": 627,
               "Literal": "6000000",
               "Base": 10
             }
           }
         ],
         "Modifier": {
-          "Name": "WRITABLE",
+          "Name": "CONST",
           "QuoteType": 1,
-          "NamePos": 904,
-          "NameEnd": 912
+          "NamePos": 628,
+          "NameEnd": 633
         }
       }
     ]
   },
   {
-    "AlterPos": 914,
-    "StatementEnd": 998,
+    "AlterPos": 636,
+    "StatementEnd": 717,
     "IfExists": false,
     "RoleRenamePairs": [
       {
         "RoleName": {
           "Name": {
-            "Name": "r4_01293",
+            "Name": "r9_01293",
             "QuoteType": 1,
-            "NamePos": 925,
-            "NameEnd": 933
+            "NamePos": 647,
+            "NameEnd": 655
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 933
+        "StatementEnd": 655
       }
     ],
     "Settings": [
@@ -782,13 +516,13 @@
             "Name": {
               "Name": "PROFILE",
               "QuoteType": 1,
-              "NamePos": 943,
-              "NameEnd": 950
+              "NamePos": 665,
+              "NameEnd": 672
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 952,
-              "LiteralEnd": 959,
+              "LiteralPos": 674,
+              "LiteralEnd": 681,
               "Literal": "default"
             }
           }
@@ -801,13 +535,279 @@
             "Name": {
               "Name": "max_memory_usage",
               "QuoteType": 1,
-              "NamePos": 962,
-              "NameEnd": 978
+              "NamePos": 684,
+              "NameEnd": 700
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 979,
-              "NumEnd": 986,
+              "NumPos": 701,
+              "NumEnd": 708,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": {
+          "Name": "WRITABLE",
+          "QuoteType": 1,
+          "NamePos": 709,
+          "NameEnd": 717
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 720,
+    "StatementEnd": 749,
+    "IfExists": false,
+    "RoleRenamePairs": [
+      {
+        "RoleName": {
+          "Name": {
+            "Name": "r1_01293",
+            "QuoteType": 1,
+            "NamePos": 731,
+            "NameEnd": 739
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        "NewName": null,
+        "StatementEnd": 739
+      },
+      {
+        "RoleName": {
+          "Name": {
+            "Name": "r2_01293",
+            "QuoteType": 1,
+            "NamePos": 741,
+            "NameEnd": 749
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        "NewName": null,
+        "StatementEnd": 749
+      }
+    ],
+    "Settings": null
+  },
+  {
+    "AlterPos": 752,
+    "StatementEnd": 791,
+    "IfExists": false,
+    "RoleRenamePairs": [
+      {
+        "RoleName": {
+          "Name": {
+            "Name": "r1_01293",
+            "QuoteType": 1,
+            "NamePos": 763,
+            "NameEnd": 771
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        "NewName": null,
+        "StatementEnd": 771
+      }
+    ],
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "readonly",
+              "QuoteType": 1,
+              "NamePos": 781,
+              "NameEnd": 789
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 790,
+              "NumEnd": 791,
+              "Literal": "1",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "AlterPos": 794,
+    "StatementEnd": 839,
+    "IfExists": false,
+    "RoleRenamePairs": [
+      {
+        "RoleName": {
+          "Name": {
+            "Name": "r2_01293",
+            "QuoteType": 1,
+            "NamePos": 805,
+            "NameEnd": 813
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        "NewName": null,
+        "StatementEnd": 813
+      }
+    ],
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "QuoteType": 1,
+              "NamePos": 823,
+              "NameEnd": 830
+            },
+            "Operation": "",
+            "Value": {
+              "LiteralPos": 832,
+              "LiteralEnd": 839,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      }
+    ]
+  },
+  {
+    "AlterPos": 843,
+    "StatementEnd": 929,
+    "IfExists": false,
+    "RoleRenamePairs": [
+      {
+        "RoleName": {
+          "Name": {
+            "Name": "r3_01293",
+            "QuoteType": 1,
+            "NamePos": 854,
+            "NameEnd": 862
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        "NewName": null,
+        "StatementEnd": 862
+      }
+    ],
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "QuoteType": 1,
+              "NamePos": 872,
+              "NameEnd": 888
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 889,
+              "NumEnd": 896,
+              "Literal": "5000000",
+              "Base": 10
+            }
+          },
+          {
+            "Name": {
+              "Name": "MIN",
+              "QuoteType": 1,
+              "NamePos": 897,
+              "NameEnd": 900
+            },
+            "Operation": "",
+            "Value": {
+              "NumPos": 901,
+              "NumEnd": 908,
+              "Literal": "4000000",
+              "Base": 10
+            }
+          },
+          {
+            "Name": {
+              "Name": "MAX",
+              "QuoteType": 1,
+              "NamePos": 909,
+              "NameEnd": 912
+            },
+            "Operation": "",
+            "Value": {
+              "NumPos": 913,
+              "NumEnd": 920,
+              "Literal": "6000000",
+              "Base": 10
+            }
+          }
+        ],
+        "Modifier": {
+          "Name": "WRITABLE",
+          "QuoteType": 1,
+          "NamePos": 921,
+          "NameEnd": 929
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 932,
+    "StatementEnd": 1016,
+    "IfExists": false,
+    "RoleRenamePairs": [
+      {
+        "RoleName": {
+          "Name": {
+            "Name": "r4_01293",
+            "QuoteType": 1,
+            "NamePos": 943,
+            "NameEnd": 951
+          },
+          "Scope": null,
+          "OnCluster": null
+        },
+        "NewName": null,
+        "StatementEnd": 951
+      }
+    ],
+    "Settings": [
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "PROFILE",
+              "QuoteType": 1,
+              "NamePos": 961,
+              "NameEnd": 968
+            },
+            "Operation": "",
+            "Value": {
+              "LiteralPos": 970,
+              "LiteralEnd": 977,
+              "Literal": "default"
+            }
+          }
+        ],
+        "Modifier": null
+      },
+      {
+        "SettingPairs": [
+          {
+            "Name": {
+              "Name": "max_memory_usage",
+              "QuoteType": 1,
+              "NamePos": 980,
+              "NameEnd": 996
+            },
+            "Operation": "=",
+            "Value": {
+              "NumPos": 997,
+              "NumEnd": 1004,
               "Literal": "5000000",
               "Base": 10
             }
@@ -821,13 +821,13 @@
             "Name": {
               "Name": "readonly",
               "QuoteType": 1,
-              "NamePos": 988,
-              "NameEnd": 996
+              "NamePos": 1006,
+              "NameEnd": 1014
             },
             "Operation": "=",
             "Value": {
-              "NumPos": 997,
-              "NumEnd": 998,
+              "NumPos": 1015,
+              "NumEnd": 1016,
               "Literal": "1",
               "Base": 10
             }
@@ -838,8 +838,8 @@
     ]
   },
   {
-    "AlterPos": 1000,
-    "StatementEnd": 1033,
+    "AlterPos": 1019,
+    "StatementEnd": 1052,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -847,14 +847,14 @@
           "Name": {
             "Name": "r5_01293",
             "QuoteType": 1,
-            "NamePos": 1011,
-            "NameEnd": 1019
+            "NamePos": 1030,
+            "NameEnd": 1038
           },
           "Scope": null,
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 1019
+        "StatementEnd": 1038
       }
     ],
     "Settings": [
@@ -863,15 +863,15 @@
         "Modifier": {
           "Name": "NONE",
           "QuoteType": 1,
-          "NamePos": 1029,
-          "NameEnd": 1033
+          "NamePos": 1048,
+          "NameEnd": 1052
         }
       }
     ]
   },
   {
-    "AlterPos": 1035,
-    "StatementEnd": 1057,
+    "AlterPos": 1055,
+    "StatementEnd": 1077,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -879,25 +879,25 @@
           "Name": {
             "Name": "r1_01293",
             "QuoteType": 1,
-            "NamePos": 1046,
-            "NameEnd": 1054
+            "NamePos": 1066,
+            "NameEnd": 1074
           },
           "Scope": {
-            "LiteralPos": 1056,
-            "LiteralEnd": 1057,
+            "LiteralPos": 1076,
+            "LiteralEnd": 1077,
             "Literal": "%"
           },
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 1057
+        "StatementEnd": 1077
       }
     ],
     "Settings": null
   },
   {
-    "AlterPos": 1060,
-    "StatementEnd": 1093,
+    "AlterPos": 1081,
+    "StatementEnd": 1114,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -905,18 +905,18 @@
           "Name": {
             "Name": "r2_01293",
             "QuoteType": 1,
-            "NamePos": 1071,
-            "NameEnd": 1079
+            "NamePos": 1092,
+            "NameEnd": 1100
           },
           "Scope": {
-            "LiteralPos": 1081,
-            "LiteralEnd": 1093,
+            "LiteralPos": 1102,
+            "LiteralEnd": 1114,
             "Literal": "%.myhost.com"
           },
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 1093
+        "StatementEnd": 1114
       }
     ],
     "Settings": null

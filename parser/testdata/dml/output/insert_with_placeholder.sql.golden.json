@@ -56,66 +56,61 @@
     },
     "Values": [
       {
-        "LeftParenPos": 63,
-        "RightParenPos": 74,
+        "LeftParenPos": 64,
+        "RightParenPos": 75,
         "Values": [
           {
-            "PlaceholderPos": 64,
-            "PlaceHolderEnd": 64,
+            "PlaceholderPos": 65,
+            "PlaceHolderEnd": 65,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 67,
-            "PlaceHolderEnd": 67,
+            "PlaceholderPos": 68,
+            "PlaceHolderEnd": 68,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 70,
-            "PlaceHolderEnd": 70,
+            "PlaceholderPos": 71,
+            "PlaceHolderEnd": 71,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 73,
-            "PlaceHolderEnd": 73,
+            "PlaceholderPos": 74,
+            "PlaceHolderEnd": 74,
             "Type": "?"
           }
         ]
       },
       {
-        "LeftParenPos": 81,
-        "RightParenPos": 92,
+        "LeftParenPos": 83,
+        "RightParenPos": 94,
         "Values": [
           {
-            "PlaceholderPos": 82,
-            "PlaceHolderEnd": 82,
+            "PlaceholderPos": 84,
+            "PlaceHolderEnd": 84,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 85,
-            "PlaceHolderEnd": 85,
+            "PlaceholderPos": 87,
+            "PlaceHolderEnd": 87,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 88,
-            "PlaceHolderEnd": 88,
+            "PlaceholderPos": 90,
+            "PlaceHolderEnd": 90,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 91,
-            "PlaceHolderEnd": 91,
+            "PlaceholderPos": 93,
+            "PlaceHolderEnd": 93,
             "Type": "?"
           }
         ]
       },
       {
-        "LeftParenPos": 99,
-        "RightParenPos": 110,
+        "LeftParenPos": 102,
+        "RightParenPos": 113,
         "Values": [
-          {
-            "PlaceholderPos": 100,
-            "PlaceHolderEnd": 100,
-            "Type": "?"
-          },
           {
             "PlaceholderPos": 103,
             "PlaceHolderEnd": 103,
@@ -130,31 +125,36 @@
             "PlaceholderPos": 109,
             "PlaceHolderEnd": 109,
             "Type": "?"
+          },
+          {
+            "PlaceholderPos": 112,
+            "PlaceHolderEnd": 112,
+            "Type": "?"
           }
         ]
       },
       {
-        "LeftParenPos": 117,
-        "RightParenPos": 128,
+        "LeftParenPos": 121,
+        "RightParenPos": 132,
         "Values": [
           {
-            "PlaceholderPos": 118,
-            "PlaceHolderEnd": 118,
+            "PlaceholderPos": 122,
+            "PlaceHolderEnd": 122,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 121,
-            "PlaceHolderEnd": 121,
+            "PlaceholderPos": 125,
+            "PlaceHolderEnd": 125,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 124,
-            "PlaceHolderEnd": 124,
+            "PlaceholderPos": 128,
+            "PlaceHolderEnd": 128,
             "Type": "?"
           },
           {
-            "PlaceholderPos": 127,
-            "PlaceHolderEnd": 127,
+            "PlaceholderPos": 131,
+            "PlaceHolderEnd": 131,
             "Type": "?"
           }
         ]
@@ -163,7 +163,7 @@
     "SelectExpr": null
   },
   {
-    "InsertPos": 133,
+    "InsertPos": 140,
     "Format": null,
     "HasTableKeyword": false,
     "Table": {
@@ -171,20 +171,20 @@
       "Table": {
         "Name": "test_with_typed_columns",
         "QuoteType": 1,
-        "NamePos": 145,
-        "NameEnd": 168
+        "NamePos": 152,
+        "NameEnd": 175
       }
     },
     "ColumnNames": {
-      "LeftParenPos": 169,
-      "RightParenPos": 184,
+      "LeftParenPos": 176,
+      "RightParenPos": 191,
       "ColumnNames": [
         {
           "Ident": {
             "Name": "id",
             "QuoteType": 1,
-            "NamePos": 170,
-            "NameEnd": 172
+            "NamePos": 177,
+            "NameEnd": 179
           },
           "DotIdent": null
         },
@@ -192,8 +192,8 @@
           "Ident": {
             "Name": "created_at",
             "QuoteType": 1,
-            "NamePos": 174,
-            "NameEnd": 184
+            "NamePos": 181,
+            "NameEnd": 191
           },
           "DotIdent": null
         }
@@ -201,49 +201,49 @@
     },
     "Values": [
       {
-        "LeftParenPos": 193,
-        "RightParenPos": 234,
+        "LeftParenPos": 201,
+        "RightParenPos": 242,
         "Values": [
           {
-            "LeftBracePos": 194,
-            "RightBracePos": 205,
+            "LeftBracePos": 202,
+            "RightBracePos": 213,
             "Name": {
               "Name": "id",
               "QuoteType": 1,
-              "NamePos": 195,
-              "NameEnd": 197
+              "NamePos": 203,
+              "NameEnd": 205
             },
             "Type": {
               "Name": {
                 "Name": "Int32",
                 "QuoteType": 1,
-                "NamePos": 199,
-                "NameEnd": 204
+                "NamePos": 207,
+                "NameEnd": 212
               }
             }
           },
           {
-            "LeftBracePos": 207,
-            "RightBracePos": 234,
+            "LeftBracePos": 215,
+            "RightBracePos": 242,
             "Name": {
               "Name": "created_at",
               "QuoteType": 1,
-              "NamePos": 208,
-              "NameEnd": 218
+              "NamePos": 216,
+              "NameEnd": 226
             },
             "Type": {
-              "LeftParenPos": 231,
-              "RightParenPos": 232,
+              "LeftParenPos": 239,
+              "RightParenPos": 240,
               "Name": {
                 "Name": "DateTime64",
                 "QuoteType": 1,
-                "NamePos": 220,
-                "NameEnd": 230
+                "NamePos": 228,
+                "NameEnd": 238
               },
               "Params": [
                 {
-                  "NumPos": 231,
-                  "NumEnd": 232,
+                  "NumPos": 239,
+                  "NumEnd": 240,
                   "Literal": "6",
                   "Base": 10
                 }

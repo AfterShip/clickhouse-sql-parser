@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 181,
+    "StatementEnd": 187,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -12,23 +12,23 @@
           "Name": {
             "Name": "toStartOfInterval",
             "QuoteType": 1,
-            "NamePos": 11,
-            "NameEnd": 28
+            "NamePos": 12,
+            "NameEnd": 29
           },
           "Params": {
-            "LeftParenPos": 28,
-            "RightParenPos": 59,
+            "LeftParenPos": 29,
+            "RightParenPos": 60,
             "Items": {
-              "ListPos": 29,
-              "ListEnd": 58,
+              "ListPos": 30,
+              "ListEnd": 59,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "timestamp",
                     "QuoteType": 1,
-                    "NamePos": 29,
-                    "NameEnd": 38
+                    "NamePos": 30,
+                    "NameEnd": 39
                   },
                   "Alias": null
                 },
@@ -37,21 +37,21 @@
                     "Name": {
                       "Name": "toIntervalMinute",
                       "QuoteType": 1,
-                      "NamePos": 40,
-                      "NameEnd": 56
+                      "NamePos": 41,
+                      "NameEnd": 57
                     },
                     "Params": {
-                      "LeftParenPos": 56,
-                      "RightParenPos": 58,
+                      "LeftParenPos": 57,
+                      "RightParenPos": 59,
                       "Items": {
-                        "ListPos": 57,
-                        "ListEnd": 58,
+                        "ListPos": 58,
+                        "ListEnd": 59,
                         "HasDistinct": false,
                         "Items": [
                           {
                             "Expr": {
-                              "NumPos": 57,
-                              "NumEnd": 58,
+                              "NumPos": 58,
+                              "NumEnd": 59,
                               "Literal": "1",
                               "Base": 10
                             },
@@ -73,40 +73,40 @@
         "Alias": {
           "Name": "interval",
           "QuoteType": 1,
-          "NamePos": 64,
-          "NameEnd": 72
+          "NamePos": 65,
+          "NameEnd": 73
         }
       },
       {
         "Expr": {
           "Name": "column_name",
           "QuoteType": 1,
-          "NamePos": 78,
-          "NameEnd": 89
+          "NamePos": 80,
+          "NameEnd": 91
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 90,
+      "FromPos": 93,
       "Expr": {
         "Table": {
-          "TablePos": 95,
-          "TableEnd": 100,
+          "TablePos": 98,
+          "TableEnd": 103,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "table",
               "QuoteType": 1,
-              "NamePos": 95,
-              "NameEnd": 100
+              "NamePos": 98,
+              "NameEnd": 103
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 100,
+        "StatementEnd": 103,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -115,38 +115,38 @@
     "Window": null,
     "Prewhere": null,
     "Where": {
-      "WherePos": 101,
+      "WherePos": 105,
       "Expr": {
         "Name": "true",
         "QuoteType": 1,
-        "NamePos": 107,
-        "NameEnd": 111
+        "NamePos": 111,
+        "NameEnd": 115
       }
     },
     "GroupBy": {
-      "GroupByPos": 112,
-      "GroupByEnd": 145,
+      "GroupByPos": 117,
+      "GroupByEnd": 151,
       "AggregateType": "",
       "Expr": {
-        "ListPos": 121,
-        "ListEnd": 143,
+        "ListPos": 126,
+        "ListEnd": 148,
         "HasDistinct": false,
         "Items": [
           {
             "Expr": {
-              "LeftParenPos": 121,
-              "RightParenPos": 143,
+              "LeftParenPos": 126,
+              "RightParenPos": 148,
               "Items": {
-                "ListPos": 122,
-                "ListEnd": 143,
+                "ListPos": 127,
+                "ListEnd": 148,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "interval",
                       "QuoteType": 1,
-                      "NamePos": 122,
-                      "NameEnd": 130
+                      "NamePos": 127,
+                      "NameEnd": 135
                     },
                     "Alias": null
                   },
@@ -154,8 +154,8 @@
                     "Expr": {
                       "Name": "column_name",
                       "QuoteType": 1,
-                      "NamePos": 132,
-                      "NameEnd": 143
+                      "NamePos": 137,
+                      "NameEnd": 148
                     },
                     "Alias": null
                   }
@@ -174,39 +174,39 @@
     "WithTotal": false,
     "Having": null,
     "OrderBy": {
-      "OrderPos": 145,
-      "ListEnd": 181,
+      "OrderPos": 151,
+      "ListEnd": 187,
       "Items": [
         {
-          "OrderPos": 145,
+          "OrderPos": 151,
           "Expr": {
-            "LeftParenPos": 154,
-            "RightParenPos": 181,
+            "LeftParenPos": 160,
+            "RightParenPos": 187,
             "Items": {
-              "ListPos": 155,
-              "ListEnd": 181,
+              "ListPos": 161,
+              "ListEnd": 187,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "interval",
                     "QuoteType": 1,
-                    "NamePos": 155,
-                    "NameEnd": 163
+                    "NamePos": 161,
+                    "NameEnd": 169
                   },
                   "Alias": {
                     "Name": "i",
                     "QuoteType": 1,
-                    "NamePos": 167,
-                    "NameEnd": 168
+                    "NamePos": 173,
+                    "NameEnd": 174
                   }
                 },
                 {
                   "Expr": {
                     "Name": "column_name",
                     "QuoteType": 1,
-                    "NamePos": 170,
-                    "NameEnd": 181
+                    "NamePos": 176,
+                    "NameEnd": 187
                   },
                   "Alias": null
                 }

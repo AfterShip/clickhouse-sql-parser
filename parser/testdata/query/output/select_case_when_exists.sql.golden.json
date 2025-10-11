@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 205,
+    "StatementEnd": 215,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -11,40 +11,40 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 11,
-          "NameEnd": 11
+          "NamePos": 12,
+          "NameEnd": 12
         },
         "Modifiers": [],
         "Alias": null
       },
       {
         "Expr": {
-          "CasePos": 18,
+          "CasePos": 20,
           "EndPos": 0,
           "Expr": null,
           "Whens": [
             {
-              "WhenPos": 31,
-              "ThenPos": 110,
+              "WhenPos": 34,
+              "ThenPos": 116,
               "When": {
                 "Name": {
                   "Name": "EXISTS",
                   "QuoteType": 1,
-                  "NamePos": 36,
-                  "NameEnd": 42
+                  "NamePos": 39,
+                  "NameEnd": 45
                 },
                 "Params": {
-                  "LeftParenPos": 42,
-                  "RightParenPos": 100,
+                  "LeftParenPos": 45,
+                  "RightParenPos": 105,
                   "Items": {
-                    "ListPos": 43,
-                    "ListEnd": 99,
+                    "ListPos": 46,
+                    "ListEnd": 104,
                     "HasDistinct": false,
                     "Items": [
                       {
                         "Expr": {
-                          "SelectPos": 43,
-                          "StatementEnd": 99,
+                          "SelectPos": 46,
+                          "StatementEnd": 104,
                           "With": null,
                           "Top": null,
                           "HasDistinct": false,
@@ -52,8 +52,8 @@
                           "SelectItems": [
                             {
                               "Expr": {
-                                "NumPos": 50,
-                                "NumEnd": 51,
+                                "NumPos": 53,
+                                "NumEnd": 54,
                                 "Literal": "1",
                                 "Base": 10
                               },
@@ -62,24 +62,24 @@
                             }
                           ],
                           "From": {
-                            "FromPos": 56,
+                            "FromPos": 60,
                             "Expr": {
                               "Table": {
-                                "TablePos": 61,
-                                "TableEnd": 71,
+                                "TablePos": 65,
+                                "TableEnd": 75,
                                 "Alias": null,
                                 "Expr": {
                                   "Database": null,
                                   "Table": {
                                     "Name": "table_name",
                                     "QuoteType": 1,
-                                    "NamePos": 61,
-                                    "NameEnd": 71
+                                    "NamePos": 65,
+                                    "NameEnd": 75
                                   }
                                 },
                                 "HasFinal": false
                               },
-                              "StatementEnd": 71,
+                              "StatementEnd": 75,
                               "SampleRatio": null,
                               "HasFinal": false
                             }
@@ -88,18 +88,18 @@
                           "Window": null,
                           "Prewhere": null,
                           "Where": {
-                            "WherePos": 76,
+                            "WherePos": 81,
                             "Expr": {
                               "LeftExpr": {
                                 "Name": "col1",
                                 "QuoteType": 1,
-                                "NamePos": 82,
-                                "NameEnd": 86
+                                "NamePos": 87,
+                                "NameEnd": 91
                               },
                               "Operation": "=",
                               "RightExpr": {
-                                "LiteralPos": 90,
-                                "LiteralEnd": 99,
+                                "LiteralPos": 95,
+                                "LiteralEnd": 104,
                                 "Literal": "999999999"
                               },
                               "HasGlobal": false,
@@ -126,18 +126,18 @@
                 }
               },
               "Then": {
-                "LiteralPos": 116,
-                "LiteralEnd": 120,
+                "LiteralPos": 122,
+                "LiteralEnd": 126,
                 "Literal": "then"
               },
               "ElsePos": 0,
               "Else": null
             }
           ],
-          "ElsePos": 130,
+          "ElsePos": 137,
           "Else": {
-            "LiteralPos": 136,
-            "LiteralEnd": 140,
+            "LiteralPos": 143,
+            "LiteralEnd": 147,
             "Literal": "else"
           }
         },
@@ -145,30 +145,30 @@
         "Alias": {
           "Name": "check_result",
           "QuoteType": 1,
-          "NamePos": 153,
-          "NameEnd": 165
+          "NamePos": 161,
+          "NameEnd": 173
         }
       }
     ],
     "From": {
-      "FromPos": 166,
+      "FromPos": 175,
       "Expr": {
         "Table": {
-          "TablePos": 171,
-          "TableEnd": 181,
+          "TablePos": 180,
+          "TableEnd": 190,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "table_name",
               "QuoteType": 1,
-              "NamePos": 171,
-              "NameEnd": 181
+              "NamePos": 180,
+              "NameEnd": 190
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 181,
+        "StatementEnd": 190,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -177,18 +177,18 @@
     "Window": null,
     "Prewhere": null,
     "Where": {
-      "WherePos": 182,
+      "WherePos": 192,
       "Expr": {
         "LeftExpr": {
           "Name": "col1",
           "QuoteType": 1,
-          "NamePos": 188,
-          "NameEnd": 192
+          "NamePos": 198,
+          "NameEnd": 202
         },
         "Operation": "=",
         "RightExpr": {
-          "LiteralPos": 196,
-          "LiteralEnd": 205,
+          "LiteralPos": 206,
+          "LiteralEnd": 215,
           "Literal": "123456789"
         },
         "HasGlobal": false,

@@ -1,34 +1,34 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 133,
+    "StatementEnd": 140,
     "With": {
       "WithPos": 0,
-      "EndPos": 24,
+      "EndPos": 25,
       "CTEs": [
         {
-          "CTEPos": 9,
+          "CTEPos": 10,
           "Expr": {
             "Name": {
               "Name": "test",
               "QuoteType": 1,
-              "NamePos": 9,
-              "NameEnd": 13
+              "NamePos": 10,
+              "NameEnd": 14
             },
             "Params": {
-              "LeftParenPos": 13,
-              "RightParenPos": 24,
+              "LeftParenPos": 14,
+              "RightParenPos": 25,
               "Items": {
-                "ListPos": 14,
-                "ListEnd": 24,
+                "ListPos": 15,
+                "ListEnd": 25,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "f1",
                       "QuoteType": 1,
-                      "NamePos": 14,
-                      "NameEnd": 16
+                      "NamePos": 15,
+                      "NameEnd": 17
                     },
                     "Alias": null
                   },
@@ -36,8 +36,8 @@
                     "Expr": {
                       "Name": "f2",
                       "QuoteType": 1,
-                      "NamePos": 18,
-                      "NameEnd": 20
+                      "NamePos": 19,
+                      "NameEnd": 21
                     },
                     "Alias": null
                   },
@@ -45,8 +45,8 @@
                     "Expr": {
                       "Name": "f3",
                       "QuoteType": 1,
-                      "NamePos": 22,
-                      "NameEnd": 24
+                      "NamePos": 23,
+                      "NameEnd": 25
                     },
                     "Alias": null
                   }
@@ -56,8 +56,8 @@
             }
           },
           "Alias": {
-            "SelectPos": 30,
-            "StatementEnd": 58,
+            "SelectPos": 31,
+            "StatementEnd": 59,
             "With": null,
             "Top": null,
             "HasDistinct": false,
@@ -67,8 +67,8 @@
                 "Expr": {
                   "Name": "f4",
                   "QuoteType": 1,
-                  "NamePos": 37,
-                  "NameEnd": 39
+                  "NamePos": 38,
+                  "NameEnd": 40
                 },
                 "Modifiers": [],
                 "Alias": null
@@ -77,8 +77,8 @@
                 "Expr": {
                   "Name": "f5",
                   "QuoteType": 1,
-                  "NamePos": 41,
-                  "NameEnd": 43
+                  "NamePos": 42,
+                  "NameEnd": 44
                 },
                 "Modifiers": [],
                 "Alias": null
@@ -87,32 +87,32 @@
                 "Expr": {
                   "Name": "f6",
                   "QuoteType": 1,
-                  "NamePos": 45,
-                  "NameEnd": 47
+                  "NamePos": 46,
+                  "NameEnd": 48
                 },
                 "Modifiers": [],
                 "Alias": null
               }
             ],
             "From": {
-              "FromPos": 48,
+              "FromPos": 49,
               "Expr": {
                 "Table": {
-                  "TablePos": 53,
-                  "TableEnd": 58,
+                  "TablePos": 54,
+                  "TableEnd": 59,
                   "Alias": null,
                   "Expr": {
                     "Database": null,
                     "Table": {
                       "Name": "sales",
                       "QuoteType": 1,
-                      "NamePos": 53,
-                      "NameEnd": 58
+                      "NamePos": 54,
+                      "NameEnd": 59
                     }
                   },
                   "HasFinal": false
                 },
-                "StatementEnd": 58,
+                "StatementEnd": 59,
                 "SampleRatio": null,
                 "HasFinal": false
               }
@@ -144,67 +144,67 @@
         "Expr": {
           "Name": "f1",
           "QuoteType": 1,
-          "NamePos": 71,
-          "NameEnd": 73
+          "NamePos": 74,
+          "NameEnd": 76
         },
         "Modifiers": [],
         "Alias": {
           "Name": "new_f1",
           "QuoteType": 1,
-          "NamePos": 77,
-          "NameEnd": 83
+          "NamePos": 80,
+          "NameEnd": 86
         }
       },
       {
         "Expr": {
           "Name": "f2",
           "QuoteType": 1,
-          "NamePos": 89,
-          "NameEnd": 91
+          "NamePos": 93,
+          "NameEnd": 95
         },
         "Modifiers": [],
         "Alias": {
           "Name": "new_f2",
           "QuoteType": 1,
-          "NamePos": 95,
-          "NameEnd": 101
+          "NamePos": 99,
+          "NameEnd": 105
         }
       },
       {
         "Expr": {
           "Name": "f3",
           "QuoteType": 1,
-          "NamePos": 107,
-          "NameEnd": 109
+          "NamePos": 112,
+          "NameEnd": 114
         },
         "Modifiers": [],
         "Alias": {
           "Name": "new_f3",
           "QuoteType": 1,
-          "NamePos": 113,
-          "NameEnd": 119
+          "NamePos": 118,
+          "NameEnd": 124
         }
       }
     ],
     "From": {
-      "FromPos": 120,
+      "FromPos": 126,
       "Expr": {
         "Table": {
-          "TablePos": 129,
-          "TableEnd": 133,
+          "TablePos": 136,
+          "TableEnd": 140,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "test",
               "QuoteType": 1,
-              "NamePos": 129,
-              "NameEnd": 133
+              "NamePos": 136,
+              "NameEnd": 140
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 133,
+        "StatementEnd": 140,
         "SampleRatio": null,
         "HasFinal": false
       }

@@ -1,22 +1,22 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 121,
+    "StatementEnd": 131,
     "With": {
       "WithPos": 0,
-      "EndPos": 68,
+      "EndPos": 73,
       "CTEs": [
         {
-          "CTEPos": 9,
+          "CTEPos": 10,
           "Expr": {
             "Name": "t1",
             "QuoteType": 1,
-            "NamePos": 9,
-            "NameEnd": 11
+            "NamePos": 10,
+            "NameEnd": 12
           },
           "Alias": {
-            "SelectPos": 37,
-            "StatementEnd": 54,
+            "SelectPos": 40,
+            "StatementEnd": 57,
             "With": null,
             "Top": null,
             "HasDistinct": false,
@@ -24,8 +24,8 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "NumPos": 44,
-                  "NumEnd": 45,
+                  "NumPos": 47,
+                  "NumEnd": 48,
                   "Literal": "1",
                   "Base": 10
                 },
@@ -33,8 +33,8 @@
                 "Alias": {
                   "Name": "value",
                   "QuoteType": 1,
-                  "NamePos": 49,
-                  "NameEnd": 54
+                  "NamePos": 52,
+                  "NameEnd": 57
                 }
               }
             ],
@@ -57,16 +57,16 @@
           }
         },
         {
-          "CTEPos": 66,
+          "CTEPos": 71,
           "Expr": {
             "Name": "t2",
             "QuoteType": 1,
-            "NamePos": 66,
-            "NameEnd": 68
+            "NamePos": 71,
+            "NameEnd": 73
           },
           "Alias": {
-            "SelectPos": 81,
-            "StatementEnd": 98,
+            "SelectPos": 88,
+            "StatementEnd": 105,
             "With": null,
             "Top": null,
             "HasDistinct": false,
@@ -74,8 +74,8 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "NumPos": 88,
-                  "NumEnd": 89,
+                  "NumPos": 95,
+                  "NumEnd": 96,
                   "Literal": "2",
                   "Base": 10
                 },
@@ -83,8 +83,8 @@
                 "Alias": {
                   "Name": "value",
                   "QuoteType": 1,
-                  "NamePos": 93,
-                  "NameEnd": 98
+                  "NamePos": 100,
+                  "NameEnd": 105
                 }
               }
             ],
@@ -116,56 +116,56 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 112,
-          "NameEnd": 112
+          "NamePos": 121,
+          "NameEnd": 121
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 114,
+      "FromPos": 124,
       "Expr": {
-        "JoinPos": 119,
+        "JoinPos": 129,
         "Left": {
           "Table": {
-            "TablePos": 119,
-            "TableEnd": 121,
+            "TablePos": 129,
+            "TableEnd": 131,
             "Alias": null,
             "Expr": {
               "Database": null,
               "Table": {
                 "Name": "t1",
                 "QuoteType": 1,
-                "NamePos": 119,
-                "NameEnd": 121
+                "NamePos": 129,
+                "NameEnd": 131
               }
             },
             "HasFinal": false
           },
-          "StatementEnd": 121,
+          "StatementEnd": 131,
           "SampleRatio": null,
           "HasFinal": false
         },
         "Right": {
-          "JoinPos": 131,
+          "JoinPos": 142,
           "Left": {
             "Table": {
-              "TablePos": 141,
-              "TableEnd": 143,
+              "TablePos": 152,
+              "TableEnd": 154,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "t2",
                   "QuoteType": 1,
-                  "NamePos": 141,
-                  "NameEnd": 143
+                  "NamePos": 152,
+                  "NameEnd": 154
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 143,
+            "StatementEnd": 154,
             "SampleRatio": null,
             "HasFinal": false
           },
@@ -175,18 +175,18 @@
             "JOIN"
           ],
           "Constraints": {
-            "OnPos": 144,
+            "OnPos": 155,
             "On": {
-              "ListPos": 147,
-              "ListEnd": 151,
+              "ListPos": 158,
+              "ListEnd": 162,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "true",
                     "QuoteType": 1,
-                    "NamePos": 147,
-                    "NameEnd": 151
+                    "NamePos": 158,
+                    "NameEnd": 162
                   },
                   "Alias": null
                 }

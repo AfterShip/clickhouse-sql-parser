@@ -1,22 +1,22 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 124,
+    "StatementEnd": 132,
     "With": {
       "WithPos": 0,
-      "EndPos": 46,
+      "EndPos": 48,
       "CTEs": [
         {
-          "CTEPos": 9,
+          "CTEPos": 10,
           "Expr": {
             "Name": "cte1",
             "QuoteType": 1,
-            "NamePos": 9,
-            "NameEnd": 13
+            "NamePos": 10,
+            "NameEnd": 14
           },
           "Alias": {
-            "SelectPos": 18,
-            "StatementEnd": 35,
+            "SelectPos": 19,
+            "StatementEnd": 36,
             "With": null,
             "Top": null,
             "HasDistinct": false,
@@ -26,32 +26,32 @@
                 "Expr": {
                   "Name": "f1",
                   "QuoteType": 1,
-                  "NamePos": 25,
-                  "NameEnd": 27
+                  "NamePos": 26,
+                  "NameEnd": 28
                 },
                 "Modifiers": [],
                 "Alias": null
               }
             ],
             "From": {
-              "FromPos": 28,
+              "FromPos": 29,
               "Expr": {
                 "Table": {
-                  "TablePos": 33,
-                  "TableEnd": 35,
+                  "TablePos": 34,
+                  "TableEnd": 36,
                   "Alias": null,
                   "Expr": {
                     "Database": null,
                     "Table": {
                       "Name": "t1",
                       "QuoteType": 1,
-                      "NamePos": 33,
-                      "NameEnd": 35
+                      "NamePos": 34,
+                      "NameEnd": 36
                     }
                   },
                   "HasFinal": false
                 },
-                "StatementEnd": 35,
+                "StatementEnd": 36,
                 "SampleRatio": null,
                 "HasFinal": false
               }
@@ -74,16 +74,16 @@
           }
         },
         {
-          "CTEPos": 42,
+          "CTEPos": 44,
           "Expr": {
             "Name": "cte2",
             "QuoteType": 1,
-            "NamePos": 42,
-            "NameEnd": 46
+            "NamePos": 44,
+            "NameEnd": 48
           },
           "Alias": {
-            "SelectPos": 51,
-            "StatementEnd": 68,
+            "SelectPos": 53,
+            "StatementEnd": 70,
             "With": null,
             "Top": null,
             "HasDistinct": false,
@@ -93,32 +93,32 @@
                 "Expr": {
                   "Name": "f2",
                   "QuoteType": 1,
-                  "NamePos": 58,
-                  "NameEnd": 60
+                  "NamePos": 60,
+                  "NameEnd": 62
                 },
                 "Modifiers": [],
                 "Alias": null
               }
             ],
             "From": {
-              "FromPos": 61,
+              "FromPos": 63,
               "Expr": {
                 "Table": {
-                  "TablePos": 66,
-                  "TableEnd": 68,
+                  "TablePos": 68,
+                  "TableEnd": 70,
                   "Alias": null,
                   "Expr": {
                     "Database": null,
                     "Table": {
                       "Name": "t2",
                       "QuoteType": 1,
-                      "NamePos": 66,
-                      "NameEnd": 68
+                      "NamePos": 68,
+                      "NameEnd": 70
                     }
                   },
                   "HasFinal": false
                 },
-                "StatementEnd": 68,
+                "StatementEnd": 70,
                 "SampleRatio": null,
                 "HasFinal": false
               }
@@ -152,14 +152,14 @@
             {
               "Name": "cte1",
               "QuoteType": 1,
-              "NamePos": 81,
-              "NameEnd": 85
+              "NamePos": 85,
+              "NameEnd": 89
             },
             {
               "Name": "f1",
               "QuoteType": 1,
-              "NamePos": 86,
-              "NameEnd": 88
+              "NamePos": 90,
+              "NameEnd": 92
             }
           ]
         },
@@ -172,14 +172,14 @@
             {
               "Name": "cte2",
               "QuoteType": 1,
-              "NamePos": 94,
-              "NameEnd": 98
+              "NamePos": 99,
+              "NameEnd": 103
             },
             {
               "Name": "f2",
               "QuoteType": 1,
-              "NamePos": 99,
-              "NameEnd": 101
+              "NamePos": 104,
+              "NameEnd": 106
             }
           ]
         },
@@ -192,14 +192,14 @@
             {
               "Name": "t3",
               "QuoteType": 1,
-              "NamePos": 107,
-              "NameEnd": 109
+              "NamePos": 113,
+              "NameEnd": 115
             },
             {
               "Name": "f3",
               "QuoteType": 1,
-              "NamePos": 110,
-              "NameEnd": 112
+              "NamePos": 116,
+              "NameEnd": 118
             }
           ]
         },
@@ -208,68 +208,68 @@
       }
     ],
     "From": {
-      "FromPos": 113,
+      "FromPos": 120,
       "Expr": {
-        "JoinPos": 122,
+        "JoinPos": 130,
         "Left": {
           "Table": {
-            "TablePos": 122,
-            "TableEnd": 124,
+            "TablePos": 130,
+            "TableEnd": 132,
             "Alias": null,
             "Expr": {
               "Database": null,
               "Table": {
                 "Name": "t3",
                 "QuoteType": 1,
-                "NamePos": 122,
-                "NameEnd": 124
+                "NamePos": 130,
+                "NameEnd": 132
               }
             },
             "HasFinal": false
           },
-          "StatementEnd": 124,
+          "StatementEnd": 132,
           "SampleRatio": null,
           "HasFinal": false
         },
         "Right": {
-          "JoinPos": 125,
+          "JoinPos": 133,
           "Left": {
             "Table": {
-              "TablePos": 125,
-              "TableEnd": 129,
+              "TablePos": 133,
+              "TableEnd": 137,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "cte1",
                   "QuoteType": 1,
-                  "NamePos": 125,
-                  "NameEnd": 129
+                  "NamePos": 133,
+                  "NameEnd": 137
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 129,
+            "StatementEnd": 137,
             "SampleRatio": null,
             "HasFinal": false
           },
           "Right": {
             "Table": {
-              "TablePos": 130,
-              "TableEnd": 134,
+              "TablePos": 138,
+              "TableEnd": 142,
               "Alias": null,
               "Expr": {
                 "Database": null,
                 "Table": {
                   "Name": "cte2",
                   "QuoteType": 1,
-                  "NamePos": 130,
-                  "NameEnd": 134
+                  "NamePos": 138,
+                  "NameEnd": 142
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 134,
+            "StatementEnd": 142,
             "SampleRatio": null,
             "HasFinal": false
           },

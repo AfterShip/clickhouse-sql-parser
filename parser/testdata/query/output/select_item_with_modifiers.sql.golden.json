@@ -93,8 +93,8 @@
     "Except": null
   },
   {
-    "SelectPos": 37,
-    "StatementEnd": 73,
+    "SelectPos": 38,
+    "StatementEnd": 74,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -104,23 +104,23 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 44,
-          "NameEnd": 44
+          "NamePos": 45,
+          "NameEnd": 45
         },
         "Modifiers": [
           {
             "Name": {
               "Name": "REPLACE",
               "QuoteType": 1,
-              "NamePos": 46,
-              "NameEnd": 53
+              "NamePos": 47,
+              "NameEnd": 54
             },
             "Params": {
-              "LeftParenPos": 53,
-              "RightParenPos": 64,
+              "LeftParenPos": 54,
+              "RightParenPos": 65,
               "Items": {
-                "ListPos": 54,
-                "ListEnd": 64,
+                "ListPos": 55,
+                "ListEnd": 65,
                 "HasDistinct": false,
                 "Items": [
                   {
@@ -128,13 +128,13 @@
                       "LeftExpr": {
                         "Name": "i",
                         "QuoteType": 1,
-                        "NamePos": 54,
-                        "NameEnd": 55
+                        "NamePos": 55,
+                        "NameEnd": 56
                       },
                       "Operation": "+",
                       "RightExpr": {
-                        "NumPos": 58,
-                        "NumEnd": 59,
+                        "NumPos": 59,
+                        "NumEnd": 60,
                         "Literal": "1",
                         "Base": 10
                       },
@@ -144,8 +144,8 @@
                     "Alias": {
                       "Name": "i",
                       "QuoteType": 1,
-                      "NamePos": 63,
-                      "NameEnd": 64
+                      "NamePos": 64,
+                      "NameEnd": 65
                     }
                   }
                 ]
@@ -158,24 +158,24 @@
       }
     ],
     "From": {
-      "FromPos": 66,
+      "FromPos": 67,
       "Expr": {
         "Table": {
-          "TablePos": 71,
-          "TableEnd": 73,
+          "TablePos": 72,
+          "TableEnd": 74,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t1",
               "QuoteType": 1,
-              "NamePos": 71,
-              "NameEnd": 73
+              "NamePos": 72,
+              "NameEnd": 74
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 73,
+        "StatementEnd": 74,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -197,8 +197,8 @@
     "Except": null
   },
   {
-    "SelectPos": 75,
-    "StatementEnd": 133,
+    "SelectPos": 77,
+    "StatementEnd": 135,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -208,23 +208,23 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 82,
-          "NameEnd": 82
+          "NamePos": 84,
+          "NameEnd": 84
         },
         "Modifiers": [
           {
             "Name": {
               "Name": "REPLACE",
               "QuoteType": 1,
-              "NamePos": 84,
-              "NameEnd": 91
+              "NamePos": 86,
+              "NameEnd": 93
             },
             "Params": {
-              "LeftParenPos": 91,
-              "RightParenPos": 102,
+              "LeftParenPos": 93,
+              "RightParenPos": 104,
               "Items": {
-                "ListPos": 92,
-                "ListEnd": 102,
+                "ListPos": 94,
+                "ListEnd": 104,
                 "HasDistinct": false,
                 "Items": [
                   {
@@ -232,13 +232,13 @@
                       "LeftExpr": {
                         "Name": "i",
                         "QuoteType": 1,
-                        "NamePos": 92,
-                        "NameEnd": 93
+                        "NamePos": 94,
+                        "NameEnd": 95
                       },
                       "Operation": "+",
                       "RightExpr": {
-                        "NumPos": 96,
-                        "NumEnd": 97,
+                        "NumPos": 98,
+                        "NumEnd": 99,
                         "Literal": "1",
                         "Base": 10
                       },
@@ -248,8 +248,8 @@
                     "Alias": {
                       "Name": "i",
                       "QuoteType": 1,
-                      "NamePos": 101,
-                      "NameEnd": 102
+                      "NamePos": 103,
+                      "NameEnd": 104
                     }
                   }
                 ]
@@ -261,23 +261,23 @@
             "Name": {
               "Name": "EXCEPT",
               "QuoteType": 1,
-              "NamePos": 104,
-              "NameEnd": 110
+              "NamePos": 106,
+              "NameEnd": 112
             },
             "Params": {
-              "LeftParenPos": 111,
-              "RightParenPos": 113,
+              "LeftParenPos": 113,
+              "RightParenPos": 115,
               "Items": {
-                "ListPos": 112,
-                "ListEnd": 113,
+                "ListPos": 114,
+                "ListEnd": 115,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "j",
                       "QuoteType": 1,
-                      "NamePos": 112,
-                      "NameEnd": 113
+                      "NamePos": 114,
+                      "NameEnd": 115
                     },
                     "Alias": null
                   }
@@ -290,23 +290,23 @@
             "Name": {
               "Name": "APPLY",
               "QuoteType": 1,
-              "NamePos": 115,
-              "NameEnd": 120
+              "NamePos": 117,
+              "NameEnd": 122
             },
             "Params": {
-              "LeftParenPos": 120,
-              "RightParenPos": 124,
+              "LeftParenPos": 122,
+              "RightParenPos": 126,
               "Items": {
-                "ListPos": 121,
-                "ListEnd": 124,
+                "ListPos": 123,
+                "ListEnd": 126,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "sum",
                       "QuoteType": 1,
-                      "NamePos": 121,
-                      "NameEnd": 124
+                      "NamePos": 123,
+                      "NameEnd": 126
                     },
                     "Alias": null
                   }
@@ -320,24 +320,24 @@
       }
     ],
     "From": {
-      "FromPos": 126,
+      "FromPos": 128,
       "Expr": {
         "Table": {
-          "TablePos": 131,
-          "TableEnd": 133,
+          "TablePos": 133,
+          "TableEnd": 135,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t2",
               "QuoteType": 1,
-              "NamePos": 131,
-              "NameEnd": 133
+              "NamePos": 133,
+              "NameEnd": 135
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 133,
+        "StatementEnd": 135,
         "SampleRatio": null,
         "HasFinal": false
       }

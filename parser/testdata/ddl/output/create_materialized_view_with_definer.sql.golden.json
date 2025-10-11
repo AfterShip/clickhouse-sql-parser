@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 355,
+    "StatementEnd": 368,
     "Name": {
       "Database": null,
       "Table": {
@@ -14,36 +14,36 @@
     "IfNotExists": false,
     "OnCluster": null,
     "Refresh": {
-      "RefreshPos": 34,
+      "RefreshPos": 35,
       "Frequency": "EVERY",
       "Interval": {
         "IntervalPos": 0,
         "Expr": {
-          "NumPos": 48,
-          "NumEnd": 49,
+          "NumPos": 49,
+          "NumEnd": 50,
           "Literal": "1",
           "Base": 10
         },
         "Unit": {
           "Name": "HOUR",
           "QuoteType": 1,
-          "NamePos": 50,
-          "NameEnd": 54
+          "NamePos": 51,
+          "NameEnd": 55
         }
       },
       "Offset": {
         "IntervalPos": 0,
         "Expr": {
-          "NumPos": 62,
-          "NumEnd": 64,
+          "NumPos": 63,
+          "NumEnd": 65,
           "Literal": "10",
           "Base": 10
         },
         "Unit": {
           "Name": "MINUTE",
           "QuoteType": 1,
-          "NamePos": 65,
-          "NameEnd": 71
+          "NamePos": 66,
+          "NameEnd": 72
         }
       }
     },
@@ -54,45 +54,45 @@
     "Engine": null,
     "HasEmpty": false,
     "Destination": {
-      "ToPos": 79,
+      "ToPos": 80,
       "TableIdentifier": {
         "Database": null,
         "Table": {
           "Name": "events_export",
           "QuoteType": 1,
-          "NamePos": 82,
-          "NameEnd": 95
+          "NamePos": 83,
+          "NameEnd": 96
         }
       },
       "TableSchema": {
-        "SchemaPos": 96,
-        "SchemaEnd": 173,
+        "SchemaPos": 98,
+        "SchemaEnd": 179,
         "Columns": [
           {
-            "NamePos": 103,
-            "ColumnEnd": 126,
+            "NamePos": 106,
+            "ColumnEnd": 129,
             "Name": {
               "Ident": {
                 "Name": "timestamp",
                 "QuoteType": 3,
-                "NamePos": 103,
-                "NameEnd": 112
+                "NamePos": 106,
+                "NameEnd": 115
               },
               "DotIdent": null
             },
             "Type": {
-              "LeftParenPos": 125,
-              "RightParenPos": 126,
+              "LeftParenPos": 128,
+              "RightParenPos": 129,
               "Name": {
                 "Name": "DateTime64",
                 "QuoteType": 1,
-                "NamePos": 114,
-                "NameEnd": 124
+                "NamePos": 117,
+                "NameEnd": 127
               },
               "Params": [
                 {
-                  "NumPos": 125,
-                  "NumEnd": 126,
+                  "NumPos": 128,
+                  "NumEnd": 129,
                   "Literal": "9",
                   "Base": 10
                 }
@@ -109,14 +109,14 @@
             "CompressionCodec": null
           },
           {
-            "NamePos": 134,
-            "ColumnEnd": 149,
+            "NamePos": 138,
+            "ColumnEnd": 153,
             "Name": {
               "Ident": {
                 "Name": "field_1",
                 "QuoteType": 3,
-                "NamePos": 134,
-                "NameEnd": 141
+                "NamePos": 138,
+                "NameEnd": 145
               },
               "DotIdent": null
             },
@@ -124,8 +124,8 @@
               "Name": {
                 "Name": "String",
                 "QuoteType": 1,
-                "NamePos": 143,
-                "NameEnd": 149
+                "NamePos": 147,
+                "NameEnd": 153
               }
             },
             "NotNull": null,
@@ -139,14 +139,14 @@
             "CompressionCodec": null
           },
           {
-            "NamePos": 156,
-            "ColumnEnd": 171,
+            "NamePos": 161,
+            "ColumnEnd": 176,
             "Name": {
               "Ident": {
                 "Name": "field_2",
                 "QuoteType": 3,
-                "NamePos": 156,
-                "NameEnd": 163
+                "NamePos": 161,
+                "NameEnd": 168
               },
               "DotIdent": null
             },
@@ -154,8 +154,8 @@
               "Name": {
                 "Name": "String",
                 "QuoteType": 1,
-                "NamePos": 165,
-                "NameEnd": 171
+                "NamePos": 170,
+                "NameEnd": 176
               }
             },
             "NotNull": null,
@@ -176,8 +176,8 @@
     "SubQuery": {
       "HasParen": true,
       "Select": {
-        "SelectPos": 218,
-        "StatementEnd": 355,
+        "SelectPos": 226,
+        "StatementEnd": 368,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -187,8 +187,8 @@
             "Expr": {
               "Name": "timestamp",
               "QuoteType": 1,
-              "NamePos": 229,
-              "NameEnd": 238
+              "NamePos": 238,
+              "NameEnd": 247
             },
             "Modifiers": [],
             "Alias": null
@@ -197,8 +197,8 @@
             "Expr": {
               "Name": "field_1",
               "QuoteType": 1,
-              "NamePos": 244,
-              "NameEnd": 251
+              "NamePos": 254,
+              "NameEnd": 261
             },
             "Modifiers": [],
             "Alias": null
@@ -207,8 +207,8 @@
             "Expr": {
               "Name": "field_2",
               "QuoteType": 1,
-              "NamePos": 257,
-              "NameEnd": 264
+              "NamePos": 268,
+              "NameEnd": 275
             },
             "Modifiers": [],
             "Alias": null
@@ -217,15 +217,15 @@
             "Expr": {
               "Name": "FROM",
               "QuoteType": 1,
-              "NamePos": 266,
-              "NameEnd": 270
+              "NamePos": 278,
+              "NameEnd": 282
             },
             "Modifiers": [],
             "Alias": {
               "Name": "event_table",
               "QuoteType": 1,
-              "NamePos": 271,
-              "NameEnd": 282
+              "NamePos": 283,
+              "NameEnd": 294
             }
           }
         ],
@@ -234,29 +234,29 @@
         "Window": null,
         "Prewhere": null,
         "Where": {
-          "WherePos": 283,
+          "WherePos": 296,
           "Expr": {
             "LeftExpr": {
               "Name": {
                 "Name": "toStartOfHour",
                 "QuoteType": 1,
-                "NamePos": 289,
-                "NameEnd": 302
+                "NamePos": 302,
+                "NameEnd": 315
               },
               "Params": {
-                "LeftParenPos": 302,
-                "RightParenPos": 312,
+                "LeftParenPos": 315,
+                "RightParenPos": 325,
                 "Items": {
-                  "ListPos": 303,
-                  "ListEnd": 312,
+                  "ListPos": 316,
+                  "ListEnd": 325,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
                         "Name": "timestamp",
                         "QuoteType": 1,
-                        "NamePos": 303,
-                        "NameEnd": 312
+                        "NamePos": 316,
+                        "NameEnd": 325
                       },
                       "Alias": null
                     }
@@ -270,15 +270,15 @@
               "Name": {
                 "Name": "toStartOfHour",
                 "QuoteType": 1,
-                "NamePos": 316,
-                "NameEnd": 329
+                "NamePos": 329,
+                "NameEnd": 342
               },
               "Params": {
-                "LeftParenPos": 329,
-                "RightParenPos": 355,
+                "LeftParenPos": 342,
+                "RightParenPos": 368,
                 "Items": {
-                  "ListPos": 330,
-                  "ListEnd": 354,
+                  "ListPos": 343,
+                  "ListEnd": 367,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -287,15 +287,15 @@
                           "Name": {
                             "Name": "now",
                             "QuoteType": 1,
-                            "NamePos": 330,
-                            "NameEnd": 333
+                            "NamePos": 343,
+                            "NameEnd": 346
                           },
                           "Params": {
-                            "LeftParenPos": 333,
-                            "RightParenPos": 334,
+                            "LeftParenPos": 346,
+                            "RightParenPos": 347,
                             "Items": {
-                              "ListPos": 334,
-                              "ListEnd": 334,
+                              "ListPos": 347,
+                              "ListEnd": 347,
                               "HasDistinct": false,
                               "Items": []
                             },
@@ -307,21 +307,21 @@
                           "Name": {
                             "Name": "toIntervalHour",
                             "QuoteType": 1,
-                            "NamePos": 338,
-                            "NameEnd": 352
+                            "NamePos": 351,
+                            "NameEnd": 365
                           },
                           "Params": {
-                            "LeftParenPos": 352,
-                            "RightParenPos": 354,
+                            "LeftParenPos": 365,
+                            "RightParenPos": 367,
                             "Items": {
-                              "ListPos": 353,
-                              "ListEnd": 354,
+                              "ListPos": 366,
+                              "ListEnd": 367,
                               "HasDistinct": false,
                               "Items": [
                                 {
                                   "Expr": {
-                                    "NumPos": 353,
-                                    "NumEnd": 354,
+                                    "NumPos": 366,
+                                    "NumEnd": 367,
                                     "Literal": "1",
                                     "Base": 10
                                   },
@@ -361,15 +361,15 @@
     },
     "Populate": false,
     "Comment": {
-      "LiteralPos": 367,
-      "LiteralEnd": 379,
+      "LiteralPos": 381,
+      "LiteralEnd": 393,
       "Literal": "Test comment"
     },
     "Definer": {
       "Name": "default",
       "QuoteType": 1,
-      "NamePos": 185,
-      "NameEnd": 192
+      "NamePos": 192,
+      "NameEnd": 199
     },
     "SQLSecurity": "DEFINER"
   }

@@ -40,8 +40,8 @@
     "Except": null
   },
   {
-    "SelectPos": 27,
-    "StatementEnd": 52,
+    "SelectPos": 29,
+    "StatementEnd": 54,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -51,8 +51,8 @@
         "Expr": {
           "Name": "$abc",
           "QuoteType": 1,
-          "NamePos": 34,
-          "NameEnd": 38
+          "NamePos": 36,
+          "NameEnd": 40
         },
         "Modifiers": [],
         "Alias": null
@@ -61,8 +61,8 @@
         "Expr": {
           "Name": "a$$bc",
           "QuoteType": 1,
-          "NamePos": 40,
-          "NameEnd": 45
+          "NamePos": 42,
+          "NameEnd": 47
         },
         "Modifiers": [],
         "Alias": null
@@ -71,8 +71,8 @@
         "Expr": {
           "Name": "abc$$",
           "QuoteType": 1,
-          "NamePos": 47,
-          "NameEnd": 52
+          "NamePos": 49,
+          "NameEnd": 54
         },
         "Modifiers": [],
         "Alias": null

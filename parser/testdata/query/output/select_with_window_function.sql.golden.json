@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 508,
+    "StatementEnd": 520,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -26,90 +26,90 @@
         "Expr": {
           "Name": "timestamp",
           "QuoteType": 1,
-          "NamePos": 53,
-          "NameEnd": 62
+          "NamePos": 54,
+          "NameEnd": 63
         },
         "Modifiers": [],
         "Alias": {
           "Name": "timestamp",
           "QuoteType": 1,
-          "NamePos": 66,
-          "NameEnd": 75
+          "NamePos": 67,
+          "NameEnd": 76
         }
       },
       {
         "Expr": {
           "Name": "step_0",
           "QuoteType": 1,
-          "NamePos": 81,
-          "NameEnd": 87
+          "NamePos": 83,
+          "NameEnd": 89
         },
         "Modifiers": [],
         "Alias": {
           "Name": "step_0",
           "QuoteType": 1,
-          "NamePos": 91,
-          "NameEnd": 97
+          "NamePos": 93,
+          "NameEnd": 99
         }
       },
       {
         "Expr": {
           "Name": "latest_0",
           "QuoteType": 1,
-          "NamePos": 103,
-          "NameEnd": 111
+          "NamePos": 106,
+          "NameEnd": 114
         },
         "Modifiers": [],
         "Alias": {
           "Name": "latest_0",
           "QuoteType": 1,
-          "NamePos": 115,
-          "NameEnd": 123
+          "NamePos": 118,
+          "NameEnd": 126
         }
       },
       {
         "Expr": {
           "Name": "step_1",
           "QuoteType": 1,
-          "NamePos": 129,
-          "NameEnd": 135
+          "NamePos": 133,
+          "NameEnd": 139
         },
         "Modifiers": [],
         "Alias": {
           "Name": "step_1",
           "QuoteType": 1,
-          "NamePos": 139,
-          "NameEnd": 145
+          "NamePos": 143,
+          "NameEnd": 149
         }
       },
       {
         "Expr": {
           "Name": "latest_1",
           "QuoteType": 1,
-          "NamePos": 151,
-          "NameEnd": 159
+          "NamePos": 156,
+          "NameEnd": 164
         },
         "Modifiers": [],
         "Alias": {
           "Name": "latest_1",
           "QuoteType": 1,
-          "NamePos": 163,
-          "NameEnd": 171
+          "NamePos": 168,
+          "NameEnd": 176
         }
       },
       {
         "Expr": {
           "Name": "step_2",
           "QuoteType": 1,
-          "NamePos": 177,
-          "NameEnd": 183
+          "NamePos": 183,
+          "NameEnd": 189
         },
         "Modifiers": [],
         "Alias": {
           "Name": "step_2",
           "QuoteType": 1,
-          "NamePos": 187,
-          "NameEnd": 193
+          "NamePos": 193,
+          "NameEnd": 199
         }
       },
       {
@@ -118,23 +118,23 @@
             "Name": {
               "Name": "min",
               "QuoteType": 1,
-              "NamePos": 199,
-              "NameEnd": 202
+              "NamePos": 206,
+              "NameEnd": 209
             },
             "Params": {
-              "LeftParenPos": 202,
-              "RightParenPos": 211,
+              "LeftParenPos": 209,
+              "RightParenPos": 218,
               "Items": {
-                "ListPos": 203,
-                "ListEnd": 211,
+                "ListPos": 210,
+                "ListEnd": 218,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "latest_2",
                       "QuoteType": 1,
-                      "NamePos": 203,
-                      "NameEnd": 211
+                      "NamePos": 210,
+                      "NameEnd": 218
                     },
                     "Alias": null
                   }
@@ -143,23 +143,23 @@
               "ColumnArgList": null
             }
           },
-          "OverPos": 213,
+          "OverPos": 220,
           "OverExpr": {
-            "LeftParenPos": 218,
-            "RightParenPos": 327,
+            "LeftParenPos": 225,
+            "RightParenPos": 335,
             "PartitionBy": {
-              "PartitionPos": 218,
+              "PartitionPos": 225,
               "Expr": {
-                "ListPos": 232,
-                "ListEnd": 250,
+                "ListPos": 239,
+                "ListEnd": 257,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "aggregation_target",
                       "QuoteType": 1,
-                      "NamePos": 232,
-                      "NameEnd": 250
+                      "NamePos": 239,
+                      "NameEnd": 257
                     },
                     "Alias": null
                   }
@@ -167,16 +167,16 @@
               }
             },
             "OrderBy": {
-              "OrderPos": 255,
-              "ListEnd": 273,
+              "OrderPos": 263,
+              "ListEnd": 281,
               "Items": [
                 {
-                  "OrderPos": 255,
+                  "OrderPos": 263,
                   "Expr": {
                     "Name": "timestamp",
                     "QuoteType": 1,
-                    "NamePos": 264,
-                    "NameEnd": 273
+                    "NamePos": 272,
+                    "NameEnd": 281
                   },
                   "Alias": null,
                   "Direction": "DESC"
@@ -184,31 +184,31 @@
               ]
             },
             "Frame": {
-              "FramePos": 279,
+              "FramePos": 287,
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
                 "Between": {
-                  "FramePos": 292,
+                  "FramePos": 300,
                   "Type": "",
                   "Extend": {
-                    "UnboundedPos": 292,
+                    "UnboundedPos": 300,
                     "UnboundedEnd": 0,
                     "Direction": "PRECEDING"
                   }
                 },
-                "AndPos": 312,
+                "AndPos": 320,
                 "And": {
-                  "FramePos": 316,
+                  "FramePos": 324,
                   "Type": "",
                   "Extend": {
                     "Number": {
-                      "NumPos": 316,
-                      "NumEnd": 317,
+                      "NumPos": 324,
+                      "NumEnd": 325,
                       "Literal": "0",
                       "Base": 10
                     },
-                    "UnboundedEnd": 327,
+                    "UnboundedEnd": 335,
                     "Direction": "PRECEDING"
                   }
                 }
@@ -220,8 +220,8 @@
         "Alias": {
           "Name": "latest_2",
           "QuoteType": 1,
-          "NamePos": 332,
-          "NameEnd": 340
+          "NamePos": 340,
+          "NameEnd": 348
         }
       },
       {
@@ -230,23 +230,23 @@
             "Name": {
               "Name": "min",
               "QuoteType": 1,
-              "NamePos": 346,
-              "NameEnd": 349
+              "NamePos": 355,
+              "NameEnd": 358
             },
             "Params": {
-              "LeftParenPos": 349,
-              "RightParenPos": 358,
+              "LeftParenPos": 358,
+              "RightParenPos": 367,
               "Items": {
-                "ListPos": 350,
-                "ListEnd": 358,
+                "ListPos": 359,
+                "ListEnd": 367,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "latest_1",
                       "QuoteType": 1,
-                      "NamePos": 350,
-                      "NameEnd": 358
+                      "NamePos": 359,
+                      "NameEnd": 367
                     },
                     "Alias": null
                   }
@@ -255,63 +255,63 @@
               "ColumnArgList": null
             }
           },
-          "OverPos": 360,
+          "OverPos": 369,
           "OverExpr": {
             "Name": "w",
             "QuoteType": 1,
-            "NamePos": 365,
-            "NameEnd": 366
+            "NamePos": 374,
+            "NameEnd": 375
           }
         },
         "Modifiers": [],
         "Alias": {
           "Name": "latest_1",
           "QuoteType": 1,
-          "NamePos": 370,
-          "NameEnd": 378
+          "NamePos": 379,
+          "NameEnd": 387
         }
       }
     ],
     "From": {
-      "FromPos": 379,
+      "FromPos": 389,
       "Expr": {
         "Table": {
-          "TablePos": 384,
-          "TableEnd": 386,
+          "TablePos": 394,
+          "TableEnd": 396,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t0",
               "QuoteType": 1,
-              "NamePos": 384,
-              "NameEnd": 386
+              "NamePos": 394,
+              "NameEnd": 396
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 386,
+        "StatementEnd": 396,
         "SampleRatio": null,
         "HasFinal": false
       }
     },
     "ArrayJoin": null,
     "Window": {
-      "LeftParenPos": 399,
-      "RightParenPos": 508,
+      "LeftParenPos": 410,
+      "RightParenPos": 520,
       "PartitionBy": {
-        "PartitionPos": 399,
+        "PartitionPos": 410,
         "Expr": {
-          "ListPos": 413,
-          "ListEnd": 431,
+          "ListPos": 424,
+          "ListEnd": 442,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
                 "Name": "aggregation_target",
                 "QuoteType": 1,
-                "NamePos": 413,
-                "NameEnd": 431
+                "NamePos": 424,
+                "NameEnd": 442
               },
               "Alias": null
             }
@@ -319,16 +319,16 @@
         }
       },
       "OrderBy": {
-        "OrderPos": 436,
-        "ListEnd": 454,
+        "OrderPos": 448,
+        "ListEnd": 466,
         "Items": [
           {
-            "OrderPos": 436,
+            "OrderPos": 448,
             "Expr": {
               "Name": "timestamp",
               "QuoteType": 1,
-              "NamePos": 445,
-              "NameEnd": 454
+              "NamePos": 457,
+              "NameEnd": 466
             },
             "Alias": null,
             "Direction": "DESC"
@@ -336,42 +336,42 @@
         ]
       },
       "Frame": {
-        "FramePos": 460,
+        "FramePos": 472,
         "Type": "ROWS",
         "Extend": {
           "Expr": null,
           "Between": {
-            "FramePos": 473,
+            "FramePos": 485,
             "Type": "",
             "Extend": {
-              "UnboundedPos": 473,
+              "UnboundedPos": 485,
               "UnboundedEnd": 0,
               "Direction": "PRECEDING"
             }
           },
-          "AndPos": 493,
+          "AndPos": 505,
           "And": {
-            "FramePos": 497,
+            "FramePos": 509,
             "Type": "",
             "Extend": {
               "Number": {
-                "NumPos": 497,
-                "NumEnd": 498,
+                "NumPos": 509,
+                "NumEnd": 510,
                 "Literal": "0",
                 "Base": 10
               },
-              "UnboundedEnd": 508,
+              "UnboundedEnd": 520,
               "Direction": "PRECEDING"
             }
           }
         }
       },
-      "WindowPos": 387,
+      "WindowPos": 398,
       "Name": {
         "Name": "w",
         "QuoteType": 1,
-        "NamePos": 394,
-        "NameEnd": 395
+        "NamePos": 405,
+        "NameEnd": 406
       },
       "AsPos": 0
     },

@@ -67,30 +67,30 @@
     "WithOptions": []
   },
   {
-    "GrantPos": 39,
-    "StatementEnd": 113,
+    "GrantPos": 40,
+    "StatementEnd": 114,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 45,
+        "PrivilegePos": 46,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 51,
-          "RightParenPos": 55,
+          "LeftParenPos": 52,
+          "RightParenPos": 56,
           "Items": {
-            "ListPos": 52,
-            "ListEnd": 55,
+            "ListPos": 53,
+            "ListEnd": 56,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 52,
-                  "NameEnd": 53
+                  "NamePos": 53,
+                  "NameEnd": 54
                 },
                 "Alias": null
               },
@@ -98,8 +98,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 54,
-                  "NameEnd": 55
+                  "NamePos": 55,
+                  "NameEnd": 56
                 },
                 "Alias": null
               }
@@ -113,22 +113,22 @@
       "Database": {
         "Name": "db",
         "QuoteType": 1,
-        "NamePos": 60,
-        "NameEnd": 62
+        "NamePos": 61,
+        "NameEnd": 63
       },
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 63,
-        "NameEnd": 68
+        "NamePos": 64,
+        "NameEnd": 69
       }
     },
     "To": [
       {
         "Name": "john",
         "QuoteType": 1,
-        "NamePos": 72,
-        "NameEnd": 76
+        "NamePos": 73,
+        "NameEnd": 77
       }
     ],
     "WithOptions": [
@@ -137,30 +137,30 @@
     ]
   },
   {
-    "GrantPos": 114,
-    "StatementEnd": 147,
+    "GrantPos": 116,
+    "StatementEnd": 149,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 120,
+        "PrivilegePos": 122,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 126,
-          "RightParenPos": 130,
+          "LeftParenPos": 128,
+          "RightParenPos": 132,
           "Items": {
-            "ListPos": 127,
-            "ListEnd": 130,
+            "ListPos": 129,
+            "ListEnd": 132,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 127,
-                  "NameEnd": 128
+                  "NamePos": 129,
+                  "NameEnd": 130
                 },
                 "Alias": null
               },
@@ -168,8 +168,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 129,
-                  "NameEnd": 130
+                  "NamePos": 131,
+                  "NameEnd": 132
                 },
                 "Alias": null
               }
@@ -183,51 +183,51 @@
       "Database": {
         "Name": "db",
         "QuoteType": 1,
-        "NamePos": 135,
-        "NameEnd": 137
-      },
-      "Table": {
-        "Name": "*",
-        "QuoteType": 0,
-        "NamePos": 138,
+        "NamePos": 137,
         "NameEnd": 139
+      },
+      "Table": {
+        "Name": "*",
+        "QuoteType": 0,
+        "NamePos": 140,
+        "NameEnd": 141
       }
     },
     "To": [
       {
         "Name": "john",
         "QuoteType": 1,
-        "NamePos": 143,
-        "NameEnd": 147
+        "NamePos": 145,
+        "NameEnd": 149
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 149,
-    "StatementEnd": 185,
+    "GrantPos": 152,
+    "StatementEnd": 188,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 155,
+        "PrivilegePos": 158,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 161,
-          "RightParenPos": 165,
+          "LeftParenPos": 164,
+          "RightParenPos": 168,
           "Items": {
-            "ListPos": 162,
-            "ListEnd": 165,
+            "ListPos": 165,
+            "ListEnd": 168,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 162,
-                  "NameEnd": 163
+                  "NamePos": 165,
+                  "NameEnd": 166
                 },
                 "Alias": null
               },
@@ -235,8 +235,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 164,
-                  "NameEnd": 165
+                  "NamePos": 167,
+                  "NameEnd": 168
                 },
                 "Alias": null
               }
@@ -250,51 +250,51 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 170,
-        "NameEnd": 171
+        "NamePos": 173,
+        "NameEnd": 174
       },
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 172,
-        "NameEnd": 177
+        "NamePos": 175,
+        "NameEnd": 180
       }
     },
     "To": [
       {
         "Name": "john",
         "QuoteType": 1,
-        "NamePos": 181,
-        "NameEnd": 185
+        "NamePos": 184,
+        "NameEnd": 188
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 187,
-    "StatementEnd": 219,
+    "GrantPos": 191,
+    "StatementEnd": 223,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 193,
+        "PrivilegePos": 197,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 199,
-          "RightParenPos": 203,
+          "LeftParenPos": 203,
+          "RightParenPos": 207,
           "Items": {
-            "ListPos": 200,
-            "ListEnd": 203,
+            "ListPos": 204,
+            "ListEnd": 207,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 200,
-                  "NameEnd": 201
+                  "NamePos": 204,
+                  "NameEnd": 205
                 },
                 "Alias": null
               },
@@ -302,8 +302,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 202,
-                  "NameEnd": 203
+                  "NamePos": 206,
+                  "NameEnd": 207
                 },
                 "Alias": null
               }
@@ -317,51 +317,51 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 208,
-        "NameEnd": 209
+        "NamePos": 212,
+        "NameEnd": 213
       },
       "Table": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 210,
-        "NameEnd": 211
+        "NamePos": 214,
+        "NameEnd": 215
       }
     },
     "To": [
       {
         "Name": "john",
         "QuoteType": 1,
-        "NamePos": 215,
-        "NameEnd": 219
+        "NamePos": 219,
+        "NameEnd": 223
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 221,
-    "StatementEnd": 265,
+    "GrantPos": 226,
+    "StatementEnd": 270,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 227,
+        "PrivilegePos": 232,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 233,
-          "RightParenPos": 237,
+          "LeftParenPos": 238,
+          "RightParenPos": 242,
           "Items": {
-            "ListPos": 234,
-            "ListEnd": 237,
+            "ListPos": 239,
+            "ListEnd": 242,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 234,
-                  "NameEnd": 235
+                  "NamePos": 239,
+                  "NameEnd": 240
                 },
                 "Alias": null
               },
@@ -369,8 +369,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 236,
-                  "NameEnd": 237
+                  "NamePos": 241,
+                  "NameEnd": 242
                 },
                 "Alias": null
               }
@@ -384,51 +384,51 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 242,
-        "NameEnd": 243
+        "NamePos": 247,
+        "NameEnd": 248
       },
       "Table": {
         "Name": "table",
         "QuoteType": 1,
-        "NamePos": 244,
-        "NameEnd": 249
+        "NamePos": 249,
+        "NameEnd": 254
       }
     },
     "To": [
       {
         "Name": "CURRENT_USER",
         "QuoteType": 1,
-        "NamePos": 253,
-        "NameEnd": 265
+        "NamePos": 258,
+        "NameEnd": 270
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 267,
-    "StatementEnd": 321,
+    "GrantPos": 273,
+    "StatementEnd": 327,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 273,
+        "PrivilegePos": 279,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 279,
-          "RightParenPos": 283,
+          "LeftParenPos": 285,
+          "RightParenPos": 289,
           "Items": {
-            "ListPos": 280,
-            "ListEnd": 283,
+            "ListPos": 286,
+            "ListEnd": 289,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 280,
-                  "NameEnd": 281
+                  "NamePos": 286,
+                  "NameEnd": 287
                 },
                 "Alias": null
               },
@@ -436,8 +436,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 282,
-                  "NameEnd": 283
+                  "NamePos": 288,
+                  "NameEnd": 289
                 },
                 "Alias": null
               }
@@ -451,45 +451,45 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 288,
-        "NameEnd": 289
-      },
-      "Table": {
-        "Name": "table",
-        "QuoteType": 1,
-        "NamePos": 290,
+        "NamePos": 294,
         "NameEnd": 295
+      },
+      "Table": {
+        "Name": "table",
+        "QuoteType": 1,
+        "NamePos": 296,
+        "NameEnd": 301
       }
     },
     "To": [
       {
         "Name": "CURRENT_USER",
         "QuoteType": 1,
-        "NamePos": 299,
-        "NameEnd": 311
+        "NamePos": 305,
+        "NameEnd": 317
       },
       {
         "Name": "john",
         "QuoteType": 1,
-        "NamePos": 312,
-        "NameEnd": 316
+        "NamePos": 318,
+        "NameEnd": 322
       },
       {
         "Name": "mary",
         "QuoteType": 1,
-        "NamePos": 317,
-        "NameEnd": 321
+        "NamePos": 323,
+        "NameEnd": 327
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 323,
-    "StatementEnd": 372,
+    "GrantPos": 330,
+    "StatementEnd": 379,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 329,
+        "PrivilegePos": 336,
         "PrivilegeEnd": 0,
         "Keywords": [
           "ALL"
@@ -501,22 +501,22 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 336,
-        "NameEnd": 337
+        "NamePos": 343,
+        "NameEnd": 344
       },
       "Table": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 338,
-        "NameEnd": 339
+        "NamePos": 345,
+        "NameEnd": 346
       }
     },
     "To": [
       {
         "Name": "admin_role",
         "QuoteType": 1,
-        "NamePos": 343,
-        "NameEnd": 353
+        "NamePos": 350,
+        "NameEnd": 360
       }
     ],
     "WithOptions": [
@@ -524,12 +524,12 @@
     ]
   },
   {
-    "GrantPos": 373,
-    "StatementEnd": 435,
+    "GrantPos": 381,
+    "StatementEnd": 443,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 379,
+        "PrivilegePos": 387,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
@@ -537,7 +537,7 @@
         "Params": null
       },
       {
-        "PrivilegePos": 386,
+        "PrivilegePos": 394,
         "PrivilegeEnd": 0,
         "Keywords": [
           "INSERT"
@@ -549,51 +549,51 @@
       "Database": {
         "Name": "database",
         "QuoteType": 1,
-        "NamePos": 396,
-        "NameEnd": 404
+        "NamePos": 404,
+        "NameEnd": 412
       },
       "Table": {
         "Name": "table_1",
         "QuoteType": 1,
-        "NamePos": 405,
-        "NameEnd": 412
+        "NamePos": 413,
+        "NameEnd": 420
       }
     },
     "To": [
       {
         "Name": "table_1_select_role",
         "QuoteType": 1,
-        "NamePos": 416,
-        "NameEnd": 435
+        "NamePos": 424,
+        "NameEnd": 443
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 437,
-    "StatementEnd": 508,
+    "GrantPos": 446,
+    "StatementEnd": 517,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 443,
+        "PrivilegePos": 452,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
         ],
         "Params": {
-          "LeftParenPos": 449,
-          "RightParenPos": 457,
+          "LeftParenPos": 458,
+          "RightParenPos": 466,
           "Items": {
-            "ListPos": 450,
-            "ListEnd": 457,
+            "ListPos": 459,
+            "ListEnd": 466,
             "HasDistinct": false,
             "Items": [
               {
                 "Expr": {
                   "Name": "x",
                   "QuoteType": 1,
-                  "NamePos": 450,
-                  "NameEnd": 451
+                  "NamePos": 459,
+                  "NameEnd": 460
                 },
                 "Alias": null
               },
@@ -601,8 +601,8 @@
                 "Expr": {
                   "Name": "y",
                   "QuoteType": 1,
-                  "NamePos": 453,
-                  "NameEnd": 454
+                  "NamePos": 462,
+                  "NameEnd": 463
                 },
                 "Alias": null
               },
@@ -610,8 +610,8 @@
                 "Expr": {
                   "Name": "z",
                   "QuoteType": 1,
-                  "NamePos": 456,
-                  "NameEnd": 457
+                  "NamePos": 465,
+                  "NameEnd": 466
                 },
                 "Alias": null
               }
@@ -621,7 +621,7 @@
         }
       },
       {
-        "PrivilegePos": 459,
+        "PrivilegePos": 468,
         "PrivilegeEnd": 0,
         "Keywords": [
           "INSERT"
@@ -633,33 +633,33 @@
       "Database": {
         "Name": "database",
         "QuoteType": 1,
-        "NamePos": 469,
-        "NameEnd": 477
+        "NamePos": 478,
+        "NameEnd": 486
       },
       "Table": {
         "Name": "table_1",
         "QuoteType": 1,
-        "NamePos": 478,
-        "NameEnd": 485
+        "NamePos": 487,
+        "NameEnd": 494
       }
     },
     "To": [
       {
         "Name": "table_1_select_role",
         "QuoteType": 1,
-        "NamePos": 489,
-        "NameEnd": 508
+        "NamePos": 498,
+        "NameEnd": 517
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 510,
-    "StatementEnd": 558,
+    "GrantPos": 520,
+    "StatementEnd": 568,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 516,
+        "PrivilegePos": 526,
         "PrivilegeEnd": 0,
         "Keywords": [
           "SELECT"
@@ -667,7 +667,7 @@
         "Params": null
       },
       {
-        "PrivilegePos": 524,
+        "PrivilegePos": 534,
         "PrivilegeEnd": 0,
         "Keywords": [
           "dictGet"
@@ -679,33 +679,33 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 535,
-        "NameEnd": 536
+        "NamePos": 545,
+        "NameEnd": 546
       },
       "Table": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 537,
-        "NameEnd": 538
+        "NamePos": 547,
+        "NameEnd": 548
       }
     },
     "To": [
       {
         "Name": "select_all_role",
         "QuoteType": 1,
-        "NamePos": 543,
-        "NameEnd": 558
+        "NamePos": 553,
+        "NameEnd": 568
       }
     ],
     "WithOptions": []
   },
   {
-    "GrantPos": 560,
-    "StatementEnd": 605,
+    "GrantPos": 571,
+    "StatementEnd": 616,
     "OnCluster": null,
     "Privileges": [
       {
-        "PrivilegePos": 566,
+        "PrivilegePos": 577,
         "PrivilegeEnd": 0,
         "Keywords": [
           "ADMIN",
@@ -718,22 +718,22 @@
       "Database": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 582,
-        "NameEnd": 583
+        "NamePos": 593,
+        "NameEnd": 594
       },
       "Table": {
         "Name": "*",
         "QuoteType": 0,
-        "NamePos": 584,
-        "NameEnd": 585
+        "NamePos": 595,
+        "NameEnd": 596
       }
     },
     "To": [
       {
         "Name": "select_all_role",
         "QuoteType": 1,
-        "NamePos": 590,
-        "NameEnd": 605
+        "NamePos": 601,
+        "NameEnd": 616
       }
     ],
     "WithOptions": []

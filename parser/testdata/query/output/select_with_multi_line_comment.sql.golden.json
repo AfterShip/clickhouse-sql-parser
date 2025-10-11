@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 61,
+    "StatementEnd": 66,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -11,32 +11,32 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 48,
-          "NameEnd": 48
+          "NamePos": 51,
+          "NameEnd": 51
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 50,
+      "FromPos": 54,
       "Expr": {
         "Table": {
-          "TablePos": 59,
-          "TableEnd": 61,
+          "TablePos": 64,
+          "TableEnd": 66,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t0",
               "QuoteType": 1,
-              "NamePos": 59,
-              "NameEnd": 61
+              "NamePos": 64,
+              "NameEnd": 66
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 61,
+        "StatementEnd": 66,
         "SampleRatio": null,
         "HasFinal": false
       }

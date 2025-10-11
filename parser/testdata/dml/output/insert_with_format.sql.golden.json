@@ -22,33 +22,33 @@
     "SelectExpr": null
   },
   {
-    "InsertPos": 59,
+    "InsertPos": 60,
     "Format": null,
     "HasTableKeyword": false,
     "Table": {
       "Database": {
         "Name": "db",
         "QuoteType": 2,
-        "NamePos": 72,
-        "NameEnd": 74
+        "NamePos": 73,
+        "NameEnd": 75
       },
       "Table": {
         "Name": "table_name",
         "QuoteType": 2,
-        "NamePos": 77,
-        "NameEnd": 87
+        "NamePos": 78,
+        "NameEnd": 88
       }
     },
     "ColumnNames": {
-      "LeftParenPos": 89,
-      "RightParenPos": 100,
+      "LeftParenPos": 90,
+      "RightParenPos": 101,
       "ColumnNames": [
         {
           "Ident": {
             "Name": "col1",
             "QuoteType": 1,
-            "NamePos": 90,
-            "NameEnd": 94
+            "NamePos": 91,
+            "NameEnd": 95
           },
           "DotIdent": null
         },
@@ -56,8 +56,8 @@
           "Ident": {
             "Name": "col2",
             "QuoteType": 1,
-            "NamePos": 96,
-            "NameEnd": 100
+            "NamePos": 97,
+            "NameEnd": 101
           },
           "DotIdent": null
         }
@@ -65,18 +65,18 @@
     },
     "Values": [
       {
-        "LeftParenPos": 109,
-        "RightParenPos": 114,
+        "LeftParenPos": 110,
+        "RightParenPos": 115,
         "Values": [
           {
-            "NumPos": 110,
-            "NumEnd": 111,
+            "NumPos": 111,
+            "NumEnd": 112,
             "Literal": "1",
             "Base": 10
           },
           {
-            "NumPos": 113,
-            "NumEnd": 114,
+            "NumPos": 114,
+            "NumEnd": 115,
             "Literal": "2",
             "Base": 10
           }
@@ -86,33 +86,33 @@
     "SelectExpr": null
   },
   {
-    "InsertPos": 117,
+    "InsertPos": 119,
     "Format": null,
     "HasTableKeyword": false,
     "Table": {
       "Database": {
         "Name": "_test_1345# $.ДБ",
         "QuoteType": 3,
-        "NamePos": 130,
-        "NameEnd": 148
+        "NamePos": 132,
+        "NameEnd": 150
       },
       "Table": {
         "Name": "2. Таблица №2",
         "QuoteType": 3,
-        "NamePos": 151,
-        "NameEnd": 173
+        "NamePos": 153,
+        "NameEnd": 175
       }
     },
     "ColumnNames": {
-      "LeftParenPos": 175,
-      "RightParenPos": 186,
+      "LeftParenPos": 177,
+      "RightParenPos": 188,
       "ColumnNames": [
         {
           "Ident": {
             "Name": "col1",
             "QuoteType": 1,
-            "NamePos": 176,
-            "NameEnd": 180
+            "NamePos": 178,
+            "NameEnd": 182
           },
           "DotIdent": null
         },
@@ -120,8 +120,8 @@
           "Ident": {
             "Name": "col2",
             "QuoteType": 1,
-            "NamePos": 182,
-            "NameEnd": 186
+            "NamePos": 184,
+            "NameEnd": 188
           },
           "DotIdent": null
         }
@@ -131,7 +131,7 @@
     "SelectExpr": null
   },
   {
-    "InsertPos": 189,
+    "InsertPos": 192,
     "Format": null,
     "HasTableKeyword": false,
     "Table": {
@@ -139,20 +139,20 @@
       "Table": {
         "Name": "table_name",
         "QuoteType": 1,
-        "NamePos": 201,
-        "NameEnd": 211
+        "NamePos": 204,
+        "NameEnd": 214
       }
     },
     "ColumnNames": {
-      "LeftParenPos": 212,
-      "RightParenPos": 223,
+      "LeftParenPos": 215,
+      "RightParenPos": 226,
       "ColumnNames": [
         {
           "Ident": {
             "Name": "col1",
             "QuoteType": 1,
-            "NamePos": 213,
-            "NameEnd": 217
+            "NamePos": 216,
+            "NameEnd": 220
           },
           "DotIdent": null
         },
@@ -160,8 +160,8 @@
           "Ident": {
             "Name": "col2",
             "QuoteType": 1,
-            "NamePos": 219,
-            "NameEnd": 223
+            "NamePos": 222,
+            "NameEnd": 226
           },
           "DotIdent": null
         }
@@ -169,18 +169,18 @@
     },
     "Values": [
       {
-        "LeftParenPos": 232,
-        "RightParenPos": 237,
+        "LeftParenPos": 235,
+        "RightParenPos": 240,
         "Values": [
           {
-            "NumPos": 233,
-            "NumEnd": 234,
+            "NumPos": 236,
+            "NumEnd": 237,
             "Literal": "1",
             "Base": 10
           },
           {
-            "NumPos": 236,
-            "NumEnd": 237,
+            "NumPos": 239,
+            "NumEnd": 240,
             "Literal": "2",
             "Base": 10
           }

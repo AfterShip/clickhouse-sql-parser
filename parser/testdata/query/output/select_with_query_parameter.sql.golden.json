@@ -24,22 +24,22 @@
     }
   },
   {
-    "SetPos": 18,
+    "SetPos": 19,
     "Settings": {
-      "SettingsPos": 22,
-      "ListEnd": 36,
+      "SettingsPos": 23,
+      "ListEnd": 37,
       "Items": [
         {
-          "SettingsPos": 22,
+          "SettingsPos": 23,
           "Name": {
             "Name": "param_b",
             "QuoteType": 1,
-            "NamePos": 22,
-            "NameEnd": 29
+            "NamePos": 23,
+            "NameEnd": 30
           },
           "Expr": {
-            "LiteralPos": 33,
-            "LiteralEnd": 36,
+            "LiteralPos": 34,
+            "LiteralEnd": 37,
             "Literal": "str"
           }
         }
@@ -47,22 +47,22 @@
     }
   },
   {
-    "SetPos": 39,
+    "SetPos": 41,
     "Settings": {
-      "SettingsPos": 43,
-      "ListEnd": 73,
+      "SettingsPos": 45,
+      "ListEnd": 75,
       "Items": [
         {
-          "SettingsPos": 43,
+          "SettingsPos": 45,
           "Name": {
             "Name": "param_c",
             "QuoteType": 1,
-            "NamePos": 43,
-            "NameEnd": 50
+            "NamePos": 45,
+            "NameEnd": 52
           },
           "Expr": {
-            "LiteralPos": 54,
-            "LiteralEnd": 73,
+            "LiteralPos": 56,
+            "LiteralEnd": 75,
             "Literal": "2022-08-04 18:30:53"
           }
         }
@@ -70,41 +70,41 @@
     }
   },
   {
-    "SetPos": 76,
+    "SetPos": 79,
     "Settings": {
-      "SettingsPos": 80,
-      "ListEnd": 121,
+      "SettingsPos": 83,
+      "ListEnd": 124,
       "Items": [
         {
-          "SettingsPos": 80,
+          "SettingsPos": 83,
           "Name": {
             "Name": "param_d",
             "QuoteType": 1,
-            "NamePos": 80,
-            "NameEnd": 87
+            "NamePos": 83,
+            "NameEnd": 90
           },
           "Expr": {
-            "LBracePos": 90,
-            "RBracePos": 121,
+            "LBracePos": 93,
+            "RBracePos": 124,
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 92,
-                  "LiteralEnd": 94,
+                  "LiteralPos": 95,
+                  "LiteralEnd": 97,
                   "Literal": "10"
                 },
                 "Value": {
-                  "LeftBracketPos": 97,
-                  "RightBracketPos": 104,
+                  "LeftBracketPos": 100,
+                  "RightBracketPos": 107,
                   "Items": {
-                    "ListPos": 98,
-                    "ListEnd": 104,
+                    "ListPos": 101,
+                    "ListEnd": 107,
                     "HasDistinct": false,
                     "Items": [
                       {
                         "Expr": {
-                          "NumPos": 98,
-                          "NumEnd": 100,
+                          "NumPos": 101,
+                          "NumEnd": 103,
                           "Literal": "11",
                           "Base": 10
                         },
@@ -112,8 +112,8 @@
                       },
                       {
                         "Expr": {
-                          "NumPos": 102,
-                          "NumEnd": 104,
+                          "NumPos": 105,
+                          "NumEnd": 107,
                           "Literal": "12",
                           "Base": 10
                         },
@@ -125,22 +125,22 @@
               },
               {
                 "Key": {
-                  "LiteralPos": 108,
-                  "LiteralEnd": 110,
+                  "LiteralPos": 111,
+                  "LiteralEnd": 113,
                   "Literal": "13"
                 },
                 "Value": {
-                  "LeftBracketPos": 113,
-                  "RightBracketPos": 120,
+                  "LeftBracketPos": 116,
+                  "RightBracketPos": 123,
                   "Items": {
-                    "ListPos": 114,
-                    "ListEnd": 120,
+                    "ListPos": 117,
+                    "ListEnd": 123,
                     "HasDistinct": false,
                     "Items": [
                       {
                         "Expr": {
-                          "NumPos": 114,
-                          "NumEnd": 116,
+                          "NumPos": 117,
+                          "NumEnd": 119,
                           "Literal": "14",
                           "Base": 10
                         },
@@ -148,8 +148,8 @@
                       },
                       {
                         "Expr": {
-                          "NumPos": 118,
-                          "NumEnd": 120,
+                          "NumPos": 121,
+                          "NumEnd": 123,
                           "Literal": "15",
                           "Base": 10
                         },
@@ -166,8 +166,8 @@
     }
   },
   {
-    "SelectPos": 125,
-    "StatementEnd": 218,
+    "SelectPos": 130,
+    "StatementEnd": 227,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -175,20 +175,20 @@
     "SelectItems": [
       {
         "Expr": {
-          "LBracePos": 136,
-          "RBracePos": 146,
+          "LBracePos": 142,
+          "RBracePos": 152,
           "Name": {
             "Name": "a",
             "QuoteType": 1,
-            "NamePos": 137,
-            "NameEnd": 138
+            "NamePos": 143,
+            "NameEnd": 144
           },
           "Type": {
             "Name": {
               "Name": "UInt32",
               "QuoteType": 1,
-              "NamePos": 140,
-              "NameEnd": 146
+              "NamePos": 146,
+              "NameEnd": 152
             }
           }
         },
@@ -197,20 +197,20 @@
       },
       {
         "Expr": {
-          "LBracePos": 153,
-          "RBracePos": 163,
+          "LBracePos": 160,
+          "RBracePos": 170,
           "Name": {
             "Name": "b",
             "QuoteType": 1,
-            "NamePos": 154,
-            "NameEnd": 155
+            "NamePos": 161,
+            "NameEnd": 162
           },
           "Type": {
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 157,
-              "NameEnd": 163
+              "NamePos": 164,
+              "NameEnd": 170
             }
           }
         },
@@ -219,20 +219,20 @@
       },
       {
         "Expr": {
-          "LBracePos": 170,
-          "RBracePos": 182,
+          "LBracePos": 178,
+          "RBracePos": 190,
           "Name": {
             "Name": "c",
             "QuoteType": 1,
-            "NamePos": 171,
-            "NameEnd": 172
+            "NamePos": 179,
+            "NameEnd": 180
           },
           "Type": {
             "Name": {
               "Name": "DateTime",
               "QuoteType": 1,
-              "NamePos": 174,
-              "NameEnd": 182
+              "NamePos": 182,
+              "NameEnd": 190
             }
           }
         },
@@ -241,48 +241,48 @@
       },
       {
         "Expr": {
-          "LBracePos": 189,
-          "RBracePos": 218,
+          "LBracePos": 198,
+          "RBracePos": 227,
           "Name": {
             "Name": "d",
             "QuoteType": 1,
-            "NamePos": 190,
-            "NameEnd": 191
+            "NamePos": 199,
+            "NameEnd": 200
           },
           "Type": {
-            "LeftParenPos": 197,
-            "RightParenPos": 217,
+            "LeftParenPos": 206,
+            "RightParenPos": 226,
             "Name": {
               "Name": "Map",
               "QuoteType": 1,
-              "NamePos": 193,
-              "NameEnd": 196
+              "NamePos": 202,
+              "NameEnd": 205
             },
             "Params": [
               {
                 "Name": {
                   "Name": "String",
                   "QuoteType": 1,
-                  "NamePos": 197,
-                  "NameEnd": 203
+                  "NamePos": 206,
+                  "NameEnd": 212
                 }
               },
               {
-                "LeftParenPos": 211,
-                "RightParenPos": 216,
+                "LeftParenPos": 220,
+                "RightParenPos": 225,
                 "Name": {
                   "Name": "Array",
                   "QuoteType": 1,
-                  "NamePos": 205,
-                  "NameEnd": 210
+                  "NamePos": 214,
+                  "NameEnd": 219
                 },
                 "Params": [
                   {
                     "Name": {
                       "Name": "UInt8",
                       "QuoteType": 1,
-                      "NamePos": 211,
-                      "NameEnd": 216
+                      "NamePos": 220,
+                      "NameEnd": 225
                     }
                   }
                 ]
@@ -312,8 +312,8 @@
     "Except": null
   },
   {
-    "SelectPos": 222,
-    "StatementEnd": 283,
+    "SelectPos": 233,
+    "StatementEnd": 294,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -323,32 +323,32 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 229,
-          "NameEnd": 229
+          "NamePos": 240,
+          "NameEnd": 240
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 231,
+      "FromPos": 242,
       "Expr": {
         "Table": {
-          "TablePos": 236,
-          "TableEnd": 246,
+          "TablePos": 247,
+          "TableEnd": 257,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "clickhouse",
               "QuoteType": 1,
-              "NamePos": 236,
-              "NameEnd": 246
+              "NamePos": 247,
+              "NameEnd": 257
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 246,
+        "StatementEnd": 257,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -357,30 +357,30 @@
     "Window": null,
     "Prewhere": null,
     "Where": {
-      "WherePos": 247,
+      "WherePos": 258,
       "Expr": {
         "LeftExpr": {
           "Name": "tenant_id",
           "QuoteType": 1,
-          "NamePos": 253,
-          "NameEnd": 262
+          "NamePos": 264,
+          "NameEnd": 273
         },
         "Operation": "=",
         "RightExpr": {
-          "LBracePos": 265,
-          "RBracePos": 283,
+          "LBracePos": 276,
+          "RBracePos": 294,
           "Name": {
             "Name": "tenant_id",
             "QuoteType": 1,
-            "NamePos": 266,
-            "NameEnd": 275
+            "NamePos": 277,
+            "NameEnd": 286
           },
           "Type": {
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 277,
-              "NameEnd": 283
+              "NamePos": 288,
+              "NameEnd": 294
             }
           }
         },

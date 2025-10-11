@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 270,
+    "StatementEnd": 284,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -16,18 +16,18 @@
     "UUID": null,
     "OnCluster": null,
     "TableSchema": {
-      "SchemaPos": 20,
-      "SchemaEnd": 229,
+      "SchemaPos": 21,
+      "SchemaEnd": 241,
       "Columns": [
         {
-          "NamePos": 27,
-          "ColumnEnd": 47,
+          "NamePos": 29,
+          "ColumnEnd": 49,
           "Name": {
             "Ident": {
               "Name": "event_time",
               "QuoteType": 3,
-              "NamePos": 27,
-              "NameEnd": 37
+              "NamePos": 29,
+              "NameEnd": 39
             },
             "DotIdent": null
           },
@@ -35,8 +35,8 @@
             "Name": {
               "Name": "DateTime",
               "QuoteType": 1,
-              "NamePos": 39,
-              "NameEnd": 47
+              "NamePos": 41,
+              "NameEnd": 49
             }
           },
           "NotNull": null,
@@ -50,14 +50,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 54,
-          "ColumnEnd": 70,
+          "NamePos": 57,
+          "ColumnEnd": 73,
           "Name": {
             "Ident": {
               "Name": "event_id",
               "QuoteType": 3,
-              "NamePos": 54,
-              "NameEnd": 62
+              "NamePos": 57,
+              "NameEnd": 65
             },
             "DotIdent": null
           },
@@ -65,8 +65,8 @@
             "Name": {
               "Name": "UInt64",
               "QuoteType": 1,
-              "NamePos": 64,
-              "NameEnd": 70
+              "NamePos": 67,
+              "NameEnd": 73
             }
           },
           "NotNull": null,
@@ -80,14 +80,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 77,
-          "ColumnEnd": 92,
+          "NamePos": 81,
+          "ColumnEnd": 96,
           "Name": {
             "Ident": {
               "Name": "user_id",
               "QuoteType": 3,
-              "NamePos": 77,
-              "NameEnd": 84
+              "NamePos": 81,
+              "NameEnd": 88
             },
             "DotIdent": null
           },
@@ -95,8 +95,8 @@
             "Name": {
               "Name": "UInt64",
               "QuoteType": 1,
-              "NamePos": 86,
-              "NameEnd": 92
+              "NamePos": 90,
+              "NameEnd": 96
             }
           },
           "NotNull": null,
@@ -110,14 +110,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 99,
-          "ColumnEnd": 118,
+          "NamePos": 104,
+          "ColumnEnd": 123,
           "Name": {
             "Ident": {
               "Name": "huge_string",
               "QuoteType": 3,
-              "NamePos": 99,
-              "NameEnd": 110
+              "NamePos": 104,
+              "NameEnd": 115
             },
             "DotIdent": null
           },
@@ -125,8 +125,8 @@
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 112,
-              "NameEnd": 118
+              "NamePos": 117,
+              "NameEnd": 123
             }
           },
           "NotNull": null,
@@ -141,31 +141,31 @@
         },
         {
           "IncludeProjectionKeyword": true,
-          "ProjectionPos": 124,
+          "ProjectionPos": 130,
           "Identifier": {
             "Ident": {
               "Name": "order_by_user_id",
               "QuoteType": 1,
-              "NamePos": 135,
-              "NameEnd": 151
+              "NamePos": 141,
+              "NameEnd": 157
             },
             "DotIdent": null
           },
           "Select": {
-            "LeftParenPos": 156,
-            "RightParenPos": 227,
+            "LeftParenPos": 163,
+            "RightParenPos": 238,
             "With": null,
             "SelectColumns": {
-              "ListPos": 185,
-              "ListEnd": 197,
+              "ListPos": 194,
+              "ListEnd": 206,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "_part_offset",
                     "QuoteType": 1,
-                    "NamePos": 185,
-                    "NameEnd": 197
+                    "NamePos": 194,
+                    "NameEnd": 206
                   },
                   "Alias": null
                 }
@@ -173,18 +173,18 @@
             },
             "GroupBy": null,
             "OrderBy": {
-              "OrderByPos": 206,
+              "OrderByPos": 216,
               "Columns": {
-                "ListPos": 215,
-                "ListEnd": 222,
+                "ListPos": 225,
+                "ListEnd": 232,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "user_id",
                       "QuoteType": 1,
-                      "NamePos": 215,
-                      "NameEnd": 222
+                      "NamePos": 225,
+                      "NameEnd": 232
                     },
                     "Alias": null
                   }
@@ -198,15 +198,15 @@
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 231,
-      "EngineEnd": 270,
+      "EnginePos": 244,
+      "EngineEnd": 284,
       "Name": "MergeTree",
       "Params": {
-        "LeftParenPos": 249,
-        "RightParenPos": 250,
+        "LeftParenPos": 262,
+        "RightParenPos": 263,
         "Items": {
-          "ListPos": 250,
-          "ListEnd": 250,
+          "ListPos": 263,
+          "ListEnd": 263,
           "HasDistinct": false,
           "Items": []
         },
@@ -218,25 +218,25 @@
       "TTL": null,
       "Settings": null,
       "OrderBy": {
-        "OrderPos": 252,
-        "ListEnd": 270,
+        "OrderPos": 266,
+        "ListEnd": 284,
         "Items": [
           {
-            "OrderPos": 252,
+            "OrderPos": 266,
             "Expr": {
-              "LeftParenPos": 261,
-              "RightParenPos": 270,
+              "LeftParenPos": 275,
+              "RightParenPos": 284,
               "Items": {
-                "ListPos": 262,
-                "ListEnd": 270,
+                "ListPos": 276,
+                "ListEnd": 284,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
                       "Name": "event_id",
                       "QuoteType": 1,
-                      "NamePos": 262,
-                      "NameEnd": 270
+                      "NamePos": 276,
+                      "NameEnd": 284
                     },
                     "Alias": null
                   }

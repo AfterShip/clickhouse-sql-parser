@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 171,
+    "StatementEnd": 183,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -11,8 +11,8 @@
         "Expr": {
           "Name": "datacenter",
           "QuoteType": 1,
-          "NamePos": 11,
-          "NameEnd": 21
+          "NamePos": 12,
+          "NameEnd": 22
         },
         "Modifiers": [],
         "Alias": null
@@ -21,8 +21,8 @@
         "Expr": {
           "Name": "distro",
           "QuoteType": 1,
-          "NamePos": 27,
-          "NameEnd": 33
+          "NamePos": 29,
+          "NameEnd": 35
         },
         "Modifiers": [],
         "Alias": null
@@ -32,23 +32,23 @@
           "Name": {
             "Name": "SUM",
             "QuoteType": 1,
-            "NamePos": 39,
-            "NameEnd": 42
+            "NamePos": 42,
+            "NameEnd": 45
           },
           "Params": {
-            "LeftParenPos": 43,
-            "RightParenPos": 52,
+            "LeftParenPos": 46,
+            "RightParenPos": 55,
             "Items": {
-              "ListPos": 44,
-              "ListEnd": 52,
+              "ListPos": 47,
+              "ListEnd": 55,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "quantity",
                     "QuoteType": 1,
-                    "NamePos": 44,
-                    "NameEnd": 52
+                    "NamePos": 47,
+                    "NameEnd": 55
                   },
                   "Alias": null
                 }
@@ -61,30 +61,30 @@
         "Alias": {
           "Name": "qty",
           "QuoteType": 1,
-          "NamePos": 57,
-          "NameEnd": 60
+          "NamePos": 60,
+          "NameEnd": 63
         }
       }
     ],
     "From": {
-      "FromPos": 61,
+      "FromPos": 65,
       "Expr": {
         "Table": {
-          "TablePos": 70,
-          "TableEnd": 77,
+          "TablePos": 75,
+          "TableEnd": 82,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "servers",
               "QuoteType": 1,
-              "NamePos": 70,
-              "NameEnd": 77
+              "NamePos": 75,
+              "NameEnd": 82
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 77,
+        "StatementEnd": 82,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -94,32 +94,32 @@
     "Prewhere": null,
     "Where": null,
     "GroupBy": {
-      "GroupByPos": 78,
-      "GroupByEnd": 171,
+      "GroupByPos": 84,
+      "GroupByEnd": 183,
       "AggregateType": "GROUPING SETS",
       "Expr": {
-        "LeftParenPos": 104,
-        "RightParenPos": 170,
+        "LeftParenPos": 111,
+        "RightParenPos": 182,
         "Items": {
-          "ListPos": 110,
-          "ListEnd": 168,
+          "ListPos": 118,
+          "ListEnd": 179,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LeftParenPos": 110,
-                "RightParenPos": 128,
+                "LeftParenPos": 118,
+                "RightParenPos": 136,
                 "Items": {
-                  "ListPos": 111,
-                  "ListEnd": 128,
+                  "ListPos": 119,
+                  "ListEnd": 136,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
                         "Name": "datacenter",
                         "QuoteType": 1,
-                        "NamePos": 111,
-                        "NameEnd": 121
+                        "NamePos": 119,
+                        "NameEnd": 129
                       },
                       "Alias": null
                     },
@@ -127,8 +127,8 @@
                       "Expr": {
                         "Name": "distro",
                         "QuoteType": 1,
-                        "NamePos": 122,
-                        "NameEnd": 128
+                        "NamePos": 130,
+                        "NameEnd": 136
                       },
                       "Alias": null
                     }
@@ -140,19 +140,19 @@
             },
             {
               "Expr": {
-                "LeftParenPos": 135,
-                "RightParenPos": 146,
+                "LeftParenPos": 144,
+                "RightParenPos": 155,
                 "Items": {
-                  "ListPos": 136,
-                  "ListEnd": 146,
+                  "ListPos": 145,
+                  "ListEnd": 155,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
                         "Name": "datacenter",
                         "QuoteType": 1,
-                        "NamePos": 136,
-                        "NameEnd": 146
+                        "NamePos": 145,
+                        "NameEnd": 155
                       },
                       "Alias": null
                     }
@@ -164,19 +164,19 @@
             },
             {
               "Expr": {
-                "LeftParenPos": 153,
-                "RightParenPos": 160,
+                "LeftParenPos": 163,
+                "RightParenPos": 170,
                 "Items": {
-                  "ListPos": 154,
-                  "ListEnd": 160,
+                  "ListPos": 164,
+                  "ListEnd": 170,
                   "HasDistinct": false,
                   "Items": [
                     {
                       "Expr": {
                         "Name": "distro",
                         "QuoteType": 1,
-                        "NamePos": 154,
-                        "NameEnd": 160
+                        "NamePos": 164,
+                        "NameEnd": 170
                       },
                       "Alias": null
                     }
@@ -188,11 +188,11 @@
             },
             {
               "Expr": {
-                "LeftParenPos": 167,
-                "RightParenPos": 168,
+                "LeftParenPos": 178,
+                "RightParenPos": 179,
                 "Items": {
-                  "ListPos": 168,
-                  "ListEnd": 168,
+                  "ListPos": 179,
+                  "ListEnd": 179,
                   "HasDistinct": false,
                   "Items": []
                 },
@@ -220,8 +220,8 @@
     "Except": null
   },
   {
-    "SelectPos": 174,
-    "StatementEnd": 264,
+    "SelectPos": 188,
+    "StatementEnd": 284,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -231,8 +231,8 @@
         "Expr": {
           "Name": "datacenter",
           "QuoteType": 1,
-          "NamePos": 185,
-          "NameEnd": 195
+          "NamePos": 200,
+          "NameEnd": 210
         },
         "Modifiers": [],
         "Alias": null
@@ -241,8 +241,8 @@
         "Expr": {
           "Name": "distro",
           "QuoteType": 1,
-          "NamePos": 201,
-          "NameEnd": 207
+          "NamePos": 217,
+          "NameEnd": 223
         },
         "Modifiers": [],
         "Alias": null
@@ -252,23 +252,23 @@
           "Name": {
             "Name": "SUM",
             "QuoteType": 1,
-            "NamePos": 213,
-            "NameEnd": 216
+            "NamePos": 230,
+            "NameEnd": 233
           },
           "Params": {
-            "LeftParenPos": 217,
-            "RightParenPos": 226,
+            "LeftParenPos": 234,
+            "RightParenPos": 243,
             "Items": {
-              "ListPos": 218,
-              "ListEnd": 226,
+              "ListPos": 235,
+              "ListEnd": 243,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "quantity",
                     "QuoteType": 1,
-                    "NamePos": 218,
-                    "NameEnd": 226
+                    "NamePos": 235,
+                    "NameEnd": 243
                   },
                   "Alias": null
                 }
@@ -281,30 +281,30 @@
         "Alias": {
           "Name": "qty",
           "QuoteType": 1,
-          "NamePos": 231,
-          "NameEnd": 234
+          "NamePos": 248,
+          "NameEnd": 251
         }
       }
     ],
     "From": {
-      "FromPos": 235,
+      "FromPos": 253,
       "Expr": {
         "Table": {
-          "TablePos": 244,
-          "TableEnd": 251,
+          "TablePos": 263,
+          "TableEnd": 270,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "servers",
               "QuoteType": 1,
-              "NamePos": 244,
-              "NameEnd": 251
+              "NamePos": 263,
+              "NameEnd": 270
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 251,
+        "StatementEnd": 270,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -314,8 +314,8 @@
     "Prewhere": null,
     "Where": null,
     "GroupBy": {
-      "GroupByPos": 252,
-      "GroupByEnd": 264,
+      "GroupByPos": 272,
+      "GroupByEnd": 284,
       "AggregateType": "ALL",
       "Expr": null,
       "WithCube": false,

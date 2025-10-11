@@ -30,26 +30,26 @@
     ]
   },
   {
-    "AlterPos": 46,
-    "StatementEnd": 101,
+    "AlterPos": 47,
+    "StatementEnd": 102,
     "TableIdentifier": {
       "Database": null,
       "Table": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 58,
-        "NameEnd": 62
+        "NamePos": 59,
+        "NameEnd": 63
       }
     },
     "OnCluster": null,
     "AlterExprs": [
       {
-        "AttachPos": 63,
+        "AttachPos": 64,
         "Partition": {
-          "PartitionPos": 70,
+          "PartitionPos": 71,
           "Expr": {
-            "LiteralPos": 81,
-            "LiteralEnd": 89,
+            "LiteralPos": 82,
+            "LiteralEnd": 90,
             "Literal": "20210114"
           },
           "ID": null,
@@ -60,35 +60,35 @@
           "Table": {
             "Name": "test1",
             "QuoteType": 1,
-            "NamePos": 96,
-            "NameEnd": 101
+            "NamePos": 97,
+            "NameEnd": 102
           }
         }
       }
     ]
   },
   {
-    "AlterPos": 103,
-    "StatementEnd": 149,
+    "AlterPos": 105,
+    "StatementEnd": 151,
     "TableIdentifier": {
       "Database": null,
       "Table": {
         "Name": "test",
         "QuoteType": 1,
-        "NamePos": 115,
-        "NameEnd": 119
+        "NamePos": 117,
+        "NameEnd": 121
       }
     },
     "OnCluster": null,
     "AlterExprs": [
       {
-        "AttachPos": 120,
+        "AttachPos": 122,
         "Partition": {
-          "PartitionPos": 127,
+          "PartitionPos": 129,
           "Expr": null,
           "ID": {
-            "LiteralPos": 141,
-            "LiteralEnd": 149,
+            "LiteralPos": 143,
+            "LiteralEnd": 151,
             "Literal": "20210114"
           },
           "All": false

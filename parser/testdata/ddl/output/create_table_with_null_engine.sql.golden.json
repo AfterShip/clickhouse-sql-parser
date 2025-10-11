@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 172,
+    "StatementEnd": 176,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -29,18 +29,18 @@
       }
     },
     "TableSchema": {
-      "SchemaPos": 40,
-      "SchemaEnd": 157,
+      "SchemaPos": 41,
+      "SchemaEnd": 161,
       "Columns": [
         {
-          "NamePos": 47,
-          "ColumnEnd": 78,
+          "NamePos": 49,
+          "ColumnEnd": 80,
           "Name": {
             "Ident": {
               "Name": "trace_id",
               "QuoteType": 3,
-              "NamePos": 47,
-              "NameEnd": 55
+              "NamePos": 49,
+              "NameEnd": 57
             },
             "DotIdent": null
           },
@@ -48,8 +48,8 @@
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 57,
-              "NameEnd": 63
+              "NamePos": 59,
+              "NameEnd": 65
             }
           },
           "NotNull": null,
@@ -58,19 +58,19 @@
           "MaterializedExpr": null,
           "AliasExpr": null,
           "Codec": {
-            "CodecPos": 64,
-            "RightParenPos": 78,
+            "CodecPos": 66,
+            "RightParenPos": 80,
             "Type": null,
             "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,
-              "NamePos": 70,
-              "NameEnd": 74
+              "NamePos": 72,
+              "NameEnd": 76
             },
             "Level": {
-              "NumPos": 74,
-              "NumEnd": 76,
+              "NumPos": 76,
+              "NumEnd": 78,
               "Literal": "1",
               "Base": 10
             }
@@ -80,13 +80,13 @@
           "CompressionCodec": null
         },
         {
-          "IndexPos": 84,
+          "IndexPos": 87,
           "Name": {
             "Ident": {
               "Name": "trace_id_bloom_idx",
               "QuoteType": 1,
-              "NamePos": 90,
-              "NameEnd": 108
+              "NamePos": 93,
+              "NameEnd": 111
             },
             "DotIdent": null
           },
@@ -94,32 +94,32 @@
             "Expr": {
               "Name": "trace_id",
               "QuoteType": 1,
-              "NamePos": 109,
-              "NameEnd": 117
+              "NamePos": 112,
+              "NameEnd": 120
             },
             "Alias": null
           },
           "ColumnType": {
-            "LeftParenPos": 136,
-            "RightParenPos": 140,
+            "LeftParenPos": 139,
+            "RightParenPos": 143,
             "Name": {
               "Name": "bloom_filter",
               "QuoteType": 1,
-              "NamePos": 123,
-              "NameEnd": 135
+              "NamePos": 126,
+              "NameEnd": 138
             },
             "Params": [
               {
-                "NumPos": 136,
-                "NumEnd": 140,
+                "NumPos": 139,
+                "NumEnd": 143,
                 "Literal": "0.01",
                 "Base": 10
               }
             ]
           },
           "Granularity": {
-            "NumPos": 154,
-            "NumEnd": 156,
+            "NumPos": 157,
+            "NumEnd": 159,
             "Literal": "64",
             "Base": 10
           }
@@ -129,15 +129,15 @@
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 159,
-      "EngineEnd": 172,
+      "EnginePos": 163,
+      "EngineEnd": 176,
       "Name": "Null",
       "Params": {
-        "LeftParenPos": 172,
-        "RightParenPos": 173,
+        "LeftParenPos": 176,
+        "RightParenPos": 177,
         "Items": {
-          "ListPos": 173,
-          "ListEnd": 173,
+          "ListPos": 177,
+          "ListEnd": 177,
           "HasDistinct": false,
           "Items": []
         },
