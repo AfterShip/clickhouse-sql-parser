@@ -885,6 +885,26 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Table, fn) {
 			return false
 		}
+	case *AlterTableDelete:
+		if !Walk(n.WhereClause, fn) {
+			return false
+		}
+	case *AlterTableUpdate:
+		for _, assignment := range n.Assignments {
+			if !Walk(assignment, fn) {
+				return false
+			}
+		}
+		if !Walk(n.WhereClause, fn) {
+			return false
+		}
+	case *UpdateAssignment:
+		if !Walk(n.Column, fn) {
+			return false
+		}
+		if !Walk(n.Expr, fn) {
+			return false
+		}
 	case *AlterRole:
 		for _, pair := range n.RoleRenamePairs {
 			if !Walk(pair, fn) {

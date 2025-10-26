@@ -1,0 +1,93 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 91,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "users",
+        "QuoteType": 1,
+        "NamePos": 17,
+        "NameEnd": 22
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "UpdatePos": 23,
+        "StatementEnd": 91,
+        "Assignments": [
+          {
+            "AssignmentPos": 30,
+            "Column": {
+              "Ident": {
+                "Name": "status",
+                "QuoteType": 1,
+                "NamePos": 30,
+                "NameEnd": 36
+              },
+              "DotIdent": null
+            },
+            "Expr": {
+              "LiteralPos": 40,
+              "LiteralEnd": 46,
+              "Literal": "active"
+            }
+          },
+          {
+            "AssignmentPos": 49,
+            "Column": {
+              "Ident": {
+                "Name": "updated_at",
+                "QuoteType": 1,
+                "NamePos": 49,
+                "NameEnd": 59
+              },
+              "DotIdent": null
+            },
+            "Expr": {
+              "Name": {
+                "Name": "now",
+                "QuoteType": 1,
+                "NamePos": 62,
+                "NameEnd": 65
+              },
+              "Params": {
+                "LeftParenPos": 65,
+                "RightParenPos": 66,
+                "Items": {
+                  "ListPos": 66,
+                  "ListEnd": 66,
+                  "HasDistinct": false,
+                  "Items": []
+                },
+                "ColumnArgList": null
+              }
+            }
+          }
+        ],
+        "WhereClause": {
+          "LeftExpr": {
+            "Name": "status",
+            "QuoteType": 1,
+            "NamePos": 74,
+            "NameEnd": 80
+          },
+          "Operation": "=",
+          "RightExpr": {
+            "LiteralPos": 84,
+            "LiteralEnd": 91,
+            "Literal": "pending"
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        }
+      }
+    ]
+  }
+]
