@@ -1,0 +1,136 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 20,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "NumPos": 7,
+          "NumEnd": 8,
+          "Literal": "1",
+          "Base": 10
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 9,
+      "Expr": {
+        "LeftExpr": {
+          "NumPos": 15,
+          "NumEnd": 16,
+          "Literal": "1",
+          "Base": 10
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "NumPos": 19,
+          "NumEnd": 20,
+          "Literal": "1",
+          "Base": 10
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 22,
+    "StatementEnd": 60,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "LBracePos": 29,
+          "RBracePos": 38,
+          "Name": {
+            "Name": "p",
+            "QuoteType": 1,
+            "NamePos": 30,
+            "NameEnd": 31
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt8",
+              "QuoteType": 1,
+              "NamePos": 33,
+              "NameEnd": 38
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 40,
+      "Expr": {
+        "LeftExpr": {
+          "LBracePos": 46,
+          "RBracePos": 55,
+          "Name": {
+            "Name": "p",
+            "QuoteType": 1,
+            "NamePos": 47,
+            "NameEnd": 48
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt8",
+              "QuoteType": 1,
+              "NamePos": 50,
+              "NameEnd": 55
+            }
+          }
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "NumPos": 59,
+          "NumEnd": 60,
+          "Literal": "1",
+          "Base": 10
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "InsertPos": 0,
+    "Format": null,
+    "HasTableKeyword": false,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 13
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 14,
+      "RightParenPos": 16,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "c",
+            "QuoteType": 1,
+            "NamePos": 15,
+            "NameEnd": 16
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": [
+      {
+        "LeftParenPos": 25,
+        "RightParenPos": 40,
+        "Values": [
+          {
+            "LeftBracePos": 26,
+            "RightBracePos": 40,
+            "Name": {
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 27,
+              "NameEnd": 31
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "QuoteType": 1,
+                "NamePos": 33,
+                "NameEnd": 39
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "SelectExpr": null
+  }
+]
