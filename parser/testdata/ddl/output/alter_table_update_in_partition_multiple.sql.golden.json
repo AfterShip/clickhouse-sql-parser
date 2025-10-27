@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 106,
+    "StatementEnd": 108,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -20,7 +20,7 @@
     "AlterExprs": [
       {
         "UpdatePos": 23,
-        "StatementEnd": 106,
+        "StatementEnd": 108,
         "Assignments": [
           {
             "AssignmentPos": 30,
@@ -75,33 +75,33 @@
           "LeftExpr": {
             "Name": "id",
             "QuoteType": 1,
-            "NamePos": 74,
-            "NameEnd": 76
+            "NamePos": 99,
+            "NameEnd": 101
           },
           "Operation": "\u003e",
           "RightExpr": {
-            "NumPos": 79,
-            "NumEnd": 82,
-            "Literal": "100",
+            "NumPos": 104,
+            "NumEnd": 108,
+            "Literal": "1000",
             "Base": 10
           },
           "HasGlobal": false,
           "HasNot": false
         },
         "InPartition": {
-          "PartitionPos": 86,
+          "PartitionPos": 71,
           "Expr": {
-            "LeftParenPos": 96,
-            "RightParenPos": 106,
+            "LeftParenPos": 81,
+            "RightParenPos": 91,
             "Items": {
-              "ListPos": 98,
-              "ListEnd": 105,
+              "ListPos": 83,
+              "ListEnd": 90,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
-                    "LiteralPos": 98,
-                    "LiteralEnd": 105,
+                    "LiteralPos": 83,
+                    "LiteralEnd": 90,
                     "Literal": "2024-01"
                   },
                   "Alias": null

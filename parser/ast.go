@@ -1505,12 +1505,12 @@ func (a *AlterTableUpdate) String() string {
 		}
 		builder.WriteString(assignment.String())
 	}
-	builder.WriteString(" WHERE ")
-	builder.WriteString(a.WhereClause.String())
 	if a.InPartition != nil {
 		builder.WriteString(" IN ")
 		builder.WriteString(a.InPartition.String())
 	}
+	builder.WriteString(" WHERE ")
+	builder.WriteString(a.WhereClause.String())
 	return builder.String()
 }
 

@@ -860,7 +860,7 @@ func (p *Parser) parseAlterTableDelete(pos Pos) (AlterTableClause, error) {
 	}, nil
 }
 
-// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] WHERE condition [IN PARTITION partition_expr]
+// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] [IN PARTITION partition_id] WHERE condition
 func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 	if err := p.expectKeyword(KeywordUpdate); err != nil {
 		return nil, err
@@ -883,6 +883,15 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 		assignments = append(assignments, assignment)
 	}
 
+	// Parse optional IN PARTITION clause (before WHERE)
+	var inPartition *PartitionClause
+	if p.tryConsumeKeywords(KeywordIn) {
+		inPartition, err = p.tryParsePartitionClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	if err := p.expectKeyword(KeywordWhere); err != nil {
 		return nil, err
 	}
@@ -893,18 +902,6 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 	}
 
 	statementEnd := whereExpr.End()
-
-	// Parse optional IN PARTITION clause
-	var inPartition *PartitionClause
-	if p.tryConsumeKeywords(KeywordIn) {
-		inPartition, err = p.tryParsePartitionClause(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		if inPartition != nil {
-			statementEnd = inPartition.End()
-		}
-	}
 
 	return &AlterTableUpdate{
 		UpdatePos:    pos,
@@ -926,7 +923,9 @@ func (p *Parser) parseUpdateAssignment(pos Pos) (*UpdateAssignment, error) {
 		return nil, err
 	}
 
-	expr, err := p.parseExpr(p.Pos())
+	// Parse expression but stop before IN operator (to allow IN PARTITION after assignments)
+	// Use precedenceIn to stop before consuming the IN keyword
+	expr, err := p.parseSubExpr(p.Pos(), precedenceIn)
 	if err != nil {
 		return nil, err
 	}
