@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 91,
+    "StatementEnd": 106,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -20,7 +20,7 @@
     "AlterExprs": [
       {
         "UpdatePos": 23,
-        "StatementEnd": 91,
+        "StatementEnd": 106,
         "Assignments": [
           {
             "AssignmentPos": 30,
@@ -73,21 +73,46 @@
         ],
         "WhereClause": {
           "LeftExpr": {
-            "Name": "status",
+            "Name": "id",
             "QuoteType": 1,
             "NamePos": 74,
-            "NameEnd": 80
+            "NameEnd": 76
           },
-          "Operation": "=",
+          "Operation": "\u003e",
           "RightExpr": {
-            "LiteralPos": 84,
-            "LiteralEnd": 91,
-            "Literal": "pending"
+            "NumPos": 79,
+            "NumEnd": 82,
+            "Literal": "100",
+            "Base": 10
           },
           "HasGlobal": false,
           "HasNot": false
         },
-        "InPartition": null
+        "InPartition": {
+          "PartitionPos": 86,
+          "Expr": {
+            "LeftParenPos": 96,
+            "RightParenPos": 106,
+            "Items": {
+              "ListPos": 98,
+              "ListEnd": 105,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 98,
+                    "LiteralEnd": 105,
+                    "Literal": "2024-01"
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "ID": null,
+          "All": false
+        }
       }
     ]
   }

@@ -860,7 +860,7 @@ func (p *Parser) parseAlterTableDelete(pos Pos) (AlterTableClause, error) {
 	}, nil
 }
 
-// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] WHERE condition
+// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] WHERE condition [IN PARTITION partition_expr]
 func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 	if err := p.expectKeyword(KeywordUpdate); err != nil {
 		return nil, err
@@ -892,11 +892,26 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 		return nil, err
 	}
 
+	statementEnd := whereExpr.End()
+
+	// Parse optional IN PARTITION clause
+	var inPartition *PartitionClause
+	if p.tryConsumeKeywords(KeywordIn) {
+		inPartition, err = p.tryParsePartitionClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if inPartition != nil {
+			statementEnd = inPartition.End()
+		}
+	}
+
 	return &AlterTableUpdate{
 		UpdatePos:    pos,
-		StatementEnd: whereExpr.End(),
+		StatementEnd: statementEnd,
 		Assignments:  assignments,
 		WhereClause:  whereExpr,
+		InPartition:  inPartition,
 	}, nil
 }
 

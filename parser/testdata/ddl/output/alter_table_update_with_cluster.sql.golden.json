@@ -76,7 +76,8 @@
           },
           "HasGlobal": false,
           "HasNot": false
-        }
+        },
+        "InPartition": null
       }
     ]
   }

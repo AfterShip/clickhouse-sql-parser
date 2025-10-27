@@ -64,6 +64,11 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike):
 		return PrecedenceBetweenLike
 	case p.matchKeyword(KeywordIn):
+		// Special case: IN PARTITION should not be parsed as a binary operation
+		// It's used in ALTER TABLE UPDATE/DELETE statements as a separate clause
+		if p.peekKeyword(KeywordPartition) {
+			return PrecedenceUnknown
+		}
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
 		return PrecedenceGlobal

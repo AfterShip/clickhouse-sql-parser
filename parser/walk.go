@@ -898,6 +898,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.WhereClause, fn) {
 			return false
 		}
+		if n.InPartition != nil {
+			if !Walk(n.InPartition, fn) {
+				return false
+			}
+		}
 	case *UpdateAssignment:
 		if !Walk(n.Column, fn) {
 			return false
