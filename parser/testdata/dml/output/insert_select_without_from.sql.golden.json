@@ -1,0 +1,87 @@
+[
+  {
+    "InsertPos": 0,
+    "Format": null,
+    "HasTableKeyword": false,
+    "Table": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 13
+      }
+    },
+    "ColumnNames": {
+      "LeftParenPos": 14,
+      "RightParenPos": 16,
+      "ColumnNames": [
+        {
+          "Ident": {
+            "Name": "c",
+            "QuoteType": 1,
+            "NamePos": 15,
+            "NameEnd": 16
+          },
+          "DotIdent": null
+        }
+      ]
+    },
+    "Values": null,
+    "SelectExpr": {
+      "SelectPos": 18,
+      "StatementEnd": 38,
+      "With": null,
+      "Top": null,
+      "HasDistinct": false,
+      "DistinctOn": null,
+      "SelectItems": [
+        {
+          "Expr": {
+            "NumPos": 25,
+            "NumEnd": 26,
+            "Literal": "1",
+            "Base": 10
+          },
+          "Modifiers": [],
+          "Alias": null
+        }
+      ],
+      "From": null,
+      "ArrayJoin": null,
+      "Window": null,
+      "Prewhere": null,
+      "Where": {
+        "WherePos": 27,
+        "Expr": {
+          "LeftExpr": {
+            "NumPos": 33,
+            "NumEnd": 34,
+            "Literal": "1",
+            "Base": 10
+          },
+          "Operation": "=",
+          "RightExpr": {
+            "NumPos": 37,
+            "NumEnd": 38,
+            "Literal": "1",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        }
+      },
+      "GroupBy": null,
+      "WithTotal": false,
+      "Having": null,
+      "OrderBy": null,
+      "LimitBy": null,
+      "Limit": null,
+      "Settings": null,
+      "Format": null,
+      "UnionAll": null,
+      "UnionDistinct": null,
+      "Except": null
+    }
+  }
+]

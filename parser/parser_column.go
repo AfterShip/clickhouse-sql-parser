@@ -344,6 +344,40 @@ func (p *Parser) peekKeyword(keyword string) bool {
 	return token.Kind == TokenKindKeyword && strings.EqualFold(token.String, keyword)
 }
 
+// isSelectItemTerminatorKeyword checks whether the current token is a keyword
+// that begins a clause following the SELECT item list. When true, we should not
+// treat the keyword itself as a bare alias.
+func (p *Parser) isSelectItemTerminatorKeyword() bool {
+	switch {
+	case p.matchKeyword(KeywordFrom):
+		return true
+	case p.matchKeyword(KeywordWhere):
+		return true
+	case p.matchKeyword(KeywordPrewhere):
+		return true
+	case p.matchKeyword(KeywordGroup):
+		return true
+	case p.matchKeyword(KeywordHaving):
+		return true
+	case p.matchKeyword(KeywordWindow):
+		return true
+	case p.matchKeyword(KeywordOrder):
+		return true
+	case p.matchKeyword(KeywordLimit):
+		return true
+	case p.matchKeyword(KeywordSettings):
+		return true
+	case p.matchKeyword(KeywordFormat):
+		return true
+	case p.matchKeyword(KeywordUnion):
+		return true
+	case p.matchKeyword(KeywordExcept):
+		return true
+	default:
+		return false
+	}
+}
+
 func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// Should parse the keyword as an identifier if the keyword is followed by one of comma, `AS`.
 	// For example: `SELECT 1 as interval GROUP BY interval` is a valid syntax in ClickHouse.
@@ -391,7 +425,9 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	case p.matchTokenKind(TokenKindLBrace):
 		// The map literal string also starts with '{', so we need to check the next token
 		// to determine if it is a map literal or a query param.
-		if p.peekTokenKind(TokenKindIdent) {
+		// Treat both identifiers and keywords as identifier-like for placeholders.
+		// parseIdent accepts keywords-as-ident, so this is safe.
+		if p.peekTokenKind(TokenKindIdent) || p.peekTokenKind(TokenKindKeyword) {
 			return p.parseQueryParam(p.Pos())
 		}
 		return p.parseMapLiteral(p.Pos())
@@ -752,7 +788,7 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 		if err != nil {
 			return nil, err
 		}
-	case p.lastTokenKind() == TokenKindKeyword && !p.matchKeyword(KeywordFrom):
+	case p.lastTokenKind() == TokenKindKeyword && !p.isSelectItemTerminatorKeyword():
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err

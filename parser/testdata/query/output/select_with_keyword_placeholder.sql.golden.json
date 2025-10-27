@@ -1,0 +1,121 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 20,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "LBracePos": 7,
+          "RBracePos": 20,
+          "Name": {
+            "Name": "name",
+            "QuoteType": 1,
+            "NamePos": 8,
+            "NameEnd": 12
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 14,
+              "NameEnd": 20
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  },
+  {
+    "SelectPos": 23,
+    "StatementEnd": 53,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "toString",
+            "QuoteType": 1,
+            "NamePos": 30,
+            "NameEnd": 38
+          },
+          "Params": {
+            "LeftParenPos": 38,
+            "RightParenPos": 53,
+            "Items": {
+              "ListPos": 39,
+              "ListEnd": 52,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LBracePos": 39,
+                    "RBracePos": 52,
+                    "Name": {
+                      "Name": "name",
+                      "QuoteType": 1,
+                      "NamePos": 40,
+                      "NameEnd": 44
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "String",
+                        "QuoteType": 1,
+                        "NamePos": 46,
+                        "NameEnd": 52
+                      }
+                    }
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
