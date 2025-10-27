@@ -1,0 +1,72 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 96,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events",
+        "QuoteType": 1,
+        "NamePos": 17,
+        "NameEnd": 23
+      }
+    },
+    "OnCluster": {
+      "OnPos": 24,
+      "Expr": {
+        "LiteralPos": 36,
+        "LiteralEnd": 51,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "DeletePos": 53,
+        "StatementEnd": 96,
+        "WhereClause": {
+          "LeftExpr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 66,
+              "NameEnd": 68
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "NumPos": 71,
+              "NumEnd": 74,
+              "Literal": "123",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "Operation": "AND",
+          "RightExpr": {
+            "LeftExpr": {
+              "Name": "status",
+              "QuoteType": 1,
+              "NamePos": 79,
+              "NameEnd": 85
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "LiteralPos": 89,
+              "LiteralEnd": 96,
+              "Literal": "deleted"
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        }
+      }
+    ]
+  }
+]

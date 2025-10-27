@@ -1442,6 +1442,121 @@ func (a *AlterTableReplacePartition) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableReplacePartition(a)
 }
 
+type AlterTableDelete struct {
+	DeletePos    Pos
+	StatementEnd Pos
+	WhereClause  Expr
+}
+
+func (a *AlterTableDelete) Pos() Pos {
+	return a.DeletePos
+}
+
+func (a *AlterTableDelete) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableDelete) AlterType() string {
+	return "DELETE"
+}
+
+func (a *AlterTableDelete) String() string {
+	var builder strings.Builder
+	builder.WriteString("DELETE WHERE ")
+	builder.WriteString(a.WhereClause.String())
+	return builder.String()
+}
+
+func (a *AlterTableDelete) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	if err := a.WhereClause.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitAlterTableDelete(a)
+}
+
+type AlterTableUpdate struct {
+	UpdatePos    Pos
+	StatementEnd Pos
+	Assignments  []*UpdateAssignment
+	WhereClause  Expr
+}
+
+func (a *AlterTableUpdate) Pos() Pos {
+	return a.UpdatePos
+}
+
+func (a *AlterTableUpdate) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableUpdate) AlterType() string {
+	return "UPDATE"
+}
+
+func (a *AlterTableUpdate) String() string {
+	var builder strings.Builder
+	builder.WriteString("UPDATE ")
+	for i, assignment := range a.Assignments {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(assignment.String())
+	}
+	builder.WriteString(" WHERE ")
+	builder.WriteString(a.WhereClause.String())
+	return builder.String()
+}
+
+func (a *AlterTableUpdate) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	for _, assignment := range a.Assignments {
+		if err := assignment.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if err := a.WhereClause.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitAlterTableUpdate(a)
+}
+
+type UpdateAssignment struct {
+	AssignmentPos Pos
+	Column        *NestedIdentifier
+	Expr          Expr
+}
+
+func (u *UpdateAssignment) Pos() Pos {
+	return u.AssignmentPos
+}
+
+func (u *UpdateAssignment) End() Pos {
+	return u.Expr.End()
+}
+
+func (u *UpdateAssignment) String() string {
+	var builder strings.Builder
+	builder.WriteString(u.Column.String())
+	builder.WriteString(" = ")
+	builder.WriteString(u.Expr.String())
+	return builder.String()
+}
+
+func (u *UpdateAssignment) Accept(visitor ASTVisitor) error {
+	visitor.Enter(u)
+	defer visitor.Leave(u)
+	if err := u.Column.Accept(visitor); err != nil {
+		return err
+	}
+	if err := u.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitUpdateAssignment(u)
+}
+
 type RemovePropertyType struct {
 	RemovePos Pos
 

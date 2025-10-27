@@ -1,0 +1,83 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 84,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 14
+      },
+      "Table": {
+        "Name": "table",
+        "QuoteType": 1,
+        "NamePos": 15,
+        "NameEnd": 20
+      }
+    },
+    "OnCluster": {
+      "OnPos": 21,
+      "Expr": {
+        "Name": "cluster1",
+        "QuoteType": 1,
+        "NamePos": 32,
+        "NameEnd": 40
+      }
+    },
+    "AlterExprs": [
+      {
+        "UpdatePos": 41,
+        "StatementEnd": 84,
+        "Assignments": [
+          {
+            "AssignmentPos": 48,
+            "Column": {
+              "Ident": {
+                "Name": "column1",
+                "QuoteType": 1,
+                "NamePos": 48,
+                "NameEnd": 55
+              },
+              "DotIdent": null
+            },
+            "Expr": {
+              "LeftExpr": {
+                "Name": "column1",
+                "QuoteType": 1,
+                "NamePos": 58,
+                "NameEnd": 65
+              },
+              "Operation": "+",
+              "RightExpr": {
+                "NumPos": 68,
+                "NumEnd": 69,
+                "Literal": "1",
+                "Base": 10
+              },
+              "HasGlobal": false,
+              "HasNot": false
+            }
+          }
+        ],
+        "WhereClause": {
+          "LeftExpr": {
+            "Name": "id",
+            "QuoteType": 1,
+            "NamePos": 76,
+            "NameEnd": 78
+          },
+          "Operation": "\u003e",
+          "RightExpr": {
+            "NumPos": 81,
+            "NumEnd": 84,
+            "Literal": "100",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        }
+      }
+    ]
+  }
+]

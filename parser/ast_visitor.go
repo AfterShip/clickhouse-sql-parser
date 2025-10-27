@@ -32,6 +32,9 @@ type ASTVisitor interface {
 	VisitAlterTableModifySetting(expr *AlterTableModifySetting) error
 	VisitAlterTableResetSetting(expr *AlterTableResetSetting) error
 	VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) error
+	VisitAlterTableDelete(expr *AlterTableDelete) error
+	VisitAlterTableUpdate(expr *AlterTableUpdate) error
+	VisitUpdateAssignment(expr *UpdateAssignment) error
 	VisitRemovePropertyType(expr *RemovePropertyType) error
 	VisitTableIndex(expr *TableIndex) error
 	VisitIdent(expr *Ident) error
@@ -414,6 +417,27 @@ func (v *DefaultASTVisitor) VisitAlterTableResetSetting(expr *AlterTableResetSet
 }
 
 func (v *DefaultASTVisitor) VisitAlterTableReplacePartition(expr *AlterTableReplacePartition) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableDelete(expr *AlterTableDelete) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableUpdate(expr *AlterTableUpdate) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitUpdateAssignment(expr *UpdateAssignment) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

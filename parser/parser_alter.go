@@ -53,8 +53,12 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			alter, err = p.parseAlterTableMaterialize(p.Pos())
 		case p.matchKeyword(KeywordReset):
 			alter, err = p.parseAlterTableReset(p.Pos())
+		case p.matchKeyword(KeywordDelete):
+			alter, err = p.parseAlterTableDelete(p.Pos())
+		case p.matchKeyword(KeywordUpdate):
+			alter, err = p.parseAlterTableUpdate(p.Pos())
 		default:
-			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR|MODIFY|REPLACE|MATERIALIZE|RESET")
+			return nil, errors.New("expected token: ADD|DROP|ATTACH|DETACH|FREEZE|REMOVE|CLEAR|MODIFY|REPLACE|MATERIALIZE|RESET|DELETE|UPDATE")
 		}
 		if err != nil {
 			return nil, err
@@ -831,5 +835,90 @@ func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
 		ResetPos:     pos,
 		StatementEnd: statementEnd,
 		Settings:     settings,
+	}, nil
+}
+
+// Syntax: ALTER TABLE DELETE WHERE condition
+func (p *Parser) parseAlterTableDelete(pos Pos) (AlterTableClause, error) {
+	if err := p.expectKeyword(KeywordDelete); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectKeyword(KeywordWhere); err != nil {
+		return nil, err
+	}
+
+	whereExpr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &AlterTableDelete{
+		DeletePos:    pos,
+		StatementEnd: whereExpr.End(),
+		WhereClause:  whereExpr,
+	}, nil
+}
+
+// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] WHERE condition
+func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
+	if err := p.expectKeyword(KeywordUpdate); err != nil {
+		return nil, err
+	}
+
+	// Parse at least one assignment
+	assignments := make([]*UpdateAssignment, 0)
+	assignment, err := p.parseUpdateAssignment(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	assignments = append(assignments, assignment)
+
+	// Parse additional comma-separated assignments
+	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		assignment, err = p.parseUpdateAssignment(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		assignments = append(assignments, assignment)
+	}
+
+	if err := p.expectKeyword(KeywordWhere); err != nil {
+		return nil, err
+	}
+
+	whereExpr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &AlterTableUpdate{
+		UpdatePos:    pos,
+		StatementEnd: whereExpr.End(),
+		Assignments:  assignments,
+		WhereClause:  whereExpr,
+	}, nil
+}
+
+// Parse column = expression assignment
+func (p *Parser) parseUpdateAssignment(pos Pos) (*UpdateAssignment, error) {
+	column, err := p.ParseNestedIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+		return nil, err
+	}
+
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &UpdateAssignment{
+		AssignmentPos: pos,
+		Column:        column,
+		Expr:          expr,
 	}, nil
 }
