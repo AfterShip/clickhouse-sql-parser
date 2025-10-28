@@ -71,6 +71,7 @@
             }
           }
         ],
+        "InPartition": null,
         "WhereClause": {
           "LeftExpr": {
             "Name": "status",
