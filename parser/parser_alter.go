@@ -860,7 +860,7 @@ func (p *Parser) parseAlterTableDelete(pos Pos) (AlterTableClause, error) {
 	}, nil
 }
 
-// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] WHERE condition
+// Syntax: ALTER TABLE UPDATE column1 = expr1 [, column2 = expr2, ...] [IN PARTITION partition_id] WHERE condition
 func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 	if err := p.expectKeyword(KeywordUpdate); err != nil {
 		return nil, err
@@ -883,6 +883,13 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 		assignments = append(assignments, assignment)
 	}
 
+	var inPartition *PartitionClause
+	if p.tryConsumeKeywords(KeywordIn) {
+		inPartition, err = p.parsePartitionClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+	}
 	if err := p.expectKeyword(KeywordWhere); err != nil {
 		return nil, err
 	}
@@ -896,6 +903,7 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 		UpdatePos:    pos,
 		StatementEnd: whereExpr.End(),
 		Assignments:  assignments,
+		InPartition:  inPartition,
 		WhereClause:  whereExpr,
 	}, nil
 }
@@ -911,7 +919,10 @@ func (p *Parser) parseUpdateAssignment(pos Pos) (*UpdateAssignment, error) {
 		return nil, err
 	}
 
-	expr, err := p.parseExpr(p.Pos())
+	// Why don't we use parseExpr here? Because `ALTER TABLE UPDATE` syntax allows to
+	// use `IN PARTITION` keywords after assignments. So we need to limit the precedence
+	// to avoid parsing `IN PARTITION` as part of the expression.
+	expr, err := p.parseSubExpr(p.Pos(), precedenceIn)
 	if err != nil {
 		return nil, err
 	}
