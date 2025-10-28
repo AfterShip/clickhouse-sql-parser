@@ -1,0 +1,123 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 90,
+    "OrReplace": false,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 17
+      },
+      "Table": {
+        "Name": "qbit_example",
+        "QuoteType": 1,
+        "NamePos": 18,
+        "NameEnd": 30
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 31,
+      "SchemaEnd": 73,
+      "Columns": [
+        {
+          "NamePos": 37,
+          "ColumnEnd": 46,
+          "Name": {
+            "Ident": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 37,
+              "NameEnd": 39
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "QuoteType": 1,
+              "NamePos": 40,
+              "NameEnd": 46
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 52,
+          "ColumnEnd": 71,
+          "Name": {
+            "Ident": {
+              "Name": "vec",
+              "QuoteType": 1,
+              "NamePos": 52,
+              "NameEnd": 55
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 61,
+            "RightParenPos": 71,
+            "Name": {
+              "Name": "QBit",
+              "QuoteType": 1,
+              "NamePos": 56,
+              "NameEnd": 60
+            },
+            "Params": [
+              {
+                "Name": "Float32",
+                "QuoteType": 1,
+                "NamePos": 61,
+                "NameEnd": 68
+              },
+              {
+                "NumPos": 70,
+                "NumEnd": 71,
+                "Literal": "8",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 75,
+      "EngineEnd": 90,
+      "Name": "Memory",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": null
+    },
+    "SubQuery": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
