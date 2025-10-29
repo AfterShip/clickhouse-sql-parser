@@ -1,0 +1,605 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 746,
+    "With": {
+      "WithPos": 0,
+      "EndPos": 249,
+      "CTEs": [
+        {
+          "CTEPos": 9,
+          "Expr": {
+            "Name": "monthly",
+            "QuoteType": 1,
+            "NamePos": 9,
+            "NameEnd": 16
+          },
+          "Alias": {
+            "SelectPos": 30,
+            "StatementEnd": 236,
+            "With": null,
+            "Top": null,
+            "HasDistinct": false,
+            "DistinctOn": null,
+            "SelectItems": [
+              {
+                "Expr": {
+                  "Name": {
+                    "Name": "toStartOfMonth",
+                    "QuoteType": 1,
+                    "NamePos": 37,
+                    "NameEnd": 51
+                  },
+                  "Params": {
+                    "LeftParenPos": 51,
+                    "RightParenPos": 56,
+                    "Items": {
+                      "ListPos": 52,
+                      "ListEnd": 56,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "Name": "date",
+                            "QuoteType": 1,
+                            "NamePos": 52,
+                            "NameEnd": 56
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Modifiers": [],
+                "Alias": {
+                  "Name": "month",
+                  "QuoteType": 1,
+                  "NamePos": 61,
+                  "NameEnd": 66
+                }
+              },
+              {
+                "Expr": {
+                  "Name": "department",
+                  "QuoteType": 1,
+                  "NamePos": 83,
+                  "NameEnd": 93
+                },
+                "Modifiers": [],
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": {
+                    "Name": "avg",
+                    "QuoteType": 1,
+                    "NamePos": 110,
+                    "NameEnd": 113
+                  },
+                  "Params": {
+                    "LeftParenPos": 113,
+                    "RightParenPos": 120,
+                    "Items": {
+                      "ListPos": 114,
+                      "ListEnd": 120,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "Name": "salary",
+                            "QuoteType": 1,
+                            "NamePos": 114,
+                            "NameEnd": 120
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Modifiers": [],
+                "Alias": {
+                  "Name": "avg_salary",
+                  "QuoteType": 1,
+                  "NamePos": 134,
+                  "NameEnd": 144
+                }
+              }
+            ],
+            "From": {
+              "FromPos": 153,
+              "Expr": {
+                "Table": {
+                  "TablePos": 158,
+                  "TableEnd": 170,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "salary_table",
+                      "QuoteType": 1,
+                      "NamePos": 158,
+                      "NameEnd": 170
+                    }
+                  },
+                  "HasFinal": false
+                },
+                "StatementEnd": 170,
+                "SampleRatio": null,
+                "HasFinal": false
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": {
+              "WherePos": 179,
+              "Expr": {
+                "LeftExpr": {
+                  "Name": "year",
+                  "QuoteType": 1,
+                  "NamePos": 185,
+                  "NameEnd": 189
+                },
+                "Operation": "=",
+                "RightExpr": {
+                  "NumPos": 192,
+                  "NumEnd": 196,
+                  "Literal": "2023",
+                  "Base": 10
+                },
+                "HasGlobal": false,
+                "HasNot": false
+              }
+            },
+            "GroupBy": {
+              "GroupByPos": 205,
+              "GroupByEnd": 236,
+              "AggregateType": "",
+              "Expr": {
+                "ListPos": 214,
+                "ListEnd": 231,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "month",
+                      "QuoteType": 1,
+                      "NamePos": 214,
+                      "NameEnd": 219
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "department",
+                      "QuoteType": 1,
+                      "NamePos": 221,
+                      "NameEnd": 231
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "WithCube": false,
+              "WithRollup": false,
+              "WithTotals": false
+            },
+            "WithTotal": false,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Limit": null,
+            "Settings": null,
+            "Format": null,
+            "UnionAll": null,
+            "UnionDistinct": null,
+            "Except": null
+          }
+        },
+        {
+          "CTEPos": 243,
+          "Expr": {
+            "Name": "ranked",
+            "QuoteType": 1,
+            "NamePos": 243,
+            "NameEnd": 249
+          },
+          "Alias": {
+            "SelectPos": 263,
+            "StatementEnd": 448,
+            "With": null,
+            "Top": null,
+            "HasDistinct": false,
+            "DistinctOn": null,
+            "SelectItems": [
+              {
+                "Expr": {
+                  "Name": "month",
+                  "QuoteType": 1,
+                  "NamePos": 270,
+                  "NameEnd": 275
+                },
+                "Modifiers": [],
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "department",
+                  "QuoteType": 1,
+                  "NamePos": 292,
+                  "NameEnd": 302
+                },
+                "Modifiers": [],
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "avg_salary",
+                  "QuoteType": 1,
+                  "NamePos": 319,
+                  "NameEnd": 329
+                },
+                "Modifiers": [],
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Function": {
+                    "Name": {
+                      "Name": "row_number",
+                      "QuoteType": 1,
+                      "NamePos": 346,
+                      "NameEnd": 356
+                    },
+                    "Params": {
+                      "LeftParenPos": 356,
+                      "RightParenPos": 357,
+                      "Items": {
+                        "ListPos": 357,
+                        "ListEnd": 357,
+                        "HasDistinct": false,
+                        "Items": []
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "OverPos": 359,
+                  "OverExpr": {
+                    "LeftParenPos": 364,
+                    "RightParenPos": 413,
+                    "PartitionBy": {
+                      "PartitionPos": 364,
+                      "Expr": {
+                        "ListPos": 378,
+                        "ListEnd": 388,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "Name": "department",
+                              "QuoteType": 1,
+                              "NamePos": 378,
+                              "NameEnd": 388
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      }
+                    },
+                    "OrderBy": {
+                      "OrderPos": 389,
+                      "ListEnd": 408,
+                      "Items": [
+                        {
+                          "OrderPos": 389,
+                          "Expr": {
+                            "Name": "avg_salary",
+                            "QuoteType": 1,
+                            "NamePos": 398,
+                            "NameEnd": 408
+                          },
+                          "Alias": null,
+                          "Direction": "DESC"
+                        }
+                      ]
+                    },
+                    "Frame": null
+                  }
+                },
+                "Modifiers": [],
+                "Alias": {
+                  "Name": "dept_rank",
+                  "QuoteType": 1,
+                  "NamePos": 418,
+                  "NameEnd": 427
+                }
+              }
+            ],
+            "From": {
+              "FromPos": 436,
+              "Expr": {
+                "Table": {
+                  "TablePos": 441,
+                  "TableEnd": 448,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "monthly",
+                      "QuoteType": 1,
+                      "NamePos": 441,
+                      "NameEnd": 448
+                    }
+                  },
+                  "HasFinal": false
+                },
+                "StatementEnd": 448,
+                "SampleRatio": null,
+                "HasFinal": false
+              }
+            },
+            "ArrayJoin": null,
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "WithTotal": false,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Limit": null,
+            "Settings": null,
+            "Format": null,
+            "UnionAll": null,
+            "UnionDistinct": null,
+            "Except": null
+          }
+        }
+      ]
+    },
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "month",
+          "QuoteType": 1,
+          "NamePos": 462,
+          "NameEnd": 467
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "department",
+          "QuoteType": 1,
+          "NamePos": 476,
+          "NameEnd": 486
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "avg_salary",
+          "QuoteType": 1,
+          "NamePos": 495,
+          "NameEnd": 505
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "lag",
+              "QuoteType": 1,
+              "NamePos": 514,
+              "NameEnd": 517
+            },
+            "Params": {
+              "LeftParenPos": 517,
+              "RightParenPos": 534,
+              "Items": {
+                "ListPos": 518,
+                "ListEnd": 534,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "avg_salary",
+                      "QuoteType": 1,
+                      "NamePos": 518,
+                      "NameEnd": 528
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "NumPos": 530,
+                      "NumEnd": 531,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "NumPos": 533,
+                      "NumEnd": 534,
+                      "Literal": "0",
+                      "Base": 10
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 536,
+          "OverExpr": {
+            "LeftParenPos": 541,
+            "RightParenPos": 667,
+            "PartitionBy": {
+              "PartitionPos": 541,
+              "Expr": {
+                "ListPos": 567,
+                "ListEnd": 577,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "department",
+                      "QuoteType": 1,
+                      "NamePos": 567,
+                      "NameEnd": 577
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 589,
+              "ListEnd": 603,
+              "Items": [
+                {
+                  "OrderPos": 589,
+                  "Expr": {
+                    "Name": "month",
+                    "QuoteType": 1,
+                    "NamePos": 598,
+                    "NameEnd": 603
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 615,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 628,
+                    "NumEnd": 629,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "EndPos": 639,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 640,
+                "And": {
+                  "CurrentPos": 644,
+                  "RowEnd": 668
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "prev_month_avg",
+          "QuoteType": 1,
+          "NamePos": 672,
+          "NameEnd": 686
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 687,
+      "Expr": {
+        "Table": {
+          "TablePos": 692,
+          "TableEnd": 698,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "ranked",
+              "QuoteType": 1,
+              "NamePos": 692,
+              "NameEnd": 698
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 698,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 699,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "dept_rank",
+          "QuoteType": 1,
+          "NamePos": 705,
+          "NameEnd": 714
+        },
+        "Operation": "\u003c=",
+        "RightExpr": {
+          "NumPos": 718,
+          "NumEnd": 719,
+          "Literal": "5",
+          "Base": 10
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 720,
+      "ListEnd": 746,
+      "Items": [
+        {
+          "OrderPos": 720,
+          "Expr": {
+            "Name": "month",
+            "QuoteType": 1,
+            "NamePos": 729,
+            "NameEnd": 734
+          },
+          "Alias": null,
+          "Direction": ""
+        },
+        {
+          "OrderPos": 720,
+          "Expr": {
+            "Name": "department",
+            "QuoteType": 1,
+            "NamePos": 736,
+            "NameEnd": 746
+          },
+          "Alias": null,
+          "Direction": ""
+        }
+      ]
+    },
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

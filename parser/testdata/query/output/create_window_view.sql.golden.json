@@ -1,0 +1,218 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 295,
+    "OrReplace": true,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "asdf",
+        "QuoteType": 1,
+        "NamePos": 23,
+        "NameEnd": 27
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": null,
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 31,
+        "StatementEnd": 295,
+        "With": null,
+        "Top": null,
+        "HasDistinct": false,
+        "DistinctOn": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 38,
+              "NameEnd": 40
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "LeftExpr": {
+                "Name": "price",
+                "QuoteType": 1,
+                "NamePos": 49,
+                "NameEnd": 54
+              },
+              "Operation": "*",
+              "RightExpr": {
+                "NumPos": 57,
+                "NumEnd": 60,
+                "Literal": "1.5",
+                "Base": 10
+              },
+              "HasGlobal": false,
+              "HasNot": false
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "computed_value",
+              "QuoteType": 1,
+              "NamePos": 64,
+              "NameEnd": 78
+            }
+          },
+          {
+            "Expr": {
+              "Function": {
+                "Name": {
+                  "Name": "row_number",
+                  "QuoteType": 1,
+                  "NamePos": 87,
+                  "NameEnd": 97
+                },
+                "Params": {
+                  "LeftParenPos": 97,
+                  "RightParenPos": 98,
+                  "Items": {
+                    "ListPos": 98,
+                    "ListEnd": 98,
+                    "HasDistinct": false,
+                    "Items": []
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "OverPos": 100,
+              "OverExpr": {
+                "LeftParenPos": 105,
+                "RightParenPos": 238,
+                "PartitionBy": {
+                  "PartitionPos": 105,
+                  "Expr": {
+                    "ListPos": 131,
+                    "ListEnd": 139,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "category",
+                          "QuoteType": 1,
+                          "NamePos": 131,
+                          "NameEnd": 139
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  }
+                },
+                "OrderBy": {
+                  "OrderPos": 151,
+                  "ListEnd": 170,
+                  "Items": [
+                    {
+                      "OrderPos": 151,
+                      "Expr": {
+                        "Name": "created_at",
+                        "QuoteType": 1,
+                        "NamePos": 160,
+                        "NameEnd": 170
+                      },
+                      "Alias": null,
+                      "Direction": ""
+                    }
+                  ]
+                },
+                "Frame": {
+                  "FramePos": 182,
+                  "Type": "RANGE",
+                  "Extend": {
+                    "Expr": null,
+                    "Between": {
+                      "Number": {
+                        "NumPos": 196,
+                        "NumEnd": 200,
+                        "Literal": "3600",
+                        "Base": 10
+                      },
+                      "EndPos": 210,
+                      "Direction": "PRECEDING"
+                    },
+                    "AndPos": 211,
+                    "And": {
+                      "CurrentPos": 215,
+                      "RowEnd": 239
+                    }
+                  }
+                }
+              }
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "rn",
+              "QuoteType": 1,
+              "NamePos": 249,
+              "NameEnd": 251
+            }
+          }
+        ],
+        "From": {
+          "FromPos": 252,
+          "Expr": {
+            "Table": {
+              "TablePos": 257,
+              "TableEnd": 269,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "source_table",
+                  "QuoteType": 1,
+                  "NamePos": 257,
+                  "NameEnd": 269
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 269,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": {
+          "WherePos": 270,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "date",
+              "QuoteType": 1,
+              "NamePos": 276,
+              "NameEnd": 280
+            },
+            "Operation": "\u003e=",
+            "RightExpr": {
+              "LiteralPos": 285,
+              "LiteralEnd": 295,
+              "Literal": "2023-01-01"
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    }
+  }
+]

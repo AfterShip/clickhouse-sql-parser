@@ -189,28 +189,20 @@
               "Extend": {
                 "Expr": null,
                 "Between": {
-                  "FramePos": 292,
-                  "Type": "",
-                  "Extend": {
-                    "UnboundedPos": 292,
-                    "UnboundedEnd": 0,
-                    "Direction": "PRECEDING"
-                  }
+                  "UnboundedPos": 292,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
                 },
                 "AndPos": 312,
                 "And": {
-                  "FramePos": 316,
-                  "Type": "",
-                  "Extend": {
-                    "Number": {
-                      "NumPos": 316,
-                      "NumEnd": 317,
-                      "Literal": "0",
-                      "Base": 10
-                    },
-                    "UnboundedEnd": 327,
-                    "Direction": "PRECEDING"
-                  }
+                  "Number": {
+                    "NumPos": 316,
+                    "NumEnd": 317,
+                    "Literal": "0",
+                    "Base": 10
+                  },
+                  "EndPos": 327,
+                  "Direction": "PRECEDING"
                 }
               }
             }
@@ -297,83 +289,82 @@
     },
     "ArrayJoin": null,
     "Window": {
-      "LeftParenPos": 399,
-      "RightParenPos": 508,
-      "PartitionBy": {
-        "PartitionPos": 399,
-        "Expr": {
-          "ListPos": 413,
-          "ListEnd": 431,
-          "HasDistinct": false,
-          "Items": [
-            {
-              "Expr": {
-                "Name": "aggregation_target",
-                "QuoteType": 1,
-                "NamePos": 413,
-                "NameEnd": 431
-              },
-              "Alias": null
-            }
-          ]
-        }
-      },
-      "OrderBy": {
-        "OrderPos": 436,
-        "ListEnd": 454,
-        "Items": [
-          {
-            "OrderPos": 436,
-            "Expr": {
-              "Name": "timestamp",
-              "QuoteType": 1,
-              "NamePos": 445,
-              "NameEnd": 454
-            },
-            "Alias": null,
-            "Direction": "DESC"
-          }
-        ]
-      },
-      "Frame": {
-        "FramePos": 460,
-        "Type": "ROWS",
-        "Extend": {
-          "Expr": null,
-          "Between": {
-            "FramePos": 473,
-            "Type": "",
-            "Extend": {
-              "UnboundedPos": 473,
-              "UnboundedEnd": 0,
-              "Direction": "PRECEDING"
-            }
-          },
-          "AndPos": 493,
-          "And": {
-            "FramePos": 497,
-            "Type": "",
-            "Extend": {
-              "Number": {
-                "NumPos": 497,
-                "NumEnd": 498,
-                "Literal": "0",
-                "Base": 10
-              },
-              "UnboundedEnd": 508,
-              "Direction": "PRECEDING"
-            }
-          }
-        }
-      },
       "WindowPos": 387,
-      "Name": {
-        "Name": "w",
-        "QuoteType": 1,
-        "NamePos": 394,
-        "NameEnd": 395
-      },
-      "AsPos": 0
+      "EndPos": 508,
+      "Windows": [
+        {
+          "Name": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 394,
+            "NameEnd": 395
+          },
+          "AsPos": 396,
+          "Expr": {
+            "LeftParenPos": 399,
+            "RightParenPos": 508,
+            "PartitionBy": {
+              "PartitionPos": 399,
+              "Expr": {
+                "ListPos": 413,
+                "ListEnd": 431,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "aggregation_target",
+                      "QuoteType": 1,
+                      "NamePos": 413,
+                      "NameEnd": 431
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 436,
+              "ListEnd": 454,
+              "Items": [
+                {
+                  "OrderPos": 436,
+                  "Expr": {
+                    "Name": "timestamp",
+                    "QuoteType": 1,
+                    "NamePos": 445,
+                    "NameEnd": 454
+                  },
+                  "Alias": null,
+                  "Direction": "DESC"
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 460,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 473,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 493,
+                "And": {
+                  "Number": {
+                    "NumPos": 497,
+                    "NumEnd": 498,
+                    "Literal": "0",
+                    "Base": 10
+                  },
+                  "EndPos": 508,
+                  "Direction": "PRECEDING"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "Prewhere": null,
     "Where": null,
