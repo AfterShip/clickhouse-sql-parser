@@ -874,11 +874,13 @@ func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
 		switch {
 		case p.matchTokenKind(TokenKindIdent):
-			switch ident.Name {
-			case "Nested":
+			switch {
+			case strings.EqualFold(ident.Name, "Nested"):
 				return p.parseNestedType(ident, p.Pos())
-			case "JSON":
+			case strings.EqualFold(ident.Name, "JSON"):
 				return p.parseJSONType(ident, p.Pos())
+			case strings.EqualFold(ident.Name, "QBit"):
+				return p.parseColumnTypeWithParams(ident, p.Pos())
 			default:
 				return p.parseComplexType(ident, p.Pos())
 			}

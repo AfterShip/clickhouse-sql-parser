@@ -315,11 +315,13 @@ func (p *Parser) parseLiteral(pos Pos) (Literal, error) {
 		return p.parseNumber(pos)
 	case p.matchTokenKind(TokenKindString):
 		return p.parseString(pos)
+	case p.matchTokenKind(TokenKindIdent):
+		return p.parseIdent()
 	case p.matchKeyword(KeywordNull):
 		// accept the NULL keyword
 		return &NullLiteral{NullPos: pos}, nil
 	default:
-		return nil, fmt.Errorf("expected <int>, <string> or keyword <NULL>, but got %q", p.lastTokenKind())
+		return nil, fmt.Errorf("expected <int>, <string>, <ident> or keyword <NULL>, but got %q", p.lastTokenKind())
 	}
 }
 
