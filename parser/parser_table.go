@@ -276,7 +276,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 					return nil, err
 				}
 			default:
-				return nil, fmt.Errorf("expected IDENT or (, but got %q", p.lastTokenKind())
+				return nil, fmt.Errorf("expected window name or (, but got %q", p.lastTokenKind())
 			}
 
 			if err != nil {

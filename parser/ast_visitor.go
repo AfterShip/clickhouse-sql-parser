@@ -148,6 +148,7 @@ type ASTVisitor interface {
 	VisitWindowFrameCurrentRow(expr *WindowFrameCurrentRow) error
 	VisitWindowFrameUnbounded(expr *WindowFrameUnbounded) error
 	VisitWindowFrameNumber(expr *WindowFrameNumber) error
+	VisitWindowFrameParam(expr *WindowFrameParam) error
 	VisitArrayJoinExpr(expr *ArrayJoinClause) error
 	VisitSelectQuery(expr *SelectQuery) error
 	VisitSubQueryExpr(expr *SubQuery) error
@@ -1222,6 +1223,13 @@ func (v *DefaultASTVisitor) VisitWindowFrameUnbounded(expr *WindowFrameUnbounded
 }
 
 func (v *DefaultASTVisitor) VisitWindowFrameNumber(expr *WindowFrameNumber) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitWindowFrameParam(expr *WindowFrameParam) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
