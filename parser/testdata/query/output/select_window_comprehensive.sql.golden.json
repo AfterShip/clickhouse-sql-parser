@@ -1,0 +1,2196 @@
+[
+  {
+    "SelectPos": 167,
+    "StatementEnd": 4194,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 200,
+              "NameEnd": 203
+            },
+            "Params": {
+              "LeftParenPos": 203,
+              "RightParenPos": 205,
+              "Items": {
+                "ListPos": 204,
+                "ListEnd": 205,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 204,
+                      "NameEnd": 205
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 207,
+          "OverExpr": {
+            "LeftParenPos": 212,
+            "RightParenPos": 272,
+            "PartitionBy": null,
+            "OrderBy": {
+              "OrderPos": 213,
+              "ListEnd": 223,
+              "Items": [
+                {
+                  "OrderPos": 213,
+                  "Expr": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 222,
+                    "NameEnd": 223
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 224,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 237,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 257,
+                "And": {
+                  "CurrentPos": 261,
+                  "RowEnd": 273
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "running_total",
+          "QuoteType": 1,
+          "NamePos": 317,
+          "NameEnd": 330
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "avg",
+              "QuoteType": 1,
+              "NamePos": 336,
+              "NameEnd": 339
+            },
+            "Params": {
+              "LeftParenPos": 339,
+              "RightParenPos": 341,
+              "Items": {
+                "ListPos": 340,
+                "ListEnd": 341,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 340,
+                      "NameEnd": 341
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 351,
+          "OverExpr": {
+            "LeftParenPos": 356,
+            "RightParenPos": 424,
+            "PartitionBy": {
+              "PartitionPos": 356,
+              "Expr": {
+                "ListPos": 370,
+                "ListEnd": 371,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "z",
+                      "QuoteType": 1,
+                      "NamePos": 370,
+                      "NameEnd": 371
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 372,
+              "ListEnd": 382,
+              "Items": [
+                {
+                  "OrderPos": 372,
+                  "Expr": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 381,
+                    "NameEnd": 382
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 383,
+              "Type": "RANGE",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 397,
+                    "NumEnd": 398,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "EndPos": 408,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 409,
+                "And": {
+                  "Number": {
+                    "NumPos": 413,
+                    "NumEnd": 414,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "EndPos": 424,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "avg_range1",
+          "QuoteType": 1,
+          "NamePos": 464,
+          "NameEnd": 474
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "row_number",
+              "QuoteType": 1,
+              "NamePos": 517,
+              "NameEnd": 527
+            },
+            "Params": {
+              "LeftParenPos": 527,
+              "RightParenPos": 528,
+              "Items": {
+                "ListPos": 528,
+                "ListEnd": 528,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 530,
+          "OverExpr": {
+            "Name": "w1",
+            "QuoteType": 1,
+            "NamePos": 535,
+            "NameEnd": 537
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rn_w1",
+          "QuoteType": 1,
+          "NamePos": 634,
+          "NameEnd": 639
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "rank",
+              "QuoteType": 1,
+              "NamePos": 645,
+              "NameEnd": 649
+            },
+            "Params": {
+              "LeftParenPos": 649,
+              "RightParenPos": 650,
+              "Items": {
+                "ListPos": 650,
+                "ListEnd": 650,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 652,
+          "OverExpr": {
+            "Name": "w1",
+            "QuoteType": 1,
+            "NamePos": 657,
+            "NameEnd": 659
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rank_w1",
+          "QuoteType": 1,
+          "NamePos": 762,
+          "NameEnd": 769
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 775,
+              "NameEnd": 778
+            },
+            "Params": {
+              "LeftParenPos": 778,
+              "RightParenPos": 780,
+              "Items": {
+                "ListPos": 779,
+                "ListEnd": 780,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 779,
+                      "NameEnd": 780
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 782,
+          "OverExpr": {
+            "Name": "w1",
+            "QuoteType": 1,
+            "NamePos": 787,
+            "NameEnd": 789
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "sum_w1",
+          "QuoteType": 1,
+          "NamePos": 892,
+          "NameEnd": 898
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 953,
+              "NameEnd": 956
+            },
+            "Params": {
+              "LeftParenPos": 956,
+              "RightParenPos": 958,
+              "Items": {
+                "ListPos": 957,
+                "ListEnd": 958,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 957,
+                      "NameEnd": 958
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 960,
+          "OverExpr": {
+            "LeftParenPos": 965,
+            "RightParenPos": 983,
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": {
+              "FramePos": 966,
+              "Type": "ROWS",
+              "Extend": {
+                "Number": {
+                  "NumPos": 971,
+                  "NumEnd": 973,
+                  "Literal": "10",
+                  "Base": 10
+                },
+                "EndPos": 983,
+                "Direction": "PRECEDING"
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rows_10_preceding",
+          "QuoteType": 1,
+          "NamePos": 1070,
+          "NameEnd": 1087
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 1093,
+              "NameEnd": 1096
+            },
+            "Params": {
+              "LeftParenPos": 1096,
+              "RightParenPos": 1098,
+              "Items": {
+                "ListPos": 1097,
+                "ListEnd": 1098,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 1097,
+                      "NameEnd": 1098
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1100,
+          "OverExpr": {
+            "LeftParenPos": 1105,
+            "RightParenPos": 1154,
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": {
+              "FramePos": 1106,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "CurrentPos": 1119,
+                  "RowEnd": 1134
+                },
+                "AndPos": 1131,
+                "And": {
+                  "UnboundedPos": 1135,
+                  "UnboundedEnd": 0,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rows_cur_to_unbounded_following",
+          "QuoteType": 1,
+          "NamePos": 1210,
+          "NameEnd": 1241
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 1247,
+              "NameEnd": 1250
+            },
+            "Params": {
+              "LeftParenPos": 1250,
+              "RightParenPos": 1252,
+              "Items": {
+                "ListPos": 1251,
+                "ListEnd": 1252,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 1251,
+                      "NameEnd": 1252
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1254,
+          "OverExpr": {
+            "LeftParenPos": 1259,
+            "RightParenPos": 1300,
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": {
+              "FramePos": 1260,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 1273,
+                    "NumEnd": 1274,
+                    "Literal": "5",
+                    "Base": 10
+                  },
+                  "EndPos": 1284,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 1285,
+                "And": {
+                  "Number": {
+                    "NumPos": 1289,
+                    "NumEnd": 1290,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "EndPos": 1300,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rows_5p_3f",
+          "QuoteType": 1,
+          "NamePos": 1364,
+          "NameEnd": 1374
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 1380,
+              "NameEnd": 1383
+            },
+            "Params": {
+              "LeftParenPos": 1383,
+              "RightParenPos": 1385,
+              "Items": {
+                "ListPos": 1384,
+                "ListEnd": 1385,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 1384,
+                      "NameEnd": 1385
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1387,
+          "OverExpr": {
+            "LeftParenPos": 1392,
+            "RightParenPos": 1435,
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": {
+              "FramePos": 1393,
+              "Type": "RANGE",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 1407,
+                    "NumEnd": 1409,
+                    "Literal": "10",
+                    "Base": 10
+                  },
+                  "EndPos": 1419,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 1420,
+                "And": {
+                  "CurrentPos": 1424,
+                  "RowEnd": 1436
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "range_10p_cur",
+          "QuoteType": 1,
+          "NamePos": 1497,
+          "NameEnd": 1510
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 1516,
+              "NameEnd": 1519
+            },
+            "Params": {
+              "LeftParenPos": 1519,
+              "RightParenPos": 1521,
+              "Items": {
+                "ListPos": 1520,
+                "ListEnd": 1521,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 1520,
+                      "NameEnd": 1521
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1523,
+          "OverExpr": {
+            "LeftParenPos": 1528,
+            "RightParenPos": 1578,
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": {
+              "FramePos": 1529,
+              "Type": "RANGE",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 1543,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 1563,
+                "And": {
+                  "CurrentPos": 1567,
+                  "RowEnd": 1579
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "range_unbounded_to_cur",
+          "QuoteType": 1,
+          "NamePos": 1633,
+          "NameEnd": 1655
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "row_number",
+              "QuoteType": 1,
+              "NamePos": 1690,
+              "NameEnd": 1700
+            },
+            "Params": {
+              "LeftParenPos": 1700,
+              "RightParenPos": 1701,
+              "Items": {
+                "ListPos": 1701,
+                "ListEnd": 1701,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1703,
+          "OverExpr": {
+            "LeftParenPos": 1708,
+            "RightParenPos": 1734,
+            "PartitionBy": {
+              "PartitionPos": 1708,
+              "Expr": {
+                "ListPos": 1722,
+                "ListEnd": 1723,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 1722,
+                      "NameEnd": 1723
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 1724,
+              "ListEnd": 1734,
+              "Items": [
+                {
+                  "OrderPos": 1724,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 1733,
+                    "NameEnd": 1734
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "row_num",
+          "QuoteType": 1,
+          "NamePos": 1807,
+          "NameEnd": 1814
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "rank",
+              "QuoteType": 1,
+              "NamePos": 1820,
+              "NameEnd": 1824
+            },
+            "Params": {
+              "LeftParenPos": 1824,
+              "RightParenPos": 1825,
+              "Items": {
+                "ListPos": 1825,
+                "ListEnd": 1825,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1827,
+          "OverExpr": {
+            "LeftParenPos": 1832,
+            "RightParenPos": 1858,
+            "PartitionBy": {
+              "PartitionPos": 1832,
+              "Expr": {
+                "ListPos": 1846,
+                "ListEnd": 1847,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 1846,
+                      "NameEnd": 1847
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 1848,
+              "ListEnd": 1858,
+              "Items": [
+                {
+                  "OrderPos": 1848,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 1857,
+                    "NameEnd": 1858
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rank_val",
+          "QuoteType": 1,
+          "NamePos": 1937,
+          "NameEnd": 1945
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "dense_rank",
+              "QuoteType": 1,
+              "NamePos": 1951,
+              "NameEnd": 1961
+            },
+            "Params": {
+              "LeftParenPos": 1961,
+              "RightParenPos": 1962,
+              "Items": {
+                "ListPos": 1962,
+                "ListEnd": 1962,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 1964,
+          "OverExpr": {
+            "LeftParenPos": 1969,
+            "RightParenPos": 1995,
+            "PartitionBy": {
+              "PartitionPos": 1969,
+              "Expr": {
+                "ListPos": 1983,
+                "ListEnd": 1984,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 1983,
+                      "NameEnd": 1984
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 1985,
+              "ListEnd": 1995,
+              "Items": [
+                {
+                  "OrderPos": 1985,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 1994,
+                    "NameEnd": 1995
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "dense_rank_val",
+          "QuoteType": 1,
+          "NamePos": 2068,
+          "NameEnd": 2082
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "first_value",
+              "QuoteType": 1,
+              "NamePos": 2088,
+              "NameEnd": 2099
+            },
+            "Params": {
+              "LeftParenPos": 2099,
+              "RightParenPos": 2101,
+              "Items": {
+                "ListPos": 2100,
+                "ListEnd": 2101,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 2100,
+                      "NameEnd": 2101
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2119,
+          "OverExpr": {
+            "LeftParenPos": 2124,
+            "RightParenPos": 2207,
+            "PartitionBy": {
+              "PartitionPos": 2124,
+              "Expr": {
+                "ListPos": 2138,
+                "ListEnd": 2139,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 2138,
+                      "NameEnd": 2139
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 2140,
+              "ListEnd": 2150,
+              "Items": [
+                {
+                  "OrderPos": 2140,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 2149,
+                    "NameEnd": 2150
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 2151,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 2164,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 2184,
+                "And": {
+                  "UnboundedPos": 2188,
+                  "UnboundedEnd": 0,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "first_val",
+          "QuoteType": 1,
+          "NamePos": 2224,
+          "NameEnd": 2233
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "last_value",
+              "QuoteType": 1,
+              "NamePos": 2239,
+              "NameEnd": 2249
+            },
+            "Params": {
+              "LeftParenPos": 2249,
+              "RightParenPos": 2251,
+              "Items": {
+                "ListPos": 2250,
+                "ListEnd": 2251,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 2250,
+                      "NameEnd": 2251
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2268,
+          "OverExpr": {
+            "LeftParenPos": 2273,
+            "RightParenPos": 2356,
+            "PartitionBy": {
+              "PartitionPos": 2273,
+              "Expr": {
+                "ListPos": 2287,
+                "ListEnd": 2288,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 2287,
+                      "NameEnd": 2288
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 2289,
+              "ListEnd": 2299,
+              "Items": [
+                {
+                  "OrderPos": 2289,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 2298,
+                    "NameEnd": 2299
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 2300,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 2313,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 2333,
+                "And": {
+                  "UnboundedPos": 2337,
+                  "UnboundedEnd": 0,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "last_val",
+          "QuoteType": 1,
+          "NamePos": 2374,
+          "NameEnd": 2382
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "lag",
+              "QuoteType": 1,
+              "NamePos": 2388,
+              "NameEnd": 2391
+            },
+            "Params": {
+              "LeftParenPos": 2391,
+              "RightParenPos": 2396,
+              "Items": {
+                "ListPos": 2392,
+                "ListEnd": 2396,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 2392,
+                      "NameEnd": 2393
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "NumPos": 2395,
+                      "NumEnd": 2396,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2398,
+          "OverExpr": {
+            "LeftParenPos": 2403,
+            "RightParenPos": 2429,
+            "PartitionBy": {
+              "PartitionPos": 2403,
+              "Expr": {
+                "ListPos": 2417,
+                "ListEnd": 2418,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 2417,
+                      "NameEnd": 2418
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 2419,
+              "ListEnd": 2429,
+              "Items": [
+                {
+                  "OrderPos": 2419,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 2428,
+                    "NameEnd": 2429
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "prev_x",
+          "QuoteType": 1,
+          "NamePos": 2505,
+          "NameEnd": 2511
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "lead",
+              "QuoteType": 1,
+              "NamePos": 2517,
+              "NameEnd": 2521
+            },
+            "Params": {
+              "LeftParenPos": 2521,
+              "RightParenPos": 2526,
+              "Items": {
+                "ListPos": 2522,
+                "ListEnd": 2526,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 2522,
+                      "NameEnd": 2523
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "NumPos": 2525,
+                      "NumEnd": 2526,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2528,
+          "OverExpr": {
+            "LeftParenPos": 2533,
+            "RightParenPos": 2559,
+            "PartitionBy": {
+              "PartitionPos": 2533,
+              "Expr": {
+                "ListPos": 2547,
+                "ListEnd": 2548,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 2547,
+                      "NameEnd": 2548
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 2549,
+              "ListEnd": 2559,
+              "Items": [
+                {
+                  "OrderPos": 2549,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 2558,
+                    "NameEnd": 2559
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "next_x",
+          "QuoteType": 1,
+          "NamePos": 2634,
+          "NameEnd": 2640
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "percent_rank",
+              "QuoteType": 1,
+              "NamePos": 2646,
+              "NameEnd": 2658
+            },
+            "Params": {
+              "LeftParenPos": 2658,
+              "RightParenPos": 2659,
+              "Items": {
+                "ListPos": 2659,
+                "ListEnd": 2659,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2661,
+          "OverExpr": {
+            "LeftParenPos": 2666,
+            "RightParenPos": 2692,
+            "PartitionBy": {
+              "PartitionPos": 2666,
+              "Expr": {
+                "ListPos": 2680,
+                "ListEnd": 2681,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 2680,
+                      "NameEnd": 2681
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 2682,
+              "ListEnd": 2692,
+              "Items": [
+                {
+                  "OrderPos": 2682,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 2691,
+                    "NameEnd": 2692
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "pct_rank",
+          "QuoteType": 1,
+          "NamePos": 2763,
+          "NameEnd": 2771
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 2836,
+              "NameEnd": 2839
+            },
+            "Params": {
+              "LeftParenPos": 2839,
+              "RightParenPos": 2841,
+              "Items": {
+                "ListPos": 2840,
+                "ListEnd": 2841,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 2840,
+                      "NameEnd": 2841
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2843,
+          "OverExpr": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 2848,
+            "NameEnd": 2849
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "sum_over_w",
+          "QuoteType": 1,
+          "NamePos": 2953,
+          "NameEnd": 2963
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "avg",
+              "QuoteType": 1,
+              "NamePos": 2969,
+              "NameEnd": 2972
+            },
+            "Params": {
+              "LeftParenPos": 2972,
+              "RightParenPos": 2974,
+              "Items": {
+                "ListPos": 2973,
+                "ListEnd": 2974,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 2973,
+                      "NameEnd": 2974
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 2976,
+          "OverExpr": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 2981,
+            "NameEnd": 2982
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "avg_over_w",
+          "QuoteType": 1,
+          "NamePos": 3086,
+          "NameEnd": 3096
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "row_number",
+              "QuoteType": 1,
+              "NamePos": 3102,
+              "NameEnd": 3112
+            },
+            "Params": {
+              "LeftParenPos": 3112,
+              "RightParenPos": 3113,
+              "Items": {
+                "ListPos": 3113,
+                "ListEnd": 3113,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 3115,
+          "OverExpr": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 3120,
+            "NameEnd": 3121
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rn_over_w",
+          "QuoteType": 1,
+          "NamePos": 3219,
+          "NameEnd": 3228
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "count",
+              "QuoteType": 1,
+              "NamePos": 3286,
+              "NameEnd": 3291
+            },
+            "Params": {
+              "LeftParenPos": 3291,
+              "RightParenPos": 3293,
+              "Items": {
+                "ListPos": 3292,
+                "ListEnd": 3292,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "*",
+                      "QuoteType": 0,
+                      "NamePos": 3292,
+                      "NameEnd": 3292
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 3295,
+          "OverExpr": {
+            "LeftParenPos": 3300,
+            "RightParenPos": 3355,
+            "PartitionBy": {
+              "PartitionPos": 3300,
+              "Expr": {
+                "ListPos": 3314,
+                "ListEnd": 3330,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "col1",
+                      "QuoteType": 1,
+                      "NamePos": 3314,
+                      "NameEnd": 3318
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "col2",
+                      "QuoteType": 1,
+                      "NamePos": 3320,
+                      "NameEnd": 3324
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "col3",
+                      "QuoteType": 1,
+                      "NamePos": 3326,
+                      "NameEnd": 3330
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 3331,
+              "ListEnd": 3350,
+              "Items": [
+                {
+                  "OrderPos": 3331,
+                  "Expr": {
+                    "Name": "col4",
+                    "QuoteType": 1,
+                    "NamePos": 3340,
+                    "NameEnd": 3344
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                },
+                {
+                  "OrderPos": 3331,
+                  "Expr": {
+                    "Name": "col5",
+                    "QuoteType": 1,
+                    "NamePos": 3346,
+                    "NameEnd": 3350
+                  },
+                  "Alias": null,
+                  "Direction": "DESC"
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "cnt_multi",
+          "QuoteType": 1,
+          "NamePos": 3403,
+          "NameEnd": 3412
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 3418,
+              "NameEnd": 3421
+            },
+            "Params": {
+              "LeftParenPos": 3421,
+              "RightParenPos": 3425,
+              "Items": {
+                "ListPos": 3422,
+                "ListEnd": 3425,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "val",
+                      "QuoteType": 1,
+                      "NamePos": 3422,
+                      "NameEnd": 3425
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 3435,
+          "OverExpr": {
+            "LeftParenPos": 3440,
+            "RightParenPos": 3533,
+            "PartitionBy": {
+              "PartitionPos": 3440,
+              "Expr": {
+                "ListPos": 3454,
+                "ListEnd": 3464,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "col1",
+                      "QuoteType": 1,
+                      "NamePos": 3454,
+                      "NameEnd": 3458
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "col2",
+                      "QuoteType": 1,
+                      "NamePos": 3460,
+                      "NameEnd": 3464
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 3465,
+              "ListEnd": 3484,
+              "Items": [
+                {
+                  "OrderPos": 3465,
+                  "Expr": {
+                    "Name": "col4",
+                    "QuoteType": 1,
+                    "NamePos": 3474,
+                    "NameEnd": 3478
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                },
+                {
+                  "OrderPos": 3465,
+                  "Expr": {
+                    "Name": "col5",
+                    "QuoteType": 1,
+                    "NamePos": 3480,
+                    "NameEnd": 3484
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 3485,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 3498,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 3518,
+                "And": {
+                  "CurrentPos": 3522,
+                  "RowEnd": 3534
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "total_multi",
+          "QuoteType": 1,
+          "NamePos": 3548,
+          "NameEnd": 3559
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 3604,
+              "NameEnd": 3607
+            },
+            "Params": {
+              "LeftParenPos": 3607,
+              "RightParenPos": 3614,
+              "Items": {
+                "ListPos": 3608,
+                "ListEnd": 3614,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "amount",
+                      "QuoteType": 1,
+                      "NamePos": 3608,
+                      "NameEnd": 3614
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 3624,
+          "OverExpr": {
+            "LeftParenPos": 3629,
+            "RightParenPos": 3732,
+            "PartitionBy": {
+              "PartitionPos": 3629,
+              "Expr": {
+                "ListPos": 3643,
+                "ListEnd": 3670,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": {
+                        "Name": "date_trunc",
+                        "QuoteType": 1,
+                        "NamePos": 3643,
+                        "NameEnd": 3653
+                      },
+                      "Params": {
+                        "LeftParenPos": 3653,
+                        "RightParenPos": 3670,
+                        "Items": {
+                          "ListPos": 3655,
+                          "ListEnd": 3670,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "LiteralPos": 3655,
+                                "LiteralEnd": 3658,
+                                "Literal": "day"
+                              },
+                              "Alias": null
+                            },
+                            {
+                              "Expr": {
+                                "Name": "timestamp",
+                                "QuoteType": 1,
+                                "NamePos": 3661,
+                                "NameEnd": 3670
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 3672,
+              "ListEnd": 3690,
+              "Items": [
+                {
+                  "OrderPos": 3672,
+                  "Expr": {
+                    "Name": "timestamp",
+                    "QuoteType": 1,
+                    "NamePos": 3681,
+                    "NameEnd": 3690
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 3691,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 3704,
+                    "NumEnd": 3706,
+                    "Literal": "10",
+                    "Base": 10
+                  },
+                  "EndPos": 3716,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 3717,
+                "And": {
+                  "CurrentPos": 3721,
+                  "RowEnd": 3733
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "daily_total",
+          "QuoteType": 1,
+          "NamePos": 3737,
+          "NameEnd": 3748
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "avg",
+              "QuoteType": 1,
+              "NamePos": 3754,
+              "NameEnd": 3757
+            },
+            "Params": {
+              "LeftParenPos": 3757,
+              "RightParenPos": 3764,
+              "Items": {
+                "ListPos": 3758,
+                "ListEnd": 3764,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "amount",
+                      "QuoteType": 1,
+                      "NamePos": 3758,
+                      "NameEnd": 3764
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 3774,
+          "OverExpr": {
+            "LeftParenPos": 3779,
+            "RightParenPos": 3859,
+            "PartitionBy": null,
+            "OrderBy": {
+              "OrderPos": 3780,
+              "ListEnd": 3816,
+              "Items": [
+                {
+                  "OrderPos": 3780,
+                  "Expr": {
+                    "ExtractPos": 3780,
+                    "Interval": {
+                      "Name": "HOUR",
+                      "QuoteType": 1,
+                      "NamePos": 3797,
+                      "NameEnd": 3801
+                    },
+                    "FromPos": 3802,
+                    "FromExpr": {
+                      "Name": "timestamp",
+                      "QuoteType": 1,
+                      "NamePos": 3807,
+                      "NameEnd": 3816
+                    }
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 3818,
+              "Type": "RANGE",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 3832,
+                    "NumEnd": 3833,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "EndPos": 3843,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 3844,
+                "And": {
+                  "Number": {
+                    "NumPos": 3848,
+                    "NumEnd": 3849,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "EndPos": 3859,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "hourly_avg",
+          "QuoteType": 1,
+          "NamePos": 3887,
+          "NameEnd": 3897
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 3898,
+      "Expr": {
+        "Table": {
+          "TablePos": 3903,
+          "TableEnd": 3904,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 3903,
+              "NameEnd": 3904
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 3904,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": {
+      "WindowPos": 3905,
+      "EndPos": 4194,
+      "Windows": [
+        {
+          "Name": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 3912,
+            "NameEnd": 3913
+          },
+          "AsPos": 3914,
+          "Expr": {
+            "LeftParenPos": 3917,
+            "RightParenPos": 3928,
+            "PartitionBy": null,
+            "OrderBy": {
+              "OrderPos": 3918,
+              "ListEnd": 3928,
+              "Items": [
+                {
+                  "OrderPos": 3918,
+                  "Expr": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 3927,
+                    "NameEnd": 3928
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": null
+          }
+        },
+        {
+          "Name": {
+            "Name": "w1",
+            "QuoteType": 1,
+            "NamePos": 3938,
+            "NameEnd": 3940
+          },
+          "AsPos": 3941,
+          "Expr": {
+            "LeftParenPos": 3944,
+            "RightParenPos": 4019,
+            "PartitionBy": {
+              "PartitionPos": 3944,
+              "Expr": {
+                "ListPos": 3958,
+                "ListEnd": 3959,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 3958,
+                      "NameEnd": 3959
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 3960,
+              "ListEnd": 3970,
+              "Items": [
+                {
+                  "OrderPos": 3960,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 3969,
+                    "NameEnd": 3970
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 3971,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 3984,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 4004,
+                "And": {
+                  "CurrentPos": 4008,
+                  "RowEnd": 4020
+                }
+              }
+            }
+          }
+        },
+        {
+          "Name": {
+            "Name": "w4",
+            "QuoteType": 1,
+            "NamePos": 4029,
+            "NameEnd": 4031
+          },
+          "AsPos": 4032,
+          "Expr": {
+            "LeftParenPos": 4035,
+            "RightParenPos": 4102,
+            "PartitionBy": {
+              "PartitionPos": 4035,
+              "Expr": {
+                "ListPos": 4049,
+                "ListEnd": 4050,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 4049,
+                      "NameEnd": 4050
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 4051,
+              "ListEnd": 4061,
+              "Items": [
+                {
+                  "OrderPos": 4051,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 4060,
+                    "NameEnd": 4061
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 4062,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Number": {
+                    "NumPos": 4075,
+                    "NumEnd": 4076,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "EndPos": 4086,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 4087,
+                "And": {
+                  "CurrentPos": 4091,
+                  "RowEnd": 4103
+                }
+              }
+            }
+          }
+        },
+        {
+          "Name": {
+            "Name": "w5",
+            "QuoteType": 1,
+            "NamePos": 4112,
+            "NameEnd": 4114
+          },
+          "AsPos": 4115,
+          "Expr": {
+            "LeftParenPos": 4118,
+            "RightParenPos": 4194,
+            "PartitionBy": {
+              "PartitionPos": 4118,
+              "Expr": {
+                "ListPos": 4132,
+                "ListEnd": 4133,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "z",
+                      "QuoteType": 1,
+                      "NamePos": 4132,
+                      "NameEnd": 4133
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 4134,
+              "ListEnd": 4144,
+              "Items": [
+                {
+                  "OrderPos": 4134,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 4143,
+                    "NameEnd": 4144
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 4145,
+              "Type": "RANGE",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "UnboundedPos": 4159,
+                  "UnboundedEnd": 0,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 4179,
+                "And": {
+                  "CurrentPos": 4183,
+                  "RowEnd": 4195
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

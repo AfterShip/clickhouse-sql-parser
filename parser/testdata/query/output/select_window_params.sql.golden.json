@@ -1,0 +1,497 @@
+[
+  {
+    "SelectPos": 100,
+    "StatementEnd": 663,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 107,
+              "NameEnd": 110
+            },
+            "Params": {
+              "LeftParenPos": 110,
+              "RightParenPos": 112,
+              "Items": {
+                "ListPos": 111,
+                "ListEnd": 112,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 111,
+                      "NameEnd": 112
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 114,
+          "OverExpr": {
+            "LeftParenPos": 119,
+            "RightParenPos": 184,
+            "PartitionBy": null,
+            "OrderBy": {
+              "OrderPos": 120,
+              "ListEnd": 130,
+              "Items": [
+                {
+                  "OrderPos": 120,
+                  "Expr": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 129,
+                    "NameEnd": 130
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 131,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Param": {
+                    "LBracePos": 144,
+                    "RBracePos": 157,
+                    "Name": {
+                      "Name": "start",
+                      "QuoteType": 1,
+                      "NamePos": 145,
+                      "NameEnd": 150
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "UInt32",
+                        "QuoteType": 1,
+                        "NamePos": 151,
+                        "NameEnd": 157
+                      }
+                    }
+                  },
+                  "EndPos": 168,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 169,
+                "And": {
+                  "CurrentPos": 173,
+                  "RowEnd": 185
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "total1",
+          "QuoteType": 1,
+          "NamePos": 215,
+          "NameEnd": 221
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "avg",
+              "QuoteType": 1,
+              "NamePos": 230,
+              "NameEnd": 233
+            },
+            "Params": {
+              "LeftParenPos": 233,
+              "RightParenPos": 235,
+              "Items": {
+                "ListPos": 234,
+                "ListEnd": 235,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 234,
+                      "NameEnd": 235
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 237,
+          "OverExpr": {
+            "LeftParenPos": 242,
+            "RightParenPos": 305,
+            "PartitionBy": null,
+            "OrderBy": {
+              "OrderPos": 243,
+              "ListEnd": 253,
+              "Items": [
+                {
+                  "OrderPos": 243,
+                  "Expr": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 252,
+                    "NameEnd": 253
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 254,
+              "Type": "ROWS",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "CurrentPos": 267,
+                  "RowEnd": 282
+                },
+                "AndPos": 279,
+                "And": {
+                  "Param": {
+                    "LBracePos": 283,
+                    "RBracePos": 294,
+                    "Name": {
+                      "Name": "end",
+                      "QuoteType": 1,
+                      "NamePos": 284,
+                      "NameEnd": 287
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "UInt32",
+                        "QuoteType": 1,
+                        "NamePos": 288,
+                        "NameEnd": 294
+                      }
+                    }
+                  },
+                  "EndPos": 305,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "avg1",
+          "QuoteType": 1,
+          "NamePos": 338,
+          "NameEnd": 342
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "count",
+              "QuoteType": 1,
+              "NamePos": 351,
+              "NameEnd": 356
+            },
+            "Params": {
+              "LeftParenPos": 356,
+              "RightParenPos": 358,
+              "Items": {
+                "ListPos": 357,
+                "ListEnd": 357,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "*",
+                      "QuoteType": 0,
+                      "NamePos": 357,
+                      "NameEnd": 357
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 360,
+          "OverExpr": {
+            "LeftParenPos": 365,
+            "RightParenPos": 454,
+            "PartitionBy": null,
+            "OrderBy": {
+              "OrderPos": 366,
+              "ListEnd": 376,
+              "Items": [
+                {
+                  "OrderPos": 366,
+                  "Expr": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 375,
+                    "NameEnd": 376
+                  },
+                  "Alias": null,
+                  "Direction": ""
+                }
+              ]
+            },
+            "Frame": {
+              "FramePos": 377,
+              "Type": "RANGE",
+              "Extend": {
+                "Expr": null,
+                "Between": {
+                  "Param": {
+                    "LBracePos": 391,
+                    "RBracePos": 410,
+                    "Name": {
+                      "Name": "range_start",
+                      "QuoteType": 1,
+                      "NamePos": 392,
+                      "NameEnd": 403
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "UInt32",
+                        "QuoteType": 1,
+                        "NamePos": 404,
+                        "NameEnd": 410
+                      }
+                    }
+                  },
+                  "EndPos": 421,
+                  "Direction": "PRECEDING"
+                },
+                "AndPos": 422,
+                "And": {
+                  "Param": {
+                    "LBracePos": 426,
+                    "RBracePos": 443,
+                    "Name": {
+                      "Name": "range_end",
+                      "QuoteType": 1,
+                      "NamePos": 427,
+                      "NameEnd": 436
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "UInt32",
+                        "QuoteType": 1,
+                        "NamePos": 437,
+                        "NameEnd": 443
+                      }
+                    }
+                  },
+                  "EndPos": 454,
+                  "Direction": "FOLLOWING"
+                }
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "cnt1",
+          "QuoteType": 1,
+          "NamePos": 459,
+          "NameEnd": 463
+        }
+      },
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 472,
+              "NameEnd": 475
+            },
+            "Params": {
+              "LeftParenPos": 475,
+              "RightParenPos": 477,
+              "Items": {
+                "ListPos": 476,
+                "ListEnd": 477,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 476,
+                      "NameEnd": 477
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 479,
+          "OverExpr": {
+            "LeftParenPos": 484,
+            "RightParenPos": 521,
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": {
+              "FramePos": 485,
+              "Type": "ROWS",
+              "Extend": {
+                "Param": {
+                  "LBracePos": 490,
+                  "RBracePos": 510,
+                  "Name": {
+                    "Name": "window_size",
+                    "QuoteType": 1,
+                    "NamePos": 491,
+                    "NameEnd": 502
+                  },
+                  "Type": {
+                    "Name": {
+                      "Name": "UInt32",
+                      "QuoteType": 1,
+                      "NamePos": 504,
+                      "NameEnd": 510
+                    }
+                  }
+                },
+                "EndPos": 521,
+                "Direction": "PRECEDING"
+              }
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "rows_shorthand",
+          "QuoteType": 1,
+          "NamePos": 580,
+          "NameEnd": 594
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 595,
+      "Expr": {
+        "Table": {
+          "TablePos": 600,
+          "TableEnd": 601,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 600,
+              "NameEnd": 601
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 601,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 602,
+      "Expr": {
+        "LeftExpr": {
+          "LeftExpr": {
+            "Name": "category",
+            "QuoteType": 1,
+            "NamePos": 608,
+            "NameEnd": 616
+          },
+          "Operation": "=",
+          "RightExpr": {
+            "LBracePos": 619,
+            "RBracePos": 636,
+            "Name": {
+              "Name": "category",
+              "QuoteType": 1,
+              "NamePos": 620,
+              "NameEnd": 628
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "QuoteType": 1,
+                "NamePos": 630,
+                "NameEnd": 636
+              }
+            }
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Operation": "AND",
+        "RightExpr": {
+          "LeftExpr": {
+            "Name": "type",
+            "QuoteType": 1,
+            "NamePos": 644,
+            "NameEnd": 648
+          },
+          "Operation": "=",
+          "RightExpr": {
+            "LBracePos": 651,
+            "RBracePos": 663,
+            "Name": {
+              "Name": "type",
+              "QuoteType": 1,
+              "NamePos": 652,
+              "NameEnd": 656
+            },
+            "Type": {
+              "Name": {
+                "Name": "String",
+                "QuoteType": 1,
+                "NamePos": 657,
+                "NameEnd": 663
+              }
+            }
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

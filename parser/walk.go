@@ -348,11 +348,16 @@ func Walk(node Expr, fn WalkFunc) bool {
 			}
 		}
 	case *WindowClause:
-		if !Walk(n.Name, fn) {
-			return false
-		}
-		if !Walk(n.WindowExpr, fn) {
-			return false
+		for _, window := range n.Windows {
+			if window == nil {
+				continue
+			}
+			if !Walk(window.Name, fn) {
+				return false
+			}
+			if !Walk(window.Expr, fn) {
+				return false
+			}
 		}
 	case *WindowExpr:
 		if !Walk(n.PartitionBy, fn) {

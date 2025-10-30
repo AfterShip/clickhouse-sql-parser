@@ -603,86 +603,160 @@ func (p *Parser) parseWindowFrameClause(pos Pos) (*WindowFrameClause, error) {
 	if p.matchKeyword(KeywordRows) || p.matchKeyword(KeywordRange) {
 		windowFrameType = p.last().String
 		_ = p.lexer.consumeToken()
+	} else {
+		return nil, fmt.Errorf("expected ROWS or RANGE for window frame")
 	}
 
 	var expr Expr
-	switch {
-	case p.tryConsumeKeywords(KeywordBetween):
-		betweenWindowFrame, err := p.parseWindowFrameClause(p.Pos())
+	if p.tryConsumeKeywords(KeywordBetween) {
+		left, err := p.parseFrameExtent()
 		if err != nil {
 			return nil, err
 		}
-
 		andPos := p.Pos()
 		if err := p.expectKeyword(KeywordAnd); err != nil {
 			return nil, err
 		}
-
-		andWindowFrame, err := p.parseWindowFrameClause(p.Pos())
+		right, err := p.parseFrameExtent()
 		if err != nil {
 			return nil, err
 		}
 		expr = &BetweenClause{
-			Between: betweenWindowFrame,
+			Between: left,
 			AndPos:  andPos,
-			And:     andWindowFrame,
+			And:     right,
 		}
-	case p.matchKeyword(KeywordCurrent):
-		currentPos := p.Pos()
-		_ = p.lexer.consumeToken()
-		rowEnd := p.End()
-		if err := p.expectKeyword(KeywordRow); err != nil {
-			return nil, err
-		}
-		expr = &WindowFrameCurrentRow{
-			CurrentPos: currentPos,
-			RowEnd:     rowEnd,
-		}
-	case p.matchKeyword(KeywordUnbounded):
-		unboundedPos := p.Pos()
-		_ = p.lexer.consumeToken()
-
-		direction := ""
-		switch {
-		case p.matchKeyword(KeywordPreceding), p.matchKeyword(KeywordFollowing):
-			direction = p.last().String
-			_ = p.lexer.consumeToken()
-		default:
-			return nil, fmt.Errorf("expected PRECEDING or FOLLOWING, got %s", p.lastTokenKind())
-		}
-		expr = &WindowFrameUnbounded{
-			UnboundedPos: unboundedPos,
-			Direction:    direction,
-		}
-	case p.matchTokenKind(TokenKindInt):
-		number, err := p.parseNumber(p.Pos())
+	} else {
+		// single extent
+		extent, err := p.parseFrameExtent()
 		if err != nil {
 			return nil, err
 		}
-
-		var unboundedEnd Pos
-		direction := ""
-		switch {
-		case p.matchKeyword(KeywordPreceding), p.matchKeyword(KeywordFollowing):
-			direction = p.last().String
-			unboundedEnd = p.End()
-			_ = p.lexer.consumeToken()
-		default:
-			return nil, fmt.Errorf("expected PRECEDING or FOLLOWING, got %s", p.lastTokenKind())
-		}
-		expr = &WindowFrameNumber{
-			UnboundedEnd: unboundedEnd,
-			Number:       number,
-			Direction:    direction,
-		}
-	default:
-		return nil, fmt.Errorf("expected BETWEEN, CURRENT, UNBOUNDED or integer, got %s", p.lastTokenKind())
+		expr = extent
 	}
+
 	return &WindowFrameClause{
 		FramePos: pos,
 		Type:     windowFrameType,
 		Extend:   expr,
 	}, nil
+}
+
+// parseFrameExtent parses a single frame extent
+func (p *Parser) parseFrameExtent() (Expr, error) {
+	switch {
+	case p.matchKeyword(KeywordCurrent):
+		return p.parseFrameCurrentRow()
+	case p.matchKeyword(KeywordUnbounded):
+		return p.parseFrameUnbounded()
+	case p.matchTokenKind(TokenKindInt):
+		return p.parseFrameNumber()
+	case p.matchTokenKind(TokenKindLBrace):
+		return p.parseFrameParam()
+	case p.matchKeyword(KeywordInterval):
+		return p.parseFrameInterval()
+	default:
+		return nil, fmt.Errorf("expected UNBOUNDED, CURRENT ROW, integer, parameter, or interval")
+	}
+}
+
+func (p *Parser) parseFrameCurrentRow() (Expr, error) {
+	currentPos := p.Pos()
+	_ = p.lexer.consumeToken()
+	if err := p.expectKeyword(KeywordRow); err != nil {
+		return nil, err
+	}
+	rowEnd := p.End()
+	return &WindowFrameCurrentRow{
+		CurrentPos: currentPos,
+		RowEnd:     rowEnd,
+	}, nil
+}
+
+func (p *Parser) parseFrameUnbounded() (Expr, error) {
+	unboundedPos := p.Pos()
+	_ = p.lexer.consumeToken()
+
+	direction, err := p.parseFrameDirection()
+	if err != nil {
+		return nil, err
+	}
+	return &WindowFrameUnbounded{
+		UnboundedPos: unboundedPos,
+		Direction:    direction,
+	}, nil
+}
+
+func (p *Parser) parseFrameNumber() (Expr, error) {
+	number, err := p.parseNumber(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	direction, endPos, err := p.parseFrameDirectionWithEnd()
+	if err != nil {
+		return nil, err
+	}
+	return &WindowFrameNumber{
+		EndPos:    endPos,
+		Number:    number,
+		Direction: direction,
+	}, nil
+}
+
+func (p *Parser) parseFrameParam() (Expr, error) {
+	queryParam, err := p.parseQueryParam(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	direction, endPos, err := p.parseFrameDirectionWithEnd()
+	if err != nil {
+		return nil, err
+	}
+	return &WindowFrameParam{
+		Param:     queryParam,
+		EndPos:    endPos,
+		Direction: direction,
+	}, nil
+}
+
+func (p *Parser) parseFrameInterval() (Expr, error) {
+	intervalExpr, err := p.parseInterval(true)
+	if err != nil {
+		return nil, err
+	}
+
+	direction, endPos, err := p.parseFrameDirectionWithEnd()
+	if err != nil {
+		return nil, err
+	}
+	return &WindowFrameExtendExpr{
+		Expr:      intervalExpr,
+		Direction: direction,
+		EndPos:    endPos,
+	}, nil
+}
+
+func (p *Parser) parseFrameDirection() (string, error) {
+	switch {
+	case p.matchKeyword(KeywordPreceding), p.matchKeyword(KeywordFollowing):
+		direction := p.last().String
+		_ = p.lexer.consumeToken()
+		return direction, nil
+	default:
+		return "", fmt.Errorf("expected PRECEDING or FOLLOWING, got %s", p.lastTokenKind())
+	}
+}
+
+func (p *Parser) parseFrameDirectionWithEnd() (string, Pos, error) {
+	if !p.matchKeyword(KeywordPreceding) && !p.matchKeyword(KeywordFollowing) {
+		return "", 0, fmt.Errorf("expected PRECEDING or FOLLOWING, got %s", p.lastTokenKind())
+	}
+	endPos := p.End()
+	direction := p.last().String
+	_ = p.lexer.consumeToken()
+	return direction, endPos, nil
 }
 
 func (p *Parser) tryParseWindowClause(pos Pos) (*WindowClause, error) {
@@ -726,24 +800,43 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 		return nil, err
 	}
 
-	windowName, err := p.parseIdent()
-	if err != nil {
-		return nil, err
+	windows := make([]*WindowDefinition, 0, 1)
+	for {
+		windowName, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+
+		asPos := p.Pos()
+		if err := p.expectKeyword(KeywordAs); err != nil {
+			return nil, err
+		}
+
+		condition, err := p.parseWindowCondition(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		windows = append(windows, &WindowDefinition{
+			Name:  windowName,
+			AsPos: asPos,
+			Expr:  condition,
+		})
+
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
 	}
 
-	if err := p.expectKeyword(KeywordAs); err != nil {
-		return nil, err
-	}
-
-	condition, err := p.parseWindowCondition(p.Pos())
-	if err != nil {
-		return nil, err
+	var endPos Pos
+	if len(windows) > 0 {
+		endPos = windows[len(windows)-1].End()
 	}
 
 	return &WindowClause{
-		WindowPos:  pos,
-		Name:       windowName,
-		WindowExpr: condition,
+		WindowPos: pos,
+		EndPos:    endPos,
+		Windows:   windows,
 	}, nil
 }
 
