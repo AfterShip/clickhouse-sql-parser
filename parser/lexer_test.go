@@ -32,18 +32,76 @@ func TestConsumeComment(t *testing.T) {
 }
 
 func TestConsumeString(t *testing.T) {
-	strs := []string{
-		"'hello world'",
-		"'123'",
-	}
-	for _, s := range strs {
-		lexer := NewLexer(s)
-		err := lexer.consumeToken()
-		require.NoError(t, err)
-		require.Equal(t, TokenKindString, lexer.lastToken.Kind)
-		require.Equal(t, strings.Trim(s, "'"), lexer.lastToken.String)
-		require.True(t, lexer.isEOF())
-	}
+	t.Run("Simple strings", func(t *testing.T) {
+		strs := []string{
+			"'hello world'",
+			"'123'",
+		}
+		for _, s := range strs {
+			lexer := NewLexer(s)
+			err := lexer.consumeToken()
+			require.NoError(t, err)
+			require.Equal(t, TokenKindString, lexer.lastToken.Kind)
+			require.Equal(t, strings.Trim(s, "'"), lexer.lastToken.String)
+			require.True(t, lexer.isEOF())
+		}
+	})
+
+	t.Run("Strings with backslash-escaped quotes", func(t *testing.T) {
+		testCases := []struct {
+			input    string
+			expected string
+		}{
+			{`'hello\'world'`, `hello\'world`},
+			{`'test\''`, `test\'`},
+			{`'\'abc\''`, `\'abc\'`},
+		}
+		for _, tc := range testCases {
+			lexer := NewLexer(tc.input)
+			err := lexer.consumeToken()
+			require.NoError(t, err, "Failed to parse: %s", tc.input)
+			require.Equal(t, TokenKindString, lexer.lastToken.Kind)
+			require.Equal(t, tc.expected, lexer.lastToken.String)
+			require.True(t, lexer.isEOF())
+		}
+	})
+
+	t.Run("Strings with double single quotes", func(t *testing.T) {
+		testCases := []struct {
+			input    string
+			expected string
+		}{
+			{`'hello''world'`, `hello''world`},
+			{`'test''123'`, `test''123`},
+			{`'abc''def''ghi'`, `abc''def''ghi`},
+		}
+		for _, tc := range testCases {
+			lexer := NewLexer(tc.input)
+			err := lexer.consumeToken()
+			require.NoError(t, err, "Failed to parse: %s", tc.input)
+			require.Equal(t, TokenKindString, lexer.lastToken.Kind)
+			require.Equal(t, tc.expected, lexer.lastToken.String)
+			require.True(t, lexer.isEOF())
+		}
+	})
+
+	t.Run("Strings with backslash-escaped backslashes", func(t *testing.T) {
+		testCases := []struct {
+			input    string
+			expected string
+		}{
+			{`'a\\b'`, `a\\b`},
+			{`'test\\123'`, `test\\123`},
+		}
+		for _, tc := range testCases {
+			lexer := NewLexer(tc.input)
+			err := lexer.consumeToken()
+			require.NoError(t, err, "Failed to parse: %s", tc.input)
+			require.Equal(t, TokenKindString, lexer.lastToken.Kind)
+			require.Equal(t, tc.expected, lexer.lastToken.String)
+			require.True(t, lexer.isEOF())
+		}
+	})
 }
 
 func TestConsumeNumber(t *testing.T) {

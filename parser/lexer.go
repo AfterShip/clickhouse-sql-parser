@@ -249,10 +249,28 @@ func (l *Lexer) consumeMultiLineComment() {
 func (l *Lexer) consumeString() error {
 	i := 1
 	endChar := byte('\'')
-	for l.peekOk(i) && l.peekN(i) != endChar {
+	for l.peekOk(i) {
+		c := l.peekN(i)
+		// backslash escape
+		if c == '\\' {
+			i++
+			if l.peekOk(i) {
+				i++
+			}
+			continue
+		}
+		// single quote
+		if c == endChar {
+			// double single quote ''
+			if l.peekOk(i+1) && l.peekN(i+1) == endChar {
+				i += 2
+				continue
+			}
+			break
+		}
 		i++
 	}
-	if !l.peekOk(i) {
+	if !l.peekOk(i) || l.peekN(i) != endChar {
 		return errors.New("invalid string")
 	}
 	l.lastToken = &Token{
