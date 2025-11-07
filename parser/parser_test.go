@@ -138,7 +138,6 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT n FROM t ORDER BY n WITH FILL TO",                          // TO without value
 		"SELECT n FROM t ORDER BY n WITH FILL STEP",                        // STEP without value
 		"SELECT n FROM t ORDER BY n WITH FILL STALENESS",                   // STALENESS without value
-		// Note: "INTERPOLATE without WITH FILL" is syntactically valid (parses), though semantically questionable
 		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE (x",              // Missing closing paren
 		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE x AS x + 1",      // Missing parens around column list
 	}

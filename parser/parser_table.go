@@ -875,13 +875,11 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 		ListEnd:        interpolatePos + Pos(len("INTERPOLATE")),
 	}
 
-	// Check if there's a column list
 	if p.tryConsumeTokenKind(TokenKindLParen) == nil {
-		// No column list - INTERPOLATE without columns is valid
+		// INTERPOLATE without columns is valid
 		return interpolate, nil
 	}
 
-	// Parse column list
 	items := make([]*InterpolateItem, 0)
 	for {
 		column, err := p.parseIdent()
@@ -891,7 +889,6 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 
 		item := &InterpolateItem{Column: column}
 
-		// Check for optional AS expression
 		if p.matchKeyword(KeywordAs) {
 			_ = p.lexer.consumeToken()
 			expr, err := p.parseExpr(interpolatePos)
@@ -903,13 +900,11 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 
 		items = append(items, item)
 
-		// Check for comma or end of list
 		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
 	}
 
-	// Consume closing paren
 	rparen := p.tryConsumeTokenKind(TokenKindRParen)
 	if rparen == nil {
 		return nil, fmt.Errorf("expected ')' after INTERPOLATE column list")
