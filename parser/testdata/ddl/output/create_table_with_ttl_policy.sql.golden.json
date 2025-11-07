@@ -282,9 +282,11 @@
               "NameEnd": 105
             },
             "Alias": null,
-            "Direction": ""
+            "Direction": "",
+            "Fill": null
           }
-        ]
+        ],
+        "Interpolate": null
       }
     },
     "SubQuery": null,
@@ -530,9 +532,11 @@
               "NameEnd": 339
             },
             "Alias": null,
-            "Direction": ""
+            "Direction": "",
+            "Fill": null
           }
-        ]
+        ],
+        "Interpolate": null
       }
     },
     "SubQuery": null,
@@ -879,9 +883,11 @@
               }
             },
             "Alias": null,
-            "Direction": ""
+            "Direction": "",
+            "Fill": null
           }
-        ]
+        ],
+        "Interpolate": null
       }
     },
     "SubQuery": null,

@@ -1,0 +1,233 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 170,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "date",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 11
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 13,
+          "NameEnd": 18
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 19,
+      "Expr": {
+        "Table": {
+          "TablePos": 24,
+          "TableEnd": 123,
+          "Alias": null,
+          "Expr": {
+            "HasParen": true,
+            "Select": {
+              "SelectPos": 30,
+              "StatementEnd": 123,
+              "With": null,
+              "Top": null,
+              "HasDistinct": false,
+              "DistinctOn": null,
+              "SelectItems": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Name": {
+                        "Name": "toDate",
+                        "QuoteType": 1,
+                        "NamePos": 37,
+                        "NameEnd": 43
+                      },
+                      "Params": {
+                        "LeftParenPos": 43,
+                        "RightParenPos": 56,
+                        "Items": {
+                          "ListPos": 45,
+                          "ListEnd": 55,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "LiteralPos": 45,
+                                "LiteralEnd": 55,
+                                "Literal": "2020-01-01"
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Operation": "+",
+                    "RightExpr": {
+                      "IntervalPos": 60,
+                      "Expr": {
+                        "Name": "number",
+                        "QuoteType": 1,
+                        "NamePos": 69,
+                        "NameEnd": 75
+                      },
+                      "Unit": {
+                        "Name": "DAY",
+                        "QuoteType": 1,
+                        "NamePos": 76,
+                        "NameEnd": 79
+                      }
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Modifiers": [],
+                  "Alias": {
+                    "Name": "date",
+                    "QuoteType": 1,
+                    "NamePos": 83,
+                    "NameEnd": 87
+                  }
+                },
+                {
+                  "Expr": {
+                    "Name": "number",
+                    "QuoteType": 1,
+                    "NamePos": 89,
+                    "NameEnd": 95
+                  },
+                  "Modifiers": [],
+                  "Alias": {
+                    "Name": "value",
+                    "QuoteType": 1,
+                    "NamePos": 99,
+                    "NameEnd": 104
+                  }
+                }
+              ],
+              "From": {
+                "FromPos": 109,
+                "Expr": {
+                  "Table": {
+                    "TablePos": 114,
+                    "TableEnd": 123,
+                    "Alias": null,
+                    "Expr": {
+                      "Name": {
+                        "Name": "numbers",
+                        "QuoteType": 1,
+                        "NamePos": 114,
+                        "NameEnd": 121
+                      },
+                      "Args": {
+                        "LeftParenPos": 121,
+                        "RightParenPos": 123,
+                        "Args": [
+                          {
+                            "NumPos": 122,
+                            "NumEnd": 123,
+                            "Literal": "5",
+                            "Base": 10
+                          }
+                        ]
+                      }
+                    },
+                    "HasFinal": false
+                  },
+                  "StatementEnd": 123,
+                  "SampleRatio": null,
+                  "HasFinal": false
+                }
+              },
+              "ArrayJoin": null,
+              "Window": null,
+              "Prewhere": null,
+              "Where": null,
+              "GroupBy": null,
+              "WithTotal": false,
+              "Having": null,
+              "OrderBy": null,
+              "LimitBy": null,
+              "Limit": null,
+              "Settings": null,
+              "Format": null,
+              "UnionAll": null,
+              "UnionDistinct": null,
+              "Except": null
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 123,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 127,
+      "ListEnd": 170,
+      "Items": [
+        {
+          "OrderPos": 127,
+          "Expr": {
+            "Name": "date",
+            "QuoteType": 1,
+            "NamePos": 136,
+            "NameEnd": 140
+          },
+          "Alias": null,
+          "Direction": "",
+          "Fill": {
+            "FillPos": 146,
+            "From": null,
+            "To": null,
+            "Step": {
+              "IntervalPos": 156,
+              "Expr": {
+                "NumPos": 165,
+                "NumEnd": 166,
+                "Literal": "1",
+                "Base": 10
+              },
+              "Unit": {
+                "Name": "DAY",
+                "QuoteType": 1,
+                "NamePos": 167,
+                "NameEnd": 170
+              }
+            },
+            "Staleness": null
+          }
+        }
+      ],
+      "Interpolate": null
+    },
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

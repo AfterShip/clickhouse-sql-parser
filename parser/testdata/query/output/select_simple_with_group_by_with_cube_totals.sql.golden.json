@@ -122,9 +122,11 @@
             "NameEnd": 86
           },
           "Alias": null,
-          "Direction": ""
+          "Direction": "",
+          "Fill": null
         }
-      ]
+      ],
+      "Interpolate": null
     },
     "LimitBy": null,
     "Limit": null,

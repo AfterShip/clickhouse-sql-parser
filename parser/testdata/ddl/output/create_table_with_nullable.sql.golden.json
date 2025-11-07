@@ -417,9 +417,11 @@
               "NameEnd": 386
             },
             "Alias": null,
-            "Direction": ""
+            "Direction": "",
+            "Fill": null
           }
-        ]
+        ],
+        "Interpolate": null
       }
     },
     "SubQuery": null,

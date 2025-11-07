@@ -61,9 +61,11 @@
             "NameEnd": 47
           },
           "Alias": null,
-          "Direction": ""
+          "Direction": "",
+          "Fill": null
         }
-      ]
+      ],
+      "Interpolate": null
     },
     "LimitBy": null,
     "Limit": null,

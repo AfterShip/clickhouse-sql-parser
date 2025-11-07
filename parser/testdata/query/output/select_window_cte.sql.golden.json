@@ -303,9 +303,11 @@
                             "NameEnd": 408
                           },
                           "Alias": null,
-                          "Direction": "DESC"
+                          "Direction": "DESC",
+                          "Fill": null
                         }
-                      ]
+                      ],
+                      "Interpolate": null
                     },
                     "Frame": null
                   }
@@ -480,9 +482,11 @@
                     "NameEnd": 603
                   },
                   "Alias": null,
-                  "Direction": ""
+                  "Direction": "",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": {
               "FramePos": 615,
@@ -579,7 +583,8 @@
             "NameEnd": 734
           },
           "Alias": null,
-          "Direction": ""
+          "Direction": "",
+          "Fill": null
         },
         {
           "OrderPos": 720,
@@ -590,9 +595,11 @@
             "NameEnd": 746
           },
           "Alias": null,
-          "Direction": ""
+          "Direction": "",
+          "Fill": null
         }
-      ]
+      ],
+      "Interpolate": null
     },
     "LimitBy": null,
     "Limit": null,
