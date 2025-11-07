@@ -798,19 +798,11 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 
 	// Parse optional WITH FILL clause
 	var fill *Fill
-	if p.matchKeyword(KeywordWith) {
-		savedState := p.lexer.saveState()
-		_ = p.lexer.consumeToken() // consume WITH
-		if p.matchKeyword(KeywordFill) {
-			fillPos := p.Pos()
-			_ = p.lexer.consumeToken() // consume FILL
-			fill, err = p.parseFillClause(fillPos)
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			// Not WITH FILL, restore state
-			p.lexer.restoreState(savedState)
+	if p.tryConsumeKeywords(KeywordWith, KeywordFill) {
+		fillPos := p.Pos()
+		fill, err = p.parseFillClause(fillPos)
+		if err != nil {
+			return nil, err
 		}
 	}
 
@@ -889,8 +881,7 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 
 		item := &InterpolateItem{Column: column}
 
-		if p.matchKeyword(KeywordAs) {
-			_ = p.lexer.consumeToken()
+		if p.tryConsumeKeywords(KeywordAs) {
 			expr, err := p.parseExpr(interpolatePos)
 			if err != nil {
 				return nil, err
