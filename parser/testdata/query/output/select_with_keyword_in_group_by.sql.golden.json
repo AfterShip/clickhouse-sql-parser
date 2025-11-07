@@ -215,9 +215,11 @@
             "ColumnArgList": null
           },
           "Alias": null,
-          "Direction": "ASC"
+          "Direction": "ASC",
+          "Fill": null
         }
-      ]
+      ],
+      "Interpolate": null
     },
     "LimitBy": null,
     "Limit": null,

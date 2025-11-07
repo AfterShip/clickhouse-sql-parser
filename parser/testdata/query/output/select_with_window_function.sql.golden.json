@@ -179,9 +179,11 @@
                     "NameEnd": 273
                   },
                   "Alias": null,
-                  "Direction": "DESC"
+                  "Direction": "DESC",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": {
               "FramePos": 279,
@@ -335,9 +337,11 @@
                     "NameEnd": 454
                   },
                   "Alias": null,
-                  "Direction": "DESC"
+                  "Direction": "DESC",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": {
               "FramePos": 460,

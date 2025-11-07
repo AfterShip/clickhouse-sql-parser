@@ -56,9 +56,11 @@
                     "NameEnd": 130
                   },
                   "Alias": null,
-                  "Direction": ""
+                  "Direction": "",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": {
               "FramePos": 131,
@@ -153,9 +155,11 @@
                     "NameEnd": 253
                   },
                   "Alias": null,
-                  "Direction": ""
+                  "Direction": "",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": {
               "FramePos": 254,
@@ -250,9 +254,11 @@
                     "NameEnd": 376
                   },
                   "Alias": null,
-                  "Direction": ""
+                  "Direction": "",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": {
               "FramePos": 377,

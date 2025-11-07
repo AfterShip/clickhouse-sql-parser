@@ -121,9 +121,11 @@
                     "NameEnd": 85
                   },
                   "Alias": null,
-                  "Direction": "ASC"
+                  "Direction": "ASC",
+                  "Fill": null
                 }
-              ]
+              ],
+              "Interpolate": null
             },
             "Frame": null
           }

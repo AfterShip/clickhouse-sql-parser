@@ -78,6 +78,7 @@ const (
 	KeywordFalse        = "FALSE"
 	KeywordFetches      = "FETCHES"
 	KeywordFileSystem   = "FILESYSTEM"
+	KeywordFill         = "FILL"
 	KeywordFinal        = "FINAL"
 	KeywordFirst        = "FIRST"
 	KeywordFlush        = "FLUSH"
@@ -110,6 +111,7 @@ const (
 	KeywordInner        = "INNER"
 	KeywordInsert       = "INSERT"
 	KeywordInterval     = "INTERVAL"
+	KeywordInterpolate  = "INTERPOLATE"
 	KeywordInto         = "INTO"
 	KeywordIp           = "IP"
 	KeywordIs           = "IS"
@@ -205,6 +207,8 @@ const (
 	KeywordSkip         = "SKIP"
 	KeywordSource       = "SOURCE"
 	KeywordStart        = "START"
+	KeywordStaleness    = "STALENESS"
+	KeywordStep         = "STEP"
 	KeywordStop         = "STOP"
 	KeywordSubstring    = "SUBSTRING"
 	KeywordSync         = "SYNC"
@@ -328,6 +332,7 @@ var keywords = NewSet(
 	KeywordFalse,
 	KeywordFetches,
 	KeywordFileSystem,
+	KeywordFill,
 	KeywordFinal,
 	KeywordFirst,
 	KeywordFlush,
@@ -360,6 +365,7 @@ var keywords = NewSet(
 	KeywordInner,
 	KeywordInsert,
 	KeywordInterval,
+	KeywordInterpolate,
 	KeywordInto,
 	KeywordIp,
 	KeywordIs,
@@ -455,6 +461,8 @@ var keywords = NewSet(
 	KeywordSkip,
 	KeywordSource,
 	KeywordStart,
+	KeywordStaleness,
+	KeywordStep,
 	KeywordStop,
 	KeywordSubstring,
 	KeywordSync,
