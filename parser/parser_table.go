@@ -170,6 +170,16 @@ func (p *Parser) parseCreateDictionary(pos Pos, orReplace bool) (*CreateDictiona
 	createDict.Engine = engine
 	createDict.StatementEnd = engine.End()
 
+	// parse COMMENT clause if exists
+	comment, err := p.tryParseComment()
+	if err != nil {
+		return nil, err
+	}
+	createDict.Comment = comment
+	if comment != nil {
+		createDict.StatementEnd = comment.End()
+	}
+
 	return createDict, nil
 }
 

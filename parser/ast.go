@@ -5442,6 +5442,7 @@ type CreateDictionary struct {
 	OnCluster    *ClusterClause
 	Schema       *DictionarySchemaClause
 	Engine       *DictionaryEngineClause
+	Comment      *StringLiteral
 }
 
 func (c *CreateDictionary) Type() string {
@@ -5488,6 +5489,11 @@ func (c *CreateDictionary) String() string {
 		builder.WriteString(c.Engine.String())
 	}
 
+	if c.Comment != nil {
+		builder.WriteString(" COMMENT ")
+		builder.WriteString(c.Comment.String())
+	}
+
 	return builder.String()
 }
 
@@ -5514,6 +5520,11 @@ func (c *CreateDictionary) Accept(visitor ASTVisitor) error {
 	}
 	if c.Engine != nil {
 		if err := c.Engine.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Comment != nil {
+		if err := c.Comment.Accept(visitor); err != nil {
 			return err
 		}
 	}

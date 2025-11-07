@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 444,
+    "StatementEnd": 493,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -360,6 +360,10 @@
         ]
       }
     },
-    "Comment": null
+    "Comment": {
+      "LiteralPos": 455,
+      "LiteralEnd": 493,
+      "Literal": "This is a test dictionary with comment"
+    }
   }
 ]

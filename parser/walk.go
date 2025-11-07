@@ -687,6 +687,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Engine, fn) {
 			return false
 		}
+		if !Walk(n.Comment, fn) {
+			return false
+		}
 	case *CreateFunction:
 		if !Walk(n.FunctionName, fn) {
 			return false
