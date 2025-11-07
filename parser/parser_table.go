@@ -819,8 +819,7 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	fill := &Fill{FillPos: fillPos}
 
 	// Parse optional FROM clause
-	if p.matchKeyword(KeywordFrom) {
-		_ = p.lexer.consumeToken()
+	if p.tryConsumeKeywords(KeywordFrom) {
 		fromExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -829,8 +828,7 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	}
 
 	// Parse optional TO clause
-	if p.matchKeyword(KeywordTo) {
-		_ = p.lexer.consumeToken()
+	if p.tryConsumeKeywords(KeywordTo) {
 		toExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -839,8 +837,7 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	}
 
 	// Parse optional STEP clause
-	if p.matchKeyword(KeywordStep) {
-		_ = p.lexer.consumeToken()
+	if p.tryConsumeKeywords(KeywordStep) {
 		stepExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -849,8 +846,7 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	}
 
 	// Parse optional STALENESS clause
-	if p.matchKeyword(KeywordStaleness) {
-		_ = p.lexer.consumeToken()
+	if p.tryConsumeKeywords(KeywordStaleness) {
 		stalenessExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
