@@ -741,6 +741,19 @@ func (p *Parser) parseOrderByClause(pos Pos) (*OrderByClause, error) {
 		orderByListExpr.ListEnd = items[len(items)-1].End()
 	}
 	orderByListExpr.Items = items
+
+	// Parse optional INTERPOLATE clause
+	if p.matchKeyword(KeywordInterpolate) {
+		interpolatePos := p.Pos()
+		_ = p.lexer.consumeToken()
+		interpolate, err := p.parseInterpolateClause(interpolatePos)
+		if err != nil {
+			return nil, err
+		}
+		orderByListExpr.Interpolate = interpolate
+		orderByListExpr.ListEnd = interpolate.End()
+	}
+
 	return orderByListExpr, nil
 }
 
@@ -782,12 +795,130 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 		direction = OrderDirectionDesc
 		_ = p.lexer.consumeToken()
 	}
+
+	// Parse optional WITH FILL clause
+	var fill *Fill
+	if p.matchKeyword(KeywordWith) {
+		savedState := p.lexer.saveState()
+		_ = p.lexer.consumeToken() // consume WITH
+		if p.matchKeyword(KeywordFill) {
+			fillPos := p.Pos()
+			_ = p.lexer.consumeToken() // consume FILL
+			fill, err = p.parseFillClause(fillPos)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			// Not WITH FILL, restore state
+			p.lexer.restoreState(savedState)
+		}
+	}
+
 	return &OrderExpr{
 		OrderPos:  pos,
 		Alias:     alias,
 		Expr:      columnExpr,
 		Direction: direction,
+		Fill:      fill,
 	}, nil
+}
+
+func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
+	fill := &Fill{FillPos: fillPos}
+
+	// Parse optional FROM clause
+	if p.matchKeyword(KeywordFrom) {
+		_ = p.lexer.consumeToken()
+		fromExpr, err := p.parseExpr(fillPos)
+		if err != nil {
+			return nil, err
+		}
+		fill.From = fromExpr
+	}
+
+	// Parse optional TO clause
+	if p.matchKeyword(KeywordTo) {
+		_ = p.lexer.consumeToken()
+		toExpr, err := p.parseExpr(fillPos)
+		if err != nil {
+			return nil, err
+		}
+		fill.To = toExpr
+	}
+
+	// Parse optional STEP clause
+	if p.matchKeyword(KeywordStep) {
+		_ = p.lexer.consumeToken()
+		stepExpr, err := p.parseExpr(fillPos)
+		if err != nil {
+			return nil, err
+		}
+		fill.Step = stepExpr
+	}
+
+	// Parse optional STALENESS clause
+	if p.matchKeyword(KeywordStaleness) {
+		_ = p.lexer.consumeToken()
+		stalenessExpr, err := p.parseExpr(fillPos)
+		if err != nil {
+			return nil, err
+		}
+		fill.Staleness = stalenessExpr
+	}
+
+	return fill, nil
+}
+
+func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause, error) {
+	interpolate := &InterpolateClause{
+		InterpolatePos: interpolatePos,
+		ListEnd:        interpolatePos + Pos(len("INTERPOLATE")),
+	}
+
+	// Check if there's a column list
+	if p.tryConsumeTokenKind(TokenKindLParen) == nil {
+		// No column list - INTERPOLATE without columns is valid
+		return interpolate, nil
+	}
+
+	// Parse column list
+	items := make([]*InterpolateItem, 0)
+	for {
+		column, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+
+		item := &InterpolateItem{Column: column}
+
+		// Check for optional AS expression
+		if p.matchKeyword(KeywordAs) {
+			_ = p.lexer.consumeToken()
+			expr, err := p.parseExpr(interpolatePos)
+			if err != nil {
+				return nil, err
+			}
+			item.Expr = expr
+		}
+
+		items = append(items, item)
+
+		// Check for comma or end of list
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+
+	// Consume closing paren
+	rparen := p.tryConsumeTokenKind(TokenKindRParen)
+	if rparen == nil {
+		return nil, fmt.Errorf("expected ')' after INTERPOLATE column list")
+	}
+
+	interpolate.Items = items
+	interpolate.ListEnd = rparen.End
+
+	return interpolate, nil
 }
 
 func (p *Parser) tryParseTTLClause(pos Pos, allowMultiValues bool) (*TTLClause, error) {

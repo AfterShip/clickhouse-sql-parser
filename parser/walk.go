@@ -241,11 +241,43 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
+		if !Walk(n.Interpolate, fn) {
+			return false
+		}
 	case *OrderExpr:
 		if !Walk(n.Expr, fn) {
 			return false
 		}
 		if !Walk(n.Alias, fn) {
+			return false
+		}
+		if !Walk(n.Fill, fn) {
+			return false
+		}
+	case *Fill:
+		if !Walk(n.From, fn) {
+			return false
+		}
+		if !Walk(n.To, fn) {
+			return false
+		}
+		if !Walk(n.Step, fn) {
+			return false
+		}
+		if !Walk(n.Staleness, fn) {
+			return false
+		}
+	case *InterpolateClause:
+		for _, item := range n.Items {
+			if !Walk(item, fn) {
+				return false
+			}
+		}
+	case *InterpolateItem:
+		if !Walk(n.Column, fn) {
+			return false
+		}
+		if !Walk(n.Expr, fn) {
 			return false
 		}
 	case *LimitClause:

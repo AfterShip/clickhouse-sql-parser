@@ -131,10 +131,20 @@ func validFormatSQL(t *testing.T, sql string) {
 func TestParser_InvalidSyntax(t *testing.T) {
 	invalidSQLs := []string{
 		"SELECT * FROM",
+		// WITH FILL error cases
+		"SELECT n FROM t ORDER BY n WITH",                                  // WITH without FILL
+		"SELECT n FROM t ORDER BY n FILL",                                  // FILL without WITH
+		"SELECT n FROM t ORDER BY n WITH FILL FROM",                        // FROM without value
+		"SELECT n FROM t ORDER BY n WITH FILL TO",                          // TO without value
+		"SELECT n FROM t ORDER BY n WITH FILL STEP",                        // STEP without value
+		"SELECT n FROM t ORDER BY n WITH FILL STALENESS",                   // STALENESS without value
+		// Note: "INTERPOLATE without WITH FILL" is syntactically valid (parses), though semantically questionable
+		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE (x",              // Missing closing paren
+		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE x AS x + 1",      // Missing parens around column list
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
 		_, err := parser.ParseStmts()
-		require.Error(t, err)
+		require.Error(t, err, "Expected error for SQL: %s", sql)
 	}
 }

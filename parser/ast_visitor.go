@@ -78,6 +78,9 @@ type ASTVisitor interface {
 	VisitRefreshExpr(expr *RefreshExpr) error
 	VisitOrderByExpr(expr *OrderExpr) error
 	VisitOrderByListExpr(expr *OrderByClause) error
+	VisitFill(expr *Fill) error
+	VisitInterpolateItem(expr *InterpolateItem) error
+	VisitInterpolateClause(expr *InterpolateClause) error
 	VisitSettingsExpr(expr *SettingExpr) error
 	VisitSettingsExprList(expr *SettingsClause) error
 	VisitParamExprList(expr *ParamExprList) error
@@ -740,6 +743,27 @@ func (v *DefaultASTVisitor) VisitOrderByExpr(expr *OrderExpr) error {
 }
 
 func (v *DefaultASTVisitor) VisitOrderByListExpr(expr *OrderByClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitFill(expr *Fill) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitInterpolateItem(expr *InterpolateItem) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitInterpolateClause(expr *InterpolateClause) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

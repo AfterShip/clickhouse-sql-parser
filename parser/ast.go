@@ -3636,11 +3636,88 @@ func (t *TTLClause) Accept(visitor ASTVisitor) error {
 	return visitor.VisitTTLExprList(t)
 }
 
+type Fill struct {
+	FillPos   Pos
+	From      Expr // optional
+	To        Expr // optional
+	Step      Expr // optional
+	Staleness Expr // optional
+}
+
+func (f *Fill) Pos() Pos {
+	return f.FillPos
+}
+
+func (f *Fill) End() Pos {
+	if f.Staleness != nil {
+		return f.Staleness.End()
+	}
+	if f.Step != nil {
+		return f.Step.End()
+	}
+	if f.To != nil {
+		return f.To.End()
+	}
+	if f.From != nil {
+		return f.From.End()
+	}
+	return f.FillPos + Pos(len("FILL"))
+}
+
+func (f *Fill) String() string {
+	var builder strings.Builder
+	builder.WriteString("WITH FILL")
+	if f.From != nil {
+		builder.WriteString(" FROM ")
+		builder.WriteString(f.From.String())
+	}
+	if f.To != nil {
+		builder.WriteString(" TO ")
+		builder.WriteString(f.To.String())
+	}
+	if f.Step != nil {
+		builder.WriteString(" STEP ")
+		builder.WriteString(f.Step.String())
+	}
+	if f.Staleness != nil {
+		builder.WriteString(" STALENESS ")
+		builder.WriteString(f.Staleness.String())
+	}
+	return builder.String()
+}
+
+func (f *Fill) Accept(visitor ASTVisitor) error {
+	visitor.Enter(f)
+	defer visitor.Leave(f)
+	if f.From != nil {
+		if err := f.From.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if f.To != nil {
+		if err := f.To.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if f.Step != nil {
+		if err := f.Step.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if f.Staleness != nil {
+		if err := f.Staleness.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitFill(f)
+}
+
 type OrderExpr struct {
 	OrderPos  Pos
 	Expr      Expr
 	Alias     *Ident
 	Direction OrderDirection
+	Fill      *Fill // optional WITH FILL clause
 }
 
 func (o *OrderExpr) Pos() Pos {
@@ -3648,6 +3725,9 @@ func (o *OrderExpr) Pos() Pos {
 }
 
 func (o *OrderExpr) End() Pos {
+	if o.Fill != nil {
+		return o.Fill.End()
+	}
 	if o.Alias != nil {
 		return o.Alias.End()
 	}
@@ -3665,6 +3745,10 @@ func (o *OrderExpr) String() string {
 		builder.WriteByte(' ')
 		builder.WriteString(string(o.Direction))
 	}
+	if o.Fill != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(o.Fill.String())
+	}
 	return builder.String()
 }
 
@@ -3679,13 +3763,100 @@ func (o *OrderExpr) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
+	if o.Fill != nil {
+		if err := o.Fill.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	return visitor.VisitOrderByExpr(o)
 }
 
+type InterpolateItem struct {
+	Column *Ident
+	Expr   Expr // optional AS expression
+}
+
+func (i *InterpolateItem) Pos() Pos {
+	return i.Column.Pos()
+}
+
+func (i *InterpolateItem) End() Pos {
+	if i.Expr != nil {
+		return i.Expr.End()
+	}
+	return i.Column.End()
+}
+
+func (i *InterpolateItem) String() string {
+	var builder strings.Builder
+	builder.WriteString(i.Column.String())
+	if i.Expr != nil {
+		builder.WriteString(" AS ")
+		builder.WriteString(i.Expr.String())
+	}
+	return builder.String()
+}
+
+func (i *InterpolateItem) Accept(visitor ASTVisitor) error {
+	visitor.Enter(i)
+	defer visitor.Leave(i)
+	if err := i.Column.Accept(visitor); err != nil {
+		return err
+	}
+	if i.Expr != nil {
+		if err := i.Expr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitInterpolateItem(i)
+}
+
+type InterpolateClause struct {
+	InterpolatePos Pos
+	ListEnd        Pos
+	Items          []*InterpolateItem // can be nil for INTERPOLATE without columns
+}
+
+func (i *InterpolateClause) Pos() Pos {
+	return i.InterpolatePos
+}
+
+func (i *InterpolateClause) End() Pos {
+	return i.ListEnd
+}
+
+func (i *InterpolateClause) String() string {
+	var builder strings.Builder
+	builder.WriteString("INTERPOLATE")
+	if len(i.Items) > 0 {
+		builder.WriteString(" (")
+		for idx, item := range i.Items {
+			builder.WriteString(item.String())
+			if idx != len(i.Items)-1 {
+				builder.WriteString(", ")
+			}
+		}
+		builder.WriteByte(')')
+	}
+	return builder.String()
+}
+
+func (i *InterpolateClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(i)
+	defer visitor.Leave(i)
+	for _, item := range i.Items {
+		if err := item.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitInterpolateClause(i)
+}
+
 type OrderByClause struct {
-	OrderPos Pos
-	ListEnd  Pos
-	Items    []Expr
+	OrderPos    Pos
+	ListEnd     Pos
+	Items       []Expr
+	Interpolate *InterpolateClause // optional INTERPOLATE clause
 }
 
 func (o *OrderByClause) Pos() Pos {
@@ -3693,6 +3864,9 @@ func (o *OrderByClause) Pos() Pos {
 }
 
 func (o *OrderByClause) End() Pos {
+	if o.Interpolate != nil {
+		return o.Interpolate.End()
+	}
 	return o.ListEnd
 }
 
@@ -3706,6 +3880,10 @@ func (o *OrderByClause) String() string {
 			builder.WriteByte(' ')
 		}
 	}
+	if o.Interpolate != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(o.Interpolate.String())
+	}
 	return builder.String()
 }
 
@@ -3714,6 +3892,11 @@ func (o *OrderByClause) Accept(visitor ASTVisitor) error {
 	defer visitor.Leave(o)
 	for _, item := range o.Items {
 		if err := item.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if o.Interpolate != nil {
+		if err := o.Interpolate.Accept(visitor); err != nil {
 			return err
 		}
 	}
