@@ -117,6 +117,7 @@
       "OrderBy": null
     },
     "SubQuery": null,
+    "AsTableFunction": null,
     "HasTemporary": false,
     "Comment": null
   }
