@@ -1132,7 +1132,6 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	}
 	// parse DELTA if  CODEC(Delta, ZSTD(1))
 	// or CODEC(Delta(9), ZSTD(1)) or CODEC(T64, ZSTD(1))
-	//var codecType *Ident
 	var name *Ident
 	var typeLevel *NumberLiteral
 	switch strings.ToUpper(codecType.Name) {
