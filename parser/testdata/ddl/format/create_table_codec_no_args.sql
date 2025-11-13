@@ -4,4 +4,4 @@ CREATE TABLE shark_attacks (
 );
 
 -- Format SQL:
-CREATE TABLE shark_attacks (timestamp DateTime CODEC(DoubleDelta, DoubleDelta));
+CREATE TABLE shark_attacks (timestamp DateTime CODEC(DoubleDelta));

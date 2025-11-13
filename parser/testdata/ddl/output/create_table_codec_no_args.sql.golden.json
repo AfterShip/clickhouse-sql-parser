@@ -47,12 +47,7 @@
           "Codec": {
             "CodecPos": 52,
             "RightParenPos": 70,
-            "Type": {
-              "Name": "DoubleDelta",
-              "QuoteType": 1,
-              "NamePos": 58,
-              "NameEnd": 69
-            },
+            "Type": null,
             "TypeLevel": null,
             "Name": {
               "Name": "DoubleDelta",
