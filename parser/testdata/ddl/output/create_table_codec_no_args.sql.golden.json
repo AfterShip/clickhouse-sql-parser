@@ -1,0 +1,73 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 0,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "shark_attacks",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 26
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 27,
+      "SchemaEnd": 72,
+      "Columns": [
+        {
+          "NamePos": 33,
+          "ColumnEnd": 70,
+          "Name": {
+            "Ident": {
+              "Name": "timestamp",
+              "QuoteType": 1,
+              "NamePos": 33,
+              "NameEnd": 42
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "QuoteType": 1,
+              "NamePos": 43,
+              "NameEnd": 51
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 52,
+            "RightParenPos": 70,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "DoubleDelta",
+              "QuoteType": 1,
+              "NamePos": 58,
+              "NameEnd": 69
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": null,
+    "SubQuery": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]

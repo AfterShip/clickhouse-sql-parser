@@ -1166,27 +1166,34 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	}
 
 	// parse codec name
-	name, err := p.parseIdent()
+	codecType, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}
 	// parse DELTA if  CODEC(Delta, ZSTD(1))
 	// or CODEC(Delta(9), ZSTD(1)) or CODEC(T64, ZSTD(1))
-	var codecType *Ident
+	var name *Ident
 	var typeLevel *NumberLiteral
-	switch strings.ToUpper(name.Name) {
+	switch strings.ToUpper(codecType.Name) {
 	case "DELTA", "DOUBLEDELTA", "T64", "GORILLA":
-		codecType = name
 		// try parse delta level
 		typeLevel, err = p.tryParseCompressionLevel(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		// consume comma
-		if err := p.expectTokenKind(TokenKindComma); err != nil {
-			return nil, err
+
+		if p.matchTokenKind(TokenKindComma) {
+			if err := p.expectTokenKind(TokenKindComma); err != nil {
+				return nil, err
+			}
+			name, err = p.parseIdent()
+			if err != nil {
+				return nil, err
+			}
 		}
-		name, err = p.parseIdent()
+	case "ZSTD", "LZ4HC", "LH4":
+		// For compression codecs, try to parse level
+		typeLevel, err = p.tryParseCompressionLevel(p.Pos())
 		if err != nil {
 			return nil, err
 		}
@@ -1194,11 +1201,13 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 
 	var level *NumberLiteral
 	// TODO: check if the codec name is valid
-	switch strings.ToUpper(name.Name) {
-	case "ZSTD", "LZ4HC", "LH4":
-		level, err = p.tryParseCompressionLevel(p.Pos())
-		if err != nil {
-			return nil, err
+	if name != nil {
+		switch strings.ToUpper(name.Name) {
+		case "ZSTD", "LZ4HC", "LH4":
+			level, err = p.tryParseCompressionLevel(p.Pos())
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -1207,6 +1216,21 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 		return nil, err
 	}
 
+	// If there's only one codec (no second name), store it in Name field instead of Type
+	// This handles cases like CODEC(DoubleDelta) or CODEC(ZSTD(1))
+	if name == nil {
+		return &CompressionCodec{
+			CodecPos:      pos,
+			RightParenPos: rightParenPos,
+			Type:          nil,
+			TypeLevel:     nil,
+			Name:          codecType,
+			Level:         typeLevel,
+		}, nil
+	}
+
+	// Two codecs: Type is the preprocessing codec, Name is the compression codec
+	// e.g., CODEC(DoubleDelta, ZSTD(1))
 	return &CompressionCodec{
 		CodecPos:      pos,
 		RightParenPos: rightParenPos,
