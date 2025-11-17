@@ -1,0 +1,62 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 54,
+    "Name": {
+      "Name": "test",
+      "QuoteType": 3,
+      "NamePos": 31,
+      "NameEnd": 35
+    },
+    "IfNotExists": true,
+    "OnCluster": null,
+    "Engine": {
+      "EnginePos": 37,
+      "EngineEnd": 54,
+      "Name": "Replicated",
+      "Params": {
+        "LeftParenPos": 54,
+        "RightParenPos": 93,
+        "Items": {
+          "ListPos": 56,
+          "ListEnd": 92,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "LiteralPos": 56,
+                "LiteralEnd": 72,
+                "Literal": "/root/test_local"
+              },
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "LiteralPos": 76,
+                "LiteralEnd": 81,
+                "Literal": "shard"
+              },
+              "Alias": null
+            },
+            {
+              "Expr": {
+                "LiteralPos": 85,
+                "LiteralEnd": 92,
+                "Literal": "replica"
+              },
+              "Alias": null
+            }
+          ]
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": null
+    },
+    "Comment": null
+  }
+]
