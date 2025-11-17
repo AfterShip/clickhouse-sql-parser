@@ -100,7 +100,7 @@ func (p *Parser) parseCreateDatabase(pos Pos) (*CreateDatabase, error) {
 		return nil, err
 	}
 	if engineExpr != nil {
-		StatementEnd = onCluster.End()
+		StatementEnd = engineExpr.End()
 	}
 	commentExpr, err := p.tryParseComment()
 	if err != nil {
