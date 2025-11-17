@@ -1,0 +1,148 @@
+[
+  {
+    "SetPos": 0,
+    "Settings": {
+      "SettingsPos": 4,
+      "ListEnd": 49,
+      "Items": [
+        {
+          "SettingsPos": 4,
+          "Name": {
+            "Name": "allow_suspicious_low_cardinality_types",
+            "QuoteType": 1,
+            "NamePos": 4,
+            "NameEnd": 42
+          },
+          "Expr": {
+            "LiteralPos": 45,
+            "LiteralEnd": 49,
+            "Literal": "true"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 52,
+    "Settings": {
+      "SettingsPos": 56,
+      "ListEnd": 78,
+      "Items": [
+        {
+          "SettingsPos": 56,
+          "Name": {
+            "Name": "max_block_size",
+            "QuoteType": 1,
+            "NamePos": 56,
+            "NameEnd": 70
+          },
+          "Expr": {
+            "NumPos": 73,
+            "NumEnd": 78,
+            "Literal": "65536",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 81,
+    "Settings": {
+      "SettingsPos": 85,
+      "ListEnd": 132,
+      "Items": [
+        {
+          "SettingsPos": 85,
+          "Name": {
+            "Name": "output_format_json_quote_64bit_integers",
+            "QuoteType": 1,
+            "NamePos": 85,
+            "NameEnd": 124
+          },
+          "Expr": {
+            "LiteralPos": 128,
+            "LiteralEnd": 132,
+            "Literal": "true"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 136,
+    "Settings": {
+      "SettingsPos": 140,
+      "ListEnd": 233,
+      "Items": [
+        {
+          "SettingsPos": 140,
+          "Name": {
+            "Name": "max_threads",
+            "QuoteType": 1,
+            "NamePos": 140,
+            "NameEnd": 151
+          },
+          "Expr": {
+            "NumPos": 154,
+            "NumEnd": 155,
+            "Literal": "8",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 157,
+          "Name": {
+            "Name": "max_memory_usage",
+            "QuoteType": 1,
+            "NamePos": 157,
+            "NameEnd": 173
+          },
+          "Expr": {
+            "NumPos": 176,
+            "NumEnd": 187,
+            "Literal": "10000000000",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 189,
+          "Name": {
+            "Name": "enable_optimize_predicate_expression",
+            "QuoteType": 1,
+            "NamePos": 189,
+            "NameEnd": 225
+          },
+          "Expr": {
+            "LiteralPos": 228,
+            "LiteralEnd": 233,
+            "Literal": "false"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 236,
+    "Settings": {
+      "SettingsPos": 240,
+      "ListEnd": 274,
+      "Items": [
+        {
+          "SettingsPos": 240,
+          "Name": {
+            "Name": "allow_experimental_analyzer",
+            "QuoteType": 1,
+            "NamePos": 240,
+            "NameEnd": 267
+          },
+          "Expr": {
+            "LiteralPos": 270,
+            "LiteralEnd": 274,
+            "Literal": "true"
+          }
+        }
+      ]
+    }
+  }
+]

@@ -545,7 +545,7 @@
   },
   {
     "CreatePos": 399,
-    "StatementEnd": 707,
+    "StatementEnd": 719,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -659,7 +659,7 @@
     },
     "Engine": {
       "EnginePos": 489,
-      "EngineEnd": 707,
+      "EngineEnd": 719,
       "Name": "MergeTree",
       "Params": {
         "LeftParenPos": 505,
@@ -823,7 +823,7 @@
       },
       "Settings": {
         "SettingsPos": 643,
-        "ListEnd": 707,
+        "ListEnd": 719,
         "Items": [
           {
             "SettingsPos": 652,
@@ -853,6 +853,20 @@
               "NumEnd": 707,
               "Literal": "0",
               "Base": 10
+            }
+          },
+          {
+            "SettingsPos": 709,
+            "Name": {
+              "Name": "foo",
+              "QuoteType": 1,
+              "NamePos": 709,
+              "NameEnd": 712
+            },
+            "Expr": {
+              "LiteralPos": 715,
+              "LiteralEnd": 719,
+              "Literal": "true"
             }
           }
         ]

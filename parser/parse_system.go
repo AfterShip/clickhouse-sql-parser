@@ -19,6 +19,20 @@ func (p *Parser) parseSetStmt(pos Pos) (*SetStmt, error) {
 	}, nil
 }
 
+func (p *Parser) parseSettingsStmt(pos Pos) (*SetStmt, error) {
+	if err := p.expectKeyword(KeywordSettings); err != nil {
+		return nil, err
+	}
+	settings, err := p.parseSettingsClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &SetStmt{
+		SetPos:   pos,
+		Settings: settings,
+	}, nil
+}
+
 func (p *Parser) parseSystemFlushExpr(pos Pos) (*SystemFlushExpr, error) {
 	if err := p.expectKeyword(KeywordFlush); err != nil {
 		return nil, err

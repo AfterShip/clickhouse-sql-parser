@@ -4914,6 +4914,30 @@ func (s *StringLiteral) Accept(visitor ASTVisitor) error {
 	return visitor.VisitStringLiteral(s)
 }
 
+type BoolLiteral struct {
+	LiteralPos Pos
+	LiteralEnd Pos
+	Literal    string
+}
+
+func (b *BoolLiteral) Pos() Pos {
+	return b.LiteralPos
+}
+
+func (b *BoolLiteral) End() Pos {
+	return b.LiteralEnd
+}
+
+func (b *BoolLiteral) String() string {
+	return b.Literal
+}
+
+func (b *BoolLiteral) Accept(visitor ASTVisitor) error {
+	visitor.Enter(b)
+	defer visitor.Leave(b)
+	return visitor.VisitBoolLiteral(b)
+}
+
 type PlaceHolder struct {
 	PlaceholderPos Pos
 	PlaceHolderEnd Pos

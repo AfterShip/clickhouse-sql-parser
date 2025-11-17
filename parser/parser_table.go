@@ -1096,8 +1096,17 @@ func (p *Parser) parseSettingsExpr(pos Pos) (*SettingExpr, error) {
 			return nil, err
 		}
 		expr = m
+	case p.matchKeyword(KeywordTrue), p.matchKeyword(KeywordFalse):
+		// Handle TRUE/FALSE keywords as boolean literals
+		lastToken := p.last()
+		_ = p.lexer.consumeToken()
+		expr = &BoolLiteral{
+			LiteralPos: lastToken.Pos,
+			LiteralEnd: lastToken.End,
+			Literal:    lastToken.String,
+		}
 	default:
-		return nil, fmt.Errorf("unexpected token: %q, expected <number> or <string>", p.last().String)
+		return nil, fmt.Errorf("unexpected token: %q, expected <number>, <bool> or <string>", p.last().String)
 	}
 
 	return &SettingExpr{
@@ -1232,6 +1241,8 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 		expr, err = p.parseUseStmt(pos)
 	case p.matchKeyword(KeywordSet):
 		expr, err = p.parseSetStmt(pos)
+	case p.matchKeyword(KeywordSettings):
+		expr, err = p.parseSettingsStmt(pos)
 	case p.matchKeyword(KeywordSystem):
 		expr, err = p.parseSystemStmt(pos)
 	case p.matchKeyword(KeywordOptimize):
