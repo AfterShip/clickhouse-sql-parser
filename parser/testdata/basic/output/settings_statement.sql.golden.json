@@ -1,0 +1,148 @@
+[
+  {
+    "SetPos": 0,
+    "Settings": {
+      "SettingsPos": 9,
+      "ListEnd": 54,
+      "Items": [
+        {
+          "SettingsPos": 9,
+          "Name": {
+            "Name": "allow_suspicious_low_cardinality_types",
+            "QuoteType": 1,
+            "NamePos": 9,
+            "NameEnd": 47
+          },
+          "Expr": {
+            "LiteralPos": 50,
+            "LiteralEnd": 54,
+            "Literal": "true"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 57,
+    "Settings": {
+      "SettingsPos": 66,
+      "ListEnd": 88,
+      "Items": [
+        {
+          "SettingsPos": 66,
+          "Name": {
+            "Name": "max_block_size",
+            "QuoteType": 1,
+            "NamePos": 66,
+            "NameEnd": 80
+          },
+          "Expr": {
+            "NumPos": 83,
+            "NumEnd": 88,
+            "Literal": "65536",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 91,
+    "Settings": {
+      "SettingsPos": 100,
+      "ListEnd": 147,
+      "Items": [
+        {
+          "SettingsPos": 100,
+          "Name": {
+            "Name": "output_format_json_quote_64bit_integers",
+            "QuoteType": 1,
+            "NamePos": 100,
+            "NameEnd": 139
+          },
+          "Expr": {
+            "LiteralPos": 143,
+            "LiteralEnd": 147,
+            "Literal": "true"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 151,
+    "Settings": {
+      "SettingsPos": 160,
+      "ListEnd": 253,
+      "Items": [
+        {
+          "SettingsPos": 160,
+          "Name": {
+            "Name": "max_threads",
+            "QuoteType": 1,
+            "NamePos": 160,
+            "NameEnd": 171
+          },
+          "Expr": {
+            "NumPos": 174,
+            "NumEnd": 175,
+            "Literal": "8",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 177,
+          "Name": {
+            "Name": "max_memory_usage",
+            "QuoteType": 1,
+            "NamePos": 177,
+            "NameEnd": 193
+          },
+          "Expr": {
+            "NumPos": 196,
+            "NumEnd": 207,
+            "Literal": "10000000000",
+            "Base": 10
+          }
+        },
+        {
+          "SettingsPos": 209,
+          "Name": {
+            "Name": "enable_optimize_predicate_expression",
+            "QuoteType": 1,
+            "NamePos": 209,
+            "NameEnd": 245
+          },
+          "Expr": {
+            "LiteralPos": 248,
+            "LiteralEnd": 253,
+            "Literal": "false"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "SetPos": 256,
+    "Settings": {
+      "SettingsPos": 265,
+      "ListEnd": 299,
+      "Items": [
+        {
+          "SettingsPos": 265,
+          "Name": {
+            "Name": "allow_experimental_analyzer",
+            "QuoteType": 1,
+            "NamePos": 265,
+            "NameEnd": 292
+          },
+          "Expr": {
+            "LiteralPos": 295,
+            "LiteralEnd": 299,
+            "Literal": "true"
+          }
+        }
+      ]
+    }
+  }
+]
