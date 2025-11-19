@@ -290,6 +290,7 @@
       }
     },
     "SubQuery": null,
+    "TableFunction": null,
     "HasTemporary": false,
     "Comment": null
   },
@@ -540,6 +541,7 @@
       }
     },
     "SubQuery": null,
+    "TableFunction": null,
     "HasTemporary": false,
     "Comment": null
   },
@@ -905,6 +907,7 @@
       }
     },
     "SubQuery": null,
+    "TableFunction": null,
     "HasTemporary": false,
     "Comment": null
   }

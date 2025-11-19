@@ -233,12 +233,39 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 	}
 
 	if p.tryConsumeKeywords(KeywordAs) {
-		subQuery, err := p.parseSubQuery(p.Pos())
-		if err != nil {
-			return nil, err
+		// After AS, we can have: SELECT/WITH (with or without parens), or table_function(...)
+		// Check if it's a SELECT/WITH query (explicitly check keywords/paren before ident)
+		if p.matchKeyword(KeywordSelect) || p.matchKeyword(KeywordWith) || p.matchTokenKind(TokenKindLParen) {
+			// It's a SELECT or WITH query (with or without parentheses)
+			subQuery, err := p.parseSubQuery(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			createTable.SubQuery = subQuery
+			createTable.StatementEnd = subQuery.End()
+		} else if p.matchTokenKind(TokenKindIdent) {
+			// It's a table function: remote(...), remoteSecure(...), etc.
+			ident, err := p.parseIdent()
+			if err != nil {
+				return nil, err
+			}
+			if p.matchTokenKind(TokenKindLParen) {
+				argsExpr, err := p.parseTableArgList(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				tableFunc := &TableFunctionExpr{
+					Name: ident,
+					Args: argsExpr,
+				}
+				createTable.TableFunction = tableFunc
+				createTable.StatementEnd = tableFunc.End()
+			} else {
+				return nil, fmt.Errorf("expected ( after identifier in AS clause, got %q", p.lastTokenKind())
+			}
+		} else {
+			return nil, fmt.Errorf("expected SELECT, WITH or identifier after AS, got %q", p.lastTokenKind())
 		}
-		createTable.SubQuery = subQuery
-		createTable.StatementEnd = subQuery.End()
 	}
 
 	comment, err := p.tryParseComment()
@@ -382,51 +409,53 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 			SchemaEnd: rightParenPos,
 			Columns:   columns,
 		}, nil
-	case p.tryConsumeKeywords(KeywordAs):
+	case p.matchKeyword(KeywordAs) && !p.peekKeyword(KeywordSelect) && !p.peekKeyword(KeywordWith) && !p.peekTokenKind(TokenKindLParen):
+		// Handle AS only if followed by identifier (not SELECT/WITH/LPAREN)
+		// This handles: AS ident, AS ident.ident, AS ident(...)
+		// CREATE TABLE will handle: AS SELECT, AS WITH, AS (SELECT ...)
+		p.tryConsumeKeywords(KeywordAs)
+
+		ident, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
 		switch {
-		case p.matchTokenKind(TokenKindIdent):
-			ident, err := p.parseIdent()
+		case p.matchTokenKind(TokenKindDot):
+			// it's a database.table
+			dotIdent, err := p.tryParseDotIdent(p.Pos())
 			if err != nil {
 				return nil, err
 			}
-			switch {
-			case p.matchTokenKind(TokenKindDot):
-				// it's a database.table
-				dotIdent, err := p.tryParseDotIdent(p.Pos())
-				if err != nil {
-					return nil, err
-				}
-				return &TableSchemaClause{
-					SchemaPos: pos,
-					SchemaEnd: dotIdent.End(),
-					AliasTable: &TableIdentifier{
-						Database: ident,
-						Table:    dotIdent,
-					},
-				}, nil
-			case p.matchTokenKind(TokenKindLParen):
-				// it's a table function
-				argsExpr, err := p.parseTableArgList(pos)
-				if err != nil {
-					return nil, err
-				}
-				return &TableSchemaClause{
-					SchemaPos: pos,
-					SchemaEnd: p.End(),
-					TableFunction: &TableFunctionExpr{
-						Name: ident,
-						Args: argsExpr,
-					},
-				}, nil
-			default:
-				return &TableSchemaClause{
-					SchemaPos: pos,
-					SchemaEnd: p.End(),
-					AliasTable: &TableIdentifier{
-						Table: ident,
-					},
-				}, nil
+			return &TableSchemaClause{
+				SchemaPos: pos,
+				SchemaEnd: dotIdent.End(),
+				AliasTable: &TableIdentifier{
+					Database: ident,
+					Table:    dotIdent,
+				},
+			}, nil
+		case p.matchTokenKind(TokenKindLParen):
+			// it's a table function
+			argsExpr, err := p.parseTableArgList(pos)
+			if err != nil {
+				return nil, err
 			}
+			return &TableSchemaClause{
+				SchemaPos: pos,
+				SchemaEnd: p.End(),
+				TableFunction: &TableFunctionExpr{
+					Name: ident,
+					Args: argsExpr,
+				},
+			}, nil
+		default:
+			return &TableSchemaClause{
+				SchemaPos: pos,
+				SchemaEnd: p.End(),
+				AliasTable: &TableIdentifier{
+					Table: ident,
+				},
+			}, nil
 		}
 	}
 	// no schema is ok for MATERIALIZED VIEW

@@ -957,6 +957,7 @@
       }
     },
     "SubQuery": null,
+    "TableFunction": null,
     "HasTemporary": false,
     "Comment": {
       "LiteralPos": 785,

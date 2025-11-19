@@ -1,0 +1,278 @@
+[
+  {
+    "CreatePos": 62,
+    "StatementEnd": 222,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "test_remote",
+        "QuoteType": 1,
+        "NamePos": 75,
+        "NameEnd": 86
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 87,
+      "SchemaEnd": 137,
+      "Columns": [
+        {
+          "NamePos": 93,
+          "ColumnEnd": 102,
+          "Name": {
+            "Ident": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 93,
+              "NameEnd": 95
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 96,
+              "NameEnd": 102
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 108,
+          "ColumnEnd": 119,
+          "Name": {
+            "Ident": {
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 108,
+              "NameEnd": 112
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 113,
+              "NameEnd": 119
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 125,
+          "ColumnEnd": 136,
+          "Name": {
+            "Ident": {
+              "Name": "value",
+              "QuoteType": 1,
+              "NamePos": 125,
+              "NameEnd": 130
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Int32",
+              "QuoteType": 1,
+              "NamePos": 131,
+              "NameEnd": 136
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": null,
+    "SubQuery": null,
+    "TableFunction": {
+      "Name": {
+        "Name": "remoteSecure",
+        "QuoteType": 1,
+        "NamePos": 142,
+        "NameEnd": 154
+      },
+      "Args": {
+        "LeftParenPos": 154,
+        "RightParenPos": 222,
+        "Args": [
+          {
+            "LiteralPos": 156,
+            "LiteralEnd": 172,
+            "Literal": "host.example.com"
+          },
+          {
+            "LiteralPos": 176,
+            "LiteralEnd": 185,
+            "Literal": "source_db"
+          },
+          {
+            "LiteralPos": 189,
+            "LiteralEnd": 201,
+            "Literal": "source_table"
+          },
+          {
+            "LiteralPos": 205,
+            "LiteralEnd": 209,
+            "Literal": "user"
+          },
+          {
+            "LiteralPos": 213,
+            "LiteralEnd": 221,
+            "Literal": "password"
+          }
+        ]
+      }
+    },
+    "HasTemporary": false,
+    "Comment": null
+  },
+  {
+    "CreatePos": 261,
+    "StatementEnd": 353,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "test_table",
+        "QuoteType": 1,
+        "NamePos": 274,
+        "NameEnd": 284
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 285,
+      "SchemaEnd": 308,
+      "Columns": [
+        {
+          "NamePos": 286,
+          "ColumnEnd": 295,
+          "Name": {
+            "Ident": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 286,
+              "NameEnd": 288
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 289,
+              "NameEnd": 295
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 297,
+          "ColumnEnd": 308,
+          "Name": {
+            "Ident": {
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 297,
+              "NameEnd": 301
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 302,
+              "NameEnd": 308
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": null,
+    "SubQuery": null,
+    "TableFunction": {
+      "Name": {
+        "Name": "remote",
+        "QuoteType": 1,
+        "NamePos": 313,
+        "NameEnd": 319
+      },
+      "Args": {
+        "LeftParenPos": 319,
+        "RightParenPos": 353,
+        "Args": [
+          {
+            "LiteralPos": 321,
+            "LiteralEnd": 330,
+            "Literal": "localhost"
+          },
+          {
+            "LiteralPos": 334,
+            "LiteralEnd": 336,
+            "Literal": "db"
+          },
+          {
+            "LiteralPos": 340,
+            "LiteralEnd": 352,
+            "Literal": "source_table"
+          }
+        ]
+      }
+    },
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
