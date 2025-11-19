@@ -1770,19 +1770,19 @@ func (c *CreateDatabase) Accept(visitor ASTVisitor) error {
 }
 
 type CreateTable struct {
-	CreatePos       Pos // position of CREATE|ATTACH keyword
-	StatementEnd    Pos
-	OrReplace       bool
-	Name            *TableIdentifier
-	IfNotExists     bool
-	UUID            *UUID
-	OnCluster       *ClusterClause
-	TableSchema     *TableSchemaClause
-	Engine          *EngineExpr
-	SubQuery        *SubQuery
-	AsTableFunction *TableFunctionExpr
-	HasTemporary    bool
-	Comment         *StringLiteral
+	CreatePos      Pos // position of CREATE|ATTACH keyword
+	StatementEnd   Pos
+	OrReplace      bool
+	Name           *TableIdentifier
+	IfNotExists    bool
+	UUID           *UUID
+	OnCluster      *ClusterClause
+	TableSchema    *TableSchemaClause
+	Engine         *EngineExpr
+	SubQuery       *SubQuery
+	TableFunction  *TableFunctionExpr
+	HasTemporary   bool
+	Comment        *StringLiteral
 }
 
 func (c *CreateTable) Pos() Pos {
@@ -1830,9 +1830,9 @@ func (c *CreateTable) String() string {
 		builder.WriteString(" AS ")
 		builder.WriteString(c.SubQuery.String())
 	}
-	if c.AsTableFunction != nil {
+	if c.TableFunction != nil {
 		builder.WriteString(" AS ")
-		builder.WriteString(c.AsTableFunction.String())
+		builder.WriteString(c.TableFunction.String())
 	}
 	if c.Comment != nil {
 		builder.WriteString(" COMMENT ")
@@ -1872,8 +1872,8 @@ func (c *CreateTable) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	if c.AsTableFunction != nil {
-		if err := c.AsTableFunction.Accept(visitor); err != nil {
+	if c.TableFunction != nil {
+		if err := c.TableFunction.Accept(visitor); err != nil {
 			return err
 		}
 	}

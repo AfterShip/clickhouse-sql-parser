@@ -258,7 +258,7 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 					Name: ident,
 					Args: argsExpr,
 				}
-				createTable.AsTableFunction = tableFunc
+				createTable.TableFunction = tableFunc
 				createTable.StatementEnd = tableFunc.End()
 			} else {
 				return nil, fmt.Errorf("expected ( after identifier in AS clause, got %q", p.lastTokenKind())

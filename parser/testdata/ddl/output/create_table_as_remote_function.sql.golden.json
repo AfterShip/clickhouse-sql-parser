@@ -115,7 +115,7 @@
     },
     "Engine": null,
     "SubQuery": null,
-    "AsTableFunction": {
+    "TableFunction": {
       "Name": {
         "Name": "remoteSecure",
         "QuoteType": 1,
@@ -243,7 +243,7 @@
     },
     "Engine": null,
     "SubQuery": null,
-    "AsTableFunction": {
+    "TableFunction": {
       "Name": {
         "Name": "remote",
         "QuoteType": 1,

@@ -140,7 +140,7 @@
       "OrderBy": null
     },
     "SubQuery": null,
-    "AsTableFunction": null,
+    "TableFunction": null,
     "HasTemporary": false,
     "Comment": null
   }
