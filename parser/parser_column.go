@@ -537,31 +537,6 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 	return columnExprList, nil
 }
 
-func (p *Parser) parseNamedParameter(pos Pos) (*NamedParameterExpr, error) {
-	// Parse the parameter name
-	name, err := p.parseIdent()
-	if err != nil {
-		return nil, err
-	}
-	
-	// Expect and consume the = token
-	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
-		return nil, err
-	}
-	
-	// Parse the parameter value
-	value, err := p.parseExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	
-	return &NamedParameterExpr{
-		NamePos: pos,
-		Name:    name,
-		Value:   value,
-	}, nil
-}
-
 func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
 	selectItems := make([]*SelectItem, 0)
 	for !p.lexer.isEOF() || p.last() != nil {
