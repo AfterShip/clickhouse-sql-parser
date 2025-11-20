@@ -1,0 +1,1 @@
+SELECT * FROM gcs(gcs_creds,url='https://storage.googleapis.com/some-bucket/some-path/');

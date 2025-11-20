@@ -652,19 +652,19 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 		// Check if this is a named parameter (identifier followed by =)
 		var arg Expr
 		var err error
-		
+
 		// Try to detect named parameter pattern: last token is identifier, next token is =
 		isNamedParam := false
 		lastKind := p.lastTokenKind()
 		if lastKind == TokenKindIdent || lastKind == TokenKindKeyword {
 			// Last token is an identifier, peek at the next token
 			nextToken, peekErr := p.lexer.peekToken()
-			
+
 			if peekErr == nil && nextToken != nil && nextToken.Kind == TokenKindSingleEQ {
 				isNamedParam = true
 			}
 		}
-		
+
 		if isNamedParam {
 			// Parse as named parameter - the identifier is already the last token
 			// We need to get it, consume the =, and parse the value
@@ -694,7 +694,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 			// Parse as regular table arg expression
 			arg, err = p.parseTableArgExpr(p.Pos())
 		}
-		
+
 		if err != nil {
 			return nil, err
 		}
