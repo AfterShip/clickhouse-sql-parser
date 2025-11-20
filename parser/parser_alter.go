@@ -648,7 +648,10 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 		}, nil
 	case p.matchKeyword(KeywordQuery):
 		_ = p.lexer.consumeToken()
-		selectQuery, _ := p.parseSelectQuery(pos)
+		selectQuery, err := p.parseSelectQuery(pos)
+		if err != nil {
+			return nil, err
+		}
 		return &AlterTableModifyQuery{
 			ModifyPos:    pos,
 			StatementEnd: selectQuery.End(),
