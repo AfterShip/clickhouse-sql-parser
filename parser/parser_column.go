@@ -518,7 +518,36 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 		if term != "" && p.matchTokenKind(term) {
 			break
 		}
-		columnExpr, err := p.parseColumnsExpr(p.Pos())
+		
+		// Check if this is a named parameter (identifier followed by =)
+		// We need to peek ahead to see if there's an identifier followed by =
+		var columnExpr Expr
+		var err error
+		
+		// Try to detect named parameter pattern: identifier = value
+		isNamedParam := false
+		firstToken, peekErr := p.lexer.peekToken()
+		if peekErr == nil && firstToken != nil && (firstToken.Kind == TokenKindIdent || firstToken.Kind == TokenKindKeyword) {
+			// Peek two tokens ahead to check for =
+			// Save state, consume first token, peek second, restore
+			savedState := p.lexer.saveState()
+			if err := p.lexer.consumeToken(); err == nil {
+				secondToken, peekErr2 := p.lexer.peekToken()
+				if peekErr2 == nil && secondToken != nil && secondToken.Kind == TokenKindSingleEQ {
+					isNamedParam = true
+				}
+			}
+			p.lexer.restoreState(savedState)
+		}
+		
+		if isNamedParam {
+			// Parse as named parameter
+			columnExpr, err = p.parseNamedParameter(p.Pos())
+		} else {
+			// Parse as regular column expression
+			columnExpr, err = p.parseColumnsExpr(p.Pos())
+		}
+		
 		if err != nil {
 			return nil, err
 		}
@@ -535,6 +564,31 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 		columnExprList.ListEnd = columnList[len(columnList)-1].End()
 	}
 	return columnExprList, nil
+}
+
+func (p *Parser) parseNamedParameter(pos Pos) (*NamedParameterExpr, error) {
+	// Parse the parameter name
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	
+	// Expect and consume the = token
+	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+		return nil, err
+	}
+	
+	// Parse the parameter value
+	value, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	
+	return &NamedParameterExpr{
+		NamePos: pos,
+		Name:    name,
+		Value:   value,
+	}, nil
 }
 
 func (p *Parser) parseSelectItems() ([]*SelectItem, error) {

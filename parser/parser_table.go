@@ -649,7 +649,52 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 
 	args := make([]Expr, 0)
 	for !p.lexer.isEOF() {
-		arg, err := p.parseTableArgExpr(p.Pos())
+		// Check if this is a named parameter (identifier followed by =)
+		var arg Expr
+		var err error
+		
+		// Try to detect named parameter pattern: last token is identifier, next token is =
+		isNamedParam := false
+		lastKind := p.lastTokenKind()
+		if lastKind == TokenKindIdent || lastKind == TokenKindKeyword {
+			// Last token is an identifier, peek at the next token
+			nextToken, peekErr := p.lexer.peekToken()
+			
+			if peekErr == nil && nextToken != nil && nextToken.Kind == TokenKindSingleEQ {
+				isNamedParam = true
+			}
+		}
+		
+		if isNamedParam {
+			// Parse as named parameter - the identifier is already the last token
+			// We need to get it, consume the =, and parse the value
+			name := &Ident{
+				NamePos: p.last().Pos,
+				NameEnd: p.last().End,
+				Name:    p.last().String,
+			}
+			// Consume the = token
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
+			if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+				return nil, err
+			}
+			// Parse the value
+			value, err := p.parseTableArgExpr(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			arg = &NamedParameterExpr{
+				NamePos: name.NamePos,
+				Name:    name,
+				Value:   value,
+			}
+		} else {
+			// Parse as regular table arg expression
+			arg, err = p.parseTableArgExpr(p.Pos())
+		}
+		
 		if err != nil {
 			return nil, err
 		}
