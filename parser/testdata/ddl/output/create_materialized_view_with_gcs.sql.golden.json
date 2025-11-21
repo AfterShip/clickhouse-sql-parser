@@ -1,0 +1,156 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 206,
+    "Name": {
+      "Database": {
+        "Name": "database_name",
+        "QuoteType": 1,
+        "NamePos": 25,
+        "NameEnd": 38
+      },
+      "Table": {
+        "Name": "view_name",
+        "QuoteType": 1,
+        "NamePos": 39,
+        "NameEnd": 48
+      }
+    },
+    "IfNotExists": false,
+    "OnCluster": null,
+    "Refresh": {
+      "RefreshPos": 57,
+      "Frequency": "EVERY",
+      "Interval": {
+        "IntervalPos": 0,
+        "Expr": {
+          "NumPos": 71,
+          "NumEnd": 72,
+          "Literal": "5",
+          "Base": 10
+        },
+        "Unit": {
+          "Name": "MINUTE",
+          "QuoteType": 1,
+          "NamePos": 73,
+          "NameEnd": 79
+        }
+      },
+      "Offset": null
+    },
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
+    "Engine": null,
+    "HasEmpty": false,
+    "Destination": {
+      "ToPos": 80,
+      "TableIdentifier": {
+        "Database": {
+          "Name": "database_name",
+          "QuoteType": 1,
+          "NamePos": 83,
+          "NameEnd": 96
+        },
+        "Table": {
+          "Name": "table_name",
+          "QuoteType": 1,
+          "NamePos": 97,
+          "NameEnd": 107
+        }
+      },
+      "TableSchema": null
+    },
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 119,
+        "StatementEnd": 206,
+        "With": null,
+        "Top": null,
+        "HasDistinct": false,
+        "DistinctOn": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "*",
+              "QuoteType": 0,
+              "NamePos": 126,
+              "NameEnd": 126
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": {
+          "FromPos": 128,
+          "Expr": {
+            "Table": {
+              "TablePos": 133,
+              "TableEnd": 206,
+              "Alias": null,
+              "Expr": {
+                "Name": {
+                  "Name": "gcs",
+                  "QuoteType": 1,
+                  "NamePos": 133,
+                  "NameEnd": 136
+                },
+                "Args": {
+                  "LeftParenPos": 136,
+                  "RightParenPos": 206,
+                  "Args": [
+                    {
+                      "Name": "gcs_creds",
+                      "QuoteType": 1,
+                      "NamePos": 137,
+                      "NameEnd": 146
+                    },
+                    {
+                      "NamePos": 147,
+                      "Name": {
+                        "Name": "url",
+                        "QuoteType": 0,
+                        "NamePos": 147,
+                        "NameEnd": 150
+                      },
+                      "Value": {
+                        "LiteralPos": 152,
+                        "LiteralEnd": 205,
+                        "Literal": "https://storage.googleapis.com/some-bucket/some-path/"
+                      }
+                    }
+                  ]
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 206,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "ArrayJoin": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": null,
+    "Definer": null,
+    "SQLSecurity": ""
+  }
+]

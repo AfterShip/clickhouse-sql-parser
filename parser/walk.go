@@ -1319,6 +1319,13 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
+	case *NamedParameterExpr:
+		if !Walk(n.Name, fn) {
+			return false
+		}
+		if !Walk(n.Value, fn) {
+			return false
+		}
 	case *ObjectParams:
 		if !Walk(n.Object, fn) {
 			return false
