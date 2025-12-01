@@ -45,7 +45,8 @@ func main() {
 	if options.file != "" {
 		inputBytes, err = os.ReadFile(options.file)
 		if err != nil {
-			panic(fmt.Sprintf("read file error: %s", err.Error()))
+			fmt.Fprintf(os.Stderr, "read file error: %s\n", err.Error())
+			os.Exit(1)
 		}
 	} else {
 		if strings.HasPrefix(os.Args[len(os.Args)-1], "-") {
@@ -57,7 +58,7 @@ func main() {
 	parser := clickhouse.NewParser(string(inputBytes))
 	stmts, err := parser.ParseStmts()
 	if err != nil {
-		fmt.Printf("parse statements error: %s\n", err.Error())
+		fmt.Fprintf(os.Stderr, "parse statements error: %s\n", err.Error())
 		os.Exit(1)
 	}
 	if !options.format { // print AST
