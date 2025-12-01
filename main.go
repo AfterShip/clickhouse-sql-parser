@@ -10,7 +10,9 @@ import (
 	clickhouse "github.com/AfterShip/clickhouse-sql-parser/parser"
 )
 
-const VERSION = "0.3.8"
+// Version is set at build time using -ldflags:
+// go build -ldflags "-X main.Version=v0.4.17"
+var Version = "dev"
 const help = `
 Usage: clickhouse-sql-parser [YOUR SQL STRING] -f [YOUR SQL FILE] -format
 `
@@ -32,7 +34,7 @@ func init() {
 func main() {
 	flag.Parse()
 	if options.version {
-		fmt.Println("v" + VERSION)
+		fmt.Println(Version)
 		os.Exit(0)
 	}
 	if len(os.Args) < 2 || options.help {
