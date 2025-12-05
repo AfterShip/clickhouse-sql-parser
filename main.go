@@ -10,7 +10,7 @@ import (
 	clickhouse "github.com/AfterShip/clickhouse-sql-parser/parser"
 )
 
-const VERSION = "0.3.8"
+const VERSION = "0.4.17"
 const help = `
 Usage: clickhouse-sql-parser [YOUR SQL STRING] -f [YOUR SQL FILE] -format
 `
