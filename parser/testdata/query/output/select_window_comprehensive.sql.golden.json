@@ -1884,19 +1884,24 @@
                   "OrderPos": 3780,
                   "Expr": {
                     "ExtractPos": 3780,
-                    "Interval": {
-                      "Name": "HOUR",
-                      "QuoteType": 1,
-                      "NamePos": 3797,
-                      "NameEnd": 3801
-                    },
-                    "FromPos": 3802,
-                    "FromExpr": {
-                      "Name": "timestamp",
-                      "QuoteType": 1,
-                      "NamePos": 3807,
-                      "NameEnd": 3816
-                    }
+                    "ExtractEnd": 3816,
+                    "Parameters": [
+                      {
+                        "Interval": {
+                          "Name": "HOUR",
+                          "QuoteType": 1,
+                          "NamePos": 3797,
+                          "NameEnd": 3801
+                        },
+                        "FromPos": 3802,
+                        "FromExpr": {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 3807,
+                          "NameEnd": 3816
+                        }
+                      }
+                    ]
                   },
                   "Alias": null,
                   "Direction": "",

@@ -160,6 +160,7 @@ type ASTVisitor interface {
 	VisitNegateExpr(expr *NegateExpr) error
 	VisitGlobalInExpr(expr *GlobalInOperation) error
 	VisitExtractExpr(expr *ExtractExpr) error
+	VisitIntervalFrom(expr *IntervalFrom) error
 	VisitDropDatabase(expr *DropDatabase) error
 	VisitDropStmt(expr *DropStmt) error
 	VisitDropUserOrRole(expr *DropUserOrRole) error
@@ -1312,6 +1313,13 @@ func (v *DefaultASTVisitor) VisitGlobalInExpr(expr *GlobalInOperation) error {
 }
 
 func (v *DefaultASTVisitor) VisitExtractExpr(expr *ExtractExpr) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitIntervalFrom(expr *IntervalFrom) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

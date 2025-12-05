@@ -261,23 +261,7 @@ func (p *Parser) parseTernaryExpr(condition Expr) (*TernaryOperation, error) {
 	}, nil
 }
 
-func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
-	if err := p.expectKeyword(KeywordExtract); err != nil {
-		return nil, err
-	}
-	if err := p.expectTokenKind(TokenKindLParen); err != nil {
-		return nil, err
-	}
-
-	// parse interval
-	ident, err := p.parseIdent()
-	if err != nil {
-		return nil, err
-	}
-	if !intervalUnits.Contains(strings.ToUpper(ident.Name)) {
-		return nil, fmt.Errorf("unknown interval type: <%q>", ident.Name)
-	}
-
+func (p *Parser) parseExtractFrom(ident *Ident) (*IntervalFrom, error) {
 	fromPos := p.Pos()
 	if err := p.expectKeyword(KeywordFrom); err != nil {
 		return nil, err
@@ -287,14 +271,60 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 	if err != nil {
 		return nil, err
 	}
+	return &IntervalFrom{
+		Interval: ident,
+		FromPos:  fromPos,
+		FromExpr: expr,
+	}, nil
+}
+
+func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
+	if err := p.expectKeyword(KeywordExtract); err != nil {
+		return nil, err
+	}
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	parameters := make([]Expr, 0)
+	for !p.lexer.isEOF() {
+		expr, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		var param Expr
+		if ident, ok := expr.(*Ident); ok {
+			if intervalUnits.Contains(strings.ToUpper(ident.Name)) && p.matchKeyword(KeywordFrom) {
+				param, err = p.parseExtractFrom(ident)
+				if err != nil {
+					return nil, err
+				}
+				parameters = append(parameters, param)
+			} else {
+				parameters = append(parameters, expr)
+			}
+		} else {
+			parameters = append(parameters, expr)
+		}
+
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+
+	if len(parameters) == 0 {
+		return nil, fmt.Errorf("EXTRACT requires at least one parameter")
+	}
+
+	extractEnd := p.Pos()
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ExtractExpr{
 		ExtractPos: pos,
-		Interval:   ident,
-		FromPos:    fromPos,
-		FromExpr:   expr,
+		ExtractEnd: extractEnd,
+		Parameters: parameters,
 	}, nil
 }
 

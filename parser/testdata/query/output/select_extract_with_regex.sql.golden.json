@@ -1,0 +1,454 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 476,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "COUNT",
+            "QuoteType": 1,
+            "NamePos": 9,
+            "NameEnd": 14
+          },
+          "Params": {
+            "LeftParenPos": 14,
+            "RightParenPos": 16,
+            "Items": {
+              "ListPos": 15,
+              "ListEnd": 16,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "NumPos": 15,
+                    "NumEnd": 16,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "SRC_TYPE",
+          "QuoteType": 1,
+          "NamePos": 19,
+          "NameEnd": 27
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "NODE_CLASS",
+          "QuoteType": 1,
+          "NamePos": 29,
+          "NameEnd": 39
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "PORT",
+          "QuoteType": 1,
+          "NamePos": 41,
+          "NameEnd": 45
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "CLIENT_PORT",
+          "QuoteType": 1,
+          "NamePos": 47,
+          "NameEnd": 58
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 59,
+      "Expr": {
+        "Table": {
+          "TablePos": 66,
+          "TableEnd": 76,
+          "Alias": null,
+          "Expr": {
+            "Database": {
+              "Name": "test",
+              "QuoteType": 1,
+              "NamePos": 66,
+              "NameEnd": 70
+            },
+            "Table": {
+              "Name": "table",
+              "QuoteType": 1,
+              "NamePos": 71,
+              "NameEnd": 76
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 76,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 77,
+      "Expr": {
+        "LeftExpr": {
+          "LeftExpr": {
+            "LeftExpr": {
+              "Name": "app_id",
+              "QuoteType": 1,
+              "NamePos": 85,
+              "NameEnd": 91
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "NumPos": 94,
+              "NumEnd": 103,
+              "Literal": "999118646",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "Operation": "AND",
+          "RightExpr": {
+            "LeftExpr": {
+              "Name": {
+                "Name": "toUnixTimestamp",
+                "QuoteType": 1,
+                "NamePos": 110,
+                "NameEnd": 125
+              },
+              "Params": {
+                "LeftParenPos": 125,
+                "RightParenPos": 135,
+                "Items": {
+                  "ListPos": 126,
+                  "ListEnd": 135,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "Name": "timestamp",
+                        "QuoteType": 1,
+                        "NamePos": 126,
+                        "NameEnd": 135
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Operation": "\u003e=",
+            "RightExpr": {
+              "NumPos": 140,
+              "NumEnd": 150,
+              "Literal": "1740366695",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Operation": "AND",
+        "RightExpr": {
+          "LeftExpr": {
+            "Name": {
+              "Name": "toUnixTimestamp",
+              "QuoteType": 1,
+              "NamePos": 157,
+              "NameEnd": 172
+            },
+            "Params": {
+              "LeftParenPos": 172,
+              "RightParenPos": 182,
+              "Items": {
+                "ListPos": 173,
+                "ListEnd": 182,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "timestamp",
+                      "QuoteType": 1,
+                      "NamePos": 173,
+                      "NameEnd": 182
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "Operation": "\u003c=",
+          "RightExpr": {
+            "NumPos": 187,
+            "NumEnd": 197,
+            "Literal": "1740377495",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": {
+      "GroupByPos": 198,
+      "GroupByEnd": 465,
+      "AggregateType": "",
+      "Expr": {
+        "ListPos": 209,
+        "ListEnd": 464,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Expr": {
+              "CasePos": 209,
+              "EndPos": 0,
+              "Expr": null,
+              "Whens": [
+                {
+                  "WhenPos": 218,
+                  "ThenPos": 275,
+                  "When": {
+                    "LeftExpr": {
+                      "Name": {
+                        "Name": "length",
+                        "QuoteType": 1,
+                        "NamePos": 223,
+                        "NameEnd": 229
+                      },
+                      "Params": {
+                        "LeftParenPos": 229,
+                        "RightParenPos": 269,
+                        "Items": {
+                          "ListPos": 230,
+                          "ListEnd": 267,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "ExtractPos": 230,
+                                "ExtractEnd": 268,
+                                "Parameters": [
+                                  {
+                                    "Name": "instance",
+                                    "QuoteType": 1,
+                                    "NamePos": 238,
+                                    "NameEnd": 246
+                                  },
+                                  {
+                                    "LiteralPos": 249,
+                                    "LiteralEnd": 267,
+                                    "Literal": "((\\\\d+\\\\.){3}\\\\d+)"
+                                  }
+                                ]
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Operation": "\u003e",
+                    "RightExpr": {
+                      "NumPos": 273,
+                      "NumEnd": 274,
+                      "Literal": "0",
+                      "Base": 10
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Then": {
+                    "Name": "instance",
+                    "QuoteType": 1,
+                    "NamePos": 280,
+                    "NameEnd": 288
+                  },
+                  "ElsePos": 0,
+                  "Else": null
+                }
+              ],
+              "ElsePos": 293,
+              "Else": {
+                "LiteralPos": 299,
+                "LiteralEnd": 302,
+                "Literal": "空"
+              }
+            },
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "CasePos": 313,
+              "EndPos": 0,
+              "Expr": null,
+              "Whens": [
+                {
+                  "WhenPos": 322,
+                  "ThenPos": 380,
+                  "When": {
+                    "LeftExpr": {
+                      "Name": {
+                        "Name": "length",
+                        "QuoteType": 1,
+                        "NamePos": 327,
+                        "NameEnd": 333
+                      },
+                      "Params": {
+                        "LeftParenPos": 333,
+                        "RightParenPos": 374,
+                        "Items": {
+                          "ListPos": 334,
+                          "ListEnd": 372,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "ExtractPos": 334,
+                                "ExtractEnd": 373,
+                                "Parameters": [
+                                  {
+                                    "Name": "client_ip",
+                                    "QuoteType": 1,
+                                    "NamePos": 342,
+                                    "NameEnd": 351
+                                  },
+                                  {
+                                    "LiteralPos": 354,
+                                    "LiteralEnd": 372,
+                                    "Literal": "((\\\\d+\\\\.){3}\\\\d+)"
+                                  }
+                                ]
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Operation": "\u003e",
+                    "RightExpr": {
+                      "NumPos": 378,
+                      "NumEnd": 379,
+                      "Literal": "0",
+                      "Base": 10
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Then": {
+                    "Name": "client_ip",
+                    "QuoteType": 1,
+                    "NamePos": 385,
+                    "NameEnd": 394
+                  },
+                  "ElsePos": 0,
+                  "Else": null
+                }
+              ],
+              "ElsePos": 399,
+              "Else": {
+                "LiteralPos": 405,
+                "LiteralEnd": 408,
+                "Literal": "空"
+              }
+            },
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "src_type",
+              "QuoteType": 1,
+              "NamePos": 419,
+              "NameEnd": 427
+            },
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "node_class",
+              "QuoteType": 1,
+              "NamePos": 431,
+              "NameEnd": 441
+            },
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "port",
+              "QuoteType": 1,
+              "NamePos": 445,
+              "NameEnd": 449
+            },
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "client_port",
+              "QuoteType": 1,
+              "NamePos": 453,
+              "NameEnd": 464
+            },
+            "Alias": null
+          }
+        ]
+      },
+      "WithCube": false,
+      "WithRollup": false,
+      "WithTotals": false
+    },
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": {
+      "LimitPos": 465,
+      "Limit": {
+        "NumPos": 471,
+        "NumEnd": 476,
+        "Literal": "10000",
+        "Base": 10
+      },
+      "Offset": null
+    },
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
