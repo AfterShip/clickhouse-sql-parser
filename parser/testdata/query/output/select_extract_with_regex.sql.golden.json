@@ -253,7 +253,7 @@
                         "RightParenPos": 269,
                         "Items": {
                           "ListPos": 230,
-                          "ListEnd": 267,
+                          "ListEnd": 268,
                           "HasDistinct": false,
                           "Items": [
                             {
@@ -332,7 +332,7 @@
                         "RightParenPos": 374,
                         "Items": {
                           "ListPos": 334,
-                          "ListEnd": 372,
+                          "ListEnd": 373,
                           "HasDistinct": false,
                           "Items": [
                             {
