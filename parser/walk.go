@@ -1353,6 +1353,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *ExtractExpr:
+		for _, param := range n.Parameters {
+			if !Walk(param, fn) {
+				return false
+			}
+		}
+	case *IntervalFrom:
+		if !Walk(n.Interval, fn) {
+			return false
+		}
 		if !Walk(n.FromExpr, fn) {
 			return false
 		}

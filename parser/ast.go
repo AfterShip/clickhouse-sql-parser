@@ -1770,19 +1770,19 @@ func (c *CreateDatabase) Accept(visitor ASTVisitor) error {
 }
 
 type CreateTable struct {
-	CreatePos      Pos // position of CREATE|ATTACH keyword
-	StatementEnd   Pos
-	OrReplace      bool
-	Name           *TableIdentifier
-	IfNotExists    bool
-	UUID           *UUID
-	OnCluster      *ClusterClause
-	TableSchema    *TableSchemaClause
-	Engine         *EngineExpr
-	SubQuery       *SubQuery
-	TableFunction  *TableFunctionExpr
-	HasTemporary   bool
-	Comment        *StringLiteral
+	CreatePos     Pos // position of CREATE|ATTACH keyword
+	StatementEnd  Pos
+	OrReplace     bool
+	Name          *TableIdentifier
+	IfNotExists   bool
+	UUID          *UUID
+	OnCluster     *ClusterClause
+	TableSchema   *TableSchemaClause
+	Engine        *EngineExpr
+	SubQuery      *SubQuery
+	TableFunction *TableFunctionExpr
+	HasTemporary  bool
+	Comment       *StringLiteral
 }
 
 func (c *CreateTable) Pos() Pos {
@@ -7633,11 +7633,41 @@ func (g *GlobalInOperation) Accept(visitor ASTVisitor) error {
 	return visitor.VisitGlobalInExpr(g)
 }
 
+type IntervalFrom struct {
+	Interval *Ident
+	FromPos  Pos
+	FromExpr Expr
+}
+
+func (i *IntervalFrom) Pos() Pos {
+	return i.Interval.NamePos
+}
+
+func (i *IntervalFrom) End() Pos {
+	return i.FromExpr.End()
+}
+
+func (i *IntervalFrom) String() string {
+	var builder strings.Builder
+	builder.WriteString(i.Interval.String())
+	builder.WriteString(" FROM ")
+	builder.WriteString(i.FromExpr.String())
+	return builder.String()
+}
+
+func (i *IntervalFrom) Accept(visitor ASTVisitor) error {
+	visitor.Enter(i)
+	defer visitor.Leave(i)
+	if err := i.FromExpr.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitIntervalFrom(i)
+}
+
 type ExtractExpr struct {
 	ExtractPos Pos
-	Interval   *Ident
-	FromPos    Pos
-	FromExpr   Expr
+	ExtractEnd Pos
+	Parameters []Expr
 }
 
 func (e *ExtractExpr) Pos() Pos {
@@ -7645,15 +7675,18 @@ func (e *ExtractExpr) Pos() Pos {
 }
 
 func (e *ExtractExpr) End() Pos {
-	return e.FromExpr.End()
+	return e.ExtractEnd
 }
 
 func (e *ExtractExpr) String() string {
 	var builder strings.Builder
 	builder.WriteString("EXTRACT(")
-	builder.WriteString(e.Interval.String())
-	builder.WriteString(" FROM ")
-	builder.WriteString(e.FromExpr.String())
+	for i, param := range e.Parameters {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(param.String())
+	}
 	builder.WriteByte(')')
 	return builder.String()
 }
@@ -7661,8 +7694,10 @@ func (e *ExtractExpr) String() string {
 func (e *ExtractExpr) Accept(visitor ASTVisitor) error {
 	visitor.Enter(e)
 	defer visitor.Leave(e)
-	if err := e.FromExpr.Accept(visitor); err != nil {
-		return err
+	for _, param := range e.Parameters {
+		if err := param.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitExtractExpr(e)
 }
