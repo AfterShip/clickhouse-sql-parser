@@ -901,7 +901,7 @@ func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 	if err != nil {
 		return nil, err
 	}
-	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
+	if lParen := p.tryConsumeTokenKind(TokenKindLParen); lParen != nil {
 		switch {
 		case p.matchTokenKind(TokenKindIdent):
 			switch {
@@ -924,6 +924,14 @@ func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 		case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat):
 			// fixed size
 			return p.parseColumnTypeWithParams(ident, p.Pos())
+		case p.matchTokenKind(TokenKindRParen):
+			rightParenPos := p.Pos()
+			_ = p.lexer.consumeToken()
+			return &TypeWithParams{
+				Name:          ident,
+				LeftParenPos:  lParen.Pos,
+				RightParenPos: rightParenPos,
+			}, nil
 		default:
 			return nil, fmt.Errorf("unexpected token kind: %v", p.lastTokenKind())
 		}
