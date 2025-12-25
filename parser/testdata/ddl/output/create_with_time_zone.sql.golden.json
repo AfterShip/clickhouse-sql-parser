@@ -1,0 +1,2349 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 2003,
+    "OrReplace": false,
+    "Name": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 27,
+        "NameEnd": 31
+      },
+      "Table": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 32,
+        "NameEnd": 34
+      }
+    },
+    "IfNotExists": true,
+    "UUID": null,
+    "OnCluster": {
+      "OnPos": 35,
+      "Expr": {
+        "Name": "default_cluster",
+        "QuoteType": 1,
+        "NamePos": 46,
+        "NameEnd": 61
+      }
+    },
+    "TableSchema": {
+      "SchemaPos": 62,
+      "SchemaEnd": 1756,
+      "Columns": [
+        {
+          "NamePos": 69,
+          "ColumnEnd": 258,
+          "Name": {
+            "Ident": {
+              "Name": "f0",
+              "QuoteType": 3,
+              "NamePos": 69,
+              "NameEnd": 71
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 79,
+            "RightParenPos": 237,
+            "Name": {
+              "Name": "Array",
+              "QuoteType": 1,
+              "NamePos": 73,
+              "NameEnd": 78
+            },
+            "Params": [
+              {
+                "LeftParenPos": 94,
+                "RightParenPos": 236,
+                "Name": {
+                  "Name": "Tuple",
+                  "QuoteType": 1,
+                  "NamePos": 79,
+                  "NameEnd": 84
+                },
+                "Columns": [
+                  {
+                    "NamePos": 94,
+                    "ColumnEnd": 117,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f00",
+                        "QuoteType": 1,
+                        "NamePos": 94,
+                        "NameEnd": 97
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 109,
+                      "RightParenPos": 117,
+                      "Name": {
+                        "Name": "DateTime64",
+                        "QuoteType": 1,
+                        "NamePos": 98,
+                        "NameEnd": 108
+                      },
+                      "Params": [
+                        {
+                          "NumPos": 109,
+                          "NumEnd": 110,
+                          "Literal": "9",
+                          "Base": 10
+                        },
+                        {
+                          "LiteralPos": 113,
+                          "LiteralEnd": 116,
+                          "Literal": "UTC"
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 128,
+                    "ColumnEnd": 138,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f01",
+                        "QuoteType": 1,
+                        "NamePos": 128,
+                        "NameEnd": 131
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "String",
+                        "QuoteType": 1,
+                        "NamePos": 132,
+                        "NameEnd": 138
+                      }
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 148,
+                    "ColumnEnd": 170,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f02",
+                        "QuoteType": 1,
+                        "NamePos": 148,
+                        "NameEnd": 151
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 156,
+                      "RightParenPos": 170,
+                      "Name": {
+                        "Name": "Map",
+                        "QuoteType": 1,
+                        "NamePos": 152,
+                        "NameEnd": 155
+                      },
+                      "Params": [
+                        {
+                          "Name": {
+                            "Name": "String",
+                            "QuoteType": 1,
+                            "NamePos": 156,
+                            "NameEnd": 162
+                          }
+                        },
+                        {
+                          "Name": {
+                            "Name": "String",
+                            "QuoteType": 1,
+                            "NamePos": 164,
+                            "NameEnd": 170
+                          }
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 181,
+                    "ColumnEnd": 204,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f03",
+                        "QuoteType": 1,
+                        "NamePos": 181,
+                        "NameEnd": 184
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 189,
+                      "RightParenPos": 204,
+                      "Name": {
+                        "Name": "Map",
+                        "QuoteType": 1,
+                        "NamePos": 185,
+                        "NameEnd": 188
+                      },
+                      "Params": [
+                        {
+                          "Name": {
+                            "Name": "String",
+                            "QuoteType": 1,
+                            "NamePos": 189,
+                            "NameEnd": 195
+                          }
+                        },
+                        {
+                          "Name": {
+                            "Name": "Float64",
+                            "QuoteType": 1,
+                            "NamePos": 197,
+                            "NameEnd": 204
+                          }
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 215,
+                    "ColumnEnd": 235,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f04",
+                        "QuoteType": 1,
+                        "NamePos": 215,
+                        "NameEnd": 218
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 223,
+                      "RightParenPos": 235,
+                      "Name": {
+                        "Name": "Map",
+                        "QuoteType": 1,
+                        "NamePos": 219,
+                        "NameEnd": 222
+                      },
+                      "Params": [
+                        {
+                          "Name": {
+                            "Name": "String",
+                            "QuoteType": 1,
+                            "NamePos": 223,
+                            "NameEnd": 229
+                          }
+                        },
+                        {
+                          "Name": {
+                            "Name": "BOOL",
+                            "QuoteType": 1,
+                            "NamePos": 231,
+                            "NameEnd": 235
+                          }
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  }
+                ]
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 239,
+            "RightParenPos": 258,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 245,
+              "NameEnd": 249
+            },
+            "Level": {
+              "NumPos": 249,
+              "NumEnd": 251,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 265,
+          "ColumnEnd": 296,
+          "Name": {
+            "Ident": {
+              "Name": "f1",
+              "QuoteType": 3,
+              "NamePos": 265,
+              "NameEnd": 267
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 269,
+              "NameEnd": 275
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 276,
+            "RightParenPos": 296,
+            "Type": {
+              "Name": "Delta",
+              "QuoteType": 1,
+              "NamePos": 282,
+              "NameEnd": 287
+            },
+            "TypeLevel": {
+              "NumPos": 287,
+              "NumEnd": 289,
+              "Literal": "8",
+              "Base": 10
+            },
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 292,
+              "NameEnd": 295
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 303,
+          "ColumnEnd": 333,
+          "Name": {
+            "Ident": {
+              "Name": "f2",
+              "QuoteType": 3,
+              "NamePos": 303,
+              "NameEnd": 305
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 319,
+            "RightParenPos": 321,
+            "Name": {
+              "Name": "FixedString",
+              "QuoteType": 1,
+              "NamePos": 307,
+              "NameEnd": 318
+            },
+            "Params": [
+              {
+                "NumPos": 319,
+                "NumEnd": 321,
+                "Literal": "16",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 323,
+            "RightParenPos": 333,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 329,
+              "NameEnd": 332
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 340,
+          "ColumnEnd": 369,
+          "Name": {
+            "Ident": {
+              "Name": "f3",
+              "QuoteType": 3,
+              "NamePos": 340,
+              "NameEnd": 342
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 356,
+            "RightParenPos": 357,
+            "Name": {
+              "Name": "FixedString",
+              "QuoteType": 1,
+              "NamePos": 344,
+              "NameEnd": 355
+            },
+            "Params": [
+              {
+                "NumPos": 356,
+                "NumEnd": 357,
+                "Literal": "8",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 359,
+            "RightParenPos": 369,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 365,
+              "NameEnd": 368
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 376,
+          "ColumnEnd": 405,
+          "Name": {
+            "Ident": {
+              "Name": "f4",
+              "QuoteType": 3,
+              "NamePos": 376,
+              "NameEnd": 378
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 392,
+            "RightParenPos": 393,
+            "Name": {
+              "Name": "FixedString",
+              "QuoteType": 1,
+              "NamePos": 380,
+              "NameEnd": 391
+            },
+            "Params": [
+              {
+                "NumPos": 392,
+                "NumEnd": 393,
+                "Literal": "8",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 395,
+            "RightParenPos": 405,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 401,
+              "NameEnd": 404
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 412,
+          "ColumnEnd": 457,
+          "Name": {
+            "Ident": {
+              "Name": "f6",
+              "QuoteType": 3,
+              "NamePos": 412,
+              "NameEnd": 414
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 427,
+            "RightParenPos": 435,
+            "Name": {
+              "Name": "DateTime64",
+              "QuoteType": 1,
+              "NamePos": 416,
+              "NameEnd": 426
+            },
+            "Params": [
+              {
+                "NumPos": 427,
+                "NumEnd": 428,
+                "Literal": "9",
+                "Base": 10
+              },
+              {
+                "LiteralPos": 431,
+                "LiteralEnd": 434,
+                "Literal": "UTC"
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 437,
+            "RightParenPos": 457,
+            "Type": {
+              "Name": "Delta",
+              "QuoteType": 1,
+              "NamePos": 443,
+              "NameEnd": 448
+            },
+            "TypeLevel": {
+              "NumPos": 448,
+              "NumEnd": 450,
+              "Literal": "8",
+              "Base": 10
+            },
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 453,
+              "NameEnd": 456
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 464,
+          "ColumnEnd": 495,
+          "Name": {
+            "Ident": {
+              "Name": "f6",
+              "QuoteType": 3,
+              "NamePos": 464,
+              "NameEnd": 466
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 468,
+              "NameEnd": 474
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 475,
+            "RightParenPos": 495,
+            "Type": {
+              "Name": "Delta",
+              "QuoteType": 1,
+              "NamePos": 481,
+              "NameEnd": 486
+            },
+            "TypeLevel": {
+              "NumPos": 486,
+              "NumEnd": 488,
+              "Literal": "8",
+              "Base": 10
+            },
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 491,
+              "NameEnd": 494
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 502,
+          "ColumnEnd": 543,
+          "Name": {
+            "Ident": {
+              "Name": "f7",
+              "QuoteType": 3,
+              "NamePos": 502,
+              "NameEnd": 504
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 521,
+            "RightParenPos": 527,
+            "Name": {
+              "Name": "LowCardinality",
+              "QuoteType": 1,
+              "NamePos": 506,
+              "NameEnd": 520
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 521,
+                  "NameEnd": 527
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 529,
+            "RightParenPos": 543,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 535,
+              "NameEnd": 539
+            },
+            "Level": {
+              "NumPos": 539,
+              "NumEnd": 541,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 550,
+          "ColumnEnd": 575,
+          "Name": {
+            "Ident": {
+              "Name": "f8",
+              "QuoteType": 3,
+              "NamePos": 550,
+              "NameEnd": 552
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 554,
+              "NameEnd": 560
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 561,
+            "RightParenPos": 575,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 567,
+              "NameEnd": 571
+            },
+            "Level": {
+              "NumPos": 571,
+              "NumEnd": 573,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 582,
+          "ColumnEnd": 623,
+          "Name": {
+            "Ident": {
+              "Name": "f9",
+              "QuoteType": 3,
+              "NamePos": 582,
+              "NameEnd": 584
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 601,
+            "RightParenPos": 607,
+            "Name": {
+              "Name": "LowCardinality",
+              "QuoteType": 1,
+              "NamePos": 586,
+              "NameEnd": 600
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 601,
+                  "NameEnd": 607
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 609,
+            "RightParenPos": 623,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 615,
+              "NameEnd": 619
+            },
+            "Level": {
+              "NumPos": 619,
+              "NumEnd": 621,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 630,
+          "ColumnEnd": 656,
+          "Name": {
+            "Ident": {
+              "Name": "f10",
+              "QuoteType": 3,
+              "NamePos": 630,
+              "NameEnd": 633
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 635,
+              "NameEnd": 641
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 642,
+            "RightParenPos": 656,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 648,
+              "NameEnd": 652
+            },
+            "Level": {
+              "NumPos": 652,
+              "NumEnd": 654,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 663,
+          "ColumnEnd": 705,
+          "Name": {
+            "Ident": {
+              "Name": "f11",
+              "QuoteType": 3,
+              "NamePos": 663,
+              "NameEnd": 666
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 683,
+            "RightParenPos": 689,
+            "Name": {
+              "Name": "LowCardinality",
+              "QuoteType": 1,
+              "NamePos": 668,
+              "NameEnd": 682
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 683,
+                  "NameEnd": 689
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 691,
+            "RightParenPos": 705,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 697,
+              "NameEnd": 701
+            },
+            "Level": {
+              "NumPos": 701,
+              "NumEnd": 703,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 712,
+          "ColumnEnd": 754,
+          "Name": {
+            "Ident": {
+              "Name": "f12",
+              "QuoteType": 3,
+              "NamePos": 712,
+              "NameEnd": 715
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 732,
+            "RightParenPos": 738,
+            "Name": {
+              "Name": "LowCardinality",
+              "QuoteType": 1,
+              "NamePos": 717,
+              "NameEnd": 731
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 732,
+                  "NameEnd": 738
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 740,
+            "RightParenPos": 754,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 746,
+              "NameEnd": 750
+            },
+            "Level": {
+              "NumPos": 750,
+              "NumEnd": 752,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 761,
+          "ColumnEnd": 787,
+          "Name": {
+            "Ident": {
+              "Name": "f13",
+              "QuoteType": 3,
+              "NamePos": 761,
+              "NameEnd": 764
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 766,
+              "NameEnd": 772
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 773,
+            "RightParenPos": 787,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 779,
+              "NameEnd": 783
+            },
+            "Level": {
+              "NumPos": 783,
+              "NumEnd": 785,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 794,
+          "ColumnEnd": 849,
+          "Name": {
+            "Ident": {
+              "Name": "f14",
+              "QuoteType": 3,
+              "NamePos": 794,
+              "NameEnd": 797
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 803,
+            "RightParenPos": 833,
+            "Name": {
+              "Name": "Map",
+              "QuoteType": 1,
+              "NamePos": 799,
+              "NameEnd": 802
+            },
+            "Params": [
+              {
+                "LeftParenPos": 818,
+                "RightParenPos": 824,
+                "Name": {
+                  "Name": "LowCardinality",
+                  "QuoteType": 1,
+                  "NamePos": 803,
+                  "NameEnd": 817
+                },
+                "Params": [
+                  {
+                    "Name": {
+                      "Name": "String",
+                      "QuoteType": 1,
+                      "NamePos": 818,
+                      "NameEnd": 824
+                    }
+                  }
+                ]
+              },
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 827,
+                  "NameEnd": 833
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 835,
+            "RightParenPos": 849,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 841,
+              "NameEnd": 845
+            },
+            "Level": {
+              "NumPos": 845,
+              "NumEnd": 847,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 856,
+          "ColumnEnd": 911,
+          "Name": {
+            "Ident": {
+              "Name": "f15",
+              "QuoteType": 3,
+              "NamePos": 856,
+              "NameEnd": 859
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 865,
+            "RightParenPos": 895,
+            "Name": {
+              "Name": "Map",
+              "QuoteType": 1,
+              "NamePos": 861,
+              "NameEnd": 864
+            },
+            "Params": [
+              {
+                "LeftParenPos": 880,
+                "RightParenPos": 886,
+                "Name": {
+                  "Name": "LowCardinality",
+                  "QuoteType": 1,
+                  "NamePos": 865,
+                  "NameEnd": 879
+                },
+                "Params": [
+                  {
+                    "Name": {
+                      "Name": "String",
+                      "QuoteType": 1,
+                      "NamePos": 880,
+                      "NameEnd": 886
+                    }
+                  }
+                ]
+              },
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 889,
+                  "NameEnd": 895
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 897,
+            "RightParenPos": 911,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 903,
+              "NameEnd": 907
+            },
+            "Level": {
+              "NumPos": 907,
+              "NumEnd": 909,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 918,
+          "ColumnEnd": 974,
+          "Name": {
+            "Ident": {
+              "Name": "f16",
+              "QuoteType": 3,
+              "NamePos": 918,
+              "NameEnd": 921
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 927,
+            "RightParenPos": 958,
+            "Name": {
+              "Name": "Map",
+              "QuoteType": 1,
+              "NamePos": 923,
+              "NameEnd": 926
+            },
+            "Params": [
+              {
+                "LeftParenPos": 942,
+                "RightParenPos": 948,
+                "Name": {
+                  "Name": "LowCardinality",
+                  "QuoteType": 1,
+                  "NamePos": 927,
+                  "NameEnd": 941
+                },
+                "Params": [
+                  {
+                    "Name": {
+                      "Name": "String",
+                      "QuoteType": 1,
+                      "NamePos": 942,
+                      "NameEnd": 948
+                    }
+                  }
+                ]
+              },
+              {
+                "Name": {
+                  "Name": "Float64",
+                  "QuoteType": 1,
+                  "NamePos": 951,
+                  "NameEnd": 958
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 960,
+            "RightParenPos": 974,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 966,
+              "NameEnd": 970
+            },
+            "Level": {
+              "NumPos": 970,
+              "NumEnd": 972,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 981,
+          "ColumnEnd": 1034,
+          "Name": {
+            "Ident": {
+              "Name": "f17",
+              "QuoteType": 3,
+              "NamePos": 981,
+              "NameEnd": 984
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 990,
+            "RightParenPos": 1018,
+            "Name": {
+              "Name": "Map",
+              "QuoteType": 1,
+              "NamePos": 986,
+              "NameEnd": 989
+            },
+            "Params": [
+              {
+                "LeftParenPos": 1005,
+                "RightParenPos": 1011,
+                "Name": {
+                  "Name": "LowCardinality",
+                  "QuoteType": 1,
+                  "NamePos": 990,
+                  "NameEnd": 1004
+                },
+                "Params": [
+                  {
+                    "Name": {
+                      "Name": "String",
+                      "QuoteType": 1,
+                      "NamePos": 1005,
+                      "NameEnd": 1011
+                    }
+                  }
+                ]
+              },
+              {
+                "Name": {
+                  "Name": "BOOL",
+                  "QuoteType": 1,
+                  "NamePos": 1014,
+                  "NameEnd": 1018
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 1020,
+            "RightParenPos": 1034,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 1026,
+              "NameEnd": 1030
+            },
+            "Level": {
+              "NumPos": 1030,
+              "NumEnd": 1032,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 1041,
+          "ColumnEnd": 1188,
+          "Name": {
+            "Ident": {
+              "Name": "f18",
+              "QuoteType": 3,
+              "NamePos": 1041,
+              "NameEnd": 1044
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 1052,
+            "RightParenPos": 1172,
+            "Name": {
+              "Name": "Array",
+              "QuoteType": 1,
+              "NamePos": 1046,
+              "NameEnd": 1051
+            },
+            "Params": [
+              {
+                "LeftParenPos": 1067,
+                "RightParenPos": 1171,
+                "Name": {
+                  "Name": "Tuple",
+                  "QuoteType": 1,
+                  "NamePos": 1052,
+                  "NameEnd": 1057
+                },
+                "Columns": [
+                  {
+                    "NamePos": 1067,
+                    "ColumnEnd": 1086,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f180",
+                        "QuoteType": 1,
+                        "NamePos": 1067,
+                        "NameEnd": 1071
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 1084,
+                      "RightParenPos": 1086,
+                      "Name": {
+                        "Name": "FixedString",
+                        "QuoteType": 1,
+                        "NamePos": 1072,
+                        "NameEnd": 1083
+                      },
+                      "Params": [
+                        {
+                          "NumPos": 1084,
+                          "NumEnd": 1086,
+                          "Literal": "16",
+                          "Base": 10
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 1097,
+                    "ColumnEnd": 1115,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f181",
+                        "QuoteType": 1,
+                        "NamePos": 1097,
+                        "NameEnd": 1101
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 1114,
+                      "RightParenPos": 1115,
+                      "Name": {
+                        "Name": "FixedString",
+                        "QuoteType": 1,
+                        "NamePos": 1102,
+                        "NameEnd": 1113
+                      },
+                      "Params": [
+                        {
+                          "NumPos": 1114,
+                          "NumEnd": 1115,
+                          "Literal": "8",
+                          "Base": 10
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 1126,
+                    "ColumnEnd": 1137,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f182",
+                        "QuoteType": 1,
+                        "NamePos": 1126,
+                        "NameEnd": 1130
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "Name": {
+                        "Name": "String",
+                        "QuoteType": 1,
+                        "NamePos": 1131,
+                        "NameEnd": 1137
+                      }
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  },
+                  {
+                    "NamePos": 1147,
+                    "ColumnEnd": 1170,
+                    "Name": {
+                      "Ident": {
+                        "Name": "f183",
+                        "QuoteType": 1,
+                        "NamePos": 1147,
+                        "NameEnd": 1151
+                      },
+                      "DotIdent": null
+                    },
+                    "Type": {
+                      "LeftParenPos": 1156,
+                      "RightParenPos": 1170,
+                      "Name": {
+                        "Name": "Map",
+                        "QuoteType": 1,
+                        "NamePos": 1152,
+                        "NameEnd": 1155
+                      },
+                      "Params": [
+                        {
+                          "Name": {
+                            "Name": "String",
+                            "QuoteType": 1,
+                            "NamePos": 1156,
+                            "NameEnd": 1162
+                          }
+                        },
+                        {
+                          "Name": {
+                            "Name": "String",
+                            "QuoteType": 1,
+                            "NamePos": 1164,
+                            "NameEnd": 1170
+                          }
+                        }
+                      ]
+                    },
+                    "NotNull": null,
+                    "Nullable": null,
+                    "DefaultExpr": null,
+                    "MaterializedExpr": null,
+                    "AliasExpr": null,
+                    "Codec": null,
+                    "TTL": null,
+                    "Comment": null,
+                    "CompressionCodec": null
+                  }
+                ]
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 1174,
+            "RightParenPos": 1188,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 1180,
+              "NameEnd": 1184
+            },
+            "Level": {
+              "NumPos": 1184,
+              "NumEnd": 1186,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 1199,
+          "ColumnEnd": 1226,
+          "Name": {
+            "Ident": {
+              "Name": "f184",
+              "QuoteType": 3,
+              "NamePos": 1199,
+              "NameEnd": 1203
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 1205,
+              "NameEnd": 1211
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 1212,
+            "RightParenPos": 1226,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 1218,
+              "NameEnd": 1222
+            },
+            "Level": {
+              "NumPos": 1222,
+              "NumEnd": 1224,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 1237,
+          "ColumnEnd": 1264,
+          "Name": {
+            "Ident": {
+              "Name": "f185",
+              "QuoteType": 3,
+              "NamePos": 1237,
+              "NameEnd": 1241
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 1243,
+              "NameEnd": 1249
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 1250,
+            "RightParenPos": 1264,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 1256,
+              "NameEnd": 1260
+            },
+            "Level": {
+              "NumPos": 1260,
+              "NumEnd": 1262,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 1275,
+          "ColumnEnd": 1302,
+          "Name": {
+            "Ident": {
+              "Name": "f186",
+              "QuoteType": 3,
+              "NamePos": 1275,
+              "NameEnd": 1279
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 1281,
+              "NameEnd": 1287
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 1288,
+            "RightParenPos": 1302,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 1294,
+              "NameEnd": 1298
+            },
+            "Level": {
+              "NumPos": 1298,
+              "NumEnd": 1300,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 1313,
+          "ColumnEnd": 1340,
+          "Name": {
+            "Ident": {
+              "Name": "f187",
+              "QuoteType": 3,
+              "NamePos": 1313,
+              "NameEnd": 1317
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "QuoteType": 1,
+              "NamePos": 1319,
+              "NameEnd": 1325
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 1326,
+            "RightParenPos": 1340,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 1332,
+              "NameEnd": 1336
+            },
+            "Level": {
+              "NumPos": 1336,
+              "NumEnd": 1338,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 1351,
+          "ColumnEnd": 1378,
+          "Name": {
+            "Ident": {
+              "Name": "f188",
+              "QuoteType": 3,
+              "NamePos": 1351,
+              "NameEnd": 1355
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "DATETIME",
+              "QuoteType": 1,
+              "NamePos": 1357,
+              "NameEnd": 1365
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": {
+            "Name": {
+              "Name": "now",
+              "QuoteType": 1,
+              "NamePos": 1374,
+              "NameEnd": 1377
+            },
+            "Params": {
+              "LeftParenPos": 1377,
+              "RightParenPos": 1378,
+              "Items": {
+                "ListPos": 1378,
+                "ListEnd": 1378,
+                "HasDistinct": false,
+                "Items": []
+              },
+              "ColumnArgList": null
+            }
+          },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "IndexPos": 1389,
+          "Name": {
+            "Ident": {
+              "Name": "idx_0",
+              "QuoteType": 1,
+              "NamePos": 1395,
+              "NameEnd": 1400
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "f0",
+              "QuoteType": 1,
+              "NamePos": 1401,
+              "NameEnd": 1403
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "LeftParenPos": 1422,
+            "RightParenPos": 1427,
+            "Name": {
+              "Name": "bloom_filter",
+              "QuoteType": 1,
+              "NamePos": 1409,
+              "NameEnd": 1421
+            },
+            "Params": [
+              {
+                "NumPos": 1422,
+                "NumEnd": 1427,
+                "Literal": "0.001",
+                "Base": 10
+              }
+            ]
+          },
+          "Granularity": {
+            "NumPos": 1441,
+            "NumEnd": 1442,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        {
+          "IndexPos": 1452,
+          "Name": {
+            "Ident": {
+              "Name": "idx_f1",
+              "QuoteType": 1,
+              "NamePos": 1458,
+              "NameEnd": 1464
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 1465,
+              "NameEnd": 1467
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "LeftParenPos": 1486,
+            "RightParenPos": 1491,
+            "Name": {
+              "Name": "bloom_filter",
+              "QuoteType": 1,
+              "NamePos": 1473,
+              "NameEnd": 1485
+            },
+            "Params": [
+              {
+                "NumPos": 1486,
+                "NumEnd": 1491,
+                "Literal": "0.001",
+                "Base": 10
+              }
+            ]
+          },
+          "Granularity": {
+            "NumPos": 1505,
+            "NumEnd": 1506,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        {
+          "IndexPos": 1516,
+          "Name": {
+            "Ident": {
+              "Name": "idx_f2",
+              "QuoteType": 1,
+              "NamePos": 1522,
+              "NameEnd": 1528
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "f2",
+              "QuoteType": 1,
+              "NamePos": 1529,
+              "NameEnd": 1531
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "Name": {
+              "Name": "minmax",
+              "QuoteType": 1,
+              "NamePos": 1537,
+              "NameEnd": 1543
+            }
+          },
+          "Granularity": {
+            "NumPos": 1556,
+            "NumEnd": 1557,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        {
+          "IndexPos": 1567,
+          "Name": {
+            "Ident": {
+              "Name": "idx_f3",
+              "QuoteType": 1,
+              "NamePos": 1573,
+              "NameEnd": 1579
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "f3",
+              "QuoteType": 1,
+              "NamePos": 1580,
+              "NameEnd": 1582
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "LeftParenPos": 1592,
+            "RightParenPos": 1593,
+            "Name": {
+              "Name": "set",
+              "QuoteType": 1,
+              "NamePos": 1588,
+              "NameEnd": 1591
+            },
+            "Params": [
+              {
+                "NumPos": 1592,
+                "NumEnd": 1593,
+                "Literal": "0",
+                "Base": 10
+              }
+            ]
+          },
+          "Granularity": {
+            "NumPos": 1607,
+            "NumEnd": 1608,
+            "Literal": "4",
+            "Base": 10
+          }
+        },
+        {
+          "IndexPos": 1618,
+          "Name": {
+            "Ident": {
+              "Name": "idx_f4",
+              "QuoteType": 1,
+              "NamePos": 1624,
+              "NameEnd": 1630
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": {
+                "Name": "mapValues",
+                "QuoteType": 1,
+                "NamePos": 1631,
+                "NameEnd": 1640
+              },
+              "Params": {
+                "LeftParenPos": 1640,
+                "RightParenPos": 1643,
+                "Items": {
+                  "ListPos": 1641,
+                  "ListEnd": 1643,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "Name": "f4",
+                        "QuoteType": 1,
+                        "NamePos": 1641,
+                        "NameEnd": 1643
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "LeftParenPos": 1663,
+            "RightParenPos": 1667,
+            "Name": {
+              "Name": "bloom_filter",
+              "QuoteType": 1,
+              "NamePos": 1650,
+              "NameEnd": 1662
+            },
+            "Params": [
+              {
+                "NumPos": 1663,
+                "NumEnd": 1667,
+                "Literal": "0.01",
+                "Base": 10
+              }
+            ]
+          },
+          "Granularity": {
+            "NumPos": 1681,
+            "NumEnd": 1682,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        {
+          "IndexPos": 1692,
+          "Name": {
+            "Ident": {
+              "Name": "idx_f5",
+              "QuoteType": 1,
+              "NamePos": 1698,
+              "NameEnd": 1704
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 1705,
+              "NameEnd": 1709
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "LeftParenPos": 1726,
+            "RightParenPos": 1736,
+            "Name": {
+              "Name": "tokenbf_v1",
+              "QuoteType": 1,
+              "NamePos": 1715,
+              "NameEnd": 1725
+            },
+            "Params": [
+              {
+                "NumPos": 1726,
+                "NumEnd": 1730,
+                "Literal": "4096",
+                "Base": 10
+              },
+              {
+                "NumPos": 1732,
+                "NumEnd": 1733,
+                "Literal": "3",
+                "Base": 10
+              },
+              {
+                "NumPos": 1735,
+                "NumEnd": 1736,
+                "Literal": "0",
+                "Base": 10
+              }
+            ]
+          },
+          "Granularity": {
+            "NumPos": 1750,
+            "NumEnd": 1751,
+            "Literal": "4",
+            "Base": 10
+          }
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 1762,
+      "EngineEnd": 2003,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": {
+        "PartitionPos": 1785,
+        "Expr": {
+          "ListPos": 1798,
+          "ListEnd": 1814,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "toDate",
+                  "QuoteType": 1,
+                  "NamePos": 1798,
+                  "NameEnd": 1804
+                },
+                "Params": {
+                  "LeftParenPos": 1804,
+                  "RightParenPos": 1814,
+                  "Items": {
+                    "ListPos": 1805,
+                    "ListEnd": 1814,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 1805,
+                          "NameEnd": 1814
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": null
+            }
+          ]
+        }
+      },
+      "SampleBy": null,
+      "TTL": {
+        "TTLPos": 1899,
+        "ListEnd": 1939,
+        "Items": [
+          {
+            "TTLPos": 1899,
+            "Expr": {
+              "LeftExpr": {
+                "Name": {
+                  "Name": "toDate",
+                  "QuoteType": 1,
+                  "NamePos": 1903,
+                  "NameEnd": 1909
+                },
+                "Params": {
+                  "LeftParenPos": 1909,
+                  "RightParenPos": 1919,
+                  "Items": {
+                    "ListPos": 1910,
+                    "ListEnd": 1919,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "timestamp",
+                          "QuoteType": 1,
+                          "NamePos": 1910,
+                          "NameEnd": 1919
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Operation": "+",
+              "RightExpr": {
+                "Name": {
+                  "Name": "toIntervalDay",
+                  "QuoteType": 1,
+                  "NamePos": 1923,
+                  "NameEnd": 1936
+                },
+                "Params": {
+                  "LeftParenPos": 1936,
+                  "RightParenPos": 1939,
+                  "Items": {
+                    "ListPos": 1937,
+                    "ListEnd": 1939,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "NumPos": 1937,
+                          "NumEnd": 1939,
+                          "Literal": "15",
+                          "Base": 10
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "HasGlobal": false,
+              "HasNot": false
+            },
+            "Policy": null
+          }
+        ]
+      },
+      "Settings": {
+        "SettingsPos": 1945,
+        "ListEnd": 2003,
+        "Items": [
+          {
+            "SettingsPos": 1954,
+            "Name": {
+              "Name": "index_granularity",
+              "QuoteType": 1,
+              "NamePos": 1954,
+              "NameEnd": 1971
+            },
+            "Expr": {
+              "NumPos": 1974,
+              "NumEnd": 1978,
+              "Literal": "8192",
+              "Base": 10
+            }
+          },
+          {
+            "SettingsPos": 1980,
+            "Name": {
+              "Name": "ttl_only_drop_parts",
+              "QuoteType": 1,
+              "NamePos": 1980,
+              "NameEnd": 1999
+            },
+            "Expr": {
+              "NumPos": 2002,
+              "NumEnd": 2003,
+              "Literal": "1",
+              "Base": 10
+            }
+          }
+        ]
+      },
+      "OrderBy": {
+        "OrderPos": 1820,
+        "ListEnd": 1893,
+        "Items": [
+          {
+            "OrderPos": 1820,
+            "Expr": {
+              "LeftParenPos": 1829,
+              "RightParenPos": 1893,
+              "Items": {
+                "ListPos": 1830,
+                "ListEnd": 1892,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "ts_bucket",
+                      "QuoteType": 1,
+                      "NamePos": 1830,
+                      "NameEnd": 1839
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "service_name",
+                      "QuoteType": 1,
+                      "NamePos": 1841,
+                      "NameEnd": 1853
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "name",
+                      "QuoteType": 1,
+                      "NamePos": 1855,
+                      "NameEnd": 1859
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": {
+                        "Name": "toUnixTimestamp64Nano",
+                        "QuoteType": 1,
+                        "NamePos": 1861,
+                        "NameEnd": 1882
+                      },
+                      "Params": {
+                        "LeftParenPos": 1882,
+                        "RightParenPos": 1892,
+                        "Items": {
+                          "ListPos": 1883,
+                          "ListEnd": 1892,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "Name": "timestamp",
+                                "QuoteType": 1,
+                                "NamePos": 1883,
+                                "NameEnd": 1892
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Alias": null,
+            "Direction": "",
+            "Fill": null
+          }
+        ],
+        "Interpolate": null
+      }
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
