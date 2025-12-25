@@ -911,6 +911,8 @@ func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
 				return p.parseJSONType(ident, p.Pos())
 			case strings.EqualFold(ident.Name, "QBit"):
 				return p.parseColumnTypeWithParams(ident, p.Pos())
+			case strings.EqualFold(ident.Name, "Tuple"):
+				return p.parseNestedType(ident, p.Pos())
 			default:
 				return p.parseComplexType(ident, p.Pos())
 			}
