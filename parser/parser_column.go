@@ -395,6 +395,8 @@ func (p *Parser) isSelectItemTerminatorKeyword() bool {
 		return true
 	case p.matchKeyword(KeywordLimit):
 		return true
+	case p.matchKeyword(KeywordOffset):
+		return true
 	case p.matchKeyword(KeywordSettings):
 		return true
 	case p.matchKeyword(KeywordFormat):

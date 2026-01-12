@@ -502,30 +502,42 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	return groupBy, nil
 }
 
-func (p *Parser) tryParseLimitClause(pos Pos) (*LimitClause, error) {
+func (p *Parser) tryParseLimitAfterLimitByClause(pos Pos) (*LimitClause, error) {
 	if !p.matchKeyword(KeywordLimit) {
 		return nil, nil
 	}
+
+	return p.parseLimitClause(pos)
+}
+
+func (p *Parser) tryParseLimitClause(pos Pos) (*LimitClause, error) {
+	if !p.matchKeyword(KeywordLimit) && !p.matchKeyword(KeywordOffset) {
+		return nil, nil
+	}
+
 	return p.parseLimitClause(pos)
 }
 
 func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
-	if err := p.expectKeyword(KeywordLimit); err != nil {
-		return nil, err
-	}
-
-	limit, err := p.parseExpr(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
+	var limit Expr
 	var offset Expr
-	if p.tryConsumeKeywords(KeywordOffset) {
-		offset, err = p.parseExpr(p.Pos())
-	} else if p.tryConsumeTokenKind(TokenKindComma) != nil {
-		offset = limit
+	var err error
+	if p.tryConsumeKeywords(KeywordLimit) {
 		limit, err = p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		if p.tryConsumeKeywords(KeywordOffset) {
+			offset, err = p.parseExpr(p.Pos())
+		} else if p.tryConsumeTokenKind(TokenKindComma) != nil {
+			offset = limit
+			limit, err = p.parseExpr(p.Pos())
+		}
+	} else if p.tryConsumeKeywords(KeywordOffset) {
+		offset, err = p.parseExpr(p.Pos())
 	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -1067,7 +1079,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		switch e := parsedLimitBy.(type) {
 		case *LimitByClause:
 			limitBy = e
-			limit, err = p.tryParseLimitClause(p.Pos())
+			limit, err = p.tryParseLimitAfterLimitByClause(p.Pos())
 			if err != nil {
 				return nil, err
 			}
@@ -1076,6 +1088,14 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 			}
 		case *LimitClause:
 			limit = e
+		}
+	} else {
+		limit, err = p.tryParseLimitClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if limit != nil {
+			statementEnd = limit.End()
 		}
 	}
 
