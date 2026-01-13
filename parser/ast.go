@@ -6800,10 +6800,15 @@ func (l *LimitClause) End() Pos {
 
 func (l *LimitClause) String() string {
 	var builder strings.Builder
-	builder.WriteString("LIMIT ")
-	builder.WriteString(l.Limit.String())
+	if l.Limit != nil {
+		builder.WriteString("LIMIT ")
+		builder.WriteString(l.Limit.String())
+		if l.Offset != nil {
+			builder.WriteString(" ")
+		}
+	}
 	if l.Offset != nil {
-		builder.WriteString(" OFFSET ")
+		builder.WriteString("OFFSET ")
 		builder.WriteString(l.Offset.String())
 	}
 	return builder.String()
@@ -6812,8 +6817,10 @@ func (l *LimitClause) String() string {
 func (l *LimitClause) Accept(visitor ASTVisitor) error {
 	visitor.Enter(l)
 	defer visitor.Leave(l)
-	if err := l.Limit.Accept(visitor); err != nil {
-		return err
+	if l.Limit != nil {
+		if err := l.Limit.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	if l.Offset != nil {
 		if err := l.Offset.Accept(visitor); err != nil {
