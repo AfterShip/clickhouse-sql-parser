@@ -25,11 +25,12 @@ const (
 	TokenKindGE           TokenKind = ">="
 	TokenKindQuestionMark TokenKind = "?"
 
-	TokenKindPlus  TokenKind = "+"
-	TokenKindMinus TokenKind = "-"
-	TokenKindMul   TokenKind = "*"
-	TokenKindDiv   TokenKind = "/"
-	TokenKindMod   TokenKind = "%"
+	TokenKindPlus   TokenKind = "+"
+	TokenKindMinus  TokenKind = "-"
+	TokenKindMul    TokenKind = "*"
+	TokenKindDiv    TokenKind = "/"
+	TokenKindMod    TokenKind = "%"
+	TokenKindConcat TokenKind = "||"
 
 	TokenKindArrow TokenKind = "->"
 	TokenKindDash  TokenKind = "::"
