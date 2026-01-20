@@ -1,0 +1,238 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 160,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "v",
+          "QuoteType": 1,
+          "NamePos": 11,
+          "NameEnd": 12
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "j",
+          "QuoteType": 1,
+          "NamePos": 18,
+          "NameEnd": 19
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 20,
+      "Expr": {
+        "Table": {
+          "TablePos": 25,
+          "TableEnd": 27,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t1",
+              "QuoteType": 1,
+              "NamePos": 25,
+              "NameEnd": 27
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 27,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "ArrayJoin": [
+      {
+        "ArrayPos": 32,
+        "Type": "",
+        "Expr": {
+          "ListPos": 43,
+          "ListEnd": 70,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "JSONExtractArrayRaw",
+                  "QuoteType": 1,
+                  "NamePos": 43,
+                  "NameEnd": 62
+                },
+                "Params": {
+                  "LeftParenPos": 62,
+                  "RightParenPos": 64,
+                  "Items": {
+                    "ListPos": 63,
+                    "ListEnd": 64,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 63,
+                          "NameEnd": 64
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": {
+                "Name": "j",
+                "QuoteType": 1,
+                "NamePos": 69,
+                "NameEnd": 70
+              }
+            }
+          ]
+        }
+      },
+      {
+        "ArrayPos": 75,
+        "Type": "",
+        "Expr": {
+          "ListPos": 86,
+          "ListEnd": 160,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": {
+                  "Name": "array",
+                  "QuoteType": 1,
+                  "NamePos": 86,
+                  "NameEnd": 91
+                },
+                "Params": {
+                  "LeftParenPos": 91,
+                  "RightParenPos": 154,
+                  "Items": {
+                    "ListPos": 97,
+                    "ListEnd": 152,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "Name": {
+                            "Name": "JSONExtractString",
+                            "QuoteType": 1,
+                            "NamePos": 97,
+                            "NameEnd": 114
+                          },
+                          "Params": {
+                            "LeftParenPos": 114,
+                            "RightParenPos": 121,
+                            "Items": {
+                              "ListPos": 115,
+                              "ListEnd": 120,
+                              "HasDistinct": false,
+                              "Items": [
+                                {
+                                  "Expr": {
+                                    "Name": "j",
+                                    "QuoteType": 1,
+                                    "NamePos": 115,
+                                    "NameEnd": 116
+                                  },
+                                  "Alias": null
+                                },
+                                {
+                                  "Expr": {
+                                    "LiteralPos": 119,
+                                    "LiteralEnd": 120,
+                                    "Literal": "x"
+                                  },
+                                  "Alias": null
+                                }
+                              ]
+                            },
+                            "ColumnArgList": null
+                          }
+                        },
+                        "Alias": null
+                      },
+                      {
+                        "Expr": {
+                          "Name": {
+                            "Name": "JSONExtractString",
+                            "QuoteType": 1,
+                            "NamePos": 128,
+                            "NameEnd": 145
+                          },
+                          "Params": {
+                            "LeftParenPos": 145,
+                            "RightParenPos": 152,
+                            "Items": {
+                              "ListPos": 146,
+                              "ListEnd": 151,
+                              "HasDistinct": false,
+                              "Items": [
+                                {
+                                  "Expr": {
+                                    "Name": "j",
+                                    "QuoteType": 1,
+                                    "NamePos": 146,
+                                    "NameEnd": 147
+                                  },
+                                  "Alias": null
+                                },
+                                {
+                                  "Expr": {
+                                    "LiteralPos": 150,
+                                    "LiteralEnd": 151,
+                                    "Literal": "y"
+                                  },
+                                  "Alias": null
+                                }
+                              ]
+                            },
+                            "ColumnArgList": null
+                          }
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  },
+                  "ColumnArgList": null
+                }
+              },
+              "Alias": {
+                "Name": "v",
+                "QuoteType": 1,
+                "NamePos": 159,
+                "NameEnd": 160
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

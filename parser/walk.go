@@ -36,8 +36,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.From, fn) {
 			return false
 		}
-		if !Walk(n.ArrayJoin, fn) {
-			return false
+		for _, arrayJoin := range n.ArrayJoin {
+			if !Walk(arrayJoin, fn) {
+				return false
+			}
 		}
 		if !Walk(n.Window, fn) {
 			return false

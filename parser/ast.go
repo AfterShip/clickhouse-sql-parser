@@ -7273,7 +7273,7 @@ type SelectQuery struct {
 	DistinctOn    *DistinctOn
 	SelectItems   []*SelectItem
 	From          *FromClause
-	ArrayJoin     *ArrayJoinClause
+	ArrayJoin     []*ArrayJoinClause
 	Window        *WindowClause
 	Prewhere      *PrewhereClause
 	Where         *WhereClause
@@ -7334,9 +7334,9 @@ func (s *SelectQuery) String() string { // nolint: funlen
 		builder.WriteString(" ")
 		builder.WriteString(s.From.String())
 	}
-	if s.ArrayJoin != nil {
+	for _, arrayJoin := range s.ArrayJoin {
 		builder.WriteString(" ")
-		builder.WriteString(s.ArrayJoin.String())
+		builder.WriteString(arrayJoin.String())
 	}
 	if s.Window != nil {
 		builder.WriteString(" ")
@@ -7416,8 +7416,8 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
-	if s.ArrayJoin != nil {
-		if err := s.ArrayJoin.Accept(visitor); err != nil {
+	for _, arrayJoin := range s.ArrayJoin {
+		if err := arrayJoin.Accept(visitor); err != nil {
 			return err
 		}
 	}
