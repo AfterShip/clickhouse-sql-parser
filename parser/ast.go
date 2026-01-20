@@ -7252,7 +7252,10 @@ func (a *ArrayJoinClause) End() Pos {
 }
 
 func (a *ArrayJoinClause) String() string {
-	return a.Type + " ARRAY JOIN " + a.Expr.String()
+	if a.Type != "" {
+		return a.Type + " ARRAY JOIN " + a.Expr.String()
+	}
+	return "ARRAY JOIN " + a.Expr.String()
 }
 
 func (a *ArrayJoinClause) Accept(visitor ASTVisitor) error {
