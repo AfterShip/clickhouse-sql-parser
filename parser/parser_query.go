@@ -1009,11 +1009,16 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if from != nil {
 		statementEnd = from.End()
 	}
-	arrayJoin, err := p.tryParseArrayJoinClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if arrayJoin != nil {
+	var arrayJoins []*ArrayJoinClause
+	for {
+		arrayJoin, err := p.tryParseArrayJoinClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if arrayJoin == nil {
+			break
+		}
+		arrayJoins = append(arrayJoins, arrayJoin)
 		statementEnd = arrayJoin.End()
 	}
 	prewhere, err := p.tryParsePrewhereClause(p.Pos())
@@ -1124,7 +1129,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		DistinctOn:   distinctOn,
 		SelectItems:  selectItems,
 		From:         from,
-		ArrayJoin:    arrayJoin,
+		ArrayJoin:    arrayJoins,
 		Window:       window,
 		Prewhere:     prewhere,
 		Where:        where,

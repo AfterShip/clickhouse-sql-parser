@@ -79,31 +79,33 @@
         "HasFinal": false
       }
     },
-    "ArrayJoin": {
-      "ArrayPos": 34,
-      "Type": "",
-      "Expr": {
-        "ListPos": 45,
-        "ListEnd": 53,
-        "HasDistinct": false,
-        "Items": [
-          {
-            "Expr": {
-              "Name": "m",
-              "QuoteType": 1,
-              "NamePos": 45,
-              "NameEnd": 46
-            },
-            "Alias": {
-              "Name": "bar",
-              "QuoteType": 1,
-              "NamePos": 50,
-              "NameEnd": 53
+    "ArrayJoin": [
+      {
+        "ArrayPos": 34,
+        "Type": "",
+        "Expr": {
+          "ListPos": 45,
+          "ListEnd": 53,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": "m",
+                "QuoteType": 1,
+                "NamePos": 45,
+                "NameEnd": 46
+              },
+              "Alias": {
+                "Name": "bar",
+                "QuoteType": 1,
+                "NamePos": 50,
+                "NameEnd": 53
+              }
             }
-          }
-        ]
+          ]
+        }
       }
-    },
+    ],
     "Window": null,
     "Prewhere": null,
     "Where": null,
