@@ -196,7 +196,7 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 	case p.matchKeyword(KeywordInner):
 		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
-		if p.matchKeyword(KeywordAll) || p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAsof) {
+		if p.matchKeyword(KeywordAll) || p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAsof) || p.matchKeyword(KeywordArray) {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
@@ -224,6 +224,9 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
+	case p.matchKeyword(KeywordArray):
+		modifiers = append(modifiers, p.last().String)
+		_ = p.lexer.consumeToken()
 	}
 	return modifiers
 }
@@ -281,6 +284,38 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	}
 
 	modifiers = append(modifiers, KeywordJoin)
+
+	// Check if this is an ARRAY JOIN
+	isArrayJoin := false
+	for _, mod := range modifiers {
+		if mod == KeywordArray {
+			isArrayJoin = true
+			break
+		}
+	}
+
+	if isArrayJoin {
+		// For ARRAY JOIN, parse column expression list instead of table expression
+		expr, err = p.parseColumnExprList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		// ARRAY JOIN doesn't have constraints (ON/USING)
+		// try parse next join
+		rightExpr, err = p.parseJoinRightExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &JoinExpr{
+			JoinPos:     pos,
+			Left:        expr,
+			Right:       rightExpr,
+			Modifiers:   modifiers,
+			Constraints: nil,
+		}, nil
+	}
+
 	expr, err = p.parseJoinTableExpr(p.Pos())
 	if err != nil {
 		return nil, err
@@ -853,10 +888,21 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 }
 
 func (p *Parser) tryParseArrayJoinClause(pos Pos) (*ArrayJoinClause, error) {
-	if !p.matchKeyword(KeywordLeft) && !p.matchKeyword(KeywordInner) && !p.matchKeyword(KeywordArray) {
-		return nil, nil
+	// Check if we have ARRAY directly
+	if p.matchKeyword(KeywordArray) {
+		return p.parseArrayJoinClause(pos)
 	}
-	return p.parseArrayJoinClause(pos)
+
+	// Check if we have LEFT/INNER followed by ARRAY (need lookahead)
+	if p.matchKeyword(KeywordLeft) || p.matchKeyword(KeywordInner) {
+		// Lookahead to check if ARRAY follows
+		nextToken, err := p.lexer.peekToken()
+		if err == nil && nextToken != nil && nextToken.Kind == TokenKindKeyword && nextToken.String == KeywordArray {
+			return p.parseArrayJoinClause(pos)
+		}
+	}
+
+	return nil, nil
 }
 
 func (p *Parser) parseArrayJoinClause(_ Pos) (*ArrayJoinClause, error) {

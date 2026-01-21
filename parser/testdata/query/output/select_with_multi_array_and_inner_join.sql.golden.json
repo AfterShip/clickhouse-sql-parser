@@ -1,0 +1,466 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 313,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "JSONExtractString",
+            "QuoteType": 1,
+            "NamePos": 11,
+            "NameEnd": 28
+          },
+          "Params": {
+            "LeftParenPos": 28,
+            "RightParenPos": 46,
+            "Items": {
+              "ListPos": 29,
+              "ListEnd": 45,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Fields": [
+                      {
+                        "Name": "t3",
+                        "QuoteType": 1,
+                        "NamePos": 29,
+                        "NameEnd": 31
+                      },
+                      {
+                        "Name": "props",
+                        "QuoteType": 1,
+                        "NamePos": 32,
+                        "NameEnd": 37
+                      }
+                    ]
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "LiteralPos": 40,
+                    "LiteralEnd": 45,
+                    "Literal": "value"
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 51,
+          "NameEnd": 56
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 57,
+      "Expr": {
+        "JoinPos": 62,
+        "Left": {
+          "Table": {
+            "TablePos": 62,
+            "TableEnd": 64,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 62,
+                "NameEnd": 64
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 64,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 69,
+          "Left": {
+            "ListPos": 80,
+            "ListEnd": 123,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": {
+                    "Name": "JSONExtractArrayRaw",
+                    "QuoteType": 1,
+                    "NamePos": 80,
+                    "NameEnd": 99
+                  },
+                  "Params": {
+                    "LeftParenPos": 99,
+                    "RightParenPos": 116,
+                    "Items": {
+                      "ListPos": 100,
+                      "ListEnd": 115,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "Fields": [
+                              {
+                                "Name": "t1",
+                                "QuoteType": 1,
+                                "NamePos": 100,
+                                "NameEnd": 102
+                              },
+                              {
+                                "Name": "props",
+                                "QuoteType": 1,
+                                "NamePos": 103,
+                                "NameEnd": 108
+                              }
+                            ]
+                          },
+                          "Alias": null
+                        },
+                        {
+                          "Expr": {
+                            "LiteralPos": 111,
+                            "LiteralEnd": 115,
+                            "Literal": "arr1"
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Alias": {
+                  "Name": "a1",
+                  "QuoteType": 1,
+                  "NamePos": 121,
+                  "NameEnd": 123
+                }
+              }
+            ]
+          },
+          "Right": {
+            "JoinPos": 128,
+            "Left": {
+              "Table": {
+                "TablePos": 139,
+                "TableEnd": 141,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "t2",
+                    "QuoteType": 1,
+                    "NamePos": 139,
+                    "NameEnd": 141
+                  }
+                },
+                "HasFinal": false
+              },
+              "StatementEnd": 141,
+              "SampleRatio": null,
+              "HasFinal": false
+            },
+            "Right": {
+              "JoinPos": 185,
+              "Left": {
+                "ListPos": 196,
+                "ListEnd": 239,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": {
+                        "Name": "JSONExtractArrayRaw",
+                        "QuoteType": 1,
+                        "NamePos": 196,
+                        "NameEnd": 215
+                      },
+                      "Params": {
+                        "LeftParenPos": 215,
+                        "RightParenPos": 232,
+                        "Items": {
+                          "ListPos": 216,
+                          "ListEnd": 231,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "Fields": [
+                                  {
+                                    "Name": "t2",
+                                    "QuoteType": 1,
+                                    "NamePos": 216,
+                                    "NameEnd": 218
+                                  },
+                                  {
+                                    "Name": "props",
+                                    "QuoteType": 1,
+                                    "NamePos": 219,
+                                    "NameEnd": 224
+                                  }
+                                ]
+                              },
+                              "Alias": null
+                            },
+                            {
+                              "Expr": {
+                                "LiteralPos": 227,
+                                "LiteralEnd": 231,
+                                "Literal": "arr2"
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    },
+                    "Alias": {
+                      "Name": "a2",
+                      "QuoteType": 1,
+                      "NamePos": 237,
+                      "NameEnd": 239
+                    }
+                  }
+                ]
+              },
+              "Right": {
+                "JoinPos": 244,
+                "Left": {
+                  "Table": {
+                    "TablePos": 255,
+                    "TableEnd": 257,
+                    "Alias": null,
+                    "Expr": {
+                      "Database": null,
+                      "Table": {
+                        "Name": "t3",
+                        "QuoteType": 1,
+                        "NamePos": 255,
+                        "NameEnd": 257
+                      }
+                    },
+                    "HasFinal": false
+                  },
+                  "StatementEnd": 257,
+                  "SampleRatio": null,
+                  "HasFinal": false
+                },
+                "Right": null,
+                "Modifiers": [
+                  "INNER",
+                  "JOIN"
+                ],
+                "Constraints": {
+                  "OnPos": 258,
+                  "On": {
+                    "ListPos": 261,
+                    "ListEnd": 295,
+                    "HasDistinct": false,
+                    "Items": [
+                      {
+                        "Expr": {
+                          "LeftExpr": {
+                            "Fields": [
+                              {
+                                "Name": "t3",
+                                "QuoteType": 1,
+                                "NamePos": 261,
+                                "NameEnd": 263
+                              },
+                              {
+                                "Name": "id",
+                                "QuoteType": 1,
+                                "NamePos": 264,
+                                "NameEnd": 266
+                              }
+                            ]
+                          },
+                          "Operation": "=",
+                          "RightExpr": {
+                            "Name": {
+                              "Name": "JSONExtractString",
+                              "QuoteType": 1,
+                              "NamePos": 269,
+                              "NameEnd": 286
+                            },
+                            "Params": {
+                              "LeftParenPos": 286,
+                              "RightParenPos": 295,
+                              "Items": {
+                                "ListPos": 287,
+                                "ListEnd": 294,
+                                "HasDistinct": false,
+                                "Items": [
+                                  {
+                                    "Expr": {
+                                      "Name": "a2",
+                                      "QuoteType": 1,
+                                      "NamePos": 287,
+                                      "NameEnd": 289
+                                    },
+                                    "Alias": null
+                                  },
+                                  {
+                                    "Expr": {
+                                      "LiteralPos": 292,
+                                      "LiteralEnd": 294,
+                                      "Literal": "id"
+                                    },
+                                    "Alias": null
+                                  }
+                                ]
+                              },
+                              "ColumnArgList": null
+                            }
+                          },
+                          "HasGlobal": false,
+                          "HasNot": false
+                        },
+                        "Alias": null
+                      }
+                    ]
+                  }
+                }
+              },
+              "Modifiers": [
+                "ARRAY",
+                "JOIN"
+              ],
+              "Constraints": null
+            },
+            "Modifiers": [
+              "INNER",
+              "JOIN"
+            ],
+            "Constraints": {
+              "OnPos": 142,
+              "On": {
+                "ListPos": 145,
+                "ListEnd": 179,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "LeftExpr": {
+                        "Fields": [
+                          {
+                            "Name": "t2",
+                            "QuoteType": 1,
+                            "NamePos": 145,
+                            "NameEnd": 147
+                          },
+                          {
+                            "Name": "id",
+                            "QuoteType": 1,
+                            "NamePos": 148,
+                            "NameEnd": 150
+                          }
+                        ]
+                      },
+                      "Operation": "=",
+                      "RightExpr": {
+                        "Name": {
+                          "Name": "JSONExtractString",
+                          "QuoteType": 1,
+                          "NamePos": 153,
+                          "NameEnd": 170
+                        },
+                        "Params": {
+                          "LeftParenPos": 170,
+                          "RightParenPos": 179,
+                          "Items": {
+                            "ListPos": 171,
+                            "ListEnd": 178,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "Name": "a1",
+                                  "QuoteType": 1,
+                                  "NamePos": 171,
+                                  "NameEnd": 173
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "LiteralPos": 176,
+                                  "LiteralEnd": 178,
+                                  "Literal": "id"
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        }
+                      },
+                      "HasGlobal": false,
+                      "HasNot": false
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            }
+          },
+          "Modifiers": [
+            "ARRAY",
+            "JOIN"
+          ],
+          "Constraints": null
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "ArrayJoin": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 297,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 303,
+          "NameEnd": 308
+        },
+        "Operation": "!=",
+        "RightExpr": {
+          "LiteralPos": 313,
+          "LiteralEnd": 313,
+          "Literal": ""
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
