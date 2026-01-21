@@ -200,7 +200,7 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
-	case p.matchKeyword(KeywordLeft), p.matchKeyword(KeywordRight):
+	case p.matchKeyword(KeywordLeft):
 		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordOuter) {
@@ -210,6 +210,19 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 		if p.matchKeyword(KeywordSemi) || p.matchKeyword(KeywordAnti) ||
 			p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAll) ||
 			p.matchKeyword(KeywordAsof) || p.matchKeyword(KeywordArray) {
+			modifiers = append(modifiers, p.last().String)
+			_ = p.lexer.consumeToken()
+		}
+	case p.matchKeyword(KeywordRight):
+		modifiers = append(modifiers, p.last().String)
+		_ = p.lexer.consumeToken()
+		if p.matchKeyword(KeywordOuter) {
+			modifiers = append(modifiers, p.last().String)
+			_ = p.lexer.consumeToken()
+		}
+		if p.matchKeyword(KeywordSemi) || p.matchKeyword(KeywordAnti) ||
+			p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAll) ||
+			p.matchKeyword(KeywordAsof) {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
