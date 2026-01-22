@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"fmt"
+	"slices"
 )
 
 func (p *Parser) tryParseWithClause(pos Pos) (*WithClause, error) {
@@ -299,15 +300,7 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	modifiers = append(modifiers, KeywordJoin)
 
 	// Check if this is an ARRAY JOIN
-	isArrayJoin := false
-	for _, mod := range modifiers {
-		if mod == KeywordArray {
-			isArrayJoin = true
-			break
-		}
-	}
-
-	if isArrayJoin {
+	if slices.Contains(modifiers, KeywordArray) {
 		// For ARRAY JOIN, parse column expression list instead of table expression
 		expr, err = p.parseColumnExprList(p.Pos())
 		if err != nil {
@@ -899,7 +892,6 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 		Windows:   windows,
 	}, nil
 }
-
 
 func (p *Parser) tryParseHavingClause(pos Pos) (*HavingClause, error) {
 	if !p.matchKeyword(KeywordHaving) {
