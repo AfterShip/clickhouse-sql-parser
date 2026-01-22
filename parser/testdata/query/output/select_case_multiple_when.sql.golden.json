@@ -1,0 +1,153 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 190,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 11,
+          "NameEnd": 11
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "CasePos": 18,
+          "EndPos": 0,
+          "Expr": null,
+          "Whens": [
+            {
+              "WhenPos": 31,
+              "ThenPos": 52,
+              "When": {
+                "LeftExpr": {
+                  "Name": "col2",
+                  "QuoteType": 1,
+                  "NamePos": 36,
+                  "NameEnd": 40
+                },
+                "Operation": "=",
+                "RightExpr": {
+                  "LiteralPos": 44,
+                  "LiteralEnd": 50,
+                  "Literal": "value1"
+                },
+                "HasGlobal": false,
+                "HasNot": false
+              },
+              "Then": {
+                "LiteralPos": 58,
+                "LiteralEnd": 63,
+                "Literal": "when1"
+              },
+              "ElsePos": 0,
+              "Else": null
+            },
+            {
+              "WhenPos": 73,
+              "ThenPos": 94,
+              "When": {
+                "LeftExpr": {
+                  "Name": "col3",
+                  "QuoteType": 1,
+                  "NamePos": 78,
+                  "NameEnd": 82
+                },
+                "Operation": "=",
+                "RightExpr": {
+                  "LiteralPos": 86,
+                  "LiteralEnd": 92,
+                  "Literal": "value2"
+                },
+                "HasGlobal": false,
+                "HasNot": false
+              },
+              "Then": {
+                "LiteralPos": 100,
+                "LiteralEnd": 105,
+                "Literal": "when2"
+              },
+              "ElsePos": 0,
+              "Else": null
+            }
+          ],
+          "ElsePos": 115,
+          "Else": {
+            "LiteralPos": 121,
+            "LiteralEnd": 125,
+            "Literal": "else"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "check_result",
+          "QuoteType": 1,
+          "NamePos": 138,
+          "NameEnd": 150
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 151,
+      "Expr": {
+        "Table": {
+          "TablePos": 156,
+          "TableEnd": 166,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "table_name",
+              "QuoteType": 1,
+              "NamePos": 156,
+              "NameEnd": 166
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 166,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 167,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "col1",
+          "QuoteType": 1,
+          "NamePos": 173,
+          "NameEnd": 177
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "LiteralPos": 181,
+          "LiteralEnd": 190,
+          "Literal": "123456789"
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
