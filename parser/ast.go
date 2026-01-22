@@ -6422,6 +6422,13 @@ func (j *JoinExpr) Pos() Pos {
 }
 
 func (j *JoinExpr) End() Pos {
+	// Return the rightmost position
+	if j.Right != nil {
+		return j.Right.End()
+	}
+	if j.Constraints != nil {
+		return j.Constraints.End()
+	}
 	return j.Left.End()
 }
 
