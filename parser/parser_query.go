@@ -3,6 +3,8 @@ package parser
 import (
 	"errors"
 	"fmt"
+
+	"slices"
 )
 
 func (p *Parser) tryParseWithClause(pos Pos) (*WithClause, error) {
@@ -196,11 +198,11 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 	case p.matchKeyword(KeywordInner):
 		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
-		if p.matchKeyword(KeywordAll) || p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAsof) {
+		if p.matchKeyword(KeywordAll) || p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAsof) || p.matchKeyword(KeywordArray) {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
-	case p.matchKeyword(KeywordLeft), p.matchKeyword(KeywordRight):
+	case p.matchKeyword(KeywordLeft):
 		modifiers = append(modifiers, p.last().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordOuter) {
@@ -210,6 +212,19 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 		if p.matchKeyword(KeywordSemi) || p.matchKeyword(KeywordAnti) ||
 			p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAll) ||
 			p.matchKeyword(KeywordAsof) || p.matchKeyword(KeywordArray) {
+			modifiers = append(modifiers, p.last().String)
+			_ = p.lexer.consumeToken()
+		}
+	case p.matchKeyword(KeywordRight):
+		modifiers = append(modifiers, p.last().String)
+		_ = p.lexer.consumeToken()
+		if p.matchKeyword(KeywordOuter) {
+			modifiers = append(modifiers, p.last().String)
+			_ = p.lexer.consumeToken()
+		}
+		if p.matchKeyword(KeywordSemi) || p.matchKeyword(KeywordAnti) ||
+			p.matchKeyword(KeywordAny) || p.matchKeyword(KeywordAll) ||
+			p.matchKeyword(KeywordAsof) {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
@@ -224,6 +239,9 @@ func (p *Parser) parseJoinOp(_ Pos) []string {
 			modifiers = append(modifiers, p.last().String)
 			_ = p.lexer.consumeToken()
 		}
+	case p.matchKeyword(KeywordArray):
+		modifiers = append(modifiers, p.last().String)
+		_ = p.lexer.consumeToken()
 	}
 	return modifiers
 }
@@ -281,6 +299,30 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	}
 
 	modifiers = append(modifiers, KeywordJoin)
+
+	// Check if this is an ARRAY JOIN
+	if slices.Contains(modifiers, KeywordArray) {
+		// For ARRAY JOIN, parse column expression list instead of table expression
+		expr, err = p.parseColumnExprList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		// ARRAY JOIN doesn't have constraints (ON/USING)
+		// try parse next join
+		rightExpr, err = p.parseJoinRightExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &JoinExpr{
+			JoinPos:     pos,
+			Left:        expr,
+			Right:       rightExpr,
+			Modifiers:   modifiers,
+			Constraints: nil,
+		}, nil
+	}
+
 	expr, err = p.parseJoinTableExpr(p.Pos())
 	if err != nil {
 		return nil, err
@@ -852,41 +894,6 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 	}, nil
 }
 
-func (p *Parser) tryParseArrayJoinClause(pos Pos) (*ArrayJoinClause, error) {
-	if !p.matchKeyword(KeywordLeft) && !p.matchKeyword(KeywordInner) && !p.matchKeyword(KeywordArray) {
-		return nil, nil
-	}
-	return p.parseArrayJoinClause(pos)
-}
-
-func (p *Parser) parseArrayJoinClause(_ Pos) (*ArrayJoinClause, error) {
-	var typ string
-	switch {
-	case p.matchKeyword(KeywordLeft), p.matchKeyword(KeywordInner):
-		typ = p.last().String
-		_ = p.lexer.consumeToken()
-	}
-	arrayPos := p.Pos()
-	if err := p.expectKeyword(KeywordArray); err != nil {
-		return nil, err
-	}
-
-	if err := p.expectKeyword(KeywordJoin); err != nil {
-		return nil, err
-	}
-
-	expr, err := p.parseColumnExprList(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
-	return &ArrayJoinClause{
-		ArrayPos: arrayPos,
-		Type:     typ,
-		Expr:     expr,
-	}, nil
-}
-
 func (p *Parser) tryParseHavingClause(pos Pos) (*HavingClause, error) {
 	if !p.matchKeyword(KeywordHaving) {
 		return nil, nil
@@ -1009,18 +1016,6 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if from != nil {
 		statementEnd = from.End()
 	}
-	var arrayJoins []*ArrayJoinClause
-	for {
-		arrayJoin, err := p.tryParseArrayJoinClause(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		if arrayJoin == nil {
-			break
-		}
-		arrayJoins = append(arrayJoins, arrayJoin)
-		statementEnd = arrayJoin.End()
-	}
 	prewhere, err := p.tryParsePrewhereClause(p.Pos())
 	if err != nil {
 		return nil, err
@@ -1129,7 +1124,6 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		DistinctOn:   distinctOn,
 		SelectItems:  selectItems,
 		From:         from,
-		ArrayJoin:    arrayJoins,
 		Window:       window,
 		Prewhere:     prewhere,
 		Where:        where,

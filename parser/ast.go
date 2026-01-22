@@ -6422,6 +6422,13 @@ func (j *JoinExpr) Pos() Pos {
 }
 
 func (j *JoinExpr) End() Pos {
+	// Return the rightmost position
+	if j.Right != nil {
+		return j.Right.End()
+	}
+	if j.Constraints != nil {
+		return j.Constraints.End()
+	}
 	return j.Left.End()
 }
 
@@ -7237,36 +7244,6 @@ func (f *WindowFrameParam) Accept(visitor ASTVisitor) error {
 	return visitor.VisitWindowFrameParam(f)
 }
 
-type ArrayJoinClause struct {
-	ArrayPos Pos
-	Type     string
-	Expr     Expr
-}
-
-func (a *ArrayJoinClause) Pos() Pos {
-	return a.ArrayPos
-}
-
-func (a *ArrayJoinClause) End() Pos {
-	return a.Expr.End()
-}
-
-func (a *ArrayJoinClause) String() string {
-	if a.Type != "" {
-		return a.Type + " ARRAY JOIN " + a.Expr.String()
-	}
-	return "ARRAY JOIN " + a.Expr.String()
-}
-
-func (a *ArrayJoinClause) Accept(visitor ASTVisitor) error {
-	visitor.Enter(a)
-	defer visitor.Leave(a)
-	if err := a.Expr.Accept(visitor); err != nil {
-		return err
-	}
-	return visitor.VisitArrayJoinExpr(a)
-}
-
 type SelectQuery struct {
 	SelectPos     Pos
 	StatementEnd  Pos
@@ -7276,7 +7253,6 @@ type SelectQuery struct {
 	DistinctOn    *DistinctOn
 	SelectItems   []*SelectItem
 	From          *FromClause
-	ArrayJoin     []*ArrayJoinClause
 	Window        *WindowClause
 	Prewhere      *PrewhereClause
 	Where         *WhereClause
@@ -7336,10 +7312,6 @@ func (s *SelectQuery) String() string { // nolint: funlen
 	if s.From != nil {
 		builder.WriteString(" ")
 		builder.WriteString(s.From.String())
-	}
-	for _, arrayJoin := range s.ArrayJoin {
-		builder.WriteString(" ")
-		builder.WriteString(arrayJoin.String())
 	}
 	if s.Window != nil {
 		builder.WriteString(" ")
@@ -7416,11 +7388,6 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	}
 	if s.From != nil {
 		if err := s.From.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	for _, arrayJoin := range s.ArrayJoin {
-		if err := arrayJoin.Accept(visitor); err != nil {
 			return err
 		}
 	}

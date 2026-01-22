@@ -59,53 +59,61 @@
     "From": {
       "FromPos": 25,
       "Expr": {
-        "Table": {
-          "TablePos": 30,
-          "TableEnd": 33,
-          "Alias": null,
-          "Expr": {
-            "Database": null,
-            "Table": {
-              "Name": "foo",
-              "QuoteType": 1,
-              "NamePos": 30,
-              "NameEnd": 33
-            }
+        "JoinPos": 30,
+        "Left": {
+          "Table": {
+            "TablePos": 30,
+            "TableEnd": 33,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "foo",
+                "QuoteType": 1,
+                "NamePos": 30,
+                "NameEnd": 33
+              }
+            },
+            "HasFinal": false
           },
+          "StatementEnd": 33,
+          "SampleRatio": null,
           "HasFinal": false
         },
-        "StatementEnd": 33,
-        "SampleRatio": null,
-        "HasFinal": false
+        "Right": {
+          "JoinPos": 34,
+          "Left": {
+            "ListPos": 45,
+            "ListEnd": 53,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "m",
+                  "QuoteType": 1,
+                  "NamePos": 45,
+                  "NameEnd": 46
+                },
+                "Alias": {
+                  "Name": "bar",
+                  "QuoteType": 1,
+                  "NamePos": 50,
+                  "NameEnd": 53
+                }
+              }
+            ]
+          },
+          "Right": null,
+          "Modifiers": [
+            "ARRAY",
+            "JOIN"
+          ],
+          "Constraints": null
+        },
+        "Modifiers": null,
+        "Constraints": null
       }
     },
-    "ArrayJoin": [
-      {
-        "ArrayPos": 34,
-        "Type": "",
-        "Expr": {
-          "ListPos": 45,
-          "ListEnd": 53,
-          "HasDistinct": false,
-          "Items": [
-            {
-              "Expr": {
-                "Name": "m",
-                "QuoteType": 1,
-                "NamePos": 45,
-                "NameEnd": 46
-              },
-              "Alias": {
-                "Name": "bar",
-                "QuoteType": 1,
-                "NamePos": 50,
-                "NameEnd": 53
-              }
-            }
-          ]
-        }
-      }
-    ],
     "Window": null,
     "Prewhere": null,
     "Where": null,

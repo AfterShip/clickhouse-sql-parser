@@ -36,11 +36,6 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.From, fn) {
 			return false
 		}
-		for _, arrayJoin := range n.ArrayJoin {
-			if !Walk(arrayJoin, fn) {
-				return false
-			}
-		}
 		if !Walk(n.Window, fn) {
 			return false
 		}
@@ -431,10 +426,6 @@ func Walk(node Expr, fn WalkFunc) bool {
 		// Leaf node
 	case *WindowFrameNumber:
 		if !Walk(n.Number, fn) {
-			return false
-		}
-	case *ArrayJoinClause:
-		if !Walk(n.Expr, fn) {
 			return false
 		}
 	case *TopClause:

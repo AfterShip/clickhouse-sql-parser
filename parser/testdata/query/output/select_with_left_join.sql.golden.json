@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 121,
+    "StatementEnd": 151,
     "With": {
       "WithPos": 0,
       "EndPos": 68,
@@ -39,7 +39,6 @@
               }
             ],
             "From": null,
-            "ArrayJoin": null,
             "Window": null,
             "Prewhere": null,
             "Where": null,
@@ -89,7 +88,6 @@
               }
             ],
             "From": null,
-            "ArrayJoin": null,
             "Window": null,
             "Prewhere": null,
             "Where": null,
@@ -198,7 +196,6 @@
         "Constraints": null
       }
     },
-    "ArrayJoin": null,
     "Window": null,
     "Prewhere": null,
     "Where": null,

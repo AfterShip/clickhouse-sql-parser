@@ -152,7 +152,6 @@
                   "HasFinal": false
                 }
               },
-              "ArrayJoin": null,
               "Window": null,
               "Prewhere": null,
               "Where": null,
@@ -176,7 +175,6 @@
         "HasFinal": false
       }
     },
-    "ArrayJoin": null,
     "Window": null,
     "Prewhere": null,
     "Where": null,

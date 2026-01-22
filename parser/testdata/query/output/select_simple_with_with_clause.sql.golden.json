@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 124,
+    "StatementEnd": 134,
     "With": {
       "WithPos": 0,
       "EndPos": 46,
@@ -56,7 +56,6 @@
                 "HasFinal": false
               }
             },
-            "ArrayJoin": null,
             "Window": null,
             "Prewhere": null,
             "Where": null,
@@ -123,7 +122,6 @@
                 "HasFinal": false
               }
             },
-            "ArrayJoin": null,
             "Window": null,
             "Prewhere": null,
             "Where": null,
@@ -280,7 +278,6 @@
         "Constraints": null
       }
     },
-    "ArrayJoin": null,
     "Window": null,
     "Prewhere": null,
     "Where": null,

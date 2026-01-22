@@ -141,6 +141,9 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE (x",         // Missing closing paren
 		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE x AS x + 1", // Missing parens around column list
 		"ALTER TABLE foo_mv MODIFY QUERY AS SELECT * FROM baz",        // MODIFY QUERY followed by an invalid query
+		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
+		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
+		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
