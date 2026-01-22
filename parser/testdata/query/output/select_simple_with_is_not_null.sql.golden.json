@@ -81,7 +81,6 @@
         "HasFinal": false
       }
     },
-    "ArrayJoin": null,
     "Window": null,
     "Prewhere": null,
     "Where": {

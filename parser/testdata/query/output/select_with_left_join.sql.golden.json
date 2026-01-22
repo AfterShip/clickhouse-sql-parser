@@ -39,7 +39,6 @@
               }
             ],
             "From": null,
-            "ArrayJoin": null,
             "Window": null,
             "Prewhere": null,
             "Where": null,
@@ -89,7 +88,6 @@
               }
             ],
             "From": null,
-            "ArrayJoin": null,
             "Window": null,
             "Prewhere": null,
             "Where": null,
@@ -198,7 +196,6 @@
         "Constraints": null
       }
     },
-    "ArrayJoin": null,
     "Window": null,
     "Prewhere": null,
     "Where": null,

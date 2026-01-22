@@ -900,51 +900,6 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 	}, nil
 }
 
-func (p *Parser) tryParseArrayJoinClause(pos Pos) (*ArrayJoinClause, error) {
-	// Check if we have ARRAY directly
-	if p.matchKeyword(KeywordArray) {
-		return p.parseArrayJoinClause(pos)
-	}
-
-	// Check if we have LEFT/INNER followed by ARRAY (need lookahead)
-	if p.matchKeyword(KeywordLeft) || p.matchKeyword(KeywordInner) {
-		// Lookahead to check if ARRAY follows
-		nextToken, err := p.lexer.peekToken()
-		if err == nil && nextToken != nil && nextToken.Kind == TokenKindKeyword && nextToken.String == KeywordArray {
-			return p.parseArrayJoinClause(pos)
-		}
-	}
-
-	return nil, nil
-}
-
-func (p *Parser) parseArrayJoinClause(_ Pos) (*ArrayJoinClause, error) {
-	var typ string
-	switch {
-	case p.matchKeyword(KeywordLeft), p.matchKeyword(KeywordInner):
-		typ = p.last().String
-		_ = p.lexer.consumeToken()
-	}
-	arrayPos := p.Pos()
-	if err := p.expectKeyword(KeywordArray); err != nil {
-		return nil, err
-	}
-
-	if err := p.expectKeyword(KeywordJoin); err != nil {
-		return nil, err
-	}
-
-	expr, err := p.parseColumnExprList(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
-	return &ArrayJoinClause{
-		ArrayPos: arrayPos,
-		Type:     typ,
-		Expr:     expr,
-	}, nil
-}
 
 func (p *Parser) tryParseHavingClause(pos Pos) (*HavingClause, error) {
 	if !p.matchKeyword(KeywordHaving) {
@@ -1068,18 +1023,6 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if from != nil {
 		statementEnd = from.End()
 	}
-	var arrayJoins []*ArrayJoinClause
-	for {
-		arrayJoin, err := p.tryParseArrayJoinClause(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		if arrayJoin == nil {
-			break
-		}
-		arrayJoins = append(arrayJoins, arrayJoin)
-		statementEnd = arrayJoin.End()
-	}
 	prewhere, err := p.tryParsePrewhereClause(p.Pos())
 	if err != nil {
 		return nil, err
@@ -1188,7 +1131,6 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		DistinctOn:   distinctOn,
 		SelectItems:  selectItems,
 		From:         from,
-		ArrayJoin:    arrayJoins,
 		Window:       window,
 		Prewhere:     prewhere,
 		Where:        where,
