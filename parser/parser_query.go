@@ -3,7 +3,8 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"slices"
+
+	"golang.org/x/exp/slices"
 )
 
 func (p *Parser) tryParseWithClause(pos Pos) (*WithClause, error) {
