@@ -72,7 +72,8 @@
           "CompressionCodec": null
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
       }
     ]
   },
@@ -140,7 +141,8 @@
           "CompressionCodec": null
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
       }
     ]
   }

@@ -117,12 +117,21 @@ func (p *Parser) parseAlterTableAddColumn(pos Pos) (*AlterTableAddColumn, error)
 		statementEnd = after.End()
 	}
 
+	settings, err := p.tryParseSettingsClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if settings != nil {
+		statementEnd = settings.End()
+	}
+
 	return &AlterTableAddColumn{
 		AddPos:       pos,
 		StatementEnd: statementEnd,
 		Column:       column,
 		IfNotExists:  ifNotExists,
 		After:        after,
+		Settings:     settings,
 	}, nil
 }
 
