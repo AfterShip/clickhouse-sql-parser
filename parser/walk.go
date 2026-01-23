@@ -831,6 +831,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.After, fn) {
 			return false
 		}
+		if !Walk(n.Settings, fn) {
+			return false
+		}
 	case *AlterTableAddIndex:
 		if !Walk(n.Index, fn) {
 			return false

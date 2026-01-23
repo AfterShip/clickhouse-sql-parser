@@ -605,6 +605,7 @@ type AlterTableAddColumn struct {
 	Column      *ColumnDef
 	IfNotExists bool
 	After       *NestedIdentifier
+	Settings    *SettingsClause
 }
 
 func (a *AlterTableAddColumn) Pos() Pos {
@@ -612,6 +613,9 @@ func (a *AlterTableAddColumn) Pos() Pos {
 }
 
 func (a *AlterTableAddColumn) End() Pos {
+	if a.Settings != nil {
+		return a.Settings.End()
+	}
 	return a.StatementEnd
 }
 
@@ -622,13 +626,17 @@ func (a *AlterTableAddColumn) AlterType() string {
 func (a *AlterTableAddColumn) String() string {
 	var builder strings.Builder
 	builder.WriteString("ADD COLUMN ")
-	builder.WriteString(a.Column.String())
 	if a.IfNotExists {
 		builder.WriteString("IF NOT EXISTS ")
 	}
+	builder.WriteString(a.Column.String())
 	if a.After != nil {
 		builder.WriteString(" AFTER ")
 		builder.WriteString(a.After.String())
+	}
+	if a.Settings != nil {
+		builder.WriteByte(' ')
+		builder.WriteString(a.Settings.String())
 	}
 	return builder.String()
 }
@@ -641,6 +649,11 @@ func (a *AlterTableAddColumn) Accept(visitor ASTVisitor) error {
 	}
 	if a.After != nil {
 		if err := a.After.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if a.Settings != nil {
+		if err := a.Settings.Accept(visitor); err != nil {
 			return err
 		}
 	}
