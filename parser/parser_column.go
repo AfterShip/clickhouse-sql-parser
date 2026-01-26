@@ -901,11 +901,16 @@ func (p *Parser) parseColumnCaseExpr(pos Pos) (*CaseExpr, error) {
 	return caseExpr, nil
 }
 
-func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) { // nolint:funlen
+func (p *Parser) parseColumnType(_ Pos) (ColumnType, error) {
 	ident, err := p.parseIdent()
 	if err != nil {
 		return nil, err
 	}
+
+	return p.parseColumnTypeArgs(ident)
+}
+
+func (p *Parser) parseColumnTypeArgs(ident *Ident) (ColumnType, error) { // nolint:funlen
 	if lParen := p.tryConsumeTokenKind(TokenKindLParen); lParen != nil {
 		switch {
 		case p.matchTokenKind(TokenKindIdent):
@@ -1185,10 +1190,11 @@ func (p *Parser) parseJSONType(name *Ident, pos Pos) (*JSONType, error) {
 }
 
 func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedType, error) {
-	columns, err := p.parseTableColumns()
+	columns, err := p.parseNestedTypeFields()
 	if err != nil {
 		return nil, err
 	}
+
 	rightParenPos := p.Pos()
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
@@ -1198,6 +1204,121 @@ func (p *Parser) parseNestedType(name *Ident, pos Pos) (*NestedType, error) {
 		RightParenPos: rightParenPos,
 		Name:          name,
 		Columns:       columns,
+	}, nil
+}
+
+func (p *Parser) parseNestedTypeFields() ([]Expr, error) {
+	switch {
+	case p.lexer.isEOF() || p.matchTokenKind(TokenKindRParen):
+		// Cases like `Tuple()`
+		return []Expr{}, nil
+	case p.matchTokenKind(TokenKindIdent):
+		ident, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+
+		if p.matchTokenKind(TokenKindIdent) {
+			// Cases like `Tuple(a Int, b String)` or `Nested(a Int, b String)`
+			return p.parseNestedTypeFieldsWithNames(ident)
+		}
+
+		// Cases like `Tuple(Int, String)`
+		return p.parseNestedTypeFieldsWithoutNames(ident)
+	default:
+		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+	}
+}
+
+func (p *Parser) parseNestedTypeFieldsWithNames(firstIdent *Ident) ([]Expr, error) {
+	columns := make([]Expr, 0)
+
+	columnType, err := p.parseColumnType(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	columns = append(columns, &ColumnDef{
+		NamePos: firstIdent.Pos(),
+		Name: &NestedIdentifier{
+			Ident: firstIdent,
+		},
+		Type:      columnType,
+		ColumnEnd: columnType.End(),
+	})
+
+	if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		return columns, nil
+	}
+
+	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
+		column, err := p.parseNestedTypeFieldWithName()
+		if err != nil {
+			return nil, err
+		}
+		if column == nil {
+			break
+		}
+		columns = append(columns, column)
+
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+
+	return columns, nil
+}
+
+func (p *Parser) parseNestedTypeFieldsWithoutNames(firstIdent *Ident) ([]Expr, error) {
+	columns := make([]Expr, 0)
+
+	column, err := p.parseColumnTypeArgs(firstIdent)
+	if err != nil {
+		return nil, err
+	}
+
+	columns = append(columns, column)
+
+	if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		return columns, nil
+	}
+
+	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
+		column, err := p.parseColumnType(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if column == nil {
+			break
+		}
+		columns = append(columns, column)
+
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+
+	return columns, nil
+}
+
+func (p *Parser) parseNestedTypeFieldWithName() (Expr, error) {
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	columnType, err := p.parseColumnType(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &ColumnDef{
+		NamePos: name.Pos(),
+		Name: &NestedIdentifier{
+			Ident: name,
+		},
+		Type:      columnType,
+		ColumnEnd: columnType.End(),
 	}, nil
 }
 
