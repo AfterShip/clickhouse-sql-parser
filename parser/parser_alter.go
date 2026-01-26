@@ -645,15 +645,25 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 	case p.matchKeyword(KeywordColumn):
 		return p.parseAlterTableModifyColumn(pos)
 	case p.matchKeyword(KeywordTtl):
+		ttlPos := p.Pos()
 		_ = p.lexer.consumeToken()
-		ttlExpr, err := p.parseTTLExpr(p.Pos())
+		items, err := p.parseTTLClause(ttlPos, true)
 		if err != nil {
 			return nil, err
 		}
+		listEnd := ttlPos
+		if len(items) > 0 {
+			listEnd = items[len(items)-1].End()
+		}
+		ttlClause := &TTLClause{
+			TTLPos:  ttlPos,
+			ListEnd: listEnd,
+			Items:   items,
+		}
 		return &AlterTableModifyTTL{
 			ModifyPos:    pos,
-			StatementEnd: ttlExpr.End(),
-			TTL:          ttlExpr,
+			StatementEnd: ttlClause.End(),
+			TTL:          ttlClause,
 		}, nil
 	case p.matchKeyword(KeywordQuery):
 		_ = p.lexer.consumeToken()

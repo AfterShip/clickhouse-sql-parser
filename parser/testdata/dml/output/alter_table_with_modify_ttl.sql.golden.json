@@ -30,34 +30,40 @@
         "ModifyPos": 73,
         "StatementEnd": 112,
         "TTL": {
-          "TTLPos": 84,
-          "Expr": {
-            "LeftExpr": {
-              "Name": "created_at",
-              "QuoteType": 1,
-              "NamePos": 84,
-              "NameEnd": 94
-            },
-            "Operation": "+",
-            "RightExpr": {
-              "IntervalPos": 97,
+          "TTLPos": 80,
+          "ListEnd": 112,
+          "Items": [
+            {
+              "TTLPos": 80,
               "Expr": {
-                "NumPos": 106,
-                "NumEnd": 107,
-                "Literal": "3",
-                "Base": 10
+                "LeftExpr": {
+                  "Name": "created_at",
+                  "QuoteType": 1,
+                  "NamePos": 84,
+                  "NameEnd": 94
+                },
+                "Operation": "+",
+                "RightExpr": {
+                  "IntervalPos": 97,
+                  "Expr": {
+                    "NumPos": 106,
+                    "NumEnd": 107,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "Unit": {
+                    "Name": "YEAR",
+                    "QuoteType": 1,
+                    "NamePos": 108,
+                    "NameEnd": 112
+                  }
+                },
+                "HasGlobal": false,
+                "HasNot": false
               },
-              "Unit": {
-                "Name": "YEAR",
-                "QuoteType": 1,
-                "NamePos": 108,
-                "NameEnd": 112
-              }
-            },
-            "HasGlobal": false,
-            "HasNot": false
-          },
-          "Policy": null
+              "Policy": null
+            }
+          ]
         }
       }
     ]

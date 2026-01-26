@@ -1254,7 +1254,7 @@ func (a *AlterTableModifyQuery) Accept(visitor ASTVisitor) error {
 type AlterTableModifyTTL struct {
 	ModifyPos    Pos
 	StatementEnd Pos
-	TTL          *TTLExpr
+	TTL          *TTLClause
 }
 
 func (a *AlterTableModifyTTL) Pos() Pos {
@@ -1272,7 +1272,6 @@ func (a *AlterTableModifyTTL) AlterType() string {
 func (a *AlterTableModifyTTL) String() string {
 	var builder strings.Builder
 	builder.WriteString("MODIFY ")
-	builder.WriteString("TTL ")
 	builder.WriteString(a.TTL.String())
 	return builder.String()
 }

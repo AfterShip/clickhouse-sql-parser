@@ -1,0 +1,182 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 184,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 14
+      },
+      "Table": {
+        "Name": "t0",
+        "QuoteType": 1,
+        "NamePos": 15,
+        "NameEnd": 17
+      }
+    },
+    "OnCluster": {
+      "OnPos": 18,
+      "Expr": {
+        "Name": "default_cluster",
+        "QuoteType": 1,
+        "NamePos": 29,
+        "NameEnd": 44
+      }
+    },
+    "AlterExprs": [
+      {
+        "ModifyPos": 45,
+        "StatementEnd": 184,
+        "TTL": {
+          "TTLPos": 52,
+          "ListEnd": 184,
+          "Items": [
+            {
+              "TTLPos": 52,
+              "Expr": {
+                "LeftExpr": {
+                  "Name": {
+                    "Name": "toDateTime",
+                    "QuoteType": 1,
+                    "NamePos": 60,
+                    "NameEnd": 70
+                  },
+                  "Params": {
+                    "LeftParenPos": 70,
+                    "RightParenPos": 93,
+                    "Items": {
+                      "ListPos": 71,
+                      "ListEnd": 93,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "LeftExpr": {
+                              "Name": "timestamp",
+                              "QuoteType": 1,
+                              "NamePos": 71,
+                              "NameEnd": 80
+                            },
+                            "Operation": "/",
+                            "RightExpr": {
+                              "NumPos": 83,
+                              "NumEnd": 93,
+                              "Literal": "1000000000",
+                              "Base": 10
+                            },
+                            "HasGlobal": false,
+                            "HasNot": false
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Operation": "+",
+                "RightExpr": {
+                  "IntervalPos": 97,
+                  "Expr": {
+                    "NumPos": 106,
+                    "NumEnd": 108,
+                    "Literal": "30",
+                    "Base": 10
+                  },
+                  "Unit": {
+                    "Name": "DAY",
+                    "QuoteType": 1,
+                    "NamePos": 109,
+                    "NameEnd": 112
+                  }
+                },
+                "HasGlobal": false,
+                "HasNot": false
+              },
+              "Policy": {
+                "Item": {
+                  "RulePos": 113,
+                  "ToVolume": null,
+                  "ToDisk": {
+                    "LiteralPos": 122,
+                    "LiteralEnd": 125,
+                    "Literal": "gcs"
+                  },
+                  "Action": null
+                },
+                "Where": null,
+                "GroupBy": null
+              }
+            },
+            {
+              "TTLPos": 52,
+              "Expr": {
+                "LeftExpr": {
+                  "Name": {
+                    "Name": "toDateTime",
+                    "QuoteType": 1,
+                    "NamePos": 132,
+                    "NameEnd": 142
+                  },
+                  "Params": {
+                    "LeftParenPos": 142,
+                    "RightParenPos": 165,
+                    "Items": {
+                      "ListPos": 143,
+                      "ListEnd": 165,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "LeftExpr": {
+                              "Name": "timestamp",
+                              "QuoteType": 1,
+                              "NamePos": 143,
+                              "NameEnd": 152
+                            },
+                            "Operation": "/",
+                            "RightExpr": {
+                              "NumPos": 155,
+                              "NumEnd": 165,
+                              "Literal": "1000000000",
+                              "Base": 10
+                            },
+                            "HasGlobal": false,
+                            "HasNot": false
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Operation": "+",
+                "RightExpr": {
+                  "IntervalPos": 169,
+                  "Expr": {
+                    "NumPos": 178,
+                    "NumEnd": 180,
+                    "Literal": "60",
+                    "Base": 10
+                  },
+                  "Unit": {
+                    "Name": "DAY",
+                    "QuoteType": 1,
+                    "NamePos": 181,
+                    "NameEnd": 184
+                  }
+                },
+                "HasGlobal": false,
+                "HasNot": false
+              },
+              "Policy": null
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
