@@ -14,6 +14,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY, but got %q", p.last().String)
 		}
 		switch {
+		case p.matchKeyword(KeywordNamed):
+			return p.parseCreateNamedCollection(pos)
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseCreateDatabase(pos)
 		case p.matchKeyword(KeywordDictionary):
@@ -34,7 +36,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordUser):
 			return p.parseCreateUser(pos)
 		default:
-			return nil, fmt.Errorf("expected keyword: DATABASE|DICTIONARY|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
+			return nil, fmt.Errorf("expected keyword: NAMED|DATABASE|DICTIONARY|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
 				p.lastTokenKind())
 		}
 	case p.matchKeyword(KeywordAlter):
@@ -181,6 +183,126 @@ func (p *Parser) parseCreateDictionary(pos Pos, orReplace bool) (*CreateDictiona
 	}
 
 	return createDict, nil
+}
+
+func (p *Parser) parseCreateNamedCollection(pos Pos) (*CreateNamedCollection, error) {
+	if err := p.expectKeyword(KeywordNamed); err != nil {
+		return nil, err
+	}
+
+	if err := p.expectKeyword(KeywordCollection); err != nil {
+		return nil, err
+	}
+
+	createCollection := &CreateNamedCollection{
+		CreatePos: pos,
+	}
+
+	// parse IF NOT EXISTS clause if exists
+	var err error
+	createCollection.IfNotExists, err = p.tryParseIfNotExists()
+	if err != nil {
+		return nil, err
+	}
+
+	// parse collection name
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	createCollection.Name = name
+
+	// parse ON CLUSTER clause if exists
+	onCluster, err := p.tryParseClusterClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	createCollection.OnCluster = onCluster
+
+	// parse AS keyword
+	if err := p.expectKeyword(KeywordAs); err != nil {
+		return nil, err
+	}
+
+	// parse parameters
+	params := make([]*NamedCollectionParam, 0)
+	for !p.lexer.isEOF() {
+		param, err := p.parseNamedCollectionParam(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		params = append(params, param)
+
+		// Check if there's another parameter
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+	createCollection.Params = params
+
+	if len(params) > 0 {
+		createCollection.StatementEnd = params[len(params)-1].End()
+	} else if onCluster != nil {
+		createCollection.StatementEnd = onCluster.End()
+	} else {
+		createCollection.StatementEnd = name.End()
+	}
+
+	return createCollection, nil
+}
+
+func (p *Parser) parseNamedCollectionParam(pos Pos) (*NamedCollectionParam, error) {
+	name, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+		return nil, err
+	}
+
+	// Parse the value - can be string, number, or identifier
+	var value Expr
+	switch {
+	case p.matchTokenKind(TokenKindString):
+		literal, err := p.parseLiteral(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		value = literal
+	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat):
+		literal, err := p.parseLiteral(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		value = literal
+	case p.matchTokenKind(TokenKindIdent):
+		ident, err := p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+		value = ident
+	default:
+		return nil, fmt.Errorf("expected string, number or identifier in named collection parameter, got %s", p.lastTokenKind())
+	}
+
+	param := &NamedCollectionParam{
+		ParamPos: pos,
+		Name:     name,
+		Value:    value,
+	}
+
+	// Parse optional [NOT] OVERRIDABLE clause
+	if p.tryConsumeKeywords(KeywordNot) {
+		param.NotOverridable = true
+		if err := p.expectKeyword(KeywordOverridable); err != nil {
+			return nil, err
+		}
+	} else if p.tryConsumeKeywords(KeywordOverridable) {
+		param.Overridable = true
+	}
+
+	return param, nil
 }
 
 func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error) {

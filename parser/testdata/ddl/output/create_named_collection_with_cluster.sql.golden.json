@@ -1,0 +1,72 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 153,
+    "Name": {
+      "Name": "my_collection",
+      "QuoteType": 1,
+      "NamePos": 38,
+      "NameEnd": 51
+    },
+    "IfNotExists": true,
+    "OnCluster": {
+      "OnPos": 52,
+      "Expr": {
+        "Name": "my_cluster",
+        "QuoteType": 1,
+        "NamePos": 63,
+        "NameEnd": 73
+      }
+    },
+    "Params": [
+      {
+        "ParamPos": 77,
+        "Name": {
+          "Name": "key1",
+          "QuoteType": 1,
+          "NamePos": 77,
+          "NameEnd": 81
+        },
+        "Value": {
+          "LiteralPos": 85,
+          "LiteralEnd": 91,
+          "Literal": "value1"
+        },
+        "Overridable": true,
+        "NotOverridable": false
+      },
+      {
+        "ParamPos": 106,
+        "Name": {
+          "Name": "key2",
+          "QuoteType": 1,
+          "NamePos": 106,
+          "NameEnd": 110
+        },
+        "Value": {
+          "LiteralPos": 114,
+          "LiteralEnd": 120,
+          "Literal": "value2"
+        },
+        "Overridable": false,
+        "NotOverridable": true
+      },
+      {
+        "ParamPos": 139,
+        "Name": {
+          "Name": "key3",
+          "QuoteType": 1,
+          "NamePos": 139,
+          "NameEnd": 143
+        },
+        "Value": {
+          "LiteralPos": 147,
+          "LiteralEnd": 153,
+          "Literal": "value3"
+        },
+        "Overridable": false,
+        "NotOverridable": false
+      }
+    ]
+  }
+]

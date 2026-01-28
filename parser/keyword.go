@@ -31,6 +31,7 @@ const (
 	KeywordCluster      = "CLUSTER"
 	KeywordCodec        = "CODEC"
 	KeywordCollate      = "COLLATE"
+	KeywordCollection   = "COLLECTION"
 	KeywordColumn       = "COLUMN"
 	KeywordColumns      = "COLUMNS"
 	KeywordComment      = "COMMENT"
@@ -145,6 +146,7 @@ const (
 	KeywordMoves        = "MOVES"
 	KeywordMutation     = "MUTATION"
 	KeywordName         = "NAME"
+	KeywordNamed        = "NAMED"
 	KeywordNan_sql      = "NAN_SQL"
 	KeywordNo           = "NO"
 	KeywordNone         = "NONE"
@@ -157,6 +159,7 @@ const (
 	KeywordOption       = "OPTION"
 	KeywordOr           = "OR"
 	KeywordOrder        = "ORDER"
+	KeywordOverridable  = "OVERRIDABLE"
 	KeywordOuter        = "OUTER"
 	KeywordOutfile      = "OUTFILE"
 	KeywordOver         = "OVER"
@@ -285,6 +288,7 @@ var keywords = NewSet(
 	KeywordCluster,
 	KeywordCodec,
 	KeywordCollate,
+	KeywordCollection,
 	KeywordColumn,
 	KeywordColumns,
 	KeywordComment,
@@ -399,6 +403,7 @@ var keywords = NewSet(
 	KeywordMoves,
 	KeywordMutation,
 	KeywordName,
+	KeywordNamed,
 	KeywordNan_sql,
 	KeywordNo,
 	KeywordNone,
@@ -412,6 +417,7 @@ var keywords = NewSet(
 	KeywordOr,
 	KeywordOrder,
 	KeywordOuter,
+	KeywordOverridable,
 	KeywordOutfile,
 	KeywordOver,
 	KeywordPartition,

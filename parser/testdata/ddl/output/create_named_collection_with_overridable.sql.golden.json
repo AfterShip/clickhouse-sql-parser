@@ -1,0 +1,64 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 145,
+    "Name": {
+      "Name": "test_collection",
+      "QuoteType": 1,
+      "NamePos": 24,
+      "NameEnd": 39
+    },
+    "IfNotExists": false,
+    "OnCluster": null,
+    "Params": [
+      {
+        "ParamPos": 43,
+        "Name": {
+          "Name": "url",
+          "QuoteType": 1,
+          "NamePos": 43,
+          "NameEnd": 46
+        },
+        "Value": {
+          "LiteralPos": 50,
+          "LiteralEnd": 68,
+          "Literal": "http://example.com"
+        },
+        "Overridable": true,
+        "NotOverridable": false
+      },
+      {
+        "ParamPos": 83,
+        "Name": {
+          "Name": "access_key",
+          "QuoteType": 1,
+          "NamePos": 83,
+          "NameEnd": 93
+        },
+        "Value": {
+          "LiteralPos": 97,
+          "LiteralEnd": 103,
+          "Literal": "key123"
+        },
+        "Overridable": false,
+        "NotOverridable": true
+      },
+      {
+        "ParamPos": 122,
+        "Name": {
+          "Name": "secret_key",
+          "QuoteType": 1,
+          "NamePos": 122,
+          "NameEnd": 132
+        },
+        "Value": {
+          "LiteralPos": 136,
+          "LiteralEnd": 145,
+          "Literal": "secret456"
+        },
+        "Overridable": false,
+        "NotOverridable": false
+      }
+    ]
+  }
+]

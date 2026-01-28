@@ -118,6 +118,8 @@ type ASTVisitor interface {
 	VisitTopExpr(expr *TopClause) error
 	VisitCreateLiveView(expr *CreateLiveView) error
 	VisitCreateDictionary(expr *CreateDictionary) error
+	VisitCreateNamedCollection(expr *CreateNamedCollection) error
+	VisitNamedCollectionParam(expr *NamedCollectionParam) error
 	VisitDictionarySchemaClause(expr *DictionarySchemaClause) error
 	VisitDictionaryAttribute(expr *DictionaryAttribute) error
 	VisitDictionaryEngineClause(expr *DictionaryEngineClause) error
@@ -1025,6 +1027,20 @@ func (v *DefaultASTVisitor) VisitCreateLiveView(expr *CreateLiveView) error {
 }
 
 func (v *DefaultASTVisitor) VisitCreateDictionary(expr *CreateDictionary) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitCreateNamedCollection(expr *CreateNamedCollection) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitNamedCollectionParam(expr *NamedCollectionParam) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
