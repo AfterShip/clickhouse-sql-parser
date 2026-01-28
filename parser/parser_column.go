@@ -1230,7 +1230,7 @@ func (p *Parser) parseNestedTypeFields() ([]Expr, error) {
 	}
 }
 
-func (p *Parser) parseNestedTypeFieldsWithNames(firstIdent *Ident) ([]Expr, error) {
+func (p *Parser) parseNestedTypeFieldsWithNames(columnName *Ident) ([]Expr, error) {
 	columns := make([]Expr, 0)
 
 	columnType, err := p.parseColumnType(p.Pos())
@@ -1239,9 +1239,9 @@ func (p *Parser) parseNestedTypeFieldsWithNames(firstIdent *Ident) ([]Expr, erro
 	}
 
 	columns = append(columns, &ColumnDef{
-		NamePos: firstIdent.Pos(),
+		NamePos: columnName.Pos(),
 		Name: &NestedIdentifier{
-			Ident: firstIdent,
+			Ident: columnName,
 		},
 		Type:      columnType,
 		ColumnEnd: columnType.End(),
@@ -1269,10 +1269,10 @@ func (p *Parser) parseNestedTypeFieldsWithNames(firstIdent *Ident) ([]Expr, erro
 	return columns, nil
 }
 
-func (p *Parser) parseNestedTypeFieldsWithoutNames(firstIdent *Ident) ([]Expr, error) {
+func (p *Parser) parseNestedTypeFieldsWithoutNames(columnType *Ident) ([]Expr, error) {
 	columns := make([]Expr, 0)
 
-	column, err := p.parseColumnTypeArgs(firstIdent)
+	column, err := p.parseColumnTypeArgs(columnType)
 	if err != nil {
 		return nil, err
 	}
