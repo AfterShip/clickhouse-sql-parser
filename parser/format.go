@@ -858,7 +858,12 @@ func (c *CreateMaterializedView) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(c.Settings)
 	}
 	if c.HasAppend {
-		formatter.WriteString(" APPEND")
+		if c.Settings != nil {
+			formatter.Break()
+		} else {
+			formatter.WriteByte(whitespace)
+		}
+		formatter.WriteString("APPEND")
 	}
 	if c.Engine != nil {
 		formatter.WriteExpr(c.Engine)
