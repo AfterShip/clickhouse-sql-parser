@@ -21,17 +21,25 @@ type Formatter struct {
 	mode        FormatMode
 	indentLevel int
 	lineStart   bool
+	ident       string
 }
 
 func NewFormatter() *Formatter {
 	return &Formatter{
 		mode:      FormatModeCompact,
 		lineStart: true,
+		ident:     "  ",
 	}
 }
 
-func (f *Formatter) WithBeautify() {
+func (f *Formatter) WithBeautify() *Formatter {
 	f.mode = FormatModeBeautify
+	return f
+}
+
+func (f *Formatter) WithIdent(ident string) *Formatter {
+	f.ident = ident
+	return f
 }
 
 func (f *Formatter) writeIndentIfNeeded() {
@@ -39,7 +47,7 @@ func (f *Formatter) writeIndentIfNeeded() {
 		return
 	}
 	for i := 0; i < f.indentLevel; i++ {
-		f.builder.WriteString("  ")
+		f.builder.WriteString(f.ident)
 	}
 	f.lineStart = false
 }
@@ -70,7 +78,6 @@ func (f *Formatter) WriteExpr(expr Expr) {
 	}
 	expr.FormatSQL(f)
 }
-
 
 func (f *Formatter) NewLine() {
 	if f.mode != FormatModeBeautify {
