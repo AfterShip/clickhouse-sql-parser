@@ -2309,7 +2309,7 @@ func (s *SettingsClause) FormatSQL(formatter *Formatter) {
 		if i == 0 {
 			formatter.Break()
 		} else {
-			formatter.WriteString(", ")
+			formatter.WriteByte(',')
 			formatter.Break()
 		}
 		formatter.WriteExpr(item)

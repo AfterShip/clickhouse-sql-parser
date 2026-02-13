@@ -47,8 +47,8 @@ ORDER BY
 PARTITION BY toStartOfHour(`timestamp`)
 TTL toStartOfHour(`timestamp`) + INTERVAL 7 DAY, toStartOfHour(`timestamp`) + INTERVAL 2 DAY
 SETTINGS
-  execute_merges_on_single_replica_time_threshold=1200, 
-  index_granularity=16384, 
-  max_bytes_to_merge_at_max_space_in_pool=64424509440, 
-  storage_policy='main', 
+  execute_merges_on_single_replica_time_threshold=1200,
+  index_granularity=16384,
+  max_bytes_to_merge_at_max_space_in_pool=64424509440,
+  storage_policy='main',
   ttl_only_drop_parts=1;
