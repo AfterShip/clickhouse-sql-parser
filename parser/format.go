@@ -197,13 +197,17 @@ func (a *AlterRole) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(roleRenamePair)
 	}
 	if len(a.Settings) > 0 {
-		formatter.WriteString(" SETTINGS ")
+		formatter.Break()
+		formatter.WriteString("SETTINGS")
+		formatter.Indent()
 		for i, setting := range a.Settings {
 			if i > 0 {
-				formatter.WriteString(", ")
+				formatter.WriteString(",")
 			}
+			formatter.Break()
 			formatter.WriteExpr(setting)
 		}
+		formatter.Dedent()
 	}
 }
 
@@ -2192,13 +2196,13 @@ func (r *RoleRenamePair) FormatSQL(formatter *Formatter) {
 func (r *RoleSetting) FormatSQL(formatter *Formatter) {
 	for i, settingPair := range r.SettingPairs {
 		if i > 0 {
-			formatter.WriteByte(whitespace)
+			formatter.Break()
 		}
 		formatter.WriteExpr(settingPair)
 	}
 	if r.Modifier != nil {
 		if len(r.SettingPairs) > 0 {
-			formatter.WriteByte(whitespace)
+			formatter.Break()
 		}
 		formatter.WriteExpr(r.Modifier)
 	}
