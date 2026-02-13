@@ -4,7 +4,8 @@ INSERT INTO t (c) SELECT 1 WHERE 1 = 1;
 
 
 -- Beautify SQL:
-INSERT INTO t (c)
+INSERT INTO t
+  (c)
 SELECT
   1
 WHERE
