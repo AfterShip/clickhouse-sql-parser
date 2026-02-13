@@ -44,17 +44,46 @@ On macOS:
 $ brew install clickhouse-sql-parser
 ```
 
-Parse ClickHouse SQL into AST or beautify ClickHouse SQL format:
+Parse ClickHouse SQL into AST or format ClickHouse SQL:
 
 ```bash
 ## Parse query into AST
 $ clickhouse-sql-parser "SELECT * FROM clickhouse WHERE a=100"
 
-## Beautify query
+## Format query (compact, single-line output)
 $ clickhouse-sql-parser -format "SELECT * FROM clickhouse WHERE a=100"
 
+## Beautify query (formatted with proper indentation and line breaks)
+$ clickhouse-sql-parser -beautify "SELECT * FROM clickhouse WHERE a=100"
+
 ## Parse query from file
-$ clickhouse-sql-parser -file ./test.sql
+$ clickhouse-sql-parser -f ./test.sql
+```
+
+### Beautify SQL Example
+
+The `-beautify` flag formats SQL with proper indentation and line breaks, making complex queries more readable:
+
+```bash
+# Input (compact, hard to read)
+$ clickhouse-sql-parser -beautify "SELECT user_id, COUNT(*) AS total, AVG(amount) AS avg_amount FROM orders WHERE status='completed' AND created_at>'2024-01-01' GROUP BY user_id HAVING COUNT(*)>5 ORDER BY total DESC LIMIT 10"
+
+# Output (beautified, easy to read)
+SELECT
+  user_id,
+  COUNT(*) AS total,
+  AVG(amount) AS avg_amount
+FROM orders
+WHERE
+  status = 'completed'
+AND
+  created_at > '2024-01-01'
+GROUP BY
+  user_id
+HAVING COUNT(*) > 5
+ORDER BY
+  total DESC
+LIMIT 10
 ```
 
 - Parsed tree(AST) back into a SQL statement
