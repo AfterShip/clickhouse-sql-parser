@@ -71,7 +71,6 @@ func (f *Formatter) WriteExpr(expr Expr) {
 	expr.FormatSQL(f)
 }
 
-
 func (f *Formatter) NewLine() {
 	if f.mode != FormatModeBeautify {
 		return
