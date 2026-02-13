@@ -771,12 +771,13 @@ func (c *CreateDictionary) FormatSQL(formatter *Formatter) {
 	}
 
 	if c.Engine != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(c.Engine)
 	}
 
 	if c.Comment != nil {
-		formatter.WriteString(" COMMENT ")
+		formatter.Break()
+		formatter.WriteString("COMMENT ")
 		formatter.WriteExpr(c.Comment)
 	}
 
@@ -1182,42 +1183,34 @@ func (d *DictionaryAttribute) FormatSQL(formatter *Formatter) {
 }
 
 func (d *DictionaryEngineClause) FormatSQL(formatter *Formatter) {
-	paddingSpace := false
 	if d.PrimaryKey != nil {
 		formatter.WriteExpr(d.PrimaryKey)
-		paddingSpace = true
 	}
 	if d.Source != nil {
-		if paddingSpace {
-			formatter.WriteByte(whitespace)
+		if d.PrimaryKey != nil {
+			formatter.Break()
 		}
 		formatter.WriteExpr(d.Source)
-		paddingSpace = true
 	}
 	if d.Lifetime != nil {
-		if paddingSpace {
-			formatter.WriteByte(whitespace)
+		if d.PrimaryKey != nil || d.Source != nil {
+			formatter.Break()
 		}
 		formatter.WriteExpr(d.Lifetime)
-		paddingSpace = true
 	}
 	if d.Layout != nil {
-		if paddingSpace {
-			formatter.WriteByte(whitespace)
-		}
+		formatter.WriteByte(whitespace)
 		formatter.WriteExpr(d.Layout)
-		paddingSpace = true
 	}
 	if d.Range != nil {
-		if paddingSpace {
-			formatter.WriteByte(whitespace)
+		if d.PrimaryKey != nil || d.Source != nil || d.Lifetime != nil || d.Layout != nil {
+			formatter.Break()
 		}
 		formatter.WriteExpr(d.Range)
-		paddingSpace = true
 	}
 	if d.Settings != nil {
-		if paddingSpace {
-			formatter.WriteByte(whitespace)
+		if d.PrimaryKey != nil || d.Source != nil || d.Lifetime != nil || d.Layout != nil || d.Range != nil {
+			formatter.Break()
 		}
 		formatter.WriteString("SETTINGS(")
 		for i, item := range d.Settings.Items {
@@ -1275,14 +1268,20 @@ func (d *DictionaryRangeClause) FormatSQL(formatter *Formatter) {
 }
 
 func (d *DictionarySchemaClause) FormatSQL(formatter *Formatter) {
-	formatter.WriteString("(")
+	formatter.WriteByte('(')
+	formatter.Indent()
 	for i, attr := range d.Attributes {
-		if i > 0 {
-			formatter.WriteString(", ")
+		if i == 0 {
+			formatter.NewLine()
+		} else {
+			formatter.WriteByte(',')
+			formatter.Break()
 		}
 		formatter.WriteExpr(attr)
 	}
-	formatter.WriteString(")")
+	formatter.Dedent()
+	formatter.NewLine()
+	formatter.WriteByte(')')
 }
 
 func (d *DictionarySourceClause) FormatSQL(formatter *Formatter) {
