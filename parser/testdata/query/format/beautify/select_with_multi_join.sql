@@ -30,12 +30,13 @@ SELECT
   t1.value AS value1,
   t2.value AS value2,
   t3.value AS value3
-FROM t1
-JOIN
-  t2 ON true
-JOIN
-  t3
-JOIN
-  t4 ON true
-JOIN
-  t5;
+FROM
+  t1
+  JOIN
+    t2 ON true
+  JOIN
+    t3
+  JOIN
+    t4 ON true
+  JOIN
+    t5;

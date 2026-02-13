@@ -1436,8 +1436,11 @@ func (f *FormatClause) FormatSQL(formatter *Formatter) {
 }
 
 func (f *FromClause) FormatSQL(formatter *Formatter) {
-	formatter.WriteString("FROM ")
+	formatter.WriteString("FROM")
+	formatter.Indent()
+	formatter.Break()
 	formatter.WriteExpr(f.Expr)
+	formatter.Dedent()
 }
 
 func (f *FunctionExpr) FormatSQL(formatter *Formatter) {

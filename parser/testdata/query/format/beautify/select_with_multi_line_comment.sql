@@ -9,4 +9,5 @@ from
 -- Beautify SQL:
 SELECT
   *
-FROM t0;
+FROM
+  t0;

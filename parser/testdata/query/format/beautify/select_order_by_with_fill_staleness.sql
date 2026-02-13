@@ -10,7 +10,8 @@ SELECT
   number AS key,
   5 * number AS value,
   'original' AS source
-FROM numbers(16)
+FROM
+  numbers(16)
 WHERE
   (number % 5) == 0
 ORDER BY

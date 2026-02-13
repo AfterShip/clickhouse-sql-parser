@@ -30,6 +30,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS db.table ON CLUSTER 'default_cluster' TO 
   visitParamExtractString(properties, 'd') AS d,
   visitParamExtractInt(properties, 'e') AS e,
   visitParamExtractInt(properties, 'f') AS f
-FROM db.table
+FROM
+  db.table
 WHERE
   db.table.event = 'hello';

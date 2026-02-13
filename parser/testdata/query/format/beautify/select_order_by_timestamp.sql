@@ -4,6 +4,7 @@ SELECT Timestamp FROM events ORDER BY Timestamp;
 -- Beautify SQL:
 SELECT
   Timestamp
-FROM events
+FROM
+  events
 ORDER BY
   Timestamp;

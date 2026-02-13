@@ -30,7 +30,8 @@ SELECT
   NODE_CLASS,
   PORT,
   CLIENT_PORT
-FROM test.table
+FROM
+  test.table
 WHERE
   app_id = 999118646
 AND
