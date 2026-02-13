@@ -37,6 +37,8 @@ func (f *Formatter) WithBeautify() *Formatter {
 	return f
 }
 
+// WithIndent sets the indentation string used when beautifying SQL.
+// The indent parameter should not be empty to maintain proper formatting.
 func (f *Formatter) WithIndent(indent string) *Formatter {
 	f.indent = indent
 	return f
