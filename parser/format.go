@@ -224,7 +224,7 @@ func (a *AlterTableAddColumn) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(a.After)
 	}
 	if a.Settings != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(a.Settings)
 	}
 }
@@ -310,7 +310,7 @@ func (a *AlterTableDetachPartition) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("DETACH ")
 	formatter.WriteExpr(a.Partition)
 	if a.Settings != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(a.Settings)
 	}
 }
@@ -338,7 +338,7 @@ func (a *AlterTableDropPartition) FormatSQL(formatter *Formatter) {
 	}
 	formatter.WriteExpr(a.Partition)
 	if a.Settings != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(a.Settings)
 	}
 }
