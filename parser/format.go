@@ -990,13 +990,17 @@ func (c *CreateRole) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(c.AccessStorageType)
 	}
 	if len(c.Settings) > 0 {
-		formatter.WriteString(" SETTINGS ")
+		formatter.Break()
+		formatter.WriteString("SETTINGS")
+		formatter.Indent()
 		for i, setting := range c.Settings {
 			if i > 0 {
-				formatter.WriteString(", ")
+				formatter.WriteString(",")
 			}
+			formatter.Break()
 			formatter.WriteExpr(setting)
 		}
+		formatter.Dedent()
 	}
 }
 
