@@ -13,22 +13,22 @@ func TestFormatter_WithBeautify_Chaining(t *testing.T) {
 	require.Equal(t, FormatModeBeautify, formatter.mode)
 }
 
-func TestFormatter_WithIdent_Chaining(t *testing.T) {
-	// Test that WithIdent returns the formatter for chaining
-	formatter := NewFormatter().WithIdent("    ")
+func TestFormatter_WithIndent_Chaining(t *testing.T) {
+	// Test that WithIndent returns the formatter for chaining
+	formatter := NewFormatter().WithIndent("    ")
 	require.NotNil(t, formatter)
-	require.Equal(t, "    ", formatter.ident)
+	require.Equal(t, "    ", formatter.indent)
 }
 
 func TestFormatter_ChainedMethods(t *testing.T) {
 	// Test that methods can be chained together
-	formatter := NewFormatter().WithBeautify().WithIdent("\t")
+	formatter := NewFormatter().WithBeautify().WithIndent("\t")
 	require.NotNil(t, formatter)
 	require.Equal(t, FormatModeBeautify, formatter.mode)
-	require.Equal(t, "\t", formatter.ident)
+	require.Equal(t, "\t", formatter.indent)
 }
 
-func TestFormatter_WithIdent_CustomIndentation(t *testing.T) {
+func TestFormatter_WithIndent_CustomIndentation(t *testing.T) {
 	// Test actual formatting with custom indent using parsed SQL
 	sql := "SELECT col1, col2 FROM table1 WHERE col1 > 10"
 
@@ -43,12 +43,12 @@ func TestFormatter_WithIdent_CustomIndentation(t *testing.T) {
 	result1 := formatter1.String()
 
 	// Test with 4-space indent
-	formatter2 := NewFormatter().WithBeautify().WithIdent("    ")
+	formatter2 := NewFormatter().WithBeautify().WithIndent("    ")
 	formatter2.WriteExpr(stmts[0])
 	result2 := formatter2.String()
 
 	// Test with tab indent
-	formatter3 := NewFormatter().WithBeautify().WithIdent("\t")
+	formatter3 := NewFormatter().WithBeautify().WithIndent("\t")
 	formatter3.WriteExpr(stmts[0])
 	result3 := formatter3.String()
 
@@ -66,8 +66,8 @@ func TestFormatter_WithIdent_CustomIndentation(t *testing.T) {
 	require.Contains(t, result3, "FROM")
 }
 
-func TestFormatter_DefaultIdent(t *testing.T) {
+func TestFormatter_DefaultIndent(t *testing.T) {
 	// Test that default indent is 2 spaces
 	formatter := NewFormatter()
-	require.Equal(t, "  ", formatter.ident)
+	require.Equal(t, "  ", formatter.indent)
 }
