@@ -25,6 +25,7 @@ SELECT
   min(latest_2) OVER (PARTITION BY aggregation_target ORDER BY
     timestamp DESC ROWS BETWEEN UNBOUNDED PRECEDING AND 0 PRECEDING) AS latest_2,
   min(latest_1) OVER w AS latest_1
-FROM t0
+FROM
+  t0
 WINDOW w AS (PARTITION BY aggregation_target ORDER BY
   timestamp DESC ROWS BETWEEN UNBOUNDED PRECEDING AND 0 PRECEDING);

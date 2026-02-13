@@ -25,16 +25,18 @@ PARTITION BY toYYYYMM(f0) POPULATE AS SELECT
   f1,
   f2,
   coalesce(f0, f1) AS f333
-FROM (SELECT
-  f0,
-  f1,
-  f2,
-  ROW_NUMBER() OVER (PARTITION BY f0 ORDER BY
-    coalesce(f1, f2)) AS rn
-FROM test.t
-WHERE
-  f3 IN ('foo', 'bar', 'test')
-AND
-  env = 'test') AS tmp
+FROM
+  (SELECT
+    f0,
+    f1,
+    f2,
+    ROW_NUMBER() OVER (PARTITION BY f0 ORDER BY
+      coalesce(f1, f2)) AS rn
+  FROM
+    test.t
+  WHERE
+    f3 IN ('foo', 'bar', 'test')
+  AND
+    env = 'test') AS tmp
 WHERE
   rn = 1;

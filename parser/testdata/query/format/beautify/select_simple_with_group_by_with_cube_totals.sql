@@ -5,7 +5,8 @@ SELECT a, COUNT(b) FROM group_by_all GROUP BY CUBE(a) WITH CUBE WITH TOTALS ORDE
 SELECT
   a,
   COUNT(b)
-FROM group_by_all
+FROM
+  group_by_all
 GROUP BY
   CUBE(a)
   WITH CUBE

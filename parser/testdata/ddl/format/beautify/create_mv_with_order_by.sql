@@ -19,9 +19,11 @@ ORDER BY
   (id)
 PRIMARY KEY (id) AS SELECT
   *
-FROM test_table;
+FROM
+  test_table;
 CREATE MATERIALIZED VIEW IF NOT EXISTS test_mv
 ENGINE = ReplacingMergeTree()
 PRIMARY KEY (id) AS SELECT
   *
-FROM test_table;
+FROM
+  test_table;
