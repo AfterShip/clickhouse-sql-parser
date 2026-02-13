@@ -33,6 +33,7 @@ CREATE DICTIONARY test.my_dict (
 )
 PRIMARY KEY id
 SOURCE(MYSQL(host 'localhost' port 3306 user 'default' password '' db 'test' table 'dict_table'))
-LIFETIME(MIN 1000 MAX 2000) LAYOUT(HASHED())
+LIFETIME(MIN 1000 MAX 2000)
+LAYOUT(HASHED())
 SETTINGS(max_block_size=8192)
 COMMENT 'This is a test dictionary with comment';

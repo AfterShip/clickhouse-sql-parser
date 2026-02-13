@@ -1199,7 +1199,9 @@ func (d *DictionaryEngineClause) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(d.Lifetime)
 	}
 	if d.Layout != nil {
-		formatter.WriteByte(whitespace)
+		if d.PrimaryKey != nil || d.Source != nil || d.Lifetime != nil {
+			formatter.Break()
+		}
 		formatter.WriteExpr(d.Layout)
 	}
 	if d.Range != nil {
