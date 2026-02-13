@@ -197,13 +197,17 @@ func (a *AlterRole) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(roleRenamePair)
 	}
 	if len(a.Settings) > 0 {
-		formatter.WriteString(" SETTINGS ")
+		formatter.Break()
+		formatter.WriteString("SETTINGS")
+		formatter.Indent()
 		for i, setting := range a.Settings {
-			if i > 0 {
-				formatter.WriteString(", ")
-			}
+			formatter.Break()
 			formatter.WriteExpr(setting)
+			if i < len(a.Settings)-1 {
+				formatter.WriteString(",")
+			}
 		}
+		formatter.Dedent()
 	}
 }
 
@@ -986,13 +990,17 @@ func (c *CreateRole) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(c.AccessStorageType)
 	}
 	if len(c.Settings) > 0 {
-		formatter.WriteString(" SETTINGS ")
+		formatter.Break()
+		formatter.WriteString("SETTINGS")
+		formatter.Indent()
 		for i, setting := range c.Settings {
-			if i > 0 {
-				formatter.WriteString(", ")
-			}
+			formatter.Break()
 			formatter.WriteExpr(setting)
+			if i < len(c.Settings)-1 {
+				formatter.WriteString(",")
+			}
 		}
+		formatter.Dedent()
 	}
 }
 
@@ -2192,13 +2200,21 @@ func (r *RoleRenamePair) FormatSQL(formatter *Formatter) {
 func (r *RoleSetting) FormatSQL(formatter *Formatter) {
 	for i, settingPair := range r.SettingPairs {
 		if i > 0 {
-			formatter.WriteByte(whitespace)
+			if formatter.mode == FormatModeBeautify {
+				formatter.Break()
+			} else {
+				formatter.WriteByte(whitespace)
+			}
 		}
 		formatter.WriteExpr(settingPair)
 	}
 	if r.Modifier != nil {
 		if len(r.SettingPairs) > 0 {
-			formatter.WriteByte(whitespace)
+			if formatter.mode == FormatModeBeautify {
+				formatter.Break()
+			} else {
+				formatter.WriteByte(whitespace)
+			}
 		}
 		formatter.WriteExpr(r.Modifier)
 	}
