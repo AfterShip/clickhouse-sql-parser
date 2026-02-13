@@ -29,4 +29,5 @@ ENGINE = MergeTree
 ORDER BY
   label_id
 PARTITION BY xxHash32(tag_id) % 20
-SETTINGS index_granularity=8192;
+SETTINGS
+  index_granularity=8192;

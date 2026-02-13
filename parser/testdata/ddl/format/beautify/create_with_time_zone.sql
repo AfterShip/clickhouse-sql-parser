@@ -87,4 +87,6 @@ ORDER BY
   (ts_bucket, service_name, name, toUnixTimestamp64Nano(timestamp))
 PARTITION BY toDate(timestamp)
 TTL toDate(timestamp) + toIntervalDay(15)
-SETTINGS index_granularity=8192, ttl_only_drop_parts=1;
+SETTINGS
+  index_granularity=8192, 
+  ttl_only_drop_parts=1;

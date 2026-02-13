@@ -23,4 +23,5 @@ ORDER BY
   (contractid, toDate(timestamp), userid)
 PARTITION BY toYYYYMM(timestamp)
 SAMPLE BY userid
-SETTINGS index_granularity=8192;
+SETTINGS
+  index_granularity=8192;

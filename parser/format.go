@@ -2303,13 +2303,18 @@ func (s *SettingPair) FormatSQL(formatter *Formatter) {
 }
 
 func (s *SettingsClause) FormatSQL(formatter *Formatter) {
-	formatter.WriteString("SETTINGS ")
+	formatter.WriteString("SETTINGS")
+	formatter.Indent()
 	for i, item := range s.Items {
-		if i > 0 {
+		if i == 0 {
+			formatter.Break()
+		} else {
 			formatter.WriteString(", ")
+			formatter.Break()
 		}
 		formatter.WriteExpr(item)
 	}
+	formatter.Dedent()
 }
 
 func (s *ShowStmt) FormatSQL(formatter *Formatter) {
