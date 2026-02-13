@@ -211,11 +211,11 @@ func (a *AlterTable) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("ALTER TABLE ")
 	formatter.WriteExpr(a.TableIdentifier)
 	if a.OnCluster != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(a.OnCluster)
 	}
 	for i, expr := range a.AlterExprs {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(expr)
 		if i != len(a.AlterExprs)-1 {
 			formatter.WriteString(",")

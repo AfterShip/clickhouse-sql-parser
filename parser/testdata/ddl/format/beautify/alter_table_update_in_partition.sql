@@ -3,4 +3,5 @@ ALTER TABLE test.users UPDATE status = 'inactive' IN PARTITION '2024-01-01' WHER
 
 
 -- Beautify SQL:
-ALTER TABLE test.users UPDATE status = 'inactive' IN PARTITION '2024-01-01' WHERE status = 'active';
+ALTER TABLE test.users
+UPDATE status = 'inactive' IN PARTITION '2024-01-01' WHERE status = 'active';

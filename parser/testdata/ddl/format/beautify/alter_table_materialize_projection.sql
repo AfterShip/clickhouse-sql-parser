@@ -4,4 +4,5 @@ ALTER TABLE visits_order MATERIALIZE PROJECTION IF EXISTS user_name_projection I
 
 
 -- Beautify SQL:
-ALTER TABLE visits_order MATERIALIZE PROJECTION IF EXISTS user_name_projection IN PARTITION '20240403';
+ALTER TABLE visits_order
+MATERIALIZE PROJECTION IF EXISTS user_name_projection IN PARTITION '20240403';
