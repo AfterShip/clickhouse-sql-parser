@@ -1005,11 +1005,11 @@ func (c *CreateUser) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(userName)
 	}
 	if c.Authentication != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(c.Authentication)
 	}
 	if len(c.Hosts) > 0 {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		for i, host := range c.Hosts {
 			if i > 0 {
 				formatter.WriteString(", ")
@@ -1018,27 +1018,33 @@ func (c *CreateUser) FormatSQL(formatter *Formatter) {
 		}
 	}
 	if c.DefaultRole != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(c.DefaultRole)
 	}
 	if c.DefaultDatabase != nil {
-		formatter.WriteString(" DEFAULT DATABASE ")
+		formatter.Break()
+		formatter.WriteString("DEFAULT DATABASE ")
 		formatter.WriteExpr(c.DefaultDatabase)
 	} else if c.DefaultDbNone {
-		formatter.WriteString(" DEFAULT DATABASE NONE")
+		formatter.Break()
+		formatter.WriteString("DEFAULT DATABASE NONE")
 	}
 	if c.Grantees != nil {
-		formatter.WriteByte(whitespace)
+		formatter.Break()
 		formatter.WriteExpr(c.Grantees)
 	}
 	if len(c.Settings) > 0 {
-		formatter.WriteString(" SETTINGS ")
+		formatter.Break()
+		formatter.WriteString("SETTINGS")
+		formatter.Indent()
 		for i, setting := range c.Settings {
-			if i > 0 {
-				formatter.WriteString(", ")
-			}
+			formatter.Break()
 			formatter.WriteExpr(setting)
+			if i < len(c.Settings)-1 {
+				formatter.WriteString(",")
+			}
 		}
+		formatter.Dedent()
 	}
 }
 
@@ -1492,7 +1498,8 @@ func (g *GranteesClause) FormatSQL(formatter *Formatter) {
 		}
 	}
 	if len(g.ExceptUsers) > 0 {
-		formatter.WriteString(" EXCEPT ")
+		formatter.Break()
+		formatter.WriteString("EXCEPT ")
 		for i, except := range g.ExceptUsers {
 			if i > 0 {
 				formatter.WriteString(", ")
