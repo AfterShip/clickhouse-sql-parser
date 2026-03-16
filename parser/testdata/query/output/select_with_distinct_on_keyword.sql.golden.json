@@ -6,7 +6,7 @@
     "Top": null,
     "HasDistinct": true,
     "DistinctOn": {
-      "Idents": [
+      "Exprs": [
         {
           "Name": "album",
           "QuoteType": 1,

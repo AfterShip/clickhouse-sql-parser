@@ -5201,7 +5201,7 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 }
 
 type DistinctOn struct {
-	Idents        []*Ident
+	Exprs         []Expr
 	DistinctOnPos Pos
 	DistinctOnEnd Pos
 }
@@ -5217,8 +5217,8 @@ func (s *DistinctOn) End() Pos {
 func (s *DistinctOn) Accept(visitor ASTVisitor) error {
 	visitor.Enter(s)
 	defer visitor.Leave(s)
-	for _, ident := range s.Idents {
-		if err := ident.Accept(visitor); err != nil {
+	for _, expr := range s.Exprs {
+		if err := expr.Accept(visitor); err != nil {
 			return err
 		}
 	}

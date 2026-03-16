@@ -1,0 +1,10 @@
+-- Origin SQL:
+SELECT DISTINCT ON (t.id, t.name) t.id, t.name, t.value FROM test_table t
+
+-- Beautify SQL:
+SELECT DISTINCT ON (t.id, t.name)
+  t.id,
+  t.name,
+  t.value
+FROM
+  test_table AS t;
