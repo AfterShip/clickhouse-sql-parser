@@ -1344,11 +1344,11 @@ func (d *DictionarySourceClause) FormatSQL(formatter *Formatter) {
 
 func (s *DistinctOn) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("ON (")
-	for i, expr := range s.Exprs {
+	for i, ident := range s.Idents {
 		if i > 0 {
 			formatter.WriteString(", ")
 		}
-		formatter.WriteExpr(expr)
+		formatter.WriteExpr(ident)
 	}
 	formatter.WriteByte(')')
 }

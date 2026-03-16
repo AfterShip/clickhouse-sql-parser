@@ -89,20 +89,20 @@ func (p *Parser) parseDistinctOn(pos Pos) (*DistinctOn, error) {
 		return nil, err
 	}
 
-	expr, err := p.parseExpr(p.Pos())
+	col, err := p.ParseNestedIdentifier(p.Pos())
 	if err != nil {
 		return nil, err
 	}
-	exprs := []Expr{expr}
+	idents := []*NestedIdentifier{col}
 
 	for p.matchTokenKind(TokenKindComma) {
 		_ = p.lexer.consumeToken()
 
-		expr, err = p.parseExpr(p.Pos())
+		col, err = p.ParseNestedIdentifier(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		exprs = append(exprs, expr)
+		idents = append(idents, col)
 	}
 
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {
@@ -110,7 +110,7 @@ func (p *Parser) parseDistinctOn(pos Pos) (*DistinctOn, error) {
 	}
 
 	return &DistinctOn{
-		Exprs:         exprs,
+		Idents:        idents,
 		DistinctOnPos: pos,
 		DistinctOnEnd: p.Pos(),
 	}, nil

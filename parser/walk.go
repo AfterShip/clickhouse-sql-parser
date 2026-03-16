@@ -1503,8 +1503,8 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *DistinctOn:
-		for _, expr := range n.Exprs {
-			if !Walk(expr, fn) {
+		for _, ident := range n.Idents {
+			if !Walk(ident, fn) {
 				return false
 			}
 		}

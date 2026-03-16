@@ -6,38 +6,34 @@
     "Top": null,
     "HasDistinct": true,
     "DistinctOn": {
-      "Exprs": [
+      "Idents": [
         {
-          "Fields": [
-            {
-              "Name": "t",
-              "QuoteType": 1,
-              "NamePos": 20,
-              "NameEnd": 21
-            },
-            {
-              "Name": "id",
-              "QuoteType": 1,
-              "NamePos": 22,
-              "NameEnd": 24
-            }
-          ]
+          "Ident": {
+            "Name": "t",
+            "QuoteType": 1,
+            "NamePos": 20,
+            "NameEnd": 21
+          },
+          "DotIdent": {
+            "Name": "id",
+            "QuoteType": 1,
+            "NamePos": 22,
+            "NameEnd": 24
+          }
         },
         {
-          "Fields": [
-            {
-              "Name": "t",
-              "QuoteType": 1,
-              "NamePos": 26,
-              "NameEnd": 27
-            },
-            {
-              "Name": "name",
-              "QuoteType": 1,
-              "NamePos": 28,
-              "NameEnd": 32
-            }
-          ]
+          "Ident": {
+            "Name": "t",
+            "QuoteType": 1,
+            "NamePos": 26,
+            "NameEnd": 27
+          },
+          "DotIdent": {
+            "Name": "name",
+            "QuoteType": 1,
+            "NamePos": 28,
+            "NameEnd": 32
+          }
         }
       ],
       "DistinctOnPos": 16,
