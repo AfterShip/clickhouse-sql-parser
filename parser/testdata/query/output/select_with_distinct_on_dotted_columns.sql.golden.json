@@ -1,0 +1,151 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 73,
+    "With": null,
+    "Top": null,
+    "HasDistinct": true,
+    "DistinctOn": {
+      "Idents": [
+        {
+          "Ident": {
+            "Name": "t",
+            "QuoteType": 1,
+            "NamePos": 20,
+            "NameEnd": 21
+          },
+          "DotIdent": {
+            "Name": "id",
+            "QuoteType": 1,
+            "NamePos": 22,
+            "NameEnd": 24
+          }
+        },
+        {
+          "Ident": {
+            "Name": "t",
+            "QuoteType": 1,
+            "NamePos": 26,
+            "NameEnd": 27
+          },
+          "DotIdent": {
+            "Name": "name",
+            "QuoteType": 1,
+            "NamePos": 28,
+            "NameEnd": 32
+          }
+        }
+      ],
+      "DistinctOnPos": 16,
+      "DistinctOnEnd": 34
+    },
+    "SelectItems": [
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 34,
+              "NameEnd": 35
+            },
+            {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 36,
+              "NameEnd": 38
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 40,
+              "NameEnd": 41
+            },
+            {
+              "Name": "name",
+              "QuoteType": 1,
+              "NamePos": 42,
+              "NameEnd": 46
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 48,
+              "NameEnd": 49
+            },
+            {
+              "Name": "value",
+              "QuoteType": 1,
+              "NamePos": 50,
+              "NameEnd": 55
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 56,
+      "Expr": {
+        "Table": {
+          "TablePos": 61,
+          "TableEnd": 73,
+          "Alias": null,
+          "Expr": {
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "test_table",
+                "QuoteType": 1,
+                "NamePos": 61,
+                "NameEnd": 71
+              }
+            },
+            "AliasPos": 72,
+            "Alias": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 72,
+              "NameEnd": 73
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 73,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

@@ -8,16 +8,22 @@
     "DistinctOn": {
       "Idents": [
         {
-          "Name": "album",
-          "QuoteType": 1,
-          "NamePos": 19,
-          "NameEnd": 24
+          "Ident": {
+            "Name": "album",
+            "QuoteType": 1,
+            "NamePos": 19,
+            "NameEnd": 24
+          },
+          "DotIdent": null
         },
         {
-          "Name": "artist",
-          "QuoteType": 1,
-          "NamePos": 25,
-          "NameEnd": 31
+          "Ident": {
+            "Name": "artist",
+            "QuoteType": 1,
+            "NamePos": 25,
+            "NameEnd": 31
+          },
+          "DotIdent": null
         }
       ],
       "DistinctOnPos": 16,
