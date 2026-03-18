@@ -270,6 +270,7 @@
                   "OverExpr": {
                     "LeftParenPos": 364,
                     "RightParenPos": 413,
+                    "WindowName": null,
                     "PartitionBy": {
                       "PartitionPos": 364,
                       "Expr": {
@@ -448,6 +449,7 @@
           "OverExpr": {
             "LeftParenPos": 541,
             "RightParenPos": 667,
+            "WindowName": null,
             "PartitionBy": {
               "PartitionPos": 541,
               "Expr": {

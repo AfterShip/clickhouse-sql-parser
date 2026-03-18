@@ -824,6 +824,14 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
 	}
+	var windowName *Ident
+	if p.canParseWindowNameInParens() {
+		var err error
+		windowName, err = p.parseIdent()
+		if err != nil {
+			return nil, err
+		}
+	}
 	partitionBy, err := p.tryParsePartitionByClause(pos)
 	if err != nil {
 		return nil, err
@@ -843,10 +851,39 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 	return &WindowExpr{
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
+		WindowName:    windowName,
 		PartitionBy:   partitionBy,
 		OrderBy:       orderBy,
 		Frame:         frame,
 	}, nil
+}
+
+func (p *Parser) canParseWindowNameInParens() bool {
+	if !p.matchTokenKind(TokenKindIdent) {
+		return false
+	}
+	if !p.matchTokenKind(TokenKindKeyword) {
+		return true
+	}
+
+	savedState := p.lexer.saveState()
+	defer p.lexer.restoreState(savedState)
+
+	switch {
+	case p.matchKeyword(KeywordPartition), p.matchKeyword(KeywordOrder):
+		_ = p.lexer.consumeToken()
+		return !p.matchKeyword(KeywordBy)
+	case p.matchKeyword(KeywordRows), p.matchKeyword(KeywordRange):
+		_ = p.lexer.consumeToken()
+		return !p.matchKeyword(KeywordBetween) &&
+			!p.matchKeyword(KeywordCurrent) &&
+			!p.matchKeyword(KeywordUnbounded) &&
+			!p.matchTokenKind(TokenKindInt) &&
+			!p.matchTokenKind(TokenKindLBrace) &&
+			!p.matchKeyword(KeywordInterval)
+	default:
+		return true
+	}
 }
 
 func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {

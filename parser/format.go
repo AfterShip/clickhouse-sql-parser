@@ -2755,7 +2755,14 @@ func (w *WindowClause) FormatSQL(formatter *Formatter) {
 func (w *WindowExpr) FormatSQL(formatter *Formatter) {
 	formatter.WriteByte('(')
 	hasPart := false
+	if w.WindowName != nil {
+		formatter.WriteExpr(w.WindowName)
+		hasPart = true
+	}
 	if w.PartitionBy != nil {
+		if hasPart {
+			formatter.WriteByte(whitespace)
+		}
 		formatter.WriteExpr(w.PartitionBy)
 		hasPart = true
 	}
