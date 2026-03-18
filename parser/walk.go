@@ -389,6 +389,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 			}
 		}
 	case *WindowExpr:
+		if !Walk(n.WindowName, fn) {
+			return false
+		}
 		if !Walk(n.PartitionBy, fn) {
 			return false
 		}

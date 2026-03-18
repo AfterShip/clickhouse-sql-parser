@@ -42,6 +42,7 @@
           "OverExpr": {
             "LeftParenPos": 119,
             "RightParenPos": 184,
+            "WindowName": null,
             "PartitionBy": null,
             "OrderBy": {
               "OrderPos": 120,
@@ -141,6 +142,7 @@
           "OverExpr": {
             "LeftParenPos": 242,
             "RightParenPos": 305,
+            "WindowName": null,
             "PartitionBy": null,
             "OrderBy": {
               "OrderPos": 243,
@@ -240,6 +242,7 @@
           "OverExpr": {
             "LeftParenPos": 365,
             "RightParenPos": 454,
+            "WindowName": null,
             "PartitionBy": null,
             "OrderBy": {
               "OrderPos": 366,
@@ -357,6 +360,7 @@
           "OverExpr": {
             "LeftParenPos": 484,
             "RightParenPos": 521,
+            "WindowName": null,
             "PartitionBy": null,
             "OrderBy": null,
             "Frame": {

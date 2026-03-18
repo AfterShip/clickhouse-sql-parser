@@ -87,6 +87,7 @@
               "OverExpr": {
                 "LeftParenPos": 105,
                 "RightParenPos": 238,
+                "WindowName": null,
                 "PartitionBy": {
                   "PartitionPos": 105,
                   "Expr": {

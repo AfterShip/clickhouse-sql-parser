@@ -4810,6 +4810,7 @@ func (l *LimitByClause) Accept(visitor ASTVisitor) error {
 type WindowExpr struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
+	WindowName    *Ident
 	PartitionBy   *PartitionByClause
 	OrderBy       *OrderByClause
 	Frame         *WindowFrameClause
@@ -4826,6 +4827,11 @@ func (w *WindowExpr) End() Pos {
 func (w *WindowExpr) Accept(visitor ASTVisitor) error {
 	visitor.Enter(w)
 	defer visitor.Leave(w)
+	if w.WindowName != nil {
+		if err := w.WindowName.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if w.PartitionBy != nil {
 		if err := w.PartitionBy.Accept(visitor); err != nil {
 			return err

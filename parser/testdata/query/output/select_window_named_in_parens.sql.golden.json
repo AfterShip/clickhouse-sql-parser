@@ -1,0 +1,161 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 82,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Function": {
+            "Name": {
+              "Name": "sum",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 10
+            },
+            "Params": {
+              "LeftParenPos": 10,
+              "RightParenPos": 12,
+              "Items": {
+                "ListPos": 11,
+                "ListEnd": 12,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "x",
+                      "QuoteType": 1,
+                      "NamePos": 11,
+                      "NameEnd": 12
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "OverPos": 14,
+          "OverExpr": {
+            "LeftParenPos": 19,
+            "RightParenPos": 21,
+            "WindowName": {
+              "Name": "w",
+              "QuoteType": 1,
+              "NamePos": 20,
+              "NameEnd": 21
+            },
+            "PartitionBy": null,
+            "OrderBy": null,
+            "Frame": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "sum_over_w",
+          "QuoteType": 1,
+          "NamePos": 26,
+          "NameEnd": 36
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 37,
+      "Expr": {
+        "Table": {
+          "TablePos": 42,
+          "TableEnd": 43,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 42,
+              "NameEnd": 43
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 43,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": {
+      "WindowPos": 44,
+      "EndPos": 82,
+      "Windows": [
+        {
+          "Name": {
+            "Name": "w",
+            "QuoteType": 1,
+            "NamePos": 51,
+            "NameEnd": 52
+          },
+          "AsPos": 53,
+          "Expr": {
+            "LeftParenPos": 56,
+            "RightParenPos": 82,
+            "WindowName": null,
+            "PartitionBy": {
+              "PartitionPos": 56,
+              "Expr": {
+                "ListPos": 70,
+                "ListEnd": 71,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "y",
+                      "QuoteType": 1,
+                      "NamePos": 70,
+                      "NameEnd": 71
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            },
+            "OrderBy": {
+              "OrderPos": 72,
+              "ListEnd": 82,
+              "Items": [
+                {
+                  "OrderPos": 72,
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 81,
+                    "NameEnd": 82
+                  },
+                  "Alias": null,
+                  "Direction": "",
+                  "Fill": null
+                }
+              ],
+              "Interpolate": null
+            },
+            "Frame": null
+          }
+        }
+      ]
+    },
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
