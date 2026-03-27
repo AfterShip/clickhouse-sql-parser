@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -1454,6 +1455,9 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordDesc), p.matchKeyword(KeywordDescribe):
 		expr, err = p.parseDescribeStmt(pos)
 	default:
+		if p.last() == nil {
+			return nil, errors.New("unexpected end of input")
+		}
 		return nil, fmt.Errorf("unexpected token: %q", p.last().String)
 	}
 	if err != nil {
@@ -1474,7 +1478,9 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 func (p *Parser) ParseStmts() ([]Expr, error) {
 	var stmts []Expr
 	for {
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, p.wrapError(err)
+		}
 		if p.lexer.isEOF() {
 			break
 		}
