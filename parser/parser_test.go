@@ -186,6 +186,7 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
+		"00e1d", // invalid number that leaves lastToken nil
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
