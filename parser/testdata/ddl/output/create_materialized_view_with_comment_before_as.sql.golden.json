@@ -1,0 +1,259 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 302,
+    "Name": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 25,
+        "NameEnd": 27
+      },
+      "Table": {
+        "Name": "mv_with_comment",
+        "QuoteType": 1,
+        "NamePos": 28,
+        "NameEnd": 43
+      }
+    },
+    "IfNotExists": false,
+    "OnCluster": null,
+    "Refresh": null,
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
+    "Engine": null,
+    "HasEmpty": false,
+    "Destination": {
+      "ToPos": 44,
+      "TableIdentifier": {
+        "Database": {
+          "Name": "db",
+          "QuoteType": 1,
+          "NamePos": 47,
+          "NameEnd": 49
+        },
+        "Table": {
+          "Name": "dst_table",
+          "QuoteType": 1,
+          "NamePos": 50,
+          "NameEnd": 59
+        }
+      },
+      "TableSchema": {
+        "SchemaPos": 60,
+        "SchemaEnd": 156,
+        "Columns": [
+          {
+            "NamePos": 67,
+            "ColumnEnd": 82,
+            "Name": {
+              "Ident": {
+                "Name": "shop_id",
+                "QuoteType": 3,
+                "NamePos": 67,
+                "NameEnd": 74
+              },
+              "DotIdent": null
+            },
+            "Type": {
+              "Name": {
+                "Name": "UInt64",
+                "QuoteType": 1,
+                "NamePos": 76,
+                "NameEnd": 82
+              }
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "DefaultExpr": null,
+            "MaterializedExpr": null,
+            "AliasExpr": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 89,
+            "ColumnEnd": 122,
+            "Name": {
+              "Ident": {
+                "Name": "event_type",
+                "QuoteType": 3,
+                "NamePos": 89,
+                "NameEnd": 99
+              },
+              "DotIdent": null
+            },
+            "Type": {
+              "LeftParenPos": 116,
+              "RightParenPos": 122,
+              "Name": {
+                "Name": "LowCardinality",
+                "QuoteType": 1,
+                "NamePos": 101,
+                "NameEnd": 115
+              },
+              "Params": [
+                {
+                  "Name": {
+                    "Name": "String",
+                    "QuoteType": 1,
+                    "NamePos": 116,
+                    "NameEnd": 122
+                  }
+                }
+              ]
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "DefaultExpr": null,
+            "MaterializedExpr": null,
+            "AliasExpr": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          },
+          {
+            "NamePos": 130,
+            "ColumnEnd": 154,
+            "Name": {
+              "Ident": {
+                "Name": "created_at",
+                "QuoteType": 3,
+                "NamePos": 130,
+                "NameEnd": 140
+              },
+              "DotIdent": null
+            },
+            "Type": {
+              "LeftParenPos": 153,
+              "RightParenPos": 154,
+              "Name": {
+                "Name": "DateTime64",
+                "QuoteType": 1,
+                "NamePos": 142,
+                "NameEnd": 152
+              },
+              "Params": [
+                {
+                  "NumPos": 153,
+                  "NumEnd": 154,
+                  "Literal": "9",
+                  "Base": 10
+                }
+              ]
+            },
+            "NotNull": null,
+            "Nullable": null,
+            "DefaultExpr": null,
+            "MaterializedExpr": null,
+            "AliasExpr": null,
+            "Codec": null,
+            "TTL": null,
+            "Comment": null,
+            "CompressionCodec": null
+          }
+        ],
+        "AliasTable": null,
+        "TableFunction": null
+      }
+    },
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 234,
+        "StatementEnd": 302,
+        "With": null,
+        "Top": null,
+        "HasDistinct": false,
+        "DistinctOn": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "shop_id",
+              "QuoteType": 1,
+              "NamePos": 245,
+              "NameEnd": 252
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "event_type",
+              "QuoteType": 1,
+              "NamePos": 258,
+              "NameEnd": 268
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "created_at",
+              "QuoteType": 1,
+              "NamePos": 274,
+              "NameEnd": 284
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": {
+          "FromPos": 285,
+          "Expr": {
+            "Table": {
+              "TablePos": 290,
+              "TableEnd": 302,
+              "Alias": null,
+              "Expr": {
+                "Database": {
+                  "Name": "db",
+                  "QuoteType": 1,
+                  "NamePos": 290,
+                  "NameEnd": 292
+                },
+                "Table": {
+                  "Name": "src_table",
+                  "QuoteType": 1,
+                  "NamePos": 293,
+                  "NameEnd": 302
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 302,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": {
+      "LiteralPos": 167,
+      "LiteralEnd": 229,
+      "Literal": "{\"blueprint_hash\":\"abc123\",\"timestamp\":\"2026-04-08T12:00:00Z\"}"
+    },
+    "Definer": null,
+    "SQLSecurity": ""
+  }
+]
