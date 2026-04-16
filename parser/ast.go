@@ -1849,6 +1849,11 @@ func (c *CreateUser) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
+	if c.ValidUntil != nil {
+		if err := c.ValidUntil.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	for _, host := range c.Hosts {
 		if err := host.Accept(visitor); err != nil {
 			return err
