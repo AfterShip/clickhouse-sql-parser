@@ -241,7 +241,9 @@ const (
 	KeywordUse          = "USE"
 	KeywordUser         = "USER"
 	KeywordUsing        = "USING"
+	KeywordUntil        = "UNTIL"
 	KeywordUuid         = "UUID"
+	KeywordValid        = "VALID"
 	KeywordValues       = "VALUES"
 	KeywordView         = "VIEW"
 	KeywordVolume       = "VOLUME"
@@ -498,7 +500,9 @@ var keywords = NewSet(
 	KeywordUse,
 	KeywordUser,
 	KeywordUsing,
+	KeywordUntil,
 	KeywordUuid,
+	KeywordValid,
 	KeywordValues,
 	KeywordView,
 	KeywordVolume,

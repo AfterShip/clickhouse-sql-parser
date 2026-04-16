@@ -1815,6 +1815,7 @@ type CreateUser struct {
 	OrReplace       bool
 	UserNames       []*RoleName
 	Authentication  *AuthenticationClause
+	ValidUntil      *StringLiteral
 	Hosts           []*HostClause
 	DefaultRole     *DefaultRoleClause
 	DefaultDatabase *Ident
@@ -1845,6 +1846,11 @@ func (c *CreateUser) Accept(visitor ASTVisitor) error {
 	}
 	if c.Authentication != nil {
 		if err := c.Authentication.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.ValidUntil != nil {
+		if err := c.ValidUntil.Accept(visitor); err != nil {
 			return err
 		}
 	}

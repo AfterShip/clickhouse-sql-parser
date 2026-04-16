@@ -13,6 +13,11 @@ CREATE USER user9 IDENTIFIED WITH ldap SERVER 'ldap_server';
 CREATE USER user10 IDENTIFIED WITH kerberos;
 CREATE USER user11 IDENTIFIED WITH kerberos REALM 'EXAMPLE.COM';
 
+-- CREATE USER with VALID UNTIL
+CREATE USER user33 VALID UNTIL '2026-12-12 00:00:00';
+CREATE USER user34 IDENTIFIED WITH plaintext_password BY 'password123' VALID UNTIL '2026-06-15';
+CREATE USER user35 VALID UNTIL 'infinity';
+
 -- CREATE USER with host restrictions
 CREATE USER user12 HOST LOCAL;
 CREATE USER user13 HOST ANY;
@@ -44,8 +49,9 @@ CREATE USER user30 SETTINGS PROFILE 'default';
 CREATE USER user31 SETTINGS readonly=1, max_memory_usage=5000000;
 
 -- Complex CREATE USER with multiple clauses
-CREATE USER user32 
+CREATE USER user32
     IDENTIFIED WITH plaintext_password BY 'password'
+    VALID UNTIL '2025-12-31'
     HOST NAME 'localhost'
     DEFAULT ROLE role1, role2
     DEFAULT DATABASE test_db
