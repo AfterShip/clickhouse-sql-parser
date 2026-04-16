@@ -824,6 +824,18 @@ func (p *Parser) parseOptionalClauses(createUser *CreateUser) error {
 			createUser.Authentication = auth
 			createUser.StatementEnd = auth.End()
 
+		case p.matchKeyword(KeywordValid):
+			_ = p.lexer.consumeToken() // consume VALID keyword
+			if err := p.expectKeyword(KeywordUntil); err != nil {
+				return err
+			}
+			validUntil, err := p.parseString(p.Pos())
+			if err != nil {
+				return err
+			}
+			createUser.ValidUntil = validUntil
+			createUser.StatementEnd = validUntil.End()
+
 		case p.matchKeyword(KeywordHost):
 			hosts, err := p.parseHostClauses()
 			if err != nil {

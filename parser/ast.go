@@ -1815,6 +1815,7 @@ type CreateUser struct {
 	OrReplace       bool
 	UserNames       []*RoleName
 	Authentication  *AuthenticationClause
+	ValidUntil      *StringLiteral
 	Hosts           []*HostClause
 	DefaultRole     *DefaultRoleClause
 	DefaultDatabase *Ident

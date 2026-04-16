@@ -754,6 +754,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Authentication, fn) {
 			return false
 		}
+		if !Walk(n.ValidUntil, fn) {
+			return false
+		}
 		for _, host := range n.Hosts {
 			if !Walk(host, fn) {
 				return false

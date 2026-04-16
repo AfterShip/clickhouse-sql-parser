@@ -1069,6 +1069,11 @@ func (c *CreateUser) FormatSQL(formatter *Formatter) {
 		formatter.Break()
 		formatter.WriteExpr(c.Authentication)
 	}
+	if c.ValidUntil != nil {
+		formatter.Break()
+		formatter.WriteString("VALID UNTIL ")
+		formatter.WriteExpr(c.ValidUntil)
+	}
 	if len(c.Hosts) > 0 {
 		formatter.Break()
 		for i, host := range c.Hosts {
