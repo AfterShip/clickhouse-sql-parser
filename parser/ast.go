@@ -1452,6 +1452,7 @@ type CreateView struct {
 	UUID         *UUID
 	OnCluster    *ClusterClause
 	TableSchema  *TableSchemaClause
+	Comment      *StringLiteral
 	SubQuery     *SubQuery
 }
 
@@ -1485,6 +1486,11 @@ func (c *CreateView) Accept(visitor ASTVisitor) error {
 	}
 	if c.TableSchema != nil {
 		if err := c.TableSchema.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Comment != nil {
+		if err := c.Comment.Accept(visitor); err != nil {
 			return err
 		}
 	}
