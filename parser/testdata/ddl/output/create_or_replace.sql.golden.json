@@ -409,6 +409,7 @@
       "AliasTable": null,
       "TableFunction": null
     },
+    "Comment": null,
     "SubQuery": {
       "HasParen": false,
       "Select": {

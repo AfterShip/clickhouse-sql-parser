@@ -1139,6 +1139,11 @@ func (c *CreateView) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(c.TableSchema)
 	}
 
+	if c.Comment != nil {
+		formatter.WriteString(" COMMENT ")
+		formatter.WriteExpr(c.Comment)
+	}
+
 	if c.SubQuery != nil {
 		formatter.WriteString(" AS ")
 		formatter.WriteExpr(c.SubQuery)

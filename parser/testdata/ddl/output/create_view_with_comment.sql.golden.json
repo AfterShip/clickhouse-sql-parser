@@ -1,42 +1,47 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 104,
+    "StatementEnd": 156,
     "OrReplace": false,
     "Name": {
-      "Database": null,
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 26,
+        "NameEnd": 28
+      },
       "Table": {
         "Name": "my_view",
         "QuoteType": 1,
-        "NamePos": 26,
-        "NameEnd": 33
+        "NamePos": 29,
+        "NameEnd": 36
       }
     },
     "IfNotExists": true,
     "UUID": null,
     "OnCluster": null,
     "TableSchema": {
-      "SchemaPos": 33,
-      "SchemaEnd": 58,
+      "SchemaPos": 37,
+      "SchemaEnd": 73,
       "Columns": [
         {
-          "NamePos": 34,
-          "ColumnEnd": 45,
+          "NamePos": 44,
+          "ColumnEnd": 53,
           "Name": {
             "Ident": {
-              "Name": "col1",
-              "QuoteType": 1,
-              "NamePos": 34,
-              "NameEnd": 38
+              "Name": "id",
+              "QuoteType": 3,
+              "NamePos": 44,
+              "NameEnd": 46
             },
             "DotIdent": null
           },
           "Type": {
             "Name": {
-              "Name": "String",
+              "Name": "Int64",
               "QuoteType": 1,
-              "NamePos": 39,
-              "NameEnd": 45
+              "NamePos": 48,
+              "NameEnd": 53
             }
           },
           "NotNull": null,
@@ -50,14 +55,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 47,
-          "ColumnEnd": 58,
+          "NamePos": 60,
+          "ColumnEnd": 72,
           "Name": {
             "Ident": {
-              "Name": "col2",
-              "QuoteType": 1,
-              "NamePos": 47,
-              "NameEnd": 51
+              "Name": "name",
+              "QuoteType": 3,
+              "NamePos": 60,
+              "NameEnd": 64
             },
             "DotIdent": null
           },
@@ -65,8 +70,8 @@
             "Name": {
               "Name": "String",
               "QuoteType": 1,
-              "NamePos": 52,
-              "NameEnd": 58
+              "NamePos": 66,
+              "NameEnd": 72
             }
           },
           "NotNull": null,
@@ -83,12 +88,16 @@
       "AliasTable": null,
       "TableFunction": null
     },
-    "Comment": null,
+    "Comment": {
+      "LiteralPos": 84,
+      "LiteralEnd": 111,
+      "Literal": "{\"blueprint_hash\":\"abc123\"}"
+    },
     "SubQuery": {
       "HasParen": false,
       "Select": {
-        "SelectPos": 63,
-        "StatementEnd": 104,
+        "SelectPos": 116,
+        "StatementEnd": 156,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -98,8 +107,8 @@
             "Expr": {
               "Name": "id",
               "QuoteType": 1,
-              "NamePos": 74,
-              "NameEnd": 76
+              "NamePos": 127,
+              "NameEnd": 129
             },
             "Modifiers": [],
             "Alias": null
@@ -108,32 +117,37 @@
             "Expr": {
               "Name": "name",
               "QuoteType": 1,
-              "NamePos": 82,
-              "NameEnd": 86
+              "NamePos": 135,
+              "NameEnd": 139
             },
             "Modifiers": [],
             "Alias": null
           }
         ],
         "From": {
-          "FromPos": 87,
+          "FromPos": 140,
           "Expr": {
             "Table": {
-              "TablePos": 96,
-              "TableEnd": 104,
+              "TablePos": 145,
+              "TableEnd": 156,
               "Alias": null,
               "Expr": {
-                "Database": null,
+                "Database": {
+                  "Name": "db",
+                  "QuoteType": 1,
+                  "NamePos": 145,
+                  "NameEnd": 147
+                },
                 "Table": {
                   "Name": "my_table",
                   "QuoteType": 1,
-                  "NamePos": 96,
-                  "NameEnd": 104
+                  "NamePos": 148,
+                  "NameEnd": 156
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 104,
+            "StatementEnd": 156,
             "SampleRatio": null,
             "HasFinal": false
           }

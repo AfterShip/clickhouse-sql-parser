@@ -240,6 +240,13 @@ func (p *Parser) parseCreateView(pos Pos, orReplace bool) (*CreateView, error) {
 		createView.TableSchema = tableSchema
 	}
 
+	// parse COMMENT clause if exists (before AS SELECT)
+	comment, err := p.tryParseComment()
+	if err != nil {
+		return nil, err
+	}
+	createView.Comment = comment
+
 	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
