@@ -1,0 +1,193 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 182,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "events",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 18
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AddPos": 19,
+        "StatementEnd": 182,
+        "IfNotExists": true,
+        "TableProjection": {
+          "IncludeProjectionKeyword": false,
+          "ProjectionPos": 48,
+          "Identifier": {
+            "Ident": {
+              "Name": "hourly_stats",
+              "QuoteType": 1,
+              "NamePos": 48,
+              "NameEnd": 60
+            },
+            "DotIdent": null
+          },
+          "Select": {
+            "LeftParenPos": 61,
+            "RightParenPos": 182,
+            "With": null,
+            "SelectColumns": {
+              "ListPos": 69,
+              "ListEnd": 156,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "toStartOfHour",
+                      "QuoteType": 1,
+                      "NamePos": 69,
+                      "NameEnd": 82
+                    },
+                    "Params": {
+                      "LeftParenPos": 82,
+                      "RightParenPos": 93,
+                      "Items": {
+                        "ListPos": 83,
+                        "ListEnd": 93,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "Name": "event_time",
+                              "QuoteType": 1,
+                              "NamePos": 83,
+                              "NameEnd": 93
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": {
+                    "Name": "hour",
+                    "QuoteType": 1,
+                    "NamePos": 98,
+                    "NameEnd": 102
+                  }
+                },
+                {
+                  "Expr": {
+                    "Name": "event_type",
+                    "QuoteType": 1,
+                    "NamePos": 104,
+                    "NameEnd": 114
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "count",
+                      "QuoteType": 1,
+                      "NamePos": 116,
+                      "NameEnd": 121
+                    },
+                    "Params": {
+                      "LeftParenPos": 121,
+                      "RightParenPos": 122,
+                      "Items": {
+                        "ListPos": 122,
+                        "ListEnd": 122,
+                        "HasDistinct": false,
+                        "Items": []
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": {
+                    "Name": "count",
+                    "QuoteType": 1,
+                    "NamePos": 127,
+                    "NameEnd": 132
+                  }
+                },
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "uniq",
+                      "QuoteType": 1,
+                      "NamePos": 134,
+                      "NameEnd": 138
+                    },
+                    "Params": {
+                      "LeftParenPos": 138,
+                      "RightParenPos": 146,
+                      "Items": {
+                        "ListPos": 139,
+                        "ListEnd": 146,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "Name": "user_id",
+                              "QuoteType": 1,
+                              "NamePos": 139,
+                              "NameEnd": 146
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": {
+                    "Name": "users",
+                    "QuoteType": 1,
+                    "NamePos": 151,
+                    "NameEnd": 156
+                  }
+                }
+              ]
+            },
+            "GroupBy": {
+              "GroupByPos": 157,
+              "GroupByEnd": 182,
+              "AggregateType": "",
+              "Expr": {
+                "ListPos": 166,
+                "ListEnd": 182,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "hour",
+                      "QuoteType": 1,
+                      "NamePos": 166,
+                      "NameEnd": 170
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "event_type",
+                      "QuoteType": 1,
+                      "NamePos": 172,
+                      "NameEnd": 182
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "WithCube": false,
+              "WithRollup": false,
+              "WithTotals": false
+            },
+            "OrderBy": null
+          }
+        },
+        "After": null
+      }
+    ]
+  }
+]
