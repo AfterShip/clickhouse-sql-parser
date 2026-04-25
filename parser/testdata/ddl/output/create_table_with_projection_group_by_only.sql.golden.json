@@ -1,0 +1,384 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 411,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "events",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 19
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 20,
+      "SchemaEnd": 356,
+      "Columns": [
+        {
+          "NamePos": 27,
+          "ColumnEnd": 47,
+          "Name": {
+            "Ident": {
+              "Name": "event_time",
+              "QuoteType": 3,
+              "NamePos": 27,
+              "NameEnd": 37
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "QuoteType": 1,
+              "NamePos": 39,
+              "NameEnd": 47
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 54,
+          "ColumnEnd": 72,
+          "Name": {
+            "Ident": {
+              "Name": "event_type",
+              "QuoteType": 3,
+              "NamePos": 54,
+              "NameEnd": 64
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 66,
+              "NameEnd": 72
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 79,
+          "ColumnEnd": 94,
+          "Name": {
+            "Ident": {
+              "Name": "user_id",
+              "QuoteType": 3,
+              "NamePos": 79,
+              "NameEnd": 86
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 88,
+              "NameEnd": 94
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 101,
+          "ColumnEnd": 115,
+          "Name": {
+            "Ident": {
+              "Name": "value",
+              "QuoteType": 3,
+              "NamePos": 101,
+              "NameEnd": 106
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Float64",
+              "QuoteType": 1,
+              "NamePos": 108,
+              "NameEnd": 115
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "IncludeProjectionKeyword": true,
+          "ProjectionPos": 121,
+          "Identifier": {
+            "Ident": {
+              "Name": "hourly_aggregates",
+              "QuoteType": 1,
+              "NamePos": 132,
+              "NameEnd": 149
+            },
+            "DotIdent": null
+          },
+          "Select": {
+            "LeftParenPos": 154,
+            "RightParenPos": 354,
+            "With": null,
+            "SelectColumns": {
+              "ListPos": 183,
+              "ListEnd": 315,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "toStartOfHour",
+                      "QuoteType": 1,
+                      "NamePos": 183,
+                      "NameEnd": 196
+                    },
+                    "Params": {
+                      "LeftParenPos": 196,
+                      "RightParenPos": 207,
+                      "Items": {
+                        "ListPos": 197,
+                        "ListEnd": 207,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "Name": "event_time",
+                              "QuoteType": 1,
+                              "NamePos": 197,
+                              "NameEnd": 207
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": {
+                    "Name": "hour",
+                    "QuoteType": 1,
+                    "NamePos": 212,
+                    "NameEnd": 216
+                  }
+                },
+                {
+                  "Expr": {
+                    "Name": "event_type",
+                    "QuoteType": 1,
+                    "NamePos": 230,
+                    "NameEnd": 240
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "count",
+                      "QuoteType": 1,
+                      "NamePos": 254,
+                      "NameEnd": 259
+                    },
+                    "Params": {
+                      "LeftParenPos": 259,
+                      "RightParenPos": 260,
+                      "Items": {
+                        "ListPos": 260,
+                        "ListEnd": 260,
+                        "HasDistinct": false,
+                        "Items": []
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": {
+                    "Name": "event_count",
+                    "QuoteType": 1,
+                    "NamePos": 265,
+                    "NameEnd": 276
+                  }
+                },
+                {
+                  "Expr": {
+                    "Name": {
+                      "Name": "sum",
+                      "QuoteType": 1,
+                      "NamePos": 290,
+                      "NameEnd": 293
+                    },
+                    "Params": {
+                      "LeftParenPos": 293,
+                      "RightParenPos": 299,
+                      "Items": {
+                        "ListPos": 294,
+                        "ListEnd": 299,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "Name": "value",
+                              "QuoteType": 1,
+                              "NamePos": 294,
+                              "NameEnd": 299
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      },
+                      "ColumnArgList": null
+                    }
+                  },
+                  "Alias": {
+                    "Name": "total_value",
+                    "QuoteType": 1,
+                    "NamePos": 304,
+                    "NameEnd": 315
+                  }
+                }
+              ]
+            },
+            "GroupBy": {
+              "GroupByPos": 324,
+              "GroupByEnd": 354,
+              "AggregateType": "",
+              "Expr": {
+                "ListPos": 333,
+                "ListEnd": 349,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "hour",
+                      "QuoteType": 1,
+                      "NamePos": 333,
+                      "NameEnd": 337
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "event_type",
+                      "QuoteType": 1,
+                      "NamePos": 339,
+                      "NameEnd": 349
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "WithCube": false,
+              "WithRollup": false,
+              "WithTotals": false
+            },
+            "OrderBy": null
+          }
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 358,
+      "EngineEnd": 411,
+      "Name": "MergeTree",
+      "Params": {
+        "LeftParenPos": 376,
+        "RightParenPos": 377,
+        "Items": {
+          "ListPos": 377,
+          "ListEnd": 377,
+          "HasDistinct": false,
+          "Items": []
+        },
+        "ColumnArgList": null
+      },
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 379,
+        "ListEnd": 411,
+        "Items": [
+          {
+            "OrderPos": 379,
+            "Expr": {
+              "LeftParenPos": 388,
+              "RightParenPos": 411,
+              "Items": {
+                "ListPos": 389,
+                "ListEnd": 411,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "event_time",
+                      "QuoteType": 1,
+                      "NamePos": 389,
+                      "NameEnd": 399
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "event_type",
+                      "QuoteType": 1,
+                      "NamePos": 401,
+                      "NameEnd": 411
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            },
+            "Alias": null,
+            "Direction": "",
+            "Fill": null
+          }
+        ],
+        "Interpolate": null
+      }
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]

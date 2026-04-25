@@ -166,9 +166,9 @@ func (p *Parser) parseAlterTableAddIndex(pos Pos) (*AlterTableAddIndex, error) {
 	}, nil
 }
 
-func (p *Parser) parseProjectionOrderBy(pos Pos) (*ProjectionOrderByClause, error) {
-	if err := p.expectKeyword(KeywordOrder); err != nil {
-		return nil, err
+func (p *Parser) tryParseProjectionOrderBy(pos Pos) (*ProjectionOrderByClause, error) {
+	if !p.tryConsumeKeywords(KeywordOrder) {
+		return nil, nil // nolint
 	}
 	if err := p.expectKeyword(KeywordBy); err != nil {
 		return nil, err
@@ -202,7 +202,7 @@ func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelectStmt, error) {
 	if err != nil {
 		return nil, err
 	}
-	orderBy, err := p.parseProjectionOrderBy(p.Pos())
+	orderBy, err := p.tryParseProjectionOrderBy(p.Pos())
 	if err != nil {
 		return nil, err
 	}
