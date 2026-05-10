@@ -1,0 +1,87 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 42,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "a",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 8
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "b",
+          "QuoteType": 1,
+          "NamePos": 10,
+          "NameEnd": 11
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 12,
+      "Expr": {
+        "Table": {
+          "TablePos": 17,
+          "TableEnd": 18,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 17,
+              "NameEnd": 18
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 18,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 19,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "name",
+          "QuoteType": 1,
+          "NamePos": 25,
+          "NameEnd": 29
+        },
+        "Operation": "REGEXP",
+        "RightExpr": {
+          "LiteralPos": 38,
+          "LiteralEnd": 42,
+          "Literal": "^foo"
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
