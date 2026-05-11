@@ -378,46 +378,79 @@ func (p *Parser) peekKeyword(keyword string) bool {
 	return token.Kind == TokenKindKeyword && strings.EqualFold(token.String, keyword)
 }
 
-// isSelectItemTerminatorKeyword checks whether the current token is a keyword
-// that begins a clause following the SELECT item list. When true, we should not
-// treat the keyword itself as a bare alias.
-func (p *Parser) isSelectItemTerminatorKeyword() bool {
-	switch {
-	case p.matchKeyword(KeywordFrom):
-		return true
-	case p.matchKeyword(KeywordWhere):
-		return true
-	case p.matchKeyword(KeywordPrewhere):
-		return true
-	case p.matchKeyword(KeywordGroup):
-		return true
-	case p.matchKeyword(KeywordHaving):
-		return true
-	case p.matchKeyword(KeywordWindow):
-		return true
-	case p.matchKeyword(KeywordOrder):
-		return true
-	case p.matchKeyword(KeywordLimit):
-		return true
-	case p.matchKeyword(KeywordOffset):
-		return true
-	case p.matchKeyword(KeywordSettings):
-		return true
-	case p.matchKeyword(KeywordFormat):
-		return true
-	case p.matchKeyword(KeywordUnion):
-		return true
-	case p.matchKeyword(KeywordExcept):
-		return true
-	default:
+// clauseStarterKeywords lists the keywords that begin a clause following the
+// SELECT item list. Single source of truth used by both the terminator check
+// (current-token) and the lookahead check (peek), so they cannot drift.
+var clauseStarterKeywords = []string{
+	KeywordFrom, KeywordWhere, KeywordPrewhere, KeywordGroup,
+	KeywordHaving, KeywordWindow, KeywordOrder, KeywordLimit,
+	KeywordOffset, KeywordSettings, KeywordFormat, KeywordUnion,
+	KeywordExcept,
+}
+
+// matchClauseStarterKeyword reports whether the current token is one of the
+// clause-starter keywords.
+func (p *Parser) matchClauseStarterKeyword() bool {
+	for _, kw := range clauseStarterKeywords {
+		if p.matchKeyword(kw) {
+			return true
+		}
+	}
+	return false
+}
+
+// peekIsClauseStarterKeyword reports whether the next token is one of the
+// clause-starter keywords.
+func (p *Parser) peekIsClauseStarterKeyword() bool {
+	for _, kw := range clauseStarterKeywords {
+		if p.peekKeyword(kw) {
+			return true
+		}
+	}
+	return false
+}
+
+// keywordIsSelectItemIdentifier reports whether the current keyword token is
+// being used as a bare column-reference identifier inside a SELECT projection
+// rather than starting a clause/expression. This is true when the next token
+// is `,`, `AS`, or another clause-starter keyword — any of which prove the
+// current keyword cannot legally begin a clause or expression (clause/expr
+// starters always require a value/expression next, never another
+// clause-starter or a list separator).
+//
+// ClickHouse server accepts essentially every reserved word as a bare column
+// name in a projection; matching that behavior here lets the parser handle
+// queries like `SELECT a, limit FROM t` or `SELECT a, from, b FROM t`
+// without backtick escaping. Backticked identifiers are tokenized as
+// TokenKindIdent (not TokenKindKeyword), so trailing-comma handling for
+// keyword-named tables — e.g. `SELECT count(*), FROM `limit`` — is preserved.
+func (p *Parser) keywordIsSelectItemIdentifier() bool {
+	if !p.matchTokenKind(TokenKindKeyword) {
 		return false
 	}
+	return p.peekTokenKind(TokenKindComma) ||
+		p.peekKeyword(KeywordAs) ||
+		p.peekIsClauseStarterKeyword()
+}
+
+// isSelectItemTerminatorKeyword checks whether the current token is a keyword
+// that begins a clause following the SELECT item list. When true, we should
+// not treat the keyword itself as a bare alias.
+func (p *Parser) isSelectItemTerminatorKeyword() bool {
+	if p.keywordIsSelectItemIdentifier() {
+		return false
+	}
+	return p.matchClauseStarterKeyword()
 }
 
 func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
-	// Should parse the keyword as an identifier if the keyword is followed by one of comma, `AS`.
-	// For example: `SELECT 1 as interval GROUP BY interval` is a valid syntax in ClickHouse.
-	if p.matchTokenKind(TokenKindKeyword) && (p.peekTokenKind(TokenKindComma) || p.peekKeyword(KeywordAs)) {
+	// Should parse the keyword as an identifier if the keyword is followed by
+	// `,`, `AS`, or another clause-starter keyword. ClickHouse accepts most
+	// reserved words as bare column names in projections (e.g.
+	// `SELECT 1 AS interval GROUP BY interval`, `SELECT a, case FROM t`); a
+	// clause/expression starter always requires a value/expression next, so
+	// the lookahead unambiguously identifies these as identifier uses.
+	if p.keywordIsSelectItemIdentifier() {
 		return p.parseIdent()
 	}
 	switch {

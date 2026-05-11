@@ -1,0 +1,82 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 28,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "count",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 12
+          },
+          "Params": {
+            "LeftParenPos": 12,
+            "RightParenPos": 14,
+            "Items": {
+              "ListPos": 13,
+              "ListEnd": 14,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 13,
+                    "NameEnd": 14
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 17,
+      "Expr": {
+        "Table": {
+          "TablePos": 23,
+          "TableEnd": 28,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "limit",
+              "QuoteType": 3,
+              "NamePos": 23,
+              "NameEnd": 28
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 28,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

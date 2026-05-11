@@ -1,0 +1,119 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 87,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "cloud",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 12
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "account",
+          "QuoteType": 1,
+          "NamePos": 14,
+          "NameEnd": 21
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "region",
+          "QuoteType": 1,
+          "NamePos": 23,
+          "NameEnd": 29
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "name",
+          "QuoteType": 1,
+          "NamePos": 31,
+          "NameEnd": 35
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "usage",
+          "QuoteType": 1,
+          "NamePos": 37,
+          "NameEnd": 42
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "limit",
+          "QuoteType": 1,
+          "NamePos": 44,
+          "NameEnd": 49
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "usage_percentage",
+          "QuoteType": 1,
+          "NamePos": 51,
+          "NameEnd": 67
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 68,
+      "Expr": {
+        "Table": {
+          "TablePos": 73,
+          "TableEnd": 87,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "service_quotas",
+              "QuoteType": 1,
+              "NamePos": 73,
+              "NameEnd": 87
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 87,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
