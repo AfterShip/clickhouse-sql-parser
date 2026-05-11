@@ -410,6 +410,15 @@ func (p *Parser) peekIsClauseStarterKeyword() bool {
 	return false
 }
 
+// peekIsEndOfStatement reports whether the next token is EOF or `;`.
+func (p *Parser) peekIsEndOfStatement() bool {
+	next, err := p.lexer.peekToken()
+	if err != nil || next == nil {
+		return true
+	}
+	return next.Kind == ";"
+}
+
 // keywordIsSelectItemIdentifier reports whether the current keyword token is
 // being used as a bare column-reference identifier inside a SELECT projection
 // rather than starting a clause/expression. This is true when the next token
@@ -424,6 +433,13 @@ func (p *Parser) peekIsClauseStarterKeyword() bool {
 // without backtick escaping. Backticked identifiers are tokenized as
 // TokenKindIdent (not TokenKindKeyword), so trailing-comma handling for
 // keyword-named tables — e.g. `SELECT count(*), FROM `limit`` — is preserved.
+//
+// End-of-statement (EOF or `;`) is intentionally NOT included here. It's a
+// valid disambiguator only in expression position (the current keyword IS
+// the projection expression), not in terminator/alias position (where a
+// trailing clause-starter keyword like `FROM` at EOF must still be treated
+// as a terminator, not a no-AS alias). parseColumnExpr applies the eos
+// disambiguator inline.
 func (p *Parser) keywordIsSelectItemIdentifier() bool {
 	if !p.matchTokenKind(TokenKindKeyword) {
 		return false
@@ -445,12 +461,17 @@ func (p *Parser) isSelectItemTerminatorKeyword() bool {
 
 func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// Should parse the keyword as an identifier if the keyword is followed by
-	// `,`, `AS`, or another clause-starter keyword. ClickHouse accepts most
-	// reserved words as bare column names in projections (e.g.
-	// `SELECT 1 AS interval GROUP BY interval`, `SELECT a, case FROM t`); a
-	// clause/expression starter always requires a value/expression next, so
-	// the lookahead unambiguously identifies these as identifier uses.
-	if p.keywordIsSelectItemIdentifier() {
+	// `,`, `AS`, another clause-starter keyword, or end-of-statement (EOF or
+	// `;`). ClickHouse accepts most reserved words as bare column names in
+	// projections (e.g. `SELECT 1 AS interval GROUP BY interval`,
+	// `SELECT a, case FROM t`, `SELECT case`); a clause/expression starter
+	// always requires a value/expression next, so the lookahead unambiguously
+	// identifies these as identifier uses. The end-of-statement disambiguator
+	// is only valid in expression position, so it's applied inline here
+	// rather than in keywordIsSelectItemIdentifier (which is shared with the
+	// terminator/alias check).
+	if p.keywordIsSelectItemIdentifier() ||
+		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
 		return p.parseIdent()
 	}
 	switch {
@@ -856,6 +877,10 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	var alias *Ident
 	switch {
 	case p.tryConsumeKeywords(KeywordAs):
+		// `SELECT 1 AS <reserved-keyword>` works for any keyword because
+		// matchTokenKind(TokenKindIdent) coerces TokenKindKeyword to ident
+		// (see parser_common.go matchTokenKind), so parseIdent accepts a
+		// keyword token here without needing a special-case.
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
