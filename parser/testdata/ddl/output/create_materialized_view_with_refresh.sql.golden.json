@@ -179,24 +179,31 @@
             },
             "Modifiers": [],
             "Alias": null
-          },
-          {
-            "Expr": {
-              "Name": "FROM",
-              "QuoteType": 1,
-              "NamePos": 289,
-              "NameEnd": 293
-            },
-            "Modifiers": [],
-            "Alias": {
-              "Name": "table_v5",
-              "QuoteType": 1,
-              "NamePos": 294,
-              "NameEnd": 302
-            }
           }
         ],
-        "From": null,
+        "From": {
+          "FromPos": 289,
+          "Expr": {
+            "Table": {
+              "TablePos": 294,
+              "TableEnd": 302,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "table_v5",
+                  "QuoteType": 1,
+                  "NamePos": 294,
+                  "NameEnd": 302
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 302,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
         "Window": null,
         "Prewhere": null,
         "Where": null,

@@ -31,5 +31,6 @@ AS
   SELECT
     `field_1`,
     `field_2`,
-    `field_3`,
-    FROM AS table_v5;
+    `field_3`
+  FROM
+    table_v5;

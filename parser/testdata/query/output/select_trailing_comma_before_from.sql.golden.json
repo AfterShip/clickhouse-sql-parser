@@ -1,0 +1,82 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 41,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "count",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 12
+          },
+          "Params": {
+            "LeftParenPos": 12,
+            "RightParenPos": 14,
+            "Items": {
+              "ListPos": 13,
+              "ListEnd": 14,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "x",
+                    "QuoteType": 1,
+                    "NamePos": 13,
+                    "NameEnd": 14
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 24,
+      "Expr": {
+        "Table": {
+          "TablePos": 29,
+          "TableEnd": 41,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "cloud_assets",
+              "QuoteType": 1,
+              "NamePos": 29,
+              "NameEnd": 41
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 41,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
