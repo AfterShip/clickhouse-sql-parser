@@ -587,6 +587,9 @@ func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
 		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
+		if p.isSelectItemTerminatorKeyword() {
+			break
+		}
 	}
 	return selectItems, nil
 }

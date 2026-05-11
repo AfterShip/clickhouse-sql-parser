@@ -212,24 +212,31 @@
             },
             "Modifiers": [],
             "Alias": null
-          },
-          {
-            "Expr": {
-              "Name": "FROM",
-              "QuoteType": 1,
-              "NamePos": 266,
-              "NameEnd": 270
-            },
-            "Modifiers": [],
-            "Alias": {
-              "Name": "event_table",
-              "QuoteType": 1,
-              "NamePos": 271,
-              "NameEnd": 282
-            }
           }
         ],
-        "From": null,
+        "From": {
+          "FromPos": 266,
+          "Expr": {
+            "Table": {
+              "TablePos": 271,
+              "TableEnd": 282,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "event_table",
+                  "QuoteType": 1,
+                  "NamePos": 271,
+                  "NameEnd": 282
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 282,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
         "Window": null,
         "Prewhere": null,
         "Where": {

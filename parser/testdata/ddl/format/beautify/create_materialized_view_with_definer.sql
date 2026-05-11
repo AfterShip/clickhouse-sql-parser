@@ -32,8 +32,9 @@ AS
   (SELECT
     timestamp,
     field_1,
-    field_2,
-    FROM AS event_table
+    field_2
+  FROM
+    event_table
   WHERE
     toStartOfHour(timestamp) = toStartOfHour(now() - toIntervalHour(1)))
 COMMENT 'Test comment';
