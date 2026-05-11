@@ -64,7 +64,7 @@ func (p *Parser) getNextPrecedence() int {
 		return PrecedenceDoubleColon
 	case p.matchTokenKind(TokenKindDot):
 		return PrecedenceDot
-	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike):
+	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp):
 		return PrecedenceBetweenLike
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
@@ -85,7 +85,8 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		p.matchTokenKind(TokenKindMinus), p.matchTokenKind(TokenKindPlus), p.matchTokenKind(TokenKindMul),
 		p.matchTokenKind(TokenKindDiv), p.matchTokenKind(TokenKindMod), p.matchTokenKind(TokenKindConcat),
 		p.matchKeyword(KeywordIn), p.matchKeyword(KeywordLike),
-		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
+		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp),
+		p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
 		p.matchTokenKind(TokenKindArrow), p.matchTokenKind(TokenKindDoubleEQ):
 		op := p.last().ToString()
 		_ = p.lexer.consumeToken()
