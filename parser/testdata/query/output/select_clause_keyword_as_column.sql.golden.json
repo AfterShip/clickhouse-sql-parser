@@ -1,0 +1,109 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 55,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 9
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "from",
+          "QuoteType": 1,
+          "NamePos": 11,
+          "NameEnd": 15
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "to",
+          "QuoteType": 1,
+          "NamePos": 17,
+          "NameEnd": 19
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "where",
+          "QuoteType": 1,
+          "NamePos": 21,
+          "NameEnd": 26
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "group",
+          "QuoteType": 1,
+          "NamePos": 28,
+          "NameEnd": 33
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "order",
+          "QuoteType": 1,
+          "NamePos": 35,
+          "NameEnd": 40
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 41,
+      "Expr": {
+        "Table": {
+          "TablePos": 46,
+          "TableEnd": 55,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "transfers",
+              "QuoteType": 1,
+              "NamePos": 46,
+              "NameEnd": 55
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 55,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]

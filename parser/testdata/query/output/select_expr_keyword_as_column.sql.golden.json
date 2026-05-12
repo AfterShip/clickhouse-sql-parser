@@ -1,0 +1,99 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 52,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 9
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "case",
+          "QuoteType": 1,
+          "NamePos": 11,
+          "NameEnd": 15
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "cast",
+          "QuoteType": 1,
+          "NamePos": 17,
+          "NameEnd": 21
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "extract",
+          "QuoteType": 1,
+          "NamePos": 23,
+          "NameEnd": 30
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "interval",
+          "QuoteType": 1,
+          "NamePos": 32,
+          "NameEnd": 40
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 41,
+      "Expr": {
+        "Table": {
+          "TablePos": 46,
+          "TableEnd": 52,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "events",
+              "QuoteType": 1,
+              "NamePos": 46,
+              "NameEnd": 52
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 52,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null
+  }
+]
