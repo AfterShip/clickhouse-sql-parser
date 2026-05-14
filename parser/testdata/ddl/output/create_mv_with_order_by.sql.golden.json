@@ -96,6 +96,7 @@
         "Interpolate": null
       }
     },
+    "TableSchema": null,
     "HasEmpty": false,
     "Destination": null,
     "SubQuery": {
@@ -227,6 +228,7 @@
       "Settings": null,
       "OrderBy": null
     },
+    "TableSchema": null,
     "HasEmpty": false,
     "Destination": null,
     "SubQuery": {

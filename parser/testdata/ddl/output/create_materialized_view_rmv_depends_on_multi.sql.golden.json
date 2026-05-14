@@ -1,0 +1,197 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 258,
+    "Name": {
+      "Database": {
+        "Name": "db1",
+        "QuoteType": 1,
+        "NamePos": 25,
+        "NameEnd": 28
+      },
+      "Table": {
+        "Name": "attrs_rollup_v0",
+        "QuoteType": 1,
+        "NamePos": 29,
+        "NameEnd": 44
+      }
+    },
+    "IfNotExists": false,
+    "OnCluster": null,
+    "Refresh": {
+      "RefreshPos": 45,
+      "Frequency": "EVERY",
+      "Interval": {
+        "IntervalPos": 0,
+        "Expr": {
+          "NumPos": 59,
+          "NumEnd": 60,
+          "Literal": "5",
+          "Base": 10
+        },
+        "Unit": {
+          "Name": "MINUTE",
+          "QuoteType": 1,
+          "NamePos": 61,
+          "NameEnd": 67
+        }
+      },
+      "Offset": null
+    },
+    "RandomizeFor": null,
+    "DependsOn": [
+      {
+        "Database": {
+          "Name": "db1",
+          "QuoteType": 1,
+          "NamePos": 79,
+          "NameEnd": 82
+        },
+        "Table": {
+          "Name": "metadata_mv_v0",
+          "QuoteType": 1,
+          "NamePos": 83,
+          "NameEnd": 97
+        }
+      },
+      {
+        "Database": {
+          "Name": "db1",
+          "QuoteType": 1,
+          "NamePos": 99,
+          "NameEnd": 102
+        },
+        "Table": {
+          "Name": "metadata_mv_v1",
+          "QuoteType": 1,
+          "NamePos": 103,
+          "NameEnd": 117
+        }
+      }
+    ],
+    "Settings": null,
+    "HasAppend": false,
+    "Engine": {
+      "EnginePos": 118,
+      "EngineEnd": 133,
+      "Name": "Memory",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": null
+    },
+    "TableSchema": null,
+    "HasEmpty": false,
+    "Destination": null,
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 137,
+        "StatementEnd": 258,
+        "With": null,
+        "Top": null,
+        "HasDistinct": true,
+        "DistinctOn": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "service_name",
+              "QuoteType": 1,
+              "NamePos": 157,
+              "NameEnd": 169
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "attr_key",
+              "QuoteType": 1,
+              "NamePos": 175,
+              "NameEnd": 183
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "LiteralPos": 190,
+              "LiteralEnd": 198,
+              "Literal": "profiles"
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "dataset",
+              "QuoteType": 1,
+              "NamePos": 203,
+              "NameEnd": 210
+            }
+          },
+          {
+            "Expr": {
+              "LiteralPos": 217,
+              "LiteralEnd": 223,
+              "Literal": "string"
+            },
+            "Modifiers": [],
+            "Alias": {
+              "Name": "attr_type",
+              "QuoteType": 1,
+              "NamePos": 228,
+              "NameEnd": 237
+            }
+          }
+        ],
+        "From": {
+          "FromPos": 238,
+          "Expr": {
+            "Table": {
+              "TablePos": 243,
+              "TableEnd": 258,
+              "Alias": null,
+              "Expr": {
+                "Database": {
+                  "Name": "db1",
+                  "QuoteType": 1,
+                  "NamePos": 243,
+                  "NameEnd": 246
+                },
+                "Table": {
+                  "Name": "metadata_v0",
+                  "QuoteType": 1,
+                  "NamePos": 247,
+                  "NameEnd": 258
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 258,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": null,
+    "Definer": null,
+    "SQLSecurity": ""
+  }
+]

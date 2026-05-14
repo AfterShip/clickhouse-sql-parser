@@ -668,6 +668,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Settings, fn) {
 			return false
 		}
+		if !Walk(n.TableSchema, fn) {
+			return false
+		}
 		if !Walk(n.Engine, fn) {
 			return false
 		}

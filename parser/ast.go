@@ -1356,6 +1356,7 @@ type CreateMaterializedView struct {
 	Settings     *SettingsClause
 	HasAppend    bool
 	Engine       *EngineExpr
+	TableSchema  *TableSchemaClause // column list for ENGINE-based MVs (no TO clause)
 	HasEmpty     bool
 	Destination  *DestinationClause
 	SubQuery     *SubQuery
@@ -1407,6 +1408,11 @@ func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
 	}
 	if c.Settings != nil {
 		if err := c.Settings.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.TableSchema != nil {
+		if err := c.TableSchema.Accept(visitor); err != nil {
 			return err
 		}
 	}

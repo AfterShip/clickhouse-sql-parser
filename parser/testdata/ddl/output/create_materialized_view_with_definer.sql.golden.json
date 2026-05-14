@@ -52,6 +52,7 @@
     "Settings": null,
     "HasAppend": true,
     "Engine": null,
+    "TableSchema": null,
     "HasEmpty": false,
     "Destination": {
       "ToPos": 79,

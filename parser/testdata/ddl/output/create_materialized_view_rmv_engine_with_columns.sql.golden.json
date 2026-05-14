@@ -1,0 +1,744 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 833,
+    "Name": {
+      "Database": {
+        "Name": "db1",
+        "QuoteType": 1,
+        "NamePos": 25,
+        "NameEnd": 28
+      },
+      "Table": {
+        "Name": "config_memory_v0",
+        "QuoteType": 1,
+        "NamePos": 29,
+        "NameEnd": 45
+      }
+    },
+    "IfNotExists": false,
+    "OnCluster": null,
+    "Refresh": {
+      "RefreshPos": 46,
+      "Frequency": "EVERY",
+      "Interval": {
+        "IntervalPos": 0,
+        "Expr": {
+          "NumPos": 60,
+          "NumEnd": 61,
+          "Literal": "1",
+          "Base": 10
+        },
+        "Unit": {
+          "Name": "SECOND",
+          "QuoteType": 1,
+          "NamePos": 62,
+          "NameEnd": 68
+        }
+      },
+      "Offset": null
+    },
+    "RandomizeFor": null,
+    "DependsOn": null,
+    "Settings": null,
+    "HasAppend": false,
+    "Engine": {
+      "EnginePos": 340,
+      "EngineEnd": 417,
+      "Name": "Memory",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": {
+        "SettingsPos": 356,
+        "ListEnd": 417,
+        "Items": [
+          {
+            "SettingsPos": 365,
+            "Name": {
+              "Name": "min_rows_to_keep",
+              "QuoteType": 1,
+              "NamePos": 365,
+              "NameEnd": 381
+            },
+            "Expr": {
+              "NumPos": 384,
+              "NumEnd": 390,
+              "Literal": "250000",
+              "Base": 10
+            }
+          },
+          {
+            "SettingsPos": 392,
+            "Name": {
+              "Name": "max_rows_to_keep",
+              "QuoteType": 1,
+              "NamePos": 392,
+              "NameEnd": 408
+            },
+            "Expr": {
+              "NumPos": 411,
+              "NumEnd": 417,
+              "Literal": "500000",
+              "Base": 10
+            }
+          }
+        ]
+      },
+      "OrderBy": null
+    },
+    "TableSchema": {
+      "SchemaPos": 69,
+      "SchemaEnd": 338,
+      "Columns": [
+        {
+          "NamePos": 76,
+          "ColumnEnd": 95,
+          "Name": {
+            "Ident": {
+              "Name": "schedule_id",
+              "QuoteType": 3,
+              "NamePos": 76,
+              "NameEnd": 87
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 89,
+              "NameEnd": 95
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 102,
+          "ColumnEnd": 119,
+          "Name": {
+            "Ident": {
+              "Name": "sample_rate",
+              "QuoteType": 3,
+              "NamePos": 102,
+              "NameEnd": 113
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Int8",
+              "QuoteType": 1,
+              "NamePos": 115,
+              "NameEnd": 119
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 126,
+          "ColumnEnd": 148,
+          "Name": {
+            "Ident": {
+              "Name": "start_at",
+              "QuoteType": 3,
+              "NamePos": 126,
+              "NameEnd": 134
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 147,
+            "RightParenPos": 148,
+            "Name": {
+              "Name": "DateTime64",
+              "QuoteType": 1,
+              "NamePos": 136,
+              "NameEnd": 146
+            },
+            "Params": [
+              {
+                "NumPos": 147,
+                "NumEnd": 148,
+                "Literal": "9",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 156,
+          "ColumnEnd": 176,
+          "Name": {
+            "Ident": {
+              "Name": "end_at",
+              "QuoteType": 3,
+              "NamePos": 156,
+              "NameEnd": 162
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 175,
+            "RightParenPos": 176,
+            "Name": {
+              "Name": "DateTime64",
+              "QuoteType": 1,
+              "NamePos": 164,
+              "NameEnd": 174
+            },
+            "Params": [
+              {
+                "NumPos": 175,
+                "NumEnd": 176,
+                "Literal": "9",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 184,
+          "ColumnEnd": 208,
+          "Name": {
+            "Ident": {
+              "Name": "created_at",
+              "QuoteType": 3,
+              "NamePos": 184,
+              "NameEnd": 194
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 207,
+            "RightParenPos": 208,
+            "Name": {
+              "Name": "DateTime64",
+              "QuoteType": 1,
+              "NamePos": 196,
+              "NameEnd": 206
+            },
+            "Params": [
+              {
+                "NumPos": 207,
+                "NumEnd": 208,
+                "Literal": "9",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 216,
+          "ColumnEnd": 234,
+          "Name": {
+            "Ident": {
+              "Name": "created_by",
+              "QuoteType": 3,
+              "NamePos": 216,
+              "NameEnd": 226
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 228,
+              "NameEnd": 234
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 241,
+          "ColumnEnd": 271,
+          "Name": {
+            "Ident": {
+              "Name": "properties",
+              "QuoteType": 3,
+              "NamePos": 241,
+              "NameEnd": 251
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 257,
+            "RightParenPos": 271,
+            "Name": {
+              "Name": "Map",
+              "QuoteType": 1,
+              "NamePos": 253,
+              "NameEnd": 256
+            },
+            "Params": [
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 257,
+                  "NameEnd": 263
+                }
+              },
+              {
+                "Name": {
+                  "Name": "String",
+                  "QuoteType": 1,
+                  "NamePos": 265,
+                  "NameEnd": 271
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 279,
+          "ColumnEnd": 306,
+          "Name": {
+            "Ident": {
+              "Name": "cluster_percentage",
+              "QuoteType": 3,
+              "NamePos": 279,
+              "NameEnd": 297
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Float64",
+              "QuoteType": 1,
+              "NamePos": 299,
+              "NameEnd": 306
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 313,
+          "ColumnEnd": 337,
+          "Name": {
+            "Ident": {
+              "Name": "schedule_filters",
+              "QuoteType": 3,
+              "NamePos": 313,
+              "NameEnd": 329
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 331,
+              "NameEnd": 337
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "HasEmpty": false,
+    "Destination": null,
+    "SubQuery": {
+      "HasParen": false,
+      "Select": {
+        "SelectPos": 483,
+        "StatementEnd": 833,
+        "With": null,
+        "Top": null,
+        "HasDistinct": false,
+        "DistinctOn": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "Name": "schedule_id",
+              "QuoteType": 1,
+              "NamePos": 494,
+              "NameEnd": 505
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "sample_rate",
+              "QuoteType": 1,
+              "NamePos": 511,
+              "NameEnd": 522
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "start_at",
+              "QuoteType": 1,
+              "NamePos": 528,
+              "NameEnd": 536
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "end_at",
+              "QuoteType": 1,
+              "NamePos": 542,
+              "NameEnd": 548
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "created_at",
+              "QuoteType": 1,
+              "NamePos": 554,
+              "NameEnd": 564
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "created_by",
+              "QuoteType": 1,
+              "NamePos": 570,
+              "NameEnd": 580
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "properties",
+              "QuoteType": 1,
+              "NamePos": 586,
+              "NameEnd": 596
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "cluster_percentage",
+              "QuoteType": 1,
+              "NamePos": 602,
+              "NameEnd": 620
+            },
+            "Modifiers": [],
+            "Alias": null
+          },
+          {
+            "Expr": {
+              "Name": "schedule_filters",
+              "QuoteType": 1,
+              "NamePos": 626,
+              "NameEnd": 642
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": {
+          "FromPos": 643,
+          "Expr": {
+            "Table": {
+              "TablePos": 648,
+              "TableEnd": 817,
+              "Alias": null,
+              "Expr": {
+                "HasParen": true,
+                "Select": {
+                  "SelectPos": 654,
+                  "StatementEnd": 817,
+                  "With": null,
+                  "Top": null,
+                  "HasDistinct": false,
+                  "DistinctOn": null,
+                  "SelectItems": [
+                    {
+                      "Expr": {
+                        "Name": "*",
+                        "QuoteType": 0,
+                        "NamePos": 669,
+                        "NameEnd": 669
+                      },
+                      "Modifiers": [],
+                      "Alias": null
+                    },
+                    {
+                      "Expr": {
+                        "Function": {
+                          "Name": {
+                            "Name": "row_number",
+                            "QuoteType": 1,
+                            "NamePos": 680,
+                            "NameEnd": 690
+                          },
+                          "Params": {
+                            "LeftParenPos": 690,
+                            "RightParenPos": 691,
+                            "Items": {
+                              "ListPos": 691,
+                              "ListEnd": 691,
+                              "HasDistinct": false,
+                              "Items": []
+                            },
+                            "ColumnArgList": null
+                          }
+                        },
+                        "OverPos": 693,
+                        "OverExpr": {
+                          "LeftParenPos": 698,
+                          "RightParenPos": 753,
+                          "WindowName": null,
+                          "PartitionBy": {
+                            "PartitionPos": 698,
+                            "Expr": {
+                              "ListPos": 712,
+                              "ListEnd": 728,
+                              "HasDistinct": false,
+                              "Items": [
+                                {
+                                  "Expr": {
+                                    "Name": "schedule_filters",
+                                    "QuoteType": 1,
+                                    "NamePos": 712,
+                                    "NameEnd": 728
+                                  },
+                                  "Alias": null
+                                }
+                              ]
+                            }
+                          },
+                          "OrderBy": {
+                            "OrderPos": 729,
+                            "ListEnd": 748,
+                            "Items": [
+                              {
+                                "OrderPos": 729,
+                                "Expr": {
+                                  "Name": "created_at",
+                                  "QuoteType": 1,
+                                  "NamePos": 738,
+                                  "NameEnd": 748
+                                },
+                                "Alias": null,
+                                "Direction": "DESC",
+                                "Fill": null
+                              }
+                            ],
+                            "Interpolate": null
+                          },
+                          "Frame": null
+                        }
+                      },
+                      "Modifiers": [],
+                      "Alias": {
+                        "Name": "rn",
+                        "QuoteType": 1,
+                        "NamePos": 758,
+                        "NameEnd": 760
+                      }
+                    }
+                  ],
+                  "From": {
+                    "FromPos": 765,
+                    "Expr": {
+                      "Table": {
+                        "TablePos": 770,
+                        "TableEnd": 783,
+                        "Alias": null,
+                        "Expr": {
+                          "Database": {
+                            "Name": "db1",
+                            "QuoteType": 1,
+                            "NamePos": 770,
+                            "NameEnd": 773
+                          },
+                          "Table": {
+                            "Name": "config_v0",
+                            "QuoteType": 1,
+                            "NamePos": 774,
+                            "NameEnd": 783
+                          }
+                        },
+                        "HasFinal": false
+                      },
+                      "StatementEnd": 783,
+                      "SampleRatio": null,
+                      "HasFinal": false
+                    }
+                  },
+                  "Window": null,
+                  "Prewhere": null,
+                  "Where": {
+                    "WherePos": 788,
+                    "Expr": {
+                      "LeftExpr": {
+                        "Name": "schedule_filters",
+                        "QuoteType": 1,
+                        "NamePos": 794,
+                        "NameEnd": 810
+                      },
+                      "Operation": "!=",
+                      "RightExpr": {
+                        "LiteralPos": 815,
+                        "LiteralEnd": 817,
+                        "Literal": "{}"
+                      },
+                      "HasGlobal": false,
+                      "HasNot": false
+                    }
+                  },
+                  "GroupBy": null,
+                  "WithTotal": false,
+                  "Having": null,
+                  "OrderBy": null,
+                  "LimitBy": null,
+                  "Limit": null,
+                  "Settings": null,
+                  "Format": null,
+                  "UnionAll": null,
+                  "UnionDistinct": null,
+                  "Except": null
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 817,
+            "SampleRatio": null,
+            "HasFinal": false
+          }
+        },
+        "Window": null,
+        "Prewhere": null,
+        "Where": {
+          "WherePos": 821,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "rn",
+              "QuoteType": 1,
+              "NamePos": 827,
+              "NameEnd": 829
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "NumPos": 832,
+              "NumEnd": 833,
+              "Literal": "1",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null
+      }
+    },
+    "Populate": false,
+    "Comment": {
+      "LiteralPos": 466,
+      "LiteralEnd": 478,
+      "Literal": "test comment"
+    },
+    "Definer": {
+      "Name": "default",
+      "QuoteType": 1,
+      "NamePos": 428,
+      "NameEnd": 435
+    },
+    "SQLSecurity": "DEFINER"
+  }
+]
