@@ -126,6 +126,7 @@
     },
     "HasAppend": true,
     "Engine": null,
+    "TableSchema": null,
     "HasEmpty": true,
     "Destination": {
       "ToPos": 207,

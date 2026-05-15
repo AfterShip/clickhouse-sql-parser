@@ -907,6 +907,10 @@ func (c *CreateMaterializedView) FormatSQL(formatter *Formatter) {
 		formatter.Break()
 		formatter.WriteString("APPEND")
 	}
+	if c.TableSchema != nil {
+		formatter.Break()
+		formatter.WriteExpr(c.TableSchema)
+	}
 	if c.Engine != nil {
 		formatter.Break()
 		formatter.WriteExpr(c.Engine)

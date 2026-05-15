@@ -144,6 +144,7 @@
         "Interpolate": null
       }
     },
+    "TableSchema": null,
     "HasEmpty": false,
     "Destination": null,
     "SubQuery": {
