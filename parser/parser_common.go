@@ -8,6 +8,16 @@ import (
 
 type Parser struct {
 	lexer *Lexer
+	lines lineStarts // lazily built on the first error, for position lookup
+}
+
+// lineStarts returns the line-start offsets for the input, building them on
+// first use. Errors are the cold path, so we avoid paying for this on success.
+func (p *Parser) lineStarts() lineStarts {
+	if p.lines == nil {
+		p.lines = newLineStarts(p.lexer.input)
+	}
+	return p.lines
 }
 
 func NewParser(buffer string) *Parser {
@@ -62,7 +72,11 @@ func (p *Parser) expectTokenKind(kind TokenKind) error {
 	if lastToken := p.tryConsumeTokenKind(kind); lastToken != nil {
 		return nil
 	}
-	return fmt.Errorf("expected the last token kind is: %s, but got %s", kind, p.lastTokenKind())
+	return &ParseError{
+		Pos:      p.Pos(),
+		Got:      p.last(),
+		Expected: []TokenKind{kind},
+	}
 }
 
 func (p *Parser) tryConsumeTokenKind(kind TokenKind) *Token {
@@ -89,7 +103,11 @@ func (p *Parser) matchOneOfKeywords(keywords ...string) bool {
 
 func (p *Parser) expectKeyword(keyword string) error {
 	if !p.matchKeyword(keyword) {
-		return fmt.Errorf("expected keyword: %s, but got %s", keyword, p.lastTokenKind())
+		return &ParseError{
+			Pos:     p.Pos(),
+			Got:     p.last(),
+			Keyword: keyword,
+		}
 	}
 	_ = p.lexer.consumeToken()
 	return nil
@@ -376,48 +394,30 @@ func (p *Parser) parseFormat(pos Pos) (*FormatClause, error) {
 	}, nil
 }
 
+// wrapError finalizes a parse error: it ensures the error is a *ParseError with
+// line/column resolved and the input attached for caret rendering. Errors that
+// already originate as *ParseError (from the expect* helpers) keep their
+// captured position and expected-token information; the long tail of
+// fmt.Errorf sites is wrapped here with the current position.
 func (p *Parser) wrapError(err error) error {
 	if err == nil {
 		return nil
 	}
 
-	lineNo := 0
-	column := 0
-
-	// p.Pos() can exceed the input length when the lexer is at EOF,
-	// so clamp the upper bound to avoid an index-out-of-range panic.
-	upperBound := int(p.Pos())
-	if upperBound > len(p.lexer.input) {
-		upperBound = len(p.lexer.input)
-	}
-	for i := 0; i < upperBound; i++ {
-		if p.lexer.input[i] == '\n' {
-			lineNo++
-			column = 0
-		} else {
-			column++
+	var pe *ParseError
+	if !errors.As(err, &pe) {
+		pe = &ParseError{
+			Pos: p.Pos(),
+			Got: p.last(),
+			Msg: err.Error(),
 		}
 	}
-
-	lines := strings.Split(p.lexer.input, "\n")
-	var buf strings.Builder
-	buf.WriteString(fmt.Sprintf("line %d:%d %s\n", lineNo, column, err.Error()))
-	for i, line := range lines {
-		if i == lineNo {
-			buf.WriteString(line)
-			buf.WriteByte('\n')
-			for j := 0; j < column; j++ {
-				buf.WriteByte(' ')
-			}
-			if p.last() != nil {
-				buf.WriteString(strings.Repeat("^", len(p.last().String)))
-			} else {
-				buf.WriteString("^")
-			}
-			buf.WriteByte('\n')
-		}
+	if pe.Line == 0 {
+		pe.Line, pe.Column = p.lineStarts().position(int(pe.Pos))
 	}
-	return errors.New(buf.String())
+	pe.input = p.lexer.input
+	pe.starts = p.lineStarts()
+	return pe
 }
 
 func (p *Parser) parseRatioExpr(pos Pos) (*RatioExpr, error) {
