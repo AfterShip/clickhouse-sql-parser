@@ -3,6 +3,7 @@ package parser
 import (
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -29,6 +30,38 @@ func TestConsumeComment(t *testing.T) {
 		require.NoError(t, err)
 	}
 
+}
+
+// TestConsumeUnterminatedComment guards against an infinite loop (a DoS hang)
+// when a block comment is never closed. consumeMultiLineComment previously
+// looped on isEOF() while only advancing a local index, so l.current never
+// reached EOF and the lexer spun forever. The test runs in a goroutine with a
+// timeout so a regression fails fast instead of hanging the whole test binary.
+func TestConsumeUnterminatedComment(t *testing.T) {
+	inputs := []string{
+		"/*",
+		"/* unterminated",
+		"/* unterminated *",
+		"SELECT 1 /* unterminated",
+	}
+	for _, c := range inputs {
+		c := c
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			lexer := NewLexer(c)
+			for !lexer.isEOF() {
+				if err := lexer.consumeToken(); err != nil {
+					break
+				}
+			}
+		}()
+		select {
+		case <-done:
+		case <-time.After(5 * time.Second):
+			t.Fatalf("lexer did not terminate on unterminated comment: %q", c)
+		}
+	}
 }
 
 func TestConsumeString(t *testing.T) {
