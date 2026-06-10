@@ -237,7 +237,7 @@ func (l *Lexer) consumeSingleLineComment() {
 func (l *Lexer) consumeMultiLineComment() {
 	l.skipN(2)
 	i := 0
-	for !l.isEOF() {
+	for l.peekOk(i) {
 		if l.peekOk(i+1) && l.peekN(i) == '*' && l.peekN(i+1) == '/' {
 			i += 2
 			break
