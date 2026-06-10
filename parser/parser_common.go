@@ -23,6 +23,16 @@ func (p *Parser) lastTokenKind() TokenKind {
 	return p.last().Kind
 }
 
+// lastTokenString returns the string of the last token, or "<EOF>" when the
+// lexer has no current token. Use this on error paths where the last token may
+// be nil (e.g. at end of input) to avoid a nil-pointer dereference.
+func (p *Parser) lastTokenString() string {
+	if p.last() == nil {
+		return "<EOF>"
+	}
+	return p.last().String
+}
+
 func (p *Parser) last() *Token {
 	return p.lexer.lastToken
 }
