@@ -384,7 +384,13 @@ func (p *Parser) wrapError(err error) error {
 	lineNo := 0
 	column := 0
 
-	for i := 0; i < int(p.Pos()); i++ {
+	// p.Pos() can exceed the input length when the lexer is at EOF,
+	// so clamp the upper bound to avoid an index-out-of-range panic.
+	upperBound := int(p.Pos())
+	if upperBound > len(p.lexer.input) {
+		upperBound = len(p.lexer.input)
+	}
+	for i := 0; i < upperBound; i++ {
 		if p.lexer.input[i] == '\n' {
 			lineNo++
 			column = 0
