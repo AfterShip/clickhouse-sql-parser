@@ -20,9 +20,12 @@ func newLineStarts(input string) lineStarts {
 // position returns the 1-based line and column for a byte offset.
 func (s lineStarts) position(offset int) (line, col int) {
 	// Find the largest line start that is <= offset.
-	i := max(sort.Search(len(s), func(i int) bool {
+	i := sort.Search(len(s), func(i int) bool {
 		return s[i] > offset
-	})-1, 0)
+	}) - 1
+	if i < 0 {
+		i = 0
+	}
 	return i + 1, offset - s[i] + 1
 }
 
