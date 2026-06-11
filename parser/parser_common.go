@@ -62,26 +62,30 @@ func (p *Parser) Pos() Pos {
 	return last.Pos
 }
 
-// matchTokenKind reports whether the current token matches the given kind.
-// A non-reserved keyword also matches TokenKindIdent: most ClickHouse keywords
-// (DATE, KEY, FIRST, ...) are valid identifiers anywhere an identifier is
-// expected. Reserved keywords (see reservedKeywords) do not match, so a
-// missing identifier before e.g. FROM or WHERE fails fast instead of silently
-// swallowing the clause keyword as a name.
-func (p *Parser) matchTokenKind(kind TokenKind) bool {
-	if p.lastTokenKind() == kind {
-		return true
+// matchTokenKind reports whether the current token matches any of the given
+// kinds. A non-reserved keyword also matches TokenKindIdent: most ClickHouse
+// keywords (DATE, KEY, FIRST, ...) are valid identifiers anywhere an
+// identifier is expected. Reserved keywords (see reservedKeywords) do not
+// match TokenKindIdent, so a missing identifier before e.g. FROM or WHERE
+// fails fast instead of silently swallowing the clause keyword as a name; use
+// matchTokenKind(TokenKindIdent, TokenKindKeyword) where any keyword -
+// reserved or not - is acceptable.
+func (p *Parser) matchTokenKind(kinds ...TokenKind) bool {
+	cur := p.lastTokenKind()
+	for _, kind := range kinds {
+		if cur == kind {
+			return true
+		}
 	}
-	return kind == TokenKindIdent &&
-		p.lastTokenKind() == TokenKindKeyword &&
-		!reservedKeywords.Contains(strings.ToUpper(p.last().String))
-}
-
-// matchTokenKindIn reports whether the current token's kind is in the given
-// class set, e.g. matchTokenKindIn(classIdent | classKeyword). Unlike
-// matchTokenKind it is a raw kind check: no keyword-to-identifier coercion.
-func (p *Parser) matchTokenKindIn(classes kindClass) bool {
-	return p.lastTokenKind().class()&classes != 0
+	if cur != TokenKindKeyword {
+		return false
+	}
+	for _, kind := range kinds {
+		if kind == TokenKindIdent {
+			return !reservedKeywords.Contains(strings.ToUpper(p.last().String))
+		}
+	}
+	return false
 }
 
 // expectTokenKind consumes the last token if it is the given kind.
@@ -163,7 +167,7 @@ func (p *Parser) tryParseIdent() *Ident {
 // item the lookahead disambiguated.
 func (p *Parser) parseAnyKeyword() (*Ident, error) {
 	last := p.last()
-	if !p.matchTokenKindIn(classIdent | classKeyword) {
+	if !p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
 		return nil, &ParseError{
 			Pos:      p.Pos(),
 			Got:      last,

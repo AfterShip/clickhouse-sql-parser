@@ -57,31 +57,6 @@ const (
 type Pos int
 type TokenKind string
 
-// kindClass is a bit set over token kinds, enabling multi-kind membership
-// checks in a single expression, e.g. matchTokenKindIn(classIdent | classKeyword).
-// TokenKind itself stays a string (its values are woven into the public AST
-// and error messages), so kinds that participate in such checks get a class
-// bit here instead.
-type kindClass uint8
-
-const (
-	classIdent kindClass = 1 << iota
-	classKeyword
-)
-
-// class maps a TokenKind to its kindClass bit; kinds without a class
-// (operators, punctuation, EOF) map to 0.
-func (k TokenKind) class() kindClass {
-	switch k {
-	case TokenKindIdent:
-		return classIdent
-	case TokenKindKeyword:
-		return classKeyword
-	default:
-		return 0
-	}
-}
-
 type Token struct {
 	Pos Pos
 	End Pos

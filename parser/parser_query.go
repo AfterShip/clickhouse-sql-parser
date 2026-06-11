@@ -863,10 +863,10 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 }
 
 func (p *Parser) canParseWindowNameInParens() bool {
-	if !p.matchTokenKindIn(classIdent | classKeyword) {
+	if !p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
 		return false
 	}
-	if !p.matchTokenKindIn(classKeyword) {
+	if !p.matchTokenKind(TokenKindKeyword) {
 		return true
 	}
 

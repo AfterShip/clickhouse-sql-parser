@@ -152,7 +152,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		// access column with dot notation
 		var rightExpr Expr
 		var err error
-		if p.matchTokenKindIn(classIdent | classKeyword) {
+		if p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
 			// After a dot the token can only be a member name, so even
 			// reserved keywords are accepted (e.g. `t.from`).
 			rightExpr, err = p.parseAnyKeyword()
