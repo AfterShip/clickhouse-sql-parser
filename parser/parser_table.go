@@ -12,7 +12,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		_ = p.lexer.consumeToken()
 		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
 		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary) {
-			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY, but got %q", p.lastTokenString())
+			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY, but got %q", p.curTokenString())
 		}
 		switch {
 		case p.matchKeyword(KeywordNamed):
@@ -38,7 +38,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			return p.parseCreateUser(pos)
 		default:
 			return nil, fmt.Errorf("expected keyword: NAMED|DATABASE|DICTIONARY|TABLE|VIEW|ROLE|USER|FUNCTION|MATERIALIZED, but got %q",
-				p.lastTokenKind())
+				p.curTokenKind())
 		}
 	case p.matchKeyword(KeywordAlter):
 		_ = p.lexer.consumeToken()
@@ -48,7 +48,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordTable):
 			return p.parseAlterTable(pos)
 		default:
-			return nil, fmt.Errorf("expected keyword: TABLE|ROLE, but got %q", p.lastTokenString())
+			return nil, fmt.Errorf("expected keyword: TABLE|ROLE, but got %q", p.curTokenString())
 		}
 	case p.matchKeyword(KeywordDrop),
 		p.matchKeyword(KeywordDetach):
@@ -65,7 +65,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			p.matchKeyword(KeywordRole):
 			return p.parserDropUserOrRole(pos)
 		default:
-			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE, but got %q", p.lastTokenString())
+			return nil, fmt.Errorf("expected keyword: DATABASE|TABLE, but got %q", p.curTokenString())
 		}
 	case p.matchKeyword(KeywordTruncate):
 		return p.parseTruncateTable(pos)
@@ -284,7 +284,7 @@ func (p *Parser) parseNamedCollectionParam(pos Pos) (*NamedCollectionParam, erro
 		}
 		value = ident
 	default:
-		return nil, fmt.Errorf("expected string, number or identifier in named collection parameter, got %s", p.lastTokenKind())
+		return nil, fmt.Errorf("expected string, number or identifier in named collection parameter, got %s", p.curTokenKind())
 	}
 
 	param := &NamedCollectionParam{
@@ -384,10 +384,10 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 				createTable.TableFunction = tableFunc
 				createTable.StatementEnd = tableFunc.End()
 			} else {
-				return nil, fmt.Errorf("expected ( after identifier in AS clause, got %q", p.lastTokenKind())
+				return nil, fmt.Errorf("expected ( after identifier in AS clause, got %q", p.curTokenKind())
 			}
 		} else {
-			return nil, fmt.Errorf("expected SELECT, WITH or identifier after AS, got %q", p.lastTokenKind())
+			return nil, fmt.Errorf("expected SELECT, WITH or identifier after AS, got %q", p.curTokenKind())
 		}
 	}
 
@@ -436,7 +436,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 					return nil, err
 				}
 			default:
-				return nil, fmt.Errorf("expected window name or (, but got %q", p.lastTokenKind())
+				return nil, fmt.Errorf("expected window name or (, but got %q", p.curTokenKind())
 			}
 
 			if err != nil {
@@ -484,7 +484,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 				Index:     i,
 			}, nil
 		default:
-			return nil, fmt.Errorf("expected IDENT, NUMBER or *, but got %q", p.lastTokenKind())
+			return nil, fmt.Errorf("expected IDENT, NUMBER or *, but got %q", p.curTokenKind())
 		}
 	}
 	return ident, nil
@@ -761,7 +761,7 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
 		return p.parseLiteral(p.Pos())
 	default:
-		return nil, fmt.Errorf("unexpected token: %q, expected <Name>, <literal>", p.lastTokenString())
+		return nil, fmt.Errorf("unexpected token: %q, expected <Name>, <literal>", p.curTokenString())
 	}
 }
 
@@ -778,7 +778,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 
 		// Try to detect named parameter pattern: last token is identifier, next token is =
 		isNamedParam := false
-		lastKind := p.lastTokenKind()
+		lastKind := p.curTokenKind()
 		if lastKind == TokenKindIdent || lastKind == TokenKindKeyword {
 			// Last token is an identifier, peek at the next token
 			nextToken, peekErr := p.lexer.peekToken()
@@ -792,9 +792,9 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 			// Parse as named parameter - the identifier is already the last token
 			// We need to get it, consume the =, and parse the value
 			name := &Ident{
-				NamePos: p.last().Pos,
-				NameEnd: p.last().End,
-				Name:    p.last().String,
+				NamePos: p.cur().Pos,
+				NameEnd: p.cur().End,
+				Name:    p.cur().String,
 			}
 			// Consume the = token
 			if err := p.lexer.consumeToken(); err != nil {
@@ -855,7 +855,7 @@ func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
 	case p.matchTokenKind(TokenKindString):
 		expr, err = p.parseString(p.Pos())
 	default:
-		return nil, fmt.Errorf("unexpected token: %q, expected <IDENT> or <STRING>", p.lastTokenString())
+		return nil, fmt.Errorf("unexpected token: %q, expected <IDENT> or <STRING>", p.curTokenString())
 	}
 	if err != nil {
 		return nil, err
@@ -1153,10 +1153,10 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 			}
 			rule = &TTLPolicyRule{RulePos: pos, ToVolume: value}
 		} else {
-			return nil, fmt.Errorf("unexpected token: %q, expected DISK or VOLUME", p.lastTokenKind())
+			return nil, fmt.Errorf("unexpected token: %q, expected DISK or VOLUME", p.curTokenKind())
 		}
 	case p.matchKeyword(KeywordDelete), p.matchKeyword(KeywordRecompress):
-		token := p.last()
+		token := p.cur()
 		_ = p.lexer.consumeToken()
 		action := &TTLPolicyRuleAction{
 			ActionPos: token.Pos,
@@ -1295,15 +1295,15 @@ func (p *Parser) parseSettingsExpr(pos Pos) (*SettingExpr, error) {
 		expr = m
 	case p.matchKeyword(KeywordTrue), p.matchKeyword(KeywordFalse):
 		// Handle TRUE/FALSE keywords as boolean literals
-		lastToken := p.last()
+		curToken := p.cur()
 		_ = p.lexer.consumeToken()
 		expr = &BoolLiteral{
-			LiteralPos: lastToken.Pos,
-			LiteralEnd: lastToken.End,
-			Literal:    lastToken.String,
+			LiteralPos: curToken.Pos,
+			LiteralEnd: curToken.End,
+			Literal:    curToken.String,
 		}
 	default:
-		return nil, fmt.Errorf("unexpected token: %q, expected <number>, <bool> or <string>", p.lastTokenString())
+		return nil, fmt.Errorf("unexpected token: %q, expected <number>, <bool> or <string>", p.curTokenString())
 	}
 
 	return &SettingExpr{
@@ -1360,7 +1360,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 			engineExpr.EngineEnd = params.End()
 		}
 	default:
-		return nil, fmt.Errorf("unexpected token: %s", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token: %s", p.curTokenKind())
 	}
 
 	for !p.lexer.isEOF() {
@@ -1455,10 +1455,10 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordDesc), p.matchKeyword(KeywordDescribe):
 		expr, err = p.parseDescribeStmt(pos)
 	default:
-		if p.last() == nil {
+		if p.cur() == nil {
 			return nil, errors.New("unexpected end of input")
 		}
-		return nil, fmt.Errorf("unexpected token: %q", p.lastTokenString())
+		return nil, fmt.Errorf("unexpected token: %q", p.curTokenString())
 	}
 	if err != nil {
 		return nil, err
@@ -1469,8 +1469,8 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 	}
 
 	// Statement can be terminated by ';' or EOF
-	if p.last() != nil && !p.matchTokenKind(";") {
-		return nil, fmt.Errorf("<EOF> or ';' was expected, but got: %q", p.lastTokenString())
+	if p.cur() != nil && !p.matchTokenKind(";") {
+		return nil, fmt.Errorf("<EOF> or ';' was expected, but got: %q", p.curTokenString())
 	}
 	return expr, nil
 }
@@ -1550,7 +1550,7 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 		_ = p.lexer.consumeToken()
 
 	default:
-		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.lastTokenString())
+		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.curTokenString())
 	}
 
 	stmt := &ShowStmt{
@@ -1621,7 +1621,7 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 				stmt.Format = format
 			} else if p.matchTokenKind(TokenKindIdent) {
 				// Handle format as identifier (like JSON, CSV, etc.)
-				token := p.last()
+				token := p.cur()
 				_ = p.lexer.consumeToken()
 				stmt.Format = &StringLiteral{
 					LiteralPos: token.Pos,
@@ -1629,7 +1629,7 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 					Literal:    token.String,
 				}
 			} else {
-				return nil, fmt.Errorf("expected format specification after FORMAT, got %q", p.lastTokenString())
+				return nil, fmt.Errorf("expected format specification after FORMAT, got %q", p.curTokenString())
 			}
 		}
 	}
@@ -2284,7 +2284,7 @@ func (p *Parser) parseDictionaryArgExpr(pos Pos) (*DictionaryArgExpr, error) {
 			value = ident
 		}
 	default:
-		return nil, fmt.Errorf("expected identifier, string or number in dictionary argument, got %s", p.lastTokenKind())
+		return nil, fmt.Errorf("expected identifier, string or number in dictionary argument, got %s", p.curTokenKind())
 	}
 
 	return &DictionaryArgExpr{

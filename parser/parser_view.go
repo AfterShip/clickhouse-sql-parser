@@ -105,7 +105,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		}
 		createMaterializedView.TableSchema = tableSchema
 		if !p.matchKeyword(KeywordEngine) {
-			return nil, fmt.Errorf("unexpected token: %q, expected ENGINE after column list", p.lastTokenKind())
+			return nil, fmt.Errorf("unexpected token: %q, expected ENGINE after column list", p.curTokenKind())
 		}
 		engineExpr, err := p.parseEngineExpr(p.Pos())
 		if err != nil {
@@ -121,7 +121,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		createMaterializedView.Engine = engineExpr
 		createMaterializedView.StatementEnd = engineExpr.End()
 	default:
-		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.curTokenKind())
 	}
 	createMaterializedView.HasEmpty = p.tryConsumeKeywords(KeywordEmpty)
 
@@ -140,9 +140,9 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 	// Parse SQL SECURITY clause
 	if p.tryConsumeKeywords(KeywordSQL, KeywordSecurity) {
 		if !p.matchOneOfKeywords(KeywordDefiner, KeywordNone) {
-			return nil, fmt.Errorf("expected DEFINER or NONE after SQL SECURITY, got %q", p.lastTokenKind())
+			return nil, fmt.Errorf("expected DEFINER or NONE after SQL SECURITY, got %q", p.curTokenKind())
 		}
-		createMaterializedView.SQLSecurity = p.last().String
+		createMaterializedView.SQLSecurity = p.cur().String
 		_ = p.lexer.consumeToken()
 	}
 
@@ -195,9 +195,9 @@ func (p *Parser) tryParseRefreshExpr(pos Pos) (*RefreshExpr, error) {
 	// REFRESH EVERY|AFTER interval
 	refreshExpr := &RefreshExpr{RefreshPos: pos}
 	if !p.matchOneOfKeywords(KeywordEvery, KeywordAfter) {
-		return nil, fmt.Errorf("expected EVERY or AFTER, but got %q", p.lastTokenKind())
+		return nil, fmt.Errorf("expected EVERY or AFTER, but got %q", p.curTokenKind())
 	}
-	refreshExpr.Frequency = p.last().String
+	refreshExpr.Frequency = p.cur().String
 	_ = p.lexer.consumeToken()
 
 	interval, err := p.parseInterval(false)

@@ -186,10 +186,10 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
-		"00e1d",    // invalid number that leaves lastToken nil
+		"00e1d",    // invalid number that leaves curToken nil
 		"CREATE--", // trailing comment pushes p.Pos() past end of input (wrapError out-of-range)
 		// Inputs that previously caused a nil-pointer dereference while
-		// formatting the error message at EOF (p.last() is nil).
+		// formatting the error message at EOF (p.cur() is nil).
 		"ALTER ",
 		"SELECT*FROM A(0A",
 		"SET A=",

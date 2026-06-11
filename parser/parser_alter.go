@@ -207,13 +207,13 @@ func (p *Parser) parseProjectionSelect(pos Pos) (*ProjectionSelectStmt, error) {
 		return nil, err
 	}
 
-	lastToken := p.last()
+	curToken := p.cur()
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {
 		return nil, err
 	}
 	return &ProjectionSelectStmt{
 		LeftParenPos:  pos,
-		RightParenPos: lastToken.Pos,
+		RightParenPos: curToken.Pos,
 		With:          with,
 		SelectColumns: columns,
 		GroupBy:       groupBy,
@@ -417,7 +417,7 @@ func (p *Parser) parseAlterTableDropClause(pos Pos) (AlterTableClause, error) {
 	case p.matchKeyword(KeywordProjection):
 		kind = KeywordProjection
 	default:
-		return nil, fmt.Errorf("expected token: COLUMN|INDEX|PROJECTION, but got %s", p.lastTokenKind())
+		return nil, fmt.Errorf("expected token: COLUMN|INDEX|PROJECTION, but got %s", p.curTokenKind())
 	}
 	_ = p.lexer.consumeToken()
 
@@ -546,7 +546,7 @@ func (p *Parser) parseAlterTableClearClause(pos Pos) (AlterTableClause, error) {
 	case p.matchKeyword(KeywordProjection):
 		kind = KeywordProjection
 	default:
-		return nil, fmt.Errorf("expected keyword: COLUMN|INDEX|PROJECTION, but got %q", p.lastTokenKind())
+		return nil, fmt.Errorf("expected keyword: COLUMN|INDEX|PROJECTION, but got %q", p.curTokenKind())
 	}
 	_ = p.lexer.consumeToken()
 
@@ -691,7 +691,7 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 		}, nil
 	default:
 		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY|SETTING, but got %q",
-			p.lastTokenString())
+			p.curTokenString())
 	}
 
 }
@@ -787,7 +787,7 @@ func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableClause, error) {
 	case p.matchKeyword(KeywordProjection):
 		kind = KeywordProjection
 	default:
-		return nil, fmt.Errorf("expected keyword: INDEX|PROJECTION, but got %q", p.lastTokenKind())
+		return nil, fmt.Errorf("expected keyword: INDEX|PROJECTION, but got %q", p.curTokenKind())
 	}
 	_ = p.lexer.consumeToken()
 

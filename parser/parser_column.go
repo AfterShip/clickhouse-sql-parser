@@ -88,7 +88,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp),
 		p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
 		p.matchTokenKind(TokenKindArrow), p.matchTokenKind(TokenKindDoubleEQ):
-		op := p.last().ToString()
+		op := p.cur().ToString()
 		_ = p.lexer.consumeToken()
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
 		if err != nil {
@@ -102,7 +102,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 	case p.matchTokenKind(TokenKindDash):
 		_ = p.lexer.consumeToken()
 
-		if p.matchTokenKind(TokenKindIdent) && p.last().String == "Tuple" {
+		if p.matchTokenKind(TokenKindIdent) && p.cur().String == "Tuple" {
 			name, err := p.parseIdent()
 			if err != nil {
 				return nil, err
@@ -136,7 +136,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
 		if p.expectKeyword(KeywordIn) != nil {
-			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.lastTokenKind())
+			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.curTokenKind())
 		}
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
 		if err != nil {
@@ -172,12 +172,12 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		case p.matchKeyword(KeywordLike):
 		case p.matchKeyword(KeywordIlike):
 		default:
-			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.lastTokenKind())
+			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.curTokenKind())
 		}
 		if p.matchKeyword(KeywordBetween) {
 			return p.parseBetweenClause(expr)
 		}
-		op := p.last().ToString()
+		op := p.cur().ToString()
 		_ = p.lexer.consumeToken()
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
 		if err != nil {
@@ -216,7 +216,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			Expr:  expr,
 		}, nil
 	default:
-		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 	}
 }
 
@@ -333,7 +333,7 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 }
 
 func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
-	op := p.last()
+	op := p.cur()
 	switch {
 	case p.matchTokenKind(TokenKindPlus),
 		p.matchTokenKind(TokenKindMinus),
@@ -532,7 +532,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 			Type:           string(TokenKindQuestionMark),
 		}, nil
 	default:
-		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 	}
 }
 
@@ -555,10 +555,10 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 	switch {
 	// CAST(x, T) and CAST(x AS T) are equivalent
 	case p.matchKeyword(KeywordAs), p.matchTokenKind(","):
-		separator = p.last().String
+		separator = p.cur().String
 		_ = p.lexer.consumeToken()
 	default:
-		return nil, fmt.Errorf("expected AS or , but got %s", p.lastTokenKind())
+		return nil, fmt.Errorf("expected AS or , but got %s", p.curTokenKind())
 	}
 
 	var asColumnType Expr
@@ -604,7 +604,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 	}
 	columnExprList.HasDistinct = p.tryConsumeKeywords(KeywordDistinct)
 	columnList := make([]Expr, 0)
-	for !p.lexer.isEOF() || p.last() != nil {
+	for !p.lexer.isEOF() || p.cur() != nil {
 		if term != "" && p.matchTokenKind(term) {
 			break
 		}
@@ -629,7 +629,7 @@ func (p *Parser) parseColumnExprListWithTerm(term TokenKind, pos Pos) (*ColumnEx
 
 func (p *Parser) parseSelectItems() ([]*SelectItem, error) {
 	selectItems := make([]*SelectItem, 0)
-	for !p.lexer.isEOF() || p.last() != nil {
+	for !p.lexer.isEOF() || p.cur() != nil {
 		selectItem, err := p.parseSelectItem()
 		if err != nil {
 			return nil, err
@@ -885,7 +885,7 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 		if err != nil {
 			return nil, err
 		}
-	case p.lastTokenKind() == TokenKindKeyword && !p.isSelectItemTerminatorKeyword():
+	case p.curTokenKind() == TokenKindKeyword && !p.isSelectItemTerminatorKeyword():
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -1007,7 +1007,7 @@ func (p *Parser) parseColumnTypeArgs(ident *Ident) (ColumnType, error) { // noli
 				RightParenPos: rightParenPos,
 			}, nil
 		default:
-			return nil, fmt.Errorf("unexpected token kind: %v", p.lastTokenKind())
+			return nil, fmt.Errorf("unexpected token kind: %v", p.curTokenKind())
 		}
 	}
 	return &ScalarType{Name: ident}, nil
@@ -1146,7 +1146,7 @@ func (p *Parser) parseJSONMaxDynamicOptions(pos Pos) (*JSONOption, error) {
 		}
 		return &JSONOption{MaxDynamicPaths: number}, nil
 	default:
-		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 	}
 }
 
@@ -1189,7 +1189,7 @@ func (p *Parser) parseJSONOption() (*JSONOption, error) {
 			// Reconstruct handling similar to parseJSONMaxDynamicOptions but we already consumed ident and '='
 			// Determine which option based on the first ident name
 			if len(path.Idents) != 1 {
-				return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+				return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 			}
 			name := path.Idents[0].Name
 			switch name {
@@ -1206,7 +1206,7 @@ func (p *Parser) parseJSONOption() (*JSONOption, error) {
 				}
 				return &JSONOption{MaxDynamicPaths: number}, nil
 			default:
-				return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+				return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 			}
 		}
 		// Otherwise, expect a ColumnType as a type hint for the JSON subpath
@@ -1216,7 +1216,7 @@ func (p *Parser) parseJSONOption() (*JSONOption, error) {
 		}
 		return &JSONOption{Column: &JSONTypeHint{Path: path, Type: colType}}, nil
 	default:
-		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 	}
 }
 
@@ -1288,7 +1288,7 @@ func (p *Parser) parseNestedTypeFields() ([]Expr, error) {
 		// Cases like `Tuple(Int, String)`
 		return p.parseNestedTypeFieldsWithoutNames(ident)
 	default:
-		return nil, fmt.Errorf("unexpected token kind: %s", p.lastTokenKind())
+		return nil, fmt.Errorf("unexpected token kind: %s", p.curTokenKind())
 	}
 }
 
