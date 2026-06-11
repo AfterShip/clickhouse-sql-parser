@@ -102,6 +102,19 @@ for _, stmt := range statements {
 }
 ```
 
+- Convenience helpers for single statements and expression fragments
+
+```Go
+// Parse exactly one statement (errors if the input has zero or multiple statements)
+stmt, err := clickhouse.ParseStmt("SELECT a FROM t")
+
+// Parse an expression fragment, e.g. a column expression or function call
+expr, err := clickhouse.ParseExpr("toDate(created_at) + 1")
+
+// Format AST into multi-line indented SQL (same output as the -beautify CLI flag)
+fmt.Println(clickhouse.FormatBeautify(stmt))
+```
+
 ## AST Traversal
 
 ### Walk Pattern (Recommended)

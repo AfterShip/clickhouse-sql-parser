@@ -69,10 +69,7 @@ func main() {
 	} else { // format SQL
 		for _, stmt := range stmts {
 			if options.beautify {
-				formatter := clickhouse.NewFormatter()
-				formatter.WithBeautify()
-				formatter.WriteExpr(stmt)
-				fmt.Println(formatter.String())
+				fmt.Println(clickhouse.FormatBeautify(stmt))
 			} else {
 				fmt.Println(clickhouse.Format(stmt))
 			}
