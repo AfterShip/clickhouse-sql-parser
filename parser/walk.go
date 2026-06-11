@@ -122,6 +122,8 @@ func Walk(node Expr, fn WalkFunc) bool {
 		// Leaf node
 	case *StringLiteral:
 		// Leaf node
+	case *BoolLiteral:
+		// Leaf node
 	case *NullLiteral:
 		// Leaf node
 	case *NotNullLiteral:
@@ -431,6 +433,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Number, fn) {
 			return false
 		}
+	case *WindowFrameParam:
+		if !Walk(n.Param, fn) {
+			return false
+		}
 	case *TopClause:
 		if !Walk(n.Number, fn) {
 			return false
@@ -738,6 +744,25 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 		if !Walk(n.Expr, fn) {
+			return false
+		}
+	case *CreateNamedCollection:
+		if !Walk(n.Name, fn) {
+			return false
+		}
+		if !Walk(n.OnCluster, fn) {
+			return false
+		}
+		for _, param := range n.Params {
+			if !Walk(param, fn) {
+				return false
+			}
+		}
+	case *NamedCollectionParam:
+		if !Walk(n.Name, fn) {
+			return false
+		}
+		if !Walk(n.Value, fn) {
 			return false
 		}
 	case *CreateRole:
