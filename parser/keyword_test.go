@@ -70,6 +70,7 @@ func TestReservedKeywordInDisambiguatedPositions(t *testing.T) {
 		"SELECT limit",
 		"SELECT a FROM t WHERE ts < {end:UInt32}",
 		"SELECT sum(x) OVER (order) FROM t WINDOW order AS (PARTITION BY team)",
+		"SELECT sum(x) OVER order FROM t WINDOW order AS (PARTITION BY team)",
 		"GRANT SELECT(x) ON db.table TO john WITH GRANT OPTION",
 	}
 	for _, sql := range cases {

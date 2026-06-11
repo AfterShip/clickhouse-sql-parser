@@ -428,8 +428,11 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		if p.tryConsumeKeywords(KeywordOver) {
 			var overExpr Expr
 			switch {
-			case p.matchTokenKind(TokenKindIdent):
-				overExpr, err = p.parseIdent()
+			case p.matchTokenKind(TokenKindIdent), p.lastTokenKind() == TokenKindKeyword:
+				// After OVER a bare token can only be a window name, so even
+				// reserved keywords are accepted (e.g. `OVER order`),
+				// mirroring the WINDOW clause definition side.
+				overExpr, err = p.parseIdentAnyKeyword()
 			case p.matchTokenKind(TokenKindLParen):
 				overExpr, err = p.parseWindowCondition(p.Pos())
 				if err != nil {
