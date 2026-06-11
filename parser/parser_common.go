@@ -62,9 +62,19 @@ func (p *Parser) Pos() Pos {
 	return last.Pos
 }
 
+// matchTokenKind reports whether the current token matches the given kind.
+// A non-reserved keyword also matches TokenKindIdent: most ClickHouse keywords
+// (DATE, KEY, FIRST, ...) are valid identifiers anywhere an identifier is
+// expected. Reserved keywords (see reservedKeywords) do not match, so a
+// missing identifier before e.g. FROM or WHERE fails fast instead of silently
+// swallowing the clause keyword as a name.
 func (p *Parser) matchTokenKind(kind TokenKind) bool {
-	return p.lastTokenKind() == kind ||
-		(kind == TokenKindIdent && p.lastTokenKind() == TokenKindKeyword)
+	if p.lastTokenKind() == kind {
+		return true
+	}
+	return kind == TokenKindIdent &&
+		p.lastTokenKind() == TokenKindKeyword &&
+		!reservedKeywords.Contains(strings.ToUpper(p.last().String))
 }
 
 // expectTokenKind consumes the last token if it is the given kind.
@@ -139,6 +149,29 @@ func (p *Parser) tryParseIdent() *Ident {
 	}
 }
 
+// parseIdentAnyKeyword parses the current token as an identifier, accepting
+// any keyword token — reserved or not — as the name. Use it only in positions
+// where context has already proven the token is a name and not the start of a
+// clause or expression: after AS, after a dot in a qualified name, or a select
+// item the lookahead disambiguated.
+func (p *Parser) parseIdentAnyKeyword() (*Ident, error) {
+	last := p.last()
+	if last == nil || (last.Kind != TokenKindIdent && last.Kind != TokenKindKeyword) {
+		return nil, &ParseError{
+			Pos:      p.Pos(),
+			Got:      last,
+			Expected: []TokenKind{TokenKindIdent},
+		}
+	}
+	_ = p.lexer.consumeToken()
+	return &Ident{
+		NamePos:   last.Pos,
+		NameEnd:   last.End,
+		Name:      last.String,
+		QuoteType: last.QuoteType,
+	}, nil
+}
+
 func (p *Parser) parseIdent() (*Ident, error) {
 	lastToken := p.last()
 	if err := p.expectTokenKind(TokenKindIdent); err != nil {
@@ -192,12 +225,19 @@ func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
 	if p.tryConsumeTokenKind(TokenKindDot) == nil {
 		return nil, nil // nolint
 	}
-	return p.parseIdent()
+	// After a dot the token can only be a member name, so even reserved
+	// keywords are accepted (e.g. `db.from`, `t.limit`).
+	return p.parseIdentAnyKeyword()
 }
 
 func (p *Parser) tryParseDotIdentOrString(_ Pos) (*Ident, error) {
 	if p.tryConsumeTokenKind(TokenKindDot) == nil {
 		return nil, nil // nolint
+	}
+	// After a dot the token can only be a member name, so even reserved
+	// keywords are accepted (e.g. `db.from`).
+	if p.lastTokenKind() == TokenKindKeyword {
+		return p.parseIdentAnyKeyword()
 	}
 	return p.parseIdentOrString()
 }

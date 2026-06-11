@@ -451,10 +451,12 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		return funcExpr, nil
 	case p.tryConsumeTokenKind(TokenKindDot) != nil:
 		switch {
-		case p.matchTokenKind(TokenKindIdent):
+		case p.matchTokenKind(TokenKindIdent), p.lastTokenKind() == TokenKindKeyword:
 			fields := []*Ident{ident}
 			for {
-				child, err := p.parseIdent()
+				// After a dot the token can only be a member name, so even
+				// reserved keywords are accepted (e.g. `t.from`).
+				child, err := p.parseIdentAnyKeyword()
 				if err != nil {
 					return nil, err
 				}

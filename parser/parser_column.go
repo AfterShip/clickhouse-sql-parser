@@ -152,8 +152,10 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		// access column with dot notation
 		var rightExpr Expr
 		var err error
-		if p.matchTokenKind(TokenKindIdent) {
-			rightExpr, err = p.parseIdent()
+		if p.lastTokenKind() == TokenKindIdent || p.lastTokenKind() == TokenKindKeyword {
+			// After a dot the token can only be a member name, so even
+			// reserved keywords are accepted (e.g. `t.from`).
+			rightExpr, err = p.parseIdentAnyKeyword()
 		} else {
 			rightExpr, err = p.parseDecimal(p.Pos())
 		}
@@ -472,7 +474,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// terminator/alias check).
 	if p.keywordIsSelectItemIdentifier() ||
 		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
-		return p.parseIdent()
+		return p.parseIdentAnyKeyword()
 	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
@@ -676,8 +678,10 @@ func (p *Parser) parseInterval(requireKeyword bool) (*IntervalExpr, error) {
 }
 
 func (p *Parser) parseFunctionExpr(_ Pos) (*FunctionExpr, error) {
-	// parse function name
-	name, err := p.parseIdent()
+	// parse function name; callers gate entry (select-item modifiers match
+	// EXCEPT/APPLY/REPLACE first, INSERT INTO FUNCTION follows the FUNCTION
+	// keyword), so even reserved keywords are valid names here.
+	name, err := p.parseIdentAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -794,7 +798,9 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 		return nil, err
 	}
 
-	ident, err := p.parseIdent()
+	// Inside `{name:Type}` the token can only be the parameter name, so even
+	// reserved keywords are accepted (e.g. `{end:UInt32}`).
+	ident, err := p.parseIdentAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -877,15 +883,16 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	var alias *Ident
 	switch {
 	case p.tryConsumeKeywords(KeywordAs):
-		// `SELECT 1 AS <reserved-keyword>` works for any keyword because
-		// matchTokenKind(TokenKindIdent) coerces TokenKindKeyword to ident
-		// (see parser_common.go matchTokenKind), so parseIdent accepts a
-		// keyword token here without needing a special-case.
-		alias, err = p.parseIdent()
+		// `SELECT 1 AS <keyword>` works for any keyword, reserved or not:
+		// after AS the token can only be an alias name.
+		alias, err = p.parseIdentAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
-	case p.lastTokenKind() == TokenKindKeyword && !p.isSelectItemTerminatorKeyword():
+	case p.lastTokenKind() == TokenKindKeyword &&
+		p.matchTokenKind(TokenKindIdent) && !p.isSelectItemTerminatorKeyword():
+		// Only a non-reserved keyword can be a bare (no-AS) alias; a reserved
+		// keyword here starts the next clause (e.g. `SELECT a FROM ...`).
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
