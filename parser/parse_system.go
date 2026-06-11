@@ -1280,7 +1280,7 @@ func (p *Parser) parseGrantOption(_ Pos) (string, error) {
 	}
 	// Between WITH and OPTION the token can only be the option name, which may
 	// be a reserved keyword (e.g. `WITH GRANT OPTION`).
-	ident, err := p.parseIdentAnyKeyword()
+	ident, err := p.parseAnyKeyword()
 	if err != nil {
 		return "", err
 	}

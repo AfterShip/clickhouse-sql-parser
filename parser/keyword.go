@@ -266,7 +266,7 @@ const (
 // Every other keyword is non-reserved and is accepted anywhere an identifier
 // is expected (see Parser.matchTokenKind). Positions where even a reserved
 // keyword is provably used as a name — after AS, after a dot in a qualified
-// name, or a lookahead-disambiguated select item — use parseIdentAnyKeyword.
+// name, or a lookahead-disambiguated select item — use parseAnyKeyword.
 //
 // Keywords that double as ClickHouse function or engine names (IF, LEFT,
 // RIGHT, ANY, MIN, MAX, TRIM, SET, JOIN...) must stay non-reserved.

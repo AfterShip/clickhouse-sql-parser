@@ -152,10 +152,10 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		// access column with dot notation
 		var rightExpr Expr
 		var err error
-		if p.lastTokenKind() == TokenKindIdent || p.lastTokenKind() == TokenKindKeyword {
+		if p.matchTokenKindIn(classIdent | classKeyword) {
 			// After a dot the token can only be a member name, so even
 			// reserved keywords are accepted (e.g. `t.from`).
-			rightExpr, err = p.parseIdentAnyKeyword()
+			rightExpr, err = p.parseAnyKeyword()
 		} else {
 			rightExpr, err = p.parseDecimal(p.Pos())
 		}
@@ -474,7 +474,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// terminator/alias check).
 	if p.keywordIsSelectItemIdentifier() ||
 		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
-		return p.parseIdentAnyKeyword()
+		return p.parseAnyKeyword()
 	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
@@ -681,7 +681,7 @@ func (p *Parser) parseFunctionExpr(_ Pos) (*FunctionExpr, error) {
 	// parse function name; callers gate entry (select-item modifiers match
 	// EXCEPT/APPLY/REPLACE first, INSERT INTO FUNCTION follows the FUNCTION
 	// keyword), so even reserved keywords are valid names here.
-	name, err := p.parseIdentAnyKeyword()
+	name, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -800,7 +800,7 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 
 	// Inside `{name:Type}` the token can only be the parameter name, so even
 	// reserved keywords are accepted (e.g. `{end:UInt32}`).
-	ident, err := p.parseIdentAnyKeyword()
+	ident, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -885,7 +885,7 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	case p.tryConsumeKeywords(KeywordAs):
 		// `SELECT 1 AS <keyword>` works for any keyword, reserved or not:
 		// after AS the token can only be an alias name.
-		alias, err = p.parseIdentAnyKeyword()
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}

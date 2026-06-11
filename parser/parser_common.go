@@ -77,6 +77,13 @@ func (p *Parser) matchTokenKind(kind TokenKind) bool {
 		!reservedKeywords.Contains(strings.ToUpper(p.last().String))
 }
 
+// matchTokenKindIn reports whether the current token's kind is in the given
+// class set, e.g. matchTokenKindIn(classIdent | classKeyword). Unlike
+// matchTokenKind it is a raw kind check: no keyword-to-identifier coercion.
+func (p *Parser) matchTokenKindIn(classes kindClass) bool {
+	return p.lastTokenKind().class()&classes != 0
+}
+
 // expectTokenKind consumes the last token if it is the given kind.
 func (p *Parser) expectTokenKind(kind TokenKind) error {
 	if lastToken := p.tryConsumeTokenKind(kind); lastToken != nil {
@@ -149,14 +156,14 @@ func (p *Parser) tryParseIdent() *Ident {
 	}
 }
 
-// parseIdentAnyKeyword parses the current token as an identifier, accepting
+// parseAnyKeyword parses the current token as an identifier, accepting
 // any keyword token — reserved or not — as the name. Use it only in positions
 // where context has already proven the token is a name and not the start of a
 // clause or expression: after AS, after a dot in a qualified name, or a select
 // item the lookahead disambiguated.
-func (p *Parser) parseIdentAnyKeyword() (*Ident, error) {
+func (p *Parser) parseAnyKeyword() (*Ident, error) {
 	last := p.last()
-	if last == nil || (last.Kind != TokenKindIdent && last.Kind != TokenKindKeyword) {
+	if !p.matchTokenKindIn(classIdent | classKeyword) {
 		return nil, &ParseError{
 			Pos:      p.Pos(),
 			Got:      last,
@@ -227,7 +234,7 @@ func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
 	}
 	// After a dot the token can only be a member name, so even reserved
 	// keywords are accepted (e.g. `db.from`, `t.limit`).
-	return p.parseIdentAnyKeyword()
+	return p.parseAnyKeyword()
 }
 
 func (p *Parser) tryParseDotIdentOrString(_ Pos) (*Ident, error) {
@@ -237,7 +244,7 @@ func (p *Parser) tryParseDotIdentOrString(_ Pos) (*Ident, error) {
 	// After a dot the token can only be a member name, so even reserved
 	// keywords are accepted (e.g. `db.from`).
 	if p.lastTokenKind() == TokenKindKeyword {
-		return p.parseIdentAnyKeyword()
+		return p.parseAnyKeyword()
 	}
 	return p.parseIdentOrString()
 }

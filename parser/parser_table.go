@@ -428,11 +428,11 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		if p.tryConsumeKeywords(KeywordOver) {
 			var overExpr Expr
 			switch {
-			case p.matchTokenKind(TokenKindIdent), p.lastTokenKind() == TokenKindKeyword:
+			case p.matchTokenKindIn(classIdent | classKeyword):
 				// After OVER a bare token can only be a window name, so even
 				// reserved keywords are accepted (e.g. `OVER order`),
 				// mirroring the WINDOW clause definition side.
-				overExpr, err = p.parseIdentAnyKeyword()
+				overExpr, err = p.parseAnyKeyword()
 			case p.matchTokenKind(TokenKindLParen):
 				overExpr, err = p.parseWindowCondition(p.Pos())
 				if err != nil {
@@ -454,12 +454,12 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		return funcExpr, nil
 	case p.tryConsumeTokenKind(TokenKindDot) != nil:
 		switch {
-		case p.matchTokenKind(TokenKindIdent), p.lastTokenKind() == TokenKindKeyword:
+		case p.matchTokenKindIn(classIdent | classKeyword):
 			fields := []*Ident{ident}
 			for {
 				// After a dot the token can only be a member name, so even
 				// reserved keywords are accepted (e.g. `t.from`).
-				child, err := p.parseIdentAnyKeyword()
+				child, err := p.parseAnyKeyword()
 				if err != nil {
 					return nil, err
 				}
