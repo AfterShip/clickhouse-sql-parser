@@ -34,7 +34,7 @@ func TestConsumeComment(t *testing.T) {
 
 // TestConsumeUnterminatedComment guards against an infinite loop (a DoS hang)
 // when a block comment is never closed. consumeMultiLineComment previously
-// looped on isEOF() while only advancing a local index, so l.current never
+// looped on isEOF() while only advancing a local index, so l.offset never
 // reached EOF and the lexer spun forever. The test runs in a goroutine with a
 // timeout so a regression fails fast instead of hanging the whole test binary.
 func TestConsumeUnterminatedComment(t *testing.T) {
@@ -74,8 +74,8 @@ func TestConsumeString(t *testing.T) {
 			lexer := NewLexer(s)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKindString, lexer.current.Kind)
-			require.Equal(t, strings.Trim(s, "'"), lexer.current.String)
+			require.Equal(t, TokenKindString, lexer.currentToken.Kind)
+			require.Equal(t, strings.Trim(s, "'"), lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -93,8 +93,8 @@ func TestConsumeString(t *testing.T) {
 			lexer := NewLexer(tc.input)
 			err := lexer.consumeToken()
 			require.NoError(t, err, "Failed to parse: %s", tc.input)
-			require.Equal(t, TokenKindString, lexer.current.Kind)
-			require.Equal(t, tc.expected, lexer.current.String)
+			require.Equal(t, TokenKindString, lexer.currentToken.Kind)
+			require.Equal(t, tc.expected, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -112,8 +112,8 @@ func TestConsumeString(t *testing.T) {
 			lexer := NewLexer(tc.input)
 			err := lexer.consumeToken()
 			require.NoError(t, err, "Failed to parse: %s", tc.input)
-			require.Equal(t, TokenKindString, lexer.current.Kind)
-			require.Equal(t, tc.expected, lexer.current.String)
+			require.Equal(t, TokenKindString, lexer.currentToken.Kind)
+			require.Equal(t, tc.expected, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -130,8 +130,8 @@ func TestConsumeString(t *testing.T) {
 			lexer := NewLexer(tc.input)
 			err := lexer.consumeToken()
 			require.NoError(t, err, "Failed to parse: %s", tc.input)
-			require.Equal(t, TokenKindString, lexer.current.Kind)
-			require.Equal(t, tc.expected, lexer.current.String)
+			require.Equal(t, TokenKindString, lexer.currentToken.Kind)
+			require.Equal(t, tc.expected, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -152,9 +152,9 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(i)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKindInt, lexer.current.Kind)
-			require.Equal(t, 10, lexer.current.Base)
-			require.Equal(t, i, lexer.current.String)
+			require.Equal(t, TokenKindInt, lexer.currentToken.Kind)
+			require.Equal(t, 10, lexer.currentToken.Base)
+			require.Equal(t, i, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -168,9 +168,9 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(n)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKindInt, lexer.current.Kind)
-			require.Equal(t, 16, lexer.current.Base)
-			require.Equal(t, n, lexer.current.String)
+			require.Equal(t, TokenKindInt, lexer.currentToken.Kind)
+			require.Equal(t, 16, lexer.currentToken.Base)
+			require.Equal(t, n, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -208,8 +208,8 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(f)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKindFloat, lexer.current.Kind)
-			require.Equal(t, f, lexer.current.String)
+			require.Equal(t, TokenKindFloat, lexer.currentToken.Kind)
+			require.Equal(t, f, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -258,8 +258,8 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(i)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKindIdent, lexer.current.Kind)
-			require.Equal(t, strings.Trim(i, "`"), lexer.current.String)
+			require.Equal(t, TokenKindIdent, lexer.currentToken.Kind)
+			require.Equal(t, strings.Trim(i, "`"), lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})
@@ -269,8 +269,8 @@ func TestConsumeNumber(t *testing.T) {
 			lexer := NewLexer(k)
 			err := lexer.consumeToken()
 			require.NoError(t, err)
-			require.Equal(t, TokenKindKeyword, lexer.current.Kind)
-			require.Equal(t, k, lexer.current.String)
+			require.Equal(t, TokenKindKeyword, lexer.currentToken.Kind)
+			require.Equal(t, k, lexer.currentToken.String)
 			require.True(t, lexer.isEOF())
 		}
 	})

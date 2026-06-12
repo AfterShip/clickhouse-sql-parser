@@ -26,38 +26,38 @@ func NewParser(buffer string) *Parser {
 	}
 }
 
-func (p *Parser) curTokenKind() TokenKind {
-	if p.cur() == nil {
+func (p *Parser) currentTokenKind() TokenKind {
+	if p.current() == nil {
 		return TokenKindEOF
 	}
-	return p.cur().Kind
+	return p.current().Kind
 }
 
-// curTokenString returns the string of the current token, or "<EOF>" when the
+// currentTokenString returns the string of the current token, or "<EOF>" when the
 // lexer has no current token. Use this on error paths where the current token
 // may be nil (e.g. at end of input) to avoid a nil-pointer dereference.
-func (p *Parser) curTokenString() string {
-	if p.cur() == nil {
+func (p *Parser) currentTokenString() string {
+	if p.current() == nil {
 		return "<EOF>"
 	}
-	return p.cur().String
+	return p.current().String
 }
 
 // cur returns the current lookahead token: the token the parser is looking at
 // but has not consumed yet. It is nil at end of input.
-func (p *Parser) cur() *Token {
-	return p.lexer.current
+func (p *Parser) current() *Token {
+	return p.lexer.currentToken
 }
 
 func (p *Parser) End() Pos {
-	if p.cur() == nil {
+	if p.current() == nil {
 		return Pos(p.lexer.offset + 1)
 	}
-	return p.cur().End
+	return p.current().End
 }
 
 func (p *Parser) Pos() Pos {
-	last := p.cur()
+	last := p.current()
 	if last == nil {
 		return Pos(p.lexer.offset)
 	}
@@ -65,8 +65,8 @@ func (p *Parser) Pos() Pos {
 }
 
 func (p *Parser) matchTokenKind(kind TokenKind) bool {
-	return p.curTokenKind() == kind ||
-		(kind == TokenKindIdent && p.curTokenKind() == TokenKindKeyword)
+	return p.currentTokenKind() == kind ||
+		(kind == TokenKindIdent && p.currentTokenKind() == TokenKindKeyword)
 }
 
 // expectTokenKind consumes the current token if it is the given kind.
@@ -76,14 +76,14 @@ func (p *Parser) expectTokenKind(kind TokenKind) error {
 	}
 	return &ParseError{
 		Pos:      p.Pos(),
-		Got:      p.cur(),
+		Got:      p.current(),
 		Expected: []TokenKind{kind},
 	}
 }
 
 func (p *Parser) tryConsumeTokenKind(kind TokenKind) *Token {
 	if p.matchTokenKind(kind) {
-		curToken := p.cur()
+		curToken := p.current()
 		_ = p.lexer.consumeToken()
 		return curToken
 	}
@@ -91,7 +91,7 @@ func (p *Parser) tryConsumeTokenKind(kind TokenKind) *Token {
 }
 
 func (p *Parser) matchKeyword(keyword string) bool {
-	return p.matchTokenKind(TokenKindKeyword) && strings.EqualFold(p.cur().String, keyword)
+	return p.matchTokenKind(TokenKindKeyword) && strings.EqualFold(p.current().String, keyword)
 }
 
 func (p *Parser) matchOneOfKeywords(keywords ...string) bool {
@@ -107,7 +107,7 @@ func (p *Parser) expectKeyword(keyword string) error {
 	if !p.matchKeyword(keyword) {
 		return &ParseError{
 			Pos:     p.Pos(),
-			Got:     p.cur(),
+			Got:     p.current(),
 			Keyword: keyword,
 		}
 	}
@@ -128,10 +128,10 @@ func (p *Parser) tryConsumeKeywords(keywords ...string) bool {
 }
 
 func (p *Parser) tryParseIdent() *Ident {
-	if p.curTokenKind() != TokenKindIdent {
+	if p.currentTokenKind() != TokenKindIdent {
 		return nil
 	}
-	curToken := p.cur()
+	curToken := p.current()
 	_ = p.lexer.consumeToken()
 	return &Ident{
 		NamePos:   curToken.Pos,
@@ -142,7 +142,7 @@ func (p *Parser) tryParseIdent() *Ident {
 }
 
 func (p *Parser) parseIdent() (*Ident, error) {
-	curToken := p.cur()
+	curToken := p.current()
 	if err := p.expectTokenKind(TokenKindIdent); err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 	case p.matchTokenKind(TokenKindIdent):
 		return p.parseIdent()
 	case p.matchTokenKind("*"):
-		curToken := p.cur()
+		curToken := p.current()
 		_ = p.lexer.consumeToken()
 		return &Ident{
 			NamePos: curToken.Pos,
@@ -168,7 +168,7 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 			Name:    curToken.String,
 		}, nil
 	default:
-		return nil, fmt.Errorf("expected <ident> or *, but got %q", p.curTokenKind())
+		return nil, fmt.Errorf("expected <ident> or *, but got %q", p.currentTokenKind())
 	}
 }
 
@@ -177,7 +177,7 @@ func (p *Parser) parseIdentOrString() (*Ident, error) {
 	case p.matchTokenKind(TokenKindIdent):
 		return p.parseIdent()
 	case p.matchTokenKind(TokenKindString):
-		curToken := p.cur()
+		curToken := p.current()
 		_ = p.lexer.consumeToken()
 		return &Ident{
 			NamePos:   curToken.Pos,
@@ -186,7 +186,7 @@ func (p *Parser) parseIdentOrString() (*Ident, error) {
 			QuoteType: SingleQuote, // Treat string literals as single-quoted identifiers
 		}, nil
 	default:
-		return nil, fmt.Errorf("expected <ident> or <string>, but got %q", p.curTokenKind())
+		return nil, fmt.Errorf("expected <ident> or <string>, but got %q", p.currentTokenKind())
 	}
 }
 
@@ -293,7 +293,7 @@ func (p *Parser) parseDecimal(pos Pos) (*NumberLiteral, error) {
 func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 	var err error
 
-	curToken := p.cur()
+	curToken := p.current()
 	switch {
 	case p.matchTokenKind(TokenKindInt):
 		err = p.expectTokenKind(TokenKindInt)
@@ -301,7 +301,7 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 		err = p.expectTokenKind(TokenKindFloat)
 	case p.matchTokenKind(TokenKindDot):
 		_ = p.lexer.consumeToken()
-		curToken = p.cur()
+		curToken = p.current()
 		if err := p.expectTokenKind(TokenKindInt); err != nil {
 			return nil, err
 		}
@@ -311,7 +311,7 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 		curToken.String = "." + curToken.String
 		curToken.Kind = TokenKindFloat
 	default:
-		return nil, fmt.Errorf("expected <int> or <float>, but got %q", p.curTokenKind())
+		return nil, fmt.Errorf("expected <int> or <float>, but got %q", p.currentTokenKind())
 	}
 	if err != nil {
 		return nil, err
@@ -326,7 +326,7 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 }
 
 func (p *Parser) parseString(pos Pos) (*StringLiteral, error) {
-	curToken := p.cur()
+	curToken := p.current()
 	if err := p.expectTokenKind(TokenKindString); err != nil {
 		return nil, err
 	}
@@ -351,7 +351,7 @@ func (p *Parser) parseLiteral(pos Pos) (Literal, error) {
 		// accept the NULL keyword
 		return &NullLiteral{NullPos: pos}, nil
 	default:
-		return nil, fmt.Errorf("expected <int>, <string>, <ident> or keyword <NULL>, but got %q", p.curTokenKind())
+		return nil, fmt.Errorf("expected <int>, <string>, <ident> or keyword <NULL>, but got %q", p.currentTokenKind())
 	}
 }
 
@@ -410,7 +410,7 @@ func (p *Parser) wrapError(err error) error {
 	if !errors.As(err, &pe) {
 		pe = &ParseError{
 			Pos: p.Pos(),
-			Got: p.cur(),
+			Got: p.current(),
 			Msg: err.Error(),
 		}
 	}

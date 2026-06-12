@@ -75,8 +75,8 @@ func (t *Token) ToString() string {
 }
 
 type lexerState struct {
-	offset  int    // byte offset into input of the next unread character
-	current *Token // current lookahead token; nil at end of input
+	offset       int    // byte offset into input of the next unread character
+	currentToken *Token // current lookahead token; nil at end of input
 }
 
 type Lexer struct {
@@ -165,7 +165,7 @@ func (l *Lexer) consumeNumber() error {
 	if (l.peekOk(i) && IsIdentPart(l.peekN(i))) || !hasNumberPart {
 		return errors.New("invalid number")
 	}
-	l.current = &Token{
+	l.currentToken = &Token{
 		Kind:   tokenKind,
 		String: l.slice(0, i),
 		Pos:    Pos(l.offset),
@@ -216,7 +216,7 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 	token.End = Pos(l.offset + i)
 	token.String = slice
 	token.QuoteType = quoteType
-	l.current = token
+	l.currentToken = token
 
 	l.skipN(i)
 	if quoteType != Unquoted {
@@ -274,7 +274,7 @@ func (l *Lexer) consumeString() error {
 	if !l.peekOk(i) || l.peekN(i) != endChar {
 		return errors.New("invalid string")
 	}
-	l.current = &Token{
+	l.currentToken = &Token{
 		Kind:   TokenKindString,
 		String: l.slice(1, i),
 		Pos:    Pos(l.offset + 1),
@@ -317,7 +317,7 @@ func (l *Lexer) peekToken() (*Token, error) {
 	if err := l.consumeToken(); err != nil {
 		return nil, err
 	}
-	token := l.current
+	token := l.currentToken
 
 	l.restoreState(savedState)
 	return token, nil
@@ -333,8 +333,8 @@ func (l *Lexer) hasPrecedenceToken(last *Token) bool {
 
 func (l *Lexer) consumeToken() error {
 	// replace the current token; keep the previous one to disambiguate unary +/-
-	prevToken := l.current
-	l.current = nil
+	prevToken := l.currentToken
+	l.currentToken = nil
 	l.skipComments()
 	l.skipSpace()
 	if l.isEOF() {
@@ -346,7 +346,7 @@ func (l *Lexer) consumeToken() error {
 			l.peekN(0) == '<' && l.peekOk(1) && l.peekN(1) == '>' || // <>
 			l.peekN(0) == '=' && l.peekOk(1) && l.peekN(1) == '=' || // ==
 			l.peekN(0) != '|' && l.peekOk(1) && l.peekN(1) == '=' { // |=
-			l.current = &Token{
+			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKind(l.slice(0, 2)),
 				Pos:    Pos(l.offset),
@@ -361,7 +361,7 @@ func (l *Lexer) consumeToken() error {
 		if !l.hasPrecedenceToken(prevToken) && l.peekOk(1) && IsDigit(l.peekN(1)) {
 			return l.consumeNumber()
 		} else if l.peekOk(1) && l.peekN(1) == '>' {
-			l.current = &Token{
+			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKindArrow,
 				Pos:    Pos(l.offset),
@@ -378,7 +378,7 @@ func (l *Lexer) consumeToken() error {
 		return l.consumeString()
 	case ':':
 		if l.peekOk(1) && l.peekN(1) == ':' {
-			l.current = &Token{
+			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKindDash,
 				Pos:    Pos(l.offset),
@@ -388,7 +388,7 @@ func (l *Lexer) consumeToken() error {
 			return nil
 		}
 	case '.':
-		l.current = &Token{
+		l.currentToken = &Token{
 			String: l.slice(0, 1),
 			Kind:   TokenKindDot,
 			Pos:    Pos(l.offset),
@@ -408,7 +408,7 @@ func (l *Lexer) consumeToken() error {
 	token.String = l.input[l.offset : l.offset+1]
 	token.Kind = TokenKind(token.String)
 	l.skipN(1)
-	l.current = token
+	l.currentToken = token
 	return nil
 }
 
