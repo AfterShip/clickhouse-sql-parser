@@ -176,7 +176,9 @@ func (j *JoinTableExpr) Accept(visitor ASTVisitor) error {
 		return err
 	}
 	if j.SampleRatio != nil {
-		return j.SampleRatio.Accept(visitor)
+		if err := j.SampleRatio.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitJoinTableExpr(j)
 }
