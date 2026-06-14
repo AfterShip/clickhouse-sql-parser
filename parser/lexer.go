@@ -15,7 +15,7 @@ const (
 	TokenKindInt          TokenKind = "<int>"
 	TokenKindFloat        TokenKind = "<float>"
 	TokenKindString       TokenKind = "<string>"
-	TokenKindDot                    = "."
+	TokenKindDot          TokenKind = "."
 	TokenKindSingleEQ     TokenKind = "="
 	TokenKindDoubleEQ     TokenKind = "=="
 	TokenKindNE           TokenKind = "!="
@@ -75,8 +75,8 @@ func (t *Token) ToString() string {
 }
 
 type lexerState struct {
-	current   int
-	lastToken *Token
+	offset       int    // byte offset into input of the next unread character
+	currentToken *Token // current lookahead token; nil at end of input
 }
 
 type Lexer struct {
@@ -98,19 +98,19 @@ func (l *Lexer) restoreState(state lexerState) {
 }
 
 func (l *Lexer) skipN(n int) {
-	l.current += n
+	l.offset += n
 }
 
 func (l *Lexer) slice(i, j int) string {
-	return l.input[l.current+i : l.current+j]
+	return l.input[l.offset+i : l.offset+j]
 }
 
 func (l *Lexer) peekN(n int) byte {
-	return l.input[l.current+n]
+	return l.input[l.offset+n]
 }
 
 func (l *Lexer) peekOk(n int) bool {
-	return l.current+n < len(l.input)
+	return l.offset+n < len(l.input)
 }
 
 func (l *Lexer) isKeyword(ident string) bool {
@@ -165,11 +165,11 @@ func (l *Lexer) consumeNumber() error {
 	if (l.peekOk(i) && IsIdentPart(l.peekN(i))) || !hasNumberPart {
 		return errors.New("invalid number")
 	}
-	l.lastToken = &Token{
+	l.currentToken = &Token{
 		Kind:   tokenKind,
 		String: l.slice(0, i),
-		Pos:    Pos(l.current),
-		End:    Pos(l.current + i),
+		Pos:    Pos(l.offset),
+		End:    Pos(l.offset + i),
 		Base:   base,
 	}
 	l.skipN(i)
@@ -212,11 +212,11 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 	} else {
 		token.Kind = TokenKindIdent
 	}
-	token.Pos = Pos(l.current)
-	token.End = Pos(l.current + i)
+	token.Pos = Pos(l.offset)
+	token.End = Pos(l.offset + i)
 	token.String = slice
 	token.QuoteType = quoteType
-	l.lastToken = token
+	l.currentToken = token
 
 	l.skipN(i)
 	if quoteType != Unquoted {
@@ -274,11 +274,11 @@ func (l *Lexer) consumeString() error {
 	if !l.peekOk(i) || l.peekN(i) != endChar {
 		return errors.New("invalid string")
 	}
-	l.lastToken = &Token{
+	l.currentToken = &Token{
 		Kind:   TokenKindString,
 		String: l.slice(1, i),
-		Pos:    Pos(l.current + 1),
-		End:    Pos(l.current + i),
+		Pos:    Pos(l.offset + 1),
+		End:    Pos(l.offset + i),
 	}
 	l.skipN(i + 1)
 	return nil
@@ -317,7 +317,7 @@ func (l *Lexer) peekToken() (*Token, error) {
 	if err := l.consumeToken(); err != nil {
 		return nil, err
 	}
-	token := l.lastToken
+	token := l.currentToken
 
 	l.restoreState(savedState)
 	return token, nil
@@ -332,9 +332,9 @@ func (l *Lexer) hasPrecedenceToken(last *Token) bool {
 }
 
 func (l *Lexer) consumeToken() error {
-	// clear last token
-	lastToken := l.lastToken
-	l.lastToken = nil
+	// replace the current token; keep the previous one to disambiguate unary +/-
+	prevToken := l.currentToken
+	l.currentToken = nil
 	l.skipComments()
 	l.skipSpace()
 	if l.isEOF() {
@@ -346,11 +346,11 @@ func (l *Lexer) consumeToken() error {
 			l.peekN(0) == '<' && l.peekOk(1) && l.peekN(1) == '>' || // <>
 			l.peekN(0) == '=' && l.peekOk(1) && l.peekN(1) == '=' || // ==
 			l.peekN(0) != '|' && l.peekOk(1) && l.peekN(1) == '=' { // |=
-			l.lastToken = &Token{
+			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKind(l.slice(0, 2)),
-				Pos:    Pos(l.current),
-				End:    Pos(l.current + 2),
+				Pos:    Pos(l.offset),
+				End:    Pos(l.offset + 2),
 			}
 			l.skipN(2)
 			return nil
@@ -358,14 +358,14 @@ func (l *Lexer) consumeToken() error {
 
 	case '+', '-':
 		// hasPrecedenceToken is used to distinguish between unary and binary operators
-		if !l.hasPrecedenceToken(lastToken) && l.peekOk(1) && IsDigit(l.peekN(1)) {
+		if !l.hasPrecedenceToken(prevToken) && l.peekOk(1) && IsDigit(l.peekN(1)) {
 			return l.consumeNumber()
 		} else if l.peekOk(1) && l.peekN(1) == '>' {
-			l.lastToken = &Token{
+			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKindArrow,
-				Pos:    Pos(l.current),
-				End:    Pos(l.current + 2),
+				Pos:    Pos(l.offset),
+				End:    Pos(l.offset + 2),
 			}
 			l.skipN(2)
 			return nil
@@ -373,55 +373,55 @@ func (l *Lexer) consumeToken() error {
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		return l.consumeNumber()
 	case '`', '$', '"':
-		return l.consumeIdent(Pos(l.current))
+		return l.consumeIdent(Pos(l.offset))
 	case '\'':
 		return l.consumeString()
 	case ':':
 		if l.peekOk(1) && l.peekN(1) == ':' {
-			l.lastToken = &Token{
+			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKindDash,
-				Pos:    Pos(l.current),
-				End:    Pos(l.current + 2),
+				Pos:    Pos(l.offset),
+				End:    Pos(l.offset + 2),
 			}
 			l.skipN(2)
 			return nil
 		}
 	case '.':
-		l.lastToken = &Token{
+		l.currentToken = &Token{
 			String: l.slice(0, 1),
 			Kind:   TokenKindDot,
-			Pos:    Pos(l.current),
-			End:    Pos(l.current + 1),
+			Pos:    Pos(l.offset),
+			End:    Pos(l.offset + 1),
 		}
 		l.skipN(1)
 		return nil
 	}
 
 	if IsIdentStart(l.peekN(0)) {
-		return l.consumeIdent(Pos(l.current))
+		return l.consumeIdent(Pos(l.offset))
 	}
 
 	token := &Token{}
-	token.Pos = Pos(l.current)
-	token.End = Pos(l.current + 1)
-	token.String = l.input[l.current : l.current+1]
+	token.Pos = Pos(l.offset)
+	token.End = Pos(l.offset + 1)
+	token.String = l.input[l.offset : l.offset+1]
 	token.Kind = TokenKind(token.String)
 	l.skipN(1)
-	l.lastToken = token
+	l.currentToken = token
 	return nil
 }
 
 func (l *Lexer) isEOF() bool {
-	return l.current >= len(l.input)
+	return l.offset >= len(l.input)
 }
 
 func (l *Lexer) skipSpace() {
 	for !l.isEOF() {
-		r, size := utf8.DecodeRuneInString(l.input[l.current:])
+		r, size := utf8.DecodeRuneInString(l.input[l.offset:])
 		if !unicode.IsSpace(r) {
 			break
 		}
-		l.current += size
+		l.offset += size
 	}
 }
