@@ -211,7 +211,8 @@
               "Format": null,
               "UnionAll": null,
               "UnionDistinct": null,
-              "Except": null
+              "Except": null,
+              "Intersect": null
             }
           },
           "HasFinal": false
@@ -303,6 +304,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

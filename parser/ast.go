@@ -4982,6 +4982,7 @@ func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) error {
 
 type BetweenClause struct {
 	Expr    Expr
+	Not     bool
 	Between Expr
 	AndPos  Pos
 	And     Expr
@@ -5123,6 +5124,7 @@ type SelectQuery struct {
 	UnionAll      *SelectQuery
 	UnionDistinct *SelectQuery
 	Except        *SelectQuery
+	Intersect     *SelectQuery
 }
 
 func (s *SelectQuery) Pos() Pos {
@@ -5220,6 +5222,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	}
 	if s.Except != nil {
 		if err := s.Except.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Intersect != nil {
+		if err := s.Intersect.Accept(visitor); err != nil {
 			return err
 		}
 	}

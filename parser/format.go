@@ -558,11 +558,16 @@ func (a *AuthenticationClause) FormatSQL(formatter *Formatter) {
 }
 
 func (f *BetweenClause) FormatSQL(formatter *Formatter) {
+	keyword := "BETWEEN "
+	if f.Not {
+		keyword = "NOT BETWEEN "
+	}
 	if f.Expr != nil {
 		formatter.WriteExpr(f.Expr)
-		formatter.WriteString(" BETWEEN ")
+		formatter.WriteString(" ")
+		formatter.WriteString(keyword)
 	} else {
-		formatter.WriteString("BETWEEN ")
+		formatter.WriteString(keyword)
 	}
 	formatter.WriteExpr(f.Between)
 	formatter.WriteString(" AND ")
@@ -2354,6 +2359,11 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 		formatter.WriteString("EXCEPT")
 		formatter.Break()
 		formatter.WriteExpr(s.Except)
+	} else if s.Intersect != nil {
+		formatter.Break()
+		formatter.WriteString("INTERSECT")
+		formatter.Break()
+		formatter.WriteExpr(s.Intersect)
 	}
 }
 

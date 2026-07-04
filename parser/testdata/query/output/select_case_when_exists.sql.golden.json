@@ -115,7 +115,8 @@
                           "Format": null,
                           "UnionAll": null,
                           "UnionDistinct": null,
-                          "Except": null
+                          "Except": null,
+                          "Intersect": null
                         },
                         "Alias": null
                       }
@@ -203,6 +204,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

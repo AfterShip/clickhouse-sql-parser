@@ -132,6 +132,7 @@
                   "Type": "RANGE",
                   "Extend": {
                     "Expr": null,
+                    "Not": false,
                     "Between": {
                       "Number": {
                         "NumPos": 196,
@@ -214,7 +215,8 @@
         "Format": null,
         "UnionAll": null,
         "UnionDistinct": null,
-        "Except": null
+        "Except": null,
+        "Intersect": null
       }
     }
   }

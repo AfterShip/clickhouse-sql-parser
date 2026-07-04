@@ -126,8 +126,10 @@
       },
       "UnionAll": null,
       "UnionDistinct": null,
-      "Except": null
+      "Except": null,
+      "Intersect": null
     },
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

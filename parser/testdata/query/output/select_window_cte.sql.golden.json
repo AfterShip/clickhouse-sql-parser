@@ -196,7 +196,8 @@
             "Format": null,
             "UnionAll": null,
             "UnionDistinct": null,
-            "Except": null
+            "Except": null,
+            "Intersect": null
           }
         },
         {
@@ -357,7 +358,8 @@
             "Format": null,
             "UnionAll": null,
             "UnionDistinct": null,
-            "Except": null
+            "Except": null,
+            "Intersect": null
           }
         }
       ]
@@ -493,6 +495,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 628,
@@ -606,6 +609,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

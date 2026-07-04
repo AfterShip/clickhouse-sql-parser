@@ -68,6 +68,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Param": {
                     "LBracePos": 144,
@@ -168,6 +169,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "CurrentPos": 267,
                   "RowEnd": 282
@@ -268,6 +270,7 @@
               "Type": "RANGE",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Param": {
                     "LBracePos": 391,
@@ -501,6 +504,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]
