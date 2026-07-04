@@ -68,6 +68,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 237,
                   "UnboundedEnd": 0,
@@ -169,6 +170,7 @@
               "Type": "RANGE",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 397,
@@ -428,6 +430,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "CurrentPos": 1119,
                   "RowEnd": 1134
@@ -493,6 +496,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 1273,
@@ -569,6 +573,7 @@
               "Type": "RANGE",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 1407,
@@ -639,6 +644,7 @@
               "Type": "RANGE",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 1543,
                   "UnboundedEnd": 0,
@@ -965,6 +971,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 2164,
                   "UnboundedEnd": 0,
@@ -1067,6 +1074,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 2313,
                   "UnboundedEnd": 0,
@@ -1699,6 +1707,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 3498,
                   "UnboundedEnd": 0,
@@ -1831,6 +1840,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 3704,
@@ -1934,6 +1944,7 @@
               "Type": "RANGE",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 3832,
@@ -2085,6 +2096,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 3984,
                   "UnboundedEnd": 0,
@@ -2154,6 +2166,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "Number": {
                     "NumPos": 4075,
@@ -2228,6 +2241,7 @@
               "Type": "RANGE",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 4159,
                   "UnboundedEnd": 0,
@@ -2256,6 +2270,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

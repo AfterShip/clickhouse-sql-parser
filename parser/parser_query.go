@@ -598,7 +598,7 @@ func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {
 	return p.parseLimitByClause(pos)
 }
 
-func (p *Parser) parseBetweenClause(expr Expr) (*BetweenClause, error) {
+func (p *Parser) parseBetweenClause(expr Expr, not bool) (*BetweenClause, error) {
 	if err := p.expectKeyword(KeywordBetween); err != nil {
 		return nil, err
 	}
@@ -620,6 +620,7 @@ func (p *Parser) parseBetweenClause(expr Expr) (*BetweenClause, error) {
 
 	return &BetweenClause{
 		Expr:    expr,
+		Not:     not,
 		Between: betweenExpr,
 		AndPos:  andPos,
 		And:     andExpr,
@@ -1008,6 +1009,12 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 			return nil, err
 		}
 		selectStmt.Except = exceptExpr
+	case p.tryConsumeKeywords(KeywordIntersect):
+		intersectExpr, err := p.parseSelectQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		selectStmt.Intersect = intersectExpr
 	}
 	if hasParen {
 		if err := p.expectTokenKind(TokenKindRParen); err != nil {

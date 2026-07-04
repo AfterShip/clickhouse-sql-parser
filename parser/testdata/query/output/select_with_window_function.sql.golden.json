@@ -191,6 +191,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 292,
                   "UnboundedEnd": 0,
@@ -349,6 +350,7 @@
               "Type": "ROWS",
               "Extend": {
                 "Expr": null,
+                "Not": false,
                 "Between": {
                   "UnboundedPos": 473,
                   "UnboundedEnd": 0,
@@ -383,6 +385,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

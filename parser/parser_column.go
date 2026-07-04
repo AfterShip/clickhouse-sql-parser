@@ -5,11 +5,16 @@ import (
 	"strings"
 )
 
+// Binding order follows ClickHouse's expression parser: lambda `->` binds
+// loosest so `x -> x + 1` keeps the whole body, ternary `?:` sits below
+// OR/AND so `a OR b ? 1 : 2` groups as `(a OR b) ? 1 : 2`, and prefix NOT
+// binds looser than comparisons so `NOT a = b` groups as `NOT (a = b)`.
 const (
 	PrecedenceUnknown = iota
+	PrecedenceArrow
+	PrecedenceQuery
 	PrecedenceOr
 	PrecedenceAnd
-	PrecedenceQuery
 	PrecedenceNot
 	PrecedenceGlobal
 	PrecedenceIs
@@ -20,7 +25,6 @@ const (
 	PrecedenceAddSub
 	PrecedenceMulDivMod
 	PrecedenceBracket
-	PrecedenceArrow
 	PrecedenceDot
 	PrecedenceDoubleColon
 )
@@ -41,7 +45,17 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordIs):
 		return PrecedenceIs
 	case p.matchKeyword(KeywordNot):
-		return PrecedenceNot
+		// Infix NOT only begins NOT IN/LIKE/ILIKE/BETWEEN, so it binds with
+		// the precedence of the operator it negates; `a = b NOT IN (1)` must
+		// group the same way `a = b IN (1)` does.
+		switch {
+		case p.peekKeyword(KeywordIn):
+			return precedenceIn
+		case p.peekKeyword(KeywordLike), p.peekKeyword(KeywordIlike), p.peekKeyword(KeywordBetween):
+			return PrecedenceBetweenLike
+		default:
+			return PrecedenceNot
+		}
 	case p.matchTokenKind(TokenKindDot):
 		return PrecedenceDot
 	case p.matchTokenKind(TokenKindDash):
@@ -60,16 +74,13 @@ func (p *Parser) getNextPrecedence() int {
 		return PrecedenceArrow
 	case p.matchTokenKind(TokenKindLParen), p.matchTokenKind(TokenKindLBracket):
 		return PrecedenceBracket
-	case p.matchTokenKind(TokenKindDash):
-		return PrecedenceDoubleColon
-	case p.matchTokenKind(TokenKindDot):
-		return PrecedenceDot
 	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp):
 		return PrecedenceBetweenLike
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
-		return PrecedenceGlobal
+		// GLOBAL is only valid before IN, so it binds like IN itself.
+		return precedenceIn
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return PrecedenceQuery
 	default:
@@ -87,7 +98,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		p.matchKeyword(KeywordIn), p.matchKeyword(KeywordLike),
 		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp),
 		p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
-		p.matchTokenKind(TokenKindArrow), p.matchTokenKind(TokenKindDoubleEQ):
+		p.matchTokenKind(TokenKindDoubleEQ):
 		op := p.current().ToString()
 		_ = p.lexer.consumeToken()
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
@@ -97,6 +108,19 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return &BinaryOperation{
 			LeftExpr:  expr,
 			Operation: TokenKind(op),
+			RightExpr: rightExpr,
+		}, nil
+	case p.matchTokenKind(TokenKindArrow):
+		_ = p.lexer.consumeToken()
+		// Lambdas are right-associative: `x -> y -> body` is `x -> (y -> body)`,
+		// so the body is parsed one level below the arrow's own precedence.
+		rightExpr, err := p.parseSubExpr(p.Pos(), precedence-1)
+		if err != nil {
+			return nil, err
+		}
+		return &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: TokenKindArrow,
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchTokenKind(TokenKindDash):
@@ -132,7 +156,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchKeyword(KeywordBetween):
-		return p.parseBetweenClause(expr)
+		return p.parseBetweenClause(expr, false)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
 		if p.expectKeyword(KeywordIn) != nil {
@@ -167,15 +191,15 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		}, nil
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
+		if p.matchKeyword(KeywordBetween) {
+			return p.parseBetweenClause(expr, true)
+		}
 		switch {
 		case p.matchKeyword(KeywordIn):
 		case p.matchKeyword(KeywordLike):
 		case p.matchKeyword(KeywordIlike):
 		default:
-			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.currentTokenKind())
-		}
-		if p.matchKeyword(KeywordBetween) {
-			return p.parseBetweenClause(expr)
+			return nil, fmt.Errorf("expected IN, LIKE, ILIKE or BETWEEN after NOT, got %s", p.currentTokenKind())
 		}
 		op := p.current().ToString()
 		_ = p.lexer.consumeToken()
@@ -334,16 +358,22 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 
 func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 	op := p.current()
+	var expr Expr
+	var err error
 	switch {
 	case p.matchTokenKind(TokenKindPlus),
-		p.matchTokenKind(TokenKindMinus),
-		p.matchKeyword(KeywordNot):
+		p.matchTokenKind(TokenKindMinus):
 		_ = p.lexer.consumeToken()
+		expr, err = p.parseColumnExpr(p.Pos())
+	case p.matchKeyword(KeywordNot):
+		_ = p.lexer.consumeToken()
+		// Prefix NOT binds looser than comparisons: `NOT a = b` negates the
+		// whole comparison, so the operand is parsed at NOT's own precedence
+		// instead of stopping at the primary expression.
+		expr, err = p.parseSubExpr(p.Pos(), PrecedenceNot)
 	default:
 		return p.parseColumnExpr(pos)
 	}
-
-	expr, err := p.parseColumnExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +415,7 @@ var clauseStarterKeywords = []string{
 	KeywordFrom, KeywordWhere, KeywordPrewhere, KeywordGroup,
 	KeywordHaving, KeywordWindow, KeywordOrder, KeywordLimit,
 	KeywordOffset, KeywordSettings, KeywordFormat, KeywordUnion,
-	KeywordExcept,
+	KeywordExcept, KeywordIntersect,
 }
 
 // matchClauseStarterKeyword reports whether the current token is one of the
