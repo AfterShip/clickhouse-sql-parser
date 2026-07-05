@@ -249,7 +249,7 @@ func (p *Parser) tryParseDotIdentOrString(_ Pos) (*Ident, error) {
 	}
 	// After a dot the token can only be a member name, so even reserved
 	// keywords are accepted (e.g. `db.from`).
-	if p.currentTokenKind() == TokenKindKeyword {
+	if p.matchTokenKind(TokenKindKeyword) {
 		return p.parseAnyKeyword()
 	}
 	return p.parseIdentOrString()

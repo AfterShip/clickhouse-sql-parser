@@ -72,6 +72,8 @@ func TestReservedKeywordInDisambiguatedPositions(t *testing.T) {
 		"SELECT sum(x) OVER (order) FROM t WINDOW order AS (PARTITION BY team)",
 		"SELECT sum(x) OVER order FROM t WINDOW order AS (PARTITION BY team)",
 		"GRANT SELECT(x) ON db.table TO john WITH GRANT OPTION",
+		"GRANT SELECT ON db.from TO john",
+		"CREATE TABLE t (j JSON(max_dynamic_paths=1, SKIP a.from)) ENGINE=Memory",
 	}
 	for _, sql := range cases {
 		t.Run(sql, func(t *testing.T) {

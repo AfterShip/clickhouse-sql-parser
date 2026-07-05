@@ -1301,7 +1301,12 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 			Table: ident,
 		}, nil
 	}
-	dotIdent, err := p.parseIdentOrStar()
+	var dotIdent *Ident
+	if p.matchTokenKind("*") {
+		dotIdent, err = p.parseIdentOrStar()
+	} else {
+		dotIdent, err = p.parseAnyKeyword()
+	}
 	if err != nil {
 		return nil, err
 	}

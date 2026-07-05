@@ -498,7 +498,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseColumnExtractExpr(pos)
 	case p.matchTokenKind(TokenKindIdent):
 		return p.parseIdentOrFunction(pos)
-	case p.currentTokenKind() == TokenKindKeyword && p.peekTokenKind(TokenKindLParen):
+	case p.matchTokenKind(TokenKindKeyword) && p.peekTokenKind(TokenKindLParen):
 		// Reserved operator keywords stay callable as ordinary functions when
 		// followed by '(': and(a, b), or(a, b), in(x, set), like(s, pat), ...
 		// Keywords with dedicated syntax (CAST, CASE, EXTRACT, INTERVAL, ...)
@@ -896,16 +896,15 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 		if err != nil {
 			return nil, err
 		}
-	case p.currentTokenKind() == TokenKindKeyword &&
-		p.matchTokenKind(TokenKindIdent) && !p.isSelectItemTerminatorKeyword():
-		// Only a non-reserved keyword can be a bare (no-AS) alias; a reserved
-		// keyword here starts the next clause (e.g. `SELECT a FROM ...`).
+	case p.matchTokenKind(TokenKindIdent) && !p.isSelectItemTerminatorKeyword():
+		// A bare alias can be a normal identifier or non-reserved keyword; a
+		// reserved keyword here starts the next clause (e.g. `SELECT a FROM ...`).
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
 	default:
-		alias = p.tryParseIdent()
+		alias = nil
 	}
 
 	return &SelectItem{
@@ -1125,7 +1124,7 @@ func (p *Parser) parseJSONPath() (*JSONPath, error) {
 	idents = append(idents, ident)
 
 	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindDot) != nil {
-		ident, err := p.parseIdent()
+		ident, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}

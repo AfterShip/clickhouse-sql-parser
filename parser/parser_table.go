@@ -402,7 +402,7 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 	var ident *Ident
 	var err error
-	if p.currentTokenKind() == TokenKindKeyword && p.peekTokenKind(TokenKindLParen) {
+	if p.matchTokenKind(TokenKindKeyword) && p.peekTokenKind(TokenKindLParen) {
 		// reserved operator keywords stay callable as ordinary functions:
 		// and(a, b), or(a, b), in(x, set), like(s, pat), ...
 		ident, err = p.parseAnyKeyword()
