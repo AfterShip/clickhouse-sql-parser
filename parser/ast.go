@@ -332,6 +332,11 @@ func (a *AlterTableDropPartition) Accept(visitor ASTVisitor) error {
 	if err := a.Partition.Accept(visitor); err != nil {
 		return err
 	}
+	if a.Settings != nil {
+		if err := a.Settings.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	return visitor.VisitAlterTableDropPartition(a)
 }
 
@@ -527,6 +532,11 @@ func (p *ProjectionOrderByClause) End() Pos {
 func (p *ProjectionOrderByClause) Accept(visitor ASTVisitor) error {
 	visitor.Enter(p)
 	defer visitor.Leave(p)
+	if p.Columns != nil {
+		if err := p.Columns.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	return visitor.VisitProjectionOrderBy(p)
 }
 
@@ -1238,6 +1248,11 @@ func (u *UUID) End() Pos {
 func (u *UUID) Accept(visitor ASTVisitor) error {
 	visitor.Enter(u)
 	defer visitor.Leave(u)
+	if u.Value != nil {
+		if err := u.Value.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	return visitor.VisitUUID(u)
 }
 
@@ -1266,6 +1281,11 @@ func (c *CreateDatabase) Type() string {
 func (c *CreateDatabase) Accept(visitor ASTVisitor) error {
 	visitor.Enter(c)
 	defer visitor.Leave(c)
+	if c.Name != nil {
+		if err := c.Name.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if c.OnCluster != nil {
 		if err := c.OnCluster.Accept(visitor); err != nil {
 			return err
@@ -1273,6 +1293,11 @@ func (c *CreateDatabase) Accept(visitor ASTVisitor) error {
 	}
 	if c.Engine != nil {
 		if err := c.Engine.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Comment != nil {
+		if err := c.Comment.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -1340,6 +1365,11 @@ func (c *CreateTable) Accept(visitor ASTVisitor) error {
 	}
 	if c.TableFunction != nil {
 		if err := c.TableFunction.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.Comment != nil {
+		if err := c.Comment.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -1424,13 +1454,9 @@ func (c *CreateMaterializedView) Accept(visitor ASTVisitor) error {
 		}
 	}
 	if c.Destination != nil {
+		// Destination.Accept visits its own TableSchema
 		if err := c.Destination.Accept(visitor); err != nil {
 			return err
-		}
-		if c.Destination.TableSchema != nil {
-			if err := c.Destination.TableSchema.Accept(visitor); err != nil {
-				return err
-			}
 		}
 	}
 	if c.SubQuery != nil {
@@ -1971,6 +1997,9 @@ func (d *DestinationClause) Pos() Pos {
 }
 
 func (d *DestinationClause) End() Pos {
+	if d.TableSchema != nil {
+		return d.TableSchema.End()
+	}
 	return d.TableIdentifier.End()
 }
 
@@ -1979,6 +2008,11 @@ func (d *DestinationClause) Accept(visitor ASTVisitor) error {
 	defer visitor.Leave(d)
 	if err := d.TableIdentifier.Accept(visitor); err != nil {
 		return err
+	}
+	if d.TableSchema != nil {
+		if err := d.TableSchema.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitDestinationExpr(d)
 }
@@ -5141,6 +5175,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
+	if s.DistinctOn != nil {
+		if err := s.DistinctOn.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if s.Top != nil {
 		if err := s.Top.Accept(visitor); err != nil {
 			return err
@@ -5358,6 +5397,11 @@ func (i *IntervalFrom) End() Pos {
 func (i *IntervalFrom) Accept(visitor ASTVisitor) error {
 	visitor.Enter(i)
 	defer visitor.Leave(i)
+	if i.Interval != nil {
+		if err := i.Interval.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if err := i.FromExpr.Accept(visitor); err != nil {
 		return err
 	}
@@ -5981,22 +6025,33 @@ func (i *InsertStmt) End() Pos {
 	if i.SelectExpr != nil {
 		return i.SelectExpr.End()
 	}
-	return i.Values[len(i.Values)-1].End()
+	if len(i.Values) > 0 {
+		return i.Values[len(i.Values)-1].End()
+	}
+	// `INSERT INTO t FORMAT CSV` carries neither VALUES nor a SELECT — the
+	// data arrives out of band after the statement
+	if i.Format != nil {
+		return i.Format.End()
+	}
+	if i.ColumnNames != nil {
+		return i.ColumnNames.End()
+	}
+	return i.Table.End()
 }
 
 func (i *InsertStmt) Accept(visitor ASTVisitor) error {
 	visitor.Enter(i)
 	defer visitor.Leave(i)
-	if i.Format != nil {
-		if err := i.Format.Accept(visitor); err != nil {
-			return err
-		}
-	}
 	if err := i.Table.Accept(visitor); err != nil {
 		return err
 	}
 	if i.ColumnNames != nil {
 		if err := i.ColumnNames.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if i.Format != nil {
+		if err := i.Format.Accept(visitor); err != nil {
 			return err
 		}
 	}

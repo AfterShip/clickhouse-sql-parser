@@ -69,6 +69,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.UnionDistinct, fn) {
 			return false
 		}
+		if !Walk(n.Except, fn) {
+			return false
+		}
 		if !Walk(n.Format, fn) {
 			return false
 		}
@@ -149,6 +152,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 		if !Walk(n.Then, fn) {
+			return false
+		}
+		if !Walk(n.Else, fn) {
 			return false
 		}
 	case *CaseExpr:
@@ -319,6 +325,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		}
 		if !Walk(n.Format, fn) {
 			return false
+		}
+		for _, value := range n.Values {
+			if !Walk(value, fn) {
+				return false
+			}
 		}
 		if !Walk(n.SelectExpr, fn) {
 			return false

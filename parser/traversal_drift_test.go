@@ -135,3 +135,166 @@ func TestVisitJoinTableExprWithSampleRatio(t *testing.T) {
 	require.True(t, visitedSample, "SampleClause was not visited")
 	require.True(t, visitedJoinTable, "JoinTableExpr was not visited")
 }
+
+// TestTraversalEnginesVisitSameFields statically asserts that, for every node
+// type, the set of child fields referenced by its Accept method matches the
+// set referenced by its case in Walk's type switch. The type-level test above
+// cannot catch a child field that one engine traverses and the other forgot
+// (e.g. Walk missing InsertStmt.Values while Accept visits it).
+func TestTraversalEnginesVisitSameFields(t *testing.T) {
+	entries, err := os.ReadDir(".")
+	require.NoError(t, err)
+
+	fset := token.NewFileSet()
+	acceptFields := map[string]map[string]bool{}
+	walkFields := map[string]map[string]bool{}
+
+	// collectSelectors records every selector `<base>.<Field>` in node whose
+	// base is the identifier baseName, into out.
+	collectSelectors := func(node ast.Node, baseName string, out map[string]bool) {
+		ast.Inspect(node, func(n ast.Node) bool {
+			sel, ok := n.(*ast.SelectorExpr)
+			if !ok {
+				return true
+			}
+			if ident, ok := sel.X.(*ast.Ident); ok && ident.Name == baseName {
+				out[sel.Sel.Name] = true
+			}
+			return true
+		})
+	}
+
+	for _, entry := range entries {
+		name := entry.Name()
+		if !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
+			continue
+		}
+		file, err := goparser.ParseFile(fset, name, nil, 0)
+		require.NoError(t, err)
+		for _, decl := range file.Decls {
+			d, ok := decl.(*ast.FuncDecl)
+			if !ok {
+				continue
+			}
+			switch {
+			case d.Name.Name == "Accept" && d.Recv != nil && len(d.Recv.List) == 1:
+				star, ok := d.Recv.List[0].Type.(*ast.StarExpr)
+				if !ok {
+					continue
+				}
+				typeIdent, ok := star.X.(*ast.Ident)
+				if !ok {
+					continue
+				}
+				recvName := d.Recv.List[0].Names[0].Name
+				fields := map[string]bool{}
+				collectSelectors(d.Body, recvName, fields)
+				acceptFields[typeIdent.Name] = fields
+			case d.Name.Name == "Walk" && d.Recv == nil:
+				ast.Inspect(d.Body, func(n ast.Node) bool {
+					cc, ok := n.(*ast.CaseClause)
+					if !ok {
+						return true
+					}
+					fields := map[string]bool{}
+					for _, stmt := range cc.Body {
+						collectSelectors(stmt, "n", fields)
+					}
+					for _, expr := range cc.List {
+						star, ok := expr.(*ast.StarExpr)
+						if !ok {
+							continue
+						}
+						if ident, ok := star.X.(*ast.Ident); ok {
+							walkFields[ident.Name] = fields
+						}
+					}
+					return true
+				})
+			}
+		}
+	}
+
+	require.NotEmpty(t, acceptFields)
+	require.NotEmpty(t, walkFields)
+
+	var problems []string
+	for typeName, aFields := range acceptFields {
+		wFields, ok := walkFields[typeName]
+		if !ok {
+			continue // type-level coverage is asserted by the test above
+		}
+		for _, field := range diffSet(aFields, wFields) {
+			problems = append(problems,
+				typeName+"."+field+" is traversed by Accept but not by Walk")
+		}
+		for _, field := range diffSet(wFields, aFields) {
+			problems = append(problems,
+				typeName+"."+field+" is traversed by Walk but not by Accept")
+		}
+	}
+	sort.Strings(problems)
+	require.Empty(t, problems, "child-field traversal drift between Accept and Walk")
+}
+
+// TestInsertStmtEndWithoutValues guards that End() does not panic on
+// `INSERT INTO t FORMAT CSV`, where the data arrives out of band and the
+// statement carries neither VALUES nor a SELECT.
+func TestInsertStmtEndWithoutValues(t *testing.T) {
+	sql := "INSERT INTO t FORMAT CSV"
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+	insert := stmts[0].(*InsertStmt)
+	require.Empty(t, insert.Values)
+	require.Nil(t, insert.SelectExpr)
+	require.Equal(t, Pos(len(sql)), insert.End())
+}
+
+// TestWalkVisitsInsertValues guards that Walk descends into INSERT ... VALUES
+// rows; the InsertStmt case used to skip the Values field entirely.
+func TestWalkVisitsInsertValues(t *testing.T) {
+	stmts, err := NewParser("INSERT INTO t VALUES (1, 2), (3, 4)").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	values := 0
+	Walk(stmts[0], func(node Expr) bool {
+		if _, ok := node.(*AssignmentValues); ok {
+			values++
+		}
+		return true
+	})
+	require.Equal(t, 2, values, "both VALUES rows should be walked")
+}
+
+// TestDestinationTableSchemaVisitedOnce guards that a materialized view's TO
+// destination column list is visited exactly once, inside the destination
+// clause, by both traversal engines.
+func TestDestinationTableSchemaVisitedOnce(t *testing.T) {
+	sql := "CREATE MATERIALIZED VIEW mv TO dest (id UInt64) AS SELECT id FROM src"
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	acceptVisits := 0
+	visitor := &DefaultASTVisitor{
+		Visit: func(expr Expr) error {
+			if _, ok := expr.(*TableSchemaClause); ok {
+				acceptVisits++
+			}
+			return nil
+		},
+	}
+	require.NoError(t, stmts[0].Accept(visitor))
+
+	walkVisits := 0
+	Walk(stmts[0], func(node Expr) bool {
+		if _, ok := node.(*TableSchemaClause); ok {
+			walkVisits++
+		}
+		return true
+	})
+	require.Equal(t, 1, acceptVisits, "Accept should visit the destination schema exactly once")
+	require.Equal(t, walkVisits, acceptVisits, "Accept and Walk disagree on schema visits")
+}
