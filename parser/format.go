@@ -2859,5 +2859,9 @@ func (w *WithClause) FormatSQL(formatter *Formatter) {
 
 func (w *WithTimeoutClause) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("WITH TIMEOUT ")
-	formatter.WriteExpr(w.Number)
+	if w.Number != nil {
+		formatter.WriteExpr(w.Number)
+		return
+	}
+	formatter.WriteExpr(w.Expr)
 }

@@ -237,6 +237,185 @@ func TestTraversalEnginesVisitSameFields(t *testing.T) {
 	require.Empty(t, problems, "child-field traversal drift between Accept and Walk")
 }
 
+// TestTraversalEnginesVisitAllSemanticFields guards against a field being
+// skipped by both traversal engines. The parity test above cannot catch that
+// because both Accept and Walk can agree on the same omission.
+func TestTraversalEnginesVisitAllSemanticFields(t *testing.T) {
+	fset := token.NewFileSet()
+	astFile, err := goparser.ParseFile(fset, "ast.go", nil, 0)
+	require.NoError(t, err)
+	walkFile, err := goparser.ParseFile(fset, "walk.go", nil, 0)
+	require.NoError(t, err)
+
+	structFields := map[string]map[string]string{}
+	acceptTypes := map[string]bool{}
+	for _, decl := range astFile.Decls {
+		switch d := decl.(type) {
+		case *ast.GenDecl:
+			for _, spec := range d.Specs {
+				ts, ok := spec.(*ast.TypeSpec)
+				if !ok {
+					continue
+				}
+				st, ok := ts.Type.(*ast.StructType)
+				if !ok {
+					continue
+				}
+				fields := map[string]string{}
+				for _, field := range st.Fields.List {
+					for _, name := range field.Names {
+						fields[name.Name] = baseTypeName(field.Type)
+					}
+				}
+				structFields[ts.Name.Name] = fields
+			}
+		case *ast.FuncDecl:
+			if d.Name.Name != "Accept" || d.Recv == nil || len(d.Recv.List) != 1 {
+				continue
+			}
+			if star, ok := d.Recv.List[0].Type.(*ast.StarExpr); ok {
+				if ident, ok := star.X.(*ast.Ident); ok {
+					acceptTypes[ident.Name] = true
+				}
+			}
+		}
+	}
+
+	semanticInterfaces := map[string]bool{
+		"Expr":             true,
+		"DDL":              true,
+		"AlterTableClause": true,
+		"ColumnType":       true,
+		"Literal":          true,
+	}
+	semanticHelpers := semanticHelperTypes(structFields, acceptTypes, semanticInterfaces)
+	acceptFields := receiverFields(astFile, "Accept")
+	walkFields := walkCaseFields(walkFile)
+
+	var problems []string
+	for typeName, fields := range structFields {
+		if !acceptTypes[typeName] {
+			continue
+		}
+		for fieldName, baseType := range fields {
+			if !acceptTypes[baseType] && !semanticInterfaces[baseType] && !semanticHelpers[baseType] {
+				continue
+			}
+			if !acceptFields[typeName][fieldName] {
+				problems = append(problems, typeName+"."+fieldName+" is an AST child but is not traversed by Accept")
+			}
+			if !walkFields[typeName][fieldName] {
+				problems = append(problems, typeName+"."+fieldName+" is an AST child but is not traversed by Walk")
+			}
+		}
+	}
+
+	sort.Strings(problems)
+	require.Empty(t, problems, "semantic AST fields must be reachable by traversal")
+}
+
+func baseTypeName(expr ast.Expr) string {
+	switch t := expr.(type) {
+	case *ast.Ident:
+		return t.Name
+	case *ast.StarExpr:
+		return baseTypeName(t.X)
+	case *ast.ArrayType:
+		return baseTypeName(t.Elt)
+	default:
+		return ""
+	}
+}
+
+func semanticHelperTypes(structFields map[string]map[string]string, acceptTypes, semanticInterfaces map[string]bool) map[string]bool {
+	helpers := map[string]bool{}
+	changed := true
+	for changed {
+		changed = false
+		for typeName, fields := range structFields {
+			if acceptTypes[typeName] || helpers[typeName] {
+				continue
+			}
+			for _, baseType := range fields {
+				if acceptTypes[baseType] || semanticInterfaces[baseType] || helpers[baseType] {
+					helpers[typeName] = true
+					changed = true
+					break
+				}
+			}
+		}
+	}
+	return helpers
+}
+
+func receiverFields(file *ast.File, methodName string) map[string]map[string]bool {
+	fieldsByType := map[string]map[string]bool{}
+	for _, decl := range file.Decls {
+		fn, ok := decl.(*ast.FuncDecl)
+		if !ok || fn.Name.Name != methodName || fn.Recv == nil || len(fn.Recv.List) != 1 {
+			continue
+		}
+		star, ok := fn.Recv.List[0].Type.(*ast.StarExpr)
+		if !ok {
+			continue
+		}
+		typeIdent, ok := star.X.(*ast.Ident)
+		if !ok {
+			continue
+		}
+		fieldsByType[typeIdent.Name] = directSelectors(fn.Body, fn.Recv.List[0].Names[0].Name)
+	}
+	return fieldsByType
+}
+
+func walkCaseFields(file *ast.File) map[string]map[string]bool {
+	fieldsByType := map[string]map[string]bool{}
+	for _, decl := range file.Decls {
+		fn, ok := decl.(*ast.FuncDecl)
+		if !ok || fn.Name.Name != "Walk" || fn.Recv != nil {
+			continue
+		}
+		ast.Inspect(fn.Body, func(node ast.Node) bool {
+			cc, ok := node.(*ast.CaseClause)
+			if !ok {
+				return true
+			}
+			fields := map[string]bool{}
+			for _, stmt := range cc.Body {
+				for field := range directSelectors(stmt, "n") {
+					fields[field] = true
+				}
+			}
+			for _, expr := range cc.List {
+				star, ok := expr.(*ast.StarExpr)
+				if !ok {
+					continue
+				}
+				if ident, ok := star.X.(*ast.Ident); ok {
+					fieldsByType[ident.Name] = fields
+				}
+			}
+			return true
+		})
+	}
+	return fieldsByType
+}
+
+func directSelectors(node ast.Node, baseName string) map[string]bool {
+	fields := map[string]bool{}
+	ast.Inspect(node, func(n ast.Node) bool {
+		sel, ok := n.(*ast.SelectorExpr)
+		if !ok {
+			return true
+		}
+		if ident, ok := sel.X.(*ast.Ident); ok && ident.Name == baseName {
+			fields[sel.Sel.Name] = true
+		}
+		return true
+	})
+	return fields
+}
+
 // TestInsertStmtEndWithoutValues guards that End() does not panic on
 // `INSERT INTO t FORMAT CSV`, where the data arrives out of band and the
 // statement carries neither VALUES nor a SELECT.

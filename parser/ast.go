@@ -2478,6 +2478,11 @@ func (t *TTLPolicyRule) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
+	if t.Action != nil {
+		if err := t.Action.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	return visitor.VisitTTLPolicyRule(t)
 }
 
@@ -3162,6 +3167,11 @@ func (c *ColumnDef) Accept(visitor ASTVisitor) error {
 	}
 	if c.Comment != nil {
 		if err := c.Comment.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if c.CompressionCodec != nil {
+		if err := c.CompressionCodec.Accept(visitor); err != nil {
 			return err
 		}
 	}
@@ -4504,14 +4514,27 @@ func (w *WithTimeoutClause) Pos() Pos {
 }
 
 func (w *WithTimeoutClause) End() Pos {
-	return w.Number.End()
+	if w.Number != nil {
+		return w.Number.End()
+	}
+	if w.Expr != nil {
+		return w.Expr.End()
+	}
+	return w.WithTimeoutPos
 }
 
 func (w *WithTimeoutClause) Accept(visitor ASTVisitor) error {
 	visitor.Enter(w)
 	defer visitor.Leave(w)
-	if err := w.Number.Accept(visitor); err != nil {
-		return err
+	if w.Expr != nil {
+		if err := w.Expr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if w.Number != nil {
+		if err := w.Number.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitWithTimeoutExpr(w)
 }
