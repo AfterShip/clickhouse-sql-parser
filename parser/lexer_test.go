@@ -183,6 +183,7 @@ func TestConsumeNumber(t *testing.T) {
 			"0x",
 			"0xg",
 			"-0x",
+			"0x;", // bare prefix followed by a non-digit is not an empty hex literal
 			"1.2.3",
 			"1..2",
 			"1e2.3",

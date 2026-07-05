@@ -132,15 +132,19 @@ func (l *Lexer) consumeNumber() error {
 	hasExp := false
 	hasDot := false
 	tokenKind := TokenKindInt
+	// hasNumberPart is only set when a digit is actually consumed, so that a
+	// bare prefix followed by a non-digit ("0x;") is rejected rather than
+	// lexed as an empty hex literal
 	hasNumberPart := false
 	for l.peekOk(i) {
-		hasNumberPart = true
 		c := l.peekN(i)
 		switch {
 		case base == 10 && IsDigit(c):
+			hasNumberPart = true
 			i++
 			continue
 		case base == 16 && IsHexDigit(c):
+			hasNumberPart = true
 			i++
 			continue
 		case c == '.': // float
