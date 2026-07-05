@@ -260,6 +260,70 @@ const (
 	KeywordSecurity     = "SECURITY"
 )
 
+// reservedKeywords are the structural keywords — statement starters, clause
+// starters and expression operators — that cannot be used as bare identifiers:
+// letting them match identifier positions makes a missing name silently swallow
+// the next clause (e.g. `SELECT a FROM WHERE b = 1` parsing FROM as an alias).
+// Every other keyword is non-reserved and is accepted anywhere an identifier
+// is expected (see Parser.matchTokenKind). Positions where even a reserved
+// keyword is provably used as a name — after AS, after a dot in a qualified
+// name, or a lookahead-disambiguated select item — use parseAnyKeyword.
+//
+// Keywords that double as ClickHouse function or engine names (IF, LEFT,
+// RIGHT, ANY, MIN, MAX, TRIM, SET, JOIN...) must stay non-reserved.
+var reservedKeywords = NewSet(
+	KeywordAlter,
+	KeywordAnd,
+	KeywordAs,
+	KeywordBetween,
+	KeywordBy,
+	KeywordCase,
+	KeywordCreate,
+	KeywordCross,
+	KeywordDescribe,
+	KeywordDistinct,
+	KeywordDrop,
+	KeywordElse,
+	KeywordEnd,
+	KeywordExcept,
+	KeywordExplain,
+	KeywordFormat,
+	KeywordFrom,
+	KeywordGrant,
+	KeywordGroup,
+	KeywordHaving,
+	KeywordIlike,
+	KeywordIn,
+	KeywordInner,
+	KeywordInsert,
+	KeywordInterval,
+	KeywordInto,
+	KeywordIs,
+	KeywordKill,
+	KeywordLike,
+	KeywordLimit,
+	KeywordNot,
+	KeywordOffset,
+	KeywordOn,
+	KeywordOptimize,
+	KeywordOr,
+	KeywordOrder,
+	KeywordPrewhere,
+	KeywordRename,
+	KeywordSelect,
+	KeywordSettings,
+	KeywordShow,
+	KeywordThen,
+	KeywordTruncate,
+	KeywordUnion,
+	KeywordUse,
+	KeywordUsing,
+	KeywordWhen,
+	KeywordWhere,
+	KeywordWindow,
+	KeywordWith,
+)
+
 var keywords = NewSet(
 	KeywordAdd,
 	KeywordAdmin,

@@ -176,8 +176,10 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		// access column with dot notation
 		var rightExpr Expr
 		var err error
-		if p.matchTokenKind(TokenKindIdent) {
-			rightExpr, err = p.parseIdent()
+		if p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
+			// After a dot the token can only be a member name, so even
+			// reserved keywords are accepted (e.g. `t.from`).
+			rightExpr, err = p.parseAnyKeyword()
 		} else {
 			rightExpr, err = p.parseDecimal(p.Pos())
 		}
@@ -508,7 +510,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// terminator/alias check).
 	if p.keywordIsSelectItemIdentifier() ||
 		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
-		return p.parseIdent()
+		return p.parseAnyKeyword()
 	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
@@ -531,6 +533,12 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	case p.matchKeyword(KeywordExtract):
 		return p.parseColumnExtractExpr(pos)
 	case p.matchTokenKind(TokenKindIdent):
+		return p.parseIdentOrFunction(pos)
+	case p.matchTokenKind(TokenKindKeyword) && p.peekTokenKind(TokenKindLParen):
+		// Reserved operator keywords stay callable as ordinary functions when
+		// followed by '(': and(a, b), or(a, b), in(x, set), like(s, pat), ...
+		// Keywords with dedicated syntax (CAST, CASE, EXTRACT, INTERVAL, ...)
+		// are handled by their own cases above.
 		return p.parseIdentOrFunction(pos)
 	case p.matchTokenKind(TokenKindString): // string literal
 		return p.parseString(pos)
@@ -712,8 +720,10 @@ func (p *Parser) parseInterval(requireKeyword bool) (*IntervalExpr, error) {
 }
 
 func (p *Parser) parseFunctionExpr(_ Pos) (*FunctionExpr, error) {
-	// parse function name
-	name, err := p.parseIdent()
+	// parse function name; callers gate entry (select-item modifiers match
+	// EXCEPT/APPLY/REPLACE first, INSERT INTO FUNCTION follows the FUNCTION
+	// keyword), so even reserved keywords are valid names here.
+	name, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -830,7 +840,9 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 		return nil, err
 	}
 
-	ident, err := p.parseIdent()
+	// Inside `{name:Type}` the token can only be the parameter name, so even
+	// reserved keywords are accepted (e.g. `{end:UInt32}`).
+	ident, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -880,7 +892,8 @@ func (p *Parser) parseColumnsExpr(pos Pos) (*ColumnExpr, error) {
 
 	var alias *Ident
 	if p.tryConsumeKeywords(KeywordAs) {
-		alias, err = p.parseIdent()
+		// after AS the token can only be an alias name, reserved keyword or not
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -913,21 +926,21 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	var alias *Ident
 	switch {
 	case p.tryConsumeKeywords(KeywordAs):
-		// `SELECT 1 AS <reserved-keyword>` works for any keyword because
-		// matchTokenKind(TokenKindIdent) coerces TokenKindKeyword to ident
-		// (see parser_common.go matchTokenKind), so parseIdent accepts a
-		// keyword token here without needing a special-case.
-		alias, err = p.parseIdent()
+		// `SELECT 1 AS <keyword>` works for any keyword, reserved or not:
+		// after AS the token can only be an alias name.
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
-	case p.currentTokenKind() == TokenKindKeyword && !p.isSelectItemTerminatorKeyword():
+	case p.matchTokenKind(TokenKindIdent) && !p.isSelectItemTerminatorKeyword():
+		// A bare alias can be a normal identifier or non-reserved keyword; a
+		// reserved keyword here starts the next clause (e.g. `SELECT a FROM ...`).
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
 	default:
-		alias = p.tryParseIdent()
+		alias = nil
 	}
 
 	return &SelectItem{
@@ -1147,7 +1160,7 @@ func (p *Parser) parseJSONPath() (*JSONPath, error) {
 	idents = append(idents, ident)
 
 	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindDot) != nil {
-		ident, err := p.parseIdent()
+		ident, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}

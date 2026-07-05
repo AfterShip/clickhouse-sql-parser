@@ -1278,7 +1278,9 @@ func (p *Parser) parseGrantOption(_ Pos) (string, error) {
 	if err := p.expectKeyword(KeywordWith); err != nil {
 		return "", err
 	}
-	ident, err := p.parseIdent()
+	// Between WITH and OPTION the token can only be the option name, which may
+	// be a reserved keyword (e.g. `WITH GRANT OPTION`).
+	ident, err := p.parseAnyKeyword()
 	if err != nil {
 		return "", err
 	}
@@ -1299,7 +1301,12 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 			Table: ident,
 		}, nil
 	}
-	dotIdent, err := p.parseIdentOrStar()
+	var dotIdent *Ident
+	if p.matchTokenKind("*") {
+		dotIdent, err = p.parseIdentOrStar()
+	} else {
+		dotIdent, err = p.parseAnyKeyword()
+	}
 	if err != nil {
 		return nil, err
 	}
