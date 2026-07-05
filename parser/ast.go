@@ -3202,9 +3202,39 @@ type JSONPath struct {
 	Idents []*Ident
 }
 
+func (j *JSONPath) accept(visitor ASTVisitor) error {
+	if j == nil {
+		return nil
+	}
+	for _, ident := range j.Idents {
+		if ident == nil {
+			continue
+		}
+		if err := ident.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 type JSONTypeHint struct {
 	Path *JSONPath
 	Type ColumnType
+}
+
+func (j *JSONTypeHint) accept(visitor ASTVisitor) error {
+	if j == nil {
+		return nil
+	}
+	if err := j.Path.accept(visitor); err != nil {
+		return err
+	}
+	if j.Type != nil {
+		if err := j.Type.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type JSONOption struct {
@@ -3214,6 +3244,34 @@ type JSONOption struct {
 	MaxDynamicTypes *NumberLiteral
 	// Type hint for specific JSON subcolumn path, e.g., "message String" or "a.b UInt64"
 	Column *JSONTypeHint
+}
+
+func (j *JSONOption) accept(visitor ASTVisitor) error {
+	if j == nil {
+		return nil
+	}
+	if err := j.SkipPath.accept(visitor); err != nil {
+		return err
+	}
+	if j.SkipRegex != nil {
+		if err := j.SkipRegex.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if j.MaxDynamicPaths != nil {
+		if err := j.MaxDynamicPaths.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if j.MaxDynamicTypes != nil {
+		if err := j.MaxDynamicTypes.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if err := j.Column.accept(visitor); err != nil {
+		return err
+	}
+	return nil
 }
 
 type JSONOptions struct {
@@ -3228,6 +3286,18 @@ func (j *JSONOptions) Pos() Pos {
 
 func (j *JSONOptions) End() Pos {
 	return j.RParen
+}
+
+func (j *JSONOptions) accept(visitor ASTVisitor) error {
+	if j == nil {
+		return nil
+	}
+	for _, item := range j.Items {
+		if err := item.accept(visitor); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type JSONType struct {
@@ -3254,6 +3324,9 @@ func (j *JSONType) Accept(visitor ASTVisitor) error {
 	visitor.Enter(j)
 	defer visitor.Leave(j)
 	if err := j.Name.Accept(visitor); err != nil {
+		return err
+	}
+	if err := j.Options.accept(visitor); err != nil {
 		return err
 	}
 	return visitor.VisitJSONType(j)

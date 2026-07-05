@@ -1067,6 +1067,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Name, fn) {
 			return false
 		}
+		if !walkJSONOptions(n.Options, fn) {
+			return false
+		}
 	case *PropertyType:
 		if !Walk(n.Name, fn) {
 			return false
@@ -1558,6 +1561,59 @@ func Walk(node Expr, fn WalkFunc) bool {
 			if !Walk(ident, fn) {
 				return false
 			}
+		}
+	}
+	return true
+}
+
+func walkJSONOptions(options *JSONOptions, fn WalkFunc) bool {
+	if options == nil {
+		return true
+	}
+	for _, item := range options.Items {
+		if !walkJSONOption(item, fn) {
+			return false
+		}
+	}
+	return true
+}
+
+func walkJSONOption(option *JSONOption, fn WalkFunc) bool {
+	if option == nil {
+		return true
+	}
+	if !walkJSONPath(option.SkipPath, fn) {
+		return false
+	}
+	if !Walk(option.SkipRegex, fn) {
+		return false
+	}
+	if !Walk(option.MaxDynamicPaths, fn) {
+		return false
+	}
+	if !Walk(option.MaxDynamicTypes, fn) {
+		return false
+	}
+	return walkJSONTypeHint(option.Column, fn)
+}
+
+func walkJSONTypeHint(hint *JSONTypeHint, fn WalkFunc) bool {
+	if hint == nil {
+		return true
+	}
+	if !walkJSONPath(hint.Path, fn) {
+		return false
+	}
+	return Walk(hint.Type, fn)
+}
+
+func walkJSONPath(path *JSONPath, fn WalkFunc) bool {
+	if path == nil {
+		return true
+	}
+	for _, ident := range path.Idents {
+		if !Walk(ident, fn) {
+			return false
 		}
 	}
 	return true

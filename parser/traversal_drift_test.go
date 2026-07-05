@@ -298,3 +298,52 @@ func TestDestinationTableSchemaVisitedOnce(t *testing.T) {
 	require.Equal(t, 1, acceptVisits, "Accept should visit the destination schema exactly once")
 	require.Equal(t, walkVisits, acceptVisits, "Accept and Walk disagree on schema visits")
 }
+
+func TestTraversalVisitsJSONTypeOptions(t *testing.T) {
+	sql := "CREATE TABLE t (j JSON(max_dynamic_paths=8, max_dynamic_types=9, a.b String, SKIP c.d, SKIP REGEXP 're')) ENGINE = Memory"
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	type visitedValues struct {
+		idents  []string
+		numbers []string
+		strings []string
+	}
+	collect := func(values *visitedValues, expr Expr) {
+		switch node := expr.(type) {
+		case *Ident:
+			values.idents = append(values.idents, node.Name)
+		case *NumberLiteral:
+			values.numbers = append(values.numbers, node.Literal)
+		case *StringLiteral:
+			values.strings = append(values.strings, node.Literal)
+		}
+	}
+
+	var acceptValues visitedValues
+	visitor := &DefaultASTVisitor{
+		Visit: func(expr Expr) error {
+			collect(&acceptValues, expr)
+			return nil
+		},
+	}
+	require.NoError(t, stmts[0].Accept(visitor))
+
+	var walkValues visitedValues
+	Walk(stmts[0], func(node Expr) bool {
+		collect(&walkValues, node)
+		return true
+	})
+
+	for _, values := range []visitedValues{acceptValues, walkValues} {
+		require.Contains(t, values.idents, "a")
+		require.Contains(t, values.idents, "b")
+		require.Contains(t, values.idents, "String")
+		require.Contains(t, values.idents, "c")
+		require.Contains(t, values.idents, "d")
+		require.Contains(t, values.numbers, "8")
+		require.Contains(t, values.numbers, "9")
+		require.Contains(t, values.strings, "re")
+	}
+}
