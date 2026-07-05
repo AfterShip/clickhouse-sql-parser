@@ -347,7 +347,11 @@ func (l *Lexer) consumeToken() error {
 	if err := l.nextToken(); err != nil {
 		if l.lastError == nil {
 			l.lastError = err
-			l.lastErrorPos = min(l.offset, len(l.input))
+			pos := l.offset
+			if pos > len(l.input) {
+				pos = len(l.input)
+			}
+			l.lastErrorPos = pos
 		}
 		return err
 	}
