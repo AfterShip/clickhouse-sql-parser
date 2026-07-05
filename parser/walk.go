@@ -1059,6 +1059,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Comment, fn) {
 			return false
 		}
+		if !Walk(n.CompressionCodec, fn) {
+			return false
+		}
 	case *ScalarType:
 		if !Walk(n.Name, fn) {
 			return false
@@ -1174,6 +1177,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.ToDisk, fn) {
 			return false
 		}
+		if !Walk(n.Action, fn) {
+			return false
+		}
 	case *TTLPolicyRuleAction:
 		if !Walk(n.Codec, fn) {
 			return false
@@ -1257,6 +1263,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 			}
 		}
 	case *WithTimeoutClause:
+		if !Walk(n.Expr, fn) {
+			return false
+		}
 		if !Walk(n.Number, fn) {
 			return false
 		}
