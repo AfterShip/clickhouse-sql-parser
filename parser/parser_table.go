@@ -2058,10 +2058,14 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 		NamePos: pos,
 		Name:    name,
 		Type:    columnType,
+		AttrEnd: columnType.End(),
 	}
 
 	// Parse optional attribute properties
 	for {
+		// end of the property keyword about to be consumed; flag-only
+		// properties (HIERARCHICAL, ...) end at the keyword itself
+		keywordEnd := p.End()
 		switch {
 		case p.tryConsumeKeywords(KeywordDefault):
 			if attr.Default != nil {
@@ -2072,6 +2076,7 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 				return nil, err
 			}
 			attr.Default = literal
+			attr.AttrEnd = literal.End()
 		case p.tryConsumeKeywords(KeywordExpression):
 			if attr.Expression != nil {
 				return nil, fmt.Errorf("duplicate EXPRESSION clause")
@@ -2081,21 +2086,25 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 				return nil, err
 			}
 			attr.Expression = expr
+			attr.AttrEnd = expr.End()
 		case p.tryConsumeKeywords(KeywordHierarchical):
 			if attr.Hierarchical {
 				return nil, fmt.Errorf("duplicate HIERARCHICAL clause")
 			}
 			attr.Hierarchical = true
+			attr.AttrEnd = keywordEnd
 		case p.tryConsumeKeywords(KeywordInjective):
 			if attr.Injective {
 				return nil, fmt.Errorf("duplicate INJECTIVE clause")
 			}
 			attr.Injective = true
+			attr.AttrEnd = keywordEnd
 		case p.tryConsumeKeywords(KeywordIs_object_id):
 			if attr.IsObjectId {
 				return nil, fmt.Errorf("duplicate IS_OBJECT_ID clause")
 			}
 			attr.IsObjectId = true
+			attr.AttrEnd = keywordEnd
 		default:
 			// No more attribute properties
 			return attr, nil

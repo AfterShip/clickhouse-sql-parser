@@ -503,6 +503,7 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 
 	var expr Expr
 	var err error
+	var groupByEnd Pos
 	aggregateType := ""
 	switch {
 	case p.matchKeyword(KeywordCube) || p.matchKeyword(KeywordRollup):
@@ -512,7 +513,10 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	case p.tryConsumeKeywords(KeywordGrouping, KeywordSets):
 		aggregateType = "GROUPING SETS"
 		expr, err = p.parseFunctionParams(p.Pos())
-	case p.tryConsumeKeywords(KeywordAll):
+	case p.matchKeyword(KeywordAll):
+		// GROUP BY ALL has no expression list; the clause ends at ALL itself
+		groupByEnd = p.End()
+		_ = p.lexer.consumeToken()
 		aggregateType = "ALL"
 	default:
 		expr, err = p.parseColumnExprListWithLParen(p.Pos())
@@ -520,14 +524,21 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	if err != nil {
 		return nil, err
 	}
+	if expr != nil {
+		groupByEnd = expr.End()
+	}
 	groupBy := &GroupByClause{
 		GroupByPos:    pos,
+		GroupByEnd:    groupByEnd,
 		AggregateType: aggregateType,
 		Expr:          expr,
 	}
 
 	// parse WITH CUBE, ROLLUP, TOTALS
 	for p.tryConsumeKeywords(KeywordWith) {
+		// the clause now extends to the CUBE/ROLLUP/TOTALS token; capture its
+		// end before it is consumed
+		keywordEnd := p.End()
 		switch {
 		case p.tryConsumeKeywords(KeywordCube):
 			groupBy.WithCube = true
@@ -538,8 +549,8 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 		default:
 			return nil, fmt.Errorf("expected CUBE, ROLLUP or TOTALS, got %s", p.currentTokenKind())
 		}
+		groupBy.GroupByEnd = keywordEnd
 	}
-	groupBy.GroupByEnd = p.Pos()
 
 	return groupBy, nil
 }
@@ -1082,13 +1093,15 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		statementEnd = groupBy.End()
 	}
 	withTotal := false
-	lastPos := p.Pos()
 	if p.tryConsumeKeywords(KeywordWith) {
+		// the statement now ends at the TOTALS token; capture its end before
+		// expectKeyword consumes it
+		totalsEnd := p.End()
 		if err := p.expectKeyword(KeywordTotals); err != nil {
 			return nil, err
 		}
 		withTotal = true
-		statementEnd = lastPos
+		statementEnd = totalsEnd
 	}
 	having, err := p.tryParseHavingClause(p.Pos())
 	if err != nil {

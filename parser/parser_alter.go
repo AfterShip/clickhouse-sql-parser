@@ -35,8 +35,11 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 		case p.matchKeyword(KeywordAttach):
 			alter, err = p.parseAlterTableAttachPartition(p.Pos())
 		case p.matchKeyword(KeywordDetach):
+			// like the sibling branches, the clause position is the keyword
+			// itself, so capture it before consuming DETACH
+			detachPos := p.Pos()
 			_ = p.lexer.consumeToken()
-			alter, err = p.parseAlterTableDetachPartition(p.Pos())
+			alter, err = p.parseAlterTableDetachPartition(detachPos)
 		case p.matchKeyword(KeywordFreeze):
 			alter, err = p.parseAlterTableFreezePartition(p.Pos())
 		case p.matchKeyword(KeywordRemove):
