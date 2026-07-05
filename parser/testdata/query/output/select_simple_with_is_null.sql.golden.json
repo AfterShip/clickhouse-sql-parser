@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 112,
+    "StatementEnd": 120,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -186,7 +186,8 @@
         },
         "Operation": "AND",
         "RightExpr": {
-          "IsPos": 120,
+          "IsPos": 113,
+          "NullEnd": 120,
           "Expr": {
             "Name": "f2",
             "QuoteType": 1,
@@ -208,6 +209,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

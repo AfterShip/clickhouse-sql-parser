@@ -502,7 +502,8 @@
                     "Format": null,
                     "UnionAll": null,
                     "UnionDistinct": null,
-                    "Except": null
+                    "Except": null,
+                    "Intersect": null
                   }
                 },
                 "AliasPos": 444,
@@ -552,7 +553,8 @@
         "Format": null,
         "UnionAll": null,
         "UnionDistinct": null,
-        "Except": null
+        "Except": null,
+        "Intersect": null
       }
     },
     "Populate": true,

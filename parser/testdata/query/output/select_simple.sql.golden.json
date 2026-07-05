@@ -361,7 +361,7 @@
     },
     "GroupBy": {
       "GroupByPos": 239,
-      "GroupByEnd": 258,
+      "GroupByEnd": 256,
       "AggregateType": "",
       "Expr": {
         "ListPos": 248,
@@ -433,6 +433,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

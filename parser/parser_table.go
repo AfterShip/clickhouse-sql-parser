@@ -400,7 +400,15 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 }
 
 func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
-	ident, err := p.parseIdent()
+	var ident *Ident
+	var err error
+	if p.matchTokenKind(TokenKindKeyword) && p.peekTokenKind(TokenKindLParen) {
+		// reserved operator keywords stay callable as ordinary functions:
+		// and(a, b), or(a, b), in(x, set), like(s, pat), ...
+		ident, err = p.parseAnyKeyword()
+	} else {
+		ident, err = p.parseIdent()
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -428,8 +436,11 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		if p.tryConsumeKeywords(KeywordOver) {
 			var overExpr Expr
 			switch {
-			case p.matchTokenKind(TokenKindIdent):
-				overExpr, err = p.parseIdent()
+			case p.matchTokenKind(TokenKindIdent, TokenKindKeyword):
+				// After OVER a bare token can only be a window name, so even
+				// reserved keywords are accepted (e.g. `OVER order`),
+				// mirroring the WINDOW clause definition side.
+				overExpr, err = p.parseAnyKeyword()
 			case p.matchTokenKind(TokenKindLParen):
 				overExpr, err = p.parseWindowCondition(p.Pos())
 				if err != nil {
@@ -451,10 +462,12 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		return funcExpr, nil
 	case p.tryConsumeTokenKind(TokenKindDot) != nil:
 		switch {
-		case p.matchTokenKind(TokenKindIdent):
+		case p.matchTokenKind(TokenKindIdent, TokenKindKeyword):
 			fields := []*Ident{ident}
 			for {
-				child, err := p.parseIdent()
+				// After a dot the token can only be a member name, so even
+				// reserved keywords are accepted (e.g. `t.from`).
+				child, err := p.parseAnyKeyword()
 				if err != nil {
 					return nil, err
 				}
@@ -972,7 +985,8 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 		}
 		// consume the `AS` keyword
 		_ = p.lexer.consumeToken()
-		alias, err = p.parseIdent()
+		// after AS the token can only be an alias name, reserved keyword or not
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -2058,10 +2072,14 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 		NamePos: pos,
 		Name:    name,
 		Type:    columnType,
+		AttrEnd: columnType.End(),
 	}
 
 	// Parse optional attribute properties
 	for {
+		// end of the property keyword about to be consumed; flag-only
+		// properties (HIERARCHICAL, ...) end at the keyword itself
+		keywordEnd := p.End()
 		switch {
 		case p.tryConsumeKeywords(KeywordDefault):
 			if attr.Default != nil {
@@ -2072,6 +2090,7 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 				return nil, err
 			}
 			attr.Default = literal
+			attr.AttrEnd = literal.End()
 		case p.tryConsumeKeywords(KeywordExpression):
 			if attr.Expression != nil {
 				return nil, fmt.Errorf("duplicate EXPRESSION clause")
@@ -2081,21 +2100,25 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 				return nil, err
 			}
 			attr.Expression = expr
+			attr.AttrEnd = expr.End()
 		case p.tryConsumeKeywords(KeywordHierarchical):
 			if attr.Hierarchical {
 				return nil, fmt.Errorf("duplicate HIERARCHICAL clause")
 			}
 			attr.Hierarchical = true
+			attr.AttrEnd = keywordEnd
 		case p.tryConsumeKeywords(KeywordInjective):
 			if attr.Injective {
 				return nil, fmt.Errorf("duplicate INJECTIVE clause")
 			}
 			attr.Injective = true
+			attr.AttrEnd = keywordEnd
 		case p.tryConsumeKeywords(KeywordIs_object_id):
 			if attr.IsObjectId {
 				return nil, fmt.Errorf("duplicate IS_OBJECT_ID clause")
 			}
 			attr.IsObjectId = true
+			attr.AttrEnd = keywordEnd
 		default:
 			// No more attribute properties
 			return attr, nil

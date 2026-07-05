@@ -25,6 +25,7 @@
       "Attributes": [
         {
           "NamePos": 37,
+          "AttrEnd": 46,
           "Name": {
             "Name": "id",
             "QuoteType": 1,
@@ -47,6 +48,7 @@
         },
         {
           "NamePos": 52,
+          "AttrEnd": 73,
           "Name": {
             "Name": "name",
             "QuoteType": 1,
@@ -73,6 +75,7 @@
         },
         {
           "NamePos": 80,
+          "AttrEnd": 125,
           "Name": {
             "Name": "value",
             "QuoteType": 1,
@@ -123,6 +126,7 @@
         },
         {
           "NamePos": 132,
+          "AttrEnd": 161,
           "Name": {
             "Name": "parent_id",
             "QuoteType": 1,
@@ -145,6 +149,7 @@
         },
         {
           "NamePos": 167,
+          "AttrEnd": 192,
           "Name": {
             "Name": "is_active",
             "QuoteType": 1,
@@ -167,6 +172,7 @@
         },
         {
           "NamePos": 198,
+          "AttrEnd": 227,
           "Name": {
             "Name": "object_id",
             "QuoteType": 1,

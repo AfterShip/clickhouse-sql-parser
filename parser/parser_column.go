@@ -5,11 +5,16 @@ import (
 	"strings"
 )
 
+// Binding order follows ClickHouse's expression parser: lambda `->` binds
+// loosest so `x -> x + 1` keeps the whole body, ternary `?:` sits below
+// OR/AND so `a OR b ? 1 : 2` groups as `(a OR b) ? 1 : 2`, and prefix NOT
+// binds looser than comparisons so `NOT a = b` groups as `NOT (a = b)`.
 const (
 	PrecedenceUnknown = iota
+	PrecedenceArrow
+	PrecedenceQuery
 	PrecedenceOr
 	PrecedenceAnd
-	PrecedenceQuery
 	PrecedenceNot
 	PrecedenceGlobal
 	PrecedenceIs
@@ -20,7 +25,6 @@ const (
 	PrecedenceAddSub
 	PrecedenceMulDivMod
 	PrecedenceBracket
-	PrecedenceArrow
 	PrecedenceDot
 	PrecedenceDoubleColon
 )
@@ -41,7 +45,17 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordIs):
 		return PrecedenceIs
 	case p.matchKeyword(KeywordNot):
-		return PrecedenceNot
+		// Infix NOT only begins NOT IN/LIKE/ILIKE/BETWEEN, so it binds with
+		// the precedence of the operator it negates; `a = b NOT IN (1)` must
+		// group the same way `a = b IN (1)` does.
+		switch {
+		case p.peekKeyword(KeywordIn):
+			return precedenceIn
+		case p.peekKeyword(KeywordLike), p.peekKeyword(KeywordIlike), p.peekKeyword(KeywordBetween):
+			return PrecedenceBetweenLike
+		default:
+			return PrecedenceNot
+		}
 	case p.matchTokenKind(TokenKindDot):
 		return PrecedenceDot
 	case p.matchTokenKind(TokenKindDash):
@@ -60,16 +74,13 @@ func (p *Parser) getNextPrecedence() int {
 		return PrecedenceArrow
 	case p.matchTokenKind(TokenKindLParen), p.matchTokenKind(TokenKindLBracket):
 		return PrecedenceBracket
-	case p.matchTokenKind(TokenKindDash):
-		return PrecedenceDoubleColon
-	case p.matchTokenKind(TokenKindDot):
-		return PrecedenceDot
 	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp):
 		return PrecedenceBetweenLike
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
-		return PrecedenceGlobal
+		// GLOBAL is only valid before IN, so it binds like IN itself.
+		return precedenceIn
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return PrecedenceQuery
 	default:
@@ -87,7 +98,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		p.matchKeyword(KeywordIn), p.matchKeyword(KeywordLike),
 		p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp),
 		p.matchKeyword(KeywordAnd), p.matchKeyword(KeywordOr),
-		p.matchTokenKind(TokenKindArrow), p.matchTokenKind(TokenKindDoubleEQ):
+		p.matchTokenKind(TokenKindDoubleEQ):
 		op := p.current().ToString()
 		_ = p.lexer.consumeToken()
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
@@ -97,6 +108,19 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return &BinaryOperation{
 			LeftExpr:  expr,
 			Operation: TokenKind(op),
+			RightExpr: rightExpr,
+		}, nil
+	case p.matchTokenKind(TokenKindArrow):
+		_ = p.lexer.consumeToken()
+		// Lambdas are right-associative: `x -> y -> body` is `x -> (y -> body)`,
+		// so the body is parsed one level below the arrow's own precedence.
+		rightExpr, err := p.parseSubExpr(p.Pos(), precedence-1)
+		if err != nil {
+			return nil, err
+		}
+		return &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: TokenKindArrow,
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchTokenKind(TokenKindDash):
@@ -132,7 +156,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchKeyword(KeywordBetween):
-		return p.parseBetweenClause(expr)
+		return p.parseBetweenClause(expr, false)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
 		if p.expectKeyword(KeywordIn) != nil {
@@ -152,8 +176,10 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		// access column with dot notation
 		var rightExpr Expr
 		var err error
-		if p.matchTokenKind(TokenKindIdent) {
-			rightExpr, err = p.parseIdent()
+		if p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
+			// After a dot the token can only be a member name, so even
+			// reserved keywords are accepted (e.g. `t.from`).
+			rightExpr, err = p.parseAnyKeyword()
 		} else {
 			rightExpr, err = p.parseDecimal(p.Pos())
 		}
@@ -167,15 +193,15 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		}, nil
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
+		if p.matchKeyword(KeywordBetween) {
+			return p.parseBetweenClause(expr, true)
+		}
 		switch {
 		case p.matchKeyword(KeywordIn):
 		case p.matchKeyword(KeywordLike):
 		case p.matchKeyword(KeywordIlike):
 		default:
-			return nil, fmt.Errorf("expected IN, LIKE or ILIKE after NOT, got %s", p.currentTokenKind())
-		}
-		if p.matchKeyword(KeywordBetween) {
-			return p.parseBetweenClause(expr)
+			return nil, fmt.Errorf("expected IN, LIKE, ILIKE or BETWEEN after NOT, got %s", p.currentTokenKind())
 		}
 		op := p.current().ToString()
 		_ = p.lexer.consumeToken()
@@ -200,20 +226,26 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return p.parseTernaryExpr(expr)
 	case p.matchKeyword(KeywordIs):
+		isPos := p.Pos()
 		_ = p.lexer.consumeToken()
 		isNotNull := p.tryConsumeKeywords(KeywordNot)
+		// the expression ends at the NULL keyword; capture its end before
+		// expectKeyword consumes it
+		nullEnd := p.End()
 		if err := p.expectKeyword(KeywordNull); err != nil {
 			return nil, err
 		}
 		if isNotNull {
 			return &IsNotNullExpr{
-				IsPos: p.Pos(),
-				Expr:  expr,
+				IsPos:   isPos,
+				NullEnd: nullEnd,
+				Expr:    expr,
 			}, nil
 		}
 		return &IsNullExpr{
-			IsPos: p.Pos(),
-			Expr:  expr,
+			IsPos:   isPos,
+			NullEnd: nullEnd,
+			Expr:    expr,
 		}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.currentTokenKind())
@@ -334,16 +366,22 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 
 func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 	op := p.current()
+	var expr Expr
+	var err error
 	switch {
 	case p.matchTokenKind(TokenKindPlus),
-		p.matchTokenKind(TokenKindMinus),
-		p.matchKeyword(KeywordNot):
+		p.matchTokenKind(TokenKindMinus):
 		_ = p.lexer.consumeToken()
+		expr, err = p.parseColumnExpr(p.Pos())
+	case p.matchKeyword(KeywordNot):
+		_ = p.lexer.consumeToken()
+		// Prefix NOT binds looser than comparisons: `NOT a = b` negates the
+		// whole comparison, so the operand is parsed at NOT's own precedence
+		// instead of stopping at the primary expression.
+		expr, err = p.parseSubExpr(p.Pos(), PrecedenceNot)
 	default:
 		return p.parseColumnExpr(pos)
 	}
-
-	expr, err := p.parseColumnExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +423,7 @@ var clauseStarterKeywords = []string{
 	KeywordFrom, KeywordWhere, KeywordPrewhere, KeywordGroup,
 	KeywordHaving, KeywordWindow, KeywordOrder, KeywordLimit,
 	KeywordOffset, KeywordSettings, KeywordFormat, KeywordUnion,
-	KeywordExcept,
+	KeywordExcept, KeywordIntersect,
 }
 
 // matchClauseStarterKeyword reports whether the current token is one of the
@@ -472,7 +510,7 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// terminator/alias check).
 	if p.keywordIsSelectItemIdentifier() ||
 		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
-		return p.parseIdent()
+		return p.parseAnyKeyword()
 	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
@@ -495,6 +533,12 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	case p.matchKeyword(KeywordExtract):
 		return p.parseColumnExtractExpr(pos)
 	case p.matchTokenKind(TokenKindIdent):
+		return p.parseIdentOrFunction(pos)
+	case p.matchTokenKind(TokenKindKeyword) && p.peekTokenKind(TokenKindLParen):
+		// Reserved operator keywords stay callable as ordinary functions when
+		// followed by '(': and(a, b), or(a, b), in(x, set), like(s, pat), ...
+		// Keywords with dedicated syntax (CAST, CASE, EXTRACT, INTERVAL, ...)
+		// are handled by their own cases above.
 		return p.parseIdentOrFunction(pos)
 	case p.matchTokenKind(TokenKindString): // string literal
 		return p.parseString(pos)
@@ -676,8 +720,10 @@ func (p *Parser) parseInterval(requireKeyword bool) (*IntervalExpr, error) {
 }
 
 func (p *Parser) parseFunctionExpr(_ Pos) (*FunctionExpr, error) {
-	// parse function name
-	name, err := p.parseIdent()
+	// parse function name; callers gate entry (select-item modifiers match
+	// EXCEPT/APPLY/REPLACE first, INSERT INTO FUNCTION follows the FUNCTION
+	// keyword), so even reserved keywords are valid names here.
+	name, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -794,7 +840,9 @@ func (p *Parser) parseQueryParam(pos Pos) (*QueryParam, error) {
 		return nil, err
 	}
 
-	ident, err := p.parseIdent()
+	// Inside `{name:Type}` the token can only be the parameter name, so even
+	// reserved keywords are accepted (e.g. `{end:UInt32}`).
+	ident, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}
@@ -844,7 +892,8 @@ func (p *Parser) parseColumnsExpr(pos Pos) (*ColumnExpr, error) {
 
 	var alias *Ident
 	if p.tryConsumeKeywords(KeywordAs) {
-		alias, err = p.parseIdent()
+		// after AS the token can only be an alias name, reserved keyword or not
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -877,21 +926,21 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 	var alias *Ident
 	switch {
 	case p.tryConsumeKeywords(KeywordAs):
-		// `SELECT 1 AS <reserved-keyword>` works for any keyword because
-		// matchTokenKind(TokenKindIdent) coerces TokenKindKeyword to ident
-		// (see parser_common.go matchTokenKind), so parseIdent accepts a
-		// keyword token here without needing a special-case.
-		alias, err = p.parseIdent()
+		// `SELECT 1 AS <keyword>` works for any keyword, reserved or not:
+		// after AS the token can only be an alias name.
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
-	case p.currentTokenKind() == TokenKindKeyword && !p.isSelectItemTerminatorKeyword():
+	case p.matchTokenKind(TokenKindIdent) && !p.isSelectItemTerminatorKeyword():
+		// A bare alias can be a normal identifier or non-reserved keyword; a
+		// reserved keyword here starts the next clause (e.g. `SELECT a FROM ...`).
 		alias, err = p.parseIdent()
 		if err != nil {
 			return nil, err
 		}
 	default:
-		alias = p.tryParseIdent()
+		alias = nil
 	}
 
 	return &SelectItem{
@@ -1111,7 +1160,7 @@ func (p *Parser) parseJSONPath() (*JSONPath, error) {
 	idents = append(idents, ident)
 
 	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindDot) != nil {
-		ident, err := p.parseIdent()
+		ident, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}

@@ -156,7 +156,8 @@
               "Format": null,
               "UnionAll": null,
               "UnionDistinct": null,
-              "Except": null
+              "Except": null,
+              "Intersect": null
             }
           },
           "HasFinal": false
@@ -201,6 +202,7 @@
               "ColumnArgList": null
             }
           },
+          "Not": false,
           "Between": {
             "LiteralPos": 156,
             "LiteralEnd": 166,
@@ -297,6 +299,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

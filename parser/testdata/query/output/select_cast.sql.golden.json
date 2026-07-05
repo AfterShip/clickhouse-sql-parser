@@ -50,7 +50,8 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   },
   {
     "SelectPos": 36,
@@ -100,7 +101,8 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   },
   {
     "SelectPos": 72,
@@ -160,7 +162,8 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   },
   {
     "SelectPos": 104,
@@ -211,6 +214,7 @@
     "Format": null,
     "UnionAll": null,
     "UnionDistinct": null,
-    "Except": null
+    "Except": null,
+    "Intersect": null
   }
 ]

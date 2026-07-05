@@ -399,7 +399,9 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 
 	tableEnd := expr.End()
 	if p.tryConsumeKeywords(KeywordAs) {
-		alias, err := p.parseIdent()
+		// After AS the token can only be an alias name, so even reserved
+		// keywords are accepted (e.g. `FROM t AS from`).
+		alias, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -503,6 +505,7 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 
 	var expr Expr
 	var err error
+	var groupByEnd Pos
 	aggregateType := ""
 	switch {
 	case p.matchKeyword(KeywordCube) || p.matchKeyword(KeywordRollup):
@@ -512,7 +515,10 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	case p.tryConsumeKeywords(KeywordGrouping, KeywordSets):
 		aggregateType = "GROUPING SETS"
 		expr, err = p.parseFunctionParams(p.Pos())
-	case p.tryConsumeKeywords(KeywordAll):
+	case p.matchKeyword(KeywordAll):
+		// GROUP BY ALL has no expression list; the clause ends at ALL itself
+		groupByEnd = p.End()
+		_ = p.lexer.consumeToken()
 		aggregateType = "ALL"
 	default:
 		expr, err = p.parseColumnExprListWithLParen(p.Pos())
@@ -520,14 +526,21 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 	if err != nil {
 		return nil, err
 	}
+	if expr != nil {
+		groupByEnd = expr.End()
+	}
 	groupBy := &GroupByClause{
 		GroupByPos:    pos,
+		GroupByEnd:    groupByEnd,
 		AggregateType: aggregateType,
 		Expr:          expr,
 	}
 
 	// parse WITH CUBE, ROLLUP, TOTALS
 	for p.tryConsumeKeywords(KeywordWith) {
+		// the clause now extends to the CUBE/ROLLUP/TOTALS token; capture its
+		// end before it is consumed
+		keywordEnd := p.End()
 		switch {
 		case p.tryConsumeKeywords(KeywordCube):
 			groupBy.WithCube = true
@@ -538,8 +551,8 @@ func (p *Parser) parseGroupByClause(pos Pos) (*GroupByClause, error) {
 		default:
 			return nil, fmt.Errorf("expected CUBE, ROLLUP or TOTALS, got %s", p.currentTokenKind())
 		}
+		groupBy.GroupByEnd = keywordEnd
 	}
-	groupBy.GroupByEnd = p.Pos()
 
 	return groupBy, nil
 }
@@ -598,7 +611,7 @@ func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {
 	return p.parseLimitByClause(pos)
 }
 
-func (p *Parser) parseBetweenClause(expr Expr) (*BetweenClause, error) {
+func (p *Parser) parseBetweenClause(expr Expr, not bool) (*BetweenClause, error) {
 	if err := p.expectKeyword(KeywordBetween); err != nil {
 		return nil, err
 	}
@@ -620,6 +633,7 @@ func (p *Parser) parseBetweenClause(expr Expr) (*BetweenClause, error) {
 
 	return &BetweenClause{
 		Expr:    expr,
+		Not:     not,
 		Between: betweenExpr,
 		AndPos:  andPos,
 		And:     andExpr,
@@ -826,8 +840,10 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 	}
 	var windowName *Ident
 	if p.canParseWindowNameInParens() {
+		// canParseWindowNameInParens already disambiguated keyword tokens
+		// (e.g. `OVER (order)` vs `OVER (ORDER BY ...)`).
 		var err error
-		windowName, err = p.parseIdent()
+		windowName, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -859,7 +875,7 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 }
 
 func (p *Parser) canParseWindowNameInParens() bool {
-	if !p.matchTokenKind(TokenKindIdent) {
+	if !p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
 		return false
 	}
 	if !p.matchTokenKind(TokenKindKeyword) {
@@ -893,7 +909,9 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 
 	windows := make([]*WindowDefinition, 0, 1)
 	for {
-		windowName, err := p.parseIdent()
+		// After WINDOW (or a comma) the token can only be a window name, so
+		// even reserved keywords are accepted (e.g. `WINDOW order AS (...)`).
+		windowName, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -1008,6 +1026,12 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 			return nil, err
 		}
 		selectStmt.Except = exceptExpr
+	case p.tryConsumeKeywords(KeywordIntersect):
+		intersectExpr, err := p.parseSelectQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		selectStmt.Intersect = intersectExpr
 	}
 	if hasParen {
 		if err := p.expectTokenKind(TokenKindRParen); err != nil {
@@ -1075,13 +1099,15 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		statementEnd = groupBy.End()
 	}
 	withTotal := false
-	lastPos := p.Pos()
 	if p.tryConsumeKeywords(KeywordWith) {
+		// the statement now ends at the TOTALS token; capture its end before
+		// expectKeyword consumes it
+		totalsEnd := p.End()
 		if err := p.expectKeyword(KeywordTotals); err != nil {
 			return nil, err
 		}
 		withTotal = true
-		statementEnd = lastPos
+		statementEnd = totalsEnd
 	}
 	having, err := p.tryParseHavingClause(p.Pos())
 	if err != nil {
@@ -1194,7 +1220,8 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 			Alias:  selectQuery,
 		}, nil
 	}
-	name, err := p.parseIdent()
+	// after AS the token can only be an alias name, reserved keyword or not
+	name, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}

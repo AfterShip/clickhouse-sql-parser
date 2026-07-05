@@ -317,7 +317,7 @@ func (a *AlterTableDropPartition) Pos() Pos {
 
 func (a *AlterTableDropPartition) End() Pos {
 	if a.Settings != nil {
-		a.Settings.End()
+		return a.Settings.End()
 	}
 	return a.Partition.End()
 }
@@ -4137,6 +4137,7 @@ func (d *DictionarySchemaClause) Accept(visitor ASTVisitor) error {
 
 type DictionaryAttribute struct {
 	NamePos      Pos
+	AttrEnd      Pos // end of the last property, or of the type when there is none
 	Name         *Ident
 	Type         ColumnType
 	Default      Literal
@@ -4151,22 +4152,7 @@ func (d *DictionaryAttribute) Pos() Pos {
 }
 
 func (d *DictionaryAttribute) End() Pos {
-	if d.IsObjectId {
-		return d.NamePos + Pos(len("IS_OBJECT_ID"))
-	}
-	if d.Injective {
-		return d.NamePos + Pos(len("INJECTIVE"))
-	}
-	if d.Hierarchical {
-		return d.NamePos + Pos(len("HIERARCHICAL"))
-	}
-	if d.Expression != nil {
-		return d.Expression.End()
-	}
-	if d.Default != nil {
-		return d.Default.End()
-	}
-	return d.Type.End()
+	return d.AttrEnd
 }
 
 func (d *DictionaryAttribute) Accept(visitor ASTVisitor) error {
@@ -4629,16 +4615,17 @@ func (f *FromClause) Accept(visitor ASTVisitor) error {
 }
 
 type IsNullExpr struct {
-	IsPos Pos
-	Expr  Expr
+	IsPos   Pos // position of the IS keyword
+	NullEnd Pos // end of the NULL keyword
+	Expr    Expr
 }
 
 func (n *IsNullExpr) Pos() Pos {
-	return n.IsPos
+	return n.Expr.Pos()
 }
 
 func (n *IsNullExpr) End() Pos {
-	return n.Expr.End()
+	return n.NullEnd
 }
 
 func (n *IsNullExpr) Accept(visitor ASTVisitor) error {
@@ -4651,8 +4638,9 @@ func (n *IsNullExpr) Accept(visitor ASTVisitor) error {
 }
 
 type IsNotNullExpr struct {
-	IsPos Pos
-	Expr  Expr
+	IsPos   Pos // position of the IS keyword
+	NullEnd Pos // end of the NULL keyword
+	Expr    Expr
 }
 
 func (n *IsNotNullExpr) Pos() Pos {
@@ -4660,7 +4648,7 @@ func (n *IsNotNullExpr) Pos() Pos {
 }
 
 func (n *IsNotNullExpr) End() Pos {
-	return n.Expr.End()
+	return n.NullEnd
 }
 
 func (n *IsNotNullExpr) Accept(visitor ASTVisitor) error {
@@ -5016,6 +5004,7 @@ func (f *WindowFrameExtendExpr) Accept(visitor ASTVisitor) error {
 
 type BetweenClause struct {
 	Expr    Expr
+	Not     bool
 	Between Expr
 	AndPos  Pos
 	And     Expr
@@ -5157,6 +5146,7 @@ type SelectQuery struct {
 	UnionAll      *SelectQuery
 	UnionDistinct *SelectQuery
 	Except        *SelectQuery
+	Intersect     *SelectQuery
 }
 
 func (s *SelectQuery) Pos() Pos {
@@ -5259,6 +5249,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	}
 	if s.Except != nil {
 		if err := s.Except.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Intersect != nil {
+		if err := s.Intersect.Accept(visitor); err != nil {
 			return err
 		}
 	}
