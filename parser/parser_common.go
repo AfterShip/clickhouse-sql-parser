@@ -430,7 +430,8 @@ func (p *Parser) parseRatioExpr(pos Pos) (*RatioExpr, error) {
 
 	var denominator *NumberLiteral
 	if p.tryConsumeTokenKind(TokenKindDiv) != nil {
-		denominator, err = p.parseNumber(pos)
+		// the denominator starts at its own token, not at the numerator
+		denominator, err = p.parseNumber(p.Pos())
 		if err != nil {
 			return nil, err
 		}

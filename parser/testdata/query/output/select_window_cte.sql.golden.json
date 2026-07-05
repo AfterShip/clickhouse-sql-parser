@@ -16,7 +16,7 @@
           },
           "Alias": {
             "SelectPos": 30,
-            "StatementEnd": 236,
+            "StatementEnd": 231,
             "With": null,
             "Top": null,
             "HasDistinct": false,
@@ -156,7 +156,7 @@
             },
             "GroupBy": {
               "GroupByPos": 205,
-              "GroupByEnd": 236,
+              "GroupByEnd": 231,
               "AggregateType": "",
               "Expr": {
                 "ListPos": 214,

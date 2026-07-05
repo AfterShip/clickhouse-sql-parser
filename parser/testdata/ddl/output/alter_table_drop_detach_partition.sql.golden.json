@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 120,
+    "StatementEnd": 154,
     "TableIdentifier": {
       "Database": {
         "Name": "app_utc_00",

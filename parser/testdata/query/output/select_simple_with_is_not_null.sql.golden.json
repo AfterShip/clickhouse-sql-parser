@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 133,
+    "StatementEnd": 145,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -187,7 +187,8 @@
           },
           "Operation": "AND",
           "RightExpr": {
-            "IsPos": 127,
+            "IsPos": 117,
+            "NullEnd": 124,
             "Expr": {
               "Name": "f2",
               "QuoteType": 1,
@@ -200,7 +201,8 @@
         },
         "Operation": "AND",
         "RightExpr": {
-          "IsPos": 145,
+          "IsPos": 134,
+          "NullEnd": 145,
           "Expr": {
             "Name": "f3",
             "QuoteType": 1,

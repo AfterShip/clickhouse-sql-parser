@@ -200,20 +200,26 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return p.parseTernaryExpr(expr)
 	case p.matchKeyword(KeywordIs):
+		isPos := p.Pos()
 		_ = p.lexer.consumeToken()
 		isNotNull := p.tryConsumeKeywords(KeywordNot)
+		// the expression ends at the NULL keyword; capture its end before
+		// expectKeyword consumes it
+		nullEnd := p.End()
 		if err := p.expectKeyword(KeywordNull); err != nil {
 			return nil, err
 		}
 		if isNotNull {
 			return &IsNotNullExpr{
-				IsPos: p.Pos(),
-				Expr:  expr,
+				IsPos:   isPos,
+				NullEnd: nullEnd,
+				Expr:    expr,
 			}, nil
 		}
 		return &IsNullExpr{
-			IsPos: p.Pos(),
-			Expr:  expr,
+			IsPos:   isPos,
+			NullEnd: nullEnd,
+			Expr:    expr,
 		}, nil
 	default:
 		return nil, fmt.Errorf("unexpected token kind: %s", p.currentTokenKind())

@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 171,
+    "StatementEnd": 170,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -94,7 +94,7 @@
     "Where": null,
     "GroupBy": {
       "GroupByPos": 78,
-      "GroupByEnd": 171,
+      "GroupByEnd": 170,
       "AggregateType": "GROUPING SETS",
       "Expr": {
         "LeftParenPos": 104,

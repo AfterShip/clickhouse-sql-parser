@@ -79,7 +79,7 @@
     "Where": null,
     "GroupBy": {
       "GroupByPos": 37,
-      "GroupByEnd": 76,
+      "GroupByEnd": 75,
       "AggregateType": "CUBE",
       "Expr": {
         "LeftParenPos": 50,

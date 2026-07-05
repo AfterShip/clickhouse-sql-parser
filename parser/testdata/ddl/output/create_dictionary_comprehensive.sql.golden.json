@@ -39,6 +39,7 @@
       "Attributes": [
         {
           "NamePos": 134,
+          "AttrEnd": 143,
           "Name": {
             "Name": "id",
             "QuoteType": 1,
@@ -61,6 +62,7 @@
         },
         {
           "NamePos": 149,
+          "AttrEnd": 170,
           "Name": {
             "Name": "name",
             "QuoteType": 1,
@@ -87,6 +89,7 @@
         },
         {
           "NamePos": 177,
+          "AttrEnd": 222,
           "Name": {
             "Name": "value",
             "QuoteType": 1,
@@ -137,6 +140,7 @@
         },
         {
           "NamePos": 229,
+          "AttrEnd": 258,
           "Name": {
             "Name": "parent_id",
             "QuoteType": 1,
@@ -159,6 +163,7 @@
         },
         {
           "NamePos": 264,
+          "AttrEnd": 289,
           "Name": {
             "Name": "is_active",
             "QuoteType": 1,
@@ -181,6 +186,7 @@
         },
         {
           "NamePos": 295,
+          "AttrEnd": 324,
           "Name": {
             "Name": "object_id",
             "QuoteType": 1,
