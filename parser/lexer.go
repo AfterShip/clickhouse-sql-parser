@@ -77,6 +77,16 @@ func (t *Token) ToString() string {
 type lexerState struct {
 	offset       int    // byte offset into input of the next unread character
 	currentToken *Token // current lookahead token; nil at end of input
+
+	// lastError remembers the first lexing failure (invalid number,
+	// unterminated string, unclosed quoted identifier, ...) together with the
+	// offset it occurred at. Many parser call sites discard consumeToken's
+	// return value and then read the nil currentToken as end of input; the
+	// parser consults lastError to report the real cause instead of a
+	// misleading EOF. It lives in lexerState so backtracking via
+	// restoreState automatically clears errors hit only during lookahead.
+	lastError    error
+	lastErrorPos int
 }
 
 type Lexer struct {
@@ -331,7 +341,20 @@ func (l *Lexer) hasPrecedenceToken(last *Token) bool {
 		last.Kind == TokenKindString)
 }
 
+// consumeToken advances to the next token, recording the first lexing failure
+// in lexerState so it survives call sites that discard the returned error.
 func (l *Lexer) consumeToken() error {
+	if err := l.nextToken(); err != nil {
+		if l.lastError == nil {
+			l.lastError = err
+			l.lastErrorPos = min(l.offset, len(l.input))
+		}
+		return err
+	}
+	return nil
+}
+
+func (l *Lexer) nextToken() error {
 	// replace the current token; keep the previous one to disambiguate unary +/-
 	prevToken := l.currentToken
 	l.currentToken = nil

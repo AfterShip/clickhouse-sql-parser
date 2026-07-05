@@ -407,7 +407,16 @@ func (p *Parser) wrapError(err error) error {
 	}
 
 	var pe *ParseError
-	if !errors.As(err, &pe) {
+	if lexErr := p.lexer.lastError; lexErr != nil {
+		// A lexing failure was swallowed by a call site that discards
+		// consumeToken's error; the parser then read the nil current token as
+		// end of input and failed with a misleading message. Report the
+		// lexer's own error at the offset it happened instead.
+		pe = &ParseError{
+			Pos: Pos(p.lexer.lastErrorPos),
+			Msg: lexErr.Error(),
+		}
+	} else if !errors.As(err, &pe) {
 		pe = &ParseError{
 			Pos: p.Pos(),
 			Got: p.current(),
