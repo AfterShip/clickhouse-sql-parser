@@ -399,7 +399,9 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 
 	tableEnd := expr.End()
 	if p.tryConsumeKeywords(KeywordAs) {
-		alias, err := p.parseIdent()
+		// After AS the token can only be an alias name, so even reserved
+		// keywords are accepted (e.g. `FROM t AS from`).
+		alias, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -826,8 +828,10 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 	}
 	var windowName *Ident
 	if p.canParseWindowNameInParens() {
+		// canParseWindowNameInParens already disambiguated keyword tokens
+		// (e.g. `OVER (order)` vs `OVER (ORDER BY ...)`).
 		var err error
-		windowName, err = p.parseIdent()
+		windowName, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -859,7 +863,7 @@ func (p *Parser) parseWindowCondition(pos Pos) (*WindowExpr, error) {
 }
 
 func (p *Parser) canParseWindowNameInParens() bool {
-	if !p.matchTokenKind(TokenKindIdent) {
+	if !p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
 		return false
 	}
 	if !p.matchTokenKind(TokenKindKeyword) {
@@ -893,7 +897,9 @@ func (p *Parser) parseWindowClause(pos Pos) (*WindowClause, error) {
 
 	windows := make([]*WindowDefinition, 0, 1)
 	for {
-		windowName, err := p.parseIdent()
+		// After WINDOW (or a comma) the token can only be a window name, so
+		// even reserved keywords are accepted (e.g. `WINDOW order AS (...)`).
+		windowName, err := p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
@@ -1194,7 +1200,8 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 			Alias:  selectQuery,
 		}, nil
 	}
-	name, err := p.parseIdent()
+	// after AS the token can only be an alias name, reserved keyword or not
+	name, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
 	}

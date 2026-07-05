@@ -400,7 +400,15 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 }
 
 func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
-	ident, err := p.parseIdent()
+	var ident *Ident
+	var err error
+	if p.currentTokenKind() == TokenKindKeyword && p.peekTokenKind(TokenKindLParen) {
+		// reserved operator keywords stay callable as ordinary functions:
+		// and(a, b), or(a, b), in(x, set), like(s, pat), ...
+		ident, err = p.parseAnyKeyword()
+	} else {
+		ident, err = p.parseIdent()
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -428,8 +436,11 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		if p.tryConsumeKeywords(KeywordOver) {
 			var overExpr Expr
 			switch {
-			case p.matchTokenKind(TokenKindIdent):
-				overExpr, err = p.parseIdent()
+			case p.matchTokenKind(TokenKindIdent, TokenKindKeyword):
+				// After OVER a bare token can only be a window name, so even
+				// reserved keywords are accepted (e.g. `OVER order`),
+				// mirroring the WINDOW clause definition side.
+				overExpr, err = p.parseAnyKeyword()
 			case p.matchTokenKind(TokenKindLParen):
 				overExpr, err = p.parseWindowCondition(p.Pos())
 				if err != nil {
@@ -451,10 +462,12 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		return funcExpr, nil
 	case p.tryConsumeTokenKind(TokenKindDot) != nil:
 		switch {
-		case p.matchTokenKind(TokenKindIdent):
+		case p.matchTokenKind(TokenKindIdent, TokenKindKeyword):
 			fields := []*Ident{ident}
 			for {
-				child, err := p.parseIdent()
+				// After a dot the token can only be a member name, so even
+				// reserved keywords are accepted (e.g. `t.from`).
+				child, err := p.parseAnyKeyword()
 				if err != nil {
 					return nil, err
 				}
@@ -972,7 +985,8 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 		}
 		// consume the `AS` keyword
 		_ = p.lexer.consumeToken()
-		alias, err = p.parseIdent()
+		// after AS the token can only be an alias name, reserved keyword or not
+		alias, err = p.parseAnyKeyword()
 		if err != nil {
 			return nil, err
 		}
