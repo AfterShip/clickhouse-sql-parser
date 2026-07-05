@@ -124,12 +124,13 @@ func (l *Lexer) consumeNumber() error {
 		// skip sign
 		i++
 	}
-	if l.peekN(0) == '0' && l.peekOk(1) && l.peekN(1) == 'x' {
+	if l.peekOk(i+1) && l.peekN(i) == '0' && l.peekN(i+1) == 'x' {
 		i += 2
 		base = 16
 	}
 
 	hasExp := false
+	hasDot := false
 	tokenKind := TokenKindInt
 	hasNumberPart := false
 	for l.peekOk(i) {
@@ -143,10 +144,16 @@ func (l *Lexer) consumeNumber() error {
 			i++
 			continue
 		case c == '.': // float
+			// a second dot ("1.2.3"), a dot after the exponent ("1e2.3") or
+			// a dot in a hex literal ("0x1.8") cannot start a valid number tail
+			if hasDot || hasExp || base == 16 {
+				return errors.New("invalid number")
+			}
+			hasDot = true
 			tokenKind = TokenKindFloat
 			i++
 			continue
-		case base != 16 && (c == 'e' || c == 'E' || c == 'p' || c == 'P'):
+		case base != 16 && (c == 'e' || c == 'E'):
 			if hasExp {
 				return errors.New("invalid number")
 			}
@@ -158,6 +165,8 @@ func (l *Lexer) consumeNumber() error {
 				return errors.New("exponent part should contain at least one digit")
 			}
 			hasExp = true
+			// scientific notation always denotes a floating-point value
+			tokenKind = TokenKindFloat
 			continue
 		}
 		break
@@ -231,20 +240,25 @@ func (l *Lexer) consumeSingleLineComment() {
 	for l.peekOk(i) && l.peekN(i) != '\r' && l.peekN(i) != '\n' {
 		i++
 	}
-	l.skipN(i + 1)
+	if l.peekOk(i) {
+		// consume the newline too; at EOF there is none to consume
+		i++
+	}
+	l.skipN(i)
 }
 
-func (l *Lexer) consumeMultiLineComment() {
+func (l *Lexer) consumeMultiLineComment() error {
 	l.skipN(2)
 	i := 0
 	for l.peekOk(i) {
 		if l.peekOk(i+1) && l.peekN(i) == '*' && l.peekN(i+1) == '/' {
-			i += 2
-			break
+			l.skipN(i + 2)
+			return nil
 		}
 		i++
 	}
 	l.skipN(i)
+	return errors.New("unclosed multi-line comment")
 }
 
 func (l *Lexer) consumeString() error {
@@ -284,11 +298,11 @@ func (l *Lexer) consumeString() error {
 	return nil
 }
 
-func (l *Lexer) skipComments() {
+func (l *Lexer) skipComments() error {
 	for !l.isEOF() {
 		l.skipSpace()
 		if !l.peekOk(0) {
-			return
+			return nil
 		}
 		switch l.peekN(0) {
 		case '-':
@@ -296,20 +310,23 @@ func (l *Lexer) skipComments() {
 				l.consumeSingleLineComment()
 				continue
 			}
-			return
+			return nil
 		case '/': // multi-line comment
 			if l.peekOk(1) && l.peekN(1) == '*' {
-				l.consumeMultiLineComment()
+				if err := l.consumeMultiLineComment(); err != nil {
+					return err
+				}
 				continue
 			}
-			return
+			return nil
 		case '\r', '\n':
 			// skip \r\n or \n\r
 			l.skipN(1)
 		default:
-			return
+			return nil
 		}
 	}
+	return nil
 }
 
 func (l *Lexer) peekToken() (*Token, error) {
@@ -335,7 +352,9 @@ func (l *Lexer) consumeToken() error {
 	// replace the current token; keep the previous one to disambiguate unary +/-
 	prevToken := l.currentToken
 	l.currentToken = nil
-	l.skipComments()
+	if err := l.skipComments(); err != nil {
+		return err
+	}
 	l.skipSpace()
 	if l.isEOF() {
 		return nil
@@ -400,6 +419,14 @@ func (l *Lexer) consumeToken() error {
 
 	if IsIdentStart(l.peekN(0)) {
 		return l.consumeIdent(Pos(l.offset))
+	}
+
+	// Non-ASCII bytes can only appear inside quoted identifiers or string
+	// literals, which are handled above. Report the whole rune instead of
+	// emitting a one-byte token that splits the UTF-8 sequence.
+	if l.peekN(0) >= utf8.RuneSelf {
+		r, _ := utf8.DecodeRuneInString(l.input[l.offset:])
+		return fmt.Errorf("unexpected character %q", r)
 	}
 
 	token := &Token{}

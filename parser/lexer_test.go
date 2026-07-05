@@ -141,12 +141,6 @@ func TestConsumeNumber(t *testing.T) {
 	t.Run("Integer number", func(t *testing.T) {
 		integers := []string{
 			"123",
-			"123e+10",
-			"123e-10",
-			"123e10",
-			"123E10",
-			"123E+10",
-			"123E-10",
 		}
 		for _, i := range integers {
 			lexer := NewLexer(i)
@@ -163,6 +157,8 @@ func TestConsumeNumber(t *testing.T) {
 		numbers := []string{
 			"0x123",
 			"0x1",
+			"-0x1F",
+			"+0x1F",
 		}
 		for _, n := range numbers {
 			lexer := NewLexer(n)
@@ -186,11 +182,18 @@ func TestConsumeNumber(t *testing.T) {
 			"123E-",
 			"0x",
 			"0xg",
+			"-0x",
+			"1.2.3",
+			"1..2",
+			"1e2.3",
+			"0x1.8",
+			"1p5",
+			"1P5",
 		}
 		for _, n := range invalidNumbers {
 			lexer := NewLexer(n)
 			err := lexer.consumeToken()
-			require.Error(t, err)
+			require.Error(t, err, "input %q", n)
 		}
 	})
 
@@ -203,6 +206,13 @@ func TestConsumeNumber(t *testing.T) {
 			"123.456E10",
 			"123.456E+10",
 			"123.456E-10",
+			// scientific notation without a dot is still a float
+			"123e+10",
+			"123e-10",
+			"123e10",
+			"123E10",
+			"123E+10",
+			"123E-10",
 		}
 		for _, f := range floats {
 			lexer := NewLexer(f)
@@ -274,4 +284,64 @@ func TestConsumeNumber(t *testing.T) {
 			require.True(t, lexer.isEOF())
 		}
 	})
+}
+
+// lexAll consumes tokens until EOF or the first lexer error.
+func lexAll(input string) error {
+	lexer := NewLexer(input)
+	for !lexer.isEOF() {
+		if err := lexer.consumeToken(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// TestUnterminatedBlockCommentIsAnError guards that a block comment without a
+// closing */ is reported instead of being silently swallowed at EOF.
+func TestUnterminatedBlockCommentIsAnError(t *testing.T) {
+	inputs := []string{
+		"/*",
+		"/* unterminated",
+		"/* unterminated *",
+		"SELECT 1 /* unterminated",
+	}
+	for _, input := range inputs {
+		err := lexAll(input)
+		require.Error(t, err, "input %q", input)
+		require.Contains(t, err.Error(), "unclosed multi-line comment")
+	}
+	// terminated comments still parse
+	_, err := NewParser("SELECT 1 /* ok */").ParseStmts()
+	require.NoError(t, err)
+}
+
+// TestSingleLineCommentAtEOF guards that the lexer offset does not run past
+// the end of input when a -- comment has no trailing newline.
+func TestSingleLineCommentAtEOF(t *testing.T) {
+	lexer := NewLexer("-- no newline")
+	require.NoError(t, lexer.consumeToken())
+	require.True(t, lexer.isEOF())
+	require.LessOrEqual(t, lexer.offset, len(lexer.input))
+}
+
+// TestNonASCIIByteIsAnError guards that a bare multi-byte character produces
+// a readable error naming the whole rune instead of a garbage one-byte token
+// that splits the UTF-8 sequence.
+func TestNonASCIIByteIsAnError(t *testing.T) {
+	err := lexAll("SELECT 中文")
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "'中'")
+
+	// quoted identifiers and string literals may still carry non-ASCII text
+	_, err = NewParser("SELECT `中文`, '中文'").ParseStmts()
+	require.NoError(t, err)
+}
+
+// TestNegativeHexLiteral guards the sign handling in consumeNumber: the 0x
+// check previously peeked at the sign instead of the first digit.
+func TestNegativeHexLiteral(t *testing.T) {
+	stmts, err := NewParser("SELECT 1 FROM t WHERE x = -0xFF").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
 }
