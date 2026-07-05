@@ -157,6 +157,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Then, fn) {
 			return false
 		}
+		if !Walk(n.Else, fn) {
+			return false
+		}
 	case *CaseExpr:
 		if !Walk(n.Expr, fn) {
 			return false
@@ -325,6 +328,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		}
 		if !Walk(n.Format, fn) {
 			return false
+		}
+		for _, value := range n.Values {
+			if !Walk(value, fn) {
+				return false
+			}
 		}
 		if !Walk(n.SelectExpr, fn) {
 			return false
