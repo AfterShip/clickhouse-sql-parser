@@ -1493,6 +1493,14 @@ func (p *Parser) ParseStmts() ([]Expr, error) {
 		}
 		stmts = append(stmts, stmt)
 	}
+	// A lexing failure recorded by a call site that discarded the error must
+	// not be silently accepted just because parsing reached end of input: a
+	// failed lex can leave the offset advanced (e.g. past the opening quote
+	// of an unclosed identifier), so the retained input re-lexes cleanly and
+	// never re-triggers the error.
+	if lexErr := p.lexer.lastError; lexErr != nil {
+		return nil, p.wrapError(lexErr)
+	}
 	return stmts, nil
 }
 

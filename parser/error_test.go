@@ -64,6 +64,10 @@ func TestParseError_LexerErrorSurfaced(t *testing.T) {
 		// the statement is already well-formed when the bad token appears,
 		// so this parsed successfully before
 		{"SELECT 1 'oops", "invalid string"},
+		// here the failed lex leaves the offset past the opening backtick, so
+		// the retained input re-lexes cleanly to EOF and parsing reaches the
+		// success path; the recorded error must still fail the parse
+		{"SELECT 1 `bad", "unclosed quoted identifier"},
 		// the failure is in a later statement
 		{"SELECT 1; SELECT 'bad; SELECT 2", "invalid string"},
 	}

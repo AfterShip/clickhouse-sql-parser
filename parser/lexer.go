@@ -324,12 +324,15 @@ func (l *Lexer) skipComments() {
 
 func (l *Lexer) peekToken() (*Token, error) {
 	savedState := l.saveState()
-	if err := l.consumeToken(); err != nil {
+	err := l.consumeToken()
+	token := l.currentToken
+	// restore on the error path too: a failed lookahead must not leave the
+	// offset advanced or a lexer error recorded for input the parser has not
+	// actually reached yet
+	l.restoreState(savedState)
+	if err != nil {
 		return nil, err
 	}
-	token := l.currentToken
-
-	l.restoreState(savedState)
 	return token, nil
 }
 
