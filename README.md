@@ -220,6 +220,10 @@ PASS
 ok      github.com/AfterShip/clickhouse-sql-parser/parser       66.547s
 ```
 
+## For AI coding agents
+
+If you are an AI coding agent (or are using one) to contribute to this project, read [AGENTS.md](./AGENTS.md) first and use it as your working context. It covers the project structure, coding style, testing workflow, and contribution practices — including validating SQL against `clickhouse-local` before adding new syntax or fixing parsing issues.
+
 ## Contact us
 
 Feel free to open an issue or discussion if you have any issues or questions.
