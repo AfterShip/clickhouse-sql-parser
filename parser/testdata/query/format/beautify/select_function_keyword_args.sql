@@ -4,6 +4,8 @@ SELECT trim(LEADING '0' FROM '00042');
 SELECT trim(TRAILING '/' FROM '/api/');
 SELECT substring('hello' FROM 2);
 SELECT substring('hello' FROM 2 FOR 3);
+SELECT substring('hello', 2 FOR 3);
+SELECT substring('hello' FROM 2, 3);
 SELECT substring(concat(a, b) FROM x + 1 FOR len(y)) FROM t;
 SELECT overlay('Hello world' PLACING 'SQL' FROM 7);
 SELECT overlay('Hello world' PLACING 'SQL' FROM 7 FOR 5);
@@ -23,6 +25,10 @@ SELECT
   substring('hello' FROM 2);
 SELECT
   substring('hello' FROM 2 FOR 3);
+SELECT
+  substring('hello', 2 FOR 3);
+SELECT
+  substring('hello' FROM 2, 3);
 SELECT
   substring(concat(a, b) FROM x + 1 FOR len(y))
 FROM

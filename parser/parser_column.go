@@ -767,31 +767,23 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 	}, nil
 }
 
-// keywordArgForm describes the SQL keyword-separated argument syntax a function
-// accepts in addition to comma-separated arguments: `trim(BOTH ' ' FROM s)`,
-// `substring(s FROM 2 FOR 3)`. Modifiers are the leading keywords the form may
-// start with; Separators are the keywords that stand in for a comma, in the
-// order they may appear.
-//
-// These keywords are recognised only inside the argument list of the functions
-// below, never through getNextPrecedence: FROM also starts a clause, so giving
-// it a precedence would make `SELECT x FROM t` parse `x FROM t` as one
-// expression and swallow the FROM clause.
-// Separators must appear in the declared order and form a prefix of the list,
-// so substring accepts `s FROM 2` and `s FROM 2 FOR 3` but not `s FOR 3`. Once
-// the keyword form is in use — a modifier or any separator was seen — the first
-// RequiredSeparators of them are mandatory and RequireModifier demands a
-// modifier, matching what ClickHouse's grammar rejects: `trim(' ' FROM s)`,
-// `trim(BOTH ' ')` and `overlay(s PLACING r)` are all syntax errors there.
+// keywordArgForm is the keyword-separated argument syntax a function accepts
+// besides comma-separated arguments, e.g. `trim(BOTH ' ' FROM s)`. These
+// keywords are matched only inside such an argument list, never through
+// getNextPrecedence: FROM also starts a clause, so giving it a precedence would
+// make `SELECT x FROM t` parse as a single expression.
 type keywordArgForm struct {
 	Modifiers          []string
 	RequireModifier    bool
-	Separators         []string
+	Separators         []string // stand in for a comma, in this order
 	RequiredSeparators int
+	ClosedKeywordForm  bool // the keyword form may not be mixed with commas
+	MaxSlots           int  // argument limit once a separator keyword is used
 }
 
-// Verified against ClickHouse 26.8.1: substringUTF8 has no keyword form even
-// though overlayUTF8 does.
+// Verified against ClickHouse 26.8.1: substringUTF8 has no keyword form though
+// overlayUTF8 does, and substring mixes commas with FROM/FOR while overlay
+// cannot.
 var keywordArgFunctions = map[string]keywordArgForm{
 	KeywordTrim: {
 		Modifiers:          []string{KeywordBoth, KeywordLeading, KeywordTrailing},
@@ -802,37 +794,40 @@ var keywordArgFunctions = map[string]keywordArgForm{
 	KeywordSubstring: {
 		Separators:         []string{KeywordFrom, KeywordFor},
 		RequiredSeparators: 1,
+		MaxSlots:           3,
 	},
 	KeywordOverlay: {
 		Separators:         []string{KeywordPlacing, KeywordFrom, KeywordFor},
 		RequiredSeparators: 2,
+		ClosedKeywordForm:  true,
 	},
 	KeywordOverlayUTF8: {
 		Separators:         []string{KeywordPlacing, KeywordFrom, KeywordFor},
 		RequiredSeparators: 2,
+		ClosedKeywordForm:  true,
 	},
 }
 
-// parseKeywordArgItem parses one argument of a function that accepts keyword
-// separators, folding `BOTH ' '` into a UnaryExpr and each `FROM x` / `FOR n`
-// into a BinaryOperation so the existing nodes, visitors and formatter cover
-// the new syntax unchanged.
-func (p *Parser) parseKeywordArgItem(form keywordArgForm) (Expr, error) {
-	expr, hasModifier, err := p.parseKeywordArgModifier(form)
+// parseKeywordArgItem folds `BOTH ' '` into a UnaryExpr and each `FROM x` into a
+// BinaryOperation, so the existing nodes cover the new syntax. slot is the
+// argument slot the item starts in; it reports how many slots it consumed.
+func (p *Parser) parseKeywordArgItem(form keywordArgForm, slot int, allowSeparators bool) (Expr, int, error) {
+	expr, hasModifier, err := p.parseKeywordArgModifier(form, slot)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 
-	separators := 0
-	for separators < len(form.Separators) && p.matchKeyword(form.Separators[separators]) {
+	consumed := 0
+	for allowSeparators && slot+consumed < len(form.Separators) &&
+		p.matchKeyword(form.Separators[slot+consumed]) {
 		operation := TokenKind(p.current().ToString())
 		if err := p.lexer.consumeToken(); err != nil {
-			return nil, err
+			return nil, 0, err
 		}
 
 		rightExpr, err := p.parseExpr(p.Pos())
 		if err != nil {
-			return nil, err
+			return nil, 0, err
 		}
 
 		expr = &BinaryOperation{
@@ -840,27 +835,27 @@ func (p *Parser) parseKeywordArgItem(form keywordArgForm) (Expr, error) {
 			Operation: operation,
 			RightExpr: rightExpr,
 		}
-		separators++
+		consumed++
 	}
 
-	// A modifier or any separator commits to the keyword form, so the rest of
-	// it must be present; without either this is an ordinary argument list.
-	if !hasModifier && separators == 0 {
-		return expr, nil
+	// Without a modifier or a separator this is an ordinary argument list.
+	if !hasModifier && consumed == 0 {
+		return expr, 0, nil
 	}
 	if form.RequireModifier && !hasModifier {
-		return nil, fmt.Errorf("expected one of %s before %s",
+		return nil, 0, fmt.Errorf("expected one of %s before %s",
 			strings.Join(form.Modifiers, ", "), form.Separators[0])
 	}
-	if separators < form.RequiredSeparators {
-		return nil, fmt.Errorf("expected %s", form.Separators[separators])
+	if slot+consumed < form.RequiredSeparators {
+		return nil, 0, fmt.Errorf("expected %s", form.Separators[slot+consumed])
 	}
 
-	return expr, nil
+	return expr, consumed, nil
 }
 
-func (p *Parser) parseKeywordArgModifier(form keywordArgForm) (Expr, bool, error) {
-	if !p.matchOneOfKeywords(form.Modifiers...) {
+func (p *Parser) parseKeywordArgModifier(form keywordArgForm, slot int) (Expr, bool, error) {
+	// A modifier only leads the first argument.
+	if slot != 0 || !p.matchOneOfKeywords(form.Modifiers...) {
 		expr, err := p.parseExpr(p.Pos())
 		return expr, false, err
 	}
@@ -896,17 +891,35 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 
 	itemsPos := p.Pos()
 	items := make([]Expr, 0)
+	// A comma advances the argument slot just as a separator keyword does, so the
+	// index runs across the list instead of resetting per item.
+	slot := 0
+	usedSeparator, usedComma := false, false
 	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
-		item, err := p.parseKeywordArgItem(form)
+		item, consumed, err := p.parseKeywordArgItem(form, slot, !(form.ClosedKeywordForm && usedComma))
 		if err != nil {
 			return nil, err
 		}
 
-		// Wrapped in ColumnExpr so a function's arguments have the same shape
-		// whether they were comma- or keyword-separated (see parseColumnsExpr).
+		if consumed > 0 {
+			usedSeparator = true
+		}
+		slot += consumed
+
+		// Wrapped so arguments have the same shape however they were separated
+		// (see parseColumnsExpr).
 		items = append(items, &ColumnExpr{Expr: item})
 		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
+		}
+
+		usedComma = true
+		slot++
+		if usedSeparator && form.ClosedKeywordForm {
+			return nil, fmt.Errorf("expected ')' after keyword arguments, but got ','")
+		}
+		if usedSeparator && form.MaxSlots > 0 && slot >= form.MaxSlots {
+			return nil, fmt.Errorf("expected ')', but got ','")
 		}
 	}
 

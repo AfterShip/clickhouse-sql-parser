@@ -134,8 +134,7 @@ func TestSignedNumberAfterClosingBracketIsBinaryOperator(t *testing.T) {
 	require.Equal(t, "arr[-1]", Format(expr))
 }
 
-// keywordArgOf returns the sole argument of a single-argument function call,
-// unwrapping the ColumnExpr that every function argument is wrapped in.
+// keywordArgOf returns the sole argument of a call, unwrapping its ColumnExpr.
 func keywordArgOf(t *testing.T, sql, name string) Expr {
 	t.Helper()
 	expr := parseSelectItemExpr(t, sql)
@@ -149,8 +148,7 @@ func keywordArgOf(t *testing.T, sql, name string) Expr {
 }
 
 func TestTrimKeywordArgs(t *testing.T) {
-	// trim(BOTH ' ' FROM s) reuses the existing nodes: the modifier is a
-	// UnaryExpr, the FROM separator a BinaryOperation.
+	// The modifier becomes a UnaryExpr, the FROM separator a BinaryOperation.
 	from, ok := keywordArgOf(t, "SELECT trim(BOTH ' ' FROM ' x ')", "trim").(*BinaryOperation)
 	require.True(t, ok)
 	require.Equal(t, TokenKind(KeywordFrom), from.Operation)
@@ -166,8 +164,7 @@ func TestTrimKeywordArgs(t *testing.T) {
 		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
 	}
 
-	// ClickHouse requires the modifier, the characters and FROM, so all of
-	// these stay rejected.
+	// The modifier, the characters and FROM are all required.
 	for _, sql := range []string{
 		"SELECT trim(' ' FROM ' x ')",
 		"SELECT trim(BOTH FROM ' x ')",
@@ -179,6 +176,12 @@ func TestTrimKeywordArgs(t *testing.T) {
 
 	// BOTH is not reserved, so it stays usable as an ordinary column name.
 	for _, sql := range []string{"SELECT trim(both) FROM t", "SELECT trim(both, x) FROM t", "SELECT max(both) FROM t"} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+
+	// A trailing comma argument here is a ClickHouse arity error, not a syntax
+	// error, so the parser accepts it.
+	for _, sql := range []string{"SELECT trim(BOTH ' ' FROM ' x ', 'y')", "SELECT trim('  x  ', 'y')"} {
 		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
 	}
 }
@@ -201,8 +204,26 @@ func TestSubstringKeywordArgs(t *testing.T) {
 		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
 	}
 
-	// FOR alone is rejected as ClickHouse rejects it, and substringUTF8 has no
-	// keyword form there even though overlayUTF8 does.
+	// A comma fills the same slot a separator keyword would, so substring mixes
+	// the two freely.
+	for _, sql := range []string{
+		"SELECT substring('hello', 2 FOR 3)",
+		"SELECT substring('hello' FROM 2, 3)",
+	} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+
+	// A fourth slot is a syntax error however the earlier separators were spelled.
+	for _, sql := range []string{
+		"SELECT substring('hello', 2 FOR 3, 4)",
+		"SELECT substring('hello' FROM 2, 3, 4)",
+		"SELECT substring('hello' FROM 2 FOR 3, 4)",
+	} {
+		_, err := NewParser(sql).ParseStmts()
+		require.Error(t, err, sql)
+	}
+
+	// substringUTF8 has no keyword form, unlike overlayUTF8.
 	for _, sql := range []string{
 		"SELECT substring('hello' FOR 3)",
 		"SELECT substringUTF8('hello' FROM 2 FOR 3)",
@@ -244,6 +265,28 @@ func TestOverlayKeywordArgs(t *testing.T) {
 	} {
 		_, err := NewParser(sql).ParseStmts()
 		require.Error(t, err, sql)
+	}
+
+	// Unlike substring, overlay cannot mix commas with its keyword form in
+	// either direction.
+	for _, sql := range []string{
+		"SELECT overlay('Hello world' PLACING 'SQL' FROM 1, 2)",
+		"SELECT overlay('Hello world' PLACING 'SQL' FROM 1 FOR 2, 3)",
+		"SELECT overlay('Hello world', 'SQL' FROM 1)",
+		"SELECT overlay('Hello world', 'SQL', 1 FOR 2)",
+		"SELECT overlayUTF8('Hello world' PLACING 'SQL' FROM 1, 2)",
+		"SELECT overlayUTF8('Hello world', 'SQL' FROM 1)",
+	} {
+		_, err := NewParser(sql).ParseStmts()
+		require.Error(t, err, sql)
+	}
+
+	// The all-comma form keeps its own arity.
+	for _, sql := range []string{
+		"SELECT overlay('Hello world', 'SQL', 1)",
+		"SELECT overlay('Hello world', 'SQL', 1, 2)",
+	} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
 	}
 
 	// OVERLAY and PLACING are non-reserved, so they stay usable as names.
