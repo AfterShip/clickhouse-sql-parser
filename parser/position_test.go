@@ -90,3 +90,28 @@ func TestDictionaryAttributeEnd(t *testing.T) {
 	require.Equal(t, "IS_OBJECT_ID", sql[36:48])
 	require.Equal(t, Pos(48), attrs[0].End())
 }
+
+func TestKeywordArgFunctionPositions(t *testing.T) {
+	// The keyword forms reuse UnaryExpr/BinaryOperation, so their spans must match
+	// what the same nodes report anywhere else.
+	sql := "SELECT trim(BOTH ' ' FROM s)"
+	stmt := parseOneStmt(t, sql).(*SelectQuery)
+	fn := stmt.SelectItems[0].Expr.(*FunctionExpr)
+	require.Equal(t, Pos(7), fn.Pos())
+	require.Equal(t, Pos(len(sql)-1), fn.End(), "ends on the closing paren, as any call does")
+
+	from := fn.Params.Items.Items[0].(*ColumnExpr).Expr.(*BinaryOperation)
+	require.Equal(t, "BOTH", sql[12:16])
+	require.Equal(t, "s", sql[26:27])
+	// the operation spans its operands: BOTH ... s
+	require.Equal(t, Pos(12), from.Pos())
+	require.Equal(t, Pos(27), from.End())
+
+	// the modifier starts at BOTH and ends with the characters literal, which
+	// itself runs from inside the opening quote to the closing one
+	modifier := from.LeftExpr.(*UnaryExpr)
+	require.Equal(t, Pos(12), modifier.Pos())
+	require.Equal(t, modifier.Expr.End(), modifier.End())
+	require.Equal(t, Pos(18), modifier.Expr.Pos())
+	require.Equal(t, Pos(19), modifier.Expr.End())
+}

@@ -842,10 +842,12 @@ func (p *Parser) parseKeywordArgItem(form keywordArgForm, slot int, allowSeparat
 	if !hasModifier && consumed == 0 {
 		return expr, 0, nil
 	}
+
 	if form.RequireModifier && !hasModifier {
 		return nil, 0, fmt.Errorf("expected one of %s before %s",
 			strings.Join(form.Modifiers, ", "), form.Separators[0])
 	}
+
 	if slot+consumed < form.RequiredSeparators {
 		return nil, 0, fmt.Errorf("expected %s", form.Separators[slot+consumed])
 	}
@@ -924,10 +926,9 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 
 		usedComma = true
 		slot++
-		if usedSeparator && form.ClosedKeywordForm {
-			return nil, fmt.Errorf("expected ')', but got ','")
-		}
-		if usedSeparator && form.MaxSlots > 0 && slot >= form.MaxSlots {
+
+		// The keyword form either forbids commas outright or has run out of slots.
+		if usedSeparator && (form.ClosedKeywordForm || (form.MaxSlots > 0 && slot >= form.MaxSlots)) {
 			return nil, fmt.Errorf("expected ')', but got ','")
 		}
 	}
