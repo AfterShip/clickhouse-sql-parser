@@ -279,12 +279,43 @@ func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	}
 }
 
+// parseJoinLocality consumes a GLOBAL or LOCAL join locality together with the
+// join type that follows it, returning them as join modifiers. It returns a nil
+// slice when the keyword is not followed by a join, leaving the caller to treat
+// the clause as something other than a join.
+func (p *Parser) parseJoinLocality(pos Pos) ([]string, error) {
+	locality := p.current().String
+	_ = p.lexer.consumeToken()
+
+	joinOp := p.parseJoinOp(pos)
+	if len(joinOp) == 0 && !p.matchKeyword(KeywordJoin) {
+		return nil, nil
+	}
+
+	// ARRAY JOIN reads a column list rather than a distributed table, so it has
+	// no locality.
+	if slices.Contains(joinOp, KeywordArray) {
+		return nil, fmt.Errorf("%s cannot be combined with ARRAY JOIN", locality)
+	}
+
+	return append([]string{locality}, joinOp...), nil
+}
+
 func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	var rightExpr Expr
 	var modifiers []string
 	switch {
-	case p.tryConsumeKeywords(KeywordGlobal):
-	case p.tryConsumeKeywords(KeywordLocal):
+	case p.matchOneOfKeywords(KeywordGlobal, KeywordLocal):
+		// GLOBAL/LOCAL only says how the right-hand table is distributed, so the
+		// join type still follows it: `GLOBAL LEFT JOIN` is a LEFT join.
+		modifiers, err = p.parseJoinLocality(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		if modifiers == nil {
+			return nil, nil
+		}
 	case p.tryConsumeTokenKind(TokenKindComma) != nil:
 		return p.parseJoinExpr(p.Pos())
 	default:

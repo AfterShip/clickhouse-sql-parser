@@ -186,6 +186,20 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
+		// ARRAY JOIN reads a column list, so it has no GLOBAL/LOCAL locality
+		"SELECT * FROM t GLOBAL ARRAY JOIN arr AS a",
+		"SELECT * FROM t LOCAL LEFT ARRAY JOIN arr AS a",
+		// A join takes at most one locality, and it precedes the join type
+		"SELECT * FROM t1 GLOBAL LOCAL JOIN t2 ON t1.a = t2.a",
+		"SELECT * FROM t1 LEFT GLOBAL JOIN t2 ON t1.a = t2.a",
+		// GLOBAL is an operator only before IN/NOT IN, and LOCAL is never one
+		"SELECT * FROM t WHERE a GLOBAL LIKE 'x'",
+		"SELECT * FROM t WHERE a GLOBAL NOT LIKE 'x'",
+		"SELECT * FROM t WHERE a GLOBAL BETWEEN 1 AND 2",
+		"SELECT * FROM t WHERE a NOT GLOBAL IN (SELECT 1)",
+		"SELECT * FROM t WHERE a GLOBAL GLOBAL IN (SELECT 1)",
+		"SELECT * FROM t WHERE a LOCAL IN (SELECT 1)",
+		"SELECT * FROM t WHERE a LOCAL NOT IN (SELECT 1)",
 		"00e1d",    // invalid number that leaves curToken nil
 		"CREATE--", // trailing comment pushes p.Pos() past end of input (wrapError out-of-range)
 		// Inputs that previously caused a nil-pointer dereference while
