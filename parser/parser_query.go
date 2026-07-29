@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"slices"
 )
@@ -293,12 +294,29 @@ func (p *Parser) parseJoinLocality(pos Pos) ([]string, error) {
 	}
 
 	// ARRAY JOIN reads a column list rather than a distributed table, so it has
-	// no locality.
-	if slices.Contains(joinOp, KeywordArray) {
+	// no locality. parseJoinOp keeps each modifier's source spelling, so the
+	// keyword has to be matched case-insensitively.
+	if slices.ContainsFunc(joinOp, func(modifier string) bool {
+		return strings.EqualFold(modifier, KeywordArray)
+	}) {
 		return nil, fmt.Errorf("%s cannot be combined with ARRAY JOIN", locality)
 	}
 
 	return append([]string{locality}, joinOp...), nil
+}
+
+// peekJoinAfterLocality reports whether the current GLOBAL/LOCAL keyword is
+// followed by a join operator. It leaves the lexer where it found it, so
+// expression parsing can use it to tell a join locality apart from the GLOBAL IN
+// operator.
+func (p *Parser) peekJoinAfterLocality() bool {
+	savedState := p.lexer.saveState()
+	defer p.lexer.restoreState(savedState)
+
+	_ = p.lexer.consumeToken()
+	p.parseJoinOp(p.Pos())
+
+	return p.matchKeyword(KeywordJoin)
 }
 
 func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
