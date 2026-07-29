@@ -116,6 +116,24 @@ func TestNotInGroupsLikeIn(t *testing.T) {
 	}
 }
 
+func TestSignedNumberAfterClosingBracketIsBinaryOperator(t *testing.T) {
+	// A closing `)` or `]` ends an expression, so the following `+`/`-` is a
+	// binary operator and not the sign of the next numeric literal.
+	for _, sql := range []string{"SELECT (1)-1", "SELECT arr[1]-1", "SELECT f()-1"} {
+		expr := parseSelectItemExpr(t, sql)
+		op, ok := expr.(*BinaryOperation)
+		require.True(t, ok, "%s: expected BinaryOperation at the top, got %T", sql, expr)
+		require.Equal(t, TokenKindMinus, op.Operation, sql)
+		right, ok := op.RightExpr.(*NumberLiteral)
+		require.True(t, ok, "%s: right side should be the unsigned literal `1`, got %T", sql, op.RightExpr)
+		require.Equal(t, "1", right.Literal, sql)
+	}
+
+	// A `+`/`-` after an opening bracket is still a sign, not an operator.
+	expr := parseSelectItemExpr(t, "SELECT arr[-1]")
+	require.Equal(t, "arr[-1]", Format(expr))
+}
+
 func TestIntersect(t *testing.T) {
 	stmts, err := NewParser("SELECT 1 INTERSECT SELECT 2").ParseStmts()
 	require.NoError(t, err)
