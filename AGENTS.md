@@ -45,7 +45,7 @@ Before adding support for new syntax or fixing a parsing issue, **verify that th
 
   ```shell
   # Syntax-check only (does not run the query). Exit code 0 means the SQL parses.
-  echo "SELECT * FROM system.one WHERE a = 100" | clickhouse local --query "EXPLAIN SYNTAX $(cat)"
+  clickhouse local --query "EXPLAIN SYNTAX SELECT * FROM system.one WHERE a = 100"
 
   # Or check DDL/DML that references no data:
   clickhouse local --multiquery --query "CREATE TABLE t (id UInt64) ENGINE = Memory; DESCRIBE t;"
