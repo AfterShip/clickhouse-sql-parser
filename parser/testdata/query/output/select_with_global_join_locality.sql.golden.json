@@ -1,0 +1,1756 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 46,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 7,
+          "NameEnd": 7
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 9,
+      "Expr": {
+        "JoinPos": 14,
+        "Left": {
+          "Table": {
+            "TablePos": 14,
+            "TableEnd": 16,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 14,
+                "NameEnd": 16
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 16,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 17,
+          "Left": {
+            "Table": {
+              "TablePos": 29,
+              "TableEnd": 31,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 29,
+                  "NameEnd": 31
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 31,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 32,
+            "On": {
+              "ListPos": 35,
+              "ListEnd": 46,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 35,
+                          "NameEnd": 37
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 38,
+                          "NameEnd": 39
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 42,
+                          "NameEnd": 44
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 45,
+                          "NameEnd": 46
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 49,
+    "StatementEnd": 101,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 56,
+          "NameEnd": 56
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 58,
+      "Expr": {
+        "JoinPos": 63,
+        "Left": {
+          "Table": {
+            "TablePos": 63,
+            "TableEnd": 65,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 63,
+                "NameEnd": 65
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 65,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 66,
+          "Left": {
+            "Table": {
+              "TablePos": 84,
+              "TableEnd": 86,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 84,
+                  "NameEnd": 86
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 86,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "INNER",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 87,
+            "On": {
+              "ListPos": 90,
+              "ListEnd": 101,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 90,
+                          "NameEnd": 92
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 93,
+                          "NameEnd": 94
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 97,
+                          "NameEnd": 99
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 100,
+                          "NameEnd": 101
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 104,
+    "StatementEnd": 155,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 111,
+          "NameEnd": 111
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 113,
+      "Expr": {
+        "JoinPos": 118,
+        "Left": {
+          "Table": {
+            "TablePos": 118,
+            "TableEnd": 120,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 118,
+                "NameEnd": 120
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 120,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 121,
+          "Left": {
+            "Table": {
+              "TablePos": 138,
+              "TableEnd": 140,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 138,
+                  "NameEnd": 140
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 140,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "LEFT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 141,
+            "On": {
+              "ListPos": 144,
+              "ListEnd": 155,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 144,
+                          "NameEnd": 146
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 147,
+                          "NameEnd": 148
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 151,
+                          "NameEnd": 153
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 154,
+                          "NameEnd": 155
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 158,
+    "StatementEnd": 209,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 165,
+          "NameEnd": 165
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 167,
+      "Expr": {
+        "JoinPos": 172,
+        "Left": {
+          "Table": {
+            "TablePos": 172,
+            "TableEnd": 174,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 172,
+                "NameEnd": 174
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 174,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 175,
+          "Left": {
+            "Table": {
+              "TablePos": 198,
+              "TableEnd": 200,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 198,
+                  "NameEnd": 200
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 200,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "LEFT",
+            "OUTER",
+            "JOIN"
+          ],
+          "Constraints": {
+            "UsingPos": 201,
+            "Using": {
+              "ListPos": 208,
+              "ListEnd": 209,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "a",
+                    "QuoteType": 1,
+                    "NamePos": 208,
+                    "NameEnd": 209
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 213,
+    "StatementEnd": 268,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 220,
+          "NameEnd": 220
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 222,
+      "Expr": {
+        "JoinPos": 227,
+        "Left": {
+          "Table": {
+            "TablePos": 227,
+            "TableEnd": 229,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 227,
+                "NameEnd": 229
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 229,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 230,
+          "Left": {
+            "Table": {
+              "TablePos": 251,
+              "TableEnd": 253,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 251,
+                  "NameEnd": 253
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 253,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "ANY",
+            "LEFT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 254,
+            "On": {
+              "ListPos": 257,
+              "ListEnd": 268,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 257,
+                          "NameEnd": 259
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 260,
+                          "NameEnd": 261
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 264,
+                          "NameEnd": 266
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 267,
+                          "NameEnd": 268
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 271,
+    "StatementEnd": 308,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 278,
+          "NameEnd": 278
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 280,
+      "Expr": {
+        "JoinPos": 285,
+        "Left": {
+          "Table": {
+            "TablePos": 285,
+            "TableEnd": 287,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 285,
+                "NameEnd": 287
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 287,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 288,
+          "Left": {
+            "Table": {
+              "TablePos": 306,
+              "TableEnd": 308,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 306,
+                  "NameEnd": 308
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 308,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "CROSS",
+            "JOIN"
+          ],
+          "Constraints": null
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 311,
+    "StatementEnd": 365,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 318,
+          "NameEnd": 318
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 320,
+      "Expr": {
+        "JoinPos": 325,
+        "Left": {
+          "Table": {
+            "TablePos": 325,
+            "TableEnd": 332,
+            "Alias": null,
+            "Expr": {
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t1",
+                  "QuoteType": 1,
+                  "NamePos": 325,
+                  "NameEnd": 327
+                }
+              },
+              "AliasPos": 331,
+              "Alias": {
+                "Name": "x",
+                "QuoteType": 1,
+                "NamePos": 331,
+                "NameEnd": 332
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 332,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 333,
+          "Left": {
+            "Table": {
+              "TablePos": 349,
+              "TableEnd": 351,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 349,
+                  "NameEnd": 351
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 351,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "LOCAL",
+            "FULL",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 352,
+            "On": {
+              "ListPos": 355,
+              "ListEnd": 365,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "x",
+                          "QuoteType": 1,
+                          "NamePos": 355,
+                          "NameEnd": 356
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 357,
+                          "NameEnd": 358
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 361,
+                          "NameEnd": 363
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 364,
+                          "NameEnd": 365
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 368,
+    "StatementEnd": 417,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 375,
+          "NameEnd": 375
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 377,
+      "Expr": {
+        "JoinPos": 382,
+        "Left": {
+          "Table": {
+            "TablePos": 382,
+            "TableEnd": 389,
+            "Alias": null,
+            "Expr": {
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t1",
+                  "QuoteType": 1,
+                  "NamePos": 382,
+                  "NameEnd": 384
+                }
+              },
+              "AliasPos": 388,
+              "Alias": {
+                "Name": "x",
+                "QuoteType": 1,
+                "NamePos": 388,
+                "NameEnd": 389
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 389,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 390,
+          "Left": {
+            "Table": {
+              "TablePos": 407,
+              "TableEnd": 409,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 407,
+                  "NameEnd": 409
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 409,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "LOCAL",
+            "RIGHT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "UsingPos": 410,
+            "Using": {
+              "ListPos": 416,
+              "ListEnd": 417,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "a",
+                    "QuoteType": 1,
+                    "NamePos": 416,
+                    "NameEnd": 417
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 420,
+    "StatementEnd": 506,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 427,
+          "NameEnd": 427
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 429,
+      "Expr": {
+        "JoinPos": 434,
+        "Left": {
+          "Table": {
+            "TablePos": 434,
+            "TableEnd": 436,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 434,
+                "NameEnd": 436
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 436,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 437,
+          "Left": {
+            "Table": {
+              "TablePos": 454,
+              "TableEnd": 456,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 454,
+                  "NameEnd": 456
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 456,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": {
+            "JoinPos": 472,
+            "Left": {
+              "Table": {
+                "TablePos": 489,
+                "TableEnd": 491,
+                "Alias": null,
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "t3",
+                    "QuoteType": 1,
+                    "NamePos": 489,
+                    "NameEnd": 491
+                  }
+                },
+                "HasFinal": false
+              },
+              "StatementEnd": 491,
+              "SampleRatio": null,
+              "HasFinal": false
+            },
+            "Right": null,
+            "Modifiers": [
+              "GLOBAL",
+              "LEFT",
+              "JOIN"
+            ],
+            "Constraints": {
+              "OnPos": 492,
+              "On": {
+                "ListPos": 495,
+                "ListEnd": 506,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "LeftExpr": {
+                        "Fields": [
+                          {
+                            "Name": "t1",
+                            "QuoteType": 1,
+                            "NamePos": 495,
+                            "NameEnd": 497
+                          },
+                          {
+                            "Name": "a",
+                            "QuoteType": 1,
+                            "NamePos": 498,
+                            "NameEnd": 499
+                          }
+                        ]
+                      },
+                      "Operation": "=",
+                      "RightExpr": {
+                        "Fields": [
+                          {
+                            "Name": "t3",
+                            "QuoteType": 1,
+                            "NamePos": 502,
+                            "NameEnd": 504
+                          },
+                          {
+                            "Name": "a",
+                            "QuoteType": 1,
+                            "NamePos": 505,
+                            "NameEnd": 506
+                          }
+                        ]
+                      },
+                      "HasGlobal": false,
+                      "HasNot": false
+                    },
+                    "Alias": null
+                  }
+                ]
+              }
+            }
+          },
+          "Modifiers": [
+            "GLOBAL",
+            "LEFT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 457,
+            "On": {
+              "ListPos": 460,
+              "ListEnd": 471,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 460,
+                          "NameEnd": 462
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 463,
+                          "NameEnd": 464
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 467,
+                          "NameEnd": 469
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 470,
+                          "NameEnd": 471
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 509,
+    "StatementEnd": 560,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 516,
+          "NameEnd": 516
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 518,
+      "Expr": {
+        "Table": {
+          "TablePos": 523,
+          "TableEnd": 524,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 523,
+              "NameEnd": 524
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 524,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 525,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "a",
+          "QuoteType": 1,
+          "NamePos": 531,
+          "NameEnd": 532
+        },
+        "Operation": "GLOBAL IN",
+        "RightExpr": {
+          "HasParen": true,
+          "Select": {
+            "SelectPos": 544,
+            "StatementEnd": 560,
+            "With": null,
+            "Top": null,
+            "HasDistinct": false,
+            "DistinctOn": null,
+            "SelectItems": [
+              {
+                "Expr": {
+                  "Name": "b",
+                  "QuoteType": 1,
+                  "NamePos": 551,
+                  "NameEnd": 552
+                },
+                "Modifiers": [],
+                "Alias": null
+              }
+            ],
+            "From": {
+              "FromPos": 553,
+              "Expr": {
+                "Table": {
+                  "TablePos": 558,
+                  "TableEnd": 560,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "t2",
+                      "QuoteType": 1,
+                      "NamePos": 558,
+                      "NameEnd": 560
+                    }
+                  },
+                  "HasFinal": false
+                },
+                "StatementEnd": 560,
+                "SampleRatio": null,
+                "HasFinal": false
+              }
+            },
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "WithTotal": false,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Limit": null,
+            "Settings": null,
+            "Format": null,
+            "UnionAll": null,
+            "UnionDistinct": null,
+            "Except": null,
+            "Intersect": null
+          }
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 564,
+    "StatementEnd": 619,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 571,
+          "NameEnd": 571
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 573,
+      "Expr": {
+        "Table": {
+          "TablePos": 578,
+          "TableEnd": 579,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 578,
+              "NameEnd": 579
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 579,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 580,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "a",
+          "QuoteType": 1,
+          "NamePos": 586,
+          "NameEnd": 587
+        },
+        "Operation": "GLOBAL NOT IN",
+        "RightExpr": {
+          "HasParen": true,
+          "Select": {
+            "SelectPos": 603,
+            "StatementEnd": 619,
+            "With": null,
+            "Top": null,
+            "HasDistinct": false,
+            "DistinctOn": null,
+            "SelectItems": [
+              {
+                "Expr": {
+                  "Name": "b",
+                  "QuoteType": 1,
+                  "NamePos": 610,
+                  "NameEnd": 611
+                },
+                "Modifiers": [],
+                "Alias": null
+              }
+            ],
+            "From": {
+              "FromPos": 612,
+              "Expr": {
+                "Table": {
+                  "TablePos": 617,
+                  "TableEnd": 619,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "t2",
+                      "QuoteType": 1,
+                      "NamePos": 617,
+                      "NameEnd": 619
+                    }
+                  },
+                  "HasFinal": false
+                },
+                "StatementEnd": 619,
+                "SampleRatio": null,
+                "HasFinal": false
+              }
+            },
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "WithTotal": false,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Limit": null,
+            "Settings": null,
+            "Format": null,
+            "UnionAll": null,
+            "UnionDistinct": null,
+            "Except": null,
+            "Intersect": null
+          }
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 623,
+    "StatementEnd": 717,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 630,
+          "NameEnd": 630
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 632,
+      "Expr": {
+        "JoinPos": 637,
+        "Left": {
+          "Table": {
+            "TablePos": 637,
+            "TableEnd": 639,
+            "Alias": null,
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "t1",
+                "QuoteType": 1,
+                "NamePos": 637,
+                "NameEnd": 639
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 639,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 640,
+          "Left": {
+            "Table": {
+              "TablePos": 657,
+              "TableEnd": 659,
+              "Alias": null,
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t2",
+                  "QuoteType": 1,
+                  "NamePos": 657,
+                  "NameEnd": 659
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 659,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "GLOBAL",
+            "LEFT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 660,
+            "On": {
+              "ListPos": 663,
+              "ListEnd": 674,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t1",
+                          "QuoteType": 1,
+                          "NamePos": 663,
+                          "NameEnd": 665
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 666,
+                          "NameEnd": 667
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "t2",
+                          "QuoteType": 1,
+                          "NamePos": 670,
+                          "NameEnd": 672
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 673,
+                          "NameEnd": 674
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 675,
+      "Expr": {
+        "LeftExpr": {
+          "Fields": [
+            {
+              "Name": "t1",
+              "QuoteType": 1,
+              "NamePos": 681,
+              "NameEnd": 683
+            },
+            {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 684,
+              "NameEnd": 685
+            }
+          ]
+        },
+        "Operation": "GLOBAL NOT IN",
+        "RightExpr": {
+          "HasParen": true,
+          "Select": {
+            "SelectPos": 701,
+            "StatementEnd": 717,
+            "With": null,
+            "Top": null,
+            "HasDistinct": false,
+            "DistinctOn": null,
+            "SelectItems": [
+              {
+                "Expr": {
+                  "Name": "b",
+                  "QuoteType": 1,
+                  "NamePos": 708,
+                  "NameEnd": 709
+                },
+                "Modifiers": [],
+                "Alias": null
+              }
+            ],
+            "From": {
+              "FromPos": 710,
+              "Expr": {
+                "Table": {
+                  "TablePos": 715,
+                  "TableEnd": 717,
+                  "Alias": null,
+                  "Expr": {
+                    "Database": null,
+                    "Table": {
+                      "Name": "t3",
+                      "QuoteType": 1,
+                      "NamePos": 715,
+                      "NameEnd": 717
+                    }
+                  },
+                  "HasFinal": false
+                },
+                "StatementEnd": 717,
+                "SampleRatio": null,
+                "HasFinal": false
+              }
+            },
+            "Window": null,
+            "Prewhere": null,
+            "Where": null,
+            "GroupBy": null,
+            "WithTotal": false,
+            "Having": null,
+            "OrderBy": null,
+            "LimitBy": null,
+            "Limit": null,
+            "Settings": null,
+            "Format": null,
+            "UnionAll": null,
+            "UnionDistinct": null,
+            "Except": null,
+            "Intersect": null
+          }
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]

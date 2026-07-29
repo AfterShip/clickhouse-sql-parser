@@ -79,8 +79,14 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
-		// GLOBAL is only valid before IN, so it binds like IN itself.
-		return precedenceIn
+		// GLOBAL is an operator only before IN/NOT IN, where it binds like IN
+		// itself. Anywhere else it belongs to the enclosing clause — a join
+		// locality in `ON a = b GLOBAL LEFT JOIN c` — and must not bind here.
+		if p.peekKeyword(KeywordIn) || p.peekKeyword(KeywordNot) {
+			return precedenceIn
+		}
+
+		return PrecedenceUnknown
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return PrecedenceQuery
 	default:
@@ -159,16 +165,23 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return p.parseBetweenClause(expr, false)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
+		negated := p.tryConsumeKeywords(KeywordNot)
 		if p.expectKeyword(KeywordIn) != nil {
 			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.currentTokenKind())
 		}
+
+		op := TokenKind("GLOBAL IN")
+		if negated {
+			op = "GLOBAL NOT IN"
+		}
+
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
 		if err != nil {
 			return nil, err
 		}
 		return &BinaryOperation{
 			LeftExpr:  expr,
-			Operation: "GLOBAL IN",
+			Operation: op,
 			RightExpr: rightExpr,
 		}, nil
 	case p.matchTokenKind(TokenKindDot):
