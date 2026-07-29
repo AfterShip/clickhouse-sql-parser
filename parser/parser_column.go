@@ -1554,6 +1554,13 @@ func (p *Parser) tryParseCompressionLevel(pos Pos) (*NumberLiteral, error) {
 		return nil, nil // nolint
 	}
 
+	if p.matchTokenKind(TokenKindRParen) {
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
+			return nil, err
+		}
+		return nil, nil // nolint
+	}
+
 	num, err := p.parseNumber(pos)
 	if err != nil {
 		return nil, err
