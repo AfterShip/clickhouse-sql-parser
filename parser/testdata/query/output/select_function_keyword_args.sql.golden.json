@@ -1008,7 +1008,7 @@
   },
   {
     "SelectPos": 493,
-    "StatementEnd": 520,
+    "StatementEnd": 530,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -1017,34 +1017,25 @@
       {
         "Expr": {
           "Name": {
-            "Name": "trim",
+            "Name": "max",
             "QuoteType": 1,
             "NamePos": 500,
-            "NameEnd": 504
+            "NameEnd": 503
           },
           "Params": {
-            "LeftParenPos": 504,
-            "RightParenPos": 512,
+            "LeftParenPos": 503,
+            "RightParenPos": 508,
             "Items": {
-              "ListPos": 505,
-              "ListEnd": 512,
+              "ListPos": 504,
+              "ListEnd": 508,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
                     "Name": "both",
                     "QuoteType": 1,
-                    "NamePos": 505,
-                    "NameEnd": 509
-                  },
-                  "Alias": null
-                },
-                {
-                  "Expr": {
-                    "Name": "x",
-                    "QuoteType": 1,
-                    "NamePos": 511,
-                    "NameEnd": 512
+                    "NamePos": 504,
+                    "NameEnd": 508
                   },
                   "Alias": null
                 }
@@ -1055,27 +1046,42 @@
         },
         "Modifiers": [],
         "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": "a",
+          "QuoteType": 1,
+          "NamePos": 511,
+          "NameEnd": 512
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "placing",
+          "QuoteType": 1,
+          "NamePos": 516,
+          "NameEnd": 523
+        }
       }
     ],
     "From": {
-      "FromPos": 514,
+      "FromPos": 524,
       "Expr": {
         "Table": {
-          "TablePos": 519,
-          "TableEnd": 520,
+          "TablePos": 529,
+          "TableEnd": 530,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t",
               "QuoteType": 1,
-              "NamePos": 519,
-              "NameEnd": 520
+              "NamePos": 529,
+              "NameEnd": 530
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 520,
+        "StatementEnd": 530,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -1097,8 +1103,8 @@
     "Intersect": null
   },
   {
-    "SelectPos": 522,
-    "StatementEnd": 552,
+    "SelectPos": 532,
+    "StatementEnd": 562,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -1108,8 +1114,8 @@
         "Expr": {
           "Name": "overlay",
           "QuoteType": 1,
-          "NamePos": 529,
-          "NameEnd": 536
+          "NamePos": 539,
+          "NameEnd": 546
         },
         "Modifiers": [],
         "Alias": null
@@ -1118,36 +1124,147 @@
         "Expr": {
           "Name": "placing",
           "QuoteType": 1,
-          "NamePos": 538,
-          "NameEnd": 545
+          "NamePos": 548,
+          "NameEnd": 555
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 546,
+      "FromPos": 556,
       "Expr": {
         "Table": {
-          "TablePos": 551,
-          "TableEnd": 552,
+          "TablePos": 561,
+          "TableEnd": 562,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "t",
               "QuoteType": 1,
-              "NamePos": 551,
-              "NameEnd": 552
+              "NamePos": 561,
+              "NameEnd": 562
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 552,
+        "StatementEnd": 562,
         "SampleRatio": null,
         "HasFinal": false
       }
     },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 564,
+    "StatementEnd": 616,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "trim",
+            "QuoteType": 1,
+            "NamePos": 571,
+            "NameEnd": 575
+          },
+          "Params": {
+            "LeftParenPos": 575,
+            "RightParenPos": 584,
+            "Items": {
+              "ListPos": 577,
+              "ListEnd": 584,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 577,
+                    "LiteralEnd": 578,
+                    "Literal": "x"
+                  },
+                  "Alias": {
+                    "Name": "y",
+                    "QuoteType": 1,
+                    "NamePos": 583,
+                    "NameEnd": 584
+                  }
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "substring",
+            "QuoteType": 1,
+            "NamePos": 587,
+            "NameEnd": 596
+          },
+          "Params": {
+            "LeftParenPos": 596,
+            "RightParenPos": 616,
+            "Items": {
+              "ListPos": 598,
+              "ListEnd": 616,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "LiteralPos": 598,
+                      "LiteralEnd": 603,
+                      "Literal": "hello"
+                    },
+                    "Operation": "FROM",
+                    "RightExpr": {
+                      "NumPos": 610,
+                      "NumEnd": 611,
+                      "Literal": "2",
+                      "Base": 10
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": {
+                    "Name": "s",
+                    "QuoteType": 1,
+                    "NamePos": 615,
+                    "NameEnd": 616
+                  }
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
     "Window": null,
     "Prewhere": null,
     "Where": null,

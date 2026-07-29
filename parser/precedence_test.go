@@ -155,13 +155,13 @@ func TestTrimKeywordArgs(t *testing.T) {
 	modifier, ok := from.LeftExpr.(*UnaryExpr)
 	require.True(t, ok, "left side should be the BOTH modifier, got %T", from.LeftExpr)
 	require.Equal(t, TokenKind(KeywordBoth), modifier.Kind)
-	require.Equal(t, "SELECT trim(BOTH ' ' FROM ' x ')", Format(mustParseOne(t, "SELECT trim(BOTH ' ' FROM ' x ')")))
+	require.Equal(t, "SELECT trim(BOTH ' ' FROM ' x ')", Format(parseOneStmt(t, "SELECT trim(BOTH ' ' FROM ' x ')")))
 
 	for _, sql := range []string{
 		"SELECT trim(LEADING '0' FROM '00042')",
 		"SELECT trim(TRAILING '/' FROM '/api/')",
 	} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
 	// The modifier, the characters and FROM are all required.
@@ -174,15 +174,22 @@ func TestTrimKeywordArgs(t *testing.T) {
 		require.Error(t, err, sql)
 	}
 
-	// BOTH is not reserved, so it stays usable as an ordinary column name.
-	for _, sql := range []string{"SELECT trim(both) FROM t", "SELECT trim(both, x) FROM t", "SELECT max(both) FROM t"} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	// BOTH is not reserved, so it stays usable as an ordinary name. ClickHouse
+	// rejects trim(both) itself — its trim grammar always reads BOTH as the
+	// modifier — so only the non-trim spellings are asserted.
+	for _, sql := range []string{"SELECT both FROM t", "SELECT max(both) FROM t", "SELECT a AS both FROM t"} {
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
+	}
+
+	// An argument alias works as it does for any other function.
+	for _, sql := range []string{"SELECT trim('x' AS y)", "SELECT trim(BOTH ' ' FROM ' x ' AS y)"} {
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
 	// A trailing comma argument here is a ClickHouse arity error, not a syntax
 	// error, so the parser accepts it.
 	for _, sql := range []string{"SELECT trim(BOTH ' ' FROM ' x ', 'y')", "SELECT trim('  x  ', 'y')"} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 }
 
@@ -201,7 +208,7 @@ func TestSubstringKeywordArgs(t *testing.T) {
 		"SELECT substring(concat(a, b) FROM x + 1 FOR len(y))",
 		"SELECT substring('hello', 2, 3)",
 	} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
 	// A comma fills the same slot a separator keyword would, so substring mixes
@@ -210,7 +217,7 @@ func TestSubstringKeywordArgs(t *testing.T) {
 		"SELECT substring('hello', 2 FOR 3)",
 		"SELECT substring('hello' FROM 2, 3)",
 	} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
 	// A fourth slot is a syntax error however the earlier separators were spelled.
@@ -233,7 +240,7 @@ func TestSubstringKeywordArgs(t *testing.T) {
 	}
 
 	// FROM keeps its clause meaning outside these argument lists.
-	require.Equal(t, "SELECT substring FROM t", Format(mustParseOne(t, "SELECT substring FROM t")))
+	require.Equal(t, "SELECT substring FROM t", Format(parseOneStmt(t, "SELECT substring FROM t")))
 }
 
 func TestOverlayKeywordArgs(t *testing.T) {
@@ -253,7 +260,7 @@ func TestOverlayKeywordArgs(t *testing.T) {
 		"SELECT overlayUTF8(s PLACING r FROM x + 1 FOR len(y)) FROM t",
 		"SELECT overlay(a, b, c) FROM t",
 	} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
 	// Separators only count in the declared order, and both PLACING and FROM
@@ -286,21 +293,13 @@ func TestOverlayKeywordArgs(t *testing.T) {
 		"SELECT overlay('Hello world', 'SQL', 1)",
 		"SELECT overlay('Hello world', 'SQL', 1, 2)",
 	} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
 	// OVERLAY and PLACING are non-reserved, so they stay usable as names.
 	for _, sql := range []string{"SELECT overlay, placing FROM t", "SELECT a AS overlay FROM t", "SELECT max(placing) FROM t"} {
-		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
-}
-
-func mustParseOne(t *testing.T, sql string) Expr {
-	t.Helper()
-	stmts, err := NewParser(sql).ParseStmts()
-	require.NoError(t, err, sql)
-	require.Len(t, stmts, 1, sql)
-	return stmts[0]
 }
 
 func TestIntersect(t *testing.T) {

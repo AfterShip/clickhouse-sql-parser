@@ -890,6 +890,8 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 	}
 
 	itemsPos := p.Pos()
+	hasDistinct := p.tryConsumeKeywords(KeywordDistinct)
+
 	items := make([]Expr, 0)
 	// A comma advances the argument slot just as a separator keyword does, so the
 	// index runs across the list instead of resetting per item.
@@ -906,9 +908,16 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 		}
 		slot += consumed
 
-		// Wrapped so arguments have the same shape however they were separated
-		// (see parseColumnsExpr).
-		items = append(items, &ColumnExpr{Expr: item})
+		// Arguments carry an optional alias and the same ColumnExpr wrapper they
+		// would on the comma-only path (see parseColumnsExpr).
+		var alias *Ident
+		if p.tryConsumeKeywords(KeywordAs) {
+			if alias, err = p.parseAnyKeyword(); err != nil {
+				return nil, err
+			}
+		}
+
+		items = append(items, &ColumnExpr{Expr: item, Alias: alias})
 		if p.tryConsumeTokenKind(TokenKindComma) == nil {
 			break
 		}
@@ -916,7 +925,7 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 		usedComma = true
 		slot++
 		if usedSeparator && form.ClosedKeywordForm {
-			return nil, fmt.Errorf("expected ')' after keyword arguments, but got ','")
+			return nil, fmt.Errorf("expected ')', but got ','")
 		}
 		if usedSeparator && form.MaxSlots > 0 && slot >= form.MaxSlots {
 			return nil, fmt.Errorf("expected ')', but got ','")
@@ -924,9 +933,10 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 	}
 
 	itemList := &ColumnExprList{
-		ListPos: itemsPos,
-		ListEnd: itemsPos,
-		Items:   items,
+		ListPos:     itemsPos,
+		ListEnd:     itemsPos,
+		HasDistinct: hasDistinct,
+		Items:       items,
 	}
 	if len(items) > 0 {
 		itemList.ListEnd = items[len(items)-1].End()
@@ -937,11 +947,22 @@ func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*P
 		return nil, err
 	}
 
-	return &ParamExprList{
+	paramExprList := &ParamExprList{
 		LeftParenPos:  pos,
 		RightParenPos: rightParenPos,
 		Items:         itemList,
-	}, nil
+	}
+	// Parametric argument lists, as in parseFunctionParams.
+	if p.matchTokenKind(TokenKindLParen) {
+		columnArgList, err := p.parseColumnArgList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		paramExprList.ColumnArgList = columnArgList
+	}
+
+	return paramExprList, nil
 }
 
 func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {

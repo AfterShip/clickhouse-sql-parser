@@ -10,8 +10,9 @@ SELECT substring(concat(a, b) FROM x + 1 FOR len(y)) FROM t;
 SELECT overlay('Hello world' PLACING 'SQL' FROM 7);
 SELECT overlay('Hello world' PLACING 'SQL' FROM 7 FOR 5);
 SELECT overlayUTF8(s PLACING r FROM x + 1 FOR len(y)) FROM t;
-SELECT trim(both, x) FROM t;
+SELECT max(both), a AS placing FROM t;
 SELECT overlay, placing FROM t;
+SELECT trim('x' AS y), substring('hello' FROM 2 AS s);
 
 
 -- Beautify SQL:
@@ -42,7 +43,8 @@ SELECT
 FROM
   t;
 SELECT
-  trim(both, x)
+  max(both),
+  a AS placing
 FROM
   t;
 SELECT
@@ -50,3 +52,6 @@ SELECT
   placing
 FROM
   t;
+SELECT
+  trim('x' AS y),
+  substring('hello' FROM 2 AS s);
