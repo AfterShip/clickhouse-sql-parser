@@ -134,6 +134,132 @@ func TestSignedNumberAfterClosingBracketIsBinaryOperator(t *testing.T) {
 	require.Equal(t, "arr[-1]", Format(expr))
 }
 
+// keywordArgOf returns the sole argument of a single-argument function call,
+// unwrapping the ColumnExpr that every function argument is wrapped in.
+func keywordArgOf(t *testing.T, sql, name string) Expr {
+	t.Helper()
+	expr := parseSelectItemExpr(t, sql)
+	fn, ok := expr.(*FunctionExpr)
+	require.True(t, ok, "%s: expected FunctionExpr, got %T", sql, expr)
+	require.Equal(t, name, fn.Name.Name, sql)
+	require.Len(t, fn.Params.Items.Items, 1, sql)
+	arg, ok := fn.Params.Items.Items[0].(*ColumnExpr)
+	require.True(t, ok, "%s: argument should be wrapped in ColumnExpr, got %T", sql, fn.Params.Items.Items[0])
+	return arg.Expr
+}
+
+func TestTrimKeywordArgs(t *testing.T) {
+	// trim(BOTH ' ' FROM s) reuses the existing nodes: the modifier is a
+	// UnaryExpr, the FROM separator a BinaryOperation.
+	from, ok := keywordArgOf(t, "SELECT trim(BOTH ' ' FROM ' x ')", "trim").(*BinaryOperation)
+	require.True(t, ok)
+	require.Equal(t, TokenKind(KeywordFrom), from.Operation)
+	modifier, ok := from.LeftExpr.(*UnaryExpr)
+	require.True(t, ok, "left side should be the BOTH modifier, got %T", from.LeftExpr)
+	require.Equal(t, TokenKind(KeywordBoth), modifier.Kind)
+	require.Equal(t, "SELECT trim(BOTH ' ' FROM ' x ')", Format(mustParseOne(t, "SELECT trim(BOTH ' ' FROM ' x ')")))
+
+	for _, sql := range []string{
+		"SELECT trim(LEADING '0' FROM '00042')",
+		"SELECT trim(TRAILING '/' FROM '/api/')",
+	} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+
+	// ClickHouse requires the modifier, the characters and FROM, so all of
+	// these stay rejected.
+	for _, sql := range []string{
+		"SELECT trim(' ' FROM ' x ')",
+		"SELECT trim(BOTH FROM ' x ')",
+		"SELECT trim(BOTH ' ')",
+	} {
+		_, err := NewParser(sql).ParseStmts()
+		require.Error(t, err, sql)
+	}
+
+	// BOTH is not reserved, so it stays usable as an ordinary column name.
+	for _, sql := range []string{"SELECT trim(both) FROM t", "SELECT trim(both, x) FROM t", "SELECT max(both) FROM t"} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+}
+
+func TestSubstringKeywordArgs(t *testing.T) {
+	// substring(s FROM 2 FOR 3) nests left-to-right: ((s FROM 2) FOR 3).
+	forOp, ok := keywordArgOf(t, "SELECT substring('hello' FROM 2 FOR 3)", "substring").(*BinaryOperation)
+	require.True(t, ok)
+	require.Equal(t, TokenKind(KeywordFor), forOp.Operation)
+	fromOp, ok := forOp.LeftExpr.(*BinaryOperation)
+	require.True(t, ok, "left side should be the FROM operation, got %T", forOp.LeftExpr)
+	require.Equal(t, TokenKind(KeywordFrom), fromOp.Operation)
+
+	// FOR is optional, FROM is not, and the arguments are ordinary expressions.
+	for _, sql := range []string{
+		"SELECT substring('hello' FROM 2)",
+		"SELECT substring(concat(a, b) FROM x + 1 FOR len(y))",
+		"SELECT substring('hello', 2, 3)",
+	} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+
+	// FOR alone is rejected as ClickHouse rejects it, and substringUTF8 has no
+	// keyword form there even though overlayUTF8 does.
+	for _, sql := range []string{
+		"SELECT substring('hello' FOR 3)",
+		"SELECT substringUTF8('hello' FROM 2 FOR 3)",
+	} {
+		_, err := NewParser(sql).ParseStmts()
+		require.Error(t, err, sql)
+	}
+
+	// FROM keeps its clause meaning outside these argument lists.
+	require.Equal(t, "SELECT substring FROM t", Format(mustParseOne(t, "SELECT substring FROM t")))
+}
+
+func TestOverlayKeywordArgs(t *testing.T) {
+	// overlay(s PLACING r FROM n FOR m) chains three separators in order.
+	forOp, ok := keywordArgOf(t, "SELECT overlay('Hello world' PLACING 'SQL' FROM 7 FOR 5)", "overlay").(*BinaryOperation)
+	require.True(t, ok)
+	require.Equal(t, TokenKind(KeywordFor), forOp.Operation)
+	fromOp, ok := forOp.LeftExpr.(*BinaryOperation)
+	require.True(t, ok, "expected the FROM operation, got %T", forOp.LeftExpr)
+	require.Equal(t, TokenKind(KeywordFrom), fromOp.Operation)
+	placingOp, ok := fromOp.LeftExpr.(*BinaryOperation)
+	require.True(t, ok, "expected the PLACING operation, got %T", fromOp.LeftExpr)
+	require.Equal(t, TokenKind(KeywordPlacing), placingOp.Operation)
+
+	for _, sql := range []string{
+		"SELECT overlay('Hello world' PLACING 'SQL' FROM 7)",
+		"SELECT overlayUTF8(s PLACING r FROM x + 1 FOR len(y)) FROM t",
+		"SELECT overlay(a, b, c) FROM t",
+	} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+
+	// Separators only count in the declared order, and both PLACING and FROM
+	// are required — ClickHouse rejects overlay(s PLACING r).
+	for _, sql := range []string{
+		"SELECT overlay(s FROM 2 PLACING r)",
+		"SELECT overlay(s FOR 3)",
+		"SELECT overlay('Hello world' PLACING 'SQL')",
+	} {
+		_, err := NewParser(sql).ParseStmts()
+		require.Error(t, err, sql)
+	}
+
+	// OVERLAY and PLACING are non-reserved, so they stay usable as names.
+	for _, sql := range []string{"SELECT overlay, placing FROM t", "SELECT a AS overlay FROM t", "SELECT max(placing) FROM t"} {
+		require.Equal(t, sql, Format(mustParseOne(t, sql)), sql)
+	}
+}
+
+func mustParseOne(t *testing.T, sql string) Expr {
+	t.Helper()
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err, sql)
+	require.Len(t, stmts, 1, sql)
+	return stmts[0]
+}
+
 func TestIntersect(t *testing.T) {
 	stmts, err := NewParser("SELECT 1 INTERSECT SELECT 2").ParseStmts()
 	require.NoError(t, err)

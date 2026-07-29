@@ -767,6 +767,170 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 	}, nil
 }
 
+// keywordArgForm describes the SQL keyword-separated argument syntax a function
+// accepts in addition to comma-separated arguments: `trim(BOTH ' ' FROM s)`,
+// `substring(s FROM 2 FOR 3)`. Modifiers are the leading keywords the form may
+// start with; Separators are the keywords that stand in for a comma, in the
+// order they may appear.
+//
+// These keywords are recognised only inside the argument list of the functions
+// below, never through getNextPrecedence: FROM also starts a clause, so giving
+// it a precedence would make `SELECT x FROM t` parse `x FROM t` as one
+// expression and swallow the FROM clause.
+// Separators must appear in the declared order and form a prefix of the list,
+// so substring accepts `s FROM 2` and `s FROM 2 FOR 3` but not `s FOR 3`. Once
+// the keyword form is in use — a modifier or any separator was seen — the first
+// RequiredSeparators of them are mandatory and RequireModifier demands a
+// modifier, matching what ClickHouse's grammar rejects: `trim(' ' FROM s)`,
+// `trim(BOTH ' ')` and `overlay(s PLACING r)` are all syntax errors there.
+type keywordArgForm struct {
+	Modifiers          []string
+	RequireModifier    bool
+	Separators         []string
+	RequiredSeparators int
+}
+
+// Verified against ClickHouse 26.8.1: substringUTF8 has no keyword form even
+// though overlayUTF8 does.
+var keywordArgFunctions = map[string]keywordArgForm{
+	KeywordTrim: {
+		Modifiers:          []string{KeywordBoth, KeywordLeading, KeywordTrailing},
+		RequireModifier:    true,
+		Separators:         []string{KeywordFrom},
+		RequiredSeparators: 1,
+	},
+	KeywordSubstring: {
+		Separators:         []string{KeywordFrom, KeywordFor},
+		RequiredSeparators: 1,
+	},
+	KeywordOverlay: {
+		Separators:         []string{KeywordPlacing, KeywordFrom, KeywordFor},
+		RequiredSeparators: 2,
+	},
+	KeywordOverlayUTF8: {
+		Separators:         []string{KeywordPlacing, KeywordFrom, KeywordFor},
+		RequiredSeparators: 2,
+	},
+}
+
+// parseKeywordArgItem parses one argument of a function that accepts keyword
+// separators, folding `BOTH ' '` into a UnaryExpr and each `FROM x` / `FOR n`
+// into a BinaryOperation so the existing nodes, visitors and formatter cover
+// the new syntax unchanged.
+func (p *Parser) parseKeywordArgItem(form keywordArgForm) (Expr, error) {
+	expr, hasModifier, err := p.parseKeywordArgModifier(form)
+	if err != nil {
+		return nil, err
+	}
+
+	separators := 0
+	for separators < len(form.Separators) && p.matchKeyword(form.Separators[separators]) {
+		operation := TokenKind(p.current().ToString())
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
+
+		rightExpr, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		expr = &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: operation,
+			RightExpr: rightExpr,
+		}
+		separators++
+	}
+
+	// A modifier or any separator commits to the keyword form, so the rest of
+	// it must be present; without either this is an ordinary argument list.
+	if !hasModifier && separators == 0 {
+		return expr, nil
+	}
+	if form.RequireModifier && !hasModifier {
+		return nil, fmt.Errorf("expected one of %s before %s",
+			strings.Join(form.Modifiers, ", "), form.Separators[0])
+	}
+	if separators < form.RequiredSeparators {
+		return nil, fmt.Errorf("expected %s", form.Separators[separators])
+	}
+
+	return expr, nil
+}
+
+func (p *Parser) parseKeywordArgModifier(form keywordArgForm) (Expr, bool, error) {
+	if !p.matchOneOfKeywords(form.Modifiers...) {
+		expr, err := p.parseExpr(p.Pos())
+		return expr, false, err
+	}
+	// A modifier keyword is only a modifier when an expression follows it;
+	// `trim(both)` and `trim(both, x)` are calls on a column named `both`.
+	if p.peekTokenKind(TokenKindComma) || p.peekTokenKind(TokenKindRParen) {
+		expr, err := p.parseExpr(p.Pos())
+		return expr, false, err
+	}
+
+	unaryPos := p.Pos()
+	kind := TokenKind(p.current().ToString())
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, false, err
+	}
+
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, false, err
+	}
+
+	return &UnaryExpr{
+		UnaryPos: unaryPos,
+		Kind:     kind,
+		Expr:     expr,
+	}, true, nil
+}
+
+func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*ParamExprList, error) {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	itemsPos := p.Pos()
+	items := make([]Expr, 0)
+	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
+		item, err := p.parseKeywordArgItem(form)
+		if err != nil {
+			return nil, err
+		}
+
+		// Wrapped in ColumnExpr so a function's arguments have the same shape
+		// whether they were comma- or keyword-separated (see parseColumnsExpr).
+		items = append(items, &ColumnExpr{Expr: item})
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+
+	itemList := &ColumnExprList{
+		ListPos: itemsPos,
+		ListEnd: itemsPos,
+		Items:   items,
+	}
+	if len(items) > 0 {
+		itemList.ListEnd = items[len(items)-1].End()
+	}
+
+	rightParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	return &ParamExprList{
+		LeftParenPos:  pos,
+		RightParenPos: rightParenPos,
+		Items:         itemList,
+	}, nil
+}
+
 func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {
 	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
