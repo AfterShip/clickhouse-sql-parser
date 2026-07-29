@@ -180,6 +180,25 @@ func TestTrimKeywordArgs(t *testing.T) {
 		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
 	}
 
+	// Only `trim` has the keyword form; the explicit variants take commas alone,
+	// as in ClickHouse.
+	for _, sql := range []string{
+		"SELECT trimBoth('xxhixx', 'x')",
+		"SELECT trimLeft('xxhi', 'x')",
+		"SELECT trimRight('hixx', 'x')",
+	} {
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
+	}
+
+	for _, sql := range []string{
+		"SELECT trimBoth(BOTH ' ' FROM ' x ')",
+		"SELECT trimLeft(LEADING ' ' FROM ' x ')",
+		"SELECT trimRight(TRAILING ' ' FROM ' x ')",
+	} {
+		_, err := NewParser(sql).ParseStmts()
+		require.Error(t, err, sql)
+	}
+
 	// An argument alias works as it does for any other function.
 	for _, sql := range []string{"SELECT trim('x' AS y)", "SELECT trim(BOTH ' ' FROM ' x ' AS y)"} {
 		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)

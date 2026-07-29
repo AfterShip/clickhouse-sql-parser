@@ -12,3 +12,6 @@ SELECT overlayUTF8(s PLACING r FROM x + 1 FOR len(y)) FROM t;
 SELECT max(both), a AS placing FROM t;
 SELECT overlay, placing FROM t;
 SELECT trim('x' AS y), substring('hello' FROM 2 AS s);
+SELECT trimBoth('xxhixx', 'x');
+SELECT trimLeft('xxhi', 'x'), trimRight('hixx', 'x');
+SELECT ltrim('  x  '), rtrim('  x  ');
