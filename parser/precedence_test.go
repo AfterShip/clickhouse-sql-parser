@@ -148,7 +148,6 @@ func keywordArgOf(t *testing.T, sql, name string) Expr {
 }
 
 func TestTrimKeywordArgs(t *testing.T) {
-	// The modifier becomes a UnaryExpr, the FROM separator a BinaryOperation.
 	from, ok := keywordArgOf(t, "SELECT trim(BOTH ' ' FROM ' x ')", "trim").(*BinaryOperation)
 	require.True(t, ok)
 	require.Equal(t, TokenKind(KeywordFrom), from.Operation)

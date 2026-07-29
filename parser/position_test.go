@@ -107,8 +107,7 @@ func TestKeywordArgFunctionPositions(t *testing.T) {
 	require.Equal(t, Pos(12), from.Pos())
 	require.Equal(t, Pos(27), from.End())
 
-	// the modifier starts at BOTH and ends with the characters literal, which
-	// itself runs from inside the opening quote to the closing one
+	// the characters literal runs from inside the opening quote to the closing one
 	modifier := from.LeftExpr.(*UnaryExpr)
 	require.Equal(t, Pos(12), modifier.Pos())
 	require.Equal(t, modifier.Expr.End(), modifier.End())
