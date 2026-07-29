@@ -1,7 +1,7 @@
 CREATE TABLE test_local
 (
- `expectedrevenue` Nullable(Decimal(38, 4)) CODEC(GCD, ZSTD(1)),
- `count` UInt64 CODEC(GCD)
+ `foo` Nullable(Decimal(38, 4)) CODEC(GCD, ZSTD(1)),
+ `bar` UInt64 CODEC(GCD)
 )
 ENGINE = MergeTree
-ORDER BY `count`;
+ORDER BY `bar`;

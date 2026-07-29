@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 154,
+    "StatementEnd": 138,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -17,49 +17,49 @@
     "OnCluster": null,
     "TableSchema": {
       "SchemaPos": 24,
-      "SchemaEnd": 118,
+      "SchemaEnd": 104,
       "Columns": [
         {
           "NamePos": 28,
-          "ColumnEnd": 89,
+          "ColumnEnd": 77,
           "Name": {
             "Ident": {
-              "Name": "expectedrevenue",
+              "Name": "foo",
               "QuoteType": 3,
               "NamePos": 28,
-              "NameEnd": 43
+              "NameEnd": 31
             },
             "DotIdent": null
           },
           "Type": {
-            "LeftParenPos": 54,
-            "RightParenPos": 68,
+            "LeftParenPos": 42,
+            "RightParenPos": 56,
             "Name": {
               "Name": "Nullable",
               "QuoteType": 1,
-              "NamePos": 45,
-              "NameEnd": 53
+              "NamePos": 33,
+              "NameEnd": 41
             },
             "Params": [
               {
-                "LeftParenPos": 62,
-                "RightParenPos": 67,
+                "LeftParenPos": 50,
+                "RightParenPos": 55,
                 "Name": {
                   "Name": "Decimal",
                   "QuoteType": 1,
-                  "NamePos": 54,
-                  "NameEnd": 61
+                  "NamePos": 42,
+                  "NameEnd": 49
                 },
                 "Params": [
                   {
-                    "NumPos": 62,
-                    "NumEnd": 64,
+                    "NumPos": 50,
+                    "NumEnd": 52,
                     "Literal": "38",
                     "Base": 10
                   },
                   {
-                    "NumPos": 66,
-                    "NumEnd": 67,
+                    "NumPos": 54,
+                    "NumEnd": 55,
                     "Literal": "4",
                     "Base": 10
                   }
@@ -73,24 +73,24 @@
           "MaterializedExpr": null,
           "AliasExpr": null,
           "Codec": {
-            "CodecPos": 70,
-            "RightParenPos": 89,
+            "CodecPos": 58,
+            "RightParenPos": 77,
             "Type": {
               "Name": "GCD",
               "QuoteType": 1,
-              "NamePos": 76,
-              "NameEnd": 79
+              "NamePos": 64,
+              "NameEnd": 67
             },
             "TypeLevel": null,
             "Name": {
               "Name": "ZSTD",
               "QuoteType": 1,
-              "NamePos": 81,
-              "NameEnd": 85
+              "NamePos": 69,
+              "NameEnd": 73
             },
             "Level": {
-              "NumPos": 85,
-              "NumEnd": 87,
+              "NumPos": 73,
+              "NumEnd": 75,
               "Literal": "1",
               "Base": 10
             }
@@ -100,14 +100,14 @@
           "CompressionCodec": null
         },
         {
-          "NamePos": 93,
-          "ColumnEnd": 117,
+          "NamePos": 81,
+          "ColumnEnd": 103,
           "Name": {
             "Ident": {
-              "Name": "count",
+              "Name": "bar",
               "QuoteType": 3,
-              "NamePos": 93,
-              "NameEnd": 98
+              "NamePos": 81,
+              "NameEnd": 84
             },
             "DotIdent": null
           },
@@ -115,8 +115,8 @@
             "Name": {
               "Name": "UInt64",
               "QuoteType": 1,
-              "NamePos": 100,
-              "NameEnd": 106
+              "NamePos": 86,
+              "NameEnd": 92
             }
           },
           "NotNull": null,
@@ -125,15 +125,15 @@
           "MaterializedExpr": null,
           "AliasExpr": null,
           "Codec": {
-            "CodecPos": 107,
-            "RightParenPos": 117,
+            "CodecPos": 93,
+            "RightParenPos": 103,
             "Type": null,
             "TypeLevel": null,
             "Name": {
               "Name": "GCD",
               "QuoteType": 1,
-              "NamePos": 113,
-              "NameEnd": 116
+              "NamePos": 99,
+              "NameEnd": 102
             },
             "Level": null
           },
@@ -146,8 +146,8 @@
       "TableFunction": null
     },
     "Engine": {
-      "EnginePos": 120,
-      "EngineEnd": 154,
+      "EnginePos": 106,
+      "EngineEnd": 138,
       "Name": "MergeTree",
       "Params": null,
       "PrimaryKey": null,
@@ -156,16 +156,16 @@
       "TTL": null,
       "Settings": null,
       "OrderBy": {
-        "OrderPos": 139,
-        "ListEnd": 154,
+        "OrderPos": 125,
+        "ListEnd": 138,
         "Items": [
           {
-            "OrderPos": 139,
+            "OrderPos": 125,
             "Expr": {
-              "Name": "count",
+              "Name": "bar",
               "QuoteType": 3,
-              "NamePos": 149,
-              "NameEnd": 154
+              "NamePos": 135,
+              "NameEnd": 138
             },
             "Alias": null,
             "Direction": "",
