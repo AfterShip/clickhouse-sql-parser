@@ -349,7 +349,11 @@ func (l *Lexer) hasPrecedenceToken(last *Token) bool {
 		last.Kind == TokenKindKeyword ||
 		last.Kind == TokenKindInt ||
 		last.Kind == TokenKindFloat ||
-		last.Kind == TokenKindString)
+		last.Kind == TokenKindString ||
+		// A closing bracket also terminates an expression, so a following
+		// +/- is a binary operator, e.g. (1)-1 or arr[1]-1.
+		last.Kind == TokenKindRParen ||
+		last.Kind == TokenKindRBracket)
 }
 
 func (l *Lexer) consumeToken() error {
