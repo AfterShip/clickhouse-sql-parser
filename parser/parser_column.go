@@ -1452,7 +1452,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	var name *Ident
 	var typeLevel *NumberLiteral
 	switch strings.ToUpper(codecType.Name) {
-	case "DELTA", "DOUBLEDELTA", "T64", "GORILLA":
+	case "DELTA", "DOUBLEDELTA", "T64", "GORILLA", "GCD":
 		// try parse delta level
 		typeLevel, err = p.tryParseCompressionLevel(p.Pos())
 		if err != nil {

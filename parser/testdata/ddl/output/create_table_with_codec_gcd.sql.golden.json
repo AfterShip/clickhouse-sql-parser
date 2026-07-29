@@ -1,0 +1,183 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 154,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "test_local",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 23
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 24,
+      "SchemaEnd": 118,
+      "Columns": [
+        {
+          "NamePos": 28,
+          "ColumnEnd": 89,
+          "Name": {
+            "Ident": {
+              "Name": "expectedrevenue",
+              "QuoteType": 3,
+              "NamePos": 28,
+              "NameEnd": 43
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 54,
+            "RightParenPos": 68,
+            "Name": {
+              "Name": "Nullable",
+              "QuoteType": 1,
+              "NamePos": 45,
+              "NameEnd": 53
+            },
+            "Params": [
+              {
+                "LeftParenPos": 62,
+                "RightParenPos": 67,
+                "Name": {
+                  "Name": "Decimal",
+                  "QuoteType": 1,
+                  "NamePos": 54,
+                  "NameEnd": 61
+                },
+                "Params": [
+                  {
+                    "NumPos": 62,
+                    "NumEnd": 64,
+                    "Literal": "38",
+                    "Base": 10
+                  },
+                  {
+                    "NumPos": 66,
+                    "NumEnd": 67,
+                    "Literal": "4",
+                    "Base": 10
+                  }
+                ]
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 70,
+            "RightParenPos": 89,
+            "Type": {
+              "Name": "GCD",
+              "QuoteType": 1,
+              "NamePos": 76,
+              "NameEnd": 79
+            },
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 81,
+              "NameEnd": 85
+            },
+            "Level": {
+              "NumPos": 85,
+              "NumEnd": 87,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 93,
+          "ColumnEnd": 117,
+          "Name": {
+            "Ident": {
+              "Name": "count",
+              "QuoteType": 3,
+              "NamePos": 93,
+              "NameEnd": 98
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 100,
+              "NameEnd": 106
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 107,
+            "RightParenPos": 117,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "GCD",
+              "QuoteType": 1,
+              "NamePos": 113,
+              "NameEnd": 116
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 120,
+      "EngineEnd": 154,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 139,
+        "ListEnd": 154,
+        "Items": [
+          {
+            "OrderPos": 139,
+            "Expr": {
+              "Name": "count",
+              "QuoteType": 3,
+              "NamePos": 149,
+              "NameEnd": 154
+            },
+            "Alias": null,
+            "Direction": "",
+            "Fill": null
+          }
+        ],
+        "Interpolate": null
+      }
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
