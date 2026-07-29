@@ -1452,7 +1452,7 @@ func (p *Parser) tryParseCompressionCodecs(pos Pos) (*CompressionCodec, error) {
 	var name *Ident
 	var typeLevel *NumberLiteral
 	switch strings.ToUpper(codecType.Name) {
-	case "DELTA", "DOUBLEDELTA", "T64", "GORILLA":
+	case "DELTA", "DOUBLEDELTA", "T64", "GORILLA", "GCD":
 		// try parse delta level
 		typeLevel, err = p.tryParseCompressionLevel(p.Pos())
 		if err != nil {
@@ -1552,6 +1552,10 @@ func (p *Parser) parseColumnStar(pos Pos) (*Ident, error) {
 func (p *Parser) tryParseCompressionLevel(pos Pos) (*NumberLiteral, error) {
 	if p.tryConsumeTokenKind(TokenKindLParen) == nil {
 		return nil, nil // nolint
+	}
+
+	if p.matchTokenKind(TokenKindRParen) {
+		return nil, p.expectTokenKind(TokenKindRParen)
 	}
 
 	num, err := p.parseNumber(pos)

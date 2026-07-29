@@ -1,0 +1,251 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 183,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "test_local",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 23
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 24,
+      "SchemaEnd": 149,
+      "Columns": [
+        {
+          "NamePos": 28,
+          "ColumnEnd": 77,
+          "Name": {
+            "Ident": {
+              "Name": "foo",
+              "QuoteType": 3,
+              "NamePos": 28,
+              "NameEnd": 31
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 42,
+            "RightParenPos": 56,
+            "Name": {
+              "Name": "Nullable",
+              "QuoteType": 1,
+              "NamePos": 33,
+              "NameEnd": 41
+            },
+            "Params": [
+              {
+                "LeftParenPos": 50,
+                "RightParenPos": 55,
+                "Name": {
+                  "Name": "Decimal",
+                  "QuoteType": 1,
+                  "NamePos": 42,
+                  "NameEnd": 49
+                },
+                "Params": [
+                  {
+                    "NumPos": 50,
+                    "NumEnd": 52,
+                    "Literal": "38",
+                    "Base": 10
+                  },
+                  {
+                    "NumPos": 54,
+                    "NumEnd": 55,
+                    "Literal": "4",
+                    "Base": 10
+                  }
+                ]
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 58,
+            "RightParenPos": 77,
+            "Type": {
+              "Name": "GCD",
+              "QuoteType": 1,
+              "NamePos": 64,
+              "NameEnd": 67
+            },
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 69,
+              "NameEnd": 73
+            },
+            "Level": {
+              "NumPos": 73,
+              "NumEnd": 75,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 81,
+          "ColumnEnd": 103,
+          "Name": {
+            "Ident": {
+              "Name": "bar",
+              "QuoteType": 3,
+              "NamePos": 81,
+              "NameEnd": 84
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 86,
+              "NameEnd": 92
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 93,
+            "RightParenPos": 103,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "GCD",
+              "QuoteType": 1,
+              "NamePos": 99,
+              "NameEnd": 102
+            },
+            "Level": null
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 107,
+          "ColumnEnd": 148,
+          "Name": {
+            "Ident": {
+              "Name": "baz",
+              "QuoteType": 3,
+              "NamePos": 107,
+              "NameEnd": 110
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 120,
+            "RightParenPos": 125,
+            "Name": {
+              "Name": "Decimal",
+              "QuoteType": 1,
+              "NamePos": 112,
+              "NameEnd": 119
+            },
+            "Params": [
+              {
+                "NumPos": 120,
+                "NumEnd": 122,
+                "Literal": "38",
+                "Base": 10
+              },
+              {
+                "NumPos": 124,
+                "NumEnd": 125,
+                "Literal": "4",
+                "Base": 10
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 127,
+            "RightParenPos": 148,
+            "Type": {
+              "Name": "GCD",
+              "QuoteType": 1,
+              "NamePos": 133,
+              "NameEnd": 136
+            },
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 140,
+              "NameEnd": 144
+            },
+            "Level": {
+              "NumPos": 144,
+              "NumEnd": 146,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 151,
+      "EngineEnd": 183,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 170,
+        "ListEnd": 183,
+        "Items": [
+          {
+            "OrderPos": 170,
+            "Expr": {
+              "Name": "bar",
+              "QuoteType": 3,
+              "NamePos": 180,
+              "NameEnd": 183
+            },
+            "Alias": null,
+            "Direction": "",
+            "Fill": null
+          }
+        ],
+        "Interpolate": null
+      }
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]
