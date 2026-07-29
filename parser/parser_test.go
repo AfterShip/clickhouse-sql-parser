@@ -186,12 +186,19 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
-		// ARRAY JOIN reads a column list, so it has no GLOBAL/LOCAL locality
+		// ARRAY JOIN reads a column list, so it has no GLOBAL/LOCAL locality.
+		// Join modifiers keep their source spelling, so the lowercase spellings
+		// have to be rejected too.
 		"SELECT * FROM t GLOBAL ARRAY JOIN arr AS a",
 		"SELECT * FROM t LOCAL LEFT ARRAY JOIN arr AS a",
+		"SELECT * FROM t GLOBAL array JOIN arr AS a",
+		"SELECT * FROM t LOCAL left array JOIN arr AS a",
 		// A join takes at most one locality, and it precedes the join type
 		"SELECT * FROM t1 GLOBAL LOCAL JOIN t2 ON t1.a = t2.a",
 		"SELECT * FROM t1 LEFT GLOBAL JOIN t2 ON t1.a = t2.a",
+		// GLOBAL is a keyword everywhere, never an implicit alias
+		"SELECT a GLOBAL FROM t",
+		"SELECT a GLOBAL, b FROM t",
 		// GLOBAL is an operator only before IN/NOT IN, and LOCAL is never one
 		"SELECT * FROM t WHERE a GLOBAL LIKE 'x'",
 		"SELECT * FROM t WHERE a GLOBAL NOT LIKE 'x'",

@@ -79,14 +79,16 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
-		// GLOBAL is an operator only before IN/NOT IN, where it binds like IN
-		// itself. Anywhere else it belongs to the enclosing clause — a join
-		// locality in `ON a = b GLOBAL LEFT JOIN c` — and must not bind here.
-		if p.peekKeyword(KeywordIn) || p.peekKeyword(KeywordNot) {
-			return precedenceIn
+		// GLOBAL is both the IN operator's prefix and a join locality. Before a
+		// join it belongs to the enclosing FROM clause — the locality in
+		// `ON a = b GLOBAL LEFT JOIN c` — so the expression has to end here
+		// rather than bind it. Everywhere else it binds like IN itself, which
+		// keeps `GLOBAL` from being mistaken for an alias in `SELECT a GLOBAL`.
+		if p.peekJoinAfterLocality() {
+			return PrecedenceUnknown
 		}
 
-		return PrecedenceUnknown
+		return precedenceIn
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return PrecedenceQuery
 	default:
