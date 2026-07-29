@@ -1542,5 +1542,415 @@
     "UnionDistinct": null,
     "Except": null,
     "Intersect": null
+  },
+  {
+    "SelectPos": 744,
+    "StatementEnd": 794,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "position",
+            "QuoteType": 1,
+            "NamePos": 751,
+            "NameEnd": 759
+          },
+          "Params": {
+            "LeftParenPos": 759,
+            "RightParenPos": 772,
+            "Items": {
+              "ListPos": 761,
+              "ListEnd": 771,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "LiteralPos": 761,
+                      "LiteralEnd": 762,
+                      "Literal": "a"
+                    },
+                    "Operation": "IN",
+                    "RightExpr": {
+                      "LiteralPos": 768,
+                      "LiteralEnd": 771,
+                      "Literal": "abc"
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "locate",
+            "QuoteType": 1,
+            "NamePos": 775,
+            "NameEnd": 781
+          },
+          "Params": {
+            "LeftParenPos": 781,
+            "RightParenPos": 794,
+            "Items": {
+              "ListPos": 783,
+              "ListEnd": 793,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "LiteralPos": 783,
+                      "LiteralEnd": 784,
+                      "Literal": "a"
+                    },
+                    "Operation": "IN",
+                    "RightExpr": {
+                      "LiteralPos": 790,
+                      "LiteralEnd": 793,
+                      "Literal": "abc"
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 797,
+    "StatementEnd": 822,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 804,
+          "Expr": {
+            "LiteralPos": 810,
+            "LiteralEnd": 811,
+            "Literal": "1"
+          },
+          "Separator": "AS",
+          "AsPos": 813,
+          "AsType": {
+            "Name": {
+              "Name": "UInt64",
+              "QuoteType": 1,
+              "NamePos": 816,
+              "NameEnd": 822
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 825,
+    "StatementEnd": 882,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "substringUTF8",
+            "QuoteType": 1,
+            "NamePos": 832,
+            "NameEnd": 845
+          },
+          "Params": {
+            "LeftParenPos": 845,
+            "RightParenPos": 859,
+            "Items": {
+              "ListPos": 847,
+              "ListEnd": 859,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 847,
+                    "LiteralEnd": 852,
+                    "Literal": "hello"
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 855,
+                    "NumEnd": 856,
+                    "Literal": "2",
+                    "Base": 10
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 858,
+                    "NumEnd": 859,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "substr",
+            "QuoteType": 1,
+            "NamePos": 862,
+            "NameEnd": 868
+          },
+          "Params": {
+            "LeftParenPos": 868,
+            "RightParenPos": 882,
+            "Items": {
+              "ListPos": 870,
+              "ListEnd": 882,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 870,
+                    "LiteralEnd": 875,
+                    "Literal": "hello"
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 878,
+                    "NumEnd": 879,
+                    "Literal": "2",
+                    "Base": 10
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 881,
+                    "NumEnd": 882,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 885,
+    "StatementEnd": 935,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "mid",
+            "QuoteType": 1,
+            "NamePos": 892,
+            "NameEnd": 895
+          },
+          "Params": {
+            "LeftParenPos": 895,
+            "RightParenPos": 909,
+            "Items": {
+              "ListPos": 897,
+              "ListEnd": 909,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 897,
+                    "LiteralEnd": 902,
+                    "Literal": "hello"
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 905,
+                    "NumEnd": 906,
+                    "Literal": "2",
+                    "Base": 10
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 908,
+                    "NumEnd": 909,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "byteSlice",
+            "QuoteType": 1,
+            "NamePos": 912,
+            "NameEnd": 921
+          },
+          "Params": {
+            "LeftParenPos": 921,
+            "RightParenPos": 935,
+            "Items": {
+              "ListPos": 923,
+              "ListEnd": 935,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LiteralPos": 923,
+                    "LiteralEnd": 928,
+                    "Literal": "hello"
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 931,
+                    "NumEnd": 932,
+                    "Literal": "2",
+                    "Base": 10
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 934,
+                    "NumEnd": 935,
+                    "Literal": "3",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
   }
 ]

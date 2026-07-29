@@ -16,6 +16,10 @@ SELECT trim('x' AS y), substring('hello' FROM 2 AS s);
 SELECT trimBoth('xxhixx', 'x');
 SELECT trimLeft('xxhi', 'x'), trimRight('hixx', 'x');
 SELECT ltrim('  x  '), rtrim('  x  ');
+SELECT position('a' IN 'abc'), locate('a' IN 'abc');
+SELECT CAST('1' AS UInt64);
+SELECT substringUTF8('hello', 2, 3), substr('hello', 2, 3);
+SELECT mid('hello', 2, 3), byteSlice('hello', 2, 3);
 
 
 -- Beautify SQL:
@@ -66,3 +70,14 @@ SELECT
 SELECT
   ltrim('  x  '),
   rtrim('  x  ');
+SELECT
+  position('a' IN 'abc'),
+  locate('a' IN 'abc');
+SELECT
+  CAST('1' AS UInt64);
+SELECT
+  substringUTF8('hello', 2, 3),
+  substr('hello', 2, 3);
+SELECT
+  mid('hello', 2, 3),
+  byteSlice('hello', 2, 3);
