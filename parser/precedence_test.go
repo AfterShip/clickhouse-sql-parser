@@ -331,8 +331,7 @@ func TestIntersect(t *testing.T) {
 }
 
 func TestGlobalJoinLocalityPrefixesTheJoinType(t *testing.T) {
-	// GLOBAL/LOCAL only says how the right-hand table is distributed, so the
-	// join type still follows it and both have to survive into the modifiers.
+	// the locality prefixes the join type, and both have to reach the modifiers
 	for _, tc := range []struct {
 		sql       string
 		modifiers []string
@@ -355,9 +354,20 @@ func TestGlobalJoinLocalityPrefixesTheJoinType(t *testing.T) {
 	}
 }
 
+func TestLocalityWithoutAJoinKeepsItsKeyword(t *testing.T) {
+	// a GLOBAL with no join used to be consumed and dropped from Format(); the
+	// error now has to name it rather than the end of the statement
+	_, err := NewParser("SELECT * FROM t1 GLOBAL").ParseStmts()
+	require.ErrorContains(t, err, "GLOBAL")
+
+	// an explicit alias still names a table, as it does on the server
+	for _, sql := range []string{"SELECT * FROM t AS global", "SELECT * FROM t AS local"} {
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
+	}
+}
+
 func TestGlobalAfterJoinConstraintStartsANewJoin(t *testing.T) {
-	// A GLOBAL that follows an ON/USING clause belongs to the next join, so it
-	// must not be read as the GLOBAL IN operator.
+	// a GLOBAL after an ON/USING clause starts the next join, not a GLOBAL IN
 	sql := "SELECT * FROM t1 GLOBAL JOIN t2 ON t1.a = t2.a GLOBAL LEFT JOIN t3 ON t1.a = t3.a"
 	stmt := parseOneStmt(t, sql)
 	join := stmt.(*SelectQuery).From.Expr.(*JoinExpr)
@@ -388,8 +398,7 @@ func TestGlobalInAndGlobalNotIn(t *testing.T) {
 }
 
 func TestGlobalInGroupsLikeIn(t *testing.T) {
-	// GLOBAL IN binds with IN's precedence: `a = b GLOBAL IN (1)` groups as
-	// `a = (b GLOBAL IN (1))`.
+	// GLOBAL IN binds like IN: `a = b GLOBAL IN (1)` is `a = (b GLOBAL IN (1))`
 	for _, sql := range []string{"SELECT a = b GLOBAL IN (1)", "SELECT a = b GLOBAL NOT IN (1)"} {
 		expr := parseSelectItemExpr(t, sql)
 		eq, ok := expr.(*BinaryOperation)

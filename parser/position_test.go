@@ -119,8 +119,7 @@ func TestJoinLocalityIsInsideTheJoinSpan(t *testing.T) {
 	sql := "SELECT * FROM t1 GLOBAL LEFT JOIN t2 ON t1.a = t2.a"
 	stmt := parseOneStmt(t, sql).(*SelectQuery)
 	join := stmt.From.Expr.(*JoinExpr).Right.(*JoinExpr)
-	// the join starts at GLOBAL rather than at the join type, so a rewriter that
-	// reads the node back from the source keeps the locality
+	// the span starts at GLOBAL, so a source-rewriting consumer keeps the locality
 	require.Equal(t, "GLOBAL", sql[17:23])
 	require.Equal(t, Pos(17), join.Pos())
 	require.Equal(t, Pos(len(sql)), join.End())

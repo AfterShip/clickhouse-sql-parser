@@ -280,35 +280,39 @@ func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	}
 }
 
-// parseJoinLocality consumes a GLOBAL or LOCAL join locality together with the
-// join type that follows it, returning them as join modifiers. It returns a nil
-// slice when the keyword is not followed by a join, leaving the caller to treat
-// the clause as something other than a join.
-func (p *Parser) parseJoinLocality(pos Pos) ([]string, error) {
-	locality := p.current().String
+// parseJoinLocality consumes a GLOBAL or LOCAL locality together with the join
+// type after it, returning both as join modifiers. With no join it rewinds and
+// returns nil, leaving the keyword for the caller to reject.
+func (p *Parser) parseJoinLocality() ([]string, error) {
+	savedState := p.lexer.saveState()
+	locality := p.current()
 	_ = p.lexer.consumeToken()
 
-	joinOp := p.parseJoinOp(pos)
+	joinOp := p.parseJoinOp(p.Pos())
 	if len(joinOp) == 0 && !p.matchKeyword(KeywordJoin) {
+		p.lexer.restoreState(savedState)
 		return nil, nil
 	}
 
 	// ARRAY JOIN reads a column list rather than a distributed table, so it has
-	// no locality. parseJoinOp keeps each modifier's source spelling, so the
-	// keyword has to be matched case-insensitively.
+	// no locality. Modifiers keep their source spelling, hence EqualFold.
 	if slices.ContainsFunc(joinOp, func(modifier string) bool {
 		return strings.EqualFold(modifier, KeywordArray)
 	}) {
-		return nil, fmt.Errorf("%s cannot be combined with ARRAY JOIN", locality)
+		// point at the locality, not at wherever the join op stopped
+		return nil, &ParseError{
+			Pos: locality.Pos,
+			Got: locality,
+			Msg: fmt.Sprintf("%s cannot be combined with ARRAY JOIN", locality.String),
+		}
 	}
 
-	return append([]string{locality}, joinOp...), nil
+	return append([]string{locality.String}, joinOp...), nil
 }
 
 // peekJoinAfterLocality reports whether the current GLOBAL/LOCAL keyword is
-// followed by a join operator. It leaves the lexer where it found it, so
-// expression parsing can use it to tell a join locality apart from the GLOBAL IN
-// operator.
+// followed by a join operator, leaving the lexer where it found it. Expression
+// parsing uses it to tell a locality apart from the GLOBAL IN operator.
 func (p *Parser) peekJoinAfterLocality() bool {
 	savedState := p.lexer.saveState()
 	defer p.lexer.restoreState(savedState)
@@ -324,9 +328,9 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	var modifiers []string
 	switch {
 	case p.matchOneOfKeywords(KeywordGlobal, KeywordLocal):
-		// GLOBAL/LOCAL only says how the right-hand table is distributed, so the
-		// join type still follows it: `GLOBAL LEFT JOIN` is a LEFT join.
-		modifiers, err = p.parseJoinLocality(p.Pos())
+		// the locality only says how the right-hand table is distributed, so the
+		// join type still follows it: `GLOBAL LEFT JOIN` is a LEFT join
+		modifiers, err = p.parseJoinLocality()
 		if err != nil {
 			return nil, err
 		}

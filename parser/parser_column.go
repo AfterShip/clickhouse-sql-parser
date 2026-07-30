@@ -79,11 +79,8 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
-		// GLOBAL is both the IN operator's prefix and a join locality. Before a
-		// join it belongs to the enclosing FROM clause — the locality in
-		// `ON a = b GLOBAL LEFT JOIN c` — so the expression has to end here
-		// rather than bind it. Everywhere else it binds like IN itself, which
-		// keeps `GLOBAL` from being mistaken for an alias in `SELECT a GLOBAL`.
+		// GLOBAL is also a join locality: in `ON a = b GLOBAL LEFT JOIN c` it
+		// belongs to the FROM clause, so the expression has to end here.
 		if p.peekJoinAfterLocality() {
 			return PrecedenceUnknown
 		}
@@ -169,7 +166,7 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		_ = p.lexer.consumeToken()
 		negated := p.tryConsumeKeywords(KeywordNot)
 		if p.expectKeyword(KeywordIn) != nil {
-			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.currentTokenKind())
+			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.currentTokenString())
 		}
 
 		op := TokenKind("GLOBAL IN")
