@@ -267,3 +267,30 @@ func TestWalk_ShowStmtNewFields(t *testing.T) {
 
 	require.Equal(t, "5", numberLiterals[0].Literal, "Should contain LIMIT value")
 }
+
+func TestWalk_KeywordArgFunction(t *testing.T) {
+	// The keyword argument forms build UnaryExpr/BinaryOperation rather than a
+	// node of their own, so Walk must reach every operand without new wiring.
+	sql := `SELECT trim(BOTH ' ' FROM s), overlay(a PLACING b FROM c FOR d);`
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	var unary, binary, idents int
+	Walk(stmts[0], func(node Expr) bool {
+		switch node.(type) {
+		case *UnaryExpr:
+			unary++
+		case *BinaryOperation:
+			binary++
+		case *Ident:
+			idents++
+		}
+		return true
+	})
+
+	require.Equal(t, 1, unary, "the BOTH modifier")
+	require.Equal(t, 4, binary, "trim's FROM plus overlay's PLACING/FROM/FOR")
+	// s, a, b, c, d plus the two function names.
+	require.Equal(t, 7, idents)
+}

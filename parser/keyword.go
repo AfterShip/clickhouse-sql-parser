@@ -164,7 +164,10 @@ const (
 	KeywordOuter        = "OUTER"
 	KeywordOutfile      = "OUTFILE"
 	KeywordOver         = "OVER"
+	KeywordOverlay      = "OVERLAY"
+	KeywordOverlayUTF8  = "OVERLAYUTF8"
 	KeywordPartition    = "PARTITION"
+	KeywordPlacing      = "PLACING"
 	KeywordPipeline     = "PIPELINE"
 	KeywordPolicy       = "POLICY"
 	KeywordPopulate     = "POPULATE"
@@ -488,8 +491,11 @@ var keywords = NewSet(
 	KeywordOverridable,
 	KeywordOutfile,
 	KeywordOver,
+	KeywordOverlay,
+	KeywordOverlayUTF8,
 	KeywordPartition,
 	KeywordPipeline,
+	KeywordPlacing,
 	KeywordPolicy,
 	KeywordPopulate,
 	KeywordPreceding,

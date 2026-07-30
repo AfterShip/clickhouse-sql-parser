@@ -1,0 +1,46 @@
+-- Origin SQL:
+SELECT trim(BOTH ' ' FROM ' x ');
+SELECT trim(LEADING '0' FROM '00042');
+SELECT trim(TRAILING '/' FROM '/api/');
+SELECT substring('hello' FROM 2);
+SELECT substring('hello' FROM 2 FOR 3);
+SELECT substring('hello', 2 FOR 3);
+SELECT substring('hello' FROM 2, 3);
+SELECT substring(concat(a, b) FROM x + 1 FOR len(y)) FROM t;
+SELECT overlay('Hello world' PLACING 'SQL' FROM 7);
+SELECT overlay('Hello world' PLACING 'SQL' FROM 7 FOR 5);
+SELECT overlayUTF8(s PLACING r FROM x + 1 FOR len(y)) FROM t;
+SELECT max(both), a AS placing FROM t;
+SELECT overlay, placing FROM t;
+SELECT trim('x' AS y), substring('hello' FROM 2 AS s);
+SELECT trimBoth('xxhixx', 'x');
+SELECT trimLeft('xxhi', 'x'), trimRight('hixx', 'x');
+SELECT ltrim('  x  '), rtrim('  x  ');
+SELECT position('a' IN 'abc'), locate('a' IN 'abc');
+SELECT CAST('1' AS UInt64);
+SELECT substringUTF8('hello', 2, 3), substr('hello', 2, 3);
+SELECT mid('hello', 2, 3), byteSlice('hello', 2, 3);
+
+
+-- Format SQL:
+SELECT trim(BOTH ' ' FROM ' x ');
+SELECT trim(LEADING '0' FROM '00042');
+SELECT trim(TRAILING '/' FROM '/api/');
+SELECT substring('hello' FROM 2);
+SELECT substring('hello' FROM 2 FOR 3);
+SELECT substring('hello', 2 FOR 3);
+SELECT substring('hello' FROM 2, 3);
+SELECT substring(concat(a, b) FROM x + 1 FOR len(y)) FROM t;
+SELECT overlay('Hello world' PLACING 'SQL' FROM 7);
+SELECT overlay('Hello world' PLACING 'SQL' FROM 7 FOR 5);
+SELECT overlayUTF8(s PLACING r FROM x + 1 FOR len(y)) FROM t;
+SELECT max(both), a AS placing FROM t;
+SELECT overlay, placing FROM t;
+SELECT trim('x' AS y), substring('hello' FROM 2 AS s);
+SELECT trimBoth('xxhixx', 'x');
+SELECT trimLeft('xxhi', 'x'), trimRight('hixx', 'x');
+SELECT ltrim('  x  '), rtrim('  x  ');
+SELECT position('a' IN 'abc'), locate('a' IN 'abc');
+SELECT CAST('1' AS UInt64);
+SELECT substringUTF8('hello', 2, 3), substr('hello', 2, 3);
+SELECT mid('hello', 2, 3), byteSlice('hello', 2, 3);

@@ -767,6 +767,192 @@ func (p *Parser) parseColumnArgList(pos Pos) (*ColumnArgList, error) {
 	}, nil
 }
 
+// keywordArgForm is a function's keyword-separated argument syntax, e.g.
+// `trim(BOTH ' ' FROM s)`. These keywords are matched only inside such an
+// argument list, never in getNextPrecedence: FROM also starts a clause, so
+// giving it a precedence would make `SELECT x FROM t` one expression.
+type keywordArgForm struct {
+	Modifiers          []string
+	RequireModifier    bool
+	Separators         []string // stand in for a comma, in this order
+	RequiredSeparators int
+	ClosedKeywordForm  bool // the keyword form may not be mixed with commas
+	MaxSlots           int  // argument limit once a separator keyword is used
+}
+
+var keywordArgFunctions = map[string]keywordArgForm{
+	KeywordTrim: {
+		Modifiers:          []string{KeywordBoth, KeywordLeading, KeywordTrailing},
+		RequireModifier:    true,
+		Separators:         []string{KeywordFrom},
+		RequiredSeparators: 1,
+	},
+	KeywordSubstring: {
+		Separators:         []string{KeywordFrom, KeywordFor},
+		RequiredSeparators: 1,
+		MaxSlots:           3,
+	},
+	KeywordOverlay: {
+		Separators:         []string{KeywordPlacing, KeywordFrom, KeywordFor},
+		RequiredSeparators: 2,
+		ClosedKeywordForm:  true,
+	},
+	KeywordOverlayUTF8: {
+		Separators:         []string{KeywordPlacing, KeywordFrom, KeywordFor},
+		RequiredSeparators: 2,
+		ClosedKeywordForm:  true,
+	},
+}
+
+func (p *Parser) parseKeywordArgItem(form keywordArgForm, slot int, allowSeparators bool) (Expr, int, error) {
+	expr, hasModifier, err := p.parseKeywordArgModifier(form, slot)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	consumed := 0
+	for allowSeparators && slot+consumed < len(form.Separators) &&
+		p.matchKeyword(form.Separators[slot+consumed]) {
+		operation := TokenKind(p.current().ToString())
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, 0, err
+		}
+
+		rightExpr, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, 0, err
+		}
+
+		expr = &BinaryOperation{
+			LeftExpr:  expr,
+			Operation: operation,
+			RightExpr: rightExpr,
+		}
+		consumed++
+	}
+
+	if !hasModifier && consumed == 0 {
+		return expr, 0, nil
+	}
+
+	if form.RequireModifier && !hasModifier {
+		return nil, 0, fmt.Errorf("expected one of %s before %s",
+			strings.Join(form.Modifiers, ", "), form.Separators[0])
+	}
+
+	if slot+consumed < form.RequiredSeparators {
+		return nil, 0, fmt.Errorf("expected %s", form.Separators[slot+consumed])
+	}
+
+	return expr, consumed, nil
+}
+
+func (p *Parser) parseKeywordArgModifier(form keywordArgForm, slot int) (Expr, bool, error) {
+	if slot != 0 || !p.matchOneOfKeywords(form.Modifiers...) {
+		expr, err := p.parseExpr(p.Pos())
+		return expr, false, err
+	}
+	// Only a modifier when an expression follows it; a bare `both` is an identifier.
+	if p.peekTokenKind(TokenKindComma) || p.peekTokenKind(TokenKindRParen) {
+		expr, err := p.parseExpr(p.Pos())
+		return expr, false, err
+	}
+
+	unaryPos := p.Pos()
+	kind := TokenKind(p.current().ToString())
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, false, err
+	}
+
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, false, err
+	}
+
+	return &UnaryExpr{
+		UnaryPos: unaryPos,
+		Kind:     kind,
+		Expr:     expr,
+	}, true, nil
+}
+
+func (p *Parser) parseKeywordArgFunctionParams(pos Pos, form keywordArgForm) (*ParamExprList, error) {
+	if err := p.expectTokenKind(TokenKindLParen); err != nil {
+		return nil, err
+	}
+
+	itemsPos := p.Pos()
+	hasDistinct := p.tryConsumeKeywords(KeywordDistinct)
+
+	items := make([]Expr, 0)
+	// A comma advances the argument slot just as a separator keyword does, so the
+	// index runs across the list instead of resetting per item.
+	slot := 0
+	usedSeparator, usedComma := false, false
+	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
+		item, consumed, err := p.parseKeywordArgItem(form, slot, !(form.ClosedKeywordForm && usedComma))
+		if err != nil {
+			return nil, err
+		}
+
+		if consumed > 0 {
+			usedSeparator = true
+		}
+		slot += consumed
+
+		var alias *Ident
+		if p.tryConsumeKeywords(KeywordAs) {
+			if alias, err = p.parseAnyKeyword(); err != nil {
+				return nil, err
+			}
+		}
+
+		items = append(items, &ColumnExpr{Expr: item, Alias: alias})
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+
+		usedComma = true
+		slot++
+
+		if usedSeparator && (form.ClosedKeywordForm || (form.MaxSlots > 0 && slot >= form.MaxSlots)) {
+			return nil, fmt.Errorf("expected ')', but got ','")
+		}
+	}
+
+	itemList := &ColumnExprList{
+		ListPos:     itemsPos,
+		ListEnd:     itemsPos,
+		HasDistinct: hasDistinct,
+		Items:       items,
+	}
+	if len(items) > 0 {
+		itemList.ListEnd = items[len(items)-1].End()
+	}
+
+	rightParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+
+	paramExprList := &ParamExprList{
+		LeftParenPos:  pos,
+		RightParenPos: rightParenPos,
+		Items:         itemList,
+	}
+	// Parametric argument lists, as in parseFunctionParams.
+	if p.matchTokenKind(TokenKindLParen) {
+		columnArgList, err := p.parseColumnArgList(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		paramExprList.ColumnArgList = columnArgList
+	}
+
+	return paramExprList, nil
+}
+
 func (p *Parser) parseFunctionParams(pos Pos) (*ParamExprList, error) {
 	if err := p.expectTokenKind(TokenKindLParen); err != nil {
 		return nil, err
