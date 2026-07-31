@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -439,4 +440,14 @@ func TestIntervalOperatorStillParses(t *testing.T) {
 	interval, ok := expr.(*IntervalExpr)
 	require.True(t, ok, "expected *IntervalExpr, got %T", expr)
 	require.Equal(t, "DAY", interval.Unit.Name)
+}
+
+func TestRepeatedIntervalColumnsParseInPolynomialTime(t *testing.T) {
+	// Each failed INTERVAL-operator attempt reparses its whole suffix, so
+	// without memoizing the failures this input backtracks exponentially and
+	// the test hangs rather than fails.
+	sql := "SELECT " + strings.Repeat("interval + ", 60) + "interval FROM t"
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
 }

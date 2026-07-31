@@ -533,10 +533,25 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		// two readings: `INTERVAL a + b DAY` only reveals the operator use at
 		// the unit, four tokens out. Try the operator reading first and fall
 		// back to the identifier when it fails; the lexer state is the only
-		// parse state, so the restore is total.
+		// parse state, so the restore is total and the outcome at a position
+		// never changes. That determinism makes memoizing failures sound, and
+		// retrying each position at most once is what keeps repeated interval
+		// columns (`SELECT interval + interval + ...`) from backtracking
+		// exponentially: a failed attempt reparses its whole suffix, retrying
+		// every later INTERVAL inside it.
+		intervalPos := p.Pos()
+		if _, failed := p.failedIntervalOffsets[intervalPos]; failed {
+			return p.parseAnyKeyword()
+		}
+
 		savedState := p.lexer.saveState()
 		interval, err := p.parseInterval(true)
 		if err != nil {
+			if p.failedIntervalOffsets == nil {
+				p.failedIntervalOffsets = make(map[Pos]struct{})
+			}
+			p.failedIntervalOffsets[intervalPos] = struct{}{}
+
 			p.lexer.restoreState(savedState)
 			return p.parseAnyKeyword()
 		}
