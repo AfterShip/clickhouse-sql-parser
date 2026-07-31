@@ -448,6 +448,27 @@ func TestTableFunctionArgFloatAndZeroArgumentCall(t *testing.T) {
 	require.Empty(t, nested.Args.Args)
 }
 
+func TestTableFunctionArgParenthesizedExpression(t *testing.T) {
+	// a leading '(' that does not open a subquery is a parenthesized
+	// expression, with the shape the scalar `SELECT (1 + 1)` produces
+	fn := parseTableFunctionExpr(t, "SELECT * FROM numbers((1 + 1))")
+	params, ok := fn.Args.Args[0].(*ParamExprList)
+	require.True(t, ok, "argument should be a *ParamExprList, got %T", fn.Args.Args[0])
+	require.Len(t, params.Items.Items, 1)
+	item, ok := params.Items.Items[0].(*ColumnExpr)
+	require.True(t, ok, "parenthesized item should be a *ColumnExpr, got %T", params.Items.Items[0])
+	_, ok = item.Expr.(*BinaryOperation)
+	require.True(t, ok, "parenthesized argument should hold `1 + 1`, got %T", item.Expr)
+
+	sql := "SELECT * FROM numbers((a + b) * c)"
+	require.Equal(t, sql, Format(parseOneStmt(t, sql)))
+
+	// a '(' that opens a subquery still parses as one
+	fn = parseTableFunctionExpr(t, "SELECT * FROM remote('127.0.0.1', (SELECT 1))")
+	_, ok = fn.Args.Args[1].(*SubQuery)
+	require.True(t, ok, "second argument should stay a *SubQuery, got %T", fn.Args.Args[1])
+}
+
 func TestTableFunctionArgShapesUnchanged(t *testing.T) {
 	// a signed literal is still one literal, not a unary operation
 	fn := parseTableFunctionExpr(t, "SELECT * FROM numbers(-1)")

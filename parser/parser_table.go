@@ -785,7 +785,14 @@ func (p *Parser) parseTableArgPrimaryExpr(pos Pos) (Expr, error) {
 			return ident, nil
 		}
 	case p.matchTokenKind(TokenKindLParen):
-		return p.parseSubQuery(p.Pos())
+		// a leading '(' opens a subquery only when SELECT or WITH follows,
+		// e.g. remote('127.0.0.1', (SELECT 1)); anything else is a
+		// parenthesized expression, e.g. numbers((1 + 1))
+		if p.peekKeyword(KeywordSelect) || p.peekKeyword(KeywordWith) {
+			return p.parseSubQuery(p.Pos())
+		}
+
+		return p.parseFunctionParams(p.Pos())
 	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat),
 		p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
 		return p.parseLiteral(p.Pos())
