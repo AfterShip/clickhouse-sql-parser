@@ -169,7 +169,7 @@ func (p *Parser) tryParseJoinConstraints(pos Pos) (Expr, error) {
 	return nil, nil
 }
 
-func (p *Parser) parseJoinOp(_ Pos) []string {
+func (p *Parser) parseJoinType(_ Pos) []string {
 	var modifiers []string
 	switch {
 	case p.tryConsumeKeywords(KeywordCross): // cross join
@@ -280,29 +280,36 @@ func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	}
 }
 
-// parseJoinLocality consumes a GLOBAL or LOCAL join locality together with the
-// join type that follows it, returning them as join modifiers. It returns a nil
-// slice when the keyword is not followed by a join, leaving the caller to treat
-// the clause as something other than a join.
-func (p *Parser) parseJoinLocality(pos Pos) ([]string, error) {
+// parseJoinModifiers parses the modifiers that may precede JOIN: an optional
+// GLOBAL/LOCAL locality followed by the join type. When a consumed locality
+// turns out not to precede a join, it rewinds the lexer and returns nil, so
+// the locality keyword surfaces to the caller instead of being silently
+// dropped.
+func (p *Parser) parseJoinModifiers(pos Pos) ([]string, error) {
+	if !p.matchOneOfKeywords(KeywordGlobal, KeywordLocal) {
+		return p.parseJoinType(pos), nil
+	}
+
+	savedState := p.lexer.saveState()
 	locality := p.current().String
 	_ = p.lexer.consumeToken()
 
-	joinOp := p.parseJoinOp(pos)
-	if len(joinOp) == 0 && !p.matchKeyword(KeywordJoin) {
+	joinType := p.parseJoinType(pos)
+	if len(joinType) == 0 && !p.matchKeyword(KeywordJoin) {
+		p.lexer.restoreState(savedState)
 		return nil, nil
 	}
 
 	// ARRAY JOIN reads a column list rather than a distributed table, so it has
-	// no locality. parseJoinOp keeps each modifier's source spelling, so the
+	// no locality. parseJoinType keeps each modifier's source spelling, so the
 	// keyword has to be matched case-insensitively.
-	if slices.ContainsFunc(joinOp, func(modifier string) bool {
+	if slices.ContainsFunc(joinType, func(modifier string) bool {
 		return strings.EqualFold(modifier, KeywordArray)
 	}) {
 		return nil, fmt.Errorf("%s cannot be combined with ARRAY JOIN", locality)
 	}
 
-	return append([]string{locality}, joinOp...), nil
+	return append([]string{locality}, joinType...), nil
 }
 
 // peekJoinAfterLocality reports whether the current GLOBAL/LOCAL keyword is
@@ -313,31 +320,29 @@ func (p *Parser) peekJoinAfterLocality() bool {
 	savedState := p.lexer.saveState()
 	defer p.lexer.restoreState(savedState)
 
-	_ = p.lexer.consumeToken()
-	p.parseJoinOp(p.Pos())
+	modifiers, err := p.parseJoinModifiers(p.Pos())
+	if err != nil {
+		// A malformed locality join such as GLOBAL ARRAY JOIN still belongs
+		// to the FROM clause, which reports the error.
+		return true
+	}
 
-	return p.matchKeyword(KeywordJoin)
+	return modifiers != nil && p.matchKeyword(KeywordJoin)
 }
 
 func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	var rightExpr Expr
 	var modifiers []string
 	switch {
-	case p.matchOneOfKeywords(KeywordGlobal, KeywordLocal):
-		// GLOBAL/LOCAL only says how the right-hand table is distributed, so the
-		// join type still follows it: `GLOBAL LEFT JOIN` is a LEFT join.
-		modifiers, err = p.parseJoinLocality(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-
-		if modifiers == nil {
-			return nil, nil
-		}
 	case p.tryConsumeTokenKind(TokenKindComma) != nil:
 		return p.parseJoinExpr(p.Pos())
 	default:
-		modifiers = p.parseJoinOp(p.Pos())
+		// GLOBAL/LOCAL only says how the right-hand table is distributed, so
+		// the join type still follows it: `GLOBAL LEFT JOIN` is a LEFT join.
+		modifiers, err = p.parseJoinModifiers(p.Pos())
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if len(modifiers) != 0 && !p.matchKeyword(KeywordJoin) {

@@ -196,6 +196,10 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// A join takes at most one locality, and it precedes the join type
 		"SELECT * FROM t1 GLOBAL LOCAL JOIN t2 ON t1.a = t2.a",
 		"SELECT * FROM t1 LEFT GLOBAL JOIN t2 ON t1.a = t2.a",
+		// A locality that no join follows is not silently dropped
+		"SELECT * FROM t1 GLOBAL",
+		"SELECT * FROM t1 GLOBAL WHERE a = 1",
+		"SELECT * FROM t1 LOCAL SETTINGS max_threads = 1",
 		// GLOBAL is a keyword everywhere, never an implicit alias
 		"SELECT a GLOBAL FROM t",
 		"SELECT a GLOBAL, b FROM t",
