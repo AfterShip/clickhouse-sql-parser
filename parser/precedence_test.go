@@ -399,6 +399,69 @@ func TestGlobalInAndGlobalNotIn(t *testing.T) {
 	}
 }
 
+// parseTableFunctionExpr parses a single-statement SELECT and returns the
+// table function in its FROM clause.
+func parseTableFunctionExpr(t *testing.T, sql string) *TableFunctionExpr {
+	t.Helper()
+	from := parseOneStmt(t, sql).(*SelectQuery).From.Expr
+	table, ok := from.(*JoinTableExpr)
+	require.True(t, ok, "%s: expected *JoinTableExpr in FROM, got %T", sql, from)
+	fn, ok := table.Table.Expr.(*TableFunctionExpr)
+	require.True(t, ok, "%s: expected *TableFunctionExpr, got %T", sql, table.Table.Expr)
+	return fn
+}
+
+func TestTableFunctionArgAcceptsOperatorExpressions(t *testing.T) {
+	// a table-function argument continues into the operator loop, so the
+	// argument is the whole `1 + 1`, not just the first literal
+	fn := parseTableFunctionExpr(t, "SELECT * FROM numbers(1 + 1)")
+	require.Len(t, fn.Args.Args, 1)
+	op, ok := fn.Args.Args[0].(*BinaryOperation)
+	require.True(t, ok, "argument should be the binary operation `1 + 1`, got %T", fn.Args.Args[0])
+	require.Equal(t, TokenKindPlus, op.Operation)
+
+	// a nested call keeps its *TableFunctionExpr shape as the left operand
+	fn = parseTableFunctionExpr(t, "SELECT * FROM numbers(intDiv(a, b) + 1)")
+	op, ok = fn.Args.Args[0].(*BinaryOperation)
+	require.True(t, ok, "argument should be a binary operation, got %T", fn.Args.Args[0])
+	_, ok = op.LeftExpr.(*TableFunctionExpr)
+	require.True(t, ok, "left operand should stay a *TableFunctionExpr, got %T", op.LeftExpr)
+
+	for _, sql := range []string{
+		"SELECT * FROM numbers(greatest(1, a - b))",
+		"SELECT * FROM cluster('c', numbers(1 + 1))",
+		"SELECT * FROM numbers(x AND y)",
+	} {
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
+	}
+}
+
+func TestTableFunctionArgFloatAndZeroArgumentCall(t *testing.T) {
+	fn := parseTableFunctionExpr(t, "SELECT * FROM numbers(1.5)")
+	num, ok := fn.Args.Args[0].(*NumberLiteral)
+	require.True(t, ok, "argument should be a *NumberLiteral, got %T", fn.Args.Args[0])
+	require.Equal(t, "1.5", num.Literal)
+
+	fn = parseTableFunctionExpr(t, "SELECT * FROM numbers(now())")
+	nested, ok := fn.Args.Args[0].(*TableFunctionExpr)
+	require.True(t, ok, "argument should be the zero-argument call, got %T", fn.Args.Args[0])
+	require.Empty(t, nested.Args.Args)
+}
+
+func TestTableFunctionArgShapesUnchanged(t *testing.T) {
+	// a signed literal is still one literal, not a unary operation
+	fn := parseTableFunctionExpr(t, "SELECT * FROM numbers(-1)")
+	num, ok := fn.Args.Args[0].(*NumberLiteral)
+	require.True(t, ok, "argument should stay the signed literal `-1`, got %T", fn.Args.Args[0])
+	require.Equal(t, "-1", num.Literal)
+
+	// a qualified name is still a *NestedIdentifier, not an IndexOperation
+	fn = parseTableFunctionExpr(t, "SELECT * FROM cluster('c', db.table)")
+	require.Len(t, fn.Args.Args, 2)
+	_, ok = fn.Args.Args[1].(*NestedIdentifier)
+	require.True(t, ok, "second argument should stay a *NestedIdentifier, got %T", fn.Args.Args[1])
+}
+
 func TestGlobalInGroupsLikeIn(t *testing.T) {
 	// GLOBAL IN binds like IN: `a = b GLOBAL IN (1)` is `a = (b GLOBAL IN (1))`
 	for _, sql := range []string{"SELECT a = b GLOBAL IN (1)", "SELECT a = b GLOBAL NOT IN (1)"} {
