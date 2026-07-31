@@ -164,24 +164,26 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return p.parseBetweenClause(expr, false)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
-		negated := p.tryConsumeKeywords(KeywordNot)
+		hasNot := p.tryConsumeKeywords(KeywordNot)
 		if p.expectKeyword(KeywordIn) != nil {
 			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.currentTokenString())
-		}
-
-		op := TokenKind("GLOBAL IN")
-		if negated {
-			op = "GLOBAL NOT IN"
 		}
 
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
 		if err != nil {
 			return nil, err
 		}
+
+		// GLOBAL IN and GLOBAL NOT IN are the IN operator with the locality (and
+		// negation) recorded as flags, so the operator text stays IN and the
+		// formatter re-emits the GLOBAL/NOT prefixes from HasGlobal/HasNot rather
+		// than baking them into the operator string.
 		return &BinaryOperation{
 			LeftExpr:  expr,
-			Operation: op,
+			Operation: TokenKind(KeywordIn),
 			RightExpr: rightExpr,
+			HasGlobal: true,
+			HasNot:    hasNot,
 		}, nil
 	case p.matchTokenKind(TokenKindDot):
 		_ = p.lexer.consumeToken()

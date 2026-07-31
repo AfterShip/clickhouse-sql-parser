@@ -1316,7 +1316,7 @@
           "NamePos": 522,
           "NameEnd": 523
         },
-        "Operation": "GLOBAL IN",
+        "Operation": "IN",
         "RightExpr": {
           "HasParen": true,
           "Select": {
@@ -1378,7 +1378,7 @@
             "Intersect": null
           }
         },
-        "HasGlobal": false,
+        "HasGlobal": true,
         "HasNot": false
       }
     },
@@ -1448,7 +1448,7 @@
           "NamePos": 576,
           "NameEnd": 577
         },
-        "Operation": "GLOBAL NOT IN",
+        "Operation": "IN",
         "RightExpr": {
           "HasParen": true,
           "Select": {
@@ -1510,8 +1510,8 @@
             "Intersect": null
           }
         },
-        "HasGlobal": false,
-        "HasNot": false
+        "HasGlobal": true,
+        "HasNot": true
       }
     },
     "GroupBy": null,
@@ -1674,7 +1674,7 @@
             }
           ]
         },
-        "Operation": "GLOBAL NOT IN",
+        "Operation": "IN",
         "RightExpr": {
           "HasParen": true,
           "Select": {
@@ -1736,8 +1736,8 @@
             "Intersect": null
           }
         },
-        "HasGlobal": false,
-        "HasNot": false
+        "HasGlobal": true,
+        "HasNot": true
       }
     },
     "GroupBy": null,
@@ -2342,7 +2342,7 @@
           "NamePos": 1003,
           "NameEnd": 1009
         },
-        "Operation": "GLOBAL NOT IN",
+        "Operation": "IN",
         "RightExpr": {
           "HasParen": true,
           "Select": {
@@ -2415,8 +2415,8 @@
             "Intersect": null
           }
         },
-        "HasGlobal": false,
-        "HasNot": false
+        "HasGlobal": true,
+        "HasNot": true
       }
     },
     "GroupBy": null,

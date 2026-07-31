@@ -384,16 +384,18 @@ func TestGlobalAfterJoinConstraintStartsANewJoin(t *testing.T) {
 
 func TestGlobalInAndGlobalNotIn(t *testing.T) {
 	for _, tc := range []struct {
-		sql string
-		op  TokenKind
+		sql    string
+		hasNot bool
 	}{
-		{"SELECT a GLOBAL IN (SELECT 1)", "GLOBAL IN"},
-		{"SELECT a GLOBAL NOT IN (SELECT 1)", "GLOBAL NOT IN"},
+		{"SELECT a GLOBAL IN (SELECT 1)", false},
+		{"SELECT a GLOBAL NOT IN (SELECT 1)", true},
 	} {
 		expr := parseSelectItemExpr(t, tc.sql)
 		in, ok := expr.(*BinaryOperation)
 		require.True(t, ok, "%s: expected BinaryOperation at the top, got %T", tc.sql, expr)
-		require.Equal(t, tc.op, in.Operation, tc.sql)
+		require.Equal(t, TokenKind(KeywordIn), in.Operation, tc.sql)
+		require.True(t, in.HasGlobal, tc.sql)
+		require.Equal(t, tc.hasNot, in.HasNot, tc.sql)
 	}
 }
 
@@ -407,6 +409,6 @@ func TestGlobalInGroupsLikeIn(t *testing.T) {
 
 		in, ok := eq.RightExpr.(*BinaryOperation)
 		require.True(t, ok, "%s: right side of `=` should be the GLOBAL IN operation, got %T", sql, eq.RightExpr)
-		require.Contains(t, string(in.Operation), "GLOBAL", sql)
+		require.True(t, in.HasGlobal, sql)
 	}
 }
