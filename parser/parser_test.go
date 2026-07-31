@@ -200,6 +200,8 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT * FROM t1 LOCAL",
 		"SELECT * FROM t global",
 		"SELECT * FROM t1 GLOBAL JOIN t2 ON t1.a = t2.a GLOBAL",
+		"SELECT * FROM t1 GLOBAL WHERE a = 1",
+		"SELECT * FROM t1 LOCAL SETTINGS max_threads = 1",
 		// GLOBAL is a keyword everywhere, never an implicit alias
 		"SELECT a GLOBAL FROM t",
 		"SELECT a GLOBAL, b FROM t",
