@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"slices"
 )
@@ -279,12 +280,64 @@ func (p *Parser) parseJoinTableExpr(_ Pos) (Expr, error) {
 	}
 }
 
+// parseJoinLocality consumes a GLOBAL or LOCAL locality together with the join
+// type after it, returning both as join modifiers. With no join it rewinds and
+// returns nil, leaving the keyword for the caller to reject.
+func (p *Parser) parseJoinLocality() ([]string, error) {
+	savedState := p.lexer.saveState()
+	locality := p.current()
+	_ = p.lexer.consumeToken()
+
+	joinOp := p.parseJoinOp(p.Pos())
+	if len(joinOp) == 0 && !p.matchKeyword(KeywordJoin) {
+		p.lexer.restoreState(savedState)
+		return nil, nil
+	}
+
+	// ARRAY JOIN reads a column list rather than a distributed table, so it has
+	// no locality. Modifiers keep their source spelling, hence EqualFold.
+	if slices.ContainsFunc(joinOp, func(modifier string) bool {
+		return strings.EqualFold(modifier, KeywordArray)
+	}) {
+		// point at the locality, not at wherever the join op stopped
+		return nil, &ParseError{
+			Pos: locality.Pos,
+			Got: locality,
+			Msg: fmt.Sprintf("%s cannot be combined with ARRAY JOIN", locality.String),
+		}
+	}
+
+	return append([]string{locality.String}, joinOp...), nil
+}
+
+// peekJoinAfterLocality reports whether the current GLOBAL/LOCAL keyword is
+// followed by a join operator, leaving the lexer where it found it. Expression
+// parsing uses it to tell a locality apart from the GLOBAL IN operator.
+func (p *Parser) peekJoinAfterLocality() bool {
+	savedState := p.lexer.saveState()
+	defer p.lexer.restoreState(savedState)
+
+	_ = p.lexer.consumeToken()
+	p.parseJoinOp(p.Pos())
+
+	return p.matchKeyword(KeywordJoin)
+}
+
 func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	var rightExpr Expr
 	var modifiers []string
 	switch {
-	case p.tryConsumeKeywords(KeywordGlobal):
-	case p.tryConsumeKeywords(KeywordLocal):
+	case p.matchOneOfKeywords(KeywordGlobal, KeywordLocal):
+		// the locality only says how the right-hand table is distributed, so the
+		// join type still follows it: `GLOBAL LEFT JOIN` is a LEFT join
+		modifiers, err = p.parseJoinLocality()
+		if err != nil {
+			return nil, err
+		}
+
+		if modifiers == nil {
+			return nil, nil
+		}
 	case p.tryConsumeTokenKind(TokenKindComma) != nil:
 		return p.parseJoinExpr(p.Pos())
 	default:

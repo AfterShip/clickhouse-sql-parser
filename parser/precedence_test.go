@@ -329,3 +329,86 @@ func TestIntersect(t *testing.T) {
 	require.NotNil(t, selectQuery.Intersect)
 	require.Equal(t, "SELECT 1 INTERSECT SELECT 2", Format(stmts[0]))
 }
+
+func TestGlobalJoinLocalityPrefixesTheJoinType(t *testing.T) {
+	// the locality prefixes the join type, and both have to reach the modifiers
+	for _, tc := range []struct {
+		sql       string
+		modifiers []string
+	}{
+		{"SELECT * FROM t1 GLOBAL JOIN t2 ON t1.a = t2.a", []string{"GLOBAL", "JOIN"}},
+		{"SELECT * FROM t1 GLOBAL INNER JOIN t2 ON t1.a = t2.a", []string{"GLOBAL", "INNER", "JOIN"}},
+		{"SELECT * FROM t1 GLOBAL LEFT OUTER JOIN t2 ON t1.a = t2.a", []string{"GLOBAL", "LEFT", "OUTER", "JOIN"}},
+		{"SELECT * FROM t1 GLOBAL ANY LEFT JOIN t2 ON t1.a = t2.a", []string{"GLOBAL", "ANY", "LEFT", "JOIN"}},
+		{"SELECT * FROM t1 GLOBAL CROSS JOIN t2", []string{"GLOBAL", "CROSS", "JOIN"}},
+		{"SELECT * FROM t1 AS x LOCAL FULL JOIN t2 USING a", []string{"LOCAL", "FULL", "JOIN"}},
+	} {
+		from := parseOneStmt(t, tc.sql).(*SelectQuery).From.Expr
+		join, ok := from.(*JoinExpr)
+		require.True(t, ok, "%s: expected a *JoinExpr in FROM, got %T", tc.sql, from)
+
+		right, ok := join.Right.(*JoinExpr)
+		require.True(t, ok, "%s: expected the join to carry a right side, got %T", tc.sql, join.Right)
+		require.Equal(t, tc.modifiers, right.Modifiers, tc.sql)
+		require.Equal(t, tc.sql, Format(parseOneStmt(t, tc.sql)), tc.sql)
+	}
+}
+
+func TestLocalityWithoutAJoinKeepsItsKeyword(t *testing.T) {
+	// a GLOBAL with no join used to be consumed and dropped from Format(); the
+	// error now has to name it rather than the end of the statement
+	_, err := NewParser("SELECT * FROM t1 GLOBAL").ParseStmts()
+	require.ErrorContains(t, err, "GLOBAL")
+
+	// an explicit alias still names a table, as it does on the server
+	for _, sql := range []string{"SELECT * FROM t AS global", "SELECT * FROM t AS local"} {
+		require.Equal(t, sql, Format(parseOneStmt(t, sql)), sql)
+	}
+}
+
+func TestGlobalAfterJoinConstraintStartsANewJoin(t *testing.T) {
+	// a GLOBAL after an ON/USING clause starts the next join, not a GLOBAL IN
+	sql := "SELECT * FROM t1 GLOBAL JOIN t2 ON t1.a = t2.a GLOBAL LEFT JOIN t3 ON t1.a = t3.a"
+	stmt := parseOneStmt(t, sql)
+	join := stmt.(*SelectQuery).From.Expr.(*JoinExpr)
+
+	first, ok := join.Right.(*JoinExpr)
+	require.True(t, ok)
+	require.Equal(t, []string{"GLOBAL", "JOIN"}, first.Modifiers)
+
+	second, ok := first.Right.(*JoinExpr)
+	require.True(t, ok, "the second GLOBAL should start another join, got %T", first.Right)
+	require.Equal(t, []string{"GLOBAL", "LEFT", "JOIN"}, second.Modifiers)
+	require.Equal(t, sql, Format(stmt))
+}
+
+func TestGlobalInAndGlobalNotIn(t *testing.T) {
+	for _, tc := range []struct {
+		sql    string
+		hasNot bool
+	}{
+		{"SELECT a GLOBAL IN (SELECT 1)", false},
+		{"SELECT a GLOBAL NOT IN (SELECT 1)", true},
+	} {
+		expr := parseSelectItemExpr(t, tc.sql)
+		in, ok := expr.(*BinaryOperation)
+		require.True(t, ok, "%s: expected BinaryOperation at the top, got %T", tc.sql, expr)
+		require.Equal(t, TokenKind(KeywordIn), in.Operation, tc.sql)
+		require.True(t, in.HasGlobal, tc.sql)
+		require.Equal(t, tc.hasNot, in.HasNot, tc.sql)
+	}
+}
+
+func TestGlobalInGroupsLikeIn(t *testing.T) {
+	// GLOBAL IN binds like IN: `a = b GLOBAL IN (1)` is `a = (b GLOBAL IN (1))`
+	for _, sql := range []string{"SELECT a = b GLOBAL IN (1)", "SELECT a = b GLOBAL NOT IN (1)"} {
+		expr := parseSelectItemExpr(t, sql)
+		eq, ok := expr.(*BinaryOperation)
+		require.True(t, ok, "%s: expected `=` at the top, got %T", sql, expr)
+		require.Equal(t, TokenKind("="), eq.Operation, sql)
+
+		in, ok := eq.RightExpr.(*BinaryOperation)
+		require.True(t, ok, "%s: right side of `=` should be the GLOBAL IN operation, got %T", sql, eq.RightExpr)
+		require.True(t, in.HasGlobal, sql)
+	}
+}

@@ -122,7 +122,7 @@ func (p *BinaryOperation) isLogicalOp() bool {
 	case TokenKind(KeywordAnd), TokenKind(KeywordOr):
 		return true
 	default:
-		return p.HasGlobal || p.HasNot
+		return false
 	}
 }
 
@@ -143,15 +143,24 @@ func (p *BinaryOperation) writeLogicalOperand(formatter *Formatter, expr Expr) {
 	}
 }
 
+// writeOperatorPrefix emits the GLOBAL and NOT modifiers that precede the
+// operator, e.g. the GLOBAL of GLOBAL IN or both of GLOBAL NOT IN. They stack in
+// that fixed order, so this must not be an either/or.
+func (p *BinaryOperation) writeOperatorPrefix(formatter *Formatter) {
+	if p.HasGlobal {
+		formatter.WriteString("GLOBAL ")
+	}
+
+	if p.HasNot {
+		formatter.WriteString("NOT ")
+	}
+}
+
 func (p *BinaryOperation) FormatSQL(formatter *Formatter) {
 	if p.isLogicalOp() && formatter.mode == FormatModeBeautify {
 		p.writeLogicalOperand(formatter, p.LeftExpr)
 		formatter.NewLine()
-		if p.HasNot {
-			formatter.WriteString("NOT ")
-		} else if p.HasGlobal {
-			formatter.WriteString("GLOBAL ")
-		}
+		p.writeOperatorPrefix(formatter)
 		formatter.WriteString(string(p.Operation))
 		formatter.NewLine()
 		p.writeLogicalOperand(formatter, p.RightExpr)
@@ -161,11 +170,7 @@ func (p *BinaryOperation) FormatSQL(formatter *Formatter) {
 	if p.Operation != TokenKindDash {
 		formatter.WriteByte(whitespace)
 	}
-	if p.HasNot {
-		formatter.WriteString("NOT ")
-	} else if p.HasGlobal {
-		formatter.WriteString("GLOBAL ")
-	}
+	p.writeOperatorPrefix(formatter)
 	formatter.WriteString(string(p.Operation))
 	if p.Operation != TokenKindDash {
 		formatter.WriteByte(whitespace)

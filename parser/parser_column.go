@@ -79,7 +79,12 @@ func (p *Parser) getNextPrecedence() int {
 	case p.matchKeyword(KeywordIn):
 		return precedenceIn
 	case p.matchKeyword(KeywordGlobal):
-		// GLOBAL is only valid before IN, so it binds like IN itself.
+		// GLOBAL is also a join locality: in `ON a = b GLOBAL LEFT JOIN c` it
+		// belongs to the FROM clause, so the expression has to end here.
+		if p.peekJoinAfterLocality() {
+			return PrecedenceUnknown
+		}
+
 		return precedenceIn
 	case p.matchTokenKind(TokenKindQuestionMark):
 		return PrecedenceQuery
@@ -159,17 +164,26 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 		return p.parseBetweenClause(expr, false)
 	case p.matchKeyword(KeywordGlobal):
 		_ = p.lexer.consumeToken()
+		hasNot := p.tryConsumeKeywords(KeywordNot)
 		if p.expectKeyword(KeywordIn) != nil {
-			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.currentTokenKind())
+			return nil, fmt.Errorf("expected IN after GLOBAL, got %s", p.currentTokenString())
 		}
+
 		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
 		if err != nil {
 			return nil, err
 		}
+
+		// GLOBAL IN and GLOBAL NOT IN are the IN operator with the locality (and
+		// negation) recorded as flags, so the operator text stays IN and the
+		// formatter re-emits the GLOBAL/NOT prefixes from HasGlobal/HasNot rather
+		// than baking them into the operator string.
 		return &BinaryOperation{
 			LeftExpr:  expr,
-			Operation: "GLOBAL IN",
+			Operation: TokenKind(KeywordIn),
 			RightExpr: rightExpr,
+			HasGlobal: true,
+			HasNot:    hasNot,
 		}, nil
 	case p.matchTokenKind(TokenKindDot):
 		_ = p.lexer.consumeToken()
