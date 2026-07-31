@@ -528,7 +528,20 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	}
 	switch {
 	case p.matchKeyword(KeywordInterval):
-		return p.parseInterval(true)
+		// ClickHouse also accepts an unquoted `interval` as a column name
+		// (e.g. `WHERE interval > 1`), and no fixed lookahead separates the
+		// two readings: `INTERVAL a + b DAY` only reveals the operator use at
+		// the unit, four tokens out. Try the operator reading first and fall
+		// back to the identifier when it fails; the lexer state is the only
+		// parse state, so the restore is total.
+		savedState := p.lexer.saveState()
+		interval, err := p.parseInterval(true)
+		if err != nil {
+			p.lexer.restoreState(savedState)
+			return p.parseAnyKeyword()
+		}
+
+		return interval, nil
 	case p.matchKeyword(KeywordDate), p.matchKeyword(KeywordTimestamp):
 		nextToken, err := p.lexer.peekToken()
 		if err != nil {
