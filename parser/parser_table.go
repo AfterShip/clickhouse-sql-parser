@@ -746,6 +746,15 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 }
 
 func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
+	expr, err := p.parseTableArgPrimaryExpr(pos)
+	if err != nil {
+		return nil, err
+	}
+
+	return p.parseInfixLoop(expr, PrecedenceUnknown)
+}
+
+func (p *Parser) parseTableArgPrimaryExpr(pos Pos) (Expr, error) {
 	switch {
 	case p.matchTokenKind(TokenKindIdent):
 		ident, err := p.parseIdent()
@@ -776,8 +785,16 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 			return ident, nil
 		}
 	case p.matchTokenKind(TokenKindLParen):
-		return p.parseSubQuery(p.Pos())
-	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
+		// a leading '(' opens a subquery only when SELECT or WITH follows,
+		// e.g. remote('127.0.0.1', (SELECT 1)); anything else is a
+		// parenthesized expression, e.g. numbers((1 + 1))
+		if p.peekKeyword(KeywordSelect) || p.peekKeyword(KeywordWith) {
+			return p.parseSubQuery(p.Pos())
+		}
+
+		return p.parseFunctionParams(p.Pos())
+	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat),
+		p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
 		return p.parseLiteral(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <Name>, <literal>", p.currentTokenString())
@@ -790,7 +807,7 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 	}
 
 	args := make([]Expr, 0)
-	for !p.lexer.isEOF() {
+	for !p.lexer.isEOF() && !p.matchTokenKind(TokenKindRParen) {
 		// Check if this is a named parameter (identifier followed by =)
 		var arg Expr
 		var err error

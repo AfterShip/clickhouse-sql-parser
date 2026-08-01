@@ -275,12 +275,21 @@ func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return p.parseInfixLoop(expr, precedence)
+}
+
+// parseInfixLoop folds binary operators into expr while the next operator
+// binds tighter than precedence; it stops at once on tokens that are no
+// operator at all, such as ',' or ')'.
+func (p *Parser) parseInfixLoop(expr Expr, precedence int) (Expr, error) {
 	for !p.lexer.isEOF() {
 		nextPrecedence := p.getNextPrecedence()
 		if nextPrecedence <= precedence {
 			return expr, nil
 		}
 		// parse binary operation
+		var err error
 		expr, err = p.parseInfix(expr, nextPrecedence)
 		if err != nil {
 			return nil, err
