@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -495,4 +496,42 @@ func TestGlobalInGroupsLikeIn(t *testing.T) {
 		require.True(t, ok, "%s: right side of `=` should be the GLOBAL IN operation, got %T", sql, eq.RightExpr)
 		require.True(t, in.HasGlobal, sql)
 	}
+}
+
+func TestIntervalAsColumnName(t *testing.T) {
+	// An unquoted `interval` in expression position is a column reference when
+	// the INTERVAL operator reading fails: `WHERE interval > 1` is `interval > 1`.
+	stmts, err := NewParser("SELECT a FROM t WHERE interval > 1").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+	selectQuery, ok := stmts[0].(*SelectQuery)
+	require.True(t, ok, "expected *SelectQuery, got %T", stmts[0])
+	require.NotNil(t, selectQuery.Where)
+
+	cmp, ok := selectQuery.Where.Expr.(*BinaryOperation)
+	require.True(t, ok, "WHERE expression should be the comparison, got %T", selectQuery.Where.Expr)
+	require.Equal(t, TokenKind(">"), cmp.Operation)
+
+	left, ok := cmp.LeftExpr.(*Ident)
+	require.True(t, ok, "left side of `>` should be the `interval` column, got %T", cmp.LeftExpr)
+	require.Equal(t, "interval", left.Name)
+	_, ok = cmp.RightExpr.(*NumberLiteral)
+	require.True(t, ok, "right side of `>` should be the number literal, got %T", cmp.RightExpr)
+}
+
+func TestIntervalOperatorStillParses(t *testing.T) {
+	expr := parseSelectItemExpr(t, "SELECT INTERVAL 4 DAY")
+	interval, ok := expr.(*IntervalExpr)
+	require.True(t, ok, "expected *IntervalExpr, got %T", expr)
+	require.Equal(t, "DAY", interval.Unit.Name)
+}
+
+func TestRepeatedIntervalColumnsParseInPolynomialTime(t *testing.T) {
+	// Each failed INTERVAL-operator attempt reparses its whole suffix, so
+	// without memoizing the failures this input backtracks exponentially and
+	// the test hangs rather than fails.
+	sql := "SELECT " + strings.Repeat("interval + ", 60) + "interval FROM t"
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
 }

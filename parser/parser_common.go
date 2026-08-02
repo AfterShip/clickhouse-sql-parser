@@ -9,6 +9,12 @@ import (
 type Parser struct {
 	lexer *Lexer
 	lines lineStarts // lazily built on the first error, for position lookup
+
+	// failedIntervalOffsets records the positions of INTERVAL tokens whose
+	// operator reading already failed, so parseColumnExpr retries each
+	// position at most once. See the KeywordInterval case there for why the
+	// memo is sound and what it prevents.
+	failedIntervalOffsets map[Pos]struct{}
 }
 
 // lineStarts returns the line-start offsets for the input, building them on
