@@ -10,8 +10,10 @@ all: $(PROGRAM)
 
 .PHONY: all
 
+VERSION=$(shell git describe --tags --always --dirty 2>/dev/null)
+
 $(PROGRAM):
-	go build -o $(PROGRAM) main.go
+	go build -ldflags "-X main.version=$(VERSION)" -o $(PROGRAM) .
 
 test:
 	@go test -v ./... -covermode=atomic -coverprofile=coverage.out -race -compatible

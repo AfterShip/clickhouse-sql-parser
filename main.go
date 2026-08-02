@@ -5,15 +5,54 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime/debug"
 	"strings"
 
 	clickhouse "github.com/AfterShip/clickhouse-sql-parser/parser"
 )
 
-const VERSION = "0.5.4"
+// version is overridable at build time via
+// -ldflags "-X main.version=..." (see the Makefile); when empty the
+// binary reports the module version the Go toolchain recorded, so a
+// `go install ...@vX.Y.Z` build needs no hand-maintained constant.
+var version string
+
 const help = `
 Usage: clickhouse-sql-parser [YOUR SQL STRING] -f [YOUR SQL FILE] -format -beautify
 `
+
+func getVersion() string {
+	if version != "" {
+		return version
+	}
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return "unknown"
+	}
+	if v := info.Main.Version; v != "" && v != "(devel)" {
+		return v
+	}
+	// A build from a source checkout has no module version; report the
+	// VCS revision the toolchain stamped instead.
+	var revision, dirty string
+	for _, setting := range info.Settings {
+		switch setting.Key {
+		case "vcs.revision":
+			revision = setting.Value
+		case "vcs.modified":
+			if setting.Value == "true" {
+				dirty = "-dirty"
+			}
+		}
+	}
+	if revision == "" {
+		return "devel"
+	}
+	if len(revision) > 12 {
+		revision = revision[:12]
+	}
+	return "devel-" + revision + dirty
+}
 
 var options struct {
 	help     bool
@@ -34,7 +73,7 @@ func init() {
 func main() {
 	flag.Parse()
 	if options.version {
-		fmt.Println("v" + VERSION)
+		fmt.Println(getVersion())
 		os.Exit(0)
 	}
 	if len(os.Args) < 2 || options.help {
