@@ -273,7 +273,9 @@ const (
 // name, or a lookahead-disambiguated select item — use parseAnyKeyword.
 //
 // Keywords that double as ClickHouse function or engine names (IF, LEFT,
-// RIGHT, ANY, MIN, MAX, TRIM, SET, JOIN...) must stay non-reserved.
+// RIGHT, ANY, MIN, MAX, TRIM, SET, JOIN...) must stay non-reserved. So must
+// END: it only ever appears as a CASE terminator, which parseColumnCaseExpr
+// expects explicitly, and ClickHouse accepts `end` as a column name.
 var reservedKeywords = NewSet(
 	KeywordAlter,
 	KeywordAnd,
@@ -287,7 +289,6 @@ var reservedKeywords = NewSet(
 	KeywordDistinct,
 	KeywordDrop,
 	KeywordElse,
-	KeywordEnd,
 	KeywordExcept,
 	KeywordExplain,
 	KeywordFormat,
