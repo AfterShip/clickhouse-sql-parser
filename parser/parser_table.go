@@ -953,6 +953,29 @@ func (p *Parser) tryParseOrderByClause(pos Pos) (*OrderByClause, error) {
 	return p.parseOrderByClause(pos)
 }
 
+// tryParseTableOrderByClause parses the ORDER BY of a table engine, which gives
+// the sorting key. Unlike the ORDER BY of a query it holds a single expression:
+// a sorting key over several columns is written as a tuple.
+func (p *Parser) tryParseTableOrderByClause(pos Pos) (*OrderByClause, error) {
+	if !p.tryConsumeKeywords(KeywordOrder) {
+		return nil, nil // nolint
+	}
+
+	if err := p.expectKeyword(KeywordBy); err != nil {
+		return nil, err
+	}
+
+	sortingKey, err := p.parseOrderExpr(pos)
+	if err != nil {
+		return nil, err
+	}
+	return &OrderByClause{
+		OrderPos: pos,
+		ListEnd:  sortingKey.End(),
+		Items:    []Expr{sortingKey},
+	}, nil
+}
+
 func (p *Parser) parseOrderByClause(pos Pos) (*OrderByClause, error) {
 	orderByListExpr := &OrderByClause{OrderPos: pos, ListEnd: pos}
 	items := make([]Expr, 0)
@@ -1403,7 +1426,7 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	for !p.lexer.isEOF() {
 		switch {
 		case p.matchKeyword(KeywordOrder):
-			orderBy, err := p.tryParseOrderByClause(p.Pos())
+			orderBy, err := p.tryParseTableOrderByClause(p.Pos())
 			if err != nil {
 				return nil, err
 			}
