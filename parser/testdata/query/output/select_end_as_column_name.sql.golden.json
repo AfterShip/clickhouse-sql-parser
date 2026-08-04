@@ -1,0 +1,195 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 117,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "max",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 10
+          },
+          "Params": {
+            "LeftParenPos": 10,
+            "RightParenPos": 14,
+            "Items": {
+              "ListPos": 11,
+              "ListEnd": 14,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "end",
+                    "QuoteType": 1,
+                    "NamePos": 11,
+                    "NameEnd": 14
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "CasePos": 17,
+          "EndPos": 0,
+          "Expr": null,
+          "Whens": [
+            {
+              "WhenPos": 22,
+              "ThenPos": 39,
+              "When": {
+                "LeftExpr": {
+                  "Name": "end",
+                  "QuoteType": 1,
+                  "NamePos": 27,
+                  "NameEnd": 30
+                },
+                "Operation": "\u003e",
+                "RightExpr": {
+                  "Name": "start",
+                  "QuoteType": 1,
+                  "NamePos": 33,
+                  "NameEnd": 38
+                },
+                "HasGlobal": false,
+                "HasNot": false
+              },
+              "Then": {
+                "NumPos": 44,
+                "NumEnd": 45,
+                "Literal": "1",
+                "Base": 10
+              },
+              "ElsePos": 0,
+              "Else": null
+            }
+          ],
+          "ElsePos": 46,
+          "Else": {
+            "NumPos": 51,
+            "NumEnd": 52,
+            "Literal": "0",
+            "Base": 10
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "active",
+          "QuoteType": 1,
+          "NamePos": 60,
+          "NameEnd": 66
+        }
+      }
+    ],
+    "From": {
+      "FromPos": 67,
+      "Expr": {
+        "Table": {
+          "TablePos": 72,
+          "TableEnd": 73,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 72,
+              "NameEnd": 73
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 73,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 74,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "end",
+          "QuoteType": 1,
+          "NamePos": 80,
+          "NameEnd": 83
+        },
+        "Operation": "\u003e",
+        "RightExpr": {
+          "Name": "start",
+          "QuoteType": 1,
+          "NamePos": 86,
+          "NameEnd": 91
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": {
+      "GroupByPos": 92,
+      "GroupByEnd": 104,
+      "AggregateType": "",
+      "Expr": {
+        "ListPos": 101,
+        "ListEnd": 104,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Expr": {
+              "Name": "end",
+              "QuoteType": 1,
+              "NamePos": 101,
+              "NameEnd": 104
+            },
+            "Alias": null
+          }
+        ]
+      },
+      "WithCube": false,
+      "WithRollup": false,
+      "WithTotals": false
+    },
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 105,
+      "ListEnd": 117,
+      "Items": [
+        {
+          "OrderPos": 105,
+          "Expr": {
+            "Name": "end",
+            "QuoteType": 1,
+            "NamePos": 114,
+            "NameEnd": 117
+          },
+          "Alias": null,
+          "Direction": "",
+          "Fill": null
+        }
+      ],
+      "Interpolate": null
+    },
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]

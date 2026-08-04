@@ -45,11 +45,32 @@ func TestNonReservedKeywordAsIdentifier(t *testing.T) {
 		"SELECT t.key FROM t",
 		"SELECT if(a, 1, 2), any(b), left(c, 1) FROM t",
 		"SELECT * FROM t WHERE key = 1",
+		"SELECT max(end) FROM t",
+		"SELECT * FROM t WHERE end > start",
+		"INSERT INTO t (end) VALUES (1)",
+		"CREATE TABLE t (end DateTime) ENGINE=Memory",
+		"SELECT CASE WHEN end > start THEN end ELSE start END FROM t",
 	}
 	for _, sql := range cases {
 		t.Run(sql, func(t *testing.T) {
 			_, err := NewParser(sql).ParseStmts()
 			require.NoError(t, err)
+		})
+	}
+}
+
+// TestCaseExprRequiresEnd asserts that END, which is non-reserved so that
+// columns can be named `end`, still terminates a CASE expression: a CASE
+// without it must fail instead of running into the next clause.
+func TestCaseExprRequiresEnd(t *testing.T) {
+	cases := []string{
+		"SELECT CASE WHEN a THEN 1 ELSE 2 FROM t",
+		"SELECT CASE WHEN a THEN 1 FROM t",
+	}
+	for _, sql := range cases {
+		t.Run(sql, func(t *testing.T) {
+			_, err := NewParser(sql).ParseStmts()
+			require.Error(t, err)
 		})
 	}
 }
