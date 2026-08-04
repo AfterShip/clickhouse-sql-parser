@@ -1219,8 +1219,19 @@ func (d *DestinationClause) FormatSQL(formatter *Formatter) {
 
 func (d *DictionaryArgExpr) FormatSQL(formatter *Formatter) {
 	formatter.WriteExpr(d.Name)
-	formatter.WriteByte(whitespace)
-	formatter.WriteExpr(d.Value)
+	if !d.hasArgList() {
+		formatter.WriteByte(whitespace)
+		formatter.WriteExpr(d.Value)
+		return
+	}
+	formatter.WriteByte('(')
+	for i, arg := range d.Args {
+		if i > 0 {
+			formatter.WriteByte(whitespace)
+		}
+		formatter.WriteExpr(arg)
+	}
+	formatter.WriteByte(')')
 }
 
 func (d *DictionaryAttribute) FormatSQL(formatter *Formatter) {

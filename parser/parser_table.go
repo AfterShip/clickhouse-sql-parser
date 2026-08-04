@@ -2259,19 +2259,9 @@ func (p *Parser) parseDictionarySourceClause(pos Pos) (*DictionarySourceClause, 
 		return nil, err
 	}
 
-	var args []*DictionaryArgExpr
-	// Parse optional arguments
-	for !p.matchTokenKind(TokenKindRParen) {
-		arg, err := p.parseDictionaryArgExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		args = append(args, arg)
-
-		// If there's no right paren, we expect another arg (no comma needed)
-		if p.matchTokenKind(TokenKindRParen) {
-			break
-		}
+	args, err := p.parseDictionaryArgExprs()
+	if err != nil {
+		return nil, err
 	}
 
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {
@@ -2291,10 +2281,52 @@ func (p *Parser) parseDictionarySourceClause(pos Pos) (*DictionarySourceClause, 
 	}, nil
 }
 
+// parseDictionaryArgExprs parses the arguments of a dictionary clause, which
+// are separated by spaces instead of commas. It stops at the closing
+// parenthesis and leaves it for the caller to consume.
+func (p *Parser) parseDictionaryArgExprs() ([]*DictionaryArgExpr, error) {
+	var args []*DictionaryArgExpr
+	for !p.matchTokenKind(TokenKindRParen) {
+		arg, err := p.parseDictionaryArgExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, arg)
+	}
+	return args, nil
+}
+
 func (p *Parser) parseDictionaryArgExpr(pos Pos) (*DictionaryArgExpr, error) {
-	name, err := p.parseIdent()
+	// Argument names come from the source configuration, so they may be any
+	// keyword, as in SOURCE(HTTP(URL 'http://host/f.csv' FORMAT 'CSV')).
+	name, err := p.parseAnyKeyword()
 	if err != nil {
 		return nil, err
+	}
+
+	// An argument may hold its own list of arguments, as in
+	// HEADERS(HEADER(NAME 'API-KEY' VALUE 'key')).
+	if p.matchTokenKind(TokenKindLParen) {
+		lParenPos := p.Pos()
+		_ = p.lexer.consumeToken()
+
+		args, err := p.parseDictionaryArgExprs()
+		if err != nil {
+			return nil, err
+		}
+
+		rParenPos := p.Pos()
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
+			return nil, err
+		}
+
+		return &DictionaryArgExpr{
+			ArgPos:    pos,
+			Name:      name,
+			Args:      args,
+			LParenPos: lParenPos,
+			RParenPos: rParenPos,
+		}, nil
 	}
 
 	var value Expr
@@ -2422,19 +2454,9 @@ func (p *Parser) parseDictionaryLayoutClause(pos Pos) (*DictionaryLayoutClause, 
 		return nil, err
 	}
 
-	var args []*DictionaryArgExpr
-	// Parse optional arguments
-	for !p.matchTokenKind(TokenKindRParen) {
-		arg, err := p.parseDictionaryArgExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		args = append(args, arg)
-
-		// If there's no right paren, we expect another arg (no comma needed)
-		if p.matchTokenKind(TokenKindRParen) {
-			break
-		}
+	args, err := p.parseDictionaryArgExprs()
+	if err != nil {
+		return nil, err
 	}
 
 	if err := p.expectTokenKind(TokenKindRParen); err != nil {

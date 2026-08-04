@@ -1327,6 +1327,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Value, fn) {
 			return false
 		}
+		for _, arg := range n.Args {
+			if !Walk(arg, fn) {
+				return false
+			}
+		}
 	case *DictionaryLifetimeClause:
 		if !Walk(n.Value, fn) {
 			return false
