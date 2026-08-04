@@ -4387,7 +4387,13 @@ func (d *DictionarySourceClause) Accept(visitor ASTVisitor) error {
 type DictionaryArgExpr struct {
 	ArgPos Pos
 	Name   *Ident
-	Value  Expr // can be Ident with optional parentheses or literal
+	Value  Expr // can be Ident with optional parentheses or literal, nil for a nested argument list
+	// Args holds a nested argument list such as CREDENTIALS(USER 'u' PASSWORD 'p').
+	Args []*DictionaryArgExpr
+	// LParenPos tells a nested list apart from a value: it is only set when the
+	// argument is written with parentheses, which may hold no argument at all.
+	LParenPos Pos
+	RParenPos Pos
 }
 
 func (d *DictionaryArgExpr) Pos() Pos {
@@ -4395,7 +4401,14 @@ func (d *DictionaryArgExpr) Pos() Pos {
 }
 
 func (d *DictionaryArgExpr) End() Pos {
-	return d.Value.End()
+	if d.Value != nil {
+		return d.Value.End()
+	}
+	return d.RParenPos + 1
+}
+
+func (d *DictionaryArgExpr) hasArgList() bool {
+	return d.LParenPos != 0
 }
 
 func (d *DictionaryArgExpr) Accept(visitor ASTVisitor) error {
@@ -4404,8 +4417,15 @@ func (d *DictionaryArgExpr) Accept(visitor ASTVisitor) error {
 	if err := d.Name.Accept(visitor); err != nil {
 		return err
 	}
-	if err := d.Value.Accept(visitor); err != nil {
-		return err
+	if d.Value != nil {
+		if err := d.Value.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	for _, arg := range d.Args {
+		if err := arg.Accept(visitor); err != nil {
+			return err
+		}
 	}
 	return visitor.VisitDictionaryArgExpr(d)
 }

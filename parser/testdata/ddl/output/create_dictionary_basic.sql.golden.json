@@ -239,7 +239,10 @@
               "LiteralPos": 269,
               "LiteralEnd": 278,
               "Literal": "localhost"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 284,
@@ -254,7 +257,10 @@
               "NumEnd": 293,
               "Literal": "3306",
               "Base": 10
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 298,
@@ -268,7 +274,10 @@
               "LiteralPos": 304,
               "LiteralEnd": 311,
               "Literal": "default"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 317,
@@ -282,7 +291,10 @@
               "LiteralPos": 327,
               "LiteralEnd": 327,
               "Literal": ""
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 333,
@@ -296,7 +308,10 @@
               "LiteralPos": 337,
               "LiteralEnd": 341,
               "Literal": "test"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 347,
@@ -310,7 +325,10 @@
               "LiteralPos": 354,
               "LiteralEnd": 364,
               "Literal": "dict_table"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           }
         ],
         "RParenPos": 367

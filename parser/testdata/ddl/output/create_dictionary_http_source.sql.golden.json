@@ -1,0 +1,450 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 166,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "asns",
+        "QuoteType": 1,
+        "NamePos": 18,
+        "NameEnd": 22
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "Schema": {
+      "SchemaPos": 23,
+      "Attributes": [
+        {
+          "NamePos": 24,
+          "AttrEnd": 34,
+          "Name": {
+            "Name": "asn",
+            "QuoteType": 1,
+            "NamePos": 24,
+            "NameEnd": 27
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "QuoteType": 1,
+              "NamePos": 28,
+              "NameEnd": 34
+            }
+          },
+          "Default": null,
+          "Expression": null,
+          "Hierarchical": false,
+          "Injective": false,
+          "IsObjectId": false
+        },
+        {
+          "NamePos": 36,
+          "AttrEnd": 47,
+          "Name": {
+            "Name": "name",
+            "QuoteType": 1,
+            "NamePos": 36,
+            "NameEnd": 40
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 41,
+              "NameEnd": 47
+            }
+          },
+          "Default": null,
+          "Expression": null,
+          "Hierarchical": false,
+          "Injective": false,
+          "IsObjectId": false
+        }
+      ],
+      "RParenPos": 47
+    },
+    "Engine": {
+      "EnginePos": 49,
+      "PrimaryKey": {
+        "PrimaryKeyPos": 49,
+        "Keys": {
+          "ListPos": 61,
+          "ListEnd": 64,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": "asn",
+                "QuoteType": 1,
+                "NamePos": 61,
+                "NameEnd": 64
+              },
+              "Alias": null
+            }
+          ]
+        },
+        "RParenPos": 63
+      },
+      "Source": {
+        "SourcePos": 65,
+        "Source": {
+          "Name": "HTTP",
+          "QuoteType": 1,
+          "NamePos": 72,
+          "NameEnd": 76
+        },
+        "Args": [
+          {
+            "ArgPos": 77,
+            "Name": {
+              "Name": "URL",
+              "QuoteType": 1,
+              "NamePos": 77,
+              "NameEnd": 80
+            },
+            "Value": {
+              "LiteralPos": 82,
+              "LiteralEnd": 99,
+              "Literal": "http://o/asns.csv"
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
+          },
+          {
+            "ArgPos": 101,
+            "Name": {
+              "Name": "FORMAT",
+              "QuoteType": 1,
+              "NamePos": 101,
+              "NameEnd": 107
+            },
+            "Value": {
+              "LiteralPos": 109,
+              "LiteralEnd": 121,
+              "Literal": "CSVWithNames"
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
+          }
+        ],
+        "RParenPos": 123
+      },
+      "Lifetime": {
+        "LifetimePos": 125,
+        "Min": {
+          "NumPos": 138,
+          "NumEnd": 139,
+          "Literal": "0",
+          "Base": 10
+        },
+        "Max": {
+          "NumPos": 144,
+          "NumEnd": 148,
+          "Literal": "3600",
+          "Base": 10
+        },
+        "Value": null,
+        "RParenPos": 148
+      },
+      "Layout": {
+        "LayoutPos": 150,
+        "Layout": {
+          "Name": "HASHED",
+          "QuoteType": 1,
+          "NamePos": 157,
+          "NameEnd": 163
+        },
+        "Args": null,
+        "RParenPos": 165
+      },
+      "Range": null,
+      "Settings": null
+    },
+    "Comment": null
+  },
+  {
+    "CreatePos": 169,
+    "StatementEnd": 440,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "os",
+        "QuoteType": 1,
+        "NamePos": 187,
+        "NameEnd": 189
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "Schema": {
+      "SchemaPos": 190,
+      "Attributes": [
+        {
+          "NamePos": 191,
+          "AttrEnd": 200,
+          "Name": {
+            "Name": "id",
+            "QuoteType": 1,
+            "NamePos": 191,
+            "NameEnd": 193
+          },
+          "Type": {
+            "Name": {
+              "Name": "UInt32",
+              "QuoteType": 1,
+              "NamePos": 194,
+              "NameEnd": 200
+            }
+          },
+          "Default": null,
+          "Expression": null,
+          "Hierarchical": false,
+          "Injective": false,
+          "IsObjectId": false
+        },
+        {
+          "NamePos": 202,
+          "AttrEnd": 213,
+          "Name": {
+            "Name": "name",
+            "QuoteType": 1,
+            "NamePos": 202,
+            "NameEnd": 206
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 207,
+              "NameEnd": 213
+            }
+          },
+          "Default": null,
+          "Expression": null,
+          "Hierarchical": false,
+          "Injective": false,
+          "IsObjectId": false
+        }
+      ],
+      "RParenPos": 213
+    },
+    "Engine": {
+      "EnginePos": 215,
+      "PrimaryKey": {
+        "PrimaryKeyPos": 215,
+        "Keys": {
+          "ListPos": 227,
+          "ListEnd": 229,
+          "HasDistinct": false,
+          "Items": [
+            {
+              "Expr": {
+                "Name": "id",
+                "QuoteType": 1,
+                "NamePos": 227,
+                "NameEnd": 229
+              },
+              "Alias": null
+            }
+          ]
+        },
+        "RParenPos": 228
+      },
+      "Source": {
+        "SourcePos": 230,
+        "Source": {
+          "Name": "HTTP",
+          "QuoteType": 1,
+          "NamePos": 237,
+          "NameEnd": 241
+        },
+        "Args": [
+          {
+            "ArgPos": 247,
+            "Name": {
+              "Name": "url",
+              "QuoteType": 1,
+              "NamePos": 247,
+              "NameEnd": 250
+            },
+            "Value": {
+              "LiteralPos": 252,
+              "LiteralEnd": 271,
+              "Literal": "http://[::1]/os.tsv"
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
+          },
+          {
+            "ArgPos": 277,
+            "Name": {
+              "Name": "format",
+              "QuoteType": 1,
+              "NamePos": 277,
+              "NameEnd": 283
+            },
+            "Value": {
+              "LiteralPos": 285,
+              "LiteralEnd": 297,
+              "Literal": "TabSeparated"
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
+          },
+          {
+            "ArgPos": 303,
+            "Name": {
+              "Name": "credentials",
+              "QuoteType": 1,
+              "NamePos": 303,
+              "NameEnd": 314
+            },
+            "Value": null,
+            "Args": [
+              {
+                "ArgPos": 315,
+                "Name": {
+                  "Name": "user",
+                  "QuoteType": 1,
+                  "NamePos": 315,
+                  "NameEnd": 319
+                },
+                "Value": {
+                  "LiteralPos": 321,
+                  "LiteralEnd": 325,
+                  "Literal": "user"
+                },
+                "Args": null,
+                "LParenPos": 0,
+                "RParenPos": 0
+              },
+              {
+                "ArgPos": 327,
+                "Name": {
+                  "Name": "password",
+                  "QuoteType": 1,
+                  "NamePos": 327,
+                  "NameEnd": 335
+                },
+                "Value": {
+                  "LiteralPos": 337,
+                  "LiteralEnd": 345,
+                  "Literal": "password"
+                },
+                "Args": null,
+                "LParenPos": 0,
+                "RParenPos": 0
+              }
+            ],
+            "LParenPos": 314,
+            "RParenPos": 346
+          },
+          {
+            "ArgPos": 352,
+            "Name": {
+              "Name": "headers",
+              "QuoteType": 1,
+              "NamePos": 352,
+              "NameEnd": 359
+            },
+            "Value": null,
+            "Args": [
+              {
+                "ArgPos": 360,
+                "Name": {
+                  "Name": "header",
+                  "QuoteType": 1,
+                  "NamePos": 360,
+                  "NameEnd": 366
+                },
+                "Value": null,
+                "Args": [
+                  {
+                    "ArgPos": 367,
+                    "Name": {
+                      "Name": "name",
+                      "QuoteType": 1,
+                      "NamePos": 367,
+                      "NameEnd": 371
+                    },
+                    "Value": {
+                      "LiteralPos": 373,
+                      "LiteralEnd": 380,
+                      "Literal": "API-KEY"
+                    },
+                    "Args": null,
+                    "LParenPos": 0,
+                    "RParenPos": 0
+                  },
+                  {
+                    "ArgPos": 382,
+                    "Name": {
+                      "Name": "value",
+                      "QuoteType": 1,
+                      "NamePos": 382,
+                      "NameEnd": 387
+                    },
+                    "Value": {
+                      "LiteralPos": 389,
+                      "LiteralEnd": 392,
+                      "Literal": "key"
+                    },
+                    "Args": null,
+                    "LParenPos": 0,
+                    "RParenPos": 0
+                  }
+                ],
+                "LParenPos": 366,
+                "RParenPos": 393
+              }
+            ],
+            "LParenPos": 359,
+            "RParenPos": 394
+          }
+        ],
+        "RParenPos": 397
+      },
+      "Lifetime": {
+        "LifetimePos": 399,
+        "Min": {
+          "NumPos": 412,
+          "NumEnd": 413,
+          "Literal": "0",
+          "Base": 10
+        },
+        "Max": {
+          "NumPos": 418,
+          "NumEnd": 422,
+          "Literal": "3600",
+          "Base": 10
+        },
+        "Value": null,
+        "RParenPos": 422
+      },
+      "Layout": {
+        "LayoutPos": 424,
+        "Layout": {
+          "Name": "HASHED",
+          "QuoteType": 1,
+          "NamePos": 431,
+          "NameEnd": 437
+        },
+        "Args": null,
+        "RParenPos": 439
+      },
+      "Range": null,
+      "Settings": null
+    },
+    "Comment": null
+  }
+]

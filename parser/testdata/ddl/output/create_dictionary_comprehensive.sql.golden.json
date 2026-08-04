@@ -253,7 +253,10 @@
               "LiteralPos": 366,
               "LiteralEnd": 375,
               "Literal": "localhost"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 381,
@@ -268,7 +271,10 @@
               "NumEnd": 390,
               "Literal": "3306",
               "Base": 10
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 395,
@@ -282,7 +288,10 @@
               "LiteralPos": 401,
               "LiteralEnd": 405,
               "Literal": "root"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 411,
@@ -296,7 +305,10 @@
               "LiteralPos": 421,
               "LiteralEnd": 427,
               "Literal": "secret"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 433,
@@ -310,7 +322,10 @@
               "LiteralPos": 437,
               "LiteralEnd": 444,
               "Literal": "test_db"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           },
           {
             "ArgPos": 450,
@@ -324,7 +339,10 @@
               "LiteralPos": 457,
               "LiteralEnd": 473,
               "Literal": "dictionary_table"
-            }
+            },
+            "Args": null,
+            "LParenPos": 0,
+            "RParenPos": 0
           }
         ],
         "RParenPos": 476
