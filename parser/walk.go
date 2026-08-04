@@ -945,6 +945,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.SelectExpr, fn) {
 			return false
 		}
+	case *AlterTableModifyOrderBy:
+		if !Walk(n.OrderBy, fn) {
+			return false
+		}
 	case *AlterTableModifyTTL:
 		if !Walk(n.TTL, fn) {
 			return false

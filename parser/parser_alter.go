@@ -679,6 +679,20 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			StatementEnd: selectQuery.End(),
 			SelectExpr:   selectQuery,
 		}, nil
+	case p.matchKeyword(KeywordOrder):
+		_ = p.lexer.consumeToken() // consume "ORDER"
+		if err := p.expectKeyword(KeywordBy); err != nil {
+			return nil, err
+		}
+		orderBy, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		return &AlterTableModifyOrderBy{
+			ModifyPos:    pos,
+			StatementEnd: orderBy.End(),
+			OrderBy:      orderBy,
+		}, nil
 	case p.matchKeyword(KeywordSetting):
 		_ = p.lexer.consumeToken() // consume "SETTING"
 		settings, err := p.parseSettingsList(p.Pos())
@@ -693,7 +707,7 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			Settings:     settings,
 		}, nil
 	default:
-		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY|SETTING, but got %q",
+		return nil, fmt.Errorf("expected keyword: COLUMN|TTL|QUERY|ORDER|SETTING, but got %q",
 			p.currentTokenString())
 	}
 

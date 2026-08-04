@@ -28,6 +28,7 @@ type ASTVisitor interface {
 	VisitAlterTableRenameColumn(expr *AlterTableRenameColumn) error
 	VisitAlterTableModifyTTL(expr *AlterTableModifyTTL) error
 	VisitAlterTableModifyQuery(expr *AlterTableModifyQuery) error
+	VisitAlterTableModifyOrderBy(expr *AlterTableModifyOrderBy) error
 	VisitAlterTableModifyColumn(expr *AlterTableModifyColumn) error
 	VisitAlterTableModifySetting(expr *AlterTableModifySetting) error
 	VisitAlterTableResetSetting(expr *AlterTableResetSetting) error
@@ -390,6 +391,13 @@ func (v *DefaultASTVisitor) VisitAlterTableRenameColumn(expr *AlterTableRenameCo
 }
 
 func (v *DefaultASTVisitor) VisitAlterTableModifyQuery(expr *AlterTableModifyQuery) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterTableModifyOrderBy(expr *AlterTableModifyOrderBy) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

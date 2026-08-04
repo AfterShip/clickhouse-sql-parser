@@ -432,6 +432,11 @@ func (a *AlterTableModifyQuery) FormatSQL(formatter *Formatter) {
 	formatter.Dedent()
 }
 
+func (a *AlterTableModifyOrderBy) FormatSQL(formatter *Formatter) {
+	formatter.WriteString("MODIFY ORDER BY ")
+	formatter.WriteExpr(a.OrderBy)
+}
+
 func (a *AlterTableModifySetting) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("MODIFY SETTING")
 	formatter.Indent()
