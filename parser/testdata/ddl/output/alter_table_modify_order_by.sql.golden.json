@@ -1,0 +1,251 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 64,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "flows",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 17
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 18,
+        "StatementEnd": 64,
+        "OrderBy": {
+          "LeftParenPos": 34,
+          "RightParenPos": 64,
+          "Items": {
+            "ListPos": 35,
+            "ListEnd": 64,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "TimeReceived",
+                  "QuoteType": 1,
+                  "NamePos": 35,
+                  "NameEnd": 47
+                },
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "ExporterAddress",
+                  "QuoteType": 1,
+                  "NamePos": 49,
+                  "NameEnd": 64
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 67,
+    "StatementEnd": 113,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "flows",
+        "QuoteType": 1,
+        "NamePos": 79,
+        "NameEnd": 84
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 85,
+        "StatementEnd": 113,
+        "OrderBy": {
+          "Name": "TimeReceived",
+          "QuoteType": 1,
+          "NamePos": 101,
+          "NameEnd": 113
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 115,
+    "StatementEnd": 207,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 127,
+        "NameEnd": 129
+      },
+      "Table": {
+        "Name": "flows",
+        "QuoteType": 1,
+        "NamePos": 130,
+        "NameEnd": 135
+      }
+    },
+    "OnCluster": {
+      "OnPos": 136,
+      "Expr": {
+        "Name": "c",
+        "QuoteType": 1,
+        "NamePos": 147,
+        "NameEnd": 148
+      }
+    },
+    "AlterExprs": [
+      {
+        "ModifyPos": 149,
+        "StatementEnd": 207,
+        "OrderBy": {
+          "LeftParenPos": 165,
+          "RightParenPos": 207,
+          "Items": {
+            "ListPos": 166,
+            "ListEnd": 206,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "TimeReceived",
+                  "QuoteType": 1,
+                  "NamePos": 166,
+                  "NameEnd": 178
+                },
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": {
+                    "Name": "toStartOfHour",
+                    "QuoteType": 1,
+                    "NamePos": 180,
+                    "NameEnd": 193
+                  },
+                  "Params": {
+                    "LeftParenPos": 193,
+                    "RightParenPos": 206,
+                    "Items": {
+                      "ListPos": 194,
+                      "ListEnd": 206,
+                      "HasDistinct": false,
+                      "Items": [
+                        {
+                          "Expr": {
+                            "Name": "TimeReceived",
+                            "QuoteType": 1,
+                            "NamePos": 194,
+                            "NameEnd": 206
+                          },
+                          "Alias": null
+                        }
+                      ]
+                    },
+                    "ColumnArgList": null
+                  }
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 210,
+    "StatementEnd": 309,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "flows",
+        "QuoteType": 1,
+        "NamePos": 222,
+        "NameEnd": 227
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AddPos": 228,
+        "StatementEnd": 261,
+        "Column": {
+          "NamePos": 239,
+          "ColumnEnd": 261,
+          "Name": {
+            "Ident": {
+              "Name": "ExporterAddress",
+              "QuoteType": 1,
+              "NamePos": 239,
+              "NameEnd": 254
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 255,
+              "NameEnd": 261
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        "IfNotExists": false,
+        "After": null,
+        "Settings": null
+      },
+      {
+        "ModifyPos": 263,
+        "StatementEnd": 309,
+        "OrderBy": {
+          "LeftParenPos": 279,
+          "RightParenPos": 309,
+          "Items": {
+            "ListPos": 280,
+            "ListEnd": 309,
+            "HasDistinct": false,
+            "Items": [
+              {
+                "Expr": {
+                  "Name": "TimeReceived",
+                  "QuoteType": 1,
+                  "NamePos": 280,
+                  "NameEnd": 292
+                },
+                "Alias": null
+              },
+              {
+                "Expr": {
+                  "Name": "ExporterAddress",
+                  "QuoteType": 1,
+                  "NamePos": 294,
+                  "NameEnd": 309
+                },
+                "Alias": null
+              }
+            ]
+          },
+          "ColumnArgList": null
+        }
+      }
+    ]
+  }
+]

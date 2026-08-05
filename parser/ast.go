@@ -912,6 +912,33 @@ func (a *AlterTableModifyQuery) Accept(visitor ASTVisitor) error {
 	return visitor.VisitAlterTableModifyQuery(a)
 }
 
+type AlterTableModifyOrderBy struct {
+	ModifyPos    Pos
+	StatementEnd Pos
+	OrderBy      Expr
+}
+
+func (a *AlterTableModifyOrderBy) Pos() Pos {
+	return a.ModifyPos
+}
+
+func (a *AlterTableModifyOrderBy) End() Pos {
+	return a.StatementEnd
+}
+
+func (a *AlterTableModifyOrderBy) AlterType() string {
+	return "MODIFY_ORDER_BY"
+}
+
+func (a *AlterTableModifyOrderBy) Accept(visitor ASTVisitor) error {
+	visitor.Enter(a)
+	defer visitor.Leave(a)
+	if err := a.OrderBy.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitAlterTableModifyOrderBy(a)
+}
+
 type AlterTableModifyTTL struct {
 	ModifyPos    Pos
 	StatementEnd Pos

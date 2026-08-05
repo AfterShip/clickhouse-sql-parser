@@ -183,6 +183,11 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE (x",         // Missing closing paren
 		"SELECT n FROM t ORDER BY n WITH FILL INTERPOLATE x AS x + 1", // Missing parens around column list
 		"ALTER TABLE foo_mv MODIFY QUERY AS SELECT * FROM baz",        // MODIFY QUERY followed by an invalid query
+		// A sorting key is a single expression, so a key over several columns
+		// is written as a tuple. A comma starts the next engine clause in
+		// CREATE TABLE and the next clause in ALTER TABLE.
+		"CREATE TABLE t (a DateTime, b String) ENGINE = MergeTree ORDER BY a, b",
+		"ALTER TABLE t MODIFY ORDER BY a, b",
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
