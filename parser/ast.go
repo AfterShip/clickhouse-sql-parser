@@ -5903,6 +5903,7 @@ func (s *SystemFlushExpr) Accept(visitor ASTVisitor) error {
 type SystemReloadExpr struct {
 	ReloadPos    Pos
 	StatementEnd Pos
+	OnCluster    *ClusterClause
 	Dictionary   *TableIdentifier
 	Type         string
 }
@@ -5918,6 +5919,11 @@ func (s *SystemReloadExpr) End() Pos {
 func (s *SystemReloadExpr) Accept(visitor ASTVisitor) error {
 	visitor.Enter(s)
 	defer visitor.Leave(s)
+	if s.OnCluster != nil {
+		if err := s.OnCluster.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	if s.Dictionary != nil {
 		if err := s.Dictionary.Accept(visitor); err != nil {
 			return err

@@ -2511,6 +2511,10 @@ func (s *SystemFlushExpr) FormatSQL(formatter *Formatter) {
 func (s *SystemReloadExpr) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("RELOAD ")
 	formatter.WriteString(s.Type)
+	if s.OnCluster != nil {
+		formatter.WriteByte(whitespace)
+		formatter.WriteExpr(s.OnCluster)
+	}
 	if s.Dictionary != nil {
 		formatter.WriteByte(whitespace)
 		formatter.WriteExpr(s.Dictionary)
