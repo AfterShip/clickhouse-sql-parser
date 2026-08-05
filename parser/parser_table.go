@@ -760,6 +760,12 @@ func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {
 
 func (p *Parser) parseTableArgPrimaryExpr(pos Pos) (Expr, error) {
 	switch {
+	case p.matchKeyword(KeywordCast):
+		// CAST has its own syntax, so reading it as an ordinary function call
+		// stops at the AS separator: numbers(CAST(1 + 1 AS UInt64)) failed
+		// looking for ')'. CAST is not reserved, so it also matches
+		// TokenKindIdent and this case has to come first.
+		return p.parseColumnCastExpr(pos)
 	case p.matchTokenKind(TokenKindIdent):
 		ident, err := p.parseIdent()
 		if err != nil {
