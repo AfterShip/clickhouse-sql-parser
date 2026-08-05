@@ -1,0 +1,79 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 36,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "x",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 8
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 9,
+      "Expr": {
+        "Table": {
+          "TablePos": 14,
+          "TableEnd": 20,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "quotas",
+              "QuoteType": 1,
+              "NamePos": 14,
+              "NameEnd": 20
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 20,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 21,
+      "Expr": {
+        "LeftExpr": {
+          "Name": "limit",
+          "QuoteType": 1,
+          "NamePos": 27,
+          "NameEnd": 32
+        },
+        "Operation": "\u003e",
+        "RightExpr": {
+          "NumPos": 35,
+          "NumEnd": 36,
+          "Literal": "0",
+          "Base": 10
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 40,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": "limit",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 12
+          },
+          "Operation": "+",
+          "RightExpr": {
+            "NumPos": 15,
+            "NumEnd": 16,
+            "Literal": "1",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": "offset",
+            "QuoteType": 1,
+            "NamePos": 18,
+            "NameEnd": 24
+          },
+          "Operation": "+",
+          "RightExpr": {
+            "NumPos": 27,
+            "NumEnd": 28,
+            "Literal": "1",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 29,
+      "Expr": {
+        "Table": {
+          "TablePos": 34,
+          "TableEnd": 40,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "quotas",
+              "QuoteType": 1,
+              "NamePos": 34,
+              "NameEnd": 40
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 40,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]

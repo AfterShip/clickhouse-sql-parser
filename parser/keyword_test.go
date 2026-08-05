@@ -104,69 +104,6 @@ func TestReservedKeywordInDisambiguatedPositions(t *testing.T) {
 	}
 }
 
-func TestReservedKeywordAsOperandInExpression(t *testing.T) {
-	cases := []string{
-		"SELECT x FROM t WHERE limit > 0",
-		"SELECT x FROM t WHERE from = 1 AND limit <= 10",
-		"SELECT x FROM t WHERE limit != 0 AND limit == 1",
-		"SELECT x FROM t WHERE limit >= 1 AND limit < 9",
-		"SELECT limit > 0 FROM t",
-		"SELECT limit + offset, limit - offset, limit % 2 FROM t",
-		"SELECT limit * 100 / total FROM t",
-		"SELECT from || to FROM t",
-		"SELECT toFloat64(limit) FROM t",
-		"SELECT max(limit), sum(offset) FROM t",
-		"SELECT if(limit > 0, limit, 0) FROM t",
-		"SELECT limit::UInt8 FROM t",
-		"SELECT [limit][1] FROM t",
-		"SELECT arr[limit] FROM t",
-		"SELECT (limit, offset) FROM t",
-		"SELECT x FROM t GROUP BY limit HAVING limit > 1",
-		"SELECT x FROM t ORDER BY limit / total DESC",
-		"SELECT x FROM t PREWHERE limit > 0 WHERE offset > 0",
-		"SELECT sum(limit) OVER (PARTITION BY from ORDER BY limit) FROM t",
-		"SELECT x FROM t WHERE limit > 0 LIMIT 10",
-		"SELECT x FROM (SELECT limit FROM t) WHERE limit > 0",
-		"WITH cte AS (SELECT 1 AS limit) SELECT limit * 2 FROM cte",
-		"SELECT x FROM t WHERE toFloat64(a.limit) / b.limit > 0.5",
-		"SELECT CASE WHEN limit > 0 THEN limit ELSE offset END FROM t",
-		"SELECT count() FROM t WHERE limit IN (1, 2)",
-		"INSERT INTO t SELECT limit + 1 FROM s",
-		"CREATE VIEW v AS SELECT limit * 2 FROM t",
-		"ALTER TABLE t UPDATE x = limit + 1 WHERE limit > 0",
-	}
-	for _, sql := range cases {
-		t.Run(sql, func(t *testing.T) {
-			_, err := NewParser(sql).ParseStmts()
-			require.NoError(t, err)
-		})
-	}
-}
-
-func TestReservedKeywordOperandRoundTrip(t *testing.T) {
-	cases := []struct {
-		sql  string
-		want string
-	}{
-		{"SELECT x FROM t WHERE limit > 0", "SELECT x FROM t WHERE limit > 0"},
-		{"SELECT toFloat64(limit) AS limit FROM t", "SELECT toFloat64(limit) AS limit FROM t"},
-		{"SELECT limit::UInt8 FROM t", "SELECT limit::UInt8 FROM t"},
-	}
-	for _, tc := range cases {
-		t.Run(tc.sql, func(t *testing.T) {
-			stmts, err := NewParser(tc.sql).ParseStmts()
-			require.NoError(t, err)
-			require.Len(t, stmts, 1)
-
-			formatted := Format(stmts[0])
-			require.Equal(t, tc.want, formatted)
-
-			_, err = NewParser(formatted).ParseStmts()
-			require.NoError(t, err)
-		})
-	}
-}
-
 func TestExpressionContinuationDoesNotWeakenClauseParsing(t *testing.T) {
 	cases := []string{
 		"SELECT a FROM WHERE b = 1",

@@ -1,0 +1,178 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 72,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": {
+            "Name": "toFloat64",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 16
+          },
+          "Params": {
+            "LeftParenPos": 16,
+            "RightParenPos": 22,
+            "Items": {
+              "ListPos": 17,
+              "ListEnd": 22,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "limit",
+                    "QuoteType": 1,
+                    "NamePos": 17,
+                    "NameEnd": 22
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "max",
+            "QuoteType": 1,
+            "NamePos": 25,
+            "NameEnd": 28
+          },
+          "Params": {
+            "LeftParenPos": 28,
+            "RightParenPos": 34,
+            "Items": {
+              "ListPos": 29,
+              "ListEnd": 34,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "Name": "limit",
+                    "QuoteType": 1,
+                    "NamePos": 29,
+                    "NameEnd": 34
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "Name": {
+            "Name": "if",
+            "QuoteType": 1,
+            "NamePos": 37,
+            "NameEnd": 39
+          },
+          "Params": {
+            "LeftParenPos": 39,
+            "RightParenPos": 59,
+            "Items": {
+              "ListPos": 40,
+              "ListEnd": 59,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Name": "limit",
+                      "QuoteType": 1,
+                      "NamePos": 40,
+                      "NameEnd": 45
+                    },
+                    "Operation": "\u003e",
+                    "RightExpr": {
+                      "NumPos": 48,
+                      "NumEnd": 49,
+                      "Literal": "0",
+                      "Base": 10
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "Name": "limit",
+                    "QuoteType": 1,
+                    "NamePos": 51,
+                    "NameEnd": 56
+                  },
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "NumPos": 58,
+                    "NumEnd": 59,
+                    "Literal": "0",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 61,
+      "Expr": {
+        "Table": {
+          "TablePos": 66,
+          "TableEnd": 72,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "quotas",
+              "QuoteType": 1,
+              "NamePos": 66,
+              "NameEnd": 72
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 72,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]
