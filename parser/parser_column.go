@@ -640,7 +640,7 @@ func (p *Parser) parseColumnCastExpr(pos Pos) (Expr, error) {
 		return nil, err
 	}
 
-	columnExpr, err := p.parseColumnExpr(p.Pos())
+	columnExpr, err := p.parseExpr(p.Pos())
 	if err != nil {
 		return nil, err
 	}
