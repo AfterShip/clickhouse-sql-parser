@@ -229,6 +229,14 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"ALTER ",
 		"SELECT*FROM A(0A",
 		"SET A=",
+		// An operator as the last token of the input is missing its right
+		// operand. The infix loop used to stop before it, so the operator
+		// either reached the statement parser as unexpected trailing input or,
+		// when it was a keyword, was read as an implicit alias.
+		"SELECT a +",
+		"SELECT a GLOBAL",
+		"SELECT a REGEXP",
+		"SELECT * FROM t WHERE a AND",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
