@@ -188,6 +188,10 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// CREATE TABLE and the next clause in ALTER TABLE.
 		"CREATE TABLE t (a DateTime, b String) ENGINE = MergeTree ORDER BY a, b",
 		"ALTER TABLE t MODIFY ORDER BY a, b",
+		// A broken column value must report an error, not stop the parser
+		"CREATE TABLE t (x String DEFAULT CAST(a +, 'String'))",
+		"CREATE TABLE t (x String MATERIALIZED a +)",
+		"CREATE TABLE t (x String ALIAS a +)",
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported

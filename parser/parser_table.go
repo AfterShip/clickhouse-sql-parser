@@ -698,19 +698,23 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 		columnEnd = notNull.End()
 	}
 
+	var valueExpr Expr
 	switch {
 	case p.tryConsumeKeywords(KeywordDefault):
 		column.DefaultExpr, err = p.parseExpr(p.Pos())
-		columnEnd = column.DefaultExpr.End()
+		valueExpr = column.DefaultExpr
 	case p.tryConsumeKeywords(KeywordMaterialized):
 		column.MaterializedExpr, err = p.parseExpr(p.Pos())
-		columnEnd = column.MaterializedExpr.End()
+		valueExpr = column.MaterializedExpr
 	case p.tryConsumeKeywords(KeywordAlias):
 		column.AliasExpr, err = p.parseExpr(p.Pos())
-		columnEnd = column.AliasExpr.End()
+		valueExpr = column.AliasExpr
 	}
 	if err != nil {
 		return nil, err
+	}
+	if valueExpr != nil {
+		columnEnd = valueExpr.End()
 	}
 
 	comment, err := p.tryParseColumnComment(p.Pos())

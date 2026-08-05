@@ -216,5 +216,186 @@
     "UnionDistinct": null,
     "Except": null,
     "Intersect": null
+  },
+  {
+    "SelectPos": 132,
+    "StatementEnd": 169,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 139,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 144,
+              "NameEnd": 145
+            },
+            "Operation": "+",
+            "RightExpr": {
+              "NumPos": 148,
+              "NumEnd": 149,
+              "Literal": "1",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "Separator": "as",
+          "AsPos": 150,
+          "AsType": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 153,
+              "NameEnd": 159
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 164,
+          "NameEnd": 169
+        }
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 171,
+    "StatementEnd": 208,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 178,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 183,
+              "NameEnd": 184
+            },
+            "Operation": "+",
+            "RightExpr": {
+              "NumPos": 187,
+              "NumEnd": 188,
+              "Literal": "1",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "Separator": ",",
+          "AsPos": 188,
+          "AsType": {
+            "LiteralPos": 191,
+            "LiteralEnd": 197,
+            "Literal": "String"
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 203,
+          "NameEnd": 208
+        }
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 210,
+    "StatementEnd": 242,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "CastPos": 217,
+          "Expr": {
+            "NumPos": 222,
+            "NumEnd": 224,
+            "Literal": "-1",
+            "Base": 10
+          },
+          "Separator": "as",
+          "AsPos": 225,
+          "AsType": {
+            "Name": {
+              "Name": "Int8",
+              "QuoteType": 1,
+              "NamePos": 228,
+              "NameEnd": 232
+            }
+          }
+        },
+        "Modifiers": [],
+        "Alias": {
+          "Name": "value",
+          "QuoteType": 1,
+          "NamePos": 237,
+          "NameEnd": 242
+        }
+      }
+    ],
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
   }
 ]
