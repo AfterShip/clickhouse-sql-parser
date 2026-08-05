@@ -1,0 +1,145 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 81,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": "limit",
+            "QuoteType": 1,
+            "NamePos": 7,
+            "NameEnd": 12
+          },
+          "Operation": "+",
+          "RightExpr": {
+            "Name": "offset",
+            "QuoteType": 1,
+            "NamePos": 15,
+            "NameEnd": 21
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": "limit",
+            "QuoteType": 1,
+            "NamePos": 23,
+            "NameEnd": 28
+          },
+          "Operation": "-",
+          "RightExpr": {
+            "Name": "offset",
+            "QuoteType": 1,
+            "NamePos": 31,
+            "NameEnd": 37
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Name": "limit",
+            "QuoteType": 1,
+            "NamePos": 39,
+            "NameEnd": 44
+          },
+          "Operation": "%",
+          "RightExpr": {
+            "NumPos": 47,
+            "NumEnd": 48,
+            "Literal": "2",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "LeftExpr": {
+              "Name": "limit",
+              "QuoteType": 1,
+              "NamePos": 50,
+              "NameEnd": 55
+            },
+            "Operation": "*",
+            "RightExpr": {
+              "NumPos": 58,
+              "NumEnd": 61,
+              "Literal": "100",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "Operation": "/",
+          "RightExpr": {
+            "Name": "total",
+            "QuoteType": 1,
+            "NamePos": 64,
+            "NameEnd": 69
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 70,
+      "Expr": {
+        "Table": {
+          "TablePos": 75,
+          "TableEnd": 81,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "quotas",
+              "QuoteType": 1,
+              "NamePos": 75,
+              "NameEnd": 81
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 81,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]

@@ -480,6 +480,33 @@ func (p *Parser) peekIsEndOfStatement() bool {
 	return next.Kind == ";"
 }
 
+var expressionContinuationTokenKinds = []TokenKind{
+	TokenKindSingleEQ, TokenKindDoubleEQ, TokenKindNE,
+	TokenKindLT, TokenKindLE, TokenKindGT, TokenKindGE,
+	TokenKindPlus, TokenKindMinus, TokenKindMul, TokenKindDiv, TokenKindMod,
+	TokenKindConcat, TokenKindDash,
+	TokenKindRParen, TokenKindRBracket,
+}
+
+var expressionContinuationKeywords = []string{
+	KeywordAnd, KeywordOr, KeywordNot, KeywordIn, KeywordLike, KeywordIlike,
+	KeywordBetween, KeywordIs, KeywordThen, KeywordElse, KeywordEnd,
+}
+
+func (p *Parser) peekIsExpressionContinuation() bool {
+	for _, kind := range expressionContinuationTokenKinds {
+		if p.peekTokenKind(kind) {
+			return true
+		}
+	}
+	for _, keyword := range expressionContinuationKeywords {
+		if p.peekKeyword(keyword) {
+			return true
+		}
+	}
+	return false
+}
+
 // keywordIsSelectItemIdentifier reports whether the current keyword token is
 // being used as a bare column-reference identifier inside a SELECT projection
 // rather than starting a clause/expression. This is true when the next token
@@ -507,7 +534,8 @@ func (p *Parser) keywordIsSelectItemIdentifier() bool {
 	}
 	return p.peekTokenKind(TokenKindComma) ||
 		p.peekKeyword(KeywordAs) ||
-		p.peekIsClauseStarterKeyword()
+		p.peekIsClauseStarterKeyword() ||
+		p.peekIsExpressionContinuation()
 }
 
 // isSelectItemTerminatorKeyword checks whether the current token is a keyword
@@ -532,7 +560,8 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// rather than in keywordIsSelectItemIdentifier (which is shared with the
 	// terminator/alias check).
 	if p.keywordIsSelectItemIdentifier() ||
-		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
+		(p.matchTokenKind(TokenKindKeyword) &&
+			(p.peekIsEndOfStatement() || p.peekIsExpressionContinuation())) {
 		return p.parseAnyKeyword()
 	}
 	switch {

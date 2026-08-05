@@ -104,6 +104,44 @@ func TestReservedKeywordInDisambiguatedPositions(t *testing.T) {
 	}
 }
 
+func TestExpressionContinuationDoesNotWeakenClauseParsing(t *testing.T) {
+	cases := []string{
+		"SELECT a FROM WHERE b = 1",
+		"SELECT a, b FROM GROUP BY a",
+		"SELECT a AS FROM t",
+		"SELECT a FROM t JOIN ON a = b",
+		"SELECT CASE WHEN a THEN 1 ELSE 2 FROM t",
+	}
+	for _, sql := range cases {
+		t.Run(sql, func(t *testing.T) {
+			_, err := NewParser(sql).ParseStmts()
+			require.Error(t, err)
+		})
+	}
+}
+
+func TestClauseKeywordsStillParseAsClauses(t *testing.T) {
+	cases := []string{
+		"SELECT a FROM t LIMIT 10",
+		"SELECT a FROM t LIMIT 10 OFFSET 5",
+		"SELECT a FROM t LIMIT 1 BY a",
+		"SELECT a FROM t ORDER BY a DESC LIMIT 5",
+		"SELECT DISTINCT a FROM t",
+		"SELECT a FROM t UNION ALL SELECT b FROM s",
+		"SELECT a FROM t WHERE a BETWEEN 1 AND 2",
+		"SELECT INTERVAL 1 DAY",
+		"SELECT a + INTERVAL 1 DAY FROM t",
+		"SELECT * EXCEPT (a) FROM t",
+		"SELECT a FROM t FORMAT JSON",
+	}
+	for _, sql := range cases {
+		t.Run(sql, func(t *testing.T) {
+			_, err := NewParser(sql).ParseStmts()
+			require.NoError(t, err)
+		})
+	}
+}
+
 // TestReservedOperatorKeywordsAreCallable covers the regressions from the
 // review of #275: operator keywords double as ordinary ClickHouse function
 // names and must stay callable when followed by '('.
