@@ -104,6 +104,31 @@ func TestReservedKeywordInDisambiguatedPositions(t *testing.T) {
 	}
 }
 
+// TestReservedKeywordAsOperandInExpression asserts that a reserved keyword is
+// accepted as a column name wherever the following token can only continue an
+// expression - a binary operator, `::`, or the closer of an argument list,
+// tuple, or subscript. ClickHouse server accepts all of these unquoted.
+func TestReservedKeywordAsOperandInExpression(t *testing.T) {
+	cases := []string{
+		"SELECT x FROM t WHERE limit > 0",
+		"SELECT x FROM t WHERE from = 1 AND limit <= 10",
+		"SELECT limit > 0 FROM t",
+		"SELECT limit * 100 / total FROM t",
+		"SELECT toFloat64(limit) FROM t",
+		"SELECT max(limit), sum(offset) FROM t",
+		"SELECT limit::UInt8 FROM t",
+		"SELECT [limit][1] FROM t",
+		"SELECT (limit, offset) FROM t",
+		"SELECT x FROM t GROUP BY limit HAVING limit > 1",
+	}
+	for _, sql := range cases {
+		t.Run(sql, func(t *testing.T) {
+			_, err := NewParser(sql).ParseStmts()
+			require.NoError(t, err)
+		})
+	}
+}
+
 // TestReservedOperatorKeywordsAreCallable covers the regressions from the
 // review of #275: operator keywords double as ordinary ClickHouse function
 // names and must stay callable when followed by '('.

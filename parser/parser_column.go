@@ -480,6 +480,30 @@ func (p *Parser) peekIsEndOfStatement() bool {
 	return next.Kind == ";"
 }
 
+// expressionContinuationTokenKinds are the token kinds that can only follow a
+// complete expression: binary operators, the cast operator, and the closers of
+// an argument list, a tuple, or an array subscript. None of them can follow a
+// clause or expression starter, so a keyword in front of one is being used as
+// an operand — a column name.
+var expressionContinuationTokenKinds = []TokenKind{
+	TokenKindSingleEQ, TokenKindDoubleEQ, TokenKindNE,
+	TokenKindLT, TokenKindLE, TokenKindGT, TokenKindGE,
+	TokenKindPlus, TokenKindMinus, TokenKindMul, TokenKindDiv, TokenKindMod,
+	TokenKindConcat, TokenKindDash,
+	TokenKindRParen, TokenKindRBracket,
+}
+
+// peekIsExpressionContinuation reports whether the next token is one of
+// expressionContinuationTokenKinds.
+func (p *Parser) peekIsExpressionContinuation() bool {
+	for _, kind := range expressionContinuationTokenKinds {
+		if p.peekTokenKind(kind) {
+			return true
+		}
+	}
+	return false
+}
+
 // keywordIsSelectItemIdentifier reports whether the current keyword token is
 // being used as a bare column-reference identifier inside a SELECT projection
 // rather than starting a clause/expression. This is true when the next token
@@ -531,8 +555,14 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 	// is only valid in expression position, so it's applied inline here
 	// rather than in keywordIsSelectItemIdentifier (which is shared with the
 	// terminator/alias check).
+	//
+	// The same holds for a keyword followed by a binary operator, `::`, `)` or
+	// `]` (e.g. `WHERE limit > 0`, `toFloat64(limit)`, `SELECT limit > 0`):
+	// those tokens can only continue an expression whose operand is the
+	// keyword, so in expression position the keyword is a column name.
 	if p.keywordIsSelectItemIdentifier() ||
-		(p.matchTokenKind(TokenKindKeyword) && p.peekIsEndOfStatement()) {
+		(p.matchTokenKind(TokenKindKeyword) &&
+			(p.peekIsEndOfStatement() || p.peekIsExpressionContinuation())) {
 		return p.parseAnyKeyword()
 	}
 	switch {
