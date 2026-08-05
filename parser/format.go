@@ -1403,6 +1403,9 @@ func (d *DropDatabase) FormatSQL(formatter *Formatter) {
 		formatter.WriteByte(whitespace)
 		formatter.WriteExpr(d.OnCluster)
 	}
+	if len(d.Modifier) != 0 {
+		formatter.WriteString(" " + d.Modifier)
+	}
 }
 
 func (d *DropStmt) FormatSQL(formatter *Formatter) {

@@ -9,6 +9,62 @@
       "NameEnd": 36
     },
     "IfExists": true,
-    "OnCluster": null
+    "OnCluster": null,
+    "Modifier": ""
+  },
+  {
+    "DropPos": 38,
+    "StatementEnd": 74,
+    "Name": {
+      "Name": "test_db",
+      "QuoteType": 1,
+      "NamePos": 62,
+      "NameEnd": 69
+    },
+    "IfExists": true,
+    "OnCluster": null,
+    "Modifier": "SYNC"
+  },
+  {
+    "DropPos": 76,
+    "StatementEnd": 132,
+    "Name": {
+      "Name": "test_db",
+      "QuoteType": 1,
+      "NamePos": 100,
+      "NameEnd": 107
+    },
+    "IfExists": true,
+    "OnCluster": {
+      "OnPos": 108,
+      "Expr": {
+        "Name": "akvorado",
+        "QuoteType": 1,
+        "NamePos": 119,
+        "NameEnd": 127
+      }
+    },
+    "Modifier": "SYNC"
+  },
+  {
+    "DropPos": 134,
+    "StatementEnd": 184,
+    "Name": {
+      "Name": "test_db",
+      "QuoteType": 1,
+      "NamePos": 148,
+      "NameEnd": 155
+    },
+    "IfExists": false,
+    "OnCluster": {
+      "OnPos": 156,
+      "Expr": {
+        "Name": "akvorado",
+        "QuoteType": 1,
+        "NamePos": 167,
+        "NameEnd": 175
+      }
+    },
+    "Modifier": "NO DELAY"
   }
 ]

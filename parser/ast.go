@@ -5577,6 +5577,7 @@ type DropDatabase struct {
 	Name         *Ident
 	IfExists     bool
 	OnCluster    *ClusterClause
+	Modifier     string
 }
 
 func (d *DropDatabase) Pos() Pos {
