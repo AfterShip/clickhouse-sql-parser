@@ -282,8 +282,15 @@ func (p *Parser) parseSubExpr(pos Pos, precedence int) (Expr, error) {
 // parseInfixLoop folds binary operators into expr while the next operator
 // binds tighter than precedence; it stops at once on tokens that are no
 // operator at all, such as ',' or ')'.
+//
+// The guard tests the lookahead token, not just the input offset: isEOF only
+// reports that no input text is left to lex, which is already true while the
+// final token sits unconsumed in p.current(). Stopping on isEOF alone dropped
+// a trailing operator instead of reporting its missing operand, so `SELECT a +`
+// left the '+' for the statement parser to reject as unexpected trailing input,
+// and `SELECT a GLOBAL` silently read the operator as an implicit alias.
 func (p *Parser) parseInfixLoop(expr Expr, precedence int) (Expr, error) {
-	for !p.lexer.isEOF() {
+	for !p.lexer.isEOF() || p.current() != nil {
 		nextPrecedence := p.getNextPrecedence()
 		if nextPrecedence <= precedence {
 			return expr, nil
