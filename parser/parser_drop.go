@@ -25,11 +25,20 @@ func (p *Parser) parseDropDatabase(pos Pos) (*DropDatabase, error) {
 		statementEnd = onCluster.End()
 	}
 
+	modifier, err := p.tryParseModifier()
+	if err != nil {
+		return nil, err
+	}
+	if modifier != "" {
+		statementEnd = p.Pos()
+	}
+
 	return &DropDatabase{
 		DropPos:      pos,
 		Name:         name,
 		IfExists:     isExists,
 		OnCluster:    onCluster,
+		Modifier:     modifier,
 		StatementEnd: statementEnd,
 	}, nil
 }
