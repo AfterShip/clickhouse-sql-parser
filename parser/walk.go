@@ -542,6 +542,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *SystemReloadExpr:
+		if !Walk(n.OnCluster, fn) {
+			return false
+		}
 		if !Walk(n.Dictionary, fn) {
 			return false
 		}

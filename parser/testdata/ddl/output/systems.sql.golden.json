@@ -23,5 +23,136 @@
       "StatementEnd": 79,
       "Type": "FILESYSTEM CACHE"
     }
+  },
+  {
+    "SystemPos": 81,
+    "Expr": {
+      "ReloadPos": 88,
+      "StatementEnd": 107,
+      "OnCluster": null,
+      "Dictionary": null,
+      "Type": "DICTIONARIES"
+    }
+  },
+  {
+    "SystemPos": 109,
+    "Expr": {
+      "ReloadPos": 116,
+      "StatementEnd": 155,
+      "OnCluster": {
+        "OnPos": 136,
+        "Expr": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 147,
+          "NameEnd": 155
+        }
+      },
+      "Dictionary": null,
+      "Type": "DICTIONARIES"
+    }
+  },
+  {
+    "SystemPos": 157,
+    "Expr": {
+      "ReloadPos": 164,
+      "StatementEnd": 195,
+      "OnCluster": null,
+      "Dictionary": {
+        "Database": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 182,
+          "NameEnd": 190
+        },
+        "Table": {
+          "Name": "asns",
+          "QuoteType": 1,
+          "NamePos": 191,
+          "NameEnd": 195
+        }
+      },
+      "Type": "DICTIONARY"
+    }
+  },
+  {
+    "SystemPos": 197,
+    "Expr": {
+      "ReloadPos": 204,
+      "StatementEnd": 255,
+      "OnCluster": {
+        "OnPos": 222,
+        "Expr": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 233,
+          "NameEnd": 241
+        }
+      },
+      "Dictionary": {
+        "Database": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 242,
+          "NameEnd": 250
+        },
+        "Table": {
+          "Name": "asns",
+          "QuoteType": 1,
+          "NamePos": 251,
+          "NameEnd": 255
+        }
+      },
+      "Type": "DICTIONARY"
+    }
+  },
+  {
+    "SystemPos": 257,
+    "Expr": {
+      "ReloadPos": 264,
+      "StatementEnd": 315,
+      "OnCluster": {
+        "OnPos": 296,
+        "Expr": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 307,
+          "NameEnd": 315
+        }
+      },
+      "Dictionary": {
+        "Database": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 282,
+          "NameEnd": 290
+        },
+        "Table": {
+          "Name": "asns",
+          "QuoteType": 1,
+          "NamePos": 291,
+          "NameEnd": 295
+        }
+      },
+      "Type": "DICTIONARY"
+    }
+  },
+  {
+    "SystemPos": 317,
+    "Expr": {
+      "ReloadPos": 324,
+      "StatementEnd": 372,
+      "OnCluster": {
+        "OnPos": 353,
+        "Expr": {
+          "Name": "akvorado",
+          "QuoteType": 1,
+          "NamePos": 364,
+          "NameEnd": 372
+        }
+      },
+      "Dictionary": null,
+      "Type": "EMBEDDED DICTIONARIES"
+    }
   }
 ]

@@ -67,39 +67,65 @@ func (p *Parser) parseSystemReloadExpr(pos Pos) (*SystemReloadExpr, error) {
 		return nil, err
 	}
 
+	var typ string
+	var statementEnd Pos
+	// Only RELOAD DICTIONARY takes a dictionary name.
+	hasDictionaryName := false
 	switch {
 	case p.matchKeyword(KeywordDictionaries):
-		curToken := p.current()
+		typ = KeywordDictionaries
+		statementEnd = p.current().End
 		_ = p.lexer.consumeToken()
-		return &SystemReloadExpr{
-			ReloadPos:    pos,
-			StatementEnd: curToken.End,
-			Type:         KeywordDictionaries,
-		}, nil
-	case p.tryConsumeKeywords(KeywordDictionary):
-		dictionary, err := p.parseTableIdentifier(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		return &SystemReloadExpr{
-			ReloadPos:    pos,
-			StatementEnd: dictionary.End(),
-			Type:         KeywordDictionary,
-			Dictionary:   dictionary,
-		}, nil
+	case p.matchKeyword(KeywordDictionary):
+		typ = KeywordDictionary
+		statementEnd = p.current().End
+		hasDictionaryName = true
+		_ = p.lexer.consumeToken()
 	case p.tryConsumeKeywords(KeywordEmbedded):
-		curToken := p.current()
+		typ = "EMBEDDED DICTIONARIES"
+		statementEnd = p.current().End
 		if err := p.expectKeyword(KeywordDictionaries); err != nil {
 			return nil, err
 		}
-		return &SystemReloadExpr{
-			ReloadPos:    pos,
-			StatementEnd: curToken.End,
-			Type:         "EMBEDDED DICTIONARIES",
-		}, nil
 	default:
-		return nil, fmt.Errorf("expected DICTIONARIES|CONFIG")
+		return nil, fmt.Errorf("expected DICTIONARIES|DICTIONARY|EMBEDDED")
 	}
+
+	onCluster, err := p.tryParseClusterClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if onCluster != nil {
+		statementEnd = onCluster.End()
+	}
+
+	var dictionary *TableIdentifier
+	if hasDictionaryName {
+		dictionary, err = p.parseTableIdentifier(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		statementEnd = dictionary.End()
+
+		// ClickHouse also accepts ON CLUSTER after the dictionary name.
+		if onCluster == nil {
+			onCluster, err = p.tryParseClusterClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+			if onCluster != nil {
+				statementEnd = onCluster.End()
+			}
+		}
+	}
+
+	return &SystemReloadExpr{
+		ReloadPos:    pos,
+		StatementEnd: statementEnd,
+		OnCluster:    onCluster,
+		Type:         typ,
+		Dictionary:   dictionary,
+	}, nil
 }
 
 func (p *Parser) parseSystemSyncExpr(pos Pos) (*SystemSyncExpr, error) {
