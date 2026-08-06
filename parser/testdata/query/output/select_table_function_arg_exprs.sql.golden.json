@@ -994,5 +994,277 @@
     "UnionDistinct": null,
     "Except": null,
     "Intersect": null
+  },
+  {
+    "SelectPos": 391,
+    "StatementEnd": 434,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 398,
+          "NameEnd": 398
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 400,
+      "Expr": {
+        "Table": {
+          "TablePos": 405,
+          "TableEnd": 434,
+          "Alias": null,
+          "Expr": {
+            "Name": {
+              "Name": "numbers",
+              "QuoteType": 1,
+              "NamePos": 405,
+              "NameEnd": 412
+            },
+            "Args": {
+              "LeftParenPos": 412,
+              "RightParenPos": 434,
+              "Args": [
+                {
+                  "CastPos": 413,
+                  "Expr": {
+                    "LeftExpr": {
+                      "NumPos": 418,
+                      "NumEnd": 419,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Operation": "+",
+                    "RightExpr": {
+                      "NumPos": 422,
+                      "NumEnd": 423,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Separator": "AS",
+                  "AsPos": 424,
+                  "AsType": {
+                    "Name": {
+                      "Name": "UInt64",
+                      "QuoteType": 1,
+                      "NamePos": 427,
+                      "NameEnd": 433
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 434,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 437,
+    "StatementEnd": 479,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 444,
+          "NameEnd": 444
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 446,
+      "Expr": {
+        "Table": {
+          "TablePos": 451,
+          "TableEnd": 479,
+          "Alias": null,
+          "Expr": {
+            "Name": {
+              "Name": "numbers",
+              "QuoteType": 1,
+              "NamePos": 451,
+              "NameEnd": 458
+            },
+            "Args": {
+              "LeftParenPos": 458,
+              "RightParenPos": 479,
+              "Args": [
+                {
+                  "CastPos": 459,
+                  "Expr": {
+                    "LiteralPos": 465,
+                    "LiteralEnd": 467,
+                    "Literal": "10"
+                  },
+                  "Separator": ",",
+                  "AsPos": 468,
+                  "AsType": {
+                    "LiteralPos": 471,
+                    "LiteralEnd": 477,
+                    "Literal": "UInt64"
+                  }
+                }
+              ]
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 479,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 482,
+    "StatementEnd": 535,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 489,
+          "NameEnd": 489
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 491,
+      "Expr": {
+        "Table": {
+          "TablePos": 496,
+          "TableEnd": 535,
+          "Alias": null,
+          "Expr": {
+            "Name": {
+              "Name": "cluster",
+              "QuoteType": 1,
+              "NamePos": 496,
+              "NameEnd": 503
+            },
+            "Args": {
+              "LeftParenPos": 503,
+              "RightParenPos": 535,
+              "Args": [
+                {
+                  "LiteralPos": 505,
+                  "LiteralEnd": 506,
+                  "Literal": "c"
+                },
+                {
+                  "Name": {
+                    "Name": "numbers",
+                    "QuoteType": 1,
+                    "NamePos": 509,
+                    "NameEnd": 516
+                  },
+                  "Args": {
+                    "LeftParenPos": 509,
+                    "RightParenPos": 534,
+                    "Args": [
+                      {
+                        "CastPos": 517,
+                        "Expr": {
+                          "NumPos": 522,
+                          "NumEnd": 523,
+                          "Literal": "1",
+                          "Base": 10
+                        },
+                        "Separator": "AS",
+                        "AsPos": 524,
+                        "AsType": {
+                          "Name": {
+                            "Name": "UInt64",
+                            "QuoteType": 1,
+                            "NamePos": 527,
+                            "NameEnd": 533
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 535,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
   }
 ]
