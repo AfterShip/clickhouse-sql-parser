@@ -237,10 +237,41 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT a GLOBAL",
 		"SELECT a REGEXP",
 		"SELECT * FROM t WHERE a AND",
+		// A parenthesized select must still be closed and UNION still needs
+		// ALL or DISTINCT
+		"(SELECT 1",
+		"(SELECT 1) UNION SELECT 2",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
 		_, err := parser.ParseStmts()
 		require.Error(t, err, "Expected error for SQL: %s", sql)
 	}
+}
+
+func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
+	// The right operand attaches to the tail of the chain the parenthesized
+	// left operand already carries, so the result is one flat chain.
+	stmts, err := NewParser("(SELECT 1 UNION DISTINCT SELECT 2) UNION ALL SELECT 3").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	first, ok := stmts[0].(*SelectQuery)
+	require.True(t, ok)
+	require.Nil(t, first.UnionAll)
+	require.NotNil(t, first.UnionDistinct)
+	require.NotNil(t, first.UnionDistinct.UnionAll)
+	require.Nil(t, first.UnionDistinct.UnionAll.UnionAll)
+
+	stmts, err = NewParser("SELECT a FROM ((SELECT 1 AS a) UNION ALL (SELECT 2 AS a))").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	outer, ok := stmts[0].(*SelectQuery)
+	require.True(t, ok)
+	joinTable, ok := outer.From.Expr.(*JoinTableExpr)
+	require.True(t, ok)
+	subQuery, ok := joinTable.Table.Expr.(*SubQuery)
+	require.True(t, ok)
+	require.NotNil(t, subQuery.Select.UnionAll)
 }

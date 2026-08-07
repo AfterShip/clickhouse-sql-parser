@@ -1053,48 +1053,83 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		return nil, fmt.Errorf("expected SELECT, WITH or (, got %s", p.currentTokenKind())
 	}
 
-	hasParen := p.tryConsumeTokenKind(TokenKindLParen) != nil
-	selectStmt, err := p.parseSelectStmt(p.Pos())
-	if err != nil {
+	var selectStmt *SelectQuery
+	var err error
+	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
+		selectStmt, err = p.parseSelectQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
+			return nil, err
+		}
+	} else {
+		selectStmt, err = p.parseSelectStmt(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if err := p.parseSetOperation(selectStmt); err != nil {
 		return nil, err
 	}
+
+	return selectStmt, nil
+}
+
+// parseSetOperation binds a trailing UNION|EXCEPT|INTERSECT to selectStmt.
+// A parenthesized left operand may already carry a set-operation chain,
+// e.g. (SELECT 1 UNION ALL SELECT 2) UNION ALL SELECT 3, so the right
+// operand is attached to the tail of that chain.
+func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
+	tail := selectStmt
+	for {
+		if tail.UnionAll != nil {
+			tail = tail.UnionAll
+		} else if tail.UnionDistinct != nil {
+			tail = tail.UnionDistinct
+		} else if tail.Except != nil {
+			tail = tail.Except
+		} else if tail.Intersect != nil {
+			tail = tail.Intersect
+		} else {
+			break
+		}
+	}
+
 	switch {
 	case p.tryConsumeKeywords(KeywordUnion):
 		switch {
 		case p.tryConsumeKeywords(KeywordAll):
 			unionAllExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
-				return nil, err
+				return err
 			}
-			selectStmt.UnionAll = unionAllExpr
+			tail.UnionAll = unionAllExpr
 		case p.tryConsumeKeywords(KeywordDistinct):
 			unionDistinctExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
-				return nil, err
+				return err
 			}
-			selectStmt.UnionDistinct = unionDistinctExpr
+			tail.UnionDistinct = unionDistinctExpr
 		default:
-			return nil, fmt.Errorf("expected ALL or DISTINCT, got %s", p.currentTokenKind())
+			return fmt.Errorf("expected ALL or DISTINCT, got %s", p.currentTokenKind())
 		}
 	case p.tryConsumeKeywords(KeywordExcept):
 		exceptExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
-			return nil, err
+			return err
 		}
-		selectStmt.Except = exceptExpr
+		tail.Except = exceptExpr
 	case p.tryConsumeKeywords(KeywordIntersect):
 		intersectExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
-			return nil, err
+			return err
 		}
-		selectStmt.Intersect = intersectExpr
+		tail.Intersect = intersectExpr
 	}
-	if hasParen {
-		if err := p.expectTokenKind(TokenKindRParen); err != nil {
-			return nil, err
-		}
-	}
-	return selectStmt, nil
+
+	return nil
 }
 
 func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: funlen
