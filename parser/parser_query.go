@@ -1053,48 +1053,100 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		return nil, fmt.Errorf("expected SELECT, WITH or (, got %s", p.currentTokenKind())
 	}
 
-	hasParen := p.tryConsumeTokenKind(TokenKindLParen) != nil
-	selectStmt, err := p.parseSelectStmt(p.Pos())
-	if err != nil {
+	var selectStmt *SelectQuery
+	var err error
+	if lparen := p.tryConsumeTokenKind(TokenKindLParen); lparen != nil {
+		inner, err := p.parseSelectQuery(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+
+		rparenPos := p.Pos()
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
+			return nil, err
+		}
+
+		selectStmt = &SelectQuery{
+			SelectPos:    lparen.Pos,
+			StatementEnd: rparenPos + 1,
+			Paren:        inner,
+		}
+
+		settings, err := p.tryParseSettingsClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if settings != nil {
+			selectStmt.Settings = settings
+			selectStmt.StatementEnd = settings.End()
+		}
+
+		format, err := p.tryParseFormat(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if format != nil {
+			selectStmt.Format = format
+			selectStmt.StatementEnd = format.End()
+		}
+
+		// ClickHouse allows a set operator after ')' only when no SETTINGS
+		// or FORMAT was consumed: (SELECT 1) SETTINGS a=1 UNION ALL SELECT 2
+		// is a syntax error there.
+		if settings != nil || format != nil {
+			return selectStmt, nil
+		}
+	} else {
+		selectStmt, err = p.parseSelectStmt(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if err := p.parseSetOperation(selectStmt); err != nil {
 		return nil, err
 	}
+
+	return selectStmt, nil
+}
+
+// parseSetOperation binds a trailing UNION|EXCEPT|INTERSECT to selectStmt.
+// The right operand consumes the rest of the chain by recursing into
+// parseSelectQuery, so at most one operator is bound per call.
+func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
 	switch {
 	case p.tryConsumeKeywords(KeywordUnion):
 		switch {
 		case p.tryConsumeKeywords(KeywordAll):
 			unionAllExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
-				return nil, err
+				return err
 			}
 			selectStmt.UnionAll = unionAllExpr
 		case p.tryConsumeKeywords(KeywordDistinct):
 			unionDistinctExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
-				return nil, err
+				return err
 			}
 			selectStmt.UnionDistinct = unionDistinctExpr
 		default:
-			return nil, fmt.Errorf("expected ALL or DISTINCT, got %s", p.currentTokenKind())
+			return fmt.Errorf("expected ALL or DISTINCT, got %s", p.currentTokenKind())
 		}
 	case p.tryConsumeKeywords(KeywordExcept):
 		exceptExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
-			return nil, err
+			return err
 		}
 		selectStmt.Except = exceptExpr
 	case p.tryConsumeKeywords(KeywordIntersect):
 		intersectExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
-			return nil, err
+			return err
 		}
 		selectStmt.Intersect = intersectExpr
 	}
-	if hasParen {
-		if err := p.expectTokenKind(TokenKindRParen); err != nil {
-			return nil, err
-		}
-	}
-	return selectStmt, nil
+
+	return nil
 }
 
 func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: funlen
@@ -1265,9 +1317,12 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 	if err := p.expectKeyword(KeywordAs); err != nil {
 		return nil, err
 	}
-	if p.matchTokenKind(TokenKindLParen) {
+	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
 		selectQuery, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
+			return nil, err
+		}
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 		return &CTEStmt{

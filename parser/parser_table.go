@@ -1498,7 +1498,7 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 		p.matchKeyword(KeywordTruncate),
 		p.matchKeyword(KeywordRename):
 		expr, err = p.parseDDL(pos)
-	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordWith):
+	case p.matchKeyword(KeywordSelect), p.matchKeyword(KeywordWith), p.matchTokenKind(TokenKindLParen):
 		expr, err = p.parseSelectQuery(pos)
 	case p.matchKeyword(KeywordDelete):
 		expr, err = p.parseDeleteClause(pos)

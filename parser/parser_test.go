@@ -237,10 +237,65 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT a GLOBAL",
 		"SELECT a REGEXP",
 		"SELECT * FROM t WHERE a AND",
+		// A parenthesized select must still be closed and UNION still needs
+		// ALL or DISTINCT
+		"(SELECT 1",
+		"(SELECT 1) UNION SELECT 2",
+		// ClickHouse rejects a set operator once SETTINGS is bound to a
+		// parenthesized group
+		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
 		_, err := parser.ParseStmts()
 		require.Error(t, err, "Expected error for SQL: %s", sql)
 	}
+}
+
+func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
+	// A parenthesized operand becomes a Paren group, so the operator after
+	// ')' binds to the whole group instead of leaking into its chain.
+	stmts, err := NewParser("(SELECT 1 UNION DISTINCT SELECT 2) UNION ALL SELECT 3").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	group, ok := stmts[0].(*SelectQuery)
+	require.True(t, ok)
+	require.NotNil(t, group.Paren)
+	require.NotNil(t, group.Paren.UnionDistinct)
+	require.NotNil(t, group.UnionAll)
+	require.Nil(t, group.Paren.UnionDistinct.UnionAll)
+
+	stmts, err = NewParser("SELECT a FROM ((SELECT 1 AS a) UNION ALL (SELECT 2 AS a))").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	outer, ok := stmts[0].(*SelectQuery)
+	require.True(t, ok)
+	joinTable, ok := outer.From.Expr.(*JoinTableExpr)
+	require.True(t, ok)
+	subQuery, ok := joinTable.Table.Expr.(*SubQuery)
+	require.True(t, ok)
+	require.NotNil(t, subQuery.Select.Paren)
+	require.NotNil(t, subQuery.Select.UnionAll)
+	require.NotNil(t, subQuery.Select.UnionAll.Paren)
+
+	// Grouping survives the round trip: ClickHouse gives INTERSECT higher
+	// precedence than UNION, so dropping the parens would change semantics.
+	sql := "(SELECT 1 UNION ALL SELECT 2) INTERSECT SELECT 2"
+	stmts, err = NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+	require.Equal(t, sql, Format(stmts[0]))
+
+	// SETTINGS and FORMAT after ')' bind to the group.
+	stmts, err = NewParser("(SELECT 1) SETTINGS max_threads=1 FORMAT JSONEachRow").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	group, ok = stmts[0].(*SelectQuery)
+	require.True(t, ok)
+	require.NotNil(t, group.Paren)
+	require.NotNil(t, group.Settings)
+	require.NotNil(t, group.Format)
 }
