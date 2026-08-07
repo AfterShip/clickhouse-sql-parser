@@ -1055,13 +1055,21 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 
 	var selectStmt *SelectQuery
 	var err error
-	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
-		selectStmt, err = p.parseSelectQuery(p.Pos())
+	if lparen := p.tryConsumeTokenKind(TokenKindLParen); lparen != nil {
+		inner, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
 			return nil, err
 		}
+
+		rparenPos := p.Pos()
 		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
+		}
+
+		selectStmt = &SelectQuery{
+			SelectPos:    lparen.Pos,
+			StatementEnd: rparenPos + 1,
+			Paren:        inner,
 		}
 	} else {
 		selectStmt, err = p.parseSelectStmt(p.Pos())
@@ -1078,25 +1086,9 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 }
 
 // parseSetOperation binds a trailing UNION|EXCEPT|INTERSECT to selectStmt.
-// A parenthesized left operand may already carry a set-operation chain,
-// e.g. (SELECT 1 UNION ALL SELECT 2) UNION ALL SELECT 3, so the right
-// operand is attached to the tail of that chain.
+// The right operand consumes the rest of the chain by recursing into
+// parseSelectQuery, so at most one operator is bound per call.
 func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
-	tail := selectStmt
-	for {
-		if tail.UnionAll != nil {
-			tail = tail.UnionAll
-		} else if tail.UnionDistinct != nil {
-			tail = tail.UnionDistinct
-		} else if tail.Except != nil {
-			tail = tail.Except
-		} else if tail.Intersect != nil {
-			tail = tail.Intersect
-		} else {
-			break
-		}
-	}
-
 	switch {
 	case p.tryConsumeKeywords(KeywordUnion):
 		switch {
@@ -1105,13 +1097,13 @@ func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
 			if err != nil {
 				return err
 			}
-			tail.UnionAll = unionAllExpr
+			selectStmt.UnionAll = unionAllExpr
 		case p.tryConsumeKeywords(KeywordDistinct):
 			unionDistinctExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
 				return err
 			}
-			tail.UnionDistinct = unionDistinctExpr
+			selectStmt.UnionDistinct = unionDistinctExpr
 		default:
 			return fmt.Errorf("expected ALL or DISTINCT, got %s", p.currentTokenKind())
 		}
@@ -1120,13 +1112,13 @@ func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
 		if err != nil {
 			return err
 		}
-		tail.Except = exceptExpr
+		selectStmt.Except = exceptExpr
 	case p.tryConsumeKeywords(KeywordIntersect):
 		intersectExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
 			return err
 		}
-		tail.Intersect = intersectExpr
+		selectStmt.Intersect = intersectExpr
 	}
 
 	return nil
@@ -1300,9 +1292,12 @@ func (p *Parser) parseCTEStmt(pos Pos) (*CTEStmt, error) {
 	if err := p.expectKeyword(KeywordAs); err != nil {
 		return nil, err
 	}
-	if p.matchTokenKind(TokenKindLParen) {
+	if p.tryConsumeTokenKind(TokenKindLParen) != nil {
 		selectQuery, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
+			return nil, err
+		}
+		if err := p.expectTokenKind(TokenKindRParen); err != nil {
 			return nil, err
 		}
 		return &CTEStmt{

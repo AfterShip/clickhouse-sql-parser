@@ -2286,6 +2286,13 @@ func (s *SelectItem) FormatSQL(formatter *Formatter) {
 }
 
 func (s *SelectQuery) FormatSQL(formatter *Formatter) {
+	if s.Paren != nil {
+		formatter.WriteByte('(')
+		formatter.WriteExpr(s.Paren)
+		formatter.WriteByte(')')
+		s.formatSetOperation(formatter)
+		return
+	}
 	if s.With != nil {
 		formatter.WriteString("WITH")
 		formatter.Indent()
@@ -2368,6 +2375,10 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 		formatter.Break()
 		formatter.WriteExpr(s.Format)
 	}
+	s.formatSetOperation(formatter)
+}
+
+func (s *SelectQuery) formatSetOperation(formatter *Formatter) {
 	if s.UnionAll != nil {
 		formatter.Break()
 		formatter.WriteString("UNION ALL")
