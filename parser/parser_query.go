@@ -1071,6 +1071,31 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 			StatementEnd: rparenPos + 1,
 			Paren:        inner,
 		}
+
+		settings, err := p.tryParseSettingsClause(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if settings != nil {
+			selectStmt.Settings = settings
+			selectStmt.StatementEnd = settings.End()
+		}
+
+		format, err := p.tryParseFormat(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		if format != nil {
+			selectStmt.Format = format
+			selectStmt.StatementEnd = format.End()
+		}
+
+		// ClickHouse allows a set operator after ')' only when no SETTINGS
+		// or FORMAT was consumed: (SELECT 1) SETTINGS a=1 UNION ALL SELECT 2
+		// is a syntax error there.
+		if settings != nil || format != nil {
+			return selectStmt, nil
+		}
 	} else {
 		selectStmt, err = p.parseSelectStmt(p.Pos())
 		if err != nil {

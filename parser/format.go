@@ -2290,6 +2290,14 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 		formatter.WriteByte('(')
 		formatter.WriteExpr(s.Paren)
 		formatter.WriteByte(')')
+		if s.Settings != nil {
+			formatter.Break()
+			formatter.WriteExpr(s.Settings)
+		}
+		if s.Format != nil {
+			formatter.Break()
+			formatter.WriteExpr(s.Format)
+		}
 		s.formatSetOperation(formatter)
 		return
 	}

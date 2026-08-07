@@ -1478,5 +1478,210 @@
       "Except": null,
       "Intersect": null
     }
+  },
+  {
+    "SelectPos": 512,
+    "StatementEnd": 545,
+    "Paren": {
+      "SelectPos": 513,
+      "StatementEnd": 521,
+      "With": null,
+      "Top": null,
+      "HasDistinct": false,
+      "DistinctOn": null,
+      "SelectItems": [
+        {
+          "Expr": {
+            "NumPos": 520,
+            "NumEnd": 521,
+            "Literal": "1",
+            "Base": 10
+          },
+          "Modifiers": [],
+          "Alias": null
+        }
+      ],
+      "From": null,
+      "Window": null,
+      "Prewhere": null,
+      "Where": null,
+      "GroupBy": null,
+      "WithTotal": false,
+      "Having": null,
+      "OrderBy": null,
+      "LimitBy": null,
+      "Limit": null,
+      "Settings": null,
+      "Format": null,
+      "UnionAll": null,
+      "UnionDistinct": null,
+      "Except": null,
+      "Intersect": null
+    },
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": null,
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": {
+      "SettingsPos": 523,
+      "ListEnd": 545,
+      "Items": [
+        {
+          "SettingsPos": 532,
+          "Name": {
+            "Name": "max_threads",
+            "QuoteType": 1,
+            "NamePos": 532,
+            "NameEnd": 543
+          },
+          "Expr": {
+            "NumPos": 544,
+            "NumEnd": 545,
+            "Literal": "1",
+            "Base": 10
+          }
+        }
+      ]
+    },
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 547,
+    "StatementEnd": 618,
+    "Paren": {
+      "SelectPos": 548,
+      "StatementEnd": 556,
+      "With": null,
+      "Top": null,
+      "HasDistinct": false,
+      "DistinctOn": null,
+      "SelectItems": [
+        {
+          "Expr": {
+            "NumPos": 555,
+            "NumEnd": 556,
+            "Literal": "1",
+            "Base": 10
+          },
+          "Modifiers": [],
+          "Alias": null
+        }
+      ],
+      "From": null,
+      "Window": null,
+      "Prewhere": null,
+      "Where": null,
+      "GroupBy": null,
+      "WithTotal": false,
+      "Having": null,
+      "OrderBy": null,
+      "LimitBy": null,
+      "Limit": null,
+      "Settings": null,
+      "Format": null,
+      "UnionAll": {
+        "SelectPos": 567,
+        "StatementEnd": 575,
+        "With": null,
+        "Top": null,
+        "HasDistinct": false,
+        "DistinctOn": null,
+        "SelectItems": [
+          {
+            "Expr": {
+              "NumPos": 574,
+              "NumEnd": 575,
+              "Literal": "2",
+              "Base": 10
+            },
+            "Modifiers": [],
+            "Alias": null
+          }
+        ],
+        "From": null,
+        "Window": null,
+        "Prewhere": null,
+        "Where": null,
+        "GroupBy": null,
+        "WithTotal": false,
+        "Having": null,
+        "OrderBy": null,
+        "LimitBy": null,
+        "Limit": null,
+        "Settings": null,
+        "Format": null,
+        "UnionAll": null,
+        "UnionDistinct": null,
+        "Except": null,
+        "Intersect": null
+      },
+      "UnionDistinct": null,
+      "Except": null,
+      "Intersect": null
+    },
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": null,
+    "From": null,
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": {
+      "SettingsPos": 577,
+      "ListEnd": 599,
+      "Items": [
+        {
+          "SettingsPos": 586,
+          "Name": {
+            "Name": "max_threads",
+            "QuoteType": 1,
+            "NamePos": 586,
+            "NameEnd": 597
+          },
+          "Expr": {
+            "NumPos": 598,
+            "NumEnd": 599,
+            "Literal": "1",
+            "Base": 10
+          }
+        }
+      ]
+    },
+    "Format": {
+      "FormatPos": 600,
+      "Format": {
+        "Name": "JSONEachRow",
+        "QuoteType": 1,
+        "NamePos": 607,
+        "NameEnd": 618
+      }
+    },
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
   }
 ]

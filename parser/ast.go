@@ -5271,9 +5271,9 @@ type SelectQuery struct {
 	StatementEnd Pos
 	// Paren makes this node a parenthesized group wrapping the inner query:
 	// (SELECT 1 UNION ALL SELECT 2). When set, every other clause field is
-	// empty and only the set-operation fields below may be populated, binding
-	// an operator that follows the closing ')'. SelectPos and StatementEnd
-	// span the parentheses.
+	// empty except Settings, Format and the set-operation fields below, which
+	// bind clauses that follow the closing ')'. SelectPos and StatementEnd
+	// span the parentheses and any trailing clause.
 	Paren         *SelectQuery `json:",omitempty"`
 	With          *WithClause
 	Top           *TopClause

@@ -241,6 +241,9 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// ALL or DISTINCT
 		"(SELECT 1",
 		"(SELECT 1) UNION SELECT 2",
+		// ClickHouse rejects a set operator once SETTINGS is bound to a
+		// parenthesized group
+		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
@@ -284,4 +287,15 @@ func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, stmts, 1)
 	require.Equal(t, sql, Format(stmts[0]))
+
+	// SETTINGS and FORMAT after ')' bind to the group.
+	stmts, err = NewParser("(SELECT 1) SETTINGS max_threads=1 FORMAT JSONEachRow").ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	group, ok = stmts[0].(*SelectQuery)
+	require.True(t, ok)
+	require.NotNil(t, group.Paren)
+	require.NotNil(t, group.Settings)
+	require.NotNil(t, group.Format)
 }
