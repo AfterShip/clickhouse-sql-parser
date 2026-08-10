@@ -30,7 +30,7 @@
             "Select": {
               "SelectPos": 15,
               "StatementEnd": 30,
-              "Paren": {
+              "InnerQuery": {
                 "SelectPos": 16,
                 "StatementEnd": 29,
                 "With": null,
@@ -91,7 +91,7 @@
               "UnionAll": {
                 "SelectPos": 41,
                 "StatementEnd": 56,
-                "Paren": {
+                "InnerQuery": {
                   "SelectPos": 42,
                   "StatementEnd": 55,
                   "With": null,
@@ -213,7 +213,7 @@
             "Select": {
               "SelectPos": 74,
               "StatementEnd": 89,
-              "Paren": {
+              "InnerQuery": {
                 "SelectPos": 75,
                 "StatementEnd": 88,
                 "With": null,
@@ -371,7 +371,7 @@
             "Select": {
               "SelectPos": 136,
               "StatementEnd": 151,
-              "Paren": {
+              "InnerQuery": {
                 "SelectPos": 137,
                 "StatementEnd": 150,
                 "With": null,
@@ -434,7 +434,7 @@
               "Except": {
                 "SelectPos": 159,
                 "StatementEnd": 174,
-                "Paren": {
+                "InnerQuery": {
                   "SelectPos": 160,
                   "StatementEnd": 173,
                   "With": null,
@@ -554,7 +554,7 @@
             "Select": {
               "SelectPos": 192,
               "StatementEnd": 207,
-              "Paren": {
+              "InnerQuery": {
                 "SelectPos": 193,
                 "StatementEnd": 206,
                 "With": null,
@@ -618,7 +618,7 @@
               "Intersect": {
                 "SelectPos": 218,
                 "StatementEnd": 233,
-                "Paren": {
+                "InnerQuery": {
                   "SelectPos": 219,
                   "StatementEnd": 232,
                   "With": null,
@@ -709,7 +709,7 @@
   {
     "SelectPos": 236,
     "StatementEnd": 251,
-    "Paren": {
+    "InnerQuery": {
       "SelectPos": 237,
       "StatementEnd": 250,
       "With": null,
@@ -815,7 +815,7 @@
   {
     "SelectPos": 277,
     "StatementEnd": 306,
-    "Paren": {
+    "InnerQuery": {
       "SelectPos": 278,
       "StatementEnd": 286,
       "With": null,
@@ -977,7 +977,7 @@
     "UnionAll": {
       "SelectPos": 346,
       "StatementEnd": 356,
-      "Paren": {
+      "InnerQuery": {
         "SelectPos": 347,
         "StatementEnd": 355,
         "With": null,
@@ -1105,10 +1105,10 @@
             "Select": {
               "SelectPos": 392,
               "StatementEnd": 409,
-              "Paren": {
+              "InnerQuery": {
                 "SelectPos": 393,
                 "StatementEnd": 408,
-                "Paren": {
+                "InnerQuery": {
                   "SelectPos": 394,
                   "StatementEnd": 407,
                   "With": null,
@@ -1220,7 +1220,7 @@
   {
     "SelectPos": 412,
     "StatementEnd": 441,
-    "Paren": {
+    "InnerQuery": {
       "SelectPos": 413,
       "StatementEnd": 421,
       "With": null,
@@ -1385,7 +1385,7 @@
     "Intersect": {
       "SelectPos": 481,
       "StatementEnd": 510,
-      "Paren": {
+      "InnerQuery": {
         "SelectPos": 482,
         "StatementEnd": 490,
         "With": null,
@@ -1482,7 +1482,7 @@
   {
     "SelectPos": 512,
     "StatementEnd": 545,
-    "Paren": {
+    "InnerQuery": {
       "SelectPos": 513,
       "StatementEnd": 521,
       "With": null,
@@ -1563,7 +1563,7 @@
   {
     "SelectPos": 547,
     "StatementEnd": 618,
-    "Paren": {
+    "InnerQuery": {
       "SelectPos": 548,
       "StatementEnd": 556,
       "With": null,

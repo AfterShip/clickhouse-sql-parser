@@ -253,7 +253,7 @@ func TestParser_InvalidSyntax(t *testing.T) {
 }
 
 func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
-	// A parenthesized operand becomes a Paren group, so the operator after
+	// A parenthesized operand becomes a group node, so the operator after
 	// ')' binds to the whole group instead of leaking into its chain.
 	stmts, err := NewParser("(SELECT 1 UNION DISTINCT SELECT 2) UNION ALL SELECT 3").ParseStmts()
 	require.NoError(t, err)
@@ -261,10 +261,10 @@ func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
 
 	group, ok := stmts[0].(*SelectQuery)
 	require.True(t, ok)
-	require.NotNil(t, group.Paren)
-	require.NotNil(t, group.Paren.UnionDistinct)
+	require.NotNil(t, group.InnerQuery)
+	require.NotNil(t, group.InnerQuery.UnionDistinct)
 	require.NotNil(t, group.UnionAll)
-	require.Nil(t, group.Paren.UnionDistinct.UnionAll)
+	require.Nil(t, group.InnerQuery.UnionDistinct.UnionAll)
 
 	stmts, err = NewParser("SELECT a FROM ((SELECT 1 AS a) UNION ALL (SELECT 2 AS a))").ParseStmts()
 	require.NoError(t, err)
@@ -276,9 +276,9 @@ func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
 	require.True(t, ok)
 	subQuery, ok := joinTable.Table.Expr.(*SubQuery)
 	require.True(t, ok)
-	require.NotNil(t, subQuery.Select.Paren)
+	require.NotNil(t, subQuery.Select.InnerQuery)
 	require.NotNil(t, subQuery.Select.UnionAll)
-	require.NotNil(t, subQuery.Select.UnionAll.Paren)
+	require.NotNil(t, subQuery.Select.UnionAll.InnerQuery)
 
 	// Grouping survives the round trip: ClickHouse gives INTERSECT higher
 	// precedence than UNION, so dropping the parens would change semantics.
@@ -295,7 +295,7 @@ func TestParser_ParenthesizedSetOperationOperands(t *testing.T) {
 
 	group, ok = stmts[0].(*SelectQuery)
 	require.True(t, ok)
-	require.NotNil(t, group.Paren)
+	require.NotNil(t, group.InnerQuery)
 	require.NotNil(t, group.Settings)
 	require.NotNil(t, group.Format)
 }

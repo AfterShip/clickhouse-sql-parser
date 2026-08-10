@@ -5269,12 +5269,12 @@ func (f *WindowFrameParam) Accept(visitor ASTVisitor) error {
 type SelectQuery struct {
 	SelectPos    Pos
 	StatementEnd Pos
-	// Paren makes this node a parenthesized group wrapping the inner query:
+	// InnerQuery makes this node a parenthesized group wrapping that query:
 	// (SELECT 1 UNION ALL SELECT 2). When set, every other clause field is
 	// empty except Settings, Format and the set-operation fields below, which
 	// bind clauses that follow the closing ')'. SelectPos and StatementEnd
 	// span the parentheses and any trailing clause.
-	Paren         *SelectQuery `json:",omitempty"`
+	InnerQuery    *SelectQuery `json:",omitempty"`
 	With          *WithClause
 	Top           *TopClause
 	HasDistinct   bool
@@ -5309,8 +5309,8 @@ func (s *SelectQuery) End() Pos {
 func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	visitor.Enter(s)
 	defer visitor.Leave(s)
-	if s.Paren != nil {
-		if err := s.Paren.Accept(visitor); err != nil {
+	if s.InnerQuery != nil {
+		if err := s.InnerQuery.Accept(visitor); err != nil {
 			return err
 		}
 	}

@@ -2286,9 +2286,9 @@ func (s *SelectItem) FormatSQL(formatter *Formatter) {
 }
 
 func (s *SelectQuery) FormatSQL(formatter *Formatter) {
-	if s.Paren != nil {
+	if s.InnerQuery != nil {
 		formatter.WriteByte('(')
-		formatter.WriteExpr(s.Paren)
+		formatter.WriteExpr(s.InnerQuery)
 		formatter.WriteByte(')')
 		if s.Settings != nil {
 			formatter.Break()

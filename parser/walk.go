@@ -19,7 +19,7 @@ func Walk(node Expr, fn WalkFunc) bool {
 
 	switch n := node.(type) {
 	case *SelectQuery:
-		if !Walk(n.Paren, fn) {
+		if !Walk(n.InnerQuery, fn) {
 			return false
 		}
 		if !Walk(n.With, fn) {

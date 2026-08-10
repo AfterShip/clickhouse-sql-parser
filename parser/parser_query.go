@@ -1069,7 +1069,7 @@ func (p *Parser) parseSelectQuery(_ Pos) (*SelectQuery, error) {
 		selectStmt = &SelectQuery{
 			SelectPos:    lparen.Pos,
 			StatementEnd: rparenPos + 1,
-			Paren:        inner,
+			InnerQuery:   inner,
 		}
 
 		settings, err := p.tryParseSettingsClause(p.Pos())
