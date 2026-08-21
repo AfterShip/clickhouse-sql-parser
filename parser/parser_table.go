@@ -1248,6 +1248,12 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		if err != nil {
 			return nil, err
 		}
+		// The TTL GROUP BY action only accepts a plain expression list;
+		// the query-level forms (ALL, CUBE/ROLLUP/GROUPING SETS, WITH
+		// CUBE/ROLLUP/TOTALS) are rejected by ClickHouse in a TTL.
+		if groupBy.AggregateType != "" || groupBy.WithCube || groupBy.WithRollup || groupBy.WithTotals {
+			return nil, fmt.Errorf("unexpected token: %q, expected expression list in TTL GROUP BY", p.currentTokenString())
+		}
 		rule.GroupBy = groupBy
 		if p.tryConsumeKeywords(KeywordSet) {
 			for {
