@@ -203,6 +203,12 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// OR REPLACE is only accepted for MATERIALIZED VIEW under CREATE,
 		// never under ATTACH
 		"ATTACH OR REPLACE MATERIALIZED VIEW mv TO dest AS SELECT * FROM src",
+		// A TTL GROUP BY key list is greedy: after the keys the comma
+		// continues the list, so a trailing TTL action after a
+		// comma-separated key is rejected by ClickHouse (unlike after a
+		// complete SET assignment, where the comma starts the next TTL
+		// rule).
+		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id, created + INTERVAL 2 DAY DELETE",
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported
