@@ -1252,79 +1252,11 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		action.Codec = codec
 		rule = &TTLPolicyRule{RulePos: pos, Action: action}
 	case p.matchKeyword(KeywordGroup):
-		// A TTL GROUP BY action takes only a plain expression list.
-		// ClickHouse rejects the query-level forms (ALL,
-		// CUBE/ROLLUP/GROUPING SETS, WITH CUBE/ROLLUP/TOTALS) inside a
-		// TTL, so the keys are parsed directly as a list instead of
-		// reusing parseGroupByClause and then discarding those forms:
-		// building the clause from the expected shape keeps any future
-		// query-level GROUP BY sugar out of the TTL grammar as well.
-		if err := p.expectKeyword(KeywordGroup); err != nil {
+		groupBy, err := p.parseTTLPolicyGroupBy(pos)
+		if err != nil {
 			return nil, err
 		}
-		if err := p.expectKeyword(KeywordBy); err != nil {
-			return nil, err
-		}
-		keys := &ColumnExprList{ListPos: p.Pos()}
-		for {
-			var key Expr
-			var err error
-			if p.matchTokenKind(TokenKindKeyword) {
-				// Bare keywords (e.g. ALL) are valid TTL GROUP BY keys
-				// even when followed by SET or a closing engine clause;
-				// parseColumnExpr only reads a keyword as an identifier
-				// for a narrower lookahead, so fall back to it when an
-				// expression cannot start here.
-				savedState := p.lexer.saveState()
-				key, err = p.parseExpr(p.Pos())
-				if err != nil {
-					p.lexer.restoreState(savedState)
-					key, err = p.parseAnyKeyword()
-				}
-			} else {
-				key, err = p.parseExpr(p.Pos())
-			}
-			if err != nil {
-				return nil, err
-			}
-			keys.Items = append(keys.Items, key)
-			keys.ListEnd = key.End()
-			if p.tryConsumeTokenKind(TokenKindComma) == nil {
-				break
-			}
-		}
-		rule = &TTLPolicyRule{
-			RulePos: pos,
-			GroupBy: &GroupByClause{
-				GroupByPos: pos,
-				GroupByEnd: keys.End(),
-				Expr:       keys,
-			},
-		}
-		if p.tryConsumeKeywords(KeywordSet) {
-			set, err := p.parseTTLPolicySet(p.Pos())
-			if err != nil {
-				return nil, err
-			}
-			rule.Set = append(rule.Set, set)
-			for {
-				// A comma either continues the SET assignment list or
-				// starts the next TTL expression of a multi-value TTL
-				// clause; consume it and probe for another assignment,
-				// rolling both back when none follows so parseTTLClause
-				// can treat the comma as a rule separator.
-				savedState := p.lexer.saveState()
-				if p.tryConsumeTokenKind(TokenKindComma) == nil {
-					break
-				}
-				set, err := p.parseTTLPolicySet(p.Pos())
-				if err != nil {
-					p.lexer.restoreState(savedState)
-					break
-				}
-				rule.Set = append(rule.Set, set)
-			}
-		}
+		rule = groupBy
 	default:
 		return nil, nil // nolint
 	}
@@ -1336,6 +1268,85 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	}
 	policy.Where = where
 	return policy, nil
+}
+
+// parseTTLPolicyGroupBy parses the TTL GROUP BY action: a plain key
+// expression list, optionally followed by SET <col> = <expr> assignments.
+//
+// ClickHouse rejects the query-level GROUP BY forms (ALL,
+// CUBE/ROLLUP/GROUPING SETS, WITH CUBE/ROLLUP/TOTALS) inside a TTL, so the
+// keys are parsed directly as a list instead of reusing parseGroupByClause
+// and then discarding those forms: building the clause from the expected
+// shape keeps any future query-level GROUP BY sugar out of the TTL grammar
+// as well.
+func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyRule, error) {
+	if err := p.expectKeyword(KeywordGroup); err != nil {
+		return nil, err
+	}
+	if err := p.expectKeyword(KeywordBy); err != nil {
+		return nil, err
+	}
+	keys := &ColumnExprList{ListPos: p.Pos()}
+	for {
+		var key Expr
+		var err error
+		if p.matchTokenKind(TokenKindKeyword) {
+			// Bare keywords (e.g. ALL) are valid TTL GROUP BY keys even
+			// when followed by SET or a closing engine clause;
+			// parseColumnExpr only reads a keyword as an identifier for a
+			// narrower lookahead, so fall back to it when an expression
+			// cannot start here.
+			savedState := p.lexer.saveState()
+			key, err = p.parseExpr(p.Pos())
+			if err != nil {
+				p.lexer.restoreState(savedState)
+				key, err = p.parseAnyKeyword()
+			}
+		} else {
+			key, err = p.parseExpr(p.Pos())
+		}
+		if err != nil {
+			return nil, err
+		}
+		keys.Items = append(keys.Items, key)
+		keys.ListEnd = key.End()
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+	rule := &TTLPolicyRule{
+		RulePos: pos,
+		GroupBy: &GroupByClause{
+			GroupByPos: pos,
+			GroupByEnd: keys.End(),
+			Expr:       keys,
+		},
+	}
+	if p.tryConsumeKeywords(KeywordSet) {
+		set, err := p.parseTTLPolicySet(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		rule.Set = append(rule.Set, set)
+		for {
+			// A comma either continues the SET assignment list or starts
+			// the next TTL expression of a multi-value TTL clause; consume
+			// it and probe for another assignment, rolling both back when
+			// none follows so parseTTLClause can treat the comma as a rule
+			// separator.
+			savedState := p.lexer.saveState()
+			if p.tryConsumeTokenKind(TokenKindComma) == nil {
+				break
+			}
+			set, err := p.parseTTLPolicySet(p.Pos())
+			if err != nil {
+				p.lexer.restoreState(savedState)
+				break
+			}
+			rule.Set = append(rule.Set, set)
+		}
+	}
+	return rule, nil
 }
 
 // parseTTLPolicySet parses one TTL SET assignment: <col> = <expr>.
