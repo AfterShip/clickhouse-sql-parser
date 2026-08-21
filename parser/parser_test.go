@@ -209,6 +209,12 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// complete SET assignment, where the comma starts the next TTL
 		// rule).
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id, created + INTERVAL 2 DAY DELETE",
+		// A TTL WHERE clause belongs only to the DELETE action; ClickHouse
+		// rejects it after GROUP BY, RECOMPRESS, and TO DISK/VOLUME.
+		"CREATE TABLE t (id UInt64, created DateTime, x UInt64) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id SET x = sum(x) WHERE id > 0",
+		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id WHERE id > 0",
+		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY RECOMPRESS CODEC(ZSTD(1)) WHERE id > 0",
+		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY TO VOLUME 'v1' WHERE id > 0",
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported

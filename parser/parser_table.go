@@ -1220,6 +1220,7 @@ func (p *Parser) parseTTLClause(pos Pos, allowMultiValues bool) ([]*TTLExpr, err
 
 func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	var rule *TTLPolicyRule
+	var where *WhereClause
 	switch {
 	case p.tryConsumeKeywords(KeywordTo):
 		if p.tryConsumeKeywords(KeywordDisk) {
@@ -1238,6 +1239,7 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 			return nil, fmt.Errorf("unexpected token: %q, expected DISK or VOLUME", p.currentTokenKind())
 		}
 	case p.matchKeyword(KeywordDelete), p.matchKeyword(KeywordRecompress):
+		isDelete := p.matchKeyword(KeywordDelete)
 		token := p.current()
 		_ = p.lexer.consumeToken()
 		action := &TTLPolicyRuleAction{
@@ -1251,6 +1253,15 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		}
 		action.Codec = codec
 		rule = &TTLPolicyRule{RulePos: pos, Action: action}
+		// A TTL WHERE clause belongs only to the DELETE action; ClickHouse
+		// rejects it after RECOMPRESS, TO DISK/VOLUME, and GROUP BY, so it
+		// is left unconsumed for the statement parser in those cases.
+		if isDelete {
+			where, err = p.tryParseWhereClause(p.Pos())
+			if err != nil {
+				return nil, err
+			}
+		}
 	case p.matchKeyword(KeywordGroup):
 		groupBy, err := p.parseTTLPolicyGroupBy(pos)
 		if err != nil {
@@ -1260,14 +1271,7 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	default:
 		return nil, nil // nolint
 	}
-	policy := &TTLPolicy{Item: rule}
-
-	where, err := p.tryParseWhereClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	policy.Where = where
-	return policy, nil
+	return &TTLPolicy{Item: rule, Where: where}, nil
 }
 
 // parseTTLPolicyGroupBy parses the TTL GROUP BY action: a plain key
