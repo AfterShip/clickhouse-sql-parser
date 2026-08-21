@@ -200,6 +200,9 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id WITH ROLLUP",
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id WITH CUBE",
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY GROUPING SETS (id)",
+		// OR REPLACE is only accepted for MATERIALIZED VIEW under CREATE,
+		// never under ATTACH
+		"ATTACH OR REPLACE MATERIALIZED VIEW mv TO dest AS SELECT * FROM src",
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
 		"SELECT * FROM t FULL ARRAY JOIN arr AS a",  // FULL ARRAY JOIN not supported

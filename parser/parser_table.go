@@ -10,10 +10,19 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 	switch {
 	case p.matchKeyword(KeywordCreate),
 		p.matchKeyword(KeywordAttach):
+		isAttach := p.matchKeyword(KeywordAttach)
 		_ = p.lexer.consumeToken()
 		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
-		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary, KeywordMaterialized) {
-			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY|MATERIALIZED, but got %q", p.currentTokenString())
+		if orReplace {
+			// MATERIALIZED VIEW accepts OR REPLACE only under CREATE;
+			// ClickHouse rejects an ATTACH OR REPLACE combination.
+			if isAttach {
+				if !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary) {
+					return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY, but got %q", p.currentTokenString())
+				}
+			} else if !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary, KeywordMaterialized) {
+				return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY|MATERIALIZED, but got %q", p.currentTokenString())
+			}
 		}
 		switch {
 		case p.matchKeyword(KeywordNamed):
@@ -1293,7 +1302,7 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 			},
 		}
 		if p.tryConsumeKeywords(KeywordSet) {
-			set, err := p.parseUpdateAssignment(p.Pos())
+			set, err := p.parseTTLPolicySet(p.Pos())
 			if err != nil {
 				return nil, err
 			}
@@ -1308,7 +1317,7 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 				if p.tryConsumeTokenKind(TokenKindComma) == nil {
 					break
 				}
-				set, err := p.parseUpdateAssignment(p.Pos())
+				set, err := p.parseTTLPolicySet(p.Pos())
 				if err != nil {
 					p.lexer.restoreState(savedState)
 					break
@@ -1327,6 +1336,30 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	}
 	policy.Where = where
 	return policy, nil
+}
+
+// parseTTLPolicySet parses one TTL SET assignment: <col> = <expr>.
+// Unlike parseUpdateAssignment, the right-hand side is read with full
+// expression precedence: a TTL SET has no trailing clause like the IN
+// PARTITION that bounds an ALTER TABLE UPDATE assignment, so expressions
+// such as `SET x = max(y) > 0` are valid here.
+func (p *Parser) parseTTLPolicySet(pos Pos) (*UpdateAssignment, error) {
+	column, err := p.ParseNestedIdentifier(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+		return nil, err
+	}
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	return &UpdateAssignment{
+		AssignmentPos: pos,
+		Column:        column,
+		Expr:          expr,
+	}, nil
 }
 
 func (p *Parser) parseTTLExpr(pos Pos) (*TTLExpr, error) {

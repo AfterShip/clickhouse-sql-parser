@@ -9,6 +9,8 @@ CREATE TABLE t (id UInt64, created DateTime, x UInt64) ENGINE = MergeTree() ORDE
 
 CREATE TABLE t (id UInt64, created DateTime, x UInt64) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY ALL SET x = sum(x);
 
+CREATE TABLE t (id UInt64, created DateTime, x UInt64, y UInt64) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id SET x = max(y) > 0;
+
 -- Beautify SQL:
 CREATE TABLE t
 (
@@ -66,3 +68,15 @@ ORDER BY
   id
 TTL created + INTERVAL 1 DAY GROUP BY
   ALL SET x = sum(x);
+CREATE TABLE t
+(
+  id UInt64,
+  created DateTime,
+  x UInt64,
+  y UInt64
+)
+ENGINE = MergeTree()
+ORDER BY
+  id
+TTL created + INTERVAL 1 DAY GROUP BY
+  id SET x = max(y) > 0;
