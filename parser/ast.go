@@ -2578,6 +2578,9 @@ func (t *TTLExpr) Pos() Pos {
 }
 
 func (t *TTLExpr) End() Pos {
+	if t.Policy != nil {
+		return t.Policy.End()
+	}
 	return t.Expr.End()
 }
 
