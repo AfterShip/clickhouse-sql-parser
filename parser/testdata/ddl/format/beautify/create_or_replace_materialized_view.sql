@@ -1,0 +1,11 @@
+-- Origin SQL:
+CREATE OR REPLACE MATERIALIZED VIEW mv TO dest AS SELECT * FROM src;
+
+-- Beautify SQL:
+CREATE OR REPLACE MATERIALIZED VIEW mv
+TO dest
+AS
+  SELECT
+    *
+  FROM
+    src;

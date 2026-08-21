@@ -76,6 +76,8 @@ type ASTVisitor interface {
 	VisitTTLPolicy(expr *TTLPolicy) error
 	VisitTTLPolicyRule(expr *TTLPolicyRule) error
 	VisitTTLPolicyItemAction(expr *TTLPolicyRuleAction) error
+	VisitTTLPolicyGroupBy(expr *TTLPolicyGroupBy) error
+	VisitTTLPolicySetExpr(expr *TTLPolicySetExpr) error
 	VisitRefreshExpr(expr *RefreshExpr) error
 	VisitOrderByExpr(expr *OrderExpr) error
 	VisitOrderByListExpr(expr *OrderByClause) error
@@ -734,6 +736,20 @@ func (v *DefaultASTVisitor) VisitTTLPolicyRule(expr *TTLPolicyRule) error {
 }
 
 func (v *DefaultASTVisitor) VisitTTLPolicyItemAction(expr *TTLPolicyRuleAction) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTTLPolicyGroupBy(expr *TTLPolicyGroupBy) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTTLPolicySetExpr(expr *TTLPolicySetExpr) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

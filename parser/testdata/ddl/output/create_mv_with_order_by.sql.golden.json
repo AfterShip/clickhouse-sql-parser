@@ -2,6 +2,7 @@
   {
     "CreatePos": 0,
     "StatementEnd": 135,
+    "OrReplace": false,
     "Name": {
       "Database": null,
       "Table": {
@@ -168,6 +169,7 @@
   {
     "CreatePos": 138,
     "StatementEnd": 259,
+    "OrReplace": false,
     "Name": {
       "Database": null,
       "Table": {

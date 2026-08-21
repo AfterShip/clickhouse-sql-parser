@@ -1406,6 +1406,7 @@ func (c *CreateTable) Accept(visitor ASTVisitor) error {
 type CreateMaterializedView struct {
 	CreatePos    Pos // position of CREATE|ATTACH keyword
 	StatementEnd Pos
+	OrReplace    bool
 	Name         *TableIdentifier
 	IfNotExists  bool
 	OnCluster    *ClusterClause
@@ -2476,6 +2477,64 @@ type TTLPolicyRule struct {
 	ToVolume *StringLiteral
 	ToDisk   *StringLiteral
 	Action   *TTLPolicyRuleAction
+	GroupBy  *TTLPolicyGroupBy
+}
+
+type TTLPolicyGroupBy struct {
+	GroupByPos Pos
+	GroupByEnd Pos
+	Expr       Expr
+	Set        []*TTLPolicySetExpr
+}
+
+type TTLPolicySetExpr struct {
+	SetPos Pos
+	Name   *Ident
+	Expr   Expr
+}
+
+func (t *TTLPolicyGroupBy) Pos() Pos {
+	return t.GroupByPos
+}
+
+func (t *TTLPolicyGroupBy) End() Pos {
+	return t.GroupByEnd
+}
+
+func (t *TTLPolicyGroupBy) Accept(visitor ASTVisitor) error {
+	visitor.Enter(t)
+	defer visitor.Leave(t)
+	if t.Expr != nil {
+		if err := t.Expr.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	for _, set := range t.Set {
+		if err := set.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitTTLPolicyGroupBy(t)
+}
+
+func (t *TTLPolicySetExpr) Pos() Pos {
+	return t.SetPos
+}
+
+func (t *TTLPolicySetExpr) End() Pos {
+	return t.Expr.End()
+}
+
+func (t *TTLPolicySetExpr) Accept(visitor ASTVisitor) error {
+	visitor.Enter(t)
+	defer visitor.Leave(t)
+	if err := t.Name.Accept(visitor); err != nil {
+		return err
+	}
+	if err := t.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitTTLPolicySetExpr(t)
 }
 
 func (t *TTLPolicyRule) Pos() Pos {
@@ -2483,6 +2542,9 @@ func (t *TTLPolicyRule) Pos() Pos {
 }
 
 func (t *TTLPolicyRule) End() Pos {
+	if t.GroupBy != nil {
+		return t.GroupBy.End()
+	}
 	if t.Action != nil {
 		return t.Action.End()
 	}
@@ -2507,6 +2569,11 @@ func (t *TTLPolicyRule) Accept(visitor ASTVisitor) error {
 	}
 	if t.Action != nil {
 		if err := t.Action.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if t.GroupBy != nil {
+		if err := t.GroupBy.Accept(visitor); err != nil {
 			return err
 		}
 	}

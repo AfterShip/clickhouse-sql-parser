@@ -12,8 +12,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		p.matchKeyword(KeywordAttach):
 		_ = p.lexer.consumeToken()
 		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
-		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary) {
-			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY, but got %q", p.currentTokenString())
+		if orReplace && !p.matchOneOfKeywords(KeywordTemporary, KeywordTable, KeywordView, KeywordFunction, KeywordDictionary, KeywordMaterialized) {
+			return nil, fmt.Errorf("expected keyword: TEMPORARY|TABLE|VIEW|FUNCTION|DICTIONARY|MATERIALIZED, but got %q", p.currentTokenString())
 		}
 		switch {
 		case p.matchKeyword(KeywordNamed):
@@ -28,7 +28,7 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		case p.matchKeyword(KeywordFunction):
 			return p.parseCreateFunction(pos, orReplace)
 		case p.matchKeyword(KeywordMaterialized):
-			return p.parseCreateMaterializedView(pos)
+			return p.parseCreateMaterializedView(pos, orReplace)
 		case p.matchKeyword(KeywordLive):
 			return p.parseCreateLiveView(pos)
 		case p.matchKeyword(KeywordView):
@@ -1242,6 +1242,12 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		}
 		action.Codec = codec
 		rule = &TTLPolicyRule{RulePos: pos, Action: action}
+	case p.matchKeyword(KeywordGroup):
+		groupBy, err := p.parseTTLPolicyGroupBy(pos)
+		if err != nil {
+			return nil, err
+		}
+		rule = &TTLPolicyRule{RulePos: pos, GroupBy: groupBy}
 	default:
 		return nil, nil // nolint
 	}
@@ -1259,6 +1265,57 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	}
 	policy.GroupBy = groupBy
 	return policy, nil
+}
+
+// parseTTLPolicyGroupBy parses the TTL GROUP BY action:
+// GROUP BY <expr list> [SET <col> = <agg expr>[, ...]]
+func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyGroupBy, error) {
+	if err := p.expectKeyword(KeywordGroup); err != nil {
+		return nil, err
+	}
+	if err := p.expectKeyword(KeywordBy); err != nil {
+		return nil, err
+	}
+	exprList := &ColumnExprList{ListPos: p.Pos()}
+	for {
+		expr, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		exprList.Items = append(exprList.Items, expr)
+		exprList.ListEnd = expr.End()
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+	groupBy := &TTLPolicyGroupBy{
+		GroupByPos: pos,
+		GroupByEnd: exprList.End(),
+		Expr:       exprList,
+	}
+	if !p.tryConsumeKeywords(KeywordSet) {
+		return groupBy, nil
+	}
+	for {
+		setPos := p.Pos()
+		name, err := p.parseIdentOrKeyword()
+		if err != nil {
+			return nil, err
+		}
+		if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+			return nil, err
+		}
+		value, err := p.parseSubExpr(p.Pos(), precedenceIn)
+		if err != nil {
+			return nil, err
+		}
+		groupBy.Set = append(groupBy.Set, &TTLPolicySetExpr{SetPos: setPos, Name: name, Expr: value})
+		groupBy.GroupByEnd = value.End()
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+	return groupBy, nil
 }
 
 func (p *Parser) parseTTLExpr(pos Pos) (*TTLExpr, error) {

@@ -1,0 +1,5 @@
+CREATE TABLE t (id UInt64, created DateTime, x UInt64) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id SET x = sum(x);
+
+CREATE TABLE t (id UInt64, created DateTime, x UInt64) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id;
+
+CREATE TABLE t (id UInt64, created DateTime, x UInt64, total UInt64) ENGINE = MergeTree() ORDER BY (id, created) TTL created + INTERVAL 1 DAY GROUP BY id, created SET x = sum(x), total = count();

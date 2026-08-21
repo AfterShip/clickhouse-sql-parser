@@ -16,7 +16,9 @@ import "fmt"
 // [DEFINER = { user | CURRENT_USER }] [SQL SECURITY { DEFINER | NONE }]
 // AS SELECT ...
 // [COMMENT 'comment']
-func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, error) {
+//
+//nolint:funlen
+func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMaterializedView, error) {
 	if err := p.expectKeyword(KeywordMaterialized); err != nil {
 		return nil, err
 	}
@@ -24,7 +26,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos) (*CreateMaterializedView, 
 		return nil, err
 	}
 
-	createMaterializedView := &CreateMaterializedView{CreatePos: pos}
+	createMaterializedView := &CreateMaterializedView{CreatePos: pos, OrReplace: orReplace}
 
 	// parse IF NOT EXISTS clause if exists
 	var err error

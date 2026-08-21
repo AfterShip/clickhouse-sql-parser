@@ -174,7 +174,8 @@
                   "ActionEnd": 137,
                   "Action": "DELETE",
                   "Codec": null
-                }
+                },
+                "GroupBy": null
               },
               "Where": null,
               "GroupBy": null
@@ -217,7 +218,8 @@
                   "Literal": "aaa"
                 },
                 "ToDisk": null,
-                "Action": null
+                "Action": null,
+                "GroupBy": null
               },
               "Where": null,
               "GroupBy": null
@@ -260,7 +262,8 @@
                   "LiteralEnd": 216,
                   "Literal": "bbb"
                 },
-                "Action": null
+                "Action": null,
+                "GroupBy": null
               },
               "Where": null,
               "GroupBy": null
@@ -469,7 +472,8 @@
                   "ActionEnd": 371,
                   "Action": "DELETE",
                   "Codec": null
-                }
+                },
+                "GroupBy": null
               },
               "Where": {
                 "WherePos": 372,
@@ -754,7 +758,8 @@
                       "Base": 10
                     }
                   }
-                }
+                },
+                "GroupBy": null
               },
               "Where": null,
               "GroupBy": null
@@ -815,7 +820,8 @@
                       "Base": 10
                     }
                   }
-                }
+                },
+                "GroupBy": null
               },
               "Where": null,
               "GroupBy": null

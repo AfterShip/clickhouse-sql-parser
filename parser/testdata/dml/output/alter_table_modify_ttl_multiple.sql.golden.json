@@ -104,7 +104,8 @@
                     "LiteralEnd": 125,
                     "Literal": "gcs"
                   },
-                  "Action": null
+                  "Action": null,
+                  "GroupBy": null
                 },
                 "Where": null,
                 "GroupBy": null

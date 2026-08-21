@@ -886,7 +886,11 @@ func (c *CreateLiveView) FormatSQL(formatter *Formatter) {
 }
 
 func (c *CreateMaterializedView) FormatSQL(formatter *Formatter) {
-	formatter.WriteString("CREATE MATERIALIZED VIEW ")
+	formatter.WriteString("CREATE")
+	if c.OrReplace {
+		formatter.WriteString(" OR REPLACE")
+	}
+	formatter.WriteString(" MATERIALIZED VIEW ")
 	if c.IfNotExists {
 		formatter.WriteString("IF NOT EXISTS ")
 	}
@@ -2596,7 +2600,29 @@ func (t *TTLPolicyRule) FormatSQL(formatter *Formatter) {
 		formatter.WriteExpr(t.ToDisk)
 	} else if t.Action != nil {
 		formatter.WriteExpr(t.Action)
+	} else if t.GroupBy != nil {
+		formatter.WriteExpr(t.GroupBy)
 	}
+}
+
+func (t *TTLPolicyGroupBy) FormatSQL(formatter *Formatter) {
+	formatter.WriteString("GROUP BY ")
+	formatter.WriteExpr(t.Expr)
+	if len(t.Set) > 0 {
+		formatter.WriteString(" SET ")
+		for i, set := range t.Set {
+			if i > 0 {
+				formatter.WriteString(", ")
+			}
+			formatter.WriteExpr(set)
+		}
+	}
+}
+
+func (t *TTLPolicySetExpr) FormatSQL(formatter *Formatter) {
+	formatter.WriteExpr(t.Name)
+	formatter.WriteString(" = ")
+	formatter.WriteExpr(t.Expr)
 }
 
 func (t *TTLPolicyRuleAction) FormatSQL(formatter *Formatter) {
