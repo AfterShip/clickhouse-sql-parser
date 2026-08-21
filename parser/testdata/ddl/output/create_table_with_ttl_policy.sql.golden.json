@@ -175,10 +175,10 @@
                   "Action": "DELETE",
                   "Codec": null
                 },
-                "GroupBy": null
+                "GroupBy": null,
+                "Set": null
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           },
           {
@@ -219,10 +219,10 @@
                 },
                 "ToDisk": null,
                 "Action": null,
-                "GroupBy": null
+                "GroupBy": null,
+                "Set": null
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           },
           {
@@ -263,10 +263,10 @@
                   "Literal": "bbb"
                 },
                 "Action": null,
-                "GroupBy": null
+                "GroupBy": null,
+                "Set": null
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           }
         ]
@@ -473,7 +473,8 @@
                   "Action": "DELETE",
                   "Codec": null
                 },
-                "GroupBy": null
+                "GroupBy": null,
+                "Set": null
               },
               "Where": {
                 "WherePos": 372,
@@ -517,8 +518,7 @@
                   "HasGlobal": false,
                   "HasNot": false
                 }
-              },
-              "GroupBy": null
+              }
             }
           }
         ]
@@ -759,10 +759,10 @@
                     }
                   }
                 },
-                "GroupBy": null
+                "GroupBy": null,
+                "Set": null
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           },
           {
@@ -821,10 +821,10 @@
                     }
                   }
                 },
-                "GroupBy": null
+                "GroupBy": null,
+                "Set": null
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           }
         ]

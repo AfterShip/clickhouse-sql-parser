@@ -105,10 +105,10 @@
                     "Literal": "gcs"
                   },
                   "Action": null,
-                  "GroupBy": null
+                  "GroupBy": null,
+                  "Set": null
                 },
-                "Where": null,
-                "GroupBy": null
+                "Where": null
               }
             },
             {

@@ -2477,64 +2477,8 @@ type TTLPolicyRule struct {
 	ToVolume *StringLiteral
 	ToDisk   *StringLiteral
 	Action   *TTLPolicyRuleAction
-	GroupBy  *TTLPolicyGroupBy
-}
-
-type TTLPolicyGroupBy struct {
-	GroupByPos Pos
-	GroupByEnd Pos
-	Expr       Expr
-	Set        []*TTLPolicySetExpr
-}
-
-type TTLPolicySetExpr struct {
-	SetPos Pos
-	Name   *Ident
-	Expr   Expr
-}
-
-func (t *TTLPolicyGroupBy) Pos() Pos {
-	return t.GroupByPos
-}
-
-func (t *TTLPolicyGroupBy) End() Pos {
-	return t.GroupByEnd
-}
-
-func (t *TTLPolicyGroupBy) Accept(visitor ASTVisitor) error {
-	visitor.Enter(t)
-	defer visitor.Leave(t)
-	if t.Expr != nil {
-		if err := t.Expr.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	for _, set := range t.Set {
-		if err := set.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	return visitor.VisitTTLPolicyGroupBy(t)
-}
-
-func (t *TTLPolicySetExpr) Pos() Pos {
-	return t.SetPos
-}
-
-func (t *TTLPolicySetExpr) End() Pos {
-	return t.Expr.End()
-}
-
-func (t *TTLPolicySetExpr) Accept(visitor ASTVisitor) error {
-	visitor.Enter(t)
-	defer visitor.Leave(t)
-	if err := t.Name.Accept(visitor); err != nil {
-		return err
-	}
-	if err := t.Expr.Accept(visitor); err != nil {
-		return err
-	}
-	return visitor.VisitTTLPolicySetExpr(t)
+	GroupBy  *GroupByClause
+	Set      []*UpdateAssignment
 }
 
 func (t *TTLPolicyRule) Pos() Pos {
@@ -2542,6 +2486,9 @@ func (t *TTLPolicyRule) Pos() Pos {
 }
 
 func (t *TTLPolicyRule) End() Pos {
+	if len(t.Set) > 0 {
+		return t.Set[len(t.Set)-1].End()
+	}
 	if t.GroupBy != nil {
 		return t.GroupBy.End()
 	}
@@ -2577,29 +2524,27 @@ func (t *TTLPolicyRule) Accept(visitor ASTVisitor) error {
 			return err
 		}
 	}
+	for _, set := range t.Set {
+		if err := set.Accept(visitor); err != nil {
+			return err
+		}
+	}
 	return visitor.VisitTTLPolicyRule(t)
 }
 
 type TTLPolicy struct {
-	Item    *TTLPolicyRule
-	Where   *WhereClause
-	GroupBy *GroupByClause
+	Item  *TTLPolicyRule
+	Where *WhereClause
 }
 
 func (t *TTLPolicy) Pos() Pos {
 	if t.Item != nil {
 		return t.Item.Pos()
 	}
-	if t.Where != nil {
-		return t.Where.Pos()
-	}
-	return t.GroupBy.Pos()
+	return t.Where.Pos()
 }
 
 func (t *TTLPolicy) End() Pos {
-	if t.GroupBy != nil {
-		return t.GroupBy.End()
-	}
 	if t.Where != nil {
 		return t.Where.End()
 	}
@@ -2616,11 +2561,6 @@ func (t *TTLPolicy) Accept(visitor ASTVisitor) error {
 	}
 	if t.Where != nil {
 		if err := t.Where.Accept(visitor); err != nil {
-			return err
-		}
-	}
-	if t.GroupBy != nil {
-		if err := t.GroupBy.Accept(visitor); err != nil {
 			return err
 		}
 	}

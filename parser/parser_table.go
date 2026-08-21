@@ -1243,11 +1243,24 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		action.Codec = codec
 		rule = &TTLPolicyRule{RulePos: pos, Action: action}
 	case p.matchKeyword(KeywordGroup):
-		groupBy, err := p.parseTTLPolicyGroupBy(pos)
+		rule = &TTLPolicyRule{RulePos: pos}
+		groupBy, err := p.parseGroupByClause(pos)
 		if err != nil {
 			return nil, err
 		}
-		rule = &TTLPolicyRule{RulePos: pos, GroupBy: groupBy}
+		rule.GroupBy = groupBy
+		if p.tryConsumeKeywords(KeywordSet) {
+			for {
+				set, err := p.parseUpdateAssignment(p.Pos())
+				if err != nil {
+					return nil, err
+				}
+				rule.Set = append(rule.Set, set)
+				if p.tryConsumeTokenKind(TokenKindComma) == nil {
+					break
+				}
+			}
+		}
 	default:
 		return nil, nil // nolint
 	}
@@ -1258,64 +1271,7 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		return nil, err
 	}
 	policy.Where = where
-
-	groupBy, err := p.tryParseGroupByClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	policy.GroupBy = groupBy
 	return policy, nil
-}
-
-// parseTTLPolicyGroupBy parses the TTL GROUP BY action:
-// GROUP BY <expr list> [SET <col> = <agg expr>[, ...]]
-func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyGroupBy, error) {
-	if err := p.expectKeyword(KeywordGroup); err != nil {
-		return nil, err
-	}
-	if err := p.expectKeyword(KeywordBy); err != nil {
-		return nil, err
-	}
-	exprList := &ColumnExprList{ListPos: p.Pos()}
-	for {
-		expr, err := p.parseExpr(p.Pos())
-		if err != nil {
-			return nil, err
-		}
-		exprList.Items = append(exprList.Items, expr)
-		exprList.ListEnd = expr.End()
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
-			break
-		}
-	}
-	groupBy := &TTLPolicyGroupBy{
-		GroupByPos: pos,
-		GroupByEnd: exprList.End(),
-		Expr:       exprList,
-	}
-	if !p.tryConsumeKeywords(KeywordSet) {
-		return groupBy, nil
-	}
-	for {
-		setPos := p.Pos()
-		name, err := p.parseIdentOrKeyword()
-		if err != nil {
-			return nil, err
-		}
-		if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
-			return nil, err
-		}
-		value, err := p.parseSubExpr(p.Pos(), precedenceIn)
-		if err != nil {
-			return nil, err
-		}
-		groupBy.Set = append(groupBy.Set, &TTLPolicySetExpr{SetPos: setPos, Name: name, Expr: value})
-		groupBy.GroupByEnd = value.End()
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
-			break
-		}
-	}
-	return groupBy, nil
 }
 
 func (p *Parser) parseTTLExpr(pos Pos) (*TTLExpr, error) {

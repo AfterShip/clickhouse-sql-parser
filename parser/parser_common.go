@@ -168,17 +168,6 @@ func (p *Parser) tryParseIdent() *Ident {
 	}
 }
 
-// parseIdentOrKeyword parses the current token as an identifier, accepting
-// both plain identifiers and keyword tokens as the name. Use it only in
-// positions where context has already proven the token is a name and not the
-// start of a clause or expression.
-func (p *Parser) parseIdentOrKeyword() (*Ident, error) {
-	if p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
-		return p.parseAnyKeyword()
-	}
-	return nil, fmt.Errorf("expected <ident>, but got %q", p.currentTokenKind())
-}
-
 // parseAnyKeyword parses the current token as an identifier, accepting
 // any keyword token — reserved or not — as the name. Use it only in positions
 // where context has already proven the token is a name and not the start of a

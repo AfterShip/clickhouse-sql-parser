@@ -171,64 +171,73 @@
                 "Action": null,
                 "GroupBy": {
                   "GroupByPos": 117,
-                  "GroupByEnd": 142,
+                  "GroupByEnd": 128,
+                  "AggregateType": "",
                   "Expr": {
                     "ListPos": 126,
                     "ListEnd": 128,
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "Name": "id",
-                        "QuoteType": 1,
-                        "NamePos": 126,
-                        "NameEnd": 128
+                        "Expr": {
+                          "Name": "id",
+                          "QuoteType": 1,
+                          "NamePos": 126,
+                          "NameEnd": 128
+                        },
+                        "Alias": null
                       }
                     ]
                   },
-                  "Set": [
-                    {
-                      "SetPos": 133,
-                      "Name": {
+                  "WithCube": false,
+                  "WithRollup": false,
+                  "WithTotals": false
+                },
+                "Set": [
+                  {
+                    "AssignmentPos": 133,
+                    "Column": {
+                      "Ident": {
                         "Name": "x",
                         "QuoteType": 1,
                         "NamePos": 133,
                         "NameEnd": 134
                       },
-                      "Expr": {
-                        "Name": {
-                          "Name": "sum",
-                          "QuoteType": 1,
-                          "NamePos": 137,
-                          "NameEnd": 140
+                      "DotIdent": null
+                    },
+                    "Expr": {
+                      "Name": {
+                        "Name": "sum",
+                        "QuoteType": 1,
+                        "NamePos": 137,
+                        "NameEnd": 140
+                      },
+                      "Params": {
+                        "LeftParenPos": 140,
+                        "RightParenPos": 142,
+                        "Items": {
+                          "ListPos": 141,
+                          "ListEnd": 142,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "Name": "x",
+                                "QuoteType": 1,
+                                "NamePos": 141,
+                                "NameEnd": 142
+                              },
+                              "Alias": null
+                            }
+                          ]
                         },
-                        "Params": {
-                          "LeftParenPos": 140,
-                          "RightParenPos": 142,
-                          "Items": {
-                            "ListPos": 141,
-                            "ListEnd": 142,
-                            "HasDistinct": false,
-                            "Items": [
-                              {
-                                "Expr": {
-                                  "Name": "x",
-                                  "QuoteType": 1,
-                                  "NamePos": 141,
-                                  "NameEnd": 142
-                                },
-                                "Alias": null
-                              }
-                            ]
-                          },
-                          "ColumnArgList": null
-                        }
+                        "ColumnArgList": null
                       }
                     }
-                  ]
-                }
+                  }
+                ]
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           }
         ]
@@ -432,24 +441,30 @@
                 "GroupBy": {
                   "GroupByPos": 263,
                   "GroupByEnd": 274,
+                  "AggregateType": "",
                   "Expr": {
                     "ListPos": 272,
                     "ListEnd": 274,
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "Name": "id",
-                        "QuoteType": 1,
-                        "NamePos": 272,
-                        "NameEnd": 274
+                        "Expr": {
+                          "Name": "id",
+                          "QuoteType": 1,
+                          "NamePos": 272,
+                          "NameEnd": 274
+                        },
+                        "Alias": null
                       }
                     ]
                   },
-                  "Set": null
-                }
+                  "WithCube": false,
+                  "WithRollup": false,
+                  "WithTotals": false
+                },
+                "Set": null
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           }
         ]
@@ -682,98 +697,113 @@
                 "Action": null,
                 "GroupBy": {
                   "GroupByPos": 419,
-                  "GroupByEnd": 470,
+                  "GroupByEnd": 439,
+                  "AggregateType": "",
                   "Expr": {
                     "ListPos": 428,
                     "ListEnd": 439,
                     "HasDistinct": false,
                     "Items": [
                       {
-                        "Name": "id",
-                        "QuoteType": 1,
-                        "NamePos": 428,
-                        "NameEnd": 430
+                        "Expr": {
+                          "Name": "id",
+                          "QuoteType": 1,
+                          "NamePos": 428,
+                          "NameEnd": 430
+                        },
+                        "Alias": null
                       },
                       {
-                        "Name": "created",
-                        "QuoteType": 1,
-                        "NamePos": 432,
-                        "NameEnd": 439
+                        "Expr": {
+                          "Name": "created",
+                          "QuoteType": 1,
+                          "NamePos": 432,
+                          "NameEnd": 439
+                        },
+                        "Alias": null
                       }
                     ]
                   },
-                  "Set": [
-                    {
-                      "SetPos": 444,
-                      "Name": {
+                  "WithCube": false,
+                  "WithRollup": false,
+                  "WithTotals": false
+                },
+                "Set": [
+                  {
+                    "AssignmentPos": 444,
+                    "Column": {
+                      "Ident": {
                         "Name": "x",
                         "QuoteType": 1,
                         "NamePos": 444,
                         "NameEnd": 445
                       },
-                      "Expr": {
-                        "Name": {
-                          "Name": "sum",
-                          "QuoteType": 1,
-                          "NamePos": 448,
-                          "NameEnd": 451
-                        },
-                        "Params": {
-                          "LeftParenPos": 451,
-                          "RightParenPos": 453,
-                          "Items": {
-                            "ListPos": 452,
-                            "ListEnd": 453,
-                            "HasDistinct": false,
-                            "Items": [
-                              {
-                                "Expr": {
-                                  "Name": "x",
-                                  "QuoteType": 1,
-                                  "NamePos": 452,
-                                  "NameEnd": 453
-                                },
-                                "Alias": null
-                              }
-                            ]
-                          },
-                          "ColumnArgList": null
-                        }
-                      }
+                      "DotIdent": null
                     },
-                    {
-                      "SetPos": 456,
+                    "Expr": {
                       "Name": {
+                        "Name": "sum",
+                        "QuoteType": 1,
+                        "NamePos": 448,
+                        "NameEnd": 451
+                      },
+                      "Params": {
+                        "LeftParenPos": 451,
+                        "RightParenPos": 453,
+                        "Items": {
+                          "ListPos": 452,
+                          "ListEnd": 453,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "Name": "x",
+                                "QuoteType": 1,
+                                "NamePos": 452,
+                                "NameEnd": 453
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        },
+                        "ColumnArgList": null
+                      }
+                    }
+                  },
+                  {
+                    "AssignmentPos": 456,
+                    "Column": {
+                      "Ident": {
                         "Name": "total",
                         "QuoteType": 1,
                         "NamePos": 456,
                         "NameEnd": 461
                       },
-                      "Expr": {
-                        "Name": {
-                          "Name": "count",
-                          "QuoteType": 1,
-                          "NamePos": 464,
-                          "NameEnd": 469
+                      "DotIdent": null
+                    },
+                    "Expr": {
+                      "Name": {
+                        "Name": "count",
+                        "QuoteType": 1,
+                        "NamePos": 464,
+                        "NameEnd": 469
+                      },
+                      "Params": {
+                        "LeftParenPos": 469,
+                        "RightParenPos": 470,
+                        "Items": {
+                          "ListPos": 470,
+                          "ListEnd": 470,
+                          "HasDistinct": false,
+                          "Items": []
                         },
-                        "Params": {
-                          "LeftParenPos": 469,
-                          "RightParenPos": 470,
-                          "Items": {
-                            "ListPos": 470,
-                            "ListEnd": 470,
-                            "HasDistinct": false,
-                            "Items": []
-                          },
-                          "ColumnArgList": null
-                        }
+                        "ColumnArgList": null
                       }
                     }
-                  ]
-                }
+                  }
+                ]
               },
-              "Where": null,
-              "GroupBy": null
+              "Where": null
             }
           }
         ]

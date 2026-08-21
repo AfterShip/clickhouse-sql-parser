@@ -2585,10 +2585,6 @@ func (t *TTLPolicy) FormatSQL(formatter *Formatter) {
 		formatter.WriteByte(whitespace)
 		formatter.WriteExpr(t.Where)
 	}
-	if t.GroupBy != nil {
-		formatter.WriteByte(whitespace)
-		formatter.WriteExpr(t.GroupBy)
-	}
 }
 
 func (t *TTLPolicyRule) FormatSQL(formatter *Formatter) {
@@ -2603,11 +2599,6 @@ func (t *TTLPolicyRule) FormatSQL(formatter *Formatter) {
 	} else if t.GroupBy != nil {
 		formatter.WriteExpr(t.GroupBy)
 	}
-}
-
-func (t *TTLPolicyGroupBy) FormatSQL(formatter *Formatter) {
-	formatter.WriteString("GROUP BY ")
-	formatter.WriteExpr(t.Expr)
 	if len(t.Set) > 0 {
 		formatter.WriteString(" SET ")
 		for i, set := range t.Set {
@@ -2617,12 +2608,6 @@ func (t *TTLPolicyGroupBy) FormatSQL(formatter *Formatter) {
 			formatter.WriteExpr(set)
 		}
 	}
-}
-
-func (t *TTLPolicySetExpr) FormatSQL(formatter *Formatter) {
-	formatter.WriteExpr(t.Name)
-	formatter.WriteString(" = ")
-	formatter.WriteExpr(t.Expr)
 }
 
 func (t *TTLPolicyRuleAction) FormatSQL(formatter *Formatter) {

@@ -1177,9 +1177,6 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Where, fn) {
 			return false
 		}
-		if !Walk(n.GroupBy, fn) {
-			return false
-		}
 	case *TTLPolicyRule:
 		if !Walk(n.ToVolume, fn) {
 			return false
@@ -1193,21 +1190,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.GroupBy, fn) {
 			return false
 		}
-	case *TTLPolicyGroupBy:
-		if !Walk(n.Expr, fn) {
-			return false
-		}
 		for _, set := range n.Set {
 			if !Walk(set, fn) {
 				return false
 			}
-		}
-	case *TTLPolicySetExpr:
-		if !Walk(n.Name, fn) {
-			return false
-		}
-		if !Walk(n.Expr, fn) {
-			return false
 		}
 	case *TTLPolicyRuleAction:
 		if !Walk(n.Codec, fn) {
