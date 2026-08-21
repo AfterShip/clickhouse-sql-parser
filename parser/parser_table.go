@@ -1243,18 +1243,31 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 		action.Codec = codec
 		rule = &TTLPolicyRule{RulePos: pos, Action: action}
 	case p.matchKeyword(KeywordGroup):
-		rule = &TTLPolicyRule{RulePos: pos}
-		groupBy, err := p.parseGroupByClause(pos)
+		// A TTL GROUP BY action takes only a plain expression list.
+		// ClickHouse rejects the query-level forms (ALL,
+		// CUBE/ROLLUP/GROUPING SETS, WITH CUBE/ROLLUP/TOTALS) inside a
+		// TTL, so the keys are parsed directly as a list instead of
+		// reusing parseGroupByClause and then discarding those forms:
+		// building the clause from the expected shape keeps any future
+		// query-level GROUP BY sugar out of the TTL grammar as well.
+		if err := p.expectKeyword(KeywordGroup); err != nil {
+			return nil, err
+		}
+		if err := p.expectKeyword(KeywordBy); err != nil {
+			return nil, err
+		}
+		keys, err := p.parseColumnExprList(p.Pos())
 		if err != nil {
 			return nil, err
 		}
-		// The TTL GROUP BY action only accepts a plain expression list;
-		// the query-level forms (ALL, CUBE/ROLLUP/GROUPING SETS, WITH
-		// CUBE/ROLLUP/TOTALS) are rejected by ClickHouse in a TTL.
-		if groupBy.AggregateType != "" || groupBy.WithCube || groupBy.WithRollup || groupBy.WithTotals {
-			return nil, fmt.Errorf("unexpected token: %q, expected expression list in TTL GROUP BY", p.currentTokenString())
+		rule = &TTLPolicyRule{
+			RulePos: pos,
+			GroupBy: &GroupByClause{
+				GroupByPos: pos,
+				GroupByEnd: keys.End(),
+				Expr:       keys,
+			},
 		}
-		rule.GroupBy = groupBy
 		if p.tryConsumeKeywords(KeywordSet) {
 			for {
 				set, err := p.parseUpdateAssignment(p.Pos())

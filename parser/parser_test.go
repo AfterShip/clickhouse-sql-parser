@@ -193,11 +193,12 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"CREATE TABLE t (x String MATERIALIZED a +)",
 		"CREATE TABLE t (x String ALIAS a +)",
 		// A TTL GROUP BY action only accepts a plain expression list; the
-		// query-level GROUP BY forms are rejected by ClickHouse in a TTL.
+		// query-level modifiers are syntax errors for ClickHouse in a TTL.
+		// (GROUP BY ALL and CUBE/ROLLUP(...) read as ordinary key
+		// expressions there and are only rejected semantically.)
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id WITH TOTALS",
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id WITH ROLLUP",
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY id WITH CUBE",
-		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY ALL",
 		"CREATE TABLE t (id UInt64, created DateTime) ENGINE = MergeTree() ORDER BY id TTL created + INTERVAL 1 DAY GROUP BY GROUPING SETS (id)",
 		// Invalid ARRAY JOIN types (only ARRAY JOIN, LEFT ARRAY JOIN, and INNER ARRAY JOIN are valid)
 		"SELECT * FROM t RIGHT ARRAY JOIN arr AS a", // RIGHT ARRAY JOIN not supported
