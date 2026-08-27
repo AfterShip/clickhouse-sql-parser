@@ -1492,7 +1492,11 @@ func (p *Parser) parseSettingsExpr(pos Pos) (*SettingExpr, error) {
 			Literal:    curToken.String,
 		}
 	default:
-		return nil, fmt.Errorf("unexpected token: %q, expected <number>, <bool> or <string>", p.currentTokenString())
+		value, err := p.parseExpr(p.Pos())
+		if err != nil {
+			return nil, fmt.Errorf("invalid setting value: %w", err)
+		}
+		expr = value
 	}
 
 	return &SettingExpr{
