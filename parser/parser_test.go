@@ -14,6 +14,23 @@ import (
 
 var runCompatible = flag.Bool("compatible", false, "run compatible test")
 
+func TestParser_TableSettingsFunctionExpression(t *testing.T) {
+	t.Parallel()
+
+	tests := map[string]string{
+		"function":        `CREATE TABLE t (timestamp DateTime64(9)) ENGINE = MergeTree ORDER BY timestamp SETTINGS table_disk = true, disk = disk(type = 's3_plain_rewritable', endpoint = 'from_env GCS_STORAGE_PATH_DATA', readonly = true)`,
+		"nested function": `CREATE TABLE t (timestamp DateTime64(9)) ENGINE = MergeTree ORDER BY timestamp SETTINGS table_disk = true, disk = disk(name = 'cache', type = 'cache', path = 'from_env CACHE_PATH', max_size = 'from_env CACHE_SIZE', enable_filesystem_query_cache_limit = true, disk = disk(type = 's3_plain_rewritable', endpoint = '[HIDDEN]', readonly = '[HIDDEN]'))`,
+	}
+
+	for name, query := range tests {
+		t.Run(name, func(t *testing.T) {
+			exprs, err := NewParser(query).ParseStmts()
+			require.NoError(t, err)
+			require.Len(t, exprs, 1)
+		})
+	}
+}
+
 func TestParser_Compatible(t *testing.T) {
 	if !*runCompatible {
 		t.Skip("Compatible test runs only if -compatible is set")
