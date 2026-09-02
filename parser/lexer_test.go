@@ -346,3 +346,33 @@ func TestNegativeHexLiteral(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, stmts, 1)
 }
+
+// The peek cache is keyed on the lexer state, including the token before the
+// peeked one, because `-` lexes differently after an operand (binary minus)
+// than after an operator (a signed number). Backtracking to the same state
+// must reuse the cached result, and any other state must lex afresh.
+func TestPeekTokenCacheFollowsLexerState(t *testing.T) {
+	lexer := NewLexer("a -1")
+	require.NoError(t, lexer.consumeToken()) // a
+
+	peeked, err := lexer.peekToken()
+	require.NoError(t, err)
+	require.Equal(t, TokenKindMinus, peeked.Kind)
+
+	savedState := lexer.saveState()
+	require.NoError(t, lexer.consumeToken())
+	require.Same(t, peeked, lexer.currentToken)
+	require.NoError(t, lexer.consumeToken())
+	require.Equal(t, "1", lexer.currentToken.String)
+
+	lexer.restoreState(savedState)
+	require.NoError(t, lexer.consumeToken())
+	require.Same(t, peeked, lexer.currentToken)
+
+	// after a non-operand the same bytes lex as a signed number
+	lexer.restoreState(lexerState{offset: savedState.offset})
+	peeked, err = lexer.peekToken()
+	require.NoError(t, err)
+	require.Equal(t, TokenKindInt, peeked.Kind)
+	require.Equal(t, "-1", peeked.String)
+}

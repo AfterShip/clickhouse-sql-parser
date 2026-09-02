@@ -3,7 +3,6 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
 func (p *Parser) parseDDL(pos Pos) (DDL, error) {
@@ -435,7 +434,7 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		}, nil
 	case p.matchTokenKind(TokenKindLParen):
 		var params *ParamExprList
-		if form, ok := keywordArgFunctions[strings.ToUpper(ident.Name)]; ok {
+		if form, ok := lookupFold(keywordArgFunctions, ident.Name); ok {
 			params, err = p.parseKeywordArgFunctionParams(p.Pos(), form)
 		} else {
 			params, err = p.parseFunctionParams(p.Pos())
