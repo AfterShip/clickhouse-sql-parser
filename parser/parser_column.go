@@ -36,15 +36,51 @@ func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
 	return p.parseString(pos)
 }
 
+// getNextPrecedence maps the current token to the binding power of the
+// binary operator it starts. Token kinds are mutually exclusive, so a single
+// switch on the kind replaces a chain of per-operator match calls; this runs
+// after every primary expression and is hot.
 func (p *Parser) getNextPrecedence() int {
-	switch {
-	case p.matchKeyword(KeywordOr):
+	token := p.current()
+	if token == nil {
+		return PrecedenceUnknown
+	}
+	switch token.Kind {
+	case TokenKindKeyword:
+		return p.getKeywordPrecedence(token.ToString())
+	case TokenKindDot:
+		return PrecedenceDot
+	case TokenKindDash:
+		return PrecedenceDoubleColon
+	case TokenKindSingleEQ, TokenKindLT, TokenKindLE, TokenKindGE, TokenKindGT,
+		TokenKindDoubleEQ, TokenKindNE, "<>":
+		return PrecedenceCompare
+	case TokenKindConcat:
+		return PrecedenceConcat
+	case TokenKindPlus, TokenKindMinus:
+		return PrecedenceAddSub
+	case TokenKindMul, TokenKindDiv, TokenKindMod:
+		return PrecedenceMulDivMod
+	case TokenKindArrow:
+		return PrecedenceArrow
+	case TokenKindLParen, TokenKindLBracket:
+		return PrecedenceBracket
+	case TokenKindQuestionMark:
+		return PrecedenceQuery
+	default:
+		return PrecedenceUnknown
+	}
+}
+
+func (p *Parser) getKeywordPrecedence(keyword string) int {
+	switch keyword {
+	case KeywordOr:
 		return PrecedenceOr
-	case p.matchKeyword(KeywordAnd):
+	case KeywordAnd:
 		return PrecedenceAnd
-	case p.matchKeyword(KeywordIs):
+	case KeywordIs:
 		return PrecedenceIs
-	case p.matchKeyword(KeywordNot):
+	case KeywordNot:
 		// Infix NOT only begins NOT IN/LIKE/ILIKE/BETWEEN, so it binds with
 		// the precedence of the operator it negates; `a = b NOT IN (1)` must
 		// group the same way `a = b IN (1)` does.
@@ -56,38 +92,17 @@ func (p *Parser) getNextPrecedence() int {
 		default:
 			return PrecedenceNot
 		}
-	case p.matchTokenKind(TokenKindDot):
-		return PrecedenceDot
-	case p.matchTokenKind(TokenKindDash):
-		return PrecedenceDoubleColon
-	case p.matchTokenKind(TokenKindSingleEQ), p.matchTokenKind(TokenKindLT), p.matchTokenKind(TokenKindLE),
-		p.matchTokenKind(TokenKindGE), p.matchTokenKind(TokenKindGT), p.matchTokenKind(TokenKindDoubleEQ),
-		p.matchTokenKind(TokenKindNE), p.matchTokenKind("<>"):
-		return PrecedenceCompare
-	case p.matchTokenKind(TokenKindConcat):
-		return PrecedenceConcat
-	case p.matchTokenKind(TokenKindPlus), p.matchTokenKind(TokenKindMinus):
-		return PrecedenceAddSub
-	case p.matchTokenKind(TokenKindMul), p.matchTokenKind(TokenKindDiv), p.matchTokenKind(TokenKindMod):
-		return PrecedenceMulDivMod
-	case p.matchTokenKind(TokenKindArrow):
-		return PrecedenceArrow
-	case p.matchTokenKind(TokenKindLParen), p.matchTokenKind(TokenKindLBracket):
-		return PrecedenceBracket
-	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp):
+	case KeywordBetween, KeywordLike, KeywordIlike, KeywordRegexp:
 		return PrecedenceBetweenLike
-	case p.matchKeyword(KeywordIn):
+	case KeywordIn:
 		return precedenceIn
-	case p.matchKeyword(KeywordGlobal):
+	case KeywordGlobal:
 		// GLOBAL is also a join locality: in `ON a = b GLOBAL LEFT JOIN c` it
 		// belongs to the FROM clause, so the expression has to end here.
 		if p.peekJoinAfterLocality() {
 			return PrecedenceUnknown
 		}
-
 		return precedenceIn
-	case p.matchTokenKind(TokenKindQuestionMark):
-		return PrecedenceQuery
 	default:
 		return PrecedenceUnknown
 	}
@@ -368,7 +383,7 @@ func (p *Parser) parseColumnExtractExpr(pos Pos) (*ExtractExpr, error) {
 
 		var param Expr
 		if ident, ok := expr.(*Ident); ok {
-			if intervalUnits.Contains(strings.ToUpper(ident.Name)) && p.matchKeyword(KeywordFrom) {
+			if p.matchKeyword(KeywordFrom) && containsFold(intervalUnits, ident.Name) {
 				param, err = p.parseExtractFrom(ident)
 				if err != nil {
 					return nil, err
@@ -477,8 +492,15 @@ func (p *Parser) matchClauseStarterKeyword() bool {
 // peekIsClauseStarterKeyword reports whether the next token is one of the
 // clause-starter keywords.
 func (p *Parser) peekIsClauseStarterKeyword() bool {
+	if p.lexer.isEOF() {
+		return false
+	}
+	token, err := p.lexer.peekToken()
+	if err != nil || token == nil || token.Kind != TokenKindKeyword {
+		return false
+	}
 	for _, kw := range clauseStarterKeywords {
-		if p.peekKeyword(kw) {
+		if strings.EqualFold(token.String, kw) {
 			return true
 		}
 	}
@@ -812,7 +834,7 @@ func (p *Parser) parseInterval(requireKeyword bool) (*IntervalExpr, error) {
 	if err != nil {
 		return nil, err
 	}
-	if !intervalUnits.Contains(strings.ToUpper(unit.Name)) {
+	if !containsFold(intervalUnits, unit.Name) {
 		return nil, fmt.Errorf("unknown interval type: <%q>", unit.Name)
 	}
 	return &IntervalExpr{

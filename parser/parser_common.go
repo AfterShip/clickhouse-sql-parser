@@ -90,7 +90,7 @@ func (p *Parser) matchTokenKind(kinds ...TokenKind) bool {
 	}
 	for _, kind := range kinds {
 		if kind == TokenKindIdent {
-			return !reservedKeywords.Contains(strings.ToUpper(p.current().String))
+			return !containsFold(reservedKeywords, p.current().String)
 		}
 	}
 	return false
@@ -118,7 +118,8 @@ func (p *Parser) tryConsumeTokenKind(kind TokenKind) *Token {
 }
 
 func (p *Parser) matchKeyword(keyword string) bool {
-	return p.matchTokenKind(TokenKindKeyword) && strings.EqualFold(p.current().String, keyword)
+	token := p.current()
+	return token != nil && token.Kind == TokenKindKeyword && strings.EqualFold(token.String, keyword)
 }
 
 func (p *Parser) matchOneOfKeywords(keywords ...string) bool {

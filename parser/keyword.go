@@ -590,3 +590,17 @@ var keywords = NewSet(
 	KeywordSQL,
 	KeywordSecurity,
 )
+
+// lookupKeyword returns the canonical upper-case spelling of s when it is a
+// keyword, letting callers reuse the interned constant instead of allocating.
+func lookupKeyword(s string) (string, bool) {
+	return lookupFold(canonicalKeywords, s)
+}
+
+var canonicalKeywords = func() map[string]string {
+	m := make(map[string]string, len(keywords.m))
+	for keyword := range keywords.m {
+		m[keyword] = keyword
+	}
+	return m
+}()
