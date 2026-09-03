@@ -249,14 +249,18 @@ func (a *AlterTableAddColumn) FormatSQL(formatter *Formatter) {
 }
 
 func (a *AlterTableAddIndex) FormatSQL(formatter *Formatter) {
-	formatter.WriteString("ADD ")
+	formatter.WriteString("ADD INDEX ")
 	if a.IfNotExists {
 		formatter.WriteString("IF NOT EXISTS ")
 	}
-	formatter.WriteExpr(a.Index)
+	a.Index.formatDefinition(formatter)
 	if a.After != nil {
 		formatter.WriteString(" AFTER ")
 		formatter.WriteExpr(a.After)
+	}
+	if a.Settings != nil {
+		formatter.Break()
+		formatter.WriteExpr(a.Settings)
 	}
 }
 
@@ -2656,6 +2660,12 @@ func (t *TableIdentifier) FormatSQL(formatter *Formatter) {
 func (a *TableIndex) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("INDEX")
 	formatter.WriteByte(whitespace)
+	a.formatDefinition(formatter)
+}
+
+// formatDefinition writes everything after the INDEX keyword, so ALTER TABLE
+// can place IF NOT EXISTS between INDEX and the index name.
+func (a *TableIndex) formatDefinition(formatter *Formatter) {
 	formatter.WriteExpr(a.Name)
 	// Add space only if column expression doesn't start with '('
 	columnExprStr := Format(a.ColumnExpr)

@@ -488,6 +488,7 @@ type AlterTableAddIndex struct {
 	Index       *TableIndex
 	IfNotExists bool
 	After       *NestedIdentifier
+	Settings    *SettingsClause
 }
 
 func (a *AlterTableAddIndex) Pos() Pos {
@@ -495,6 +496,9 @@ func (a *AlterTableAddIndex) Pos() Pos {
 }
 
 func (a *AlterTableAddIndex) End() Pos {
+	if a.Settings != nil {
+		return a.Settings.End()
+	}
 	return a.StatementEnd
 }
 
@@ -510,6 +514,11 @@ func (a *AlterTableAddIndex) Accept(visitor ASTVisitor) error {
 	}
 	if a.After != nil {
 		if err := a.After.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if a.Settings != nil {
+		if err := a.Settings.Accept(visitor); err != nil {
 			return err
 		}
 	}
