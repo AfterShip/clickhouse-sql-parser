@@ -79,10 +79,10 @@
           }
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 112,
@@ -159,10 +159,10 @@
           }
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 228,
@@ -239,10 +239,10 @@
           }
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 348,
@@ -331,10 +331,10 @@
           }
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 481,
@@ -429,10 +429,10 @@
           }
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 615,
@@ -462,7 +462,7 @@
     "AlterExprs": [
       {
         "AddPos": 674,
-        "StatementEnd": 759,
+        "StatementEnd": 735,
         "Index": {
           "IndexPos": 678,
           "Name": {
@@ -499,30 +499,30 @@
           }
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": {
-          "SettingsPos": 736,
-          "ListEnd": 759,
-          "Items": [
-            {
-              "SettingsPos": 745,
-              "Name": {
-                "Name": "alter_sync",
-                "QuoteType": 1,
-                "NamePos": 745,
-                "NameEnd": 755
-              },
-              "Expr": {
-                "NumPos": 758,
-                "NumEnd": 759,
-                "Literal": "2",
-                "Base": 10
-              }
-            }
-          ]
-        }
+        "After": null
       }
-    ]
+    ],
+    "Settings": {
+      "SettingsPos": 736,
+      "ListEnd": 759,
+      "Items": [
+        {
+          "SettingsPos": 745,
+          "Name": {
+            "Name": "alter_sync",
+            "QuoteType": 1,
+            "NamePos": 745,
+            "NameEnd": 755
+          },
+          "Expr": {
+            "NumPos": 758,
+            "NumEnd": 759,
+            "Literal": "2",
+            "Base": 10
+          }
+        }
+      ]
+    }
   },
   {
     "AlterPos": 761,
@@ -552,7 +552,7 @@
     "AlterExprs": [
       {
         "AddPos": 820,
-        "StatementEnd": 919,
+        "StatementEnd": 895,
         "Index": {
           "IndexPos": 824,
           "Name": {
@@ -589,29 +589,29 @@
           }
         },
         "IfNotExists": true,
-        "After": null,
-        "Settings": {
-          "SettingsPos": 896,
-          "ListEnd": 919,
-          "Items": [
-            {
-              "SettingsPos": 905,
-              "Name": {
-                "Name": "alter_sync",
-                "QuoteType": 1,
-                "NamePos": 905,
-                "NameEnd": 915
-              },
-              "Expr": {
-                "NumPos": 918,
-                "NumEnd": 919,
-                "Literal": "2",
-                "Base": 10
-              }
-            }
-          ]
-        }
+        "After": null
       }
-    ]
+    ],
+    "Settings": {
+      "SettingsPos": 896,
+      "ListEnd": 919,
+      "Items": [
+        {
+          "SettingsPos": 905,
+          "Name": {
+            "Name": "alter_sync",
+            "QuoteType": 1,
+            "NamePos": 905,
+            "NameEnd": 915
+          },
+          "Expr": {
+            "NumPos": 918,
+            "NumEnd": 919,
+            "Literal": "2",
+            "Base": 10
+          }
+        }
+      ]
+    }
   }
 ]

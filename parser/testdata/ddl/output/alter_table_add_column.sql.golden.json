@@ -27,7 +27,7 @@
     "AlterExprs": [
       {
         "AddPos": 59,
-        "StatementEnd": 112,
+        "StatementEnd": 88,
         "Column": {
           "NamePos": 70,
           "ColumnEnd": 79,
@@ -67,29 +67,29 @@
             "NameEnd": 88
           },
           "DotIdent": null
-        },
-        "Settings": {
-          "SettingsPos": 89,
-          "ListEnd": 112,
-          "Items": [
-            {
-              "SettingsPos": 98,
-              "Name": {
-                "Name": "alter_sync",
-                "QuoteType": 1,
-                "NamePos": 98,
-                "NameEnd": 108
-              },
-              "Expr": {
-                "NumPos": 111,
-                "NumEnd": 112,
-                "Literal": "2",
-                "Base": 10
-              }
-            }
-          ]
         }
       }
-    ]
+    ],
+    "Settings": {
+      "SettingsPos": 89,
+      "ListEnd": 112,
+      "Items": [
+        {
+          "SettingsPos": 98,
+          "Name": {
+            "Name": "alter_sync",
+            "QuoteType": 1,
+            "NamePos": 98,
+            "NameEnd": 108
+          },
+          "Expr": {
+            "NumPos": 111,
+            "NumEnd": 112,
+            "Literal": "2",
+            "Base": 10
+          }
+        }
+      ]
+    }
   }
 ]

@@ -72,10 +72,10 @@
           "CompressionCodec": null
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 110,
@@ -141,9 +141,9 @@
           "CompressionCodec": null
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       }
-    ]
+    ],
+    "Settings": null
   }
 ]

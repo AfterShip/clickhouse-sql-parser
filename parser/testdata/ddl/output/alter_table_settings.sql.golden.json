@@ -1,0 +1,235 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 76,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 16
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 17,
+        "NameEnd": 29
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 30,
+        "StatementEnd": 52,
+        "IfExists": false,
+        "Column": {
+          "NamePos": 44,
+          "ColumnEnd": 52,
+          "Name": {
+            "Ident": {
+              "Name": "f0",
+              "QuoteType": 1,
+              "NamePos": 44,
+              "NameEnd": 46
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "Int64",
+              "QuoteType": 1,
+              "NamePos": 47,
+              "NameEnd": 52
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        "RemovePropertyType": null
+      }
+    ],
+    "Settings": {
+      "SettingsPos": 53,
+      "ListEnd": 76,
+      "Items": [
+        {
+          "SettingsPos": 62,
+          "Name": {
+            "Name": "alter_sync",
+            "QuoteType": 1,
+            "NamePos": 62,
+            "NameEnd": 72
+          },
+          "Expr": {
+            "NumPos": 75,
+            "NumEnd": 76,
+            "Literal": "2",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  },
+  {
+    "AlterPos": 78,
+    "StatementEnd": 168,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 90,
+        "NameEnd": 94
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 95,
+        "NameEnd": 107
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AddPos": 108,
+        "StatementEnd": 128,
+        "Column": {
+          "NamePos": 119,
+          "ColumnEnd": 128,
+          "Name": {
+            "Ident": {
+              "Name": "f1",
+              "QuoteType": 1,
+              "NamePos": 119,
+              "NameEnd": 121
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 122,
+              "NameEnd": 128
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        "IfNotExists": false,
+        "After": null
+      },
+      {
+        "DropPos": 130,
+        "ColumnName": {
+          "Ident": {
+            "Name": "f2",
+            "QuoteType": 1,
+            "NamePos": 142,
+            "NameEnd": 144
+          },
+          "DotIdent": null
+        },
+        "IfExists": false
+      }
+    ],
+    "Settings": {
+      "SettingsPos": 145,
+      "ListEnd": 168,
+      "Items": [
+        {
+          "SettingsPos": 154,
+          "Name": {
+            "Name": "alter_sync",
+            "QuoteType": 1,
+            "NamePos": 154,
+            "NameEnd": 164
+          },
+          "Expr": {
+            "NumPos": 167,
+            "NumEnd": 168,
+            "Literal": "2",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  },
+  {
+    "AlterPos": 170,
+    "StatementEnd": 299,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 182,
+        "NameEnd": 186
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 187,
+        "NameEnd": 199
+      }
+    },
+    "OnCluster": {
+      "OnPos": 200,
+      "Expr": {
+        "LiteralPos": 212,
+        "LiteralEnd": 227,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "MaterializedPos": 229,
+        "StatementEnd": 271,
+        "IfExists": true,
+        "IndexName": {
+          "Ident": {
+            "Name": "created_at_idx",
+            "QuoteType": 1,
+            "NamePos": 257,
+            "NameEnd": 271
+          },
+          "DotIdent": null
+        },
+        "Partition": null
+      }
+    ],
+    "Settings": {
+      "SettingsPos": 272,
+      "ListEnd": 299,
+      "Items": [
+        {
+          "SettingsPos": 281,
+          "Name": {
+            "Name": "mutations_sync",
+            "QuoteType": 1,
+            "NamePos": 281,
+            "NameEnd": 295
+          },
+          "Expr": {
+            "NumPos": 298,
+            "NumEnd": 299,
+            "Literal": "2",
+            "Base": 10
+          }
+        }
+      ]
+    }
+  }
+]

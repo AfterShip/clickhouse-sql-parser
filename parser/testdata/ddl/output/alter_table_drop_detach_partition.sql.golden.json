@@ -30,29 +30,29 @@
           },
           "ID": null,
           "All": false
-        },
-        "Settings": {
-          "SettingsPos": 122,
-          "ListEnd": 154,
-          "Items": [
-            {
-              "SettingsPos": 131,
-              "Name": {
-                "Name": "allow_drop_detached",
-                "QuoteType": 1,
-                "NamePos": 131,
-                "NameEnd": 150
-              },
-              "Expr": {
-                "NumPos": 153,
-                "NumEnd": 154,
-                "Literal": "1",
-                "Base": 10
-              }
-            }
-          ]
         }
       }
-    ]
+    ],
+    "Settings": {
+      "SettingsPos": 122,
+      "ListEnd": 154,
+      "Items": [
+        {
+          "SettingsPos": 131,
+          "Name": {
+            "Name": "allow_drop_detached",
+            "QuoteType": 1,
+            "NamePos": 131,
+            "NameEnd": 150
+          },
+          "Expr": {
+            "NumPos": 153,
+            "NumEnd": 154,
+            "Literal": "1",
+            "Base": 10
+          }
+        }
+      ]
+    }
   }
 ]

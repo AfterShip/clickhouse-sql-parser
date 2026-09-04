@@ -38,6 +38,7 @@
         },
         "IfExists": false
       }
-    ]
+    ],
+    "Settings": null
   }
 ]
