@@ -898,6 +898,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.After, fn) {
 			return false
 		}
+		if !Walk(n.Settings, fn) {
+			return false
+		}
 	case *AlterTableAddProjection:
 		if !Walk(n.TableProjection, fn) {
 			return false

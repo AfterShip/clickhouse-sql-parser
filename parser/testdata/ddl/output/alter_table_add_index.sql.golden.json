@@ -79,7 +79,8 @@
           }
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
       }
     ]
   },
@@ -158,7 +159,8 @@
           }
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
       }
     ]
   },
@@ -237,7 +239,8 @@
           }
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
       }
     ]
   },
@@ -328,7 +331,8 @@
           }
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
       }
     ]
   },
@@ -425,7 +429,188 @@
           }
         },
         "IfNotExists": false,
-        "After": null
+        "After": null,
+        "Settings": null
+      }
+    ]
+  },
+  {
+    "AlterPos": 615,
+    "StatementEnd": 759,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 627,
+        "NameEnd": 631
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 632,
+        "NameEnd": 644
+      }
+    },
+    "OnCluster": {
+      "OnPos": 645,
+      "Expr": {
+        "LiteralPos": 657,
+        "LiteralEnd": 672,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "AddPos": 674,
+        "StatementEnd": 759,
+        "Index": {
+          "IndexPos": 678,
+          "Name": {
+            "Ident": {
+              "Name": "created_at_idx",
+              "QuoteType": 1,
+              "NamePos": 684,
+              "NameEnd": 698
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "created_at",
+              "QuoteType": 1,
+              "NamePos": 699,
+              "NameEnd": 709
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "Name": {
+              "Name": "minmax",
+              "QuoteType": 1,
+              "NamePos": 715,
+              "NameEnd": 721
+            }
+          },
+          "Granularity": {
+            "NumPos": 734,
+            "NumEnd": 735,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "IfNotExists": false,
+        "After": null,
+        "Settings": {
+          "SettingsPos": 736,
+          "ListEnd": 759,
+          "Items": [
+            {
+              "SettingsPos": 745,
+              "Name": {
+                "Name": "alter_sync",
+                "QuoteType": 1,
+                "NamePos": 745,
+                "NameEnd": 755
+              },
+              "Expr": {
+                "NumPos": 758,
+                "NumEnd": 759,
+                "Literal": "2",
+                "Base": 10
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "AlterPos": 761,
+    "StatementEnd": 919,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "test",
+        "QuoteType": 1,
+        "NamePos": 773,
+        "NameEnd": 777
+      },
+      "Table": {
+        "Name": "events_local",
+        "QuoteType": 1,
+        "NamePos": 778,
+        "NameEnd": 790
+      }
+    },
+    "OnCluster": {
+      "OnPos": 791,
+      "Expr": {
+        "LiteralPos": 803,
+        "LiteralEnd": 818,
+        "Literal": "default_cluster"
+      }
+    },
+    "AlterExprs": [
+      {
+        "AddPos": 820,
+        "StatementEnd": 919,
+        "Index": {
+          "IndexPos": 824,
+          "Name": {
+            "Ident": {
+              "Name": "created_at_idx",
+              "QuoteType": 1,
+              "NamePos": 844,
+              "NameEnd": 858
+            },
+            "DotIdent": null
+          },
+          "ColumnExpr": {
+            "Expr": {
+              "Name": "created_at",
+              "QuoteType": 1,
+              "NamePos": 859,
+              "NameEnd": 869
+            },
+            "Alias": null
+          },
+          "ColumnType": {
+            "Name": {
+              "Name": "minmax",
+              "QuoteType": 1,
+              "NamePos": 875,
+              "NameEnd": 881
+            }
+          },
+          "Granularity": {
+            "NumPos": 894,
+            "NumEnd": 895,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "IfNotExists": true,
+        "After": null,
+        "Settings": {
+          "SettingsPos": 896,
+          "ListEnd": 919,
+          "Items": [
+            {
+              "SettingsPos": 905,
+              "Name": {
+                "Name": "alter_sync",
+                "QuoteType": 1,
+                "NamePos": 905,
+                "NameEnd": 915
+              },
+              "Expr": {
+                "NumPos": 918,
+                "NumEnd": 919,
+                "Literal": "2",
+                "Base": 10
+              }
+            }
+          ]
+        }
       }
     ]
   }

@@ -160,12 +160,20 @@ func (p *Parser) parseAlterTableAddIndex(pos Pos) (*AlterTableAddIndex, error) {
 	if after != nil {
 		statementEnd = after.End()
 	}
+	settings, err := p.tryParseSettingsClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if settings != nil {
+		statementEnd = settings.End()
+	}
 	return &AlterTableAddIndex{
 		AddPos:       pos,
 		StatementEnd: statementEnd,
 		IfNotExists:  ifNotExists,
 		Index:        index,
 		After:        after,
+		Settings:     settings,
 	}, nil
 }
 
