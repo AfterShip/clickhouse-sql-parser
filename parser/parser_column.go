@@ -1323,9 +1323,16 @@ func (p *Parser) parseColumnTypeArgs(ident *Ident) (ColumnType, error) { // noli
 				return p.parseColumnTypeWithParams(ident, p.Pos())
 			case strings.EqualFold(ident.Name, "Tuple"):
 				return p.parseNestedType(ident, p.Pos())
+			case p.matchNamedTypeParam():
+				return p.parseColumnTypeWithNamedParams(ident, lParen.Pos)
 			default:
 				return p.parseComplexType(ident, p.Pos())
 			}
+		case p.matchTokenKind(TokenKindKeyword):
+			if p.matchNamedTypeParam() {
+				return p.parseColumnTypeWithNamedParams(ident, lParen.Pos)
+			}
+			return nil, fmt.Errorf("unexpected token kind: %v", p.currentTokenKind())
 		case p.matchTokenKind(TokenKindString):
 			if peekToken, err := p.lexer.peekToken(); err == nil && peekToken.Kind == TokenKindSingleEQ {
 				// enum values
@@ -1435,6 +1442,50 @@ func (p *Parser) parseColumnTypeWithParams(name *Ident, pos Pos) (*TypeWithParam
 	return &TypeWithParams{
 		Name:          name,
 		LeftParenPos:  pos,
+		RightParenPos: rightParenPos,
+		Params:        params,
+	}, nil
+}
+
+func (p *Parser) matchNamedTypeParam() bool {
+	if !p.matchTokenKind(TokenKindIdent, TokenKindKeyword) {
+		return false
+	}
+	peekToken, err := p.lexer.peekToken()
+	return err == nil && peekToken.Kind == TokenKindSingleEQ
+}
+
+func (p *Parser) parseColumnTypeWithNamedParams(name *Ident, leftParenPos Pos) (*TypeWithNamedParams, error) {
+	params := make([]*NamedParameterExpr, 0)
+	for !p.lexer.isEOF() {
+		paramName, err := p.parseAnyKeyword()
+		if err != nil {
+			return nil, err
+		}
+		if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
+			return nil, err
+		}
+		value, err := p.parseLiteral(p.Pos())
+		if err != nil {
+			return nil, err
+		}
+		params = append(params, &NamedParameterExpr{
+			NamePos: paramName.NamePos,
+			Name:    paramName,
+			Value:   value,
+		})
+		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			break
+		}
+	}
+
+	rightParenPos := p.Pos()
+	if err := p.expectTokenKind(TokenKindRParen); err != nil {
+		return nil, err
+	}
+	return &TypeWithNamedParams{
+		Name:          name,
+		LeftParenPos:  leftParenPos,
 		RightParenPos: rightParenPos,
 		Params:        params,
 	}, nil
