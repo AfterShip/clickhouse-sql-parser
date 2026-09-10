@@ -1681,7 +1681,7 @@ func (p *Parser) ParseStmts() ([]Expr, error) {
 			continue
 		}
 		stmt, err := p.parseStmt(p.Pos())
-		if err != nil || p.lexer.err != nil {
+		if err != nil {
 			return nil, p.wrapError(err)
 		}
 		stmts = append(stmts, stmt)
