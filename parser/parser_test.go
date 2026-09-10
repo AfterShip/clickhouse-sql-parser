@@ -189,6 +189,10 @@ func validFormatSQL(t *testing.T, sql string) {
 
 func TestParser_InvalidSyntax(t *testing.T) {
 	invalidSQLs := []string{
+		"SELECT",
+		"SELECT 1; SELECT",
+		"SELECT 1 /*",
+		"SELECT 1 +> 2",
 		"SELECT * FROM",
 		// WITH FILL error cases
 		"SELECT n FROM t ORDER BY n WITH",                             // WITH without FILL
@@ -289,6 +293,29 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		parser := NewParser(sql)
 		_, err := parser.ParseStmts()
 		require.Error(t, err, "Expected error for SQL: %s", sql)
+	}
+}
+
+func TestParser_FinalTokenConsumption(t *testing.T) {
+	for _, suffix := range []string{"", " ", ";", " -- trailing comment", " /* trailing comment */"} {
+		t.Run(suffix, func(t *testing.T) {
+			for _, sql := range []string{"SELECT", "SELECT 1; SELECT"} {
+				stmts, err := NewParser(sql + suffix).ParseStmts()
+				require.Error(t, err, "SQL: %s", sql+suffix)
+				require.Nil(t, stmts)
+			}
+
+			stmts, err := NewParser("SELECT 1; SELECT 2" + suffix).ParseStmts()
+			require.NoError(t, err)
+			require.Len(t, stmts, 2)
+			require.Equal(t, "SELECT 2", Format(stmts[1]))
+		})
+	}
+
+	for _, sql := range []string{"", " ", ";;", "-- comment", "/* comment */"} {
+		stmts, err := NewParser(sql).ParseStmts()
+		require.NoError(t, err)
+		require.Empty(t, stmts)
 	}
 }
 

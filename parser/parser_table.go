@@ -1674,14 +1674,14 @@ func (p *Parser) ParseStmts() ([]Expr, error) {
 		if err := p.lexer.consumeToken(); err != nil {
 			return nil, p.wrapError(err)
 		}
-		if p.lexer.isEOF() {
+		if p.current() == nil {
 			break
 		}
 		if p.matchTokenKind(";") {
 			continue
 		}
 		stmt, err := p.parseStmt(p.Pos())
-		if err != nil {
+		if err != nil || p.lexer.err != nil {
 			return nil, p.wrapError(err)
 		}
 		stmts = append(stmts, stmt)

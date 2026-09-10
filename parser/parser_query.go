@@ -1172,11 +1172,11 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if err != nil {
 		return nil, err
 	}
-
-	statementEnd := pos
-	if len(selectItems) > 0 {
-		statementEnd = selectItems[len(selectItems)-1].End()
+	if len(selectItems) == 0 {
+		return nil, fmt.Errorf("expected SELECT expression")
 	}
+
+	statementEnd := selectItems[len(selectItems)-1].End()
 	from, err := p.tryParseFromClause(p.Pos())
 	if err != nil {
 		return nil, err

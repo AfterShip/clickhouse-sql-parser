@@ -459,6 +459,11 @@ func (p *Parser) parseFormat(pos Pos) (*FormatClause, error) {
 // captured position and expected-token information; the long tail of
 // fmt.Errorf sites is wrapped here with the current position.
 func (p *Parser) wrapError(err error) error {
+	// A grammar error can be a consequence of an ignored lexical failure.
+	// Report the original failure, including when lookahead restored the cursor.
+	if p.lexer.err != nil {
+		err = &ParseError{Pos: p.lexer.errPos, Msg: p.lexer.err.Error()}
+	}
 	if err == nil {
 		return nil
 	}

@@ -488,7 +488,10 @@ func (p *Parser) peekIsClauseStarterKeyword() bool {
 // peekIsEndOfStatement reports whether the next token is EOF or `;`.
 func (p *Parser) peekIsEndOfStatement() bool {
 	next, err := p.lexer.peekToken()
-	if err != nil || next == nil {
+	if err != nil {
+		return false
+	}
+	if next == nil {
 		return true
 	}
 	return next.Kind == ";"
@@ -593,10 +596,10 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		// (e.g. `WHERE interval > 1`), and no fixed lookahead separates the
 		// two readings: `INTERVAL a + b DAY` only reveals the operator use at
 		// the unit, four tokens out. Try the operator reading first and fall
-		// back to the identifier when it fails; the lexer state is the only
-		// parse state, so the restore is total and the outcome at a position
-		// never changes. That determinism makes memoizing failures sound, and
-		// retrying each position at most once is what keeps repeated interval
+		// back to the identifier when it fails. Restoring the lexer cursor
+		// retries the syntax; lexical failures remain fatal for the input.
+		// The outcome at a position never changes, so memoizing failures is sound.
+		// Retrying each position at most once is what keeps repeated interval
 		// columns (`SELECT interval + interval + ...`) from backtracking
 		// exponentially: a failed attempt reparses its whole suffix, retrying
 		// every later INTERVAL inside it.
