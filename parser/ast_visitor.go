@@ -99,6 +99,7 @@ type ASTVisitor interface {
 	VisitJSONType(expr *JSONType) error
 	VisitPropertyType(expr *PropertyType) error
 	VisitTypeWithParams(expr *TypeWithParams) error
+	VisitTypeWithNamedParams(expr *TypeWithNamedParams) error
 	VisitComplexType(expr *ComplexType) error
 	VisitNestedType(expr *NestedType) error
 	VisitCompressionCodec(expr *CompressionCodec) error
@@ -895,6 +896,13 @@ func (v *DefaultASTVisitor) VisitPropertyType(expr *PropertyType) error {
 }
 
 func (v *DefaultASTVisitor) VisitTypeWithParams(expr *TypeWithParams) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitTypeWithNamedParams(expr *TypeWithNamedParams) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

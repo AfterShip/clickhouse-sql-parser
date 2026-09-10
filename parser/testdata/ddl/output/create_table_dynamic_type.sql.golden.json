@@ -1,0 +1,141 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 111,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 14
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 15,
+      "SchemaEnd": 94,
+      "Columns": [
+        {
+          "NamePos": 22,
+          "ColumnEnd": 53,
+          "Name": {
+            "Ident": {
+              "Name": "value_1",
+              "QuoteType": 3,
+              "NamePos": 22,
+              "NameEnd": 29
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 38,
+            "RightParenPos": 53,
+            "Name": {
+              "Name": "Dynamic",
+              "QuoteType": 1,
+              "NamePos": 31,
+              "NameEnd": 38
+            },
+            "Params": [
+              {
+                "NamePos": 39,
+                "Name": {
+                  "Name": "max_types",
+                  "QuoteType": 1,
+                  "NamePos": 39,
+                  "NameEnd": 48
+                },
+                "Value": {
+                  "NumPos": 51,
+                  "NumEnd": 53,
+                  "Literal": "16",
+                  "Base": 10
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 61,
+          "ColumnEnd": 92,
+          "Name": {
+            "Ident": {
+              "Name": "value_2",
+              "QuoteType": 3,
+              "NamePos": 61,
+              "NameEnd": 68
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "LeftParenPos": 77,
+            "RightParenPos": 92,
+            "Name": {
+              "Name": "Dynamic",
+              "QuoteType": 1,
+              "NamePos": 70,
+              "NameEnd": 77
+            },
+            "Params": [
+              {
+                "NamePos": 78,
+                "Name": {
+                  "Name": "max_types",
+                  "QuoteType": 1,
+                  "NamePos": 78,
+                  "NameEnd": 87
+                },
+                "Value": {
+                  "NumPos": 90,
+                  "NumEnd": 92,
+                  "Literal": "16",
+                  "Base": 10
+                }
+              }
+            ]
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 96,
+      "EngineEnd": 111,
+      "Name": "Memory",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": null
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  }
+]

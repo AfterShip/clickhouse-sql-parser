@@ -2769,6 +2769,18 @@ func (s *TypeWithParams) FormatSQL(formatter *Formatter) {
 	formatter.WriteByte(')')
 }
 
+func (s *TypeWithNamedParams) FormatSQL(formatter *Formatter) {
+	formatter.WriteExpr(s.Name)
+	formatter.WriteByte('(')
+	for i, param := range s.Params {
+		if i > 0 {
+			formatter.WriteString(", ")
+		}
+		formatter.WriteExpr(param)
+	}
+	formatter.WriteByte(')')
+}
+
 func (t *TypedPlaceholder) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("{")
 	formatter.WriteExpr(t.Name)

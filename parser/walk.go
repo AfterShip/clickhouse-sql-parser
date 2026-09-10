@@ -1099,6 +1099,15 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
+	case *TypeWithNamedParams:
+		if !Walk(n.Name, fn) {
+			return false
+		}
+		for _, param := range n.Params {
+			if !Walk(param, fn) {
+				return false
+			}
+		}
 	case *ComplexType:
 		if !Walk(n.Name, fn) {
 			return false

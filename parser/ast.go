@@ -3446,6 +3446,39 @@ func (s *TypeWithParams) Type() string {
 	return s.Name.Name
 }
 
+type TypeWithNamedParams struct {
+	LeftParenPos  Pos
+	RightParenPos Pos
+	Name          *Ident
+	Params        []*NamedParameterExpr
+}
+
+func (s *TypeWithNamedParams) Pos() Pos {
+	return s.Name.NamePos
+}
+
+func (s *TypeWithNamedParams) End() Pos {
+	return s.RightParenPos
+}
+
+func (s *TypeWithNamedParams) Accept(visitor ASTVisitor) error {
+	visitor.Enter(s)
+	defer visitor.Leave(s)
+	if err := s.Name.Accept(visitor); err != nil {
+		return err
+	}
+	for _, param := range s.Params {
+		if err := param.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	return visitor.VisitTypeWithNamedParams(s)
+}
+
+func (s *TypeWithNamedParams) Type() string {
+	return s.Name.Name
+}
+
 type ComplexType struct {
 	LeftParenPos  Pos
 	RightParenPos Pos
