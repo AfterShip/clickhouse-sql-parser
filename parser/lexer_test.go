@@ -23,11 +23,20 @@ func TestConsumeComment(t *testing.T) {
 		"/* hello world */ /* hello world */\n",
 		"/* hello world */ /* hello world */\r\n",
 		"/* hello world */ /* hello world */\r",
+		"/* outer /* inner */ outer */",
+		"/* outer /* middle /* inner */ middle */ outer */",
+		"# hello world",
+		"# ",
+		"#!",
+		"#!/usr/bin/clickhouse\n",
+		"# comment\rstill comment",
 	}
 	for _, c := range comments {
 		lexer := NewLexer(c)
 		err := lexer.consumeToken()
 		require.NoError(t, err)
+		require.Nil(t, lexer.currentToken)
+		require.Equal(t, len(c), lexer.offset)
 	}
 
 }
@@ -69,6 +78,7 @@ func TestConsumeUnterminatedComment(t *testing.T) {
 		"/* unterminated",
 		"/* unterminated *",
 		"SELECT 1 /* unterminated",
+		"/* outer /* inner */",
 	}
 	for _, c := range inputs {
 		c := c
@@ -371,4 +381,81 @@ func TestNegativeHexLiteral(t *testing.T) {
 	stmts, err := NewParser("SELECT 1 FROM t WHERE x = -0xFF").ParseStmts()
 	require.NoError(t, err)
 	require.Len(t, stmts, 1)
+}
+
+func TestConsumeQuotedIdent(t *testing.T) {
+	for _, quote := range []byte{'`', '"'} {
+		for _, content := range []string{
+			"a" + string(quote) + string(quote) + "b",
+			"a\\" + string(quote) + "b",
+			"a\\\\",
+			"中文",
+		} {
+			input := string(quote) + content + string(quote)
+			t.Run(input, func(t *testing.T) {
+				lexer := NewLexer(input + ",")
+				require.NoError(t, lexer.consumeToken())
+				require.Equal(t, TokenKindIdent, lexer.currentToken.Kind)
+				require.Equal(t, content, lexer.currentToken.String)
+				require.Equal(t, Pos(1), lexer.currentToken.Pos)
+				require.Equal(t, Pos(len(input)-1), lexer.currentToken.End)
+				require.NoError(t, lexer.consumeToken())
+				require.Equal(t, TokenKindComma, lexer.currentToken.Kind)
+
+				stmts, err := NewParser("SELECT " + input).ParseStmts()
+				require.NoError(t, err)
+				require.Equal(t, "SELECT "+input, Format(stmts[0]))
+			})
+		}
+	}
+}
+
+func TestConsumeDollarQuotedString(t *testing.T) {
+	for _, tc := range []struct {
+		input, content string
+		pos            Pos
+	}{
+		{"$$hello$$", "hello", 2},
+		{"$$$$", "", 2},
+		{"$tag$it's\\n$tag$", "it\\'s\\\\n", 5},
+		{"$1_$a$$b$1_$", "a$$b", 4},
+		{"$tag$one$TAG$two$tag$", "one$TAG$two", 5},
+		{"$$中文\n/* # */$$", "中文\\n/* # */", 2},
+		{"$$a\r\nb$$", "a\\r\\nb", 2},
+		{"$$'\\$$", "\\'\\\\", 2},
+	} {
+		t.Run(tc.input, func(t *testing.T) {
+			lexer := NewLexer(tc.input + ",")
+			require.NoError(t, lexer.consumeToken())
+			require.Equal(t, TokenKindString, lexer.currentToken.Kind)
+			require.Equal(t, tc.content, lexer.currentToken.String)
+			require.Equal(t, tc.pos, lexer.currentToken.Pos)
+			require.Equal(t, Pos(len(tc.input))-tc.pos, lexer.currentToken.End)
+			require.NoError(t, lexer.consumeToken())
+			require.Equal(t, TokenKindComma, lexer.currentToken.Kind)
+
+			stmts, err := NewParser("SELECT " + tc.input).ParseStmts()
+			require.NoError(t, err)
+			for _, beautify := range []bool{false, true} {
+				formatter := NewFormatter()
+				if beautify {
+					formatter.WithBeautify()
+				}
+				formatter.WriteExpr(stmts[0])
+				formatted := formatter.String()
+				reparsed, err := NewParser(formatted).ParseStmts()
+				require.NoError(t, err)
+				require.Equal(t, "SELECT '"+tc.content+"'", Format(reparsed[0]))
+			}
+		})
+	}
+
+	// Without a complete matching delimiter, a named tag can be an identifier.
+	for _, input := range []string{"$name", "$tag$unclosed", "$tag$x$other$", "name$dollar"} {
+		lexer := NewLexer(input)
+		require.NoError(t, lexer.consumeToken())
+		require.Equal(t, TokenKindIdent, lexer.currentToken.Kind)
+		require.Equal(t, input, lexer.currentToken.String)
+		require.True(t, lexer.isEOF())
+	}
 }

@@ -55,6 +55,8 @@ func TestParseError_LexicalFailure(t *testing.T) {
 			msg string
 		}{
 			{"/*", "unclosed multi-line comment"},
+			{"/* outer /* inner */", "unclosed multi-line comment"},
+			{"$$unclosed", "invalid dollar-quoted string"},
 			{"'unclosed", "invalid string"},
 			{"`unclosed", "unclosed quoted identifier"},
 			{"1e+", "exponent part should contain at least one digit"},

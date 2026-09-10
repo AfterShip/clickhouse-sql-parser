@@ -215,12 +215,25 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 			i++
 		}
 	} else {
-		for l.peekOk(i) && (quoteType == BackTicks && l.peekN(i) != '`' ||
-			quoteType == DoubleQuote && l.peekN(i) != '"') {
+		quote := l.input[l.offset-1]
+		for l.peekOk(i) {
+			if l.peekN(i) == '\\' {
+				i++
+				if l.peekOk(i) {
+					i++
+				}
+				continue
+			}
+			if l.peekN(i) == quote {
+				if l.peekOk(i+1) && l.peekN(i+1) == quote {
+					i += 2
+					continue
+				}
+				break
+			}
 			i++
 		}
-		if !l.peekOk(i) || (quoteType == BackTicks && l.peekN(i) != '`') ||
-			(quoteType == DoubleQuote && l.peekN(i) != '"') {
+		if !l.peekOk(i) {
 			return fmt.Errorf("unclosed quoted identifier: %s", l.slice(0, i))
 		}
 	}
@@ -246,7 +259,7 @@ func (l *Lexer) consumeIdent(_ Pos) error {
 func (l *Lexer) consumeSingleLineComment() {
 	l.skipN(2)
 	i := 0
-	for l.peekOk(i) && l.peekN(i) != '\r' && l.peekN(i) != '\n' {
+	for l.peekOk(i) && l.peekN(i) != '\n' {
 		i++
 	}
 	if l.peekOk(i) {
@@ -260,10 +273,21 @@ func (l *Lexer) consumeMultiLineComment() error {
 	pos := Pos(l.offset)
 	l.skipN(2)
 	i := 0
+	depth := 1
 	for l.peekOk(i) {
+		if l.peekOk(i+1) && l.peekN(i) == '/' && l.peekN(i+1) == '*' {
+			depth++
+			i += 2
+			continue
+		}
 		if l.peekOk(i+1) && l.peekN(i) == '*' && l.peekN(i+1) == '/' {
-			l.skipN(i + 2)
-			return nil
+			depth--
+			i += 2
+			if depth == 0 {
+				l.skipN(i)
+				return nil
+			}
+			continue
 		}
 		i++
 	}
@@ -308,6 +332,40 @@ func (l *Lexer) consumeString() error {
 	return nil
 }
 
+func (l *Lexer) consumeDollarQuotedString() error {
+	i := 1
+	for l.peekOk(i) && (IsIdentStart(l.peekN(i)) || IsDigit(l.peekN(i))) {
+		i++
+	}
+	if l.peekOk(i) && l.peekN(i) == '$' {
+		delimiter := l.slice(0, i+1)
+		start := l.offset + len(delimiter)
+		if end := strings.Index(l.input[start:], delimiter); end >= 0 {
+			// StringLiteral stores the escaped interior of a single-quoted
+			// string. Heredoc contents are literal, so escape them once here.
+			literal := strings.ReplaceAll(l.input[start:start+end], "\\", "\\\\")
+			literal = strings.ReplaceAll(literal, "'", "\\'")
+			literal = strings.ReplaceAll(literal, "\n", "\\n")
+			literal = strings.ReplaceAll(literal, "\r", "\\r")
+			l.currentToken = &Token{
+				Kind:   TokenKindString,
+				String: literal,
+				Pos:    Pos(start),
+				End:    Pos(start + end),
+			}
+			l.offset = start + end + len(delimiter)
+			return nil
+		}
+	}
+
+	// ClickHouse treats an unmatched named delimiter as a bare identifier.
+	// A standalone dollar or an unmatched $$ cannot start an identifier.
+	if !l.peekOk(1) || (!IsIdentStart(l.peekN(1)) && !IsDigit(l.peekN(1))) {
+		return errors.New("invalid dollar-quoted string")
+	}
+	return l.consumeIdent(Pos(l.offset))
+}
+
 func (l *Lexer) skipComments() error {
 	for !l.isEOF() {
 		l.skipSpace()
@@ -315,6 +373,12 @@ func (l *Lexer) skipComments() error {
 			return nil
 		}
 		switch l.peekN(0) {
+		case '#':
+			if l.peekOk(1) && (l.peekN(1) == ' ' || l.peekN(1) == '!') {
+				l.consumeSingleLineComment()
+				continue
+			}
+			return nil
 		case '-':
 			if l.peekOk(1) && l.peekN(1) == '-' {
 				l.consumeSingleLineComment()
@@ -417,7 +481,9 @@ func (l *Lexer) consumeToken() (err error) {
 		}
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		return l.consumeNumber()
-	case '`', '$', '"':
+	case '$':
+		return l.consumeDollarQuotedString()
+	case '`', '"':
 		return l.consumeIdent(Pos(l.offset))
 	case '\'':
 		return l.consumeString()
