@@ -146,34 +146,37 @@ func (p *Parser) expectKeyword(keyword string) error {
 			Keyword: keyword,
 		}
 	}
-	_ = p.lexer.consumeToken()
-	return nil
+	return p.lexer.consumeToken()
 }
 
-func (p *Parser) tryConsumeKeywords(keywords ...string) bool {
+func (p *Parser) tryConsumeKeywords(keywords ...string) (bool, error) {
 	savedState := p.lexer.saveState()
 	for _, keyword := range keywords {
 		if !p.matchKeyword(keyword) {
 			p.lexer.restoreState(savedState)
-			return false
+			return false, nil
 		}
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return false, err
+		}
 	}
-	return true
+	return true, nil
 }
 
-func (p *Parser) tryParseIdent() *Ident {
+func (p *Parser) tryParseIdent() (*Ident, error) {
 	if p.currentTokenKind() != TokenKindIdent {
-		return nil
+		return nil, nil
 	}
 	curToken := p.current()
-	_ = p.lexer.consumeToken()
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, err
+	}
 	return &Ident{
 		NamePos:   curToken.Pos,
 		NameEnd:   curToken.End,
 		Name:      curToken.String,
 		QuoteType: curToken.QuoteType,
-	}
+	}, nil
 }
 
 // parseAnyKeyword parses the current token as an identifier, accepting
@@ -190,7 +193,9 @@ func (p *Parser) parseAnyKeyword() (*Ident, error) {
 			Expected: []TokenKind{TokenKindIdent},
 		}
 	}
-	_ = p.lexer.consumeToken()
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, err
+	}
 	return &Ident{
 		NamePos:   last.Pos,
 		NameEnd:   last.End,
@@ -219,7 +224,9 @@ func (p *Parser) parseIdentOrStar() (*Ident, error) {
 		return p.parseIdent()
 	case p.matchTokenKind("*"):
 		curToken := p.current()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		return &Ident{
 			NamePos: curToken.Pos,
 			NameEnd: curToken.End,
@@ -236,7 +243,9 @@ func (p *Parser) parseIdentOrString() (*Ident, error) {
 		return p.parseIdent()
 	case p.matchTokenKind(TokenKindString):
 		curToken := p.current()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		return &Ident{
 			NamePos:   curToken.Pos,
 			NameEnd:   curToken.End,
@@ -295,14 +304,18 @@ func (p *Parser) tryParseUUID() (*UUID, error) {
 }
 
 func (p *Parser) tryParseComment() (*StringLiteral, error) {
-	if !p.tryConsumeKeywords(KeywordComment) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordComment); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil
 	}
 	return p.parseString(p.Pos())
 }
 
 func (p *Parser) tryParseIfExists() (bool, error) {
-	if !p.tryConsumeKeywords(KeywordIf) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordIf); consumeErr != nil {
+		return false, consumeErr
+	} else if !matched {
 		return false, nil
 	}
 
@@ -313,7 +326,9 @@ func (p *Parser) tryParseIfExists() (bool, error) {
 }
 
 func (p *Parser) tryParseIfNotExists() (bool, error) {
-	if !p.tryConsumeKeywords(KeywordIf) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordIf); consumeErr != nil {
+		return false, consumeErr
+	} else if !matched {
 		return false, nil
 	}
 
@@ -327,15 +342,19 @@ func (p *Parser) tryParseIfNotExists() (bool, error) {
 	return true, nil
 }
 
-func (p *Parser) tryParseNull(pos Pos) *NullLiteral {
-	if !p.tryConsumeKeywords(KeywordNull) {
-		return nil
+func (p *Parser) tryParseNull(pos Pos) (*NullLiteral, error) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordNull); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
+		return nil, nil
 	}
-	return &NullLiteral{NullPos: pos}
+	return &NullLiteral{NullPos: pos}, nil
 }
 
 func (p *Parser) tryParseNotNull(pos Pos) (*NotNullLiteral, error) {
-	if !p.tryConsumeKeywords(KeywordNot) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordNot); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 	notNull := &NotNullLiteral{NotPos: pos}
@@ -369,7 +388,9 @@ func (p *Parser) parseNumber(pos Pos) (*NumberLiteral, error) {
 	case p.matchTokenKind(TokenKindFloat):
 		err = p.expectTokenKind(TokenKindFloat)
 	case p.matchTokenKind(TokenKindDot):
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		curToken = p.current()
 		if err := p.expectTokenKind(TokenKindInt); err != nil {
 			return nil, err
@@ -471,13 +492,12 @@ func (p *Parser) parseFormat(pos Pos) (*FormatClause, error) {
 // captured position and expected-token information; the long tail of
 // fmt.Errorf sites is wrapped here with the current position.
 func (p *Parser) wrapError(err error) error {
-	// A grammar error can be a consequence of an ignored lexical failure.
-	// Report the original failure, including when lookahead restored the cursor.
-	if p.lexer.err != nil {
-		err = &ParseError{Pos: p.lexer.err.pos, Msg: p.lexer.err.Error()}
-	}
 	if err == nil {
 		return nil
+	}
+	var lexicalErr *lexerError
+	if errors.As(err, &lexicalErr) {
+		err = &ParseError{Pos: lexicalErr.pos, Msg: lexicalErr.Error()}
 	}
 
 	var pe *ParseError

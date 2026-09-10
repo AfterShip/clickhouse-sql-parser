@@ -38,7 +38,9 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			// like the sibling branches, the clause position is the keyword
 			// itself, so capture it before consuming DETACH
 			detachPos := p.Pos()
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 			alter, err = p.parseAlterTableDetachPartition(detachPos)
 		case p.matchKeyword(KeywordFreeze):
 			alter, err = p.parseAlterTableFreezePartition(p.Pos())
@@ -180,7 +182,9 @@ func (p *Parser) parseAlterTableAddIndex(pos Pos) (*AlterTableAddIndex, error) {
 }
 
 func (p *Parser) tryParseProjectionOrderBy(pos Pos) (*ProjectionOrderByClause, error) {
-	if !p.tryConsumeKeywords(KeywordOrder) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordOrder); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 	if err := p.expectKeyword(KeywordBy); err != nil {
@@ -379,13 +383,17 @@ func (p *Parser) parsePartitionClause(pos Pos) (*PartitionClause, error) {
 	partition := &PartitionClause{
 		PartitionPos: pos,
 	}
-	if p.tryConsumeKeywords(KeywordId) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordId); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		id, err := p.parseString(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 		partition.ID = id
-	} else if p.tryConsumeKeywords(KeywordAll) {
+	} else if matched, consumeErr := p.tryConsumeKeywords(KeywordAll); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		partition.All = true
 	} else {
 		expr, err := p.parseExpr(p.Pos())
@@ -410,7 +418,9 @@ func (p *Parser) parseAlterTableAttachPartition(pos Pos) (AlterTableClause, erro
 	}
 	alterTable.Partition = partition
 	// FROM [db.]table?
-	if p.tryConsumeKeywords(KeywordFrom) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordFrom); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		tableIdentifier, err := p.parseTableIdentifier(p.Pos())
 		if err != nil {
 			return nil, err
@@ -432,7 +442,9 @@ func (p *Parser) parseAlterTableDropClause(pos Pos) (AlterTableClause, error) {
 	default:
 		return nil, fmt.Errorf("expected token: COLUMN|INDEX|PROJECTION, but got %s", p.currentTokenKind())
 	}
-	_ = p.lexer.consumeToken()
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, err
+	}
 
 	ifExists, err := p.tryParseIfExists()
 	if err != nil {
@@ -466,7 +478,9 @@ func (p *Parser) parseAlterTableDropClause(pos Pos) (AlterTableClause, error) {
 }
 
 func (p *Parser) tryParseAfterClause() (*NestedIdentifier, error) {
-	if !p.tryConsumeKeywords(KeywordAfter) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordAfter); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 
@@ -477,7 +491,9 @@ func (p *Parser) tryParseAfterClause() (*NestedIdentifier, error) {
 func (p *Parser) parseAlterTableDropPartition(pos Pos) (AlterTableClause, error) {
 	var hasDetached bool
 	if p.matchKeyword(KeywordDetached) {
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		hasDetached = true
 	}
 	partitionPos := p.Pos()
@@ -561,7 +577,9 @@ func (p *Parser) parseAlterTableClearClause(pos Pos) (AlterTableClause, error) {
 	default:
 		return nil, fmt.Errorf("expected keyword: COLUMN|INDEX|PROJECTION, but got %q", p.currentTokenKind())
 	}
-	_ = p.lexer.consumeToken()
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, err
+	}
 
 	ifExists, err := p.tryParseIfExists()
 	if err != nil {
@@ -575,7 +593,9 @@ func (p *Parser) parseAlterTableClearClause(pos Pos) (AlterTableClause, error) {
 	statementEnd := name.End()
 
 	var partition *PartitionClause
-	if p.tryConsumeKeywords(KeywordIn) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordIn); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		partition, err = p.tryParsePartitionClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -659,7 +679,9 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 		return p.parseAlterTableModifyColumn(pos)
 	case p.matchKeyword(KeywordTtl):
 		ttlPos := p.Pos()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		items, err := p.parseTTLClause(ttlPos, true)
 		if err != nil {
 			return nil, err
@@ -679,7 +701,9 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			TTL:          ttlClause,
 		}, nil
 	case p.matchKeyword(KeywordQuery):
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		selectQuery, err := p.parseSelectQuery(pos)
 		if err != nil {
 			return nil, err
@@ -690,7 +714,9 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			SelectExpr:   selectQuery,
 		}, nil
 	case p.matchKeyword(KeywordOrder):
-		_ = p.lexer.consumeToken() // consume "ORDER"
+		if err := p.lexer.consumeToken(); err != nil { // consume "ORDER"
+			return nil, err
+		}
 		if err := p.expectKeyword(KeywordBy); err != nil {
 			return nil, err
 		}
@@ -704,7 +730,9 @@ func (p *Parser) parseAlterTableModify(pos Pos) (AlterTableClause, error) {
 			OrderBy:      orderBy,
 		}, nil
 	case p.matchKeyword(KeywordSetting):
-		_ = p.lexer.consumeToken() // consume "SETTING"
+		if err := p.lexer.consumeToken(); err != nil { // consume "SETTING"
+			return nil, err
+		}
 		settings, err := p.parseSettingsList(p.Pos())
 		if err != nil {
 			return nil, err
@@ -816,7 +844,9 @@ func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableClause, error) {
 	default:
 		return nil, fmt.Errorf("expected keyword: INDEX|PROJECTION, but got %q", p.currentTokenKind())
 	}
-	_ = p.lexer.consumeToken()
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, err
+	}
 
 	ifExists, err := p.tryParseIfExists()
 	if err != nil {
@@ -828,7 +858,9 @@ func (p *Parser) parseAlterTableMaterialize(pos Pos) (AlterTableClause, error) {
 	}
 	statementEnd := name.End()
 	var partition *PartitionClause
-	if p.tryConsumeKeywords(KeywordIn) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordIn); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		partition, err = p.tryParsePartitionClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -947,7 +979,9 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 	}
 
 	var inPartition *PartitionClause
-	if p.tryConsumeKeywords(KeywordIn) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordIn); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		inPartition, err = p.parsePartitionClause(p.Pos())
 		if err != nil {
 			return nil, err

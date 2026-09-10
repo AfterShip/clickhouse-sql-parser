@@ -11,8 +11,13 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 	case p.matchKeyword(KeywordCreate),
 		p.matchKeyword(KeywordAttach):
 		isAttach := p.matchKeyword(KeywordAttach)
-		_ = p.lexer.consumeToken()
-		orReplace := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
+		orReplace, consumeErr := p.tryConsumeKeywords(KeywordOr, KeywordReplace)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
 		if orReplace {
 			// MATERIALIZED VIEW accepts OR REPLACE only under CREATE;
 			// ClickHouse rejects an ATTACH OR REPLACE combination.
@@ -51,7 +56,9 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 				p.currentTokenKind())
 		}
 	case p.matchKeyword(KeywordAlter):
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		switch {
 		case p.matchKeyword(KeywordRole):
 			return p.parseAlterRole(pos)
@@ -62,7 +69,9 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		}
 	case p.matchKeyword(KeywordDrop),
 		p.matchKeyword(KeywordDetach):
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		switch {
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseDropDatabase(pos)
@@ -306,12 +315,16 @@ func (p *Parser) parseNamedCollectionParam(pos Pos) (*NamedCollectionParam, erro
 	}
 
 	// Parse optional [NOT] OVERRIDABLE clause
-	if p.tryConsumeKeywords(KeywordNot) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordNot); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		param.NotOverridable = true
 		if err := p.expectKeyword(KeywordOverridable); err != nil {
 			return nil, err
 		}
-	} else if p.tryConsumeKeywords(KeywordOverridable) {
+	} else if matched, consumeErr := p.tryConsumeKeywords(KeywordOverridable); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		param.Overridable = true
 	}
 
@@ -319,15 +332,18 @@ func (p *Parser) parseNamedCollectionParam(pos Pos) (*NamedCollectionParam, erro
 }
 
 func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error) {
+	var err error
 	createTable := &CreateTable{CreatePos: pos, OrReplace: orReplace}
-	createTable.HasTemporary = p.tryConsumeKeywords(KeywordTemporary)
+	createTable.HasTemporary, err = p.tryConsumeKeywords(KeywordTemporary)
+	if err != nil {
+		return nil, err
+	}
 
 	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
 	}
 
 	// parse IF NOT EXISTS clause if exists
-	var err error
 	createTable.IfNotExists, err = p.tryParseIfNotExists()
 	if err != nil {
 		return nil, err
@@ -367,7 +383,9 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 		createTable.StatementEnd = engineExpr.End()
 	}
 
-	if p.tryConsumeKeywords(KeywordAs) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordAs); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		// After AS, we can have: SELECT/WITH (with or without parens), or table_function(...)
 		// Check if it's a SELECT/WITH query (explicitly check keywords/paren before ident)
 		if p.matchKeyword(KeywordSelect) || p.matchKeyword(KeywordWith) || p.matchTokenKind(TokenKindLParen) {
@@ -414,8 +432,14 @@ func (p *Parser) parseCreateTable(pos Pos, orReplace bool) (*CreateTable, error)
 func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 	var ident *Ident
 	var err error
-	if p.matchTokenKind(TokenKindKeyword) &&
-		(p.peekTokenKind(TokenKindLParen) || p.peekTokenKind(TokenKindDot)) {
+	keywordName := false
+	if p.matchTokenKind(TokenKindKeyword) {
+		keywordName, err = p.peekTokenKind(TokenKindLParen, TokenKindDot)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if keywordName {
 		// Reserved keywords remain valid when context proves they are function
 		// names or the first field of a qualified name.
 		ident, err = p.parseAnyKeyword()
@@ -451,7 +475,9 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 		}
 
 		overPos := p.Pos()
-		if p.tryConsumeKeywords(KeywordOver) {
+		if matched, consumeErr := p.tryConsumeKeywords(KeywordOver); consumeErr != nil {
+			return nil, consumeErr
+		} else if matched {
 			var overExpr Expr
 			switch {
 			case p.matchTokenKind(TokenKindIdent, TokenKindKeyword):
@@ -478,8 +504,15 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 			}, nil
 		}
 		return funcExpr, nil
-	case p.matchTokenKind(TokenKindDot) && !p.peekTokenKind(TokenKindColon):
-		_ = p.lexer.consumeToken()
+	case p.matchTokenKind(TokenKindDot):
+		if qualifier, err := p.peekTokenKind(TokenKindColon); err != nil {
+			return nil, err
+		} else if qualifier {
+			return ident, nil
+		}
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		switch {
 		case p.matchTokenKind(TokenKindIdent, TokenKindKeyword):
 			fields := []*Ident{ident}
@@ -491,10 +524,17 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 					return nil, err
 				}
 				fields = append(fields, child)
-				if !p.matchTokenKind(TokenKindDot) || p.peekTokenKind(TokenKindColon) {
+				if !p.matchTokenKind(TokenKindDot) {
 					break
 				}
-				_ = p.lexer.consumeToken()
+				if qualifier, err := p.peekTokenKind(TokenKindColon); err != nil {
+					return nil, err
+				} else if qualifier {
+					break
+				}
+				if err := p.lexer.consumeToken(); err != nil {
+					return nil, err
+				}
 			}
 			return &Path{Fields: fields}, nil
 		case p.matchTokenKind("*"):
@@ -565,11 +605,21 @@ func (p *Parser) parseTableSchemaClause(pos Pos) (*TableSchemaClause, error) {
 			SchemaEnd: rightParenPos,
 			Columns:   columns,
 		}, nil
-	case p.matchKeyword(KeywordAs) && !p.peekKeyword(KeywordSelect) && !p.peekKeyword(KeywordWith) && !p.peekTokenKind(TokenKindLParen):
+	case p.matchKeyword(KeywordAs):
+		next, err := p.lexer.peekToken()
+		if err != nil {
+			return nil, err
+		}
+		if next != nil && (next.Kind == TokenKindLParen ||
+			next.Kind == TokenKindKeyword && (strings.EqualFold(next.String, KeywordSelect) || strings.EqualFold(next.String, KeywordWith))) {
+			return nil, nil
+		}
 		// Handle AS only if followed by identifier (not SELECT/WITH/LPAREN)
 		// This handles: AS ident, AS ident.ident, AS ident(...)
 		// CREATE TABLE will handle: AS SELECT, AS WITH, AS (SELECT ...)
-		p.tryConsumeKeywords(KeywordAs)
+		if _, err := p.tryConsumeKeywords(KeywordAs); err != nil {
+			return nil, err
+		}
 
 		ident, err := p.parseIdent()
 		if err != nil {
@@ -624,7 +674,9 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 		switch {
 		case p.matchKeyword(KeywordIndex):
 			indexPos := p.Pos()
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 			index, err := p.parseTableIndex(indexPos)
 			if err != nil {
 				return nil, err
@@ -632,7 +684,9 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 			columns = append(columns, index)
 		case p.matchKeyword(KeywordConstraint):
 			constraintPos := p.Pos()
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 			ident, err := p.parseIdent()
 			if err != nil {
 				return nil, err
@@ -702,7 +756,10 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 		columnEnd = columnType.End()
 	}
 
-	nullable := p.tryParseNull(p.Pos())
+	nullable, err := p.tryParseNull(p.Pos())
+	if err != nil {
+		return nil, err
+	}
 	if nullable != nil {
 		columnEnd = nullable.End()
 	}
@@ -716,13 +773,22 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 
 	var valueExpr Expr
 	switch {
-	case p.tryConsumeKeywords(KeywordDefault):
+	case p.matchKeyword(KeywordDefault):
+		if err := p.expectKeyword(KeywordDefault); err != nil {
+			return nil, err
+		}
 		column.DefaultExpr, err = p.parseExpr(p.Pos())
 		valueExpr = column.DefaultExpr
-	case p.tryConsumeKeywords(KeywordMaterialized):
+	case p.matchKeyword(KeywordMaterialized):
+		if err := p.expectKeyword(KeywordMaterialized); err != nil {
+			return nil, err
+		}
 		column.MaterializedExpr, err = p.parseExpr(p.Pos())
 		valueExpr = column.MaterializedExpr
-	case p.tryConsumeKeywords(KeywordAlias):
+	case p.matchKeyword(KeywordAlias):
+		if err := p.expectKeyword(KeywordAlias); err != nil {
+			return nil, err
+		}
 		column.AliasExpr, err = p.parseExpr(p.Pos())
 		valueExpr = column.AliasExpr
 	}
@@ -814,7 +880,9 @@ func (p *Parser) parseTableArgPrimaryExpr(pos Pos) (Expr, error) {
 		// a leading '(' opens a subquery only when SELECT or WITH follows,
 		// e.g. remote('127.0.0.1', (SELECT 1)); anything else is a
 		// parenthesized expression, e.g. numbers((1 + 1))
-		if p.peekKeyword(KeywordSelect) || p.peekKeyword(KeywordWith) {
+		if query, err := p.peekKeyword(KeywordSelect, KeywordWith); err != nil {
+			return nil, err
+		} else if query {
 			return p.parseSubQuery(p.Pos())
 		}
 
@@ -845,7 +913,10 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 			// Last token is an identifier, peek at the next token
 			nextToken, peekErr := p.lexer.peekToken()
 
-			if peekErr == nil && nextToken != nil && nextToken.Kind == TokenKindSingleEQ {
+			if peekErr != nil {
+				return nil, peekErr
+			}
+			if nextToken != nil && nextToken.Kind == TokenKindSingleEQ {
 				isNamedParam = true
 			}
 		}
@@ -904,7 +975,9 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 }
 
 func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
-	if !p.tryConsumeKeywords(KeywordOn) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordOn); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 	if err := p.expectKeyword(KeywordCluster); err != nil {
@@ -931,7 +1004,9 @@ func (p *Parser) tryParseClusterClause(pos Pos) (*ClusterClause, error) {
 }
 
 func (p *Parser) tryParsePartitionByClause(pos Pos) (*PartitionByClause, error) {
-	if !p.tryConsumeKeywords(KeywordPartition) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordPartition); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 
@@ -951,7 +1026,9 @@ func (p *Parser) tryParsePartitionByClause(pos Pos) (*PartitionByClause, error) 
 }
 
 func (p *Parser) tryParsePrimaryKeyClause(pos Pos) (*PrimaryKeyClause, error) {
-	if !p.tryConsumeKeywords(KeywordPrimary) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordPrimary); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 
@@ -971,7 +1048,9 @@ func (p *Parser) tryParsePrimaryKeyClause(pos Pos) (*PrimaryKeyClause, error) {
 }
 
 func (p *Parser) tryParseOrderByClause(pos Pos) (*OrderByClause, error) {
-	if !p.tryConsumeKeywords(KeywordOrder) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordOrder); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 
@@ -985,7 +1064,9 @@ func (p *Parser) tryParseOrderByClause(pos Pos) (*OrderByClause, error) {
 // the sorting key. Unlike the ORDER BY of a query it holds a single expression:
 // a sorting key over several columns is written as a tuple.
 func (p *Parser) tryParseTableOrderByClause(pos Pos) (*OrderByClause, error) {
-	if !p.tryConsumeKeywords(KeywordOrder) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordOrder); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 
@@ -1034,7 +1115,9 @@ func (p *Parser) parseOrderByClause(pos Pos) (*OrderByClause, error) {
 	// Parse optional INTERPOLATE clause
 	if p.matchKeyword(KeywordInterpolate) {
 		interpolatePos := p.Pos()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		interpolate, err := p.parseInterpolateClause(interpolatePos)
 		if err != nil {
 			return nil, err
@@ -1056,14 +1139,18 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 	var alias *Ident
 	if p.matchKeyword(KeywordAs) {
 		// It should be a subquery instead of an order by alias if the `AS` is followed by `SELECT` keyword.
-		if nextToken, err := p.lexer.peekToken(); err == nil && nextToken.ToString() == KeywordSelect {
+		if nextToken, err := p.lexer.peekToken(); err != nil {
+			return nil, err
+		} else if nextToken != nil && nextToken.ToString() == KeywordSelect {
 			return &OrderExpr{
 				OrderPos: pos,
 				Expr:     columnExpr,
 			}, nil
 		}
 		// consume the `AS` keyword
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		// after AS the token can only be an alias name, reserved keyword or not
 		alias, err = p.parseAnyKeyword()
 		if err != nil {
@@ -1080,15 +1167,21 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 	switch {
 	case p.matchKeyword(KeywordAsc), p.matchKeyword(KeywordAscending):
 		direction = OrderDirectionAsc
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 	case p.matchKeyword(KeywordDesc), p.matchKeyword(KeywordDescending):
 		direction = OrderDirectionDesc
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 	}
 
 	// Parse optional WITH FILL clause
 	var fill *Fill
-	if p.tryConsumeKeywords(KeywordWith, KeywordFill) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordWith, KeywordFill); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		fillPos := p.Pos()
 		fill, err = p.parseFillClause(fillPos)
 		if err != nil {
@@ -1109,7 +1202,9 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	fill := &Fill{FillPos: fillPos}
 
 	// Parse optional FROM clause
-	if p.tryConsumeKeywords(KeywordFrom) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordFrom); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		fromExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -1118,7 +1213,9 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	}
 
 	// Parse optional TO clause
-	if p.tryConsumeKeywords(KeywordTo) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordTo); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		toExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -1127,7 +1224,9 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	}
 
 	// Parse optional STEP clause
-	if p.tryConsumeKeywords(KeywordStep) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordStep); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		stepExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -1136,7 +1235,9 @@ func (p *Parser) parseFillClause(fillPos Pos) (*Fill, error) {
 	}
 
 	// Parse optional STALENESS clause
-	if p.tryConsumeKeywords(KeywordStaleness) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordStaleness); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		stalenessExpr, err := p.parseExpr(fillPos)
 		if err != nil {
 			return nil, err
@@ -1169,7 +1270,9 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 
 		item := &InterpolateItem{Column: column}
 
-		if p.tryConsumeKeywords(KeywordAs) {
+		if matched, consumeErr := p.tryConsumeKeywords(KeywordAs); consumeErr != nil {
+			return nil, consumeErr
+		} else if matched {
 			expr, err := p.parseExpr(interpolatePos)
 			if err != nil {
 				return nil, err
@@ -1201,7 +1304,9 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 }
 
 func (p *Parser) tryParseTTLClause(pos Pos, allowMultiValues bool) (*TTLClause, error) {
-	if !p.tryConsumeKeywords(KeywordTtl) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordTtl); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 	ttlExprList := &TTLClause{TTLPos: pos, ListEnd: pos}
@@ -1247,14 +1352,21 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	var rule *TTLPolicyRule
 	var where *WhereClause
 	switch {
-	case p.tryConsumeKeywords(KeywordTo):
-		if p.tryConsumeKeywords(KeywordDisk) {
+	case p.matchKeyword(KeywordTo):
+		if err := p.expectKeyword(KeywordTo); err != nil {
+			return nil, err
+		}
+		if matched, consumeErr := p.tryConsumeKeywords(KeywordDisk); consumeErr != nil {
+			return nil, consumeErr
+		} else if matched {
 			value, err := p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
 			}
 			rule = &TTLPolicyRule{RulePos: pos, ToDisk: value}
-		} else if p.tryConsumeKeywords(KeywordVolume) {
+		} else if matched, consumeErr := p.tryConsumeKeywords(KeywordVolume); consumeErr != nil {
+			return nil, consumeErr
+		} else if matched {
 			value, err := p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
@@ -1266,7 +1378,9 @@ func (p *Parser) tryParseTTLPolicy(pos Pos) (*TTLPolicy, error) {
 	case p.matchKeyword(KeywordDelete), p.matchKeyword(KeywordRecompress):
 		isDelete := p.matchKeyword(KeywordDelete)
 		token := p.current()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		action := &TTLPolicyRuleAction{
 			ActionPos: token.Pos,
 			ActionEnd: token.End,
@@ -1328,6 +1442,10 @@ func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyRule, error) {
 			savedState := p.lexer.saveState()
 			key, err = p.parseExpr(p.Pos())
 			if err != nil {
+				var lexicalErr *lexerError
+				if errors.As(err, &lexicalErr) {
+					return nil, err
+				}
 				p.lexer.restoreState(savedState)
 				key, err = p.parseAnyKeyword()
 			}
@@ -1353,7 +1471,9 @@ func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyRule, error) {
 			Expr:       keys,
 		},
 	}
-	if p.tryConsumeKeywords(KeywordSet) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordSet); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		set, err := p.parseTTLPolicySet(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1373,6 +1493,10 @@ func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyRule, error) {
 			}
 			set, err := p.parseTTLPolicySet(p.Pos())
 			if err != nil {
+				var lexicalErr *lexerError
+				if errors.As(err, &lexicalErr) {
+					return nil, err
+				}
 				p.lexer.restoreState(savedState)
 				break
 			}
@@ -1423,7 +1547,9 @@ func (p *Parser) parseTTLExpr(pos Pos) (*TTLExpr, error) {
 }
 
 func (p *Parser) tryParseSampleByClause(pos Pos) (*SampleByClause, error) {
-	if !p.tryConsumeKeywords(KeywordSample) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordSample); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 
@@ -1443,7 +1569,9 @@ func (p *Parser) tryParseSampleByClause(pos Pos) (*SampleByClause, error) {
 }
 
 func (p *Parser) tryParseSettingsClause(pos Pos) (*SettingsClause, error) {
-	if !p.tryConsumeKeywords(KeywordSettings) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordSettings); consumeErr != nil {
+		return nil, consumeErr
+	} else if !matched {
 		return nil, nil // nolint
 	}
 	return p.parseSettingsClause(pos)
@@ -1521,7 +1649,9 @@ func (p *Parser) parseSettingsExpr(pos Pos) (*SettingExpr, error) {
 	case p.matchKeyword(KeywordTrue), p.matchKeyword(KeywordFalse):
 		// Handle TRUE/FALSE keywords as boolean literals
 		curToken := p.current()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		expr = &BoolLiteral{
 			LiteralPos: curToken.Pos,
 			LiteralEnd: curToken.End,
@@ -1757,7 +1887,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 	case p.matchKeyword(KeywordCreate):
 		// SHOW CREATE TABLE table_name
 		showType = "CREATE"
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 
 		if err := p.expectKeyword(KeywordTable); err != nil {
 			return nil, err
@@ -1773,12 +1905,16 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 	case p.matchKeyword(KeywordDatabases):
 		// SHOW DATABASES [optional clauses]
 		showType = "DATABASES"
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 
 	case p.matchKeyword(KeywordTables):
 		// SHOW TABLES
 		showType = "TABLES"
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 
 	default:
 		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.currentTokenString())
@@ -1795,7 +1931,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 		// Parse [[NOT] LIKE | ILIKE '<pattern>']
 		if p.matchKeyword(KeywordNot) {
 			stmt.NotLike = true
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 		}
 
 		if p.matchKeyword(KeywordLike) || p.matchKeyword(KeywordIlike) {
@@ -1804,7 +1942,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 			} else {
 				stmt.LikeType = "ILIKE"
 			}
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 
 			// Parse pattern expression
 			pattern, err := p.parseExpr(p.Pos())
@@ -1816,7 +1956,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 
 		// Parse [LIMIT <N>]
 		if p.matchKeyword(KeywordLimit) {
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 			limit, err := p.parseExpr(p.Pos())
 			if err != nil {
 				return nil, err
@@ -1826,7 +1968,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 
 		// Parse [INTO OUTFILE filename]
 		if p.matchKeyword(KeywordInto) {
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 			if err := p.expectKeyword(KeywordOutfile); err != nil {
 				return nil, err
 			}
@@ -1841,7 +1985,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 
 		// Parse [FORMAT format]
 		if p.matchKeyword(KeywordFormat) {
-			_ = p.lexer.consumeToken()
+			if err := p.lexer.consumeToken(); err != nil {
+				return nil, err
+			}
 
 			// Format can be an identifier or a string
 			if p.matchTokenKind(TokenKindString) {
@@ -1853,7 +1999,9 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 			} else if p.matchTokenKind(TokenKindIdent) {
 				// Handle format as identifier (like JSON, CSV, etc.)
 				token := p.current()
-				_ = p.lexer.consumeToken()
+				if err := p.lexer.consumeToken(); err != nil {
+					return nil, err
+				}
 				stmt.Format = &StringLiteral{
 					LiteralPos: token.Pos,
 					LiteralEnd: token.End,
@@ -1876,12 +2024,16 @@ func (p *Parser) parseDescribeStmt(pos Pos) (*DescribeStmt, error) {
 	if !p.matchKeyword(KeywordDesc) && !p.matchKeyword(KeywordDescribe) {
 		return nil, fmt.Errorf("expected DESC or DESCRIBE")
 	}
-	_ = p.lexer.consumeToken()
+	if err := p.lexer.consumeToken(); err != nil {
+		return nil, err
+	}
 
 	// TABLE keyword is optional after DESC/DESCRIBE
 	var describeType string
 	if p.matchKeyword(KeywordTable) {
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		describeType = "TABLE"
 	}
 
@@ -1904,7 +2056,10 @@ func (p *Parser) parseTruncateTable(pos Pos) (*TruncateTable, error) {
 		return nil, err
 	}
 
-	isTemporary := p.tryConsumeKeywords(KeywordTemporary)
+	isTemporary, consumeErr := p.tryConsumeKeywords(KeywordTemporary)
+	if consumeErr != nil {
+		return nil, consumeErr
+	}
 
 	if err := p.expectKeyword(KeywordTable); err != nil {
 		return nil, err
@@ -2086,6 +2241,7 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 }
 
 func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
+	var err error
 	if err := p.expectKeyword(KeywordInsert); err != nil {
 		return nil, err
 	}
@@ -2094,11 +2250,15 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 	}
 
 	insertExpr := &InsertStmt{InsertPos: pos}
-	insertExpr.HasTableKeyword = p.tryConsumeKeywords(KeywordTable)
+	insertExpr.HasTableKeyword, err = p.tryConsumeKeywords(KeywordTable)
+	if err != nil {
+		return nil, err
+	}
 
 	var table Expr
-	var err error
-	if p.tryConsumeKeywords(KeywordFunction) {
+	if matched, consumeErr := p.tryConsumeKeywords(KeywordFunction); consumeErr != nil {
+		return nil, consumeErr
+	} else if matched {
 		table, err = p.parseFunctionExpr(p.Pos())
 	} else {
 		table, err = p.parseTableIdentifier(p.Pos())
@@ -2121,7 +2281,9 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 		insertExpr.Format, err = p.parseFormat(p.Pos())
 	case p.matchKeyword(KeywordValues):
 		// consume VALUES keyword
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 		values := make([]*AssignmentValues, 0)
 		for !p.lexer.isEOF() {
 			value, err := p.parseAssignmentValues(p.Pos())
@@ -2155,9 +2317,15 @@ func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
 
 	renameTarget := KeywordTable
 	switch {
-	case p.tryConsumeKeywords(KeywordDictionary):
+	case p.matchKeyword(KeywordDictionary):
+		if err := p.expectKeyword(KeywordDictionary); err != nil {
+			return nil, err
+		}
 		renameTarget = KeywordDictionary
-	case p.tryConsumeKeywords(KeywordDatabase):
+	case p.matchKeyword(KeywordDatabase):
+		if err := p.expectKeyword(KeywordDatabase); err != nil {
+			return nil, err
+		}
 		renameTarget = KeywordDatabase
 	default:
 		if err := p.expectKeyword(KeywordTable); err != nil {
@@ -2332,7 +2500,10 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 		// properties (HIERARCHICAL, ...) end at the keyword itself
 		keywordEnd := p.End()
 		switch {
-		case p.tryConsumeKeywords(KeywordDefault):
+		case p.matchKeyword(KeywordDefault):
+			if err := p.expectKeyword(KeywordDefault); err != nil {
+				return nil, err
+			}
 			if attr.Default != nil {
 				return nil, fmt.Errorf("duplicate DEFAULT clause")
 			}
@@ -2342,7 +2513,10 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 			}
 			attr.Default = literal
 			attr.AttrEnd = literal.End()
-		case p.tryConsumeKeywords(KeywordExpression):
+		case p.matchKeyword(KeywordExpression):
+			if err := p.expectKeyword(KeywordExpression); err != nil {
+				return nil, err
+			}
 			if attr.Expression != nil {
 				return nil, fmt.Errorf("duplicate EXPRESSION clause")
 			}
@@ -2352,19 +2526,28 @@ func (p *Parser) parseDictionaryAttribute(pos Pos) (*DictionaryAttribute, error)
 			}
 			attr.Expression = expr
 			attr.AttrEnd = expr.End()
-		case p.tryConsumeKeywords(KeywordHierarchical):
+		case p.matchKeyword(KeywordHierarchical):
+			if err := p.expectKeyword(KeywordHierarchical); err != nil {
+				return nil, err
+			}
 			if attr.Hierarchical {
 				return nil, fmt.Errorf("duplicate HIERARCHICAL clause")
 			}
 			attr.Hierarchical = true
 			attr.AttrEnd = keywordEnd
-		case p.tryConsumeKeywords(KeywordInjective):
+		case p.matchKeyword(KeywordInjective):
+			if err := p.expectKeyword(KeywordInjective); err != nil {
+				return nil, err
+			}
 			if attr.Injective {
 				return nil, fmt.Errorf("duplicate INJECTIVE clause")
 			}
 			attr.Injective = true
 			attr.AttrEnd = keywordEnd
-		case p.tryConsumeKeywords(KeywordIs_object_id):
+		case p.matchKeyword(KeywordIs_object_id):
+			if err := p.expectKeyword(KeywordIs_object_id); err != nil {
+				return nil, err
+			}
 			if attr.IsObjectId {
 				return nil, fmt.Errorf("duplicate IS_OBJECT_ID clause")
 			}
@@ -2536,7 +2719,9 @@ func (p *Parser) parseDictionaryArgExpr(pos Pos) (*DictionaryArgExpr, error) {
 	// HEADERS(HEADER(NAME 'API-KEY' VALUE 'key')).
 	if p.matchTokenKind(TokenKindLParen) {
 		lParenPos := p.Pos()
-		_ = p.lexer.consumeToken()
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
 
 		args, err := p.parseDictionaryArgExprs()
 		if err != nil {
@@ -2579,7 +2764,9 @@ func (p *Parser) parseDictionaryArgExpr(pos Pos) (*DictionaryArgExpr, error) {
 		}
 		// Check if it's followed by optional parentheses
 		if p.matchTokenKind(TokenKindLParen) {
-			_ = p.lexer.consumeToken() // consume (
+			if err := p.lexer.consumeToken(); err != nil { // consume (
+				return nil, err
+			}
 			if err := p.expectTokenKind(TokenKindRParen); err != nil {
 				return nil, err
 			}
@@ -2616,7 +2803,9 @@ func (p *Parser) parseDictionaryLifetimeClause(pos Pos) (*DictionaryLifetimeClau
 	// Check for MIN/MAX form
 	if p.matchKeyword(KeywordMin) || p.matchKeyword(KeywordMax) {
 		isMinFirst := p.matchKeyword(KeywordMin)
-		_ = p.lexer.consumeToken() // consume MIN or MAX
+		if err := p.lexer.consumeToken(); err != nil { // consume MIN or MAX
+			return nil, err
+		}
 
 		first, err := p.parseNumber(p.Pos())
 		if err != nil {
