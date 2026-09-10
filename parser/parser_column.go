@@ -1452,7 +1452,7 @@ func (p *Parser) matchNamedTypeParam() bool {
 		return false
 	}
 	peekToken, err := p.lexer.peekToken()
-	return err == nil && peekToken.Kind == TokenKindSingleEQ
+	return err == nil && peekToken != nil && peekToken.Kind == TokenKindSingleEQ
 }
 
 func (p *Parser) parseColumnTypeWithNamedParams(name *Ident, leftParenPos Pos) (*TypeWithNamedParams, error) {
