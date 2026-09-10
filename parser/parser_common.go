@@ -98,7 +98,11 @@ func (p *Parser) matchTokenKind(kinds ...TokenKind) bool {
 
 // expectTokenKind consumes the current token if it is the given kind.
 func (p *Parser) expectTokenKind(kind TokenKind) error {
-	if curToken := p.tryConsumeTokenKind(kind); curToken != nil {
+	curToken, err := p.tryConsumeTokenKind(kind)
+	if err != nil {
+		return err
+	}
+	if curToken != nil {
 		return nil
 	}
 	return &ParseError{
@@ -108,13 +112,17 @@ func (p *Parser) expectTokenKind(kind TokenKind) error {
 	}
 }
 
-func (p *Parser) tryConsumeTokenKind(kind TokenKind) *Token {
+// tryConsumeTokenKind returns nil, nil on a mismatch and propagates errors
+// encountered while advancing past a matching token.
+func (p *Parser) tryConsumeTokenKind(kind TokenKind) (*Token, error) {
 	if p.matchTokenKind(kind) {
 		curToken := p.current()
-		_ = p.lexer.consumeToken()
-		return curToken
+		if err := p.lexer.consumeToken(); err != nil {
+			return nil, err
+		}
+		return curToken, nil
 	}
-	return nil
+	return nil, nil
 }
 
 func (p *Parser) matchKeyword(keyword string) bool {
@@ -241,7 +249,9 @@ func (p *Parser) parseIdentOrString() (*Ident, error) {
 }
 
 func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
-	if p.tryConsumeTokenKind(TokenKindDot) == nil {
+	if token, consumeErr := p.tryConsumeTokenKind(TokenKindDot); consumeErr != nil {
+		return nil, consumeErr
+	} else if token == nil {
 		return nil, nil // nolint
 	}
 	// After a dot the token can only be a member name, so even reserved
@@ -250,7 +260,9 @@ func (p *Parser) tryParseDotIdent(_ Pos) (*Ident, error) {
 }
 
 func (p *Parser) tryParseDotIdentOrString(_ Pos) (*Ident, error) {
-	if p.tryConsumeTokenKind(TokenKindDot) == nil {
+	if token, consumeErr := p.tryConsumeTokenKind(TokenKindDot); consumeErr != nil {
+		return nil, consumeErr
+	} else if token == nil {
 		return nil, nil // nolint
 	}
 	// After a dot the token can only be a member name, so even reserved
@@ -491,7 +503,9 @@ func (p *Parser) parseRatioExpr(pos Pos) (*RatioExpr, error) {
 	}
 
 	var denominator *NumberLiteral
-	if p.tryConsumeTokenKind(TokenKindDiv) != nil {
+	if token, consumeErr := p.tryConsumeTokenKind(TokenKindDiv); consumeErr != nil {
+		return nil, consumeErr
+	} else if token != nil {
 		// the denominator starts at its own token, not at the numerator
 		denominator, err = p.parseNumber(p.Pos())
 		if err != nil {

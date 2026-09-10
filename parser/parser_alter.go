@@ -67,7 +67,9 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 			return nil, err
 		}
 		alterTable.AlterExprs = append(alterTable.AlterExprs, alter)
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -868,7 +870,14 @@ func (p *Parser) parseAlterTableReset(pos Pos) (AlterTableClause, error) {
 	}
 	settings = append(settings, setting)
 
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		setting, err = p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -922,7 +931,14 @@ func (p *Parser) parseAlterTableUpdate(pos Pos) (AlterTableClause, error) {
 	assignments = append(assignments, assignment)
 
 	// Parse additional comma-separated assignments
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		assignment, err = p.parseUpdateAssignment(p.Pos())
 		if err != nil {
 			return nil, err

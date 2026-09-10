@@ -78,3 +78,61 @@ func TestParseError_LexicalFailure(t *testing.T) {
 		}
 	}
 }
+
+func TestParser_TokenConsumptionError(t *testing.T) {
+	for _, tc := range []struct {
+		name  string
+		sql   string
+		parse func(*Parser) error
+	}{
+		{"required token", ") /*", func(p *Parser) error { return p.expectTokenKind(TokenKindRParen) }},
+		{"optional token", ". /*", func(p *Parser) error {
+			_, err := p.tryParseDotIdent(p.Pos())
+			return err
+		}},
+		{"list separator", "a, /*", func(p *Parser) error {
+			_, err := p.parseUserNames()
+			return err
+		}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			p := NewParser(tc.sql)
+			require.NoError(t, p.lexer.consumeToken())
+			err := tc.parse(p)
+			var lexicalErr *lexerError
+			require.ErrorAs(t, err, &lexicalErr)
+			require.Equal(t, Pos(strings.Index(tc.sql, "/*")), lexicalErr.pos)
+			require.EqualError(t, lexicalErr, "unclosed multi-line comment")
+		})
+	}
+}
+
+func TestParser_TryConsumeTokenKind(t *testing.T) {
+	for _, tc := range []struct {
+		name    string
+		sql     string
+		kind    TokenKind
+		matched bool
+		next    string
+	}{
+		{"mismatch", "a /*", TokenKindComma, false, "a"},
+		{"advance", "a b", TokenKindIdent, true, "b"},
+		{"last token", "a", TokenKindIdent, true, "<EOF>"},
+		{"empty input", "", TokenKindIdent, false, "<EOF>"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			p := NewParser(tc.sql)
+			require.NoError(t, p.lexer.consumeToken())
+			current := p.current()
+			token, err := p.tryConsumeTokenKind(tc.kind)
+			require.NoError(t, err)
+			if tc.matched {
+				require.Same(t, current, token)
+			} else {
+				require.Nil(t, token)
+				require.Equal(t, current, p.current())
+			}
+			require.Equal(t, tc.next, p.currentTokenString())
+		})
+	}
+}
