@@ -32,6 +32,32 @@ func TestConsumeComment(t *testing.T) {
 
 }
 
+func TestPeekToken_RestoresState(t *testing.T) {
+	for _, suffix := range []string{"", " + 1", " /*", " 'unclosed", " `unclosed", " 1e+"} {
+		t.Run(suffix, func(t *testing.T) {
+			lexer := NewLexer("x" + suffix)
+			require.NoError(t, lexer.consumeToken())
+			before := lexer.saveState()
+
+			token, peekErr := lexer.peekToken()
+			require.Equal(t, before, lexer.saveState())
+			err := lexer.consumeToken()
+			if peekErr != nil {
+				var le *lexerError
+				require.ErrorAs(t, peekErr, &le)
+				require.Equal(t, Pos(2), le.pos)
+				require.Equal(t, peekErr, err)
+				require.Nil(t, lexer.currentToken)
+				// Further advancement must not turn a lexical failure into EOF.
+				require.Equal(t, err, lexer.consumeToken())
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, token, lexer.currentToken)
+			}
+		})
+	}
+}
+
 // TestConsumeUnterminatedComment guards against an infinite loop (a DoS hang)
 // when a block comment is never closed. consumeMultiLineComment previously
 // looped on isEOF() while only advancing a local index, so l.offset never

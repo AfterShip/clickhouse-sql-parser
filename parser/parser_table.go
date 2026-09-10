@@ -245,7 +245,9 @@ func (p *Parser) parseCreateNamedCollection(pos Pos) (*CreateNamedCollection, er
 		params = append(params, param)
 
 		// Check if there's another parameter
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -663,7 +665,9 @@ func (p *Parser) parseTableColumns() ([]Expr, error) {
 			}
 			columns = append(columns, column)
 		}
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -880,7 +884,9 @@ func (p *Parser) parseTableArgList(pos Pos) (*TableArgListExpr, error) {
 			return nil, err
 		}
 		args = append(args, arg)
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -1011,7 +1017,12 @@ func (p *Parser) parseOrderByClause(pos Pos) (*OrderByClause, error) {
 		}
 		items = append(items, expr)
 
-		if p.lexer.isEOF() || p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if p.lexer.isEOF() {
+			break
+		}
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -1142,7 +1153,9 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 		ListEnd:        interpolatePos + Pos(len("INTERPOLATE")),
 	}
 
-	if p.tryConsumeTokenKind(TokenKindLParen) == nil {
+	if token, consumeErr := p.tryConsumeTokenKind(TokenKindLParen); consumeErr != nil {
+		return nil, consumeErr
+	} else if token == nil {
 		// INTERPOLATE without columns is valid
 		return interpolate, nil
 	}
@@ -1166,12 +1179,17 @@ func (p *Parser) parseInterpolateClause(interpolatePos Pos) (*InterpolateClause,
 
 		items = append(items, item)
 
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
 
-	rparen := p.tryConsumeTokenKind(TokenKindRParen)
+	rparen, err := p.tryConsumeTokenKind(TokenKindRParen)
+	if err != nil {
+		return nil, err
+	}
 	if rparen == nil {
 		return nil, fmt.Errorf("expected ')' after INTERPOLATE column list")
 	}
@@ -1208,7 +1226,14 @@ func (p *Parser) parseTTLClause(pos Pos, allowMultiValues bool) ([]*TTLExpr, err
 		return nil, err
 	}
 	items = append(items, expr)
-	for allowMultiValues && !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for allowMultiValues && !p.lexer.isEOF() {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		expr, err = p.parseTTLExpr(pos)
 		if err != nil {
 			return nil, err
@@ -1314,7 +1339,9 @@ func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyRule, error) {
 		}
 		keys.Items = append(keys.Items, key)
 		keys.ListEnd = key.End()
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -1339,7 +1366,9 @@ func (p *Parser) parseTTLPolicyGroupBy(pos Pos) (*TTLPolicyRule, error) {
 			// none follows so parseTTLClause can treat the comma as a rule
 			// separator.
 			savedState := p.lexer.saveState()
-			if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+				return nil, consumeErr
+			} else if token == nil {
 				break
 			}
 			set, err := p.parseTTLPolicySet(p.Pos())
@@ -1442,7 +1471,14 @@ func (p *Parser) parseSettingsList(pos Pos) ([]*SettingExpr, error) {
 		return nil, err
 	}
 	items = append(items, expr)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		expr, err = p.parseSettingsExpr(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1532,7 +1568,9 @@ func (p *Parser) parseEngineExpr(pos Pos) (*EngineExpr, error) {
 	if err := p.expectKeyword(KeywordEngine); err != nil {
 		return nil, err
 	}
-	_ = p.tryConsumeTokenKind(TokenKindSingleEQ)
+	if _, err := p.tryConsumeTokenKind(TokenKindSingleEQ); err != nil {
+		return nil, err
+	}
 
 	engineExpr := &EngineExpr{EnginePos: pos}
 	var engineEnd Pos
@@ -1674,7 +1712,7 @@ func (p *Parser) ParseStmts() ([]Expr, error) {
 		if err := p.lexer.consumeToken(); err != nil {
 			return nil, p.wrapError(err)
 		}
-		if p.lexer.isEOF() {
+		if p.current() == nil {
 			break
 		}
 		if p.matchTokenKind(";") {
@@ -1941,14 +1979,23 @@ func (p *Parser) parseColumnNamesExpr(pos Pos) (*ColumnNamesExpr, error) {
 	}
 
 	var columnNames []NestedIdentifier
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindRParen) == nil {
+	for !p.lexer.isEOF() {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindRParen)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token != nil {
+			break
+		}
 		name, err := p.ParseNestedIdentifier(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 
 		columnNames = append(columnNames, *name)
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -1999,7 +2046,14 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 	var value Expr
 	var err error
 	values := make([]Expr, 0)
-	for !p.lexer.isEOF() && p.tryConsumeTokenKind(TokenKindRParen) == nil {
+	for !p.lexer.isEOF() {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindRParen)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token != nil {
+			break
+		}
 		switch {
 		case p.matchTokenKind(TokenKindLParen):
 			value, err = p.parseAssignmentValues(p.Pos())
@@ -2013,7 +2067,9 @@ func (p *Parser) parseAssignmentValues(pos Pos) (*AssignmentValues, error) {
 			return nil, err
 		}
 		values = append(values, value)
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -2073,7 +2129,9 @@ func (p *Parser) parseInsertStmt(pos Pos) (*InsertStmt, error) {
 				return nil, err
 			}
 			values = append(values, value)
-			if p.tryConsumeTokenKind(TokenKindComma) == nil {
+			if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+				return nil, consumeErr
+			} else if token == nil {
 				break
 			}
 		}
@@ -2112,7 +2170,14 @@ func (p *Parser) parseRenameStmt(pos Pos) (*RenameStmt, error) {
 		return nil, err
 	}
 	tablePairList := []*TargetPair{targetPair}
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		tablePair, err := p.parseTargetPair(p.Pos())
 		if err != nil {
 			return nil, err
@@ -2219,7 +2284,14 @@ func (p *Parser) parseDictionarySchemaClause(pos Pos) (*DictionarySchemaClause, 
 	schema.Attributes = append(schema.Attributes, attr)
 
 	// Parse additional attributes
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		attr, err := p.parseDictionaryAttribute(p.Pos())
 		if err != nil {
 			return nil, err
@@ -2712,7 +2784,14 @@ func (p *Parser) parseDictionarySettingsClause(pos Pos) (*SettingsClause, error)
 	items = append(items, expr)
 
 	// Parse additional settings
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		expr, err := p.parseSettingsExpr(p.Pos())
 		if err != nil {
 			return nil, err

@@ -83,6 +83,11 @@ type Lexer struct {
 	lexerState
 
 	input string
+
+	// Lexical failures are fatal for this input, even when discovered during
+	// lookahead. Keep them outside lexerState so restoring a cursor cannot
+	// discard the error or its original position.
+	err *lexerError
 }
 
 func NewLexer(buf string) *Lexer {
@@ -252,6 +257,7 @@ func (l *Lexer) consumeSingleLineComment() {
 }
 
 func (l *Lexer) consumeMultiLineComment() error {
+	pos := Pos(l.offset)
 	l.skipN(2)
 	i := 0
 	for l.peekOk(i) {
@@ -262,7 +268,7 @@ func (l *Lexer) consumeMultiLineComment() error {
 		i++
 	}
 	l.skipN(i)
-	return errors.New("unclosed multi-line comment")
+	return &lexerError{pos: pos, err: errors.New("unclosed multi-line comment")}
 }
 
 func (l *Lexer) consumeString() error {
@@ -335,13 +341,11 @@ func (l *Lexer) skipComments() error {
 
 func (l *Lexer) peekToken() (*Token, error) {
 	savedState := l.saveState()
+	defer l.restoreState(savedState)
 	if err := l.consumeToken(); err != nil {
 		return nil, err
 	}
-	token := l.currentToken
-
-	l.restoreState(savedState)
-	return token, nil
+	return l.currentToken, nil
 }
 
 func (l *Lexer) hasPrecedenceToken(last *Token) bool {
@@ -356,10 +360,23 @@ func (l *Lexer) hasPrecedenceToken(last *Token) bool {
 		last.Kind == TokenKindRBracket)
 }
 
-func (l *Lexer) consumeToken() error {
+func (l *Lexer) consumeToken() (err error) {
 	// replace the current token; keep the previous one to disambiguate unary +/-
 	prevToken := l.currentToken
 	l.currentToken = nil
+	if l.err != nil {
+		return l.err
+	}
+	pos := Pos(l.offset)
+	defer func() {
+		if err != nil {
+			if !errors.As(err, &l.err) {
+				l.err = &lexerError{pos: pos, err: err}
+			}
+			err = l.err
+		}
+	}()
+
 	if err := l.skipComments(); err != nil {
 		return err
 	}
@@ -367,6 +384,7 @@ func (l *Lexer) consumeToken() error {
 	if l.isEOF() {
 		return nil
 	}
+	pos = Pos(l.offset)
 	switch l.peekN(0) {
 	case '>', '<', '!', '=', '|':
 		if l.peekN(0) == '|' && l.peekOk(1) && l.peekN(1) == '|' || // ||
@@ -387,7 +405,7 @@ func (l *Lexer) consumeToken() error {
 		// hasPrecedenceToken is used to distinguish between unary and binary operators
 		if !l.hasPrecedenceToken(prevToken) && l.peekOk(1) && IsDigit(l.peekN(1)) {
 			return l.consumeNumber()
-		} else if l.peekOk(1) && l.peekN(1) == '>' {
+		} else if l.peekN(0) == '-' && l.peekOk(1) && l.peekN(1) == '>' {
 			l.currentToken = &Token{
 				String: l.slice(0, 2),
 				Kind:   TokenKindArrow,

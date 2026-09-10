@@ -389,7 +389,9 @@ func (p *Parser) parseRoleName(_ Pos) (*RoleName, error) {
 			return nil, err
 		}
 		var scope *StringLiteral
-		if p.tryConsumeTokenKind(TokenKindAtSign) != nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindAtSign); consumeErr != nil {
+			return nil, consumeErr
+		} else if token != nil {
 			scope, err = p.parseString(p.Pos())
 			if err != nil {
 				return nil, err
@@ -449,7 +451,9 @@ func (p *Parser) parseRoleSetting(_ Pos) (*RoleSetting, error) {
 			p.matchTokenKind(TokenKindFloat),
 			p.matchTokenKind(TokenKindString):
 			var op TokenKind
-			if token := p.tryConsumeTokenKind(TokenKindSingleEQ); token != nil {
+			if token, consumeErr := p.tryConsumeTokenKind(TokenKindSingleEQ); consumeErr != nil {
+				return nil, consumeErr
+			} else if token != nil {
 				op = token.Kind
 			}
 			value, err := p.parseLiteral(p.Pos())
@@ -487,7 +491,9 @@ func (p *Parser) parseRoleSettings(_ Pos) ([]*RoleSetting, error) {
 			return nil, err
 		}
 		settings = append(settings, setting)
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
+			return nil, consumeErr
+		} else if token == nil {
 			break
 		}
 	}
@@ -525,7 +531,14 @@ func (p *Parser) parseCreateRole(pos Pos) (*CreateRole, error) {
 		return nil, err
 	}
 	roleNames = append(roleNames, roleName)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		roleName, err := p.parseRoleName(p.Pos())
 		if err != nil {
 			return nil, err
@@ -677,7 +690,14 @@ func (p *Parser) parseDefaultRoleClause(pos Pos) (*DefaultRoleClause, error) {
 	}
 	roles = append(roles, role)
 
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		role, err := p.parseRoleName(p.Pos())
 		if err != nil {
 			return nil, err
@@ -712,7 +732,14 @@ func (p *Parser) parseGranteesClause(pos Pos) (*GranteesClause, error) {
 		}
 		granteeList = append(granteeList, grantee)
 
-		for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		for {
+			token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+			if consumeErr != nil {
+				return nil, consumeErr
+			}
+			if token == nil {
+				break
+			}
 			grantee, err := p.parseRoleName(p.Pos())
 			if err != nil {
 				return nil, err
@@ -733,7 +760,14 @@ func (p *Parser) parseGranteesClause(pos Pos) (*GranteesClause, error) {
 		}
 		exceptList = append(exceptList, except)
 
-		for p.tryConsumeTokenKind(TokenKindComma) != nil {
+		for {
+			token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+			if consumeErr != nil {
+				return nil, consumeErr
+			}
+			if token == nil {
+				break
+			}
 			except, err := p.parseRoleName(p.Pos())
 			if err != nil {
 				return nil, err
@@ -777,7 +811,14 @@ func (p *Parser) parseUserNames() ([]*RoleName, error) {
 	}
 	userNames = append(userNames, userName)
 
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		userName, err := p.parseRoleName(p.Pos())
 		if err != nil {
 			return nil, err
@@ -795,7 +836,14 @@ func (p *Parser) parseHostClauses() ([]*HostClause, error) {
 	}
 	hosts = append(hosts, host)
 
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		host, err := p.parseHostClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -954,7 +1002,14 @@ func (p *Parser) parserDropUserOrRole(pos Pos) (*DropUserOrRole, error) {
 		return nil, err
 	}
 	names = append(names, name)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		name, err := p.parseRoleName(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1278,7 +1333,14 @@ func (p *Parser) parsePrivilegeRoles(_ Pos) ([]*Ident, error) {
 		return nil, err
 	}
 	roles = append(roles, role)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		role, err := p.parseIdent()
 		if err != nil {
 			return nil, err
@@ -1322,7 +1384,9 @@ func (p *Parser) parseGrantSource(_ Pos) (*TableIdentifier, error) {
 		return nil, err
 	}
 
-	if p.tryConsumeTokenKind(TokenKindDot) == nil {
+	if token, consumeErr := p.tryConsumeTokenKind(TokenKindDot); consumeErr != nil {
+		return nil, consumeErr
+	} else if token == nil {
 		return &TableIdentifier{
 			Table: ident,
 		}, nil
@@ -1356,7 +1420,14 @@ func (p *Parser) parseGrantPrivilegeStmt(pos Pos) (*GrantPrivilegeStmt, error) {
 		return nil, err
 	}
 	privileges = append(privileges, privilege)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		privilege, err := p.parsePrivilegeClause(p.Pos())
 		if err != nil {
 			return nil, err
@@ -1418,7 +1489,14 @@ func (p *Parser) parseAlterRole(pos Pos) (*AlterRole, error) {
 		return nil, err
 	}
 	roleRenamePairs = append(roleRenamePairs, roleRenamePair)
-	for p.tryConsumeTokenKind(TokenKindComma) != nil {
+	for {
+		token, consumeErr := p.tryConsumeTokenKind(TokenKindComma)
+		if consumeErr != nil {
+			return nil, consumeErr
+		}
+		if token == nil {
+			break
+		}
 		roleRenamePair, err := p.parseRoleRenamePair(p.Pos())
 		if err != nil {
 			return nil, err
