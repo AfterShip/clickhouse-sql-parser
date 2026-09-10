@@ -44,25 +44,15 @@ func (p *Parser) parseDropDatabase(pos Pos) (*DropDatabase, error) {
 }
 
 func (p *Parser) parseDropStmt(pos Pos) (*DropStmt, error) {
-	var err error
 	var isTemporary bool
 	dropTarget := KeywordTable
 	switch {
-	case p.matchKeyword(KeywordDictionary):
-		if err := p.expectKeyword(KeywordDictionary); err != nil {
-			return nil, err
-		}
+	case p.tryConsumeKeywords(KeywordDictionary):
 		dropTarget = KeywordDictionary
-	case p.matchKeyword(KeywordView):
-		if err := p.expectKeyword(KeywordView); err != nil {
-			return nil, err
-		}
+	case p.tryConsumeKeywords(KeywordView):
 		dropTarget = KeywordView
 	default:
-		isTemporary, err = p.tryConsumeKeywords(KeywordTemporary)
-		if err != nil {
-			return nil, err
-		}
+		isTemporary = p.tryConsumeKeywords(KeywordTemporary)
 		if err := p.expectKeyword(KeywordTable); err != nil {
 			return nil, err
 		}
@@ -102,15 +92,9 @@ func (p *Parser) parseDropStmt(pos Pos) (*DropStmt, error) {
 
 func (p *Parser) tryParseModifier() (string, error) {
 	switch {
-	case p.matchKeyword(KeywordSync):
-		if err := p.expectKeyword(KeywordSync); err != nil {
-			return "", err
-		}
+	case p.tryConsumeKeywords(KeywordSync):
 		return "SYNC", nil
-	case p.matchKeyword(KeywordNo):
-		if err := p.expectKeyword(KeywordNo); err != nil {
-			return "", err
-		}
+	case p.tryConsumeKeywords(KeywordNo):
 		if err := p.expectKeyword(KeywordDelay); err != nil {
 			return "", err
 		}

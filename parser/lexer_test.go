@@ -48,10 +48,8 @@ func TestPeekToken_RestoresState(t *testing.T) {
 				require.Equal(t, Pos(2), le.pos)
 				require.Equal(t, peekErr, err)
 				require.Nil(t, lexer.currentToken)
-				// Rewinding to valid input must not retain the failed scan's error.
-				lexer.restoreState(lexerState{})
-				require.NoError(t, lexer.consumeToken())
-				require.Equal(t, "x", lexer.currentToken.String)
+				// Further advancement must not turn a lexical failure into EOF.
+				require.Equal(t, err, lexer.consumeToken())
 			} else {
 				require.NoError(t, err)
 				require.Equal(t, token, lexer.currentToken)

@@ -83,6 +83,11 @@ type Lexer struct {
 	lexerState
 
 	input string
+
+	// Lexical failures are fatal for this input, even when discovered during
+	// lookahead. Keep them outside lexerState so restoring a cursor cannot
+	// discard the error or its original position.
+	err *lexerError
 }
 
 func NewLexer(buf string) *Lexer {
@@ -359,13 +364,16 @@ func (l *Lexer) consumeToken() (err error) {
 	// replace the current token; keep the previous one to disambiguate unary +/-
 	prevToken := l.currentToken
 	l.currentToken = nil
+	if l.err != nil {
+		return l.err
+	}
 	pos := Pos(l.offset)
 	defer func() {
 		if err != nil {
-			var lexicalErr *lexerError
-			if !errors.As(err, &lexicalErr) {
-				err = &lexerError{pos: pos, err: err}
+			if !errors.As(err, &l.err) {
+				l.err = &lexerError{pos: pos, err: err}
 			}
+			err = l.err
 		}
 	}()
 

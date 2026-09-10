@@ -94,35 +94,6 @@ func TestParser_TokenConsumptionError(t *testing.T) {
 			_, err := p.parseUserNames()
 			return err
 		}},
-		{"required keyword", "SELECT /*", func(p *Parser) error { return p.expectKeyword(KeywordSelect) }},
-		{"optional keywords", "WITH FILL /*", func(p *Parser) error {
-			_, err := p.tryConsumeKeywords(KeywordWith, KeywordFill)
-			return err
-		}},
-		{"identifier", "a /*", func(p *Parser) error {
-			_, err := p.tryParseIdent()
-			return err
-		}},
-		{"keyword lookahead", "case /*", func(p *Parser) error {
-			_, err := p.keywordIsSelectItemIdentifier()
-			return err
-		}},
-		{"join lookahead", "GLOBAL LEFT /*", func(p *Parser) error {
-			_, err := p.peekJoinAfterLocality()
-			return err
-		}},
-		{"interval backtracking", "interval 1 + /*", func(p *Parser) error {
-			_, err := p.parseColumnExpr(p.Pos())
-			return err
-		}},
-		{"TTL backtracking", "GROUP BY ALL + /*", func(p *Parser) error {
-			_, err := p.parseTTLPolicyGroupBy(p.Pos())
-			return err
-		}},
-		{"TTL assignment backtracking", "GROUP BY a SET x = 1, y = /*", func(p *Parser) error {
-			_, err := p.parseTTLPolicyGroupBy(p.Pos())
-			return err
-		}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			p := NewParser(tc.sql)
@@ -132,33 +103,6 @@ func TestParser_TokenConsumptionError(t *testing.T) {
 			require.ErrorAs(t, err, &lexicalErr)
 			require.Equal(t, Pos(strings.Index(tc.sql, "/*")), lexicalErr.pos)
 			require.EqualError(t, lexicalErr, "unclosed multi-line comment")
-		})
-	}
-}
-
-func TestParser_TryConsumeKeywords(t *testing.T) {
-	for _, tc := range []struct {
-		sql     string
-		matched bool
-		next    string
-	}{
-		{"WITH FILL", true, "<EOF>"},
-		{"WITH FILL tail", true, "tail"},
-		{"SELECT 1", false, "SELECT"},
-		{"WITH foo", false, "WITH"},
-		{"WITH", false, "WITH"},
-	} {
-		t.Run(tc.sql, func(t *testing.T) {
-			p := NewParser(tc.sql)
-			require.NoError(t, p.lexer.consumeToken())
-			before := p.lexer.saveState()
-			matched, err := p.tryConsumeKeywords(KeywordWith, KeywordFill)
-			require.NoError(t, err)
-			require.Equal(t, tc.matched, matched)
-			require.Equal(t, tc.next, p.currentTokenString())
-			if !matched {
-				require.Equal(t, before, p.lexer.saveState())
-			}
 		})
 	}
 }

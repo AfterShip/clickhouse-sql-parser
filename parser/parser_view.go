@@ -53,18 +53,14 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 	}
 	createMaterializedView.Refresh = refreshExpr
 
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordRandomize, KeywordFor); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordRandomize, KeywordFor) {
 		randomizeFor, err := p.parseInterval(false)
 		if err != nil {
 			return nil, err
 		}
 		createMaterializedView.RandomizeFor = randomizeFor
 	}
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordDepends, KeywordOn); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordDepends, KeywordOn) {
 		dependsOnTables := make([]*TableIdentifier, 0)
 		table, err := p.parseTableIdentifier(p.Pos())
 		if err != nil {
@@ -72,9 +68,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 		}
 		dependsOnTables = append(dependsOnTables, table)
 		for p.matchTokenKind(TokenKindComma) {
-			if err := p.lexer.consumeToken(); err != nil {
-				return nil, err
-			}
+			_ = p.lexer.consumeToken()
 			table, err := p.parseTableIdentifier(p.Pos())
 			if err != nil {
 				return nil, err
@@ -88,10 +82,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 		return nil, err
 	}
 	createMaterializedView.Settings = settings
-	createMaterializedView.HasAppend, err = p.tryConsumeKeywords(KeywordAppend)
-	if err != nil {
-		return nil, err
-	}
+	createMaterializedView.HasAppend = p.tryConsumeKeywords(KeywordAppend)
 
 	switch {
 	case p.matchKeyword(KeywordTo):
@@ -134,15 +125,10 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected TO or ENGINE", p.currentTokenKind())
 	}
-	createMaterializedView.HasEmpty, err = p.tryConsumeKeywords(KeywordEmpty)
-	if err != nil {
-		return nil, err
-	}
+	createMaterializedView.HasEmpty = p.tryConsumeKeywords(KeywordEmpty)
 
 	// Parse DEFINER clause
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordDefiner); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordDefiner) {
 		if err := p.expectTokenKind(TokenKindSingleEQ); err != nil {
 			return nil, err
 		}
@@ -154,22 +140,16 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 	}
 
 	// Parse SQL SECURITY clause
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordSQL, KeywordSecurity); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordSQL, KeywordSecurity) {
 		if !p.matchOneOfKeywords(KeywordDefiner, KeywordNone) {
 			return nil, fmt.Errorf("expected DEFINER or NONE after SQL SECURITY, got %q", p.currentTokenKind())
 		}
 		createMaterializedView.SQLSecurity = p.current().String
-		if err := p.lexer.consumeToken(); err != nil {
-			return nil, err
-		}
+		_ = p.lexer.consumeToken()
 	}
 
 	// Check for POPULATE before AS SELECT - only valid with ENGINE and no Destination
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordPopulate); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordPopulate) {
 		if createMaterializedView.Destination != nil {
 			return nil, fmt.Errorf("POPULATE is only allowed when using ENGINE, not with TO clause")
 		}
@@ -189,9 +169,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 	}
 	createMaterializedView.Comment = comment
 
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordAs); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -212,9 +190,7 @@ func (p *Parser) parseCreateMaterializedView(pos Pos, orReplace bool) (*CreateMa
 }
 
 func (p *Parser) tryParseRefreshExpr(pos Pos) (*RefreshExpr, error) {
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordRefresh); consumeErr != nil {
-		return nil, consumeErr
-	} else if !matched {
+	if !p.tryConsumeKeywords(KeywordRefresh) {
 		return nil, nil // nolint
 	}
 
@@ -224,9 +200,7 @@ func (p *Parser) tryParseRefreshExpr(pos Pos) (*RefreshExpr, error) {
 		return nil, fmt.Errorf("expected EVERY or AFTER, but got %q", p.currentTokenKind())
 	}
 	refreshExpr.Frequency = p.current().String
-	if err := p.lexer.consumeToken(); err != nil {
-		return nil, err
-	}
+	_ = p.lexer.consumeToken()
 
 	interval, err := p.parseInterval(false)
 	if err != nil {
@@ -235,9 +209,7 @@ func (p *Parser) tryParseRefreshExpr(pos Pos) (*RefreshExpr, error) {
 	refreshExpr.Interval = interval
 
 	// [OFFSET interval]
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordOffset); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordOffset) {
 		offset, err := p.parseInterval(false)
 		if err != nil {
 			return nil, err
@@ -294,9 +266,7 @@ func (p *Parser) parseCreateView(pos Pos, orReplace bool) (*CreateView, error) {
 	}
 	createView.Comment = comment
 
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordAs); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -369,9 +339,7 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 		createLiveView.TableSchema = tableSchema
 	}
 
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordAs); consumeErr != nil {
-		return nil, consumeErr
-	} else if matched {
+	if p.tryConsumeKeywords(KeywordAs) {
 		subQuery, err := p.parseSubQuery(p.Pos())
 		if err != nil {
 			return nil, err
@@ -384,9 +352,7 @@ func (p *Parser) parseCreateLiveView(pos Pos) (*CreateLiveView, error) {
 }
 
 func (p *Parser) tryParseWithTimeout(pos Pos) (*WithTimeoutClause, error) {
-	if matched, consumeErr := p.tryConsumeKeywords(KeywordWith); consumeErr != nil {
-		return nil, consumeErr
-	} else if !matched {
+	if !p.tryConsumeKeywords(KeywordWith) {
 		return nil, nil // nolint
 	}
 	if err := p.expectKeyword(KeywordTimeout); err != nil {
