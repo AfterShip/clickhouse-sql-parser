@@ -5,6 +5,16 @@ import (
 	"strings"
 )
 
+// lexerError keeps a lexical failure attached to its original byte position.
+type lexerError struct {
+	pos Pos
+	err error
+}
+
+func (e *lexerError) Error() string { return e.err.Error() }
+
+func (e *lexerError) Unwrap() error { return e.err }
+
 // ParseError is a structured parse error. It carries the byte offset and the
 // 1-based line/column where parsing stopped, the offending token, and (when
 // known) the tokens the grammar expected at that point. Callers such as

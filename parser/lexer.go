@@ -87,8 +87,7 @@ type Lexer struct {
 	// Lexical failures are fatal for this input, even when discovered during
 	// lookahead. Keep them outside lexerState so restoring a cursor cannot
 	// discard the error or its original position.
-	err    error
-	errPos Pos
+	err *lexerError
 }
 
 func NewLexer(buf string) *Lexer {
@@ -258,6 +257,7 @@ func (l *Lexer) consumeSingleLineComment() {
 }
 
 func (l *Lexer) consumeMultiLineComment() error {
+	pos := Pos(l.offset)
 	l.skipN(2)
 	i := 0
 	for l.peekOk(i) {
@@ -268,7 +268,7 @@ func (l *Lexer) consumeMultiLineComment() error {
 		i++
 	}
 	l.skipN(i)
-	return errors.New("unclosed multi-line comment")
+	return &lexerError{pos: pos, err: errors.New("unclosed multi-line comment")}
 }
 
 func (l *Lexer) consumeString() error {
@@ -314,7 +314,6 @@ func (l *Lexer) skipComments() error {
 		if !l.peekOk(0) {
 			return nil
 		}
-		l.errPos = Pos(l.offset)
 		switch l.peekN(0) {
 		case '-':
 			if l.peekOk(1) && l.peekN(1) == '-' {
@@ -368,9 +367,13 @@ func (l *Lexer) consumeToken() (err error) {
 	if l.err != nil {
 		return l.err
 	}
+	pos := Pos(l.offset)
 	defer func() {
 		if err != nil {
-			l.err = err
+			if !errors.As(err, &l.err) {
+				l.err = &lexerError{pos: pos, err: err}
+			}
+			err = l.err
 		}
 	}()
 
@@ -381,7 +384,7 @@ func (l *Lexer) consumeToken() (err error) {
 	if l.isEOF() {
 		return nil
 	}
-	l.errPos = Pos(l.offset)
+	pos = Pos(l.offset)
 	switch l.peekN(0) {
 	case '>', '<', '!', '=', '|':
 		if l.peekN(0) == '|' && l.peekOk(1) && l.peekN(1) == '|' || // ||

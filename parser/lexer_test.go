@@ -43,6 +43,9 @@ func TestPeekToken_RestoresState(t *testing.T) {
 			require.Equal(t, before, lexer.saveState())
 			err := lexer.consumeToken()
 			if peekErr != nil {
+				var le *lexerError
+				require.ErrorAs(t, peekErr, &le)
+				require.Equal(t, Pos(2), le.pos)
 				require.Equal(t, peekErr, err)
 				require.Nil(t, lexer.currentToken)
 				// Further advancement must not turn a lexical failure into EOF.
