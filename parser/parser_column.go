@@ -1506,7 +1506,9 @@ func (p *Parser) parseColumnTypeWithNamedParams(name *Ident, leftParenPos Pos) (
 			Name:    paramName,
 			Value:   value,
 		})
-		if p.tryConsumeTokenKind(TokenKindComma) == nil {
+		if token, err := p.tryConsumeTokenKind(TokenKindComma); err != nil {
+			return nil, err
+		} else if token == nil {
 			break
 		}
 	}
