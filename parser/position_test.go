@@ -70,14 +70,13 @@ func TestAlterDetachPartitionPos(t *testing.T) {
 	require.Equal(t, Pos(14), detach.Pos())
 }
 
-func TestAlterDropPartitionEndIncludesSettings(t *testing.T) {
+func TestAlterTableEndIncludesSettings(t *testing.T) {
 	sql := "ALTER TABLE t DROP PARTITION p SETTINGS mutations_sync=1"
 	stmt := parseOneStmt(t, sql).(*AlterTable)
-	drop := stmt.AlterExprs[0].(*AlterTableDropPartition)
-	require.NotNil(t, drop.Settings)
-	// End() used to discard the Settings end and stop at the partition
-	require.Equal(t, drop.Settings.End(), drop.End())
-	require.Greater(t, drop.End(), drop.Partition.End())
+	require.NotNil(t, stmt.Settings)
+	// End() used to discard the Settings end and stop at the last alter clause
+	require.Equal(t, stmt.Settings.End(), stmt.End())
+	require.Greater(t, stmt.End(), stmt.AlterExprs[0].End())
 }
 
 func TestDictionaryAttributeEnd(t *testing.T) {

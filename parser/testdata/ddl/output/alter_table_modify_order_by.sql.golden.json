@@ -47,7 +47,8 @@
           "ColumnArgList": null
         }
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 67,
@@ -73,7 +74,8 @@
           "NameEnd": 113
         }
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 115,
@@ -159,7 +161,8 @@
           "ColumnArgList": null
         }
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 210,
@@ -209,8 +212,7 @@
           "CompressionCodec": null
         },
         "IfNotExists": false,
-        "After": null,
-        "Settings": null
+        "After": null
       },
       {
         "ModifyPos": 263,
@@ -246,6 +248,7 @@
           "ColumnArgList": null
         }
       }
-    ]
+    ],
+    "Settings": null
   }
 ]

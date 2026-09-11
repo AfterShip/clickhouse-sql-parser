@@ -842,6 +842,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 				return false
 			}
 		}
+		if !Walk(n.Settings, fn) {
+			return false
+		}
 	case *AlterTableAttachPartition:
 		if !Walk(n.Partition, fn) {
 			return false
@@ -853,14 +856,8 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Partition, fn) {
 			return false
 		}
-		if !Walk(n.Settings, fn) {
-			return false
-		}
 	case *AlterTableDropPartition:
 		if !Walk(n.Partition, fn) {
-			return false
-		}
-		if !Walk(n.Settings, fn) {
 			return false
 		}
 	case *AlterTableMaterializeProjection:
@@ -888,17 +885,11 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.After, fn) {
 			return false
 		}
-		if !Walk(n.Settings, fn) {
-			return false
-		}
 	case *AlterTableAddIndex:
 		if !Walk(n.Index, fn) {
 			return false
 		}
 		if !Walk(n.After, fn) {
-			return false
-		}
-		if !Walk(n.Settings, fn) {
 			return false
 		}
 	case *AlterTableAddProjection:

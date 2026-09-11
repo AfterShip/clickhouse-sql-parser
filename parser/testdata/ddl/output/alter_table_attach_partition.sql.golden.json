@@ -27,7 +27,8 @@
         },
         "From": null
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 46,
@@ -65,7 +66,8 @@
           }
         }
       }
-    ]
+    ],
+    "Settings": null
   },
   {
     "AlterPos": 103,
@@ -95,6 +97,7 @@
         },
         "From": null
       }
-    ]
+    ],
+    "Settings": null
   }
 ]

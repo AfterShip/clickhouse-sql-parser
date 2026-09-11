@@ -230,6 +230,10 @@ func (a *AlterTable) FormatSQL(formatter *Formatter) {
 			formatter.WriteString(",")
 		}
 	}
+	if a.Settings != nil {
+		formatter.Break()
+		formatter.WriteExpr(a.Settings)
+	}
 }
 
 func (a *AlterTableAddColumn) FormatSQL(formatter *Formatter) {
@@ -242,10 +246,6 @@ func (a *AlterTableAddColumn) FormatSQL(formatter *Formatter) {
 		formatter.WriteString(" AFTER ")
 		formatter.WriteExpr(a.After)
 	}
-	if a.Settings != nil {
-		formatter.Break()
-		formatter.WriteExpr(a.Settings)
-	}
 }
 
 func (a *AlterTableAddIndex) FormatSQL(formatter *Formatter) {
@@ -257,10 +257,6 @@ func (a *AlterTableAddIndex) FormatSQL(formatter *Formatter) {
 	if a.After != nil {
 		formatter.WriteString(" AFTER ")
 		formatter.WriteExpr(a.After)
-	}
-	if a.Settings != nil {
-		formatter.Break()
-		formatter.WriteExpr(a.Settings)
 	}
 }
 
@@ -337,10 +333,6 @@ func (a *AlterTableDelete) FormatSQL(formatter *Formatter) {
 func (a *AlterTableDetachPartition) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("DETACH ")
 	formatter.WriteExpr(a.Partition)
-	if a.Settings != nil {
-		formatter.Break()
-		formatter.WriteExpr(a.Settings)
-	}
 }
 
 func (a *AlterTableDropColumn) FormatSQL(formatter *Formatter) {
@@ -365,10 +357,6 @@ func (a *AlterTableDropPartition) FormatSQL(formatter *Formatter) {
 		formatter.WriteString("DETACHED ")
 	}
 	formatter.WriteExpr(a.Partition)
-	if a.Settings != nil {
-		formatter.Break()
-		formatter.WriteExpr(a.Settings)
-	}
 }
 
 func (a *AlterTableDropProjection) FormatSQL(formatter *Formatter) {

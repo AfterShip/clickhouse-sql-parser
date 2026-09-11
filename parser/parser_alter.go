@@ -78,6 +78,15 @@ func (p *Parser) parseAlterTable(pos Pos) (*AlterTable, error) {
 	}
 	alterTable.StatementEnd = alterTable.AlterExprs[len(alterTable.AlterExprs)-1].End()
 
+	settings, err := p.tryParseSettingsClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if settings != nil {
+		alterTable.Settings = settings
+		alterTable.StatementEnd = settings.End()
+	}
+
 	return alterTable, nil
 }
 
@@ -122,21 +131,12 @@ func (p *Parser) parseAlterTableAddColumn(pos Pos) (*AlterTableAddColumn, error)
 		statementEnd = after.End()
 	}
 
-	settings, err := p.tryParseSettingsClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if settings != nil {
-		statementEnd = settings.End()
-	}
-
 	return &AlterTableAddColumn{
 		AddPos:       pos,
 		StatementEnd: statementEnd,
 		Column:       column,
 		IfNotExists:  ifNotExists,
 		After:        after,
-		Settings:     settings,
 	}, nil
 }
 
@@ -162,20 +162,12 @@ func (p *Parser) parseAlterTableAddIndex(pos Pos) (*AlterTableAddIndex, error) {
 	if after != nil {
 		statementEnd = after.End()
 	}
-	settings, err := p.tryParseSettingsClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if settings != nil {
-		statementEnd = settings.End()
-	}
 	return &AlterTableAddIndex{
 		AddPos:       pos,
 		StatementEnd: statementEnd,
 		IfNotExists:  ifNotExists,
 		Index:        index,
 		After:        after,
-		Settings:     settings,
 	}, nil
 }
 
@@ -352,15 +344,9 @@ func (p *Parser) parseAlterTableDetachPartition(pos Pos) (AlterTableClause, erro
 	}
 	partition.Expr = expr
 
-	settings, err := p.tryParseSettingsClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
 	return &AlterTableDetachPartition{
 		DetachPos: pos,
 		Partition: partition,
-		Settings:  settings,
 	}, nil
 }
 
@@ -493,16 +479,10 @@ func (p *Parser) parseAlterTableDropPartition(pos Pos) (AlterTableClause, error)
 	}
 	partition.Expr = expr
 
-	settings, err := p.tryParseSettingsClause(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-
 	return &AlterTableDropPartition{
 		DropPos:     pos,
 		Partition:   partition,
 		HasDetached: hasDetached,
-		Settings:    settings,
 	}, nil
 }
 
