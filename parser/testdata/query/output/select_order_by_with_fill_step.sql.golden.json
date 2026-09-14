@@ -58,14 +58,14 @@
                         "LeftParenPos": 43,
                         "RightParenPos": 56,
                         "Items": {
-                          "ListPos": 45,
-                          "ListEnd": 55,
+                          "ListPos": 44,
+                          "ListEnd": 56,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 45,
-                                "LiteralEnd": 55,
+                                "LiteralPos": 44,
+                                "LiteralEnd": 56,
                                 "Literal": "2020-01-01"
                               },
                               "Alias": null

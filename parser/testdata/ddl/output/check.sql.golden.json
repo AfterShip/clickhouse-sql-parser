@@ -26,8 +26,8 @@
     "Partition": {
       "PartitionPos": 47,
       "Expr": {
-        "LiteralPos": 58,
-        "LiteralEnd": 61,
+        "LiteralPos": 57,
+        "LiteralEnd": 62,
         "Literal": "col"
       },
       "ID": null,

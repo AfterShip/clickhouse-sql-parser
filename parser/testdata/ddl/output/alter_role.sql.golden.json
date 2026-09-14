@@ -136,7 +136,7 @@
   },
   {
     "AlterPos": 208,
-    "StatementEnd": 253,
+    "StatementEnd": 254,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -166,8 +166,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 246,
-              "LiteralEnd": 253,
+              "LiteralPos": 245,
+              "LiteralEnd": 254,
               "Literal": "default"
             }
           }
@@ -521,8 +521,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 661,
-              "LiteralEnd": 668,
+              "LiteralPos": 660,
+              "LiteralEnd": 669,
               "Literal": "default"
             }
           }
@@ -637,7 +637,7 @@
   },
   {
     "AlterPos": 778,
-    "StatementEnd": 823,
+    "StatementEnd": 824,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -667,8 +667,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 816,
-              "LiteralEnd": 823,
+              "LiteralPos": 815,
+              "LiteralEnd": 824,
               "Literal": "default"
             }
           }
@@ -787,8 +787,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 952,
-              "LiteralEnd": 959,
+              "LiteralPos": 951,
+              "LiteralEnd": 960,
               "Literal": "default"
             }
           }
@@ -871,7 +871,7 @@
   },
   {
     "AlterPos": 1035,
-    "StatementEnd": 1057,
+    "StatementEnd": 1058,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -883,21 +883,21 @@
             "NameEnd": 1054
           },
           "Scope": {
-            "LiteralPos": 1056,
-            "LiteralEnd": 1057,
+            "LiteralPos": 1055,
+            "LiteralEnd": 1058,
             "Literal": "%"
           },
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 1057
+        "StatementEnd": 1058
       }
     ],
     "Settings": null
   },
   {
     "AlterPos": 1060,
-    "StatementEnd": 1093,
+    "StatementEnd": 1094,
     "IfExists": false,
     "RoleRenamePairs": [
       {
@@ -909,14 +909,14 @@
             "NameEnd": 1079
           },
           "Scope": {
-            "LiteralPos": 1081,
-            "LiteralEnd": 1093,
+            "LiteralPos": 1080,
+            "LiteralEnd": 1094,
             "Literal": "%.myhost.com"
           },
           "OnCluster": null
         },
         "NewName": null,
-        "StatementEnd": 1093
+        "StatementEnd": 1094
       }
     ],
     "Settings": null

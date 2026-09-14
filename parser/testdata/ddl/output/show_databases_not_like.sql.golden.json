@@ -7,8 +7,8 @@
     "NotLike": true,
     "LikeType": "LIKE",
     "LikePattern": {
-      "LiteralPos": 25,
-      "LiteralEnd": 30,
+      "LiteralPos": 24,
+      "LiteralEnd": 31,
       "Literal": "temp%"
     },
     "Limit": null,

@@ -46,13 +46,13 @@
               "NamePos": 58,
               "NameEnd": 63
             },
-            "ListPos": 65,
+            "ListPos": 64,
             "ListEnd": 160,
             "Values": [
               {
                 "Name": {
-                  "LiteralPos": 65,
-                  "LiteralEnd": 68,
+                  "LiteralPos": 64,
+                  "LiteralEnd": 69,
                   "Literal": "GET"
                 },
                 "Value": {
@@ -64,8 +64,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 75,
-                  "LiteralEnd": 79,
+                  "LiteralPos": 74,
+                  "LiteralEnd": 80,
                   "Literal": "POST"
                 },
                 "Value": {
@@ -77,8 +77,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 85,
-                  "LiteralEnd": 89,
+                  "LiteralPos": 84,
+                  "LiteralEnd": 90,
                   "Literal": "HEAD"
                 },
                 "Value": {
@@ -90,8 +90,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 95,
-                  "LiteralEnd": 98,
+                  "LiteralPos": 94,
+                  "LiteralEnd": 99,
                   "Literal": "PUT"
                 },
                 "Value": {
@@ -103,8 +103,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 103,
-                  "LiteralEnd": 108,
+                  "LiteralPos": 102,
+                  "LiteralEnd": 109,
                   "Literal": "PATCH"
                 },
                 "Value": {
@@ -116,8 +116,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 114,
-                  "LiteralEnd": 120,
+                  "LiteralPos": 113,
+                  "LiteralEnd": 121,
                   "Literal": "DELETE"
                 },
                 "Value": {
@@ -129,8 +129,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 126,
-                  "LiteralEnd": 133,
+                  "LiteralPos": 125,
+                  "LiteralEnd": 134,
                   "Literal": "CONNECT"
                 },
                 "Value": {
@@ -142,8 +142,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 139,
-                  "LiteralEnd": 146,
+                  "LiteralPos": 138,
+                  "LiteralEnd": 147,
                   "Literal": "OPTIONS"
                 },
                 "Value": {
@@ -155,8 +155,8 @@
               },
               {
                 "Name": {
-                  "LiteralPos": 152,
-                  "LiteralEnd": 157,
+                  "LiteralPos": 151,
+                  "LiteralEnd": 158,
                   "Literal": "TRACE"
                 },
                 "Value": {
@@ -264,22 +264,22 @@
         "LeftParenPos": 263,
         "RightParenPos": 313,
         "Items": {
-          "ListPos": 265,
-          "ListEnd": 312,
+          "ListPos": 264,
+          "ListEnd": 313,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 265,
-                "LiteralEnd": 299,
+                "LiteralPos": 264,
+                "LiteralEnd": 300,
                 "Literal": "/clickhouse/tables/{layer}-{shard}"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 303,
-                "LiteralEnd": 312,
+                "LiteralPos": 302,
+                "LiteralEnd": 313,
                 "Literal": "{replica}"
               },
               "Alias": null
@@ -293,7 +293,7 @@
         "PartitionPos": 315,
         "Expr": {
           "ListPos": 328,
-          "ListEnd": 344,
+          "ListEnd": 345,
           "HasDistinct": false,
           "Items": [
             {
@@ -334,7 +334,7 @@
       "SampleBy": null,
       "TTL": {
         "TTLPos": 374,
-        "ListEnd": 413,
+        "ListEnd": 414,
         "Items": [
           {
             "TTLPos": 374,

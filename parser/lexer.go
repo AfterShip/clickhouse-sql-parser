@@ -301,8 +301,8 @@ func (l *Lexer) consumeString() error {
 	l.currentToken = &Token{
 		Kind:   TokenKindString,
 		String: l.slice(1, i),
-		Pos:    Pos(l.offset + 1),
-		End:    Pos(l.offset + i),
+		Pos:    Pos(l.offset),
+		End:    Pos(l.offset + i + 1),
 	}
 	l.skipN(i + 1)
 	return nil

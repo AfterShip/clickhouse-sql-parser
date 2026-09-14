@@ -7,8 +7,8 @@
     "NotLike": false,
     "LikeType": "LIKE",
     "LikePattern": {
-      "LiteralPos": 21,
-      "LiteralEnd": 26,
+      "LiteralPos": 20,
+      "LiteralEnd": 27,
       "Literal": "prod%"
     },
     "Limit": {
@@ -18,8 +18,8 @@
       "Base": 10
     },
     "OutFile": {
-      "LiteralPos": 50,
-      "LiteralEnd": 67,
+      "LiteralPos": 49,
+      "LiteralEnd": 68,
       "Literal": "/tmp/prod_dbs.txt"
     },
     "Format": {

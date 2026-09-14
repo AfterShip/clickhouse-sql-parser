@@ -633,10 +633,11 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 		return p.parseNumber(p.Pos())
 	case p.matchTokenKind(TokenKindQuestionMark):
 		// Placeholder `?`
+		curToken := p.current()
 		_ = p.lexer.consumeToken()
 		return &PlaceHolder{
-			PlaceholderPos: pos,
-			PlaceHolderEnd: pos,
+			PlaceholderPos: curToken.Pos,
+			PlaceHolderEnd: curToken.End,
 			Type:           string(TokenKindQuestionMark),
 		}, nil
 	default:
@@ -1884,12 +1885,13 @@ func (p *Parser) parseEnumValueExpr(pos Pos) (*EnumValue, error) {
 }
 
 func (p *Parser) parseColumnStar(pos Pos) (*Ident, error) {
+	curToken := p.current()
 	if err := p.expectTokenKind("*"); err != nil {
 		return nil, err
 	}
 	return &Ident{
-		NamePos: pos,
-		NameEnd: pos,
+		NamePos: curToken.Pos,
+		NameEnd: curToken.End,
 		Name:    "*",
 	}, nil
 }

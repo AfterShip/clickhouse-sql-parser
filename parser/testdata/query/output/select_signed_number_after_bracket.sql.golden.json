@@ -224,7 +224,7 @@
                         "RightParenPos": 76,
                         "Items": {
                           "ListPos": 71,
-                          "ListEnd": 75,
+                          "ListEnd": 76,
                           "HasDistinct": false,
                           "Items": [
                             {

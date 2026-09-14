@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 91,
+    "StatementEnd": 92,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -20,7 +20,7 @@
     "AlterExprs": [
       {
         "UpdatePos": 23,
-        "StatementEnd": 91,
+        "StatementEnd": 92,
         "Assignments": [
           {
             "AssignmentPos": 30,
@@ -34,8 +34,8 @@
               "DotIdent": null
             },
             "Expr": {
-              "LiteralPos": 40,
-              "LiteralEnd": 46,
+              "LiteralPos": 39,
+              "LiteralEnd": 47,
               "Literal": "active"
             }
           },
@@ -81,8 +81,8 @@
           },
           "Operation": "=",
           "RightExpr": {
-            "LiteralPos": 84,
-            "LiteralEnd": 91,
+            "LiteralPos": 83,
+            "LiteralEnd": 92,
             "Literal": "pending"
           },
           "HasGlobal": false,

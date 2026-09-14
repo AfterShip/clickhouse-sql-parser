@@ -19,8 +19,8 @@
     "OnCluster": {
       "OnPos": 30,
       "Expr": {
-        "LiteralPos": 42,
-        "LiteralEnd": 57,
+        "LiteralPos": 41,
+        "LiteralEnd": 58,
         "Literal": "default_cluster"
       }
     },
@@ -104,8 +104,8 @@
     "OnCluster": {
       "OnPos": 142,
       "Expr": {
-        "LiteralPos": 154,
-        "LiteralEnd": 169,
+        "LiteralPos": 153,
+        "LiteralEnd": 170,
         "Literal": "default_cluster"
       }
     },
@@ -184,8 +184,8 @@
     "OnCluster": {
       "OnPos": 258,
       "Expr": {
-        "LiteralPos": 270,
-        "LiteralEnd": 285,
+        "LiteralPos": 269,
+        "LiteralEnd": 286,
         "Literal": "default_cluster"
       }
     },
@@ -264,8 +264,8 @@
     "OnCluster": {
       "OnPos": 378,
       "Expr": {
-        "LiteralPos": 390,
-        "LiteralEnd": 405,
+        "LiteralPos": 389,
+        "LiteralEnd": 406,
         "Literal": "default_cluster"
       }
     },
@@ -356,8 +356,8 @@
     "OnCluster": {
       "OnPos": 511,
       "Expr": {
-        "LiteralPos": 523,
-        "LiteralEnd": 538,
+        "LiteralPos": 522,
+        "LiteralEnd": 539,
         "Literal": "default_cluster"
       }
     },
@@ -454,8 +454,8 @@
     "OnCluster": {
       "OnPos": 645,
       "Expr": {
-        "LiteralPos": 657,
-        "LiteralEnd": 672,
+        "LiteralPos": 656,
+        "LiteralEnd": 673,
         "Literal": "default_cluster"
       }
     },
@@ -544,8 +544,8 @@
     "OnCluster": {
       "OnPos": 791,
       "Expr": {
-        "LiteralPos": 803,
-        "LiteralEnd": 818,
+        "LiteralPos": 802,
+        "LiteralEnd": 819,
         "Literal": "default_cluster"
       }
     },

@@ -100,8 +100,8 @@
                   "RulePos": 113,
                   "ToVolume": null,
                   "ToDisk": {
-                    "LiteralPos": 122,
-                    "LiteralEnd": 125,
+                    "LiteralPos": 121,
+                    "LiteralEnd": 126,
                     "Literal": "gcs"
                   },
                   "Action": null,

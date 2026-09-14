@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 8,
+    "StatementEnd": 27,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -72,7 +72,7 @@
   },
   {
     "SelectPos": 29,
-    "StatementEnd": 58,
+    "StatementEnd": 102,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -215,7 +215,7 @@
   },
   {
     "SelectPos": 105,
-    "StatementEnd": 121,
+    "StatementEnd": 172,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -270,7 +270,7 @@
     "UnionDistinct": null,
     "Except": {
       "SelectPos": 129,
-      "StatementEnd": 145,
+      "StatementEnd": 172,
       "With": null,
       "Top": null,
       "HasDistinct": false,

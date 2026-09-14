@@ -526,13 +526,13 @@
           "Expr": {
             "Table": {
               "TablePos": 648,
-              "TableEnd": 817,
+              "TableEnd": 818,
               "Alias": null,
               "Expr": {
                 "HasParen": true,
                 "Select": {
                   "SelectPos": 654,
-                  "StatementEnd": 817,
+                  "StatementEnd": 818,
                   "With": null,
                   "Top": null,
                   "HasDistinct": false,
@@ -543,7 +543,7 @@
                         "Name": "*",
                         "QuoteType": 0,
                         "NamePos": 669,
-                        "NameEnd": 669
+                        "NameEnd": 670
                       },
                       "Modifiers": [],
                       "Alias": null
@@ -665,8 +665,8 @@
                       },
                       "Operation": "!=",
                       "RightExpr": {
-                        "LiteralPos": 815,
-                        "LiteralEnd": 817,
+                        "LiteralPos": 814,
+                        "LiteralEnd": 818,
                         "Literal": "{}"
                       },
                       "HasGlobal": false,
@@ -689,7 +689,7 @@
               },
               "HasFinal": false
             },
-            "StatementEnd": 817,
+            "StatementEnd": 818,
             "SampleRatio": null,
             "HasFinal": false
           }
@@ -732,8 +732,8 @@
     },
     "Populate": false,
     "Comment": {
-      "LiteralPos": 466,
-      "LiteralEnd": 478,
+      "LiteralPos": 465,
+      "LiteralEnd": 479,
       "Literal": "test comment"
     },
     "Definer": {

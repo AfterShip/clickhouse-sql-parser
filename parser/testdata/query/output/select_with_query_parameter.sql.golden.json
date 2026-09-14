@@ -27,7 +27,7 @@
     "SetPos": 18,
     "Settings": {
       "SettingsPos": 22,
-      "ListEnd": 36,
+      "ListEnd": 37,
       "Items": [
         {
           "SettingsPos": 22,
@@ -38,8 +38,8 @@
             "NameEnd": 29
           },
           "Expr": {
-            "LiteralPos": 33,
-            "LiteralEnd": 36,
+            "LiteralPos": 32,
+            "LiteralEnd": 37,
             "Literal": "str"
           }
         }
@@ -50,7 +50,7 @@
     "SetPos": 39,
     "Settings": {
       "SettingsPos": 43,
-      "ListEnd": 73,
+      "ListEnd": 74,
       "Items": [
         {
           "SettingsPos": 43,
@@ -61,8 +61,8 @@
             "NameEnd": 50
           },
           "Expr": {
-            "LiteralPos": 54,
-            "LiteralEnd": 73,
+            "LiteralPos": 53,
+            "LiteralEnd": 74,
             "Literal": "2022-08-04 18:30:53"
           }
         }
@@ -89,8 +89,8 @@
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 92,
-                  "LiteralEnd": 94,
+                  "LiteralPos": 91,
+                  "LiteralEnd": 95,
                   "Literal": "10"
                 },
                 "Value": {
@@ -125,8 +125,8 @@
               },
               {
                 "Key": {
-                  "LiteralPos": 108,
-                  "LiteralEnd": 110,
+                  "LiteralPos": 107,
+                  "LiteralEnd": 111,
                   "Literal": "13"
                 },
                 "Value": {
@@ -167,7 +167,7 @@
   },
   {
     "SelectPos": 125,
-    "StatementEnd": 218,
+    "StatementEnd": 219,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -313,7 +313,7 @@
   },
   {
     "SelectPos": 222,
-    "StatementEnd": 283,
+    "StatementEnd": 284,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -324,7 +324,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 229,
-          "NameEnd": 229
+          "NameEnd": 230
         },
         "Modifiers": [],
         "Alias": null

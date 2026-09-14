@@ -25,8 +25,8 @@
                 },
                 "Operation": "REGEXP",
                 "RightExpr": {
-                  "LiteralPos": 33,
-                  "LiteralEnd": 41,
+                  "LiteralPos": 32,
+                  "LiteralEnd": 42,
                   "Literal": "^[0-9]+$"
                 },
                 "HasGlobal": false,

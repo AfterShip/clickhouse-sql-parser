@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 48,
+    "StatementEnd": 49,
     "TableIdentifier": {
       "Database": {
         "Name": "db",
@@ -23,8 +23,8 @@
         "Partition": {
           "PartitionPos": 27,
           "Expr": {
-            "LiteralPos": 38,
-            "LiteralEnd": 48,
+            "LiteralPos": 37,
+            "LiteralEnd": 49,
             "Literal": "2021-10-01"
           },
           "ID": null,

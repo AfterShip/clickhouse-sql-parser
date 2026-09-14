@@ -12,7 +12,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 7,
-          "NameEnd": 7
+          "NameEnd": 8
         },
         "Modifiers": [],
         "Alias": null
@@ -68,13 +68,13 @@
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 61,
-                  "LiteralEnd": 71,
+                  "LiteralPos": 60,
+                  "LiteralEnd": 72,
                   "Literal": "test_table"
                 },
                 "Value": {
-                  "LiteralPos": 75,
-                  "LiteralEnd": 85,
+                  "LiteralPos": 74,
+                  "LiteralEnd": 86,
                   "Literal": "status = 1"
                 }
               }
@@ -102,7 +102,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 97,
-          "NameEnd": 97
+          "NameEnd": 98
         },
         "Modifiers": [],
         "Alias": null
@@ -158,13 +158,13 @@
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 151,
-                  "LiteralEnd": 161,
+                  "LiteralPos": 150,
+                  "LiteralEnd": 162,
                   "Literal": "test_table"
                 },
                 "Value": {
-                  "LiteralPos": 165,
-                  "LiteralEnd": 181,
+                  "LiteralPos": 164,
+                  "LiteralEnd": 182,
                   "Literal": "value = \\'test\\'"
                 }
               }
@@ -192,7 +192,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 193,
-          "NameEnd": 193
+          "NameEnd": 194
         },
         "Modifiers": [],
         "Alias": null
@@ -248,13 +248,13 @@
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 247,
-                  "LiteralEnd": 257,
+                  "LiteralPos": 246,
+                  "LiteralEnd": 258,
                   "Literal": "test_table"
                 },
                 "Value": {
-                  "LiteralPos": 261,
-                  "LiteralEnd": 277,
+                  "LiteralPos": 260,
+                  "LiteralEnd": 278,
                   "Literal": "value = ''test''"
                 }
               }
@@ -282,7 +282,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 289,
-          "NameEnd": 289
+          "NameEnd": 290
         },
         "Modifiers": [],
         "Alias": null
@@ -338,13 +338,13 @@
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 343,
-                  "LiteralEnd": 353,
+                  "LiteralPos": 342,
+                  "LiteralEnd": 354,
                   "Literal": "test_table"
                 },
                 "Value": {
-                  "LiteralPos": 357,
-                  "LiteralEnd": 401,
+                  "LiteralPos": 356,
+                  "LiteralEnd": 402,
                   "Literal": "id IN (\\'a\\', \\'b\\') AND status = \\'active\\'"
                 }
               }
@@ -686,25 +686,25 @@
             "KeyValues": [
               {
                 "Key": {
-                  "LiteralPos": 586,
-                  "LiteralEnd": 600,
+                  "LiteralPos": 585,
+                  "LiteralEnd": 601,
                   "Literal": "system.numbers"
                 },
                 "Value": {
-                  "LiteralPos": 603,
-                  "LiteralEnd": 614,
+                  "LiteralPos": 602,
+                  "LiteralEnd": 615,
                   "Literal": "number != 3"
                 }
               },
               {
                 "Key": {
-                  "LiteralPos": 618,
-                  "LiteralEnd": 625,
+                  "LiteralPos": 617,
+                  "LiteralEnd": 626,
                   "Literal": "table_1"
                 },
                 "Value": {
-                  "LiteralPos": 628,
-                  "LiteralEnd": 634,
+                  "LiteralPos": 627,
+                  "LiteralEnd": 635,
                   "Literal": "x != 2"
                 }
               }

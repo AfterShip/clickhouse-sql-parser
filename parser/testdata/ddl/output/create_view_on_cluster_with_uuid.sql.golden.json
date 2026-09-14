@@ -20,16 +20,16 @@
     "IfNotExists": true,
     "UUID": {
       "Value": {
-        "LiteralPos": 61,
-        "LiteralEnd": 97,
+        "LiteralPos": 60,
+        "LiteralEnd": 98,
         "Literal": "3493e374-e2bb-481b-b493-e374e2bb981b"
       }
     },
     "OnCluster": {
       "OnPos": 107,
       "Expr": {
-        "LiteralPos": 119,
-        "LiteralEnd": 129,
+        "LiteralPos": 118,
+        "LiteralEnd": 130,
         "Literal": "my_cluster"
       }
     },

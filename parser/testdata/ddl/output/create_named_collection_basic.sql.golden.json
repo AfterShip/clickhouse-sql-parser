@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 158,
+    "StatementEnd": 159,
     "Name": {
       "Name": "servercore_s3_config",
       "QuoteType": 1,
@@ -20,8 +20,8 @@
           "NameEnd": 65
         },
         "Value": {
-          "LiteralPos": 69,
-          "LiteralEnd": 94,
+          "LiteralPos": 68,
+          "LiteralEnd": 95,
           "Literal": "http://local-minio:9000/*"
         },
         "Overridable": false,
@@ -36,8 +36,8 @@
           "NameEnd": 110
         },
         "Value": {
-          "LiteralPos": 114,
-          "LiteralEnd": 124,
+          "LiteralPos": 113,
+          "LiteralEnd": 125,
           "Literal": "minioadmin"
         },
         "Overridable": false,
@@ -52,8 +52,8 @@
           "NameEnd": 144
         },
         "Value": {
-          "LiteralPos": 148,
-          "LiteralEnd": 158,
+          "LiteralPos": 147,
+          "LiteralEnd": 159,
           "Literal": "minioadmin"
         },
         "Overridable": false,

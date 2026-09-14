@@ -70,12 +70,18 @@ func (e *ParseError) renderCaret(b *strings.Builder) {
 	line := e.starts.lineText(e.input, e.Line)
 	b.WriteString(line)
 	b.WriteByte('\n')
-	for i := 1; i < e.Column; i++ {
-		b.WriteByte(' ')
+	lineStart := e.starts[int(e.Line)-1]
+	offset := int(e.Pos) - lineStart
+	if offset < 0 {
+		offset = 0
 	}
+	if offset > len(line) {
+		offset = len(line)
+	}
+	b.WriteString(strings.Repeat(" ", displayWidth(line[:offset])))
 	width := 1
-	if e.Got != nil && len(e.Got.String) > width {
-		width = len(e.Got.String)
+	if e.Got != nil && displayWidth(e.Got.String) > width {
+		width = displayWidth(e.Got.String)
 	}
 	b.WriteString(strings.Repeat("^", width))
 	b.WriteByte('\n')

@@ -350,22 +350,22 @@
         "LeftParenPos": 234,
         "RightParenPos": 284,
         "Items": {
-          "ListPos": 236,
-          "ListEnd": 283,
+          "ListPos": 235,
+          "ListEnd": 284,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 236,
-                "LiteralEnd": 270,
+                "LiteralPos": 235,
+                "LiteralEnd": 271,
                 "Literal": "/clickhouse/tables/{layer}-{shard}"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 274,
-                "LiteralEnd": 283,
+                "LiteralPos": 273,
+                "LiteralEnd": 284,
                 "Literal": "{replica}"
               },
               "Alias": null

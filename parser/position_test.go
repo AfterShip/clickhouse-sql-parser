@@ -97,7 +97,8 @@ func TestKeywordArgFunctionPositions(t *testing.T) {
 	stmt := parseOneStmt(t, sql).(*SelectQuery)
 	fn := stmt.SelectItems[0].Expr.(*FunctionExpr)
 	require.Equal(t, Pos(7), fn.Pos())
-	require.Equal(t, Pos(len(sql)-1), fn.End(), "ends on the closing paren, as any call does")
+	// Spans are complete half-open source ranges, so the closing paren is included.
+	require.Equal(t, Pos(len(sql)), fn.End())
 
 	from := fn.Params.Items.Items[0].(*ColumnExpr).Expr.(*BinaryOperation)
 	require.Equal(t, "BOTH", sql[12:16])
@@ -110,8 +111,8 @@ func TestKeywordArgFunctionPositions(t *testing.T) {
 	modifier := from.LeftExpr.(*UnaryExpr)
 	require.Equal(t, Pos(12), modifier.Pos())
 	require.Equal(t, modifier.Expr.End(), modifier.End())
-	require.Equal(t, Pos(18), modifier.Expr.Pos())
-	require.Equal(t, Pos(19), modifier.Expr.End())
+	require.Equal(t, Pos(17), modifier.Expr.Pos())
+	require.Equal(t, Pos(20), modifier.Expr.End())
 }
 
 func TestJoinLocalityIsInsideTheJoinSpan(t *testing.T) {
@@ -122,4 +123,37 @@ func TestJoinLocalityIsInsideTheJoinSpan(t *testing.T) {
 	require.Equal(t, "GLOBAL", sql[17:23])
 	require.Equal(t, Pos(17), join.Pos())
 	require.Equal(t, Pos(len(sql)), join.End())
+}
+
+func TestSourceSpansCoverReportedNodes(t *testing.T) {
+	for _, tc := range []struct {
+		sql       string
+		wantSlice string
+		get       func(Expr) Expr
+	}{
+		{"SELECT *", "*", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
+		{"SELECT ?", "?", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
+		{"SELECT 'abc'", "'abc'", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
+		{"SELECT f(1)", "f(1)", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
+	} {
+		t.Run(tc.sql, func(t *testing.T) {
+			stmt := parseOneStmt(t, tc.sql)
+			node := tc.get(stmt)
+			require.GreaterOrEqual(t, node.Pos(), Pos(0))
+			require.LessOrEqual(t, node.Pos(), node.End())
+			require.LessOrEqual(t, node.End(), Pos(len(tc.sql)))
+			require.Equal(t, tc.wantSlice, tc.sql[node.Pos():node.End()])
+		})
+	}
+}
+
+func TestSelectQuerySpanContainsSetOperations(t *testing.T) {
+	sql := "SELECT 1 INTERSECT SELECT 2 UNION ALL SELECT 3"
+	root := parseOneStmt(t, sql).(*SelectQuery)
+	require.Equal(t, Pos(len(sql)), root.End())
+	require.NotNil(t, root.Intersect)
+	require.NotNil(t, root.Intersect.UnionAll)
+	require.LessOrEqual(t, root.Pos(), root.Intersect.Pos())
+	require.LessOrEqual(t, root.Intersect.End(), root.End())
+	require.LessOrEqual(t, root.Intersect.UnionAll.End(), root.End())
 }

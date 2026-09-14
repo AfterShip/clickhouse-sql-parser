@@ -4,7 +4,7 @@
     "StatementEnd": 133,
     "With": {
       "WithPos": 0,
-      "EndPos": 24,
+      "EndPos": 25,
       "CTEs": [
         {
           "CTEPos": 9,

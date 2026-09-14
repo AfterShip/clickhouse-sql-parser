@@ -18,30 +18,30 @@
         "LeftParenPos": 54,
         "RightParenPos": 93,
         "Items": {
-          "ListPos": 56,
-          "ListEnd": 92,
+          "ListPos": 55,
+          "ListEnd": 93,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 56,
-                "LiteralEnd": 72,
+                "LiteralPos": 55,
+                "LiteralEnd": 73,
                 "Literal": "/root/test_local"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 76,
-                "LiteralEnd": 81,
+                "LiteralPos": 75,
+                "LiteralEnd": 82,
                 "Literal": "shard"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 85,
-                "LiteralEnd": 92,
+                "LiteralPos": 84,
+                "LiteralEnd": 93,
                 "Literal": "replica"
               },
               "Alias": null

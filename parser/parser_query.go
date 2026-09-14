@@ -1148,12 +1148,14 @@ func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
 				return err
 			}
 			selectStmt.UnionAll = unionAllExpr
+			selectStmt.StatementEnd = unionAllExpr.End()
 		case p.tryConsumeKeywords(KeywordDistinct):
 			unionDistinctExpr, err := p.parseSelectQuery(p.Pos())
 			if err != nil {
 				return err
 			}
 			selectStmt.UnionDistinct = unionDistinctExpr
+			selectStmt.StatementEnd = unionDistinctExpr.End()
 		default:
 			return fmt.Errorf("expected ALL or DISTINCT, got %s", p.currentTokenKind())
 		}
@@ -1163,12 +1165,14 @@ func (p *Parser) parseSetOperation(selectStmt *SelectQuery) error {
 			return err
 		}
 		selectStmt.Except = exceptExpr
+		selectStmt.StatementEnd = exceptExpr.End()
 	case p.tryConsumeKeywords(KeywordIntersect):
 		intersectExpr, err := p.parseSelectQuery(p.Pos())
 		if err != nil {
 			return err
 		}
 		selectStmt.Intersect = intersectExpr
+		selectStmt.StatementEnd = intersectExpr.End()
 	}
 
 	return nil

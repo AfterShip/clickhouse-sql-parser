@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 153,
+    "StatementEnd": 154,
     "Name": {
       "Name": "my_collection",
       "QuoteType": 1,
@@ -28,8 +28,8 @@
           "NameEnd": 81
         },
         "Value": {
-          "LiteralPos": 85,
-          "LiteralEnd": 91,
+          "LiteralPos": 84,
+          "LiteralEnd": 92,
           "Literal": "value1"
         },
         "Overridable": true,
@@ -44,8 +44,8 @@
           "NameEnd": 110
         },
         "Value": {
-          "LiteralPos": 114,
-          "LiteralEnd": 120,
+          "LiteralPos": 113,
+          "LiteralEnd": 121,
           "Literal": "value2"
         },
         "Overridable": false,
@@ -60,8 +60,8 @@
           "NameEnd": 143
         },
         "Value": {
-          "LiteralPos": 147,
-          "LiteralEnd": 153,
+          "LiteralPos": 146,
+          "LiteralEnd": 154,
           "Literal": "value3"
         },
         "Overridable": false,

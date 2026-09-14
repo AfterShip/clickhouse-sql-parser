@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 101,
+    "StatementEnd": 102,
     "TableIdentifier": {
       "Database": null,
       "Table": {
@@ -15,7 +15,7 @@
     "AlterExprs": [
       {
         "MaterializedPos": 25,
-        "StatementEnd": 101,
+        "StatementEnd": 102,
         "IfExists": true,
         "ProjectionName": {
           "Ident": {
@@ -29,8 +29,8 @@
         "Partition": {
           "PartitionPos": 82,
           "Expr": {
-            "LiteralPos": 93,
-            "LiteralEnd": 101,
+            "LiteralPos": 92,
+            "LiteralEnd": 102,
             "Literal": "20240403"
           },
           "ID": null,

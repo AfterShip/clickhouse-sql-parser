@@ -20,8 +20,8 @@
     "IfNotExists": false,
     "UUID": {
       "Value": {
-        "LiteralPos": 32,
-        "LiteralEnd": 68,
+        "LiteralPos": 31,
+        "LiteralEnd": 69,
         "Literal": "87887901-e33c-497e-8788-7901e33c997e"
       }
     },
@@ -132,22 +132,22 @@
         "LeftParenPos": 154,
         "RightParenPos": 217,
         "Items": {
-          "ListPos": 156,
-          "ListEnd": 216,
+          "ListPos": 155,
+          "ListEnd": 217,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 156,
-                "LiteralEnd": 203,
+                "LiteralPos": 155,
+                "LiteralEnd": 204,
                 "Literal": "/clickhouse/tables/{layer}/{shard}/default/test"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 207,
-                "LiteralEnd": 216,
+                "LiteralPos": 206,
+                "LiteralEnd": 217,
                 "Literal": "{replica}"
               },
               "Alias": null
@@ -161,7 +161,7 @@
         "PartitionPos": 219,
         "Expr": {
           "ListPos": 232,
-          "ListEnd": 250,
+          "ListEnd": 251,
           "HasDistinct": false,
           "Items": [
             {

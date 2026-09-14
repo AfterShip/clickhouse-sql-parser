@@ -127,28 +127,28 @@
         "RightParenPos": 222,
         "Args": [
           {
-            "LiteralPos": 156,
-            "LiteralEnd": 172,
+            "LiteralPos": 155,
+            "LiteralEnd": 173,
             "Literal": "host.example.com"
           },
           {
-            "LiteralPos": 176,
-            "LiteralEnd": 185,
+            "LiteralPos": 175,
+            "LiteralEnd": 186,
             "Literal": "source_db"
           },
           {
-            "LiteralPos": 189,
-            "LiteralEnd": 201,
+            "LiteralPos": 188,
+            "LiteralEnd": 202,
             "Literal": "source_table"
           },
           {
-            "LiteralPos": 205,
-            "LiteralEnd": 209,
+            "LiteralPos": 204,
+            "LiteralEnd": 210,
             "Literal": "user"
           },
           {
-            "LiteralPos": 213,
-            "LiteralEnd": 221,
+            "LiteralPos": 212,
+            "LiteralEnd": 222,
             "Literal": "password"
           }
         ]
@@ -255,18 +255,18 @@
         "RightParenPos": 353,
         "Args": [
           {
-            "LiteralPos": 321,
-            "LiteralEnd": 330,
+            "LiteralPos": 320,
+            "LiteralEnd": 331,
             "Literal": "localhost"
           },
           {
-            "LiteralPos": 334,
-            "LiteralEnd": 336,
+            "LiteralPos": 333,
+            "LiteralEnd": 337,
             "Literal": "db"
           },
           {
-            "LiteralPos": 340,
-            "LiteralEnd": 352,
+            "LiteralPos": 339,
+            "LiteralEnd": 353,
             "Literal": "source_table"
           }
         ]

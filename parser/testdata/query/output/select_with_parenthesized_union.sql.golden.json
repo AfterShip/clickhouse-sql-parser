@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 30,
+    "StatementEnd": 56,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -23,13 +23,13 @@
       "Expr": {
         "Table": {
           "TablePos": 14,
-          "TableEnd": 30,
+          "TableEnd": 56,
           "Alias": null,
           "Expr": {
             "HasParen": true,
             "Select": {
               "SelectPos": 15,
-              "StatementEnd": 30,
+              "StatementEnd": 56,
               "InnerQuery": {
                 "SelectPos": 16,
                 "StatementEnd": 29,
@@ -161,7 +161,7 @@
           },
           "HasFinal": false
         },
-        "StatementEnd": 30,
+        "StatementEnd": 56,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -184,7 +184,7 @@
   },
   {
     "SelectPos": 59,
-    "StatementEnd": 89,
+    "StatementEnd": 118,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -206,13 +206,13 @@
       "Expr": {
         "Table": {
           "TablePos": 73,
-          "TableEnd": 89,
+          "TableEnd": 118,
           "Alias": null,
           "Expr": {
             "HasParen": true,
             "Select": {
               "SelectPos": 74,
-              "StatementEnd": 89,
+              "StatementEnd": 118,
               "InnerQuery": {
                 "SelectPos": 75,
                 "StatementEnd": 88,
@@ -319,7 +319,7 @@
           },
           "HasFinal": false
         },
-        "StatementEnd": 89,
+        "StatementEnd": 118,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -342,7 +342,7 @@
   },
   {
     "SelectPos": 121,
-    "StatementEnd": 151,
+    "StatementEnd": 174,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -364,13 +364,13 @@
       "Expr": {
         "Table": {
           "TablePos": 135,
-          "TableEnd": 151,
+          "TableEnd": 174,
           "Alias": null,
           "Expr": {
             "HasParen": true,
             "Select": {
               "SelectPos": 136,
-              "StatementEnd": 151,
+              "StatementEnd": 174,
               "InnerQuery": {
                 "SelectPos": 137,
                 "StatementEnd": 150,
@@ -502,7 +502,7 @@
           },
           "HasFinal": false
         },
-        "StatementEnd": 151,
+        "StatementEnd": 174,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -525,7 +525,7 @@
   },
   {
     "SelectPos": 177,
-    "StatementEnd": 207,
+    "StatementEnd": 233,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -547,13 +547,13 @@
       "Expr": {
         "Table": {
           "TablePos": 191,
-          "TableEnd": 207,
+          "TableEnd": 233,
           "Alias": null,
           "Expr": {
             "HasParen": true,
             "Select": {
               "SelectPos": 192,
-              "StatementEnd": 207,
+              "StatementEnd": 233,
               "InnerQuery": {
                 "SelectPos": 193,
                 "StatementEnd": 206,
@@ -685,7 +685,7 @@
           },
           "HasFinal": false
         },
-        "StatementEnd": 207,
+        "StatementEnd": 233,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -708,7 +708,7 @@
   },
   {
     "SelectPos": 236,
-    "StatementEnd": 251,
+    "StatementEnd": 275,
     "InnerQuery": {
       "SelectPos": 237,
       "StatementEnd": 250,
@@ -814,10 +814,10 @@
   },
   {
     "SelectPos": 277,
-    "StatementEnd": 306,
+    "StatementEnd": 325,
     "InnerQuery": {
       "SelectPos": 278,
-      "StatementEnd": 286,
+      "StatementEnd": 305,
       "With": null,
       "Top": null,
       "HasDistinct": false,
@@ -945,7 +945,7 @@
   },
   {
     "SelectPos": 327,
-    "StatementEnd": 335,
+    "StatementEnd": 375,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -976,7 +976,7 @@
     "Format": null,
     "UnionAll": {
       "SelectPos": 346,
-      "StatementEnd": 356,
+      "StatementEnd": 375,
       "InnerQuery": {
         "SelectPos": 347,
         "StatementEnd": 355,
@@ -1219,10 +1219,10 @@
   },
   {
     "SelectPos": 412,
-    "StatementEnd": 441,
+    "StatementEnd": 460,
     "InnerQuery": {
       "SelectPos": 413,
-      "StatementEnd": 421,
+      "StatementEnd": 440,
       "With": null,
       "Top": null,
       "HasDistinct": false,
@@ -1350,7 +1350,7 @@
   },
   {
     "SelectPos": 462,
-    "StatementEnd": 470,
+    "StatementEnd": 510,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -1387,7 +1387,7 @@
       "StatementEnd": 510,
       "InnerQuery": {
         "SelectPos": 482,
-        "StatementEnd": 490,
+        "StatementEnd": 509,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -1565,7 +1565,7 @@
     "StatementEnd": 618,
     "InnerQuery": {
       "SelectPos": 548,
-      "StatementEnd": 556,
+      "StatementEnd": 575,
       "With": null,
       "Top": null,
       "HasDistinct": false,

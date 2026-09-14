@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 25,
+    "StatementEnd": 26,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -12,7 +12,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 7,
-          "NameEnd": 7
+          "NameEnd": 8
         },
         "Modifiers": [],
         "Alias": null
@@ -22,21 +22,21 @@
       "FromPos": 9,
       "Expr": {
         "Table": {
-          "TablePos": 15,
-          "TableEnd": 25,
+          "TablePos": 14,
+          "TableEnd": 26,
           "Alias": null,
           "Expr": {
             "Database": null,
             "Table": {
               "Name": "test_table",
               "QuoteType": 4,
-              "NamePos": 15,
-              "NameEnd": 25
+              "NamePos": 14,
+              "NameEnd": 26
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 25,
+        "StatementEnd": 26,
         "SampleRatio": null,
         "HasFinal": false
       }

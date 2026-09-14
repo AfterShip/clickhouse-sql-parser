@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 96,
+    "StatementEnd": 97,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -19,15 +19,15 @@
     "OnCluster": {
       "OnPos": 24,
       "Expr": {
-        "LiteralPos": 36,
-        "LiteralEnd": 51,
+        "LiteralPos": 35,
+        "LiteralEnd": 52,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
         "DeletePos": 53,
-        "StatementEnd": 96,
+        "StatementEnd": 97,
         "WhereClause": {
           "LeftExpr": {
             "LeftExpr": {
@@ -56,8 +56,8 @@
             },
             "Operation": "=",
             "RightExpr": {
-              "LiteralPos": 89,
-              "LiteralEnd": 96,
+              "LiteralPos": 88,
+              "LiteralEnd": 97,
               "Literal": "deleted"
             },
             "HasGlobal": false,

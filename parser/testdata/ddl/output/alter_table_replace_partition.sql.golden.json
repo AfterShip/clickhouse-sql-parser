@@ -18,8 +18,8 @@
         "Partition": {
           "PartitionPos": 23,
           "Expr": {
-            "LiteralPos": 34,
-            "LiteralEnd": 43,
+            "LiteralPos": 33,
+            "LiteralEnd": 44,
             "Literal": "partition"
           },
           "ID": null,

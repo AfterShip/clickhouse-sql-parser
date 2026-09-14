@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 635,
+    "StatementEnd": 636,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -21,8 +21,8 @@
     "OnCluster": {
       "OnPos": 60,
       "Expr": {
-        "LiteralPos": 72,
-        "LiteralEnd": 87,
+        "LiteralPos": 71,
+        "LiteralEnd": 88,
         "Literal": "default_cluster"
       }
     },
@@ -56,7 +56,7 @@
       "HasParen": false,
       "Select": {
         "SelectPos": 107,
-        "StatementEnd": 635,
+        "StatementEnd": 636,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -95,7 +95,7 @@
                 "RightParenPos": 183,
                 "Items": {
                   "ListPos": 168,
-                  "ListEnd": 182,
+                  "ListEnd": 183,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -109,8 +109,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 181,
-                        "LiteralEnd": 182,
+                        "LiteralPos": 180,
+                        "LiteralEnd": 183,
                         "Literal": "x"
                       },
                       "Alias": null
@@ -141,7 +141,7 @@
                 "RightParenPos": 234,
                 "Items": {
                   "ListPos": 219,
-                  "ListEnd": 233,
+                  "ListEnd": 234,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -155,8 +155,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 232,
-                        "LiteralEnd": 233,
+                        "LiteralPos": 231,
+                        "LiteralEnd": 234,
                         "Literal": "y"
                       },
                       "Alias": null
@@ -187,7 +187,7 @@
                 "RightParenPos": 285,
                 "Items": {
                   "ListPos": 270,
-                  "ListEnd": 284,
+                  "ListEnd": 285,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -201,8 +201,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 283,
-                        "LiteralEnd": 284,
+                        "LiteralPos": 282,
+                        "LiteralEnd": 285,
                         "Literal": "z"
                       },
                       "Alias": null
@@ -233,7 +233,7 @@
                 "RightParenPos": 336,
                 "Items": {
                   "ListPos": 321,
-                  "ListEnd": 335,
+                  "ListEnd": 336,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -247,8 +247,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 334,
-                        "LiteralEnd": 335,
+                        "LiteralPos": 333,
+                        "LiteralEnd": 336,
                         "Literal": "a"
                       },
                       "Alias": null
@@ -279,7 +279,7 @@
                 "RightParenPos": 387,
                 "Items": {
                   "ListPos": 372,
-                  "ListEnd": 386,
+                  "ListEnd": 387,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -293,8 +293,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 385,
-                        "LiteralEnd": 386,
+                        "LiteralPos": 384,
+                        "LiteralEnd": 387,
                         "Literal": "b"
                       },
                       "Alias": null
@@ -325,7 +325,7 @@
                 "RightParenPos": 438,
                 "Items": {
                   "ListPos": 423,
-                  "ListEnd": 437,
+                  "ListEnd": 438,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -339,8 +339,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 436,
-                        "LiteralEnd": 437,
+                        "LiteralPos": 435,
+                        "LiteralEnd": 438,
                         "Literal": "c"
                       },
                       "Alias": null
@@ -371,7 +371,7 @@
                 "RightParenPos": 489,
                 "Items": {
                   "ListPos": 474,
-                  "ListEnd": 488,
+                  "ListEnd": 489,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -385,8 +385,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 487,
-                        "LiteralEnd": 488,
+                        "LiteralPos": 486,
+                        "LiteralEnd": 489,
                         "Literal": "d"
                       },
                       "Alias": null
@@ -417,7 +417,7 @@
                 "RightParenPos": 537,
                 "Items": {
                   "ListPos": 522,
-                  "ListEnd": 536,
+                  "ListEnd": 537,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -431,8 +431,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 535,
-                        "LiteralEnd": 536,
+                        "LiteralPos": 534,
+                        "LiteralEnd": 537,
                         "Literal": "e"
                       },
                       "Alias": null
@@ -463,7 +463,7 @@
                 "RightParenPos": 585,
                 "Items": {
                   "ListPos": 570,
-                  "ListEnd": 584,
+                  "ListEnd": 585,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -477,8 +477,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 583,
-                        "LiteralEnd": 584,
+                        "LiteralPos": 582,
+                        "LiteralEnd": 585,
                         "Literal": "f"
                       },
                       "Alias": null
@@ -554,8 +554,8 @@
             },
             "Operation": "=",
             "RightExpr": {
-              "LiteralPos": 630,
-              "LiteralEnd": 635,
+              "LiteralPos": 629,
+              "LiteralEnd": 636,
               "Literal": "hello"
             },
             "HasGlobal": false,

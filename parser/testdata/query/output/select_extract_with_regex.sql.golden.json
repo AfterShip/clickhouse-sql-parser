@@ -267,8 +267,8 @@
                                     "NameEnd": 246
                                   },
                                   {
-                                    "LiteralPos": 249,
-                                    "LiteralEnd": 267,
+                                    "LiteralPos": 248,
+                                    "LiteralEnd": 268,
                                     "Literal": "((\\\\d+\\\\.){3}\\\\d+)"
                                   }
                                 ]
@@ -302,8 +302,8 @@
               ],
               "ElsePos": 293,
               "Else": {
-                "LiteralPos": 299,
-                "LiteralEnd": 302,
+                "LiteralPos": 298,
+                "LiteralEnd": 303,
                 "Literal": "空"
               }
             },
@@ -346,8 +346,8 @@
                                     "NameEnd": 351
                                   },
                                   {
-                                    "LiteralPos": 354,
-                                    "LiteralEnd": 372,
+                                    "LiteralPos": 353,
+                                    "LiteralEnd": 373,
                                     "Literal": "((\\\\d+\\\\.){3}\\\\d+)"
                                   }
                                 ]
@@ -381,8 +381,8 @@
               ],
               "ElsePos": 399,
               "Else": {
-                "LiteralPos": 405,
-                "LiteralEnd": 408,
+                "LiteralPos": 404,
+                "LiteralEnd": 409,
                 "Literal": "空"
               }
             },

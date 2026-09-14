@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 145,
+    "StatementEnd": 146,
     "Name": {
       "Name": "test_collection",
       "QuoteType": 1,
@@ -20,8 +20,8 @@
           "NameEnd": 46
         },
         "Value": {
-          "LiteralPos": 50,
-          "LiteralEnd": 68,
+          "LiteralPos": 49,
+          "LiteralEnd": 69,
           "Literal": "http://example.com"
         },
         "Overridable": true,
@@ -36,8 +36,8 @@
           "NameEnd": 93
         },
         "Value": {
-          "LiteralPos": 97,
-          "LiteralEnd": 103,
+          "LiteralPos": 96,
+          "LiteralEnd": 104,
           "Literal": "key123"
         },
         "Overridable": false,
@@ -52,8 +52,8 @@
           "NameEnd": 132
         },
         "Value": {
-          "LiteralPos": 136,
-          "LiteralEnd": 145,
+          "LiteralPos": 135,
+          "LiteralEnd": 146,
           "Literal": "secret456"
         },
         "Overridable": false,

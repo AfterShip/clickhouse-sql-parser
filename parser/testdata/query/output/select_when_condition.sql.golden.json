@@ -23,8 +23,8 @@
                 "NameEnd": 22
               },
               "Then": {
-                "LiteralPos": 29,
-                "LiteralEnd": 34,
+                "LiteralPos": 28,
+                "LiteralEnd": 35,
                 "Literal": "hello"
               },
               "ElsePos": 0,
@@ -33,8 +33,8 @@
           ],
           "ElsePos": 36,
           "Else": {
-            "LiteralPos": 42,
-            "LiteralEnd": 47,
+            "LiteralPos": 41,
+            "LiteralEnd": 48,
             "Literal": "world"
           }
         },

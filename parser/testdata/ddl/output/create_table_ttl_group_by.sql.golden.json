@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 142,
+    "StatementEnd": 143,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -115,7 +115,7 @@
     },
     "Engine": {
       "EnginePos": 55,
-      "EngineEnd": 142,
+      "EngineEnd": 143,
       "Name": "MergeTree",
       "Params": {
         "LeftParenPos": 73,
@@ -133,7 +133,7 @@
       "SampleBy": null,
       "TTL": {
         "TTLPos": 88,
-        "ListEnd": 142,
+        "ListEnd": 143,
         "Items": [
           {
             "TTLPos": 88,
@@ -491,7 +491,7 @@
   },
   {
     "CreatePos": 277,
-    "StatementEnd": 470,
+    "StatementEnd": 471,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -635,7 +635,7 @@
     },
     "Engine": {
       "EnginePos": 346,
-      "EngineEnd": 470,
+      "EngineEnd": 471,
       "Name": "MergeTree",
       "Params": {
         "LeftParenPos": 364,
@@ -653,7 +653,7 @@
       "SampleBy": null,
       "TTL": {
         "TTLPos": 390,
-        "ListEnd": 470,
+        "ListEnd": 471,
         "Items": [
           {
             "TTLPos": 390,
@@ -1159,7 +1159,7 @@
   },
   {
     "CreatePos": 653,
-    "StatementEnd": 796,
+    "StatementEnd": 797,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -1273,7 +1273,7 @@
     },
     "Engine": {
       "EnginePos": 708,
-      "EngineEnd": 796,
+      "EngineEnd": 797,
       "Name": "MergeTree",
       "Params": {
         "LeftParenPos": 726,
@@ -1291,7 +1291,7 @@
       "SampleBy": null,
       "TTL": {
         "TTLPos": 741,
-        "ListEnd": 796,
+        "ListEnd": 797,
         "Items": [
           {
             "TTLPos": 741,

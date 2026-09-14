@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 190,
+    "StatementEnd": 191,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -12,7 +12,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 11,
-          "NameEnd": 11
+          "NameEnd": 12
         },
         "Modifiers": [],
         "Alias": null
@@ -35,16 +35,16 @@
                 },
                 "Operation": "=",
                 "RightExpr": {
-                  "LiteralPos": 44,
-                  "LiteralEnd": 50,
+                  "LiteralPos": 43,
+                  "LiteralEnd": 51,
                   "Literal": "value1"
                 },
                 "HasGlobal": false,
                 "HasNot": false
               },
               "Then": {
-                "LiteralPos": 58,
-                "LiteralEnd": 63,
+                "LiteralPos": 57,
+                "LiteralEnd": 64,
                 "Literal": "when1"
               },
               "ElsePos": 0,
@@ -62,16 +62,16 @@
                 },
                 "Operation": "=",
                 "RightExpr": {
-                  "LiteralPos": 86,
-                  "LiteralEnd": 92,
+                  "LiteralPos": 85,
+                  "LiteralEnd": 93,
                   "Literal": "value2"
                 },
                 "HasGlobal": false,
                 "HasNot": false
               },
               "Then": {
-                "LiteralPos": 100,
-                "LiteralEnd": 105,
+                "LiteralPos": 99,
+                "LiteralEnd": 106,
                 "Literal": "when2"
               },
               "ElsePos": 0,
@@ -80,8 +80,8 @@
           ],
           "ElsePos": 115,
           "Else": {
-            "LiteralPos": 121,
-            "LiteralEnd": 125,
+            "LiteralPos": 120,
+            "LiteralEnd": 126,
             "Literal": "else"
           }
         },
@@ -130,8 +130,8 @@
         },
         "Operation": "=",
         "RightExpr": {
-          "LiteralPos": 181,
-          "LiteralEnd": 190,
+          "LiteralPos": 180,
+          "LiteralEnd": 191,
           "Literal": "123456789"
         },
         "HasGlobal": false,

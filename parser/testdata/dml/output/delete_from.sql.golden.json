@@ -20,8 +20,8 @@
       },
       "Operation": "LIKE",
       "RightExpr": {
-        "LiteralPos": 35,
-        "LiteralEnd": 42,
+        "LiteralPos": 34,
+        "LiteralEnd": 43,
         "Literal": "%hello%"
       },
       "HasGlobal": false,

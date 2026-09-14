@@ -686,22 +686,22 @@
         "LeftParenPos": 720,
         "RightParenPos": 752,
         "Items": {
-          "ListPos": 722,
-          "ListEnd": 751,
+          "ListPos": 721,
+          "ListEnd": 752,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 722,
-                "LiteralEnd": 738,
+                "LiteralPos": 721,
+                "LiteralEnd": 739,
                 "Literal": "/root/test_local"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 742,
-                "LiteralEnd": 751,
+                "LiteralPos": 741,
+                "LiteralEnd": 752,
                 "Literal": "{replica}"
               },
               "Alias": null
@@ -715,7 +715,7 @@
         "PartitionPos": 754,
         "Expr": {
           "ListPos": 767,
-          "ListEnd": 792,
+          "ListEnd": 793,
           "HasDistinct": false,
           "Items": [
             {
@@ -924,8 +924,8 @@
               "NameEnd": 1097
             },
             "Expr": {
-              "LiteralPos": 1099,
-              "LiteralEnd": 1103,
+              "LiteralPos": 1098,
+              "LiteralEnd": 1104,
               "Literal": "main"
             }
           },

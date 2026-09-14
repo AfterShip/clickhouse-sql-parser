@@ -89,8 +89,8 @@
       "TableFunction": null
     },
     "Comment": {
-      "LiteralPos": 84,
-      "LiteralEnd": 111,
+      "LiteralPos": 83,
+      "LiteralEnd": 112,
       "Literal": "{\"blueprint_hash\":\"abc123\"}"
     },
     "SubQuery": {

@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 98,
+    "StatementEnd": 99,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -20,7 +20,7 @@
     "AlterExprs": [
       {
         "UpdatePos": 23,
-        "StatementEnd": 98,
+        "StatementEnd": 99,
         "Assignments": [
           {
             "AssignmentPos": 30,
@@ -34,8 +34,8 @@
               "DotIdent": null
             },
             "Expr": {
-              "LiteralPos": 40,
-              "LiteralEnd": 48,
+              "LiteralPos": 39,
+              "LiteralEnd": 49,
               "Literal": "inactive"
             }
           }
@@ -43,8 +43,8 @@
         "InPartition": {
           "PartitionPos": 53,
           "Expr": {
-            "LiteralPos": 64,
-            "LiteralEnd": 74,
+            "LiteralPos": 63,
+            "LiteralEnd": 75,
             "Literal": "2024-01-01"
           },
           "ID": null,
@@ -59,8 +59,8 @@
           },
           "Operation": "=",
           "RightExpr": {
-            "LiteralPos": 92,
-            "LiteralEnd": 98,
+            "LiteralPos": 91,
+            "LiteralEnd": 99,
             "Literal": "active"
           },
           "HasGlobal": false,

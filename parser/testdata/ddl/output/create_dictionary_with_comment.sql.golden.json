@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 493,
+    "StatementEnd": 494,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -48,7 +48,7 @@
         },
         {
           "NamePos": 52,
-          "AttrEnd": 73,
+          "AttrEnd": 74,
           "Name": {
             "Name": "name",
             "QuoteType": 1,
@@ -64,8 +64,8 @@
             }
           },
           "Default": {
-            "LiteralPos": 73,
-            "LiteralEnd": 73,
+            "LiteralPos": 72,
+            "LiteralEnd": 74,
             "Literal": ""
           },
           "Expression": null,
@@ -75,7 +75,7 @@
         },
         {
           "NamePos": 80,
-          "AttrEnd": 125,
+          "AttrEnd": 126,
           "Name": {
             "Name": "value",
             "QuoteType": 1,
@@ -236,8 +236,8 @@
               "NameEnd": 267
             },
             "Value": {
-              "LiteralPos": 269,
-              "LiteralEnd": 278,
+              "LiteralPos": 268,
+              "LiteralEnd": 279,
               "Literal": "localhost"
             },
             "Args": null,
@@ -271,8 +271,8 @@
               "NameEnd": 302
             },
             "Value": {
-              "LiteralPos": 304,
-              "LiteralEnd": 311,
+              "LiteralPos": 303,
+              "LiteralEnd": 312,
               "Literal": "default"
             },
             "Args": null,
@@ -288,8 +288,8 @@
               "NameEnd": 325
             },
             "Value": {
-              "LiteralPos": 327,
-              "LiteralEnd": 327,
+              "LiteralPos": 326,
+              "LiteralEnd": 328,
               "Literal": ""
             },
             "Args": null,
@@ -305,8 +305,8 @@
               "NameEnd": 335
             },
             "Value": {
-              "LiteralPos": 337,
-              "LiteralEnd": 341,
+              "LiteralPos": 336,
+              "LiteralEnd": 342,
               "Literal": "test"
             },
             "Args": null,
@@ -322,8 +322,8 @@
               "NameEnd": 352
             },
             "Value": {
-              "LiteralPos": 354,
-              "LiteralEnd": 364,
+              "LiteralPos": 353,
+              "LiteralEnd": 365,
               "Literal": "dict_table"
             },
             "Args": null,
@@ -385,8 +385,8 @@
       }
     },
     "Comment": {
-      "LiteralPos": 455,
-      "LiteralEnd": 493,
+      "LiteralPos": 454,
+      "LiteralEnd": 494,
       "Literal": "This is a test dictionary with comment"
     }
   }
