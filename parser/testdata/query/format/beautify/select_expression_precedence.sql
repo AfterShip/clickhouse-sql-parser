@@ -9,7 +9,7 @@ SELECT
   - tuple(1, 2).1,
   - arr[1],
   - x::Int64,
-  - (- x);
+  - - x;
 SELECT
   a = b IN (1),
   a LIKE b IN (1),
