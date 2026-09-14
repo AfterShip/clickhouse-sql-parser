@@ -580,13 +580,13 @@ func (p *Parser) parseColumnExpr(pos Pos) (Expr, error) { //nolint:funlen
 
 		return interval, nil
 	case p.matchKeyword(KeywordDate), p.matchKeyword(KeywordTimestamp):
-		nextToken, err := p.lexer.peekToken()
-		if err != nil {
-			return nil, err
+		literalPos := p.Pos()
+		savedState := p.lexer.saveState()
+		_ = p.lexer.consumeToken()
+		if p.matchTokenKind(TokenKindString) {
+			return p.parseString(literalPos)
 		}
-		if nextToken != nil && nextToken.Kind == TokenKindString {
-			return p.parseString(p.Pos())
-		}
+		p.lexer.restoreState(savedState)
 		return p.parseIdentOrFunction(pos)
 	case p.matchKeyword(KeywordCast):
 		return p.parseColumnCastExpr(pos)
@@ -1172,7 +1172,7 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 
 	modifiers := make([]*FunctionExpr, 0)
 	for {
-		if p.matchKeyword(KeywordExcept) || p.matchKeyword(KeywordApply) || p.matchKeyword(KeywordReplace) {
+		if (p.matchKeyword(KeywordExcept) && !p.peekKeyword(KeywordSelect)) || p.matchKeyword(KeywordApply) || p.matchKeyword(KeywordReplace) {
 			modifier, err := p.parseFunctionExpr(p.Pos())
 			if err != nil {
 				return nil, err

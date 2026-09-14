@@ -1,0 +1,20 @@
+-- Origin SQL:
+SELECT DATE '2024-01-01', TIMESTAMP '2024-01-01 00:00:00', date AS timestamp;
+SELECT * EXCEPT (a) FROM t;
+SELECT 1 EXCEPT SELECT 2;
+
+
+-- Beautify SQL:
+SELECT
+  '2024-01-01',
+  '2024-01-01 00:00:00',
+  date AS timestamp;
+SELECT
+  * EXCEPT(a)
+FROM
+  t;
+SELECT
+  1
+EXCEPT
+SELECT
+  2;
