@@ -2007,6 +2007,10 @@ func (n *NullLiteral) FormatSQL(formatter *Formatter) {
 }
 
 func (n *NumberLiteral) FormatSQL(formatter *Formatter) {
+	// Keep a signed literal from joining a preceding minus into a comment.
+	if strings.HasPrefix(n.Literal, "-") && strings.HasSuffix(formatter.String(), "-") {
+		formatter.WriteByte(whitespace)
+	}
 	formatter.WriteString(n.Literal)
 }
 
@@ -2783,8 +2787,14 @@ func (u *UUID) FormatSQL(formatter *Formatter) {
 }
 
 func (n *UnaryExpr) FormatSQL(formatter *Formatter) {
+	// Adjacent unary minuses must not become a line comment.
+	if n.Kind == TokenKindMinus && strings.HasSuffix(formatter.String(), "-") {
+		formatter.WriteByte(whitespace)
+	}
 	formatter.WriteString(string(n.Kind))
-	formatter.WriteByte(whitespace)
+	if n.Kind != TokenKindPlus && n.Kind != TokenKindMinus {
+		formatter.WriteByte(whitespace)
+	}
 	formatter.WriteExpr(n.Expr)
 }
 
