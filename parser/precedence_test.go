@@ -104,16 +104,15 @@ func TestNotBetween(t *testing.T) {
 }
 
 func TestNotInGroupsLikeIn(t *testing.T) {
-	// NOT IN must bind with IN's precedence: `a = b NOT IN (1)` groups as
-	// `a = (b NOT IN (1))`, exactly like `a = b IN (1)`.
+	// Comparisons and membership associate in source order in ClickHouse.
 	for _, sql := range []string{"SELECT a = b IN (1)", "SELECT a = b NOT IN (1)"} {
 		expr := parseSelectItemExpr(t, sql)
-		eq, ok := expr.(*BinaryOperation)
-		require.True(t, ok, "%s: expected `=` at the top, got %T", sql, expr)
-		require.Equal(t, TokenKind("="), eq.Operation, sql)
-		in, ok := eq.RightExpr.(*BinaryOperation)
-		require.True(t, ok, "%s: right side of `=` should be the IN operation, got %T", sql, eq.RightExpr)
+		in, ok := expr.(*BinaryOperation)
+		require.True(t, ok)
 		require.Contains(t, string(in.Operation), "IN", sql)
+		eq, ok := in.LeftExpr.(*BinaryOperation)
+		require.True(t, ok, "membership must apply to the comparison")
+		require.Equal(t, TokenKindSingleEQ, eq.Operation, sql)
 	}
 }
 
@@ -485,16 +484,15 @@ func TestTableFunctionArgShapesUnchanged(t *testing.T) {
 }
 
 func TestGlobalInGroupsLikeIn(t *testing.T) {
-	// GLOBAL IN binds like IN: `a = b GLOBAL IN (1)` is `a = (b GLOBAL IN (1))`
 	for _, sql := range []string{"SELECT a = b GLOBAL IN (1)", "SELECT a = b GLOBAL NOT IN (1)"} {
 		expr := parseSelectItemExpr(t, sql)
-		eq, ok := expr.(*BinaryOperation)
-		require.True(t, ok, "%s: expected `=` at the top, got %T", sql, expr)
-		require.Equal(t, TokenKind("="), eq.Operation, sql)
-
-		in, ok := eq.RightExpr.(*BinaryOperation)
-		require.True(t, ok, "%s: right side of `=` should be the GLOBAL IN operation, got %T", sql, eq.RightExpr)
+		in, ok := expr.(*BinaryOperation)
+		require.True(t, ok)
+		require.Equal(t, TokenKind(KeywordIn), in.Operation, sql)
 		require.True(t, in.HasGlobal, sql)
+		eq, ok := in.LeftExpr.(*BinaryOperation)
+		require.True(t, ok, "membership must apply to the comparison")
+		require.Equal(t, TokenKindSingleEQ, eq.Operation, sql)
 	}
 }
 
@@ -541,4 +539,62 @@ func TestRepeatedIntervalColumnsParseInPolynomialTime(t *testing.T) {
 	stmts, err := NewParser(sql).ParseStmts()
 	require.NoError(t, err)
 	require.Len(t, stmts, 1)
+}
+
+func TestParser_UnaryPostfixBinding(t *testing.T) {
+	for _, sql := range []string{"SELECT -tuple(1, 2).1", "SELECT -arr[1]", "SELECT -x::Int64", "SELECT - -x"} {
+		t.Run(sql, func(t *testing.T) {
+			expr := parseSelectItemExpr(t, sql)
+			unary, ok := expr.(*UnaryExpr)
+			require.True(t, ok, "expected unary minus outside postfix operation, got %T", expr)
+			require.Equal(t, TokenKindMinus, unary.Kind)
+			switch sql {
+			case "SELECT -tuple(1, 2).1":
+				require.IsType(t, &IndexOperation{}, unary.Expr)
+			case "SELECT -arr[1]":
+				require.IsType(t, &ObjectParams{}, unary.Expr)
+			case "SELECT -x::Int64":
+				require.IsType(t, &BinaryOperation{}, unary.Expr)
+			case "SELECT - -x":
+				require.IsType(t, &UnaryExpr{}, unary.Expr)
+			}
+		})
+	}
+}
+
+func TestParser_ComparisonAndBetweenBinding(t *testing.T) {
+	for _, tc := range []struct {
+		sql        string
+		root, left TokenKind
+	}{
+		{"SELECT a LIKE b IN (1)", "IN", "LIKE"},
+		{"SELECT a = b LIKE c", "LIKE", "="},
+		{"SELECT a LIKE b = c", "=", "LIKE"},
+	} {
+		expr, ok := parseSelectItemExpr(t, tc.sql).(*BinaryOperation)
+		require.True(t, ok)
+		require.Equal(t, tc.root, expr.Operation)
+		left, ok := expr.LeftExpr.(*BinaryOperation)
+		require.True(t, ok)
+		require.Equal(t, tc.left, left.Operation)
+	}
+	expr, ok := parseSelectItemExpr(t, "SELECT a BETWEEN b = c AND d = e").(*BetweenClause)
+	require.True(t, ok)
+	for _, bound := range []Expr{expr.Between, expr.And} {
+		comparison, ok := bound.(*BinaryOperation)
+		require.True(t, ok)
+		require.Equal(t, TokenKindSingleEQ, comparison.Operation)
+	}
+}
+
+func TestParser_CastBeforePostfix(t *testing.T) {
+	for _, sql := range []string{"SELECT a::Int64[1]", "SELECT a::Array(Int64)[1]"} {
+		expr := parseSelectItemExpr(t, sql)
+		array, ok := expr.(*ObjectParams)
+		require.True(t, ok, "array access must apply to the cast result")
+		cast, ok := array.Object.(*BinaryOperation)
+		require.True(t, ok)
+		require.Equal(t, TokenKindDash, cast.Operation)
+		require.Equal(t, sql, "SELECT "+Format(expr))
+	}
 }

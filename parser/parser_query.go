@@ -689,7 +689,7 @@ func (p *Parser) parseBetweenClause(expr Expr, not bool) (*BetweenClause, error)
 		return nil, err
 	}
 
-	betweenExpr, err := p.parseSubExpr(p.Pos(), PrecedenceBetweenLike)
+	betweenExpr, err := p.parseSubExpr(p.Pos(), operatorPrecedence(TokenKind(KeywordBetween)))
 	if err != nil {
 		return nil, err
 	}
@@ -699,7 +699,7 @@ func (p *Parser) parseBetweenClause(expr Expr, not bool) (*BetweenClause, error)
 		return nil, err
 	}
 
-	andExpr, err := p.parseSubExpr(p.Pos(), PrecedenceBetweenLike)
+	andExpr, err := p.parseSubExpr(p.Pos(), operatorPrecedence(TokenKind(KeywordBetween)))
 	if err != nil {
 		return nil, err
 	}

@@ -133,12 +133,12 @@ func isLogicalBinaryOp(expr Expr) bool {
 	return false
 }
 
-func (p *BinaryOperation) writeLogicalOperand(formatter *Formatter, expr Expr) {
+func (p *BinaryOperation) writeLogicalOperand(formatter *Formatter, expr Expr, right bool) {
 	if isLogicalBinaryOp(expr) {
-		formatter.WriteExpr(expr)
+		formatter.writeOperand(expr, operatorPrecedence(p.Operation), right)
 	} else {
 		formatter.Indent()
-		formatter.WriteExpr(expr)
+		formatter.writeOperand(expr, operatorPrecedence(p.Operation), right)
 		formatter.Dedent()
 	}
 }
@@ -158,15 +158,15 @@ func (p *BinaryOperation) writeOperatorPrefix(formatter *Formatter) {
 
 func (p *BinaryOperation) FormatSQL(formatter *Formatter) {
 	if p.isLogicalOp() && formatter.mode == FormatModeBeautify {
-		p.writeLogicalOperand(formatter, p.LeftExpr)
+		p.writeLogicalOperand(formatter, p.LeftExpr, false)
 		formatter.NewLine()
 		p.writeOperatorPrefix(formatter)
 		formatter.WriteString(string(p.Operation))
 		formatter.NewLine()
-		p.writeLogicalOperand(formatter, p.RightExpr)
+		p.writeLogicalOperand(formatter, p.RightExpr, true)
 		return
 	}
-	formatter.WriteExpr(p.LeftExpr)
+	formatter.writeOperand(p.LeftExpr, operatorPrecedence(p.Operation), p.Operation == TokenKindArrow)
 	if p.Operation != TokenKindDash {
 		formatter.WriteByte(whitespace)
 	}
@@ -175,7 +175,7 @@ func (p *BinaryOperation) FormatSQL(formatter *Formatter) {
 	if p.Operation != TokenKindDash {
 		formatter.WriteByte(whitespace)
 	}
-	formatter.WriteExpr(p.RightExpr)
+	formatter.writeOperand(p.RightExpr, operatorPrecedence(p.Operation), true)
 }
 
 func (a *AliasExpr) FormatSQL(formatter *Formatter) {
@@ -565,15 +565,15 @@ func (f *BetweenClause) FormatSQL(formatter *Formatter) {
 		keyword = "NOT BETWEEN "
 	}
 	if f.Expr != nil {
-		formatter.WriteExpr(f.Expr)
+		formatter.writeOperand(f.Expr, operatorPrecedence(TokenKind(KeywordBetween)), false)
 		formatter.WriteString(" ")
 		formatter.WriteString(keyword)
 	} else {
 		formatter.WriteString(keyword)
 	}
-	formatter.WriteExpr(f.Between)
+	formatter.writeOperand(f.Between, operatorPrecedence(TokenKind(KeywordBetween)), true)
 	formatter.WriteString(" AND ")
-	formatter.WriteExpr(f.And)
+	formatter.writeOperand(f.And, operatorPrecedence(TokenKind(KeywordBetween)), true)
 }
 
 func (b *BoolLiteral) FormatSQL(formatter *Formatter) {
@@ -1671,7 +1671,14 @@ func (i *Ident) FormatSQL(formatter *Formatter) {
 }
 
 func (i *IndexOperation) FormatSQL(formatter *Formatter) {
-	formatter.WriteExpr(i.Object)
+	if _, number := i.Object.(*NumberLiteral); number {
+		// Without parentheses, tuple access on 1 would become the float 1.1.
+		formatter.WriteByte('(')
+		formatter.WriteExpr(i.Object)
+		formatter.WriteByte(')')
+	} else {
+		formatter.writeOperand(i.Object, PrecedenceBracket, false)
+	}
 	formatter.WriteString(string(i.Operation))
 	formatter.WriteExpr(i.Index)
 }
@@ -1749,12 +1756,12 @@ func (i *IntervalFrom) FormatSQL(formatter *Formatter) {
 }
 
 func (n *IsNotNullExpr) FormatSQL(formatter *Formatter) {
-	formatter.WriteExpr(n.Expr)
+	formatter.writeOperand(n.Expr, operatorPrecedence(TokenKind(KeywordIs)), false)
 	formatter.WriteString(" IS NOT NULL")
 }
 
 func (n *IsNullExpr) FormatSQL(formatter *Formatter) {
-	formatter.WriteExpr(n.Expr)
+	formatter.writeOperand(n.Expr, operatorPrecedence(TokenKind(KeywordIs)), false)
 	formatter.WriteString(" IS NULL")
 }
 
@@ -2011,7 +2018,7 @@ func (n *NumberLiteral) FormatSQL(formatter *Formatter) {
 }
 
 func (o *ObjectParams) FormatSQL(formatter *Formatter) {
-	formatter.WriteExpr(o.Object)
+	formatter.writeOperand(o.Object, PrecedenceBracket, false)
 	formatter.WriteExpr(o.Params)
 }
 
@@ -2714,11 +2721,11 @@ func (t *TargetPair) FormatSQL(formatter *Formatter) {
 }
 
 func (t *TernaryOperation) FormatSQL(formatter *Formatter) {
-	formatter.WriteExpr(t.Condition)
+	formatter.writeOperand(t.Condition, PrecedenceQuery, true)
 	formatter.WriteString(" ? ")
-	formatter.WriteExpr(t.TrueExpr)
+	formatter.writeOperand(t.TrueExpr, PrecedenceQuery, true)
 	formatter.WriteString(" : ")
-	formatter.WriteExpr(t.FalseExpr)
+	formatter.writeOperand(t.FalseExpr, PrecedenceOr, true)
 }
 
 func (t *TopClause) FormatSQL(formatter *Formatter) {
@@ -2785,7 +2792,14 @@ func (u *UUID) FormatSQL(formatter *Formatter) {
 func (n *UnaryExpr) FormatSQL(formatter *Formatter) {
 	formatter.WriteString(string(n.Kind))
 	formatter.WriteByte(whitespace)
-	formatter.WriteExpr(n.Expr)
+	switch strings.ToUpper(string(n.Kind)) {
+	case "+", "-":
+		formatter.writeOperand(n.Expr, PrecedenceMulDivMod, true)
+	case KeywordNot:
+		formatter.writeOperand(n.Expr, PrecedenceNot, false)
+	default:
+		formatter.WriteExpr(n.Expr)
+	}
 }
 
 func (u *UpdateAssignment) FormatSQL(formatter *Formatter) {
