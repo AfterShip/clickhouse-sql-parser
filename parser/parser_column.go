@@ -5,30 +5,6 @@ import (
 	"strings"
 )
 
-// Binding order follows ClickHouse's expression parser: lambda `->` binds
-// loosest so `x -> x + 1` keeps the whole body, ternary `?:` sits below
-// OR/AND so `a OR b ? 1 : 2` groups as `(a OR b) ? 1 : 2`, and prefix NOT
-// binds looser than comparisons so `NOT a = b` groups as `NOT (a = b)`.
-const (
-	PrecedenceUnknown = iota
-	PrecedenceArrow
-	PrecedenceQuery
-	PrecedenceOr
-	PrecedenceAnd
-	PrecedenceNot
-	PrecedenceGlobal
-	PrecedenceIs
-	PrecedenceCompare
-	PrecedenceBetweenLike
-	precedenceIn
-	PrecedenceConcat
-	PrecedenceAddSub
-	PrecedenceMulDivMod
-	PrecedenceBracket
-	PrecedenceDot
-	PrecedenceDoubleColon
-)
-
 func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
 	if !p.tryConsumeKeywords(KeywordComment) {
 		return nil, nil // nolint
@@ -37,60 +13,25 @@ func (p *Parser) tryParseColumnComment(pos Pos) (*StringLiteral, error) {
 }
 
 func (p *Parser) getNextPrecedence() int {
-	switch {
-	case p.matchKeyword(KeywordOr):
-		return PrecedenceOr
-	case p.matchKeyword(KeywordAnd):
-		return PrecedenceAnd
-	case p.matchKeyword(KeywordIs):
-		return PrecedenceIs
-	case p.matchKeyword(KeywordNot):
-		// Infix NOT only begins NOT IN/LIKE/ILIKE/BETWEEN, so it binds with
-		// the precedence of the operator it negates; `a = b NOT IN (1)` must
-		// group the same way `a = b IN (1)` does.
-		switch {
-		case p.peekKeyword(KeywordIn):
-			return precedenceIn
-		case p.peekKeyword(KeywordLike), p.peekKeyword(KeywordIlike), p.peekKeyword(KeywordBetween):
-			return PrecedenceBetweenLike
-		default:
-			return PrecedenceNot
-		}
-	case p.matchTokenKind(TokenKindDot):
-		return PrecedenceDot
-	case p.matchTokenKind(TokenKindDash):
-		return PrecedenceDoubleColon
-	case p.matchTokenKind(TokenKindSingleEQ), p.matchTokenKind(TokenKindLT), p.matchTokenKind(TokenKindLE),
-		p.matchTokenKind(TokenKindGE), p.matchTokenKind(TokenKindGT), p.matchTokenKind(TokenKindDoubleEQ),
-		p.matchTokenKind(TokenKindNE), p.matchTokenKind("<>"):
-		return PrecedenceCompare
-	case p.matchTokenKind(TokenKindConcat):
-		return PrecedenceConcat
-	case p.matchTokenKind(TokenKindPlus), p.matchTokenKind(TokenKindMinus):
-		return PrecedenceAddSub
-	case p.matchTokenKind(TokenKindMul), p.matchTokenKind(TokenKindDiv), p.matchTokenKind(TokenKindMod):
-		return PrecedenceMulDivMod
-	case p.matchTokenKind(TokenKindArrow):
-		return PrecedenceArrow
-	case p.matchTokenKind(TokenKindLParen), p.matchTokenKind(TokenKindLBracket):
-		return PrecedenceBracket
-	case p.matchKeyword(KeywordBetween), p.matchKeyword(KeywordLike), p.matchKeyword(KeywordIlike), p.matchKeyword(KeywordRegexp):
-		return PrecedenceBetweenLike
-	case p.matchKeyword(KeywordIn):
-		return precedenceIn
-	case p.matchKeyword(KeywordGlobal):
-		// GLOBAL is also a join locality: in `ON a = b GLOBAL LEFT JOIN c` it
-		// belongs to the FROM clause, so the expression has to end here.
+	if p.current() == nil || (p.current().Kind == TokenKindIdent || p.current().Kind == TokenKindString) {
+		return PrecedenceUnknown
+	}
+	if p.matchKeyword(KeywordGlobal) {
+		// GLOBAL can instead belong to the next JOIN clause.
 		if p.peekJoinAfterLocality() {
 			return PrecedenceUnknown
 		}
-
-		return precedenceIn
-	case p.matchTokenKind(TokenKindQuestionMark):
-		return PrecedenceQuery
-	default:
-		return PrecedenceUnknown
+		return operatorPrecedence(TokenKind(KeywordIn))
 	}
+	if p.matchKeyword(KeywordNot) {
+		switch {
+		case p.peekKeyword(KeywordBetween):
+			return operatorPrecedence(TokenKind(KeywordBetween))
+		case p.peekKeyword(KeywordIn), p.peekKeyword(KeywordLike), p.peekKeyword(KeywordIlike):
+			return PrecedenceCompare
+		}
+	}
+	return operatorPrecedence(TokenKind(p.current().ToString()))
 }
 
 func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
@@ -151,7 +92,18 @@ func (p *Parser) parseInfix(expr Expr, precedence int) (Expr, error) {
 			}, nil
 		}
 
-		rightExpr, err := p.parseSubExpr(p.Pos(), precedence)
+		// The cast target is a type, so postfix access belongs to the cast
+		// result rather than to the identifier naming that type.
+		var rightExpr Expr
+		var err error
+		switch {
+		case p.matchTokenKind(TokenKindString):
+			rightExpr, err = p.parseString(p.Pos())
+		case p.peekTokenKind(TokenKindLParen):
+			rightExpr, err = p.parseFunctionExpr(p.Pos())
+		default:
+			rightExpr, err = p.parseIdent()
+		}
 		if err != nil {
 			return nil, err
 		}
@@ -415,7 +367,7 @@ func (p *Parser) parseUnaryExpr(pos Pos) (Expr, error) {
 	case p.matchTokenKind(TokenKindPlus),
 		p.matchTokenKind(TokenKindMinus):
 		_ = p.lexer.consumeToken()
-		expr, err = p.parseColumnExpr(p.Pos())
+		expr, err = p.parseSubExpr(p.Pos(), PrecedenceMulDivMod)
 	case p.matchKeyword(KeywordNot):
 		_ = p.lexer.consumeToken()
 		// Prefix NOT binds looser than comparisons: `NOT a = b` negates the

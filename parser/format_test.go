@@ -71,3 +71,51 @@ func TestFormatter_DefaultIndent(t *testing.T) {
 	formatter := NewFormatter()
 	require.Equal(t, "  ", formatter.indent)
 }
+
+func TestFormatter_ExplicitExpressionParentheses(t *testing.T) {
+	for _, sql := range []string{
+		"a + b * c",
+		"(a + b) * c",
+		"a - b - c",
+		"a - (b - c)",
+		"((a))",
+		"(a OR b) AND c",
+		"NOT (a AND b)",
+		"-tuple(1, 2).1",
+		"-arr[1]",
+		"-x::Int64",
+		"+x",
+		"- -x",
+		"-(-x)",
+		"- -1",
+		"- -1::Int64",
+		"- - -x",
+		"(-a).1",
+		"(1).1",
+		"a::Int64[1]",
+		"(a + b)::Int64",
+		"a = b IN (1)",
+		"a = (b IN (1))",
+		"a BETWEEN (b AND c) AND c",
+		"a ? b : (a ? b : c)",
+		"a -> (b -> c)",
+	} {
+		t.Run(sql, func(t *testing.T) {
+			expr := parseSelectItemExpr(t, "SELECT "+sql)
+			require.Equal(t, sql, Format(expr))
+			formatter := NewFormatter().WithBeautify()
+			formatter.WriteExpr(expr)
+			reparsed := parseSelectItemExpr(t, "SELECT "+formatter.String())
+			require.Equal(t, sql, Format(reparsed))
+		})
+	}
+}
+
+func TestFormatter_EditedExpressionRequiresExplicitParentheses(t *testing.T) {
+	expr, ok := parseSelectItemExpr(t, "SELECT a * b").(*BinaryOperation)
+	require.True(t, ok)
+	expr.LeftExpr = parseSelectItemExpr(t, "SELECT c + d")
+	require.Equal(t, "c + d * b", Format(expr))
+	expr.LeftExpr = parseSelectItemExpr(t, "SELECT (c + d)")
+	require.Equal(t, "(c + d) * b", Format(expr))
+}
