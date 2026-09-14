@@ -93,8 +93,8 @@
                           "Base": 10
                         },
                         {
-                          "LiteralPos": 113,
-                          "LiteralEnd": 116,
+                          "LiteralPos": 112,
+                          "LiteralEnd": 117,
                           "Literal": "UTC"
                         }
                       ]
@@ -557,8 +557,8 @@
                 "Base": 10
               },
               {
-                "LiteralPos": 431,
-                "LiteralEnd": 434,
+                "LiteralPos": 430,
+                "LiteralEnd": 435,
                 "Literal": "UTC"
               }
             ]
@@ -1753,7 +1753,7 @@
         },
         {
           "NamePos": 1351,
-          "ColumnEnd": 1378,
+          "ColumnEnd": 1379,
           "Name": {
             "Ident": {
               "Name": "f188",
@@ -2108,7 +2108,7 @@
         "PartitionPos": 1785,
         "Expr": {
           "ListPos": 1798,
-          "ListEnd": 1814,
+          "ListEnd": 1815,
           "HasDistinct": false,
           "Items": [
             {
@@ -2149,7 +2149,7 @@
       "SampleBy": null,
       "TTL": {
         "TTLPos": 1899,
-        "ListEnd": 1939,
+        "ListEnd": 1940,
         "Items": [
           {
             "TTLPos": 1899,
@@ -2267,7 +2267,7 @@
               "RightParenPos": 1893,
               "Items": {
                 "ListPos": 1830,
-                "ListEnd": 1892,
+                "ListEnd": 1893,
                 "HasDistinct": false,
                 "Items": [
                   {

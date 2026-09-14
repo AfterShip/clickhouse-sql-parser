@@ -40,22 +40,22 @@
         "LeftParenPos": 99,
         "RightParenPos": 150,
         "Items": {
-          "ListPos": 101,
-          "ListEnd": 149,
+          "ListPos": 100,
+          "ListEnd": 150,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 101,
-                "LiteralEnd": 136,
+                "LiteralPos": 100,
+                "LiteralEnd": 137,
                 "Literal": "/clickhouse/{layer}-{shard}/test/t0"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 140,
-                "LiteralEnd": 149,
+                "LiteralPos": 139,
+                "LiteralEnd": 150,
                 "Literal": "{replica}"
               },
               "Alias": null
@@ -69,7 +69,7 @@
         "PartitionPos": 152,
         "Expr": {
           "ListPos": 165,
-          "ListEnd": 176,
+          "ListEnd": 177,
           "HasDistinct": false,
           "Items": [
             {
@@ -248,7 +248,7 @@
                   "HasParen": true,
                   "Select": {
                     "SelectPos": 254,
-                    "StatementEnd": 433,
+                    "StatementEnd": 434,
                     "With": null,
                     "Top": null,
                     "HasDistinct": false,
@@ -331,7 +331,7 @@
                             },
                             "OrderBy": {
                               "OrderPos": 323,
-                              "ListEnd": 346,
+                              "ListEnd": 347,
                               "Items": [
                                 {
                                   "OrderPos": 323,
@@ -437,30 +437,30 @@
                             "LeftParenPos": 389,
                             "RightParenPos": 410,
                             "Items": {
-                              "ListPos": 391,
-                              "ListEnd": 409,
+                              "ListPos": 390,
+                              "ListEnd": 410,
                               "HasDistinct": false,
                               "Items": [
                                 {
                                   "Expr": {
-                                    "LiteralPos": 391,
-                                    "LiteralEnd": 394,
+                                    "LiteralPos": 390,
+                                    "LiteralEnd": 395,
                                     "Literal": "foo"
                                   },
                                   "Alias": null
                                 },
                                 {
                                   "Expr": {
-                                    "LiteralPos": 398,
-                                    "LiteralEnd": 401,
+                                    "LiteralPos": 397,
+                                    "LiteralEnd": 402,
                                     "Literal": "bar"
                                   },
                                   "Alias": null
                                 },
                                 {
                                   "Expr": {
-                                    "LiteralPos": 405,
-                                    "LiteralEnd": 409,
+                                    "LiteralPos": 404,
+                                    "LiteralEnd": 410,
                                     "Literal": "test"
                                   },
                                   "Alias": null
@@ -482,8 +482,8 @@
                           },
                           "Operation": "=",
                           "RightExpr": {
-                            "LiteralPos": 429,
-                            "LiteralEnd": 433,
+                            "LiteralPos": 428,
+                            "LiteralEnd": 434,
                             "Literal": "test"
                           },
                           "HasGlobal": false,

@@ -79,7 +79,7 @@
               "Name": "*",
               "QuoteType": 0,
               "NamePos": 126,
-              "NameEnd": 126
+              "NameEnd": 127
             },
             "Modifiers": [],
             "Alias": null
@@ -118,8 +118,8 @@
                         "NameEnd": 150
                       },
                       "Value": {
-                        "LiteralPos": 152,
-                        "LiteralEnd": 205,
+                        "LiteralPos": 151,
+                        "LiteralEnd": 206,
                         "Literal": "https://storage.googleapis.com/some-bucket/some-path/"
                       }
                     }

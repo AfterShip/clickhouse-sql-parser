@@ -20,16 +20,16 @@
     "IfNotExists": true,
     "UUID": {
       "Value": {
-        "LiteralPos": 51,
-        "LiteralEnd": 55,
+        "LiteralPos": 50,
+        "LiteralEnd": 56,
         "Literal": "1234"
       }
     },
     "OnCluster": {
       "OnPos": 57,
       "Expr": {
-        "LiteralPos": 69,
-        "LiteralEnd": 84,
+        "LiteralPos": 68,
+        "LiteralEnd": 85,
         "Literal": "default_cluster"
       }
     },
@@ -269,7 +269,7 @@
         },
         {
           "NamePos": 213,
-          "ColumnEnd": 237,
+          "ColumnEnd": 238,
           "Name": {
             "Ident": {
               "Name": "f7",
@@ -327,22 +327,22 @@
         "LeftParenPos": 269,
         "RightParenPos": 337,
         "Items": {
-          "ListPos": 271,
-          "ListEnd": 336,
+          "ListPos": 270,
+          "ListEnd": 337,
           "HasDistinct": false,
           "Items": [
             {
               "Expr": {
-                "LiteralPos": 271,
-                "LiteralEnd": 323,
+                "LiteralPos": 270,
+                "LiteralEnd": 324,
                 "Literal": "/clickhouse/tables/{layer}-{shard}/test/events_local"
               },
               "Alias": null
             },
             {
               "Expr": {
-                "LiteralPos": 327,
-                "LiteralEnd": 336,
+                "LiteralPos": 326,
+                "LiteralEnd": 337,
                 "Literal": "{replica}"
               },
               "Alias": null
@@ -356,7 +356,7 @@
         "PartitionPos": 365,
         "Expr": {
           "ListPos": 378,
-          "ListEnd": 391,
+          "ListEnd": 392,
           "HasDistinct": false,
           "Items": [
             {

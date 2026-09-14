@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 42,
+    "StatementEnd": 43,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -64,8 +64,8 @@
         },
         "Operation": "REGEXP",
         "RightExpr": {
-          "LiteralPos": 38,
-          "LiteralEnd": 42,
+          "LiteralPos": 37,
+          "LiteralEnd": 43,
           "Literal": "^foo"
         },
         "HasGlobal": false,

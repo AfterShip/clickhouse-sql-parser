@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 216,
+    "StatementEnd": 217,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -85,7 +85,7 @@
     },
     "Engine": {
       "EnginePos": 51,
-      "EngineEnd": 216,
+      "EngineEnd": 217,
       "Name": "MergeTree",
       "Params": null,
       "PrimaryKey": null,
@@ -93,7 +93,7 @@
         "PartitionPos": 70,
         "Expr": {
           "ListPos": 83,
-          "ListEnd": 93,
+          "ListEnd": 94,
           "HasDistinct": false,
           "Items": [
             {
@@ -134,7 +134,7 @@
       "SampleBy": null,
       "TTL": {
         "TTLPos": 106,
-        "ListEnd": 216,
+        "ListEnd": 217,
         "Items": [
           {
             "TTLPos": 106,
@@ -213,8 +213,8 @@
               "Item": {
                 "RulePos": 163,
                 "ToVolume": {
-                  "LiteralPos": 174,
-                  "LiteralEnd": 177,
+                  "LiteralPos": 173,
+                  "LiteralEnd": 178,
                   "Literal": "aaa"
                 },
                 "ToDisk": null,
@@ -258,8 +258,8 @@
                 "RulePos": 204,
                 "ToVolume": null,
                 "ToDisk": {
-                  "LiteralPos": 213,
-                  "LiteralEnd": 216,
+                  "LiteralPos": 212,
+                  "LiteralEnd": 217,
                   "Literal": "bbb"
                 },
                 "Action": null,
@@ -391,7 +391,7 @@
         "PartitionPos": 304,
         "Expr": {
           "ListPos": 317,
-          "ListEnd": 327,
+          "ListEnd": 328,
           "HasDistinct": false,
           "Items": [
             {
@@ -881,7 +881,7 @@
       },
       "OrderBy": {
         "OrderPos": 508,
-        "ListEnd": 523,
+        "ListEnd": 524,
         "Items": [
           {
             "OrderPos": 508,

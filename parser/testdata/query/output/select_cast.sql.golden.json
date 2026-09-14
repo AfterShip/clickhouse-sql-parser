@@ -73,8 +73,8 @@
           "Separator": ",",
           "AsPos": 49,
           "AsType": {
-            "LiteralPos": 52,
-            "LiteralEnd": 59,
+            "LiteralPos": 51,
+            "LiteralEnd": 60,
             "Literal": "Float64"
           }
         },
@@ -313,8 +313,8 @@
           "Separator": ",",
           "AsPos": 188,
           "AsType": {
-            "LiteralPos": 191,
-            "LiteralEnd": 197,
+            "LiteralPos": 190,
+            "LiteralEnd": 198,
             "Literal": "String"
           }
         },

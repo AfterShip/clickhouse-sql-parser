@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 205,
+    "StatementEnd": 206,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -12,7 +12,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 11,
-          "NameEnd": 11
+          "NameEnd": 12
         },
         "Modifiers": [],
         "Alias": null
@@ -38,13 +38,13 @@
                   "RightParenPos": 100,
                   "Items": {
                     "ListPos": 43,
-                    "ListEnd": 99,
+                    "ListEnd": 100,
                     "HasDistinct": false,
                     "Items": [
                       {
                         "Expr": {
                           "SelectPos": 43,
-                          "StatementEnd": 99,
+                          "StatementEnd": 100,
                           "With": null,
                           "Top": null,
                           "HasDistinct": false,
@@ -97,8 +97,8 @@
                               },
                               "Operation": "=",
                               "RightExpr": {
-                                "LiteralPos": 90,
-                                "LiteralEnd": 99,
+                                "LiteralPos": 89,
+                                "LiteralEnd": 100,
                                 "Literal": "999999999"
                               },
                               "HasGlobal": false,
@@ -126,8 +126,8 @@
                 }
               },
               "Then": {
-                "LiteralPos": 116,
-                "LiteralEnd": 120,
+                "LiteralPos": 115,
+                "LiteralEnd": 121,
                 "Literal": "then"
               },
               "ElsePos": 0,
@@ -136,8 +136,8 @@
           ],
           "ElsePos": 130,
           "Else": {
-            "LiteralPos": 136,
-            "LiteralEnd": 140,
+            "LiteralPos": 135,
+            "LiteralEnd": 141,
             "Literal": "else"
           }
         },
@@ -186,8 +186,8 @@
         },
         "Operation": "=",
         "RightExpr": {
-          "LiteralPos": 196,
-          "LiteralEnd": 205,
+          "LiteralPos": 195,
+          "LiteralEnd": 206,
           "Literal": "123456789"
         },
         "HasGlobal": false,

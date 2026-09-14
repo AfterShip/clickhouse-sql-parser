@@ -2942,7 +2942,7 @@ func (q *QueryParam) Pos() Pos {
 }
 
 func (q *QueryParam) End() Pos {
-	return q.RBracePos
+	return q.RBracePos + 1
 }
 
 func (q *QueryParam) Accept(visitor ASTVisitor) error {
@@ -3015,7 +3015,7 @@ func (f *FunctionExpr) Pos() Pos {
 }
 
 func (f *FunctionExpr) End() Pos {
-	return f.Params.RightParenPos
+	return f.Params.RightParenPos + 1
 }
 
 func (f *FunctionExpr) Accept(visitor ASTVisitor) error {

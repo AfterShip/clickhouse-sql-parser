@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 100,
-    "StatementEnd": 663,
+    "StatementEnd": 664,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -223,7 +223,7 @@
               "RightParenPos": 358,
               "Items": {
                 "ListPos": 357,
-                "ListEnd": 357,
+                "ListEnd": 358,
                 "HasDistinct": false,
                 "Items": [
                   {
@@ -231,7 +231,7 @@
                       "Name": "*",
                       "QuoteType": 0,
                       "NamePos": 357,
-                      "NameEnd": 357
+                      "NameEnd": 358
                     },
                     "Alias": null
                   }

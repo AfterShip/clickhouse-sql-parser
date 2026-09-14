@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 537,
+    "StatementEnd": 538,
     "OrReplace": false,
     "Name": {
       "Database": {
@@ -21,8 +21,8 @@
     "OnCluster": {
       "OnPos": 49,
       "Expr": {
-        "LiteralPos": 61,
-        "LiteralEnd": 76,
+        "LiteralPos": 60,
+        "LiteralEnd": 77,
         "Literal": "default_cluster"
       }
     },
@@ -253,7 +253,7 @@
       "HasParen": false,
       "Select": {
         "SelectPos": 208,
-        "StatementEnd": 537,
+        "StatementEnd": 538,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -292,7 +292,7 @@
                 "RightParenPos": 277,
                 "Items": {
                   "ListPos": 261,
-                  "ListEnd": 276,
+                  "ListEnd": 277,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -306,8 +306,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 274,
-                        "LiteralEnd": 276,
+                        "LiteralPos": 273,
+                        "LiteralEnd": 277,
                         "Literal": "f3"
                       },
                       "Alias": null
@@ -338,7 +338,7 @@
                 "RightParenPos": 335,
                 "Items": {
                   "ListPos": 319,
-                  "ListEnd": 334,
+                  "ListEnd": 335,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -352,8 +352,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 332,
-                        "LiteralEnd": 334,
+                        "LiteralPos": 331,
+                        "LiteralEnd": 335,
                         "Literal": "f4"
                       },
                       "Alias": null
@@ -384,7 +384,7 @@
                 "RightParenPos": 396,
                 "Items": {
                   "ListPos": 380,
-                  "ListEnd": 395,
+                  "ListEnd": 396,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -398,8 +398,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 393,
-                        "LiteralEnd": 395,
+                        "LiteralPos": 392,
+                        "LiteralEnd": 396,
                         "Literal": "f5"
                       },
                       "Alias": null
@@ -430,7 +430,7 @@
                 "RightParenPos": 449,
                 "Items": {
                   "ListPos": 433,
-                  "ListEnd": 448,
+                  "ListEnd": 449,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -444,8 +444,8 @@
                     },
                     {
                       "Expr": {
-                        "LiteralPos": 446,
-                        "LiteralEnd": 448,
+                        "LiteralPos": 445,
+                        "LiteralEnd": 449,
                         "Literal": "f6"
                       },
                       "Alias": null
@@ -521,8 +521,8 @@
             },
             "Operation": "=",
             "RightExpr": {
-              "LiteralPos": 527,
-              "LiteralEnd": 537,
+              "LiteralPos": 526,
+              "LiteralEnd": 538,
               "Literal": "test-event"
             },
             "HasGlobal": false,
@@ -545,8 +545,8 @@
     },
     "Populate": false,
     "Comment": {
-      "LiteralPos": 548,
-      "LiteralEnd": 565,
+      "LiteralPos": 547,
+      "LiteralEnd": 566,
       "Literal": "Comment for table"
     },
     "Definer": null,

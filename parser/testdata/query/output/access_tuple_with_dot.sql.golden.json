@@ -20,30 +20,30 @@
               "LeftParenPos": 12,
               "RightParenPos": 24,
               "Items": {
-                "ListPos": 14,
-                "ListEnd": 23,
+                "ListPos": 13,
+                "ListEnd": 24,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
-                      "LiteralPos": 14,
-                      "LiteralEnd": 15,
+                      "LiteralPos": 13,
+                      "LiteralEnd": 16,
                       "Literal": "a"
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "LiteralPos": 18,
-                      "LiteralEnd": 19,
+                      "LiteralPos": 17,
+                      "LiteralEnd": 20,
                       "Literal": "b"
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "LiteralPos": 22,
-                      "LiteralEnd": 23,
+                      "LiteralPos": 21,
+                      "LiteralEnd": 24,
                       "Literal": "c"
                     },
                     "Alias": null
@@ -94,7 +94,7 @@
   },
   {
     "SelectPos": 37,
-    "StatementEnd": 336,
+    "StatementEnd": 337,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -129,14 +129,14 @@
                         "LeftParenPos": 61,
                         "RightParenPos": 102,
                         "Items": {
-                          "ListPos": 63,
+                          "ListPos": 62,
                           "ListEnd": 102,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 63,
-                                "LiteralEnd": 64,
+                                "LiteralPos": 62,
+                                "LiteralEnd": 65,
                                 "Literal": "a"
                               },
                               "Alias": {
@@ -148,8 +148,8 @@
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 76,
-                                "LiteralEnd": 77,
+                                "LiteralPos": 75,
+                                "LiteralEnd": 78,
                                 "Literal": "b"
                               },
                               "Alias": {
@@ -161,8 +161,8 @@
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 91,
-                                "LiteralEnd": 92,
+                                "LiteralPos": 90,
+                                "LiteralEnd": 93,
                                 "Literal": "c"
                               },
                               "Alias": {
@@ -316,14 +316,14 @@
                         "LeftParenPos": 167,
                         "RightParenPos": 208,
                         "Items": {
-                          "ListPos": 169,
+                          "ListPos": 168,
                           "ListEnd": 208,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 169,
-                                "LiteralEnd": 170,
+                                "LiteralPos": 168,
+                                "LiteralEnd": 171,
                                 "Literal": "a"
                               },
                               "Alias": {
@@ -335,8 +335,8 @@
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 182,
-                                "LiteralEnd": 183,
+                                "LiteralPos": 181,
+                                "LiteralEnd": 184,
                                 "Literal": "b"
                               },
                               "Alias": {
@@ -348,8 +348,8 @@
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 197,
-                                "LiteralEnd": 198,
+                                "LiteralPos": 196,
+                                "LiteralEnd": 199,
                                 "Literal": "c"
                               },
                               "Alias": {
@@ -500,30 +500,30 @@
               "LeftParenPos": 279,
               "RightParenPos": 291,
               "Items": {
-                "ListPos": 281,
-                "ListEnd": 290,
+                "ListPos": 280,
+                "ListEnd": 291,
                 "HasDistinct": false,
                 "Items": [
                   {
                     "Expr": {
-                      "LiteralPos": 281,
-                      "LiteralEnd": 282,
+                      "LiteralPos": 280,
+                      "LiteralEnd": 283,
                       "Literal": "a"
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "LiteralPos": 285,
-                      "LiteralEnd": 286,
+                      "LiteralPos": 284,
+                      "LiteralEnd": 287,
                       "Literal": "b"
                     },
                     "Alias": null
                   },
                   {
                     "Expr": {
-                      "LiteralPos": 289,
-                      "LiteralEnd": 290,
+                      "LiteralPos": 288,
+                      "LiteralEnd": 291,
                       "Literal": "c"
                     },
                     "Alias": null
@@ -572,30 +572,30 @@
                       "LeftParenPos": 321,
                       "RightParenPos": 333,
                       "Items": {
-                        "ListPos": 323,
-                        "ListEnd": 332,
+                        "ListPos": 322,
+                        "ListEnd": 333,
                         "HasDistinct": false,
                         "Items": [
                           {
                             "Expr": {
-                              "LiteralPos": 323,
-                              "LiteralEnd": 324,
+                              "LiteralPos": 322,
+                              "LiteralEnd": 325,
                               "Literal": "a"
                             },
                             "Alias": null
                           },
                           {
                             "Expr": {
-                              "LiteralPos": 327,
-                              "LiteralEnd": 328,
+                              "LiteralPos": 326,
+                              "LiteralEnd": 329,
                               "Literal": "b"
                             },
                             "Alias": null
                           },
                           {
                             "Expr": {
-                              "LiteralPos": 331,
-                              "LiteralEnd": 332,
+                              "LiteralPos": 330,
+                              "LiteralEnd": 333,
                               "Literal": "c"
                             },
                             "Alias": null

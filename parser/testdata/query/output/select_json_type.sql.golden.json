@@ -95,7 +95,7 @@
   },
   {
     "SelectPos": 26,
-    "StatementEnd": 75,
+    "StatementEnd": 76,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -113,22 +113,22 @@
             "LeftParenPos": 42,
             "RightParenPos": 75,
             "Items": {
-              "ListPos": 44,
-              "ListEnd": 74,
+              "ListPos": 43,
+              "ListEnd": 75,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
-                    "LiteralPos": 44,
-                    "LiteralEnd": 67,
+                    "LiteralPos": 43,
+                    "LiteralEnd": 68,
                     "Literal": "{\"a\": 1, \"b\": {\"c\": 2}}"
                   },
                   "Alias": null
                 },
                 {
                   "Expr": {
-                    "LiteralPos": 71,
-                    "LiteralEnd": 74,
+                    "LiteralPos": 70,
+                    "LiteralEnd": 75,
                     "Literal": "$.b"
                   },
                   "Alias": null
@@ -179,8 +179,8 @@
           "Separator": ",",
           "AsPos": 94,
           "AsType": {
-            "LiteralPos": 97,
-            "LiteralEnd": 103,
+            "LiteralPos": 96,
+            "LiteralEnd": 104,
             "Literal": "String"
           }
         },
@@ -240,8 +240,8 @@
           "Separator": ",",
           "AsPos": 137,
           "AsType": {
-            "LiteralPos": 140,
-            "LiteralEnd": 146,
+            "LiteralPos": 139,
+            "LiteralEnd": 147,
             "Literal": "String"
           }
         },
@@ -307,8 +307,8 @@
           "Separator": ",",
           "AsPos": 185,
           "AsType": {
-            "LiteralPos": 188,
-            "LiteralEnd": 194,
+            "LiteralPos": 187,
+            "LiteralEnd": 195,
             "Literal": "String"
           }
         },
@@ -380,8 +380,8 @@
           "Separator": ",",
           "AsPos": 238,
           "AsType": {
-            "LiteralPos": 241,
-            "LiteralEnd": 247,
+            "LiteralPos": 240,
+            "LiteralEnd": 248,
             "Literal": "String"
           }
         },

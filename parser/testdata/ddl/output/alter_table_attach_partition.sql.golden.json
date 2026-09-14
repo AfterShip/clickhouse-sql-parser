@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 43,
+    "StatementEnd": 44,
     "TableIdentifier": {
       "Database": null,
       "Table": {
@@ -18,8 +18,8 @@
         "Partition": {
           "PartitionPos": 24,
           "Expr": {
-            "LiteralPos": 35,
-            "LiteralEnd": 43,
+            "LiteralPos": 34,
+            "LiteralEnd": 44,
             "Literal": "20210114"
           },
           "ID": null,
@@ -49,8 +49,8 @@
         "Partition": {
           "PartitionPos": 70,
           "Expr": {
-            "LiteralPos": 81,
-            "LiteralEnd": 89,
+            "LiteralPos": 80,
+            "LiteralEnd": 90,
             "Literal": "20210114"
           },
           "ID": null,
@@ -71,7 +71,7 @@
   },
   {
     "AlterPos": 103,
-    "StatementEnd": 149,
+    "StatementEnd": 150,
     "TableIdentifier": {
       "Database": null,
       "Table": {
@@ -89,8 +89,8 @@
           "PartitionPos": 127,
           "Expr": null,
           "ID": {
-            "LiteralPos": 141,
-            "LiteralEnd": 149,
+            "LiteralPos": 140,
+            "LiteralEnd": 150,
             "Literal": "20210114"
           },
           "All": false

@@ -1506,7 +1506,7 @@
               "RightParenPos": 3293,
               "Items": {
                 "ListPos": 3292,
-                "ListEnd": 3292,
+                "ListEnd": 3293,
                 "HasDistinct": false,
                 "Items": [
                   {
@@ -1514,7 +1514,7 @@
                       "Name": "*",
                       "QuoteType": 0,
                       "NamePos": 3292,
-                      "NameEnd": 3292
+                      "NameEnd": 3293
                     },
                     "Alias": null
                   }
@@ -1770,7 +1770,7 @@
               "PartitionPos": 3629,
               "Expr": {
                 "ListPos": 3643,
-                "ListEnd": 3670,
+                "ListEnd": 3671,
                 "HasDistinct": false,
                 "Items": [
                   {
@@ -1785,14 +1785,14 @@
                         "LeftParenPos": 3653,
                         "RightParenPos": 3670,
                         "Items": {
-                          "ListPos": 3655,
+                          "ListPos": 3654,
                           "ListEnd": 3670,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 3655,
-                                "LiteralEnd": 3658,
+                                "LiteralPos": 3654,
+                                "LiteralEnd": 3659,
                                 "Literal": "day"
                               },
                               "Alias": null

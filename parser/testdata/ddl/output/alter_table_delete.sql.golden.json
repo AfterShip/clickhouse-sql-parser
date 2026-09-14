@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 61,
+    "StatementEnd": 62,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -20,7 +20,7 @@
     "AlterExprs": [
       {
         "DeletePos": 24,
-        "StatementEnd": 61,
+        "StatementEnd": 62,
         "WhereClause": {
           "LeftExpr": {
             "Name": "created_at",
@@ -30,8 +30,8 @@
           },
           "Operation": "\u003c",
           "RightExpr": {
-            "LiteralPos": 51,
-            "LiteralEnd": 61,
+            "LiteralPos": 50,
+            "LiteralEnd": 62,
             "Literal": "2023-01-01"
           },
           "HasGlobal": false,

@@ -193,7 +193,7 @@
   },
   {
     "CreatePos": 282,
-    "StatementEnd": 328,
+    "StatementEnd": 329,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -221,8 +221,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 321,
-              "LiteralEnd": 328,
+              "LiteralPos": 320,
+              "LiteralEnd": 329,
               "Literal": "default"
             }
           }
@@ -562,8 +562,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 743,
-              "LiteralEnd": 750,
+              "LiteralPos": 742,
+              "LiteralEnd": 751,
               "Literal": "default"
             }
           }
@@ -670,7 +670,7 @@
   },
   {
     "CreatePos": 862,
-    "StatementEnd": 908,
+    "StatementEnd": 909,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -698,8 +698,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 901,
-              "LiteralEnd": 908,
+              "LiteralPos": 900,
+              "LiteralEnd": 909,
               "Literal": "default"
             }
           }
@@ -814,8 +814,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 1039,
-              "LiteralEnd": 1046,
+              "LiteralPos": 1038,
+              "LiteralEnd": 1047,
               "Literal": "default"
             }
           }
@@ -896,7 +896,7 @@
   },
   {
     "CreatePos": 1123,
-    "StatementEnd": 1146,
+    "StatementEnd": 1147,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -908,8 +908,8 @@
           "NameEnd": 1143
         },
         "Scope": {
-          "LiteralPos": 1145,
-          "LiteralEnd": 1146,
+          "LiteralPos": 1144,
+          "LiteralEnd": 1147,
           "Literal": "%"
         },
         "OnCluster": null
@@ -920,7 +920,7 @@
   },
   {
     "CreatePos": 1149,
-    "StatementEnd": 1183,
+    "StatementEnd": 1184,
     "IfNotExists": false,
     "OrReplace": false,
     "RoleNames": [
@@ -932,8 +932,8 @@
           "NameEnd": 1169
         },
         "Scope": {
-          "LiteralPos": 1171,
-          "LiteralEnd": 1183,
+          "LiteralPos": 1170,
+          "LiteralEnd": 1184,
           "Literal": "%.myhost.com"
         },
         "OnCluster": null

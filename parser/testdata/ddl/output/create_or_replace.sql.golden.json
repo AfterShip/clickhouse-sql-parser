@@ -196,7 +196,7 @@
         "PartitionPos": 292,
         "Expr": {
           "ListPos": 305,
-          "ListEnd": 318,
+          "ListEnd": 319,
           "HasDistinct": false,
           "Items": [
             {
@@ -320,8 +320,8 @@
     "TableFunction": null,
     "HasTemporary": false,
     "Comment": {
-      "LiteralPos": 372,
-      "LiteralEnd": 389,
+      "LiteralPos": 371,
+      "LiteralEnd": 390,
       "Literal": "Comment for table"
     }
   },

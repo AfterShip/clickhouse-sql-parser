@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 81,
+    "StatementEnd": 82,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -19,20 +19,20 @@
     "OnCluster": {
       "OnPos": 24,
       "Expr": {
-        "LiteralPos": 36,
-        "LiteralEnd": 51,
+        "LiteralPos": 35,
+        "LiteralEnd": 52,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
         "FreezePos": 53,
-        "StatementEnd": 81,
+        "StatementEnd": 82,
         "Partition": {
           "PartitionPos": 60,
           "Expr": {
-            "LiteralPos": 71,
-            "LiteralEnd": 81,
+            "LiteralPos": 70,
+            "LiteralEnd": 82,
             "Literal": "2023-07-18"
           },
           "ID": null,

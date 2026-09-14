@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 295,
+    "StatementEnd": 296,
     "OrReplace": true,
     "Name": {
       "Database": null,
@@ -21,7 +21,7 @@
       "HasParen": false,
       "Select": {
         "SelectPos": 31,
-        "StatementEnd": 295,
+        "StatementEnd": 296,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -197,8 +197,8 @@
             },
             "Operation": "\u003e=",
             "RightExpr": {
-              "LiteralPos": 285,
-              "LiteralEnd": 295,
+              "LiteralPos": 284,
+              "LiteralEnd": 296,
               "Literal": "2023-01-01"
             },
             "HasGlobal": false,

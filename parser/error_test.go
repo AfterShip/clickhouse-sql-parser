@@ -79,6 +79,15 @@ func TestParseError_LexicalFailure(t *testing.T) {
 	}
 }
 
+func TestParseError_CaretUsesDisplayWidth(t *testing.T) {
+	_, err := NewParser("SELECT\t中文 FROM 123").ParseStmts()
+	require.Error(t, err)
+	var pe *ParseError
+	require.ErrorAs(t, err, &pe)
+	require.Equal(t, 1, pe.Line)
+	require.Contains(t, pe.Error(), "SELECT\t中文 FROM 123\n        ^")
+}
+
 func TestParser_TokenConsumptionError(t *testing.T) {
 	for _, tc := range []struct {
 		name  string

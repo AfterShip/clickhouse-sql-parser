@@ -24,8 +24,8 @@
         "Partition": {
           "PartitionPos": 99,
           "Expr": {
-            "LiteralPos": 110,
-            "LiteralEnd": 120,
+            "LiteralPos": 109,
+            "LiteralEnd": 121,
             "Literal": "2022-05-24"
           },
           "ID": null,

@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 355,
+    "StatementEnd": 356,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -179,7 +179,7 @@
       "HasParen": true,
       "Select": {
         "SelectPos": 218,
-        "StatementEnd": 355,
+        "StatementEnd": 356,
         "With": null,
         "Top": null,
         "HasDistinct": false,
@@ -286,7 +286,7 @@
                 "RightParenPos": 355,
                 "Items": {
                   "ListPos": 330,
-                  "ListEnd": 354,
+                  "ListEnd": 355,
                   "HasDistinct": false,
                   "Items": [
                     {
@@ -370,8 +370,8 @@
     },
     "Populate": false,
     "Comment": {
-      "LiteralPos": 367,
-      "LiteralEnd": 379,
+      "LiteralPos": 366,
+      "LiteralEnd": 380,
       "Literal": "Test comment"
     },
     "Definer": {

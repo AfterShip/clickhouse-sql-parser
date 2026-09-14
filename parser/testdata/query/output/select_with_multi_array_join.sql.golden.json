@@ -118,7 +118,7 @@
                       "RightParenPos": 154,
                       "Items": {
                         "ListPos": 97,
-                        "ListEnd": 152,
+                        "ListEnd": 153,
                         "HasDistinct": false,
                         "Items": [
                           {
@@ -134,7 +134,7 @@
                                 "RightParenPos": 121,
                                 "Items": {
                                   "ListPos": 115,
-                                  "ListEnd": 120,
+                                  "ListEnd": 121,
                                   "HasDistinct": false,
                                   "Items": [
                                     {
@@ -148,8 +148,8 @@
                                     },
                                     {
                                       "Expr": {
-                                        "LiteralPos": 119,
-                                        "LiteralEnd": 120,
+                                        "LiteralPos": 118,
+                                        "LiteralEnd": 121,
                                         "Literal": "x"
                                       },
                                       "Alias": null
@@ -174,7 +174,7 @@
                                 "RightParenPos": 152,
                                 "Items": {
                                   "ListPos": 146,
-                                  "ListEnd": 151,
+                                  "ListEnd": 152,
                                   "HasDistinct": false,
                                   "Items": [
                                     {
@@ -188,8 +188,8 @@
                                     },
                                     {
                                       "Expr": {
-                                        "LiteralPos": 150,
-                                        "LiteralEnd": 151,
+                                        "LiteralPos": 149,
+                                        "LiteralEnd": 152,
                                         "Literal": "y"
                                       },
                                       "Alias": null

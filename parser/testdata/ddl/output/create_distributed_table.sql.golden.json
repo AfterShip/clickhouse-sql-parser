@@ -22,8 +22,8 @@
     "OnCluster": {
       "OnPos": 28,
       "Expr": {
-        "LiteralPos": 40,
-        "LiteralEnd": 55,
+        "LiteralPos": 39,
+        "LiteralEnd": 56,
         "Literal": "default_cluster"
       }
     },
@@ -56,7 +56,7 @@
         "RightParenPos": 160,
         "Items": {
           "ListPos": 104,
-          "ListEnd": 158,
+          "ListEnd": 159,
           "HasDistinct": false,
           "Items": [
             {

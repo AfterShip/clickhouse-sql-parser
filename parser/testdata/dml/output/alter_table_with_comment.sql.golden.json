@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 106,
+    "StatementEnd": 107,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -19,18 +19,18 @@
     "OnCluster": {
       "OnPos": 30,
       "Expr": {
-        "LiteralPos": 42,
-        "LiteralEnd": 57,
+        "LiteralPos": 41,
+        "LiteralEnd": 58,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
         "AddPos": 59,
-        "StatementEnd": 106,
+        "StatementEnd": 107,
         "Column": {
           "NamePos": 70,
-          "ColumnEnd": 106,
+          "ColumnEnd": 107,
           "Name": {
             "Ident": {
               "Name": "a",
@@ -56,8 +56,8 @@
           "NotNull": null,
           "Nullable": null,
           "DefaultExpr": {
-            "LiteralPos": 91,
-            "LiteralEnd": 91,
+            "LiteralPos": 90,
+            "LiteralEnd": 92,
             "Literal": ""
           },
           "MaterializedExpr": null,
@@ -66,7 +66,7 @@
           "TTL": null,
           "Comment": {
             "LiteralPos": 93,
-            "LiteralEnd": 106,
+            "LiteralEnd": 107,
             "Literal": "test"
           },
           "CompressionCodec": null
@@ -79,7 +79,7 @@
   },
   {
     "AlterPos": 110,
-    "StatementEnd": 202,
+    "StatementEnd": 203,
     "TableIdentifier": {
       "Database": {
         "Name": "test",
@@ -97,18 +97,18 @@
     "OnCluster": {
       "OnPos": 140,
       "Expr": {
-        "LiteralPos": 152,
-        "LiteralEnd": 167,
+        "LiteralPos": 151,
+        "LiteralEnd": 168,
         "Literal": "default_cluster"
       }
     },
     "AlterExprs": [
       {
         "AddPos": 169,
-        "StatementEnd": 202,
+        "StatementEnd": 203,
         "Column": {
           "NamePos": 180,
-          "ColumnEnd": 202,
+          "ColumnEnd": 203,
           "Name": {
             "Ident": {
               "Name": "hello",
@@ -129,8 +129,8 @@
           "NotNull": null,
           "Nullable": null,
           "DefaultExpr": {
-            "LiteralPos": 202,
-            "LiteralEnd": 202,
+            "LiteralPos": 201,
+            "LiteralEnd": 203,
             "Literal": ""
           },
           "MaterializedExpr": null,

@@ -1,7 +1,7 @@
 [
   {
     "TruncatePos": 0,
-    "StatementEnd": 78,
+    "StatementEnd": 79,
     "IsTemporary": true,
     "IfExists": true,
     "Name": {
@@ -21,8 +21,8 @@
     "OnCluster": {
       "OnPos": 51,
       "Expr": {
-        "LiteralPos": 63,
-        "LiteralEnd": 78,
+        "LiteralPos": 62,
+        "LiteralEnd": 79,
         "Literal": "default_cluster"
       }
     }

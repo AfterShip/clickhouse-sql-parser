@@ -24,8 +24,8 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "LiteralPos": 25,
-                  "LiteralEnd": 31,
+                  "LiteralPos": 24,
+                  "LiteralEnd": 32,
                   "Literal": "value1"
                 },
                 "Modifiers": [],
@@ -73,8 +73,8 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "LiteralPos": 65,
-                  "LiteralEnd": 71,
+                  "LiteralPos": 64,
+                  "LiteralEnd": 72,
                   "Literal": "value2"
                 },
                 "Modifiers": [],
@@ -122,8 +122,8 @@
             "SelectItems": [
               {
                 "Expr": {
-                  "LiteralPos": 105,
-                  "LiteralEnd": 111,
+                  "LiteralPos": 104,
+                  "LiteralEnd": 112,
                   "Literal": "value3"
                 },
                 "Modifiers": [],

@@ -497,7 +497,7 @@
         },
         {
           "NamePos": 457,
-          "ColumnEnd": 481,
+          "ColumnEnd": 482,
           "Name": {
             "Ident": {
               "Name": "f8",
@@ -545,7 +545,7 @@
         },
         {
           "NamePos": 488,
-          "ColumnEnd": 529,
+          "ColumnEnd": 530,
           "Name": {
             "Ident": {
               "Name": "f9",
@@ -593,14 +593,14 @@
                         "LeftBracketPos": 522,
                         "RightBracketPos": 528,
                         "Items": {
-                          "ListPos": 524,
-                          "ListEnd": 527,
+                          "ListPos": 523,
+                          "ListEnd": 528,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 524,
-                                "LiteralEnd": 527,
+                                "LiteralPos": 523,
+                                "LiteralEnd": 528,
                                 "Literal": "f70"
                               },
                               "Alias": null
@@ -751,8 +751,8 @@
                 {
                   "SkipPath": null,
                   "SkipRegex": {
-                    "LiteralPos": 647,
-                    "LiteralEnd": 652,
+                    "LiteralPos": 646,
+                    "LiteralEnd": 653,
                     "Literal": "hello"
                   },
                   "MaxDynamicPaths": null,
@@ -827,7 +827,7 @@
         "PartitionPos": 702,
         "Expr": {
           "ListPos": 715,
-          "ListEnd": 728,
+          "ListEnd": 729,
           "HasDistinct": false,
           "Items": [
             {
@@ -960,8 +960,8 @@
     "TableFunction": null,
     "HasTemporary": false,
     "Comment": {
-      "LiteralPos": 785,
-      "LiteralEnd": 802,
+      "LiteralPos": 784,
+      "LiteralEnd": 803,
       "Literal": "Comment for table"
     }
   }

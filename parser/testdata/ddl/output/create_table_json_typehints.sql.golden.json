@@ -1,7 +1,7 @@
 [
   {
     "CreatePos": 0,
-    "StatementEnd": 139,
+    "StatementEnd": 140,
     "OrReplace": false,
     "Name": {
       "Database": null,
@@ -131,8 +131,8 @@
                 {
                   "SkipPath": null,
                   "SkipRegex": {
-                    "LiteralPos": 98,
-                    "LiteralEnd": 100,
+                    "LiteralPos": 97,
+                    "LiteralEnd": 101,
                     "Literal": "re"
                   },
                   "MaxDynamicPaths": null,
@@ -158,7 +158,7 @@
     },
     "Engine": {
       "EnginePos": 105,
-      "EngineEnd": 139,
+      "EngineEnd": 140,
       "Name": "MergeTree",
       "Params": null,
       "PrimaryKey": null,
@@ -168,7 +168,7 @@
       "Settings": null,
       "OrderBy": {
         "OrderPos": 124,
-        "ListEnd": 139,
+        "ListEnd": 140,
         "Items": [
           {
             "OrderPos": 124,

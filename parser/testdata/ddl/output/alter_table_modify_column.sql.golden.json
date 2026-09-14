@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 52,
+    "StatementEnd": 53,
     "TableIdentifier": {
       "Database": null,
       "Table": {
@@ -15,11 +15,11 @@
     "AlterExprs": [
       {
         "ModifyPos": 15,
-        "StatementEnd": 52,
+        "StatementEnd": 53,
         "IfExists": false,
         "Column": {
           "NamePos": 29,
-          "ColumnEnd": 52,
+          "ColumnEnd": 53,
           "Name": {
             "Ident": {
               "Name": "f1",
@@ -46,7 +46,7 @@
           "TTL": null,
           "Comment": {
             "LiteralPos": 39,
-            "LiteralEnd": 52,
+            "LiteralEnd": 53,
             "Literal": "test"
           },
           "CompressionCodec": null

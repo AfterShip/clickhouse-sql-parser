@@ -122,7 +122,7 @@
   {
     "DropPos": 148,
     "Target": "ROLE",
-    "StatementEnd": 204,
+    "StatementEnd": 205,
     "Names": [
       {
         "Name": {
@@ -132,16 +132,16 @@
           "NameEnd": 176
         },
         "Scope": {
-          "LiteralPos": 178,
-          "LiteralEnd": 179,
+          "LiteralPos": 177,
+          "LiteralEnd": 180,
           "Literal": "%"
         },
         "OnCluster": null
       },
       {
         "Name": {
-          "LiteralPos": 183,
-          "LiteralEnd": 204,
+          "LiteralPos": 182,
+          "LiteralEnd": 205,
           "Literal": "r2_01293@%.myhost.com"
         },
         "Scope": null,

@@ -50,7 +50,7 @@
     "SetPos": 81,
     "Settings": {
       "SettingsPos": 85,
-      "ListEnd": 132,
+      "ListEnd": 133,
       "Items": [
         {
           "SettingsPos": 85,
@@ -61,8 +61,8 @@
             "NameEnd": 124
           },
           "Expr": {
-            "LiteralPos": 128,
-            "LiteralEnd": 132,
+            "LiteralPos": 127,
+            "LiteralEnd": 133,
             "Literal": "true"
           }
         }

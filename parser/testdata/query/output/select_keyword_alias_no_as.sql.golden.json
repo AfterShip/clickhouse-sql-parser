@@ -9,8 +9,8 @@
     "SelectItems": [
       {
         "Expr": {
-          "LiteralPos": 8,
-          "LiteralEnd": 11,
+          "LiteralPos": 7,
+          "LiteralEnd": 12,
           "Literal": "Joe"
         },
         "Modifiers": [],

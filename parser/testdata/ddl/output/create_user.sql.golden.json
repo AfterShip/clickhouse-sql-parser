@@ -150,7 +150,7 @@
   },
   {
     "CreatePos": 206,
-    "StatementEnd": 274,
+    "StatementEnd": 275,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -167,12 +167,12 @@
     ],
     "Authentication": {
       "AuthPos": 224,
-      "AuthEnd": 274,
+      "AuthEnd": 275,
       "NotIdentified": false,
       "AuthType": "plaintext_password",
       "AuthValue": {
-        "LiteralPos": 263,
-        "LiteralEnd": 274,
+        "LiteralPos": 262,
+        "LiteralEnd": 275,
         "Literal": "password123"
       },
       "LdapServer": null,
@@ -189,7 +189,7 @@
   },
   {
     "CreatePos": 277,
-    "StatementEnd": 338,
+    "StatementEnd": 339,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -206,12 +206,12 @@
     ],
     "Authentication": {
       "AuthPos": 295,
-      "AuthEnd": 338,
+      "AuthEnd": 339,
       "NotIdentified": false,
       "AuthType": "sha256_password",
       "AuthValue": {
-        "LiteralPos": 331,
-        "LiteralEnd": 338,
+        "LiteralPos": 330,
+        "LiteralEnd": 339,
         "Literal": "hash123"
       },
       "LdapServer": null,
@@ -228,7 +228,7 @@
   },
   {
     "CreatePos": 341,
-    "StatementEnd": 399,
+    "StatementEnd": 400,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -245,13 +245,13 @@
     ],
     "Authentication": {
       "AuthPos": 359,
-      "AuthEnd": 399,
+      "AuthEnd": 400,
       "NotIdentified": false,
       "AuthType": "",
       "AuthValue": null,
       "LdapServer": {
-        "LiteralPos": 388,
-        "LiteralEnd": 399,
+        "LiteralPos": 387,
+        "LiteralEnd": 400,
         "Literal": "ldap_server"
       },
       "KerberosRealm": null,
@@ -302,7 +302,7 @@
   },
   {
     "CreatePos": 447,
-    "StatementEnd": 509,
+    "StatementEnd": 510,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -319,14 +319,14 @@
     ],
     "Authentication": {
       "AuthPos": 466,
-      "AuthEnd": 509,
+      "AuthEnd": 510,
       "NotIdentified": false,
       "AuthType": "",
       "AuthValue": null,
       "LdapServer": null,
       "KerberosRealm": {
-        "LiteralPos": 498,
-        "LiteralEnd": 509,
+        "LiteralPos": 497,
+        "LiteralEnd": 510,
         "Literal": "EXAMPLE.COM"
       },
       "IsKerberos": true
@@ -341,7 +341,7 @@
   },
   {
     "CreatePos": 545,
-    "StatementEnd": 596,
+    "StatementEnd": 597,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -358,8 +358,8 @@
     ],
     "Authentication": null,
     "ValidUntil": {
-      "LiteralPos": 577,
-      "LiteralEnd": 596,
+      "LiteralPos": 576,
+      "LiteralEnd": 597,
       "Literal": "2026-12-12 00:00:00"
     },
     "Hosts": null,
@@ -371,7 +371,7 @@
   },
   {
     "CreatePos": 599,
-    "StatementEnd": 693,
+    "StatementEnd": 694,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -388,12 +388,12 @@
     ],
     "Authentication": {
       "AuthPos": 618,
-      "AuthEnd": 668,
+      "AuthEnd": 669,
       "NotIdentified": false,
       "AuthType": "plaintext_password",
       "AuthValue": {
-        "LiteralPos": 657,
-        "LiteralEnd": 668,
+        "LiteralPos": 656,
+        "LiteralEnd": 669,
         "Literal": "password123"
       },
       "LdapServer": null,
@@ -401,8 +401,8 @@
       "IsKerberos": false
     },
     "ValidUntil": {
-      "LiteralPos": 683,
-      "LiteralEnd": 693,
+      "LiteralPos": 682,
+      "LiteralEnd": 694,
       "Literal": "2026-06-15"
     },
     "Hosts": null,
@@ -414,7 +414,7 @@
   },
   {
     "CreatePos": 696,
-    "StatementEnd": 736,
+    "StatementEnd": 737,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -431,8 +431,8 @@
     ],
     "Authentication": null,
     "ValidUntil": {
-      "LiteralPos": 728,
-      "LiteralEnd": 736,
+      "LiteralPos": 727,
+      "LiteralEnd": 737,
       "Literal": "infinity"
     },
     "Hosts": null,
@@ -543,7 +543,7 @@
   },
   {
     "CreatePos": 868,
-    "StatementEnd": 907,
+    "StatementEnd": 908,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -563,11 +563,11 @@
     "Hosts": [
       {
         "HostPos": 887,
-        "HostEnd": 907,
+        "HostEnd": 908,
         "HostType": "NAME",
         "HostValue": {
-          "LiteralPos": 898,
-          "LiteralEnd": 907,
+          "LiteralPos": 897,
+          "LiteralEnd": 908,
           "Literal": "localhost"
         }
       }
@@ -580,7 +580,7 @@
   },
   {
     "CreatePos": 910,
-    "StatementEnd": 958,
+    "StatementEnd": 959,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -600,11 +600,11 @@
     "Hosts": [
       {
         "HostPos": 929,
-        "HostEnd": 958,
+        "HostEnd": 959,
         "HostType": "REGEXP",
         "HostValue": {
-          "LiteralPos": 942,
-          "LiteralEnd": 958,
+          "LiteralPos": 941,
+          "LiteralEnd": 959,
           "Literal": ".*\\.example\\.com"
         }
       }
@@ -617,7 +617,7 @@
   },
   {
     "CreatePos": 961,
-    "StatementEnd": 1000,
+    "StatementEnd": 1001,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -637,11 +637,11 @@
     "Hosts": [
       {
         "HostPos": 980,
-        "HostEnd": 1000,
+        "HostEnd": 1001,
         "HostType": "IP",
         "HostValue": {
-          "LiteralPos": 989,
-          "LiteralEnd": 1000,
+          "LiteralPos": 988,
+          "LiteralEnd": 1001,
           "Literal": "192.168.1.1"
         }
       }
@@ -654,7 +654,7 @@
   },
   {
     "CreatePos": 1003,
-    "StatementEnd": 1038,
+    "StatementEnd": 1039,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -674,11 +674,11 @@
     "Hosts": [
       {
         "HostPos": 1022,
-        "HostEnd": 1038,
+        "HostEnd": 1039,
         "HostType": "LIKE",
         "HostValue": {
-          "LiteralPos": 1033,
-          "LiteralEnd": 1038,
+          "LiteralPos": 1032,
+          "LiteralEnd": 1039,
           "Literal": "test%"
         }
       }
@@ -1149,7 +1149,7 @@
   },
   {
     "CreatePos": 1637,
-    "StatementEnd": 1681,
+    "StatementEnd": 1682,
     "IfNotExists": false,
     "OrReplace": false,
     "UserNames": [
@@ -1183,8 +1183,8 @@
             },
             "Operation": "",
             "Value": {
-              "LiteralPos": 1674,
-              "LiteralEnd": 1681,
+              "LiteralPos": 1673,
+              "LiteralEnd": 1682,
               "Literal": "default"
             }
           }
@@ -1279,12 +1279,12 @@
     ],
     "Authentication": {
       "AuthPos": 1819,
-      "AuthEnd": 1866,
+      "AuthEnd": 1867,
       "NotIdentified": false,
       "AuthType": "plaintext_password",
       "AuthValue": {
-        "LiteralPos": 1858,
-        "LiteralEnd": 1866,
+        "LiteralPos": 1857,
+        "LiteralEnd": 1867,
         "Literal": "password"
       },
       "LdapServer": null,
@@ -1292,18 +1292,18 @@
       "IsKerberos": false
     },
     "ValidUntil": {
-      "LiteralPos": 1885,
-      "LiteralEnd": 1895,
+      "LiteralPos": 1884,
+      "LiteralEnd": 1896,
       "Literal": "2025-12-31"
     },
     "Hosts": [
       {
         "HostPos": 1901,
-        "HostEnd": 1921,
+        "HostEnd": 1922,
         "HostType": "NAME",
         "HostValue": {
-          "LiteralPos": 1912,
-          "LiteralEnd": 1921,
+          "LiteralPos": 1911,
+          "LiteralEnd": 1922,
           "Literal": "localhost"
         }
       }

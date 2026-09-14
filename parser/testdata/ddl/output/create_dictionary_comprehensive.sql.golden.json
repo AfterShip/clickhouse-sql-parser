@@ -20,8 +20,8 @@
     "IfNotExists": false,
     "UUID": {
       "Value": {
-        "LiteralPos": 60,
-        "LiteralEnd": 96,
+        "LiteralPos": 59,
+        "LiteralEnd": 97,
         "Literal": "12345678-1234-1234-1234-123456789012"
       }
     },
@@ -62,7 +62,7 @@
         },
         {
           "NamePos": 149,
-          "AttrEnd": 170,
+          "AttrEnd": 171,
           "Name": {
             "Name": "name",
             "QuoteType": 1,
@@ -78,8 +78,8 @@
             }
           },
           "Default": {
-            "LiteralPos": 170,
-            "LiteralEnd": 170,
+            "LiteralPos": 169,
+            "LiteralEnd": 171,
             "Literal": ""
           },
           "Expression": null,
@@ -89,7 +89,7 @@
         },
         {
           "NamePos": 177,
-          "AttrEnd": 222,
+          "AttrEnd": 223,
           "Name": {
             "Name": "value",
             "QuoteType": 1,
@@ -250,8 +250,8 @@
               "NameEnd": 364
             },
             "Value": {
-              "LiteralPos": 366,
-              "LiteralEnd": 375,
+              "LiteralPos": 365,
+              "LiteralEnd": 376,
               "Literal": "localhost"
             },
             "Args": null,
@@ -285,8 +285,8 @@
               "NameEnd": 399
             },
             "Value": {
-              "LiteralPos": 401,
-              "LiteralEnd": 405,
+              "LiteralPos": 400,
+              "LiteralEnd": 406,
               "Literal": "root"
             },
             "Args": null,
@@ -302,8 +302,8 @@
               "NameEnd": 419
             },
             "Value": {
-              "LiteralPos": 421,
-              "LiteralEnd": 427,
+              "LiteralPos": 420,
+              "LiteralEnd": 428,
               "Literal": "secret"
             },
             "Args": null,
@@ -319,8 +319,8 @@
               "NameEnd": 435
             },
             "Value": {
-              "LiteralPos": 437,
-              "LiteralEnd": 444,
+              "LiteralPos": 436,
+              "LiteralEnd": 445,
               "Literal": "test_db"
             },
             "Args": null,
@@ -336,8 +336,8 @@
               "NameEnd": 455
             },
             "Value": {
-              "LiteralPos": 457,
-              "LiteralEnd": 473,
+              "LiteralPos": 456,
+              "LiteralEnd": 474,
               "Literal": "dictionary_table"
             },
             "Args": null,

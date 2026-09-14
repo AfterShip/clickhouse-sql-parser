@@ -29,7 +29,7 @@
   },
   {
     "RenamePos": 40,
-    "StatementEnd": 90,
+    "StatementEnd": 91,
     "RenameTarget": "TABLE",
     "TargetPairList": [
       {
@@ -56,8 +56,8 @@
     "OnCluster": {
       "OnPos": 63,
       "Expr": {
-        "LiteralPos": 75,
-        "LiteralEnd": 90,
+        "LiteralPos": 74,
+        "LiteralEnd": 91,
         "Literal": "default_cluster"
       }
     }
@@ -112,7 +112,7 @@
   },
   {
     "RenamePos": 128,
-    "StatementEnd": 189,
+    "StatementEnd": 190,
     "RenameTarget": "TABLE",
     "TargetPairList": [
       {
@@ -159,8 +159,8 @@
     "OnCluster": {
       "OnPos": 162,
       "Expr": {
-        "LiteralPos": 174,
-        "LiteralEnd": 189,
+        "LiteralPos": 173,
+        "LiteralEnd": 190,
         "Literal": "default_cluster"
       }
     }
@@ -195,7 +195,7 @@
   },
   {
     "RenamePos": 245,
-    "StatementEnd": 300,
+    "StatementEnd": 301,
     "RenameTarget": "DICTIONARY",
     "TargetPairList": [
       {
@@ -222,8 +222,8 @@
     "OnCluster": {
       "OnPos": 273,
       "Expr": {
-        "LiteralPos": 285,
-        "LiteralEnd": 300,
+        "LiteralPos": 284,
+        "LiteralEnd": 301,
         "Literal": "default_cluster"
       }
     }
@@ -278,7 +278,7 @@
   },
   {
     "RenamePos": 343,
-    "StatementEnd": 409,
+    "StatementEnd": 410,
     "RenameTarget": "DICTIONARY",
     "TargetPairList": [
       {
@@ -325,8 +325,8 @@
     "OnCluster": {
       "OnPos": 382,
       "Expr": {
-        "LiteralPos": 394,
-        "LiteralEnd": 409,
+        "LiteralPos": 393,
+        "LiteralEnd": 410,
         "Literal": "default_cluster"
       }
     }
@@ -361,7 +361,7 @@
   },
   {
     "RenamePos": 458,
-    "StatementEnd": 511,
+    "StatementEnd": 512,
     "RenameTarget": "DATABASE",
     "TargetPairList": [
       {
@@ -388,8 +388,8 @@
     "OnCluster": {
       "OnPos": 484,
       "Expr": {
-        "LiteralPos": 496,
-        "LiteralEnd": 511,
+        "LiteralPos": 495,
+        "LiteralEnd": 512,
         "Literal": "default_cluster"
       }
     }
@@ -444,7 +444,7 @@
   },
   {
     "RenamePos": 552,
-    "StatementEnd": 616,
+    "StatementEnd": 617,
     "RenameTarget": "DATABASE",
     "TargetPairList": [
       {
@@ -491,8 +491,8 @@
     "OnCluster": {
       "OnPos": 589,
       "Expr": {
-        "LiteralPos": 601,
-        "LiteralEnd": 616,
+        "LiteralPos": 600,
+        "LiteralEnd": 617,
         "Literal": "default_cluster"
       }
     }

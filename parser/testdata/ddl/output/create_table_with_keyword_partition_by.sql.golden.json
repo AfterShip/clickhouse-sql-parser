@@ -20,8 +20,8 @@
     "IfNotExists": false,
     "UUID": {
       "Value": {
-        "LiteralPos": 37,
-        "LiteralEnd": 73,
+        "LiteralPos": 36,
+        "LiteralEnd": 74,
         "Literal": "dad17568-b070-49d0-9ad1-7568b07029d0"
       }
     },

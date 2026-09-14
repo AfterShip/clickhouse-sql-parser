@@ -196,30 +196,30 @@
                         "LeftParenPos": 133,
                         "RightParenPos": 154,
                         "Items": {
-                          "ListPos": 135,
-                          "ListEnd": 153,
+                          "ListPos": 134,
+                          "ListEnd": 154,
                           "HasDistinct": false,
                           "Items": [
                             {
                               "Expr": {
-                                "LiteralPos": 135,
-                                "LiteralEnd": 138,
+                                "LiteralPos": 134,
+                                "LiteralEnd": 139,
                                 "Literal": "foo"
                               },
                               "Alias": null
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 142,
-                                "LiteralEnd": 145,
+                                "LiteralPos": 141,
+                                "LiteralEnd": 146,
                                 "Literal": "bar"
                               },
                               "Alias": null
                             },
                             {
                               "Expr": {
-                                "LiteralPos": 149,
-                                "LiteralEnd": 153,
+                                "LiteralPos": 148,
+                                "LiteralEnd": 154,
                                 "Literal": "test"
                               },
                               "Alias": null
@@ -243,7 +243,7 @@
               "RightParenPos": 176,
               "Items": {
                 "ListPos": 162,
-                "ListEnd": 175,
+                "ListEnd": 176,
                 "HasDistinct": false,
                 "Items": [
                   {
@@ -256,8 +256,8 @@
                       },
                       "Operation": "=",
                       "RightExpr": {
-                        "LiteralPos": 168,
-                        "LiteralEnd": 175,
+                        "LiteralPos": 167,
+                        "LiteralEnd": 176,
                         "Literal": "testing"
                       },
                       "HasGlobal": false,
@@ -278,7 +278,7 @@
             "RightParenPos": 205,
             "Items": {
               "ListPos": 183,
-              "ListEnd": 204,
+              "ListEnd": 205,
               "HasDistinct": false,
               "Items": [
                 {
@@ -291,8 +291,8 @@
                     },
                     "Operation": "NOT LIKE",
                     "RightExpr": {
-                      "LiteralPos": 196,
-                      "LiteralEnd": 204,
+                      "LiteralPos": 195,
+                      "LiteralEnd": 205,
                       "Literal": "testing2"
                     },
                     "HasGlobal": false,
@@ -320,30 +320,30 @@
             "LeftParenPos": 221,
             "RightParenPos": 235,
             "Items": {
-              "ListPos": 223,
-              "ListEnd": 234,
+              "ListPos": 222,
+              "ListEnd": 235,
               "HasDistinct": false,
               "Items": [
                 {
                   "Expr": {
-                    "LiteralPos": 223,
-                    "LiteralEnd": 224,
+                    "LiteralPos": 222,
+                    "LiteralEnd": 225,
                     "Literal": "a"
                   },
                   "Alias": null
                 },
                 {
                   "Expr": {
-                    "LiteralPos": 228,
-                    "LiteralEnd": 229,
+                    "LiteralPos": 227,
+                    "LiteralEnd": 230,
                     "Literal": "b"
                   },
                   "Alias": null
                 },
                 {
                   "Expr": {
-                    "LiteralPos": 233,
-                    "LiteralEnd": 234,
+                    "LiteralPos": 232,
+                    "LiteralEnd": 235,
                     "Literal": "c"
                   },
                   "Alias": null

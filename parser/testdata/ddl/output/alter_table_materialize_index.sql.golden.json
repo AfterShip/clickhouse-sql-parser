@@ -1,7 +1,7 @@
 [
   {
     "AlterPos": 0,
-    "StatementEnd": 91,
+    "StatementEnd": 92,
     "TableIdentifier": {
       "Database": null,
       "Table": {
@@ -15,7 +15,7 @@
     "AlterExprs": [
       {
         "MaterializedPos": 25,
-        "StatementEnd": 91,
+        "StatementEnd": 92,
         "IfExists": true,
         "IndexName": {
           "Ident": {
@@ -29,8 +29,8 @@
         "Partition": {
           "PartitionPos": 72,
           "Expr": {
-            "LiteralPos": 83,
-            "LiteralEnd": 91,
+            "LiteralPos": 82,
+            "LiteralEnd": 92,
             "Literal": "20240403"
           },
           "ID": null,

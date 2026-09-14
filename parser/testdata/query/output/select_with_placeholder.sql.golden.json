@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 28,
+    "StatementEnd": 29,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -12,7 +12,7 @@
           "Name": "*",
           "QuoteType": 0,
           "NamePos": 7,
-          "NameEnd": 7
+          "NameEnd": 8
         },
         "Modifiers": [],
         "Alias": null
@@ -55,7 +55,7 @@
         "Operation": "=",
         "RightExpr": {
           "PlaceholderPos": 28,
-          "PlaceHolderEnd": 28,
+          "PlaceHolderEnd": 29,
           "Type": "?"
         },
         "HasGlobal": false,
