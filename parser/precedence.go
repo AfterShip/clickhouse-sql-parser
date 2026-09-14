@@ -89,12 +89,12 @@ func expressionPrecedence(expr Expr) int {
 
 func (f *Formatter) writeOperand(expr Expr, precedence int, parenEqual bool) {
 	childPrecedence := expressionPrecedence(expr)
-	paren := childPrecedence < precedence || (parenEqual && childPrecedence == precedence)
-	if paren {
+	requireParen := childPrecedence < precedence || (parenEqual && childPrecedence == precedence)
+	if requireParen {
 		f.WriteByte('(')
 	}
 	f.WriteExpr(expr)
-	if paren {
+	if requireParen {
 		f.WriteByte(')')
 	}
 }
