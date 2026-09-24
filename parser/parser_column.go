@@ -517,6 +517,11 @@ func (p *Parser) keywordIsSelectItemIdentifier() bool {
 // that begins a clause following the SELECT item list. When true, we should
 // not treat the keyword itself as a bare alias.
 func (p *Parser) isSelectItemTerminatorKeyword() bool {
+	// FORMAT followed by '(' is a scalar function in the next SELECT item,
+	// not the output FORMAT clause. The latter takes a format name.
+	if p.matchKeyword(KeywordFormat) && p.peekTokenKind(TokenKindLParen) {
+		return false
+	}
 	if p.keywordIsSelectItemIdentifier() {
 		return false
 	}
