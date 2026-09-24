@@ -372,7 +372,9 @@ func (p *Parser) parseJoinRightExpr(pos Pos) (expr Expr, err error) {
 	modifiers = append(modifiers, KeywordJoin)
 
 	// Check if this is an ARRAY JOIN
-	if slices.Contains(modifiers, KeywordArray) {
+	if slices.ContainsFunc(modifiers, func(modifier string) bool {
+		return strings.EqualFold(modifier, KeywordArray)
+	}) {
 		// For ARRAY JOIN, parse column expression list instead of table expression
 		expr, err = p.parseColumnExprList(p.Pos())
 		if err != nil {
