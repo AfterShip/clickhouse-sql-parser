@@ -1780,8 +1780,13 @@ func (p *Parser) parseShowStmt(pos Pos) (*ShowStmt, error) {
 		showType = "TABLES"
 		_ = p.lexer.consumeToken()
 
+	case strings.EqualFold(p.currentTokenString(), "ACCESS"):
+		// SHOW ACCESS has no arguments or optional clauses.
+		showType = "ACCESS"
+		_ = p.lexer.consumeToken()
+
 	default:
-		return nil, fmt.Errorf("expected CREATE, DATABASES, or TABLES after SHOW, got %q", p.currentTokenString())
+		return nil, fmt.Errorf("expected ACCESS, CREATE, DATABASES, or TABLES after SHOW, got %q", p.currentTokenString())
 	}
 
 	stmt := &ShowStmt{
