@@ -31,6 +31,23 @@ func TestParser_TableSettingsFunctionExpression(t *testing.T) {
 	}
 }
 
+func TestParser_ContextualKeywords(t *testing.T) {
+	tests := []string{
+		"SELECT DATE '2024-01-01'",
+		"SELECT TIMESTAMP '2024-01-01 00:00:00'",
+		"SELECT date AS timestamp",
+		"SELECT * EXCEPT (a) FROM t",
+		"SELECT 1 EXCEPT SELECT 2",
+	}
+
+	for _, sql := range tests {
+		t.Run(sql, func(t *testing.T) {
+			_, err := NewParser(sql).ParseStmts()
+			require.NoError(t, err)
+		})
+	}
+}
+
 func TestParser_Compatible(t *testing.T) {
 	if !*runCompatible {
 		t.Skip("Compatible test runs only if -compatible is set")
@@ -285,6 +302,8 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// ALL or DISTINCT
 		"(SELECT 1",
 		"(SELECT 1) UNION SELECT 2",
+		"SELECT * EXCEPT FROM t",
+		"SELECT 1 EXCEPT 2",
 		// ClickHouse rejects a set operator once SETTINGS is bound to a
 		// parenthesized group
 		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
