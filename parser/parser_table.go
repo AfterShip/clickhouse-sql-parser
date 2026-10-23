@@ -25,6 +25,11 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			}
 		}
 		switch {
+		case p.matchKeyword(KeywordRow), p.matchKeyword(KeywordPolicy):
+			if isAttach {
+				return nil, fmt.Errorf("ATTACH ROW POLICY is an internal access-storage format")
+			}
+			return p.parseCreateRowPolicy(pos)
 		case p.matchKeyword(KeywordNamed):
 			return p.parseCreateNamedCollection(pos)
 		case p.matchKeyword(KeywordDatabase):
@@ -53,6 +58,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 	case p.matchKeyword(KeywordAlter):
 		_ = p.lexer.consumeToken()
 		switch {
+		case p.matchKeyword(KeywordRow), p.matchKeyword(KeywordPolicy):
+			return p.parseAlterRowPolicy(pos)
 		case p.matchKeyword(KeywordRole):
 			return p.parseAlterRole(pos)
 		case p.matchKeyword(KeywordTable):
@@ -62,8 +69,14 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		}
 	case p.matchKeyword(KeywordDrop),
 		p.matchKeyword(KeywordDetach):
+		isDrop := p.matchKeyword(KeywordDrop)
 		_ = p.lexer.consumeToken()
 		switch {
+		case p.matchKeyword(KeywordRow), p.matchKeyword(KeywordPolicy):
+			if !isDrop {
+				return nil, fmt.Errorf("DETACH ROW POLICY is not supported")
+			}
+			return p.parseDropRowPolicy(pos)
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseDropDatabase(pos)
 		case p.matchKeyword(KeywordTemporary),
@@ -1682,7 +1695,7 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordGrant):
 		expr, err = p.parseGrantPrivilegeStmt(pos)
 	case p.matchKeyword(KeywordShow):
-		expr, err = p.parseShowStmt(pos)
+		expr, err = p.parseShowWithPolicies(pos)
 	case p.matchKeyword(KeywordDesc), p.matchKeyword(KeywordDescribe):
 		expr, err = p.parseDescribeStmt(pos)
 	default:

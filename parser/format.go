@@ -1672,6 +1672,9 @@ func (i *Ident) FormatSQL(formatter *Formatter) {
 
 func (i *IndexOperation) FormatSQL(formatter *Formatter) {
 	formatter.WriteExpr(i.Object)
+	if _, numeric := i.Object.(*NumberLiteral); numeric && i.Operation == TokenKindDot {
+		formatter.WriteByte(whitespace)
+	}
 	formatter.WriteString(string(i.Operation))
 	formatter.WriteExpr(i.Index)
 }
