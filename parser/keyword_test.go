@@ -59,6 +59,60 @@ func TestNonReservedKeywordAsIdentifier(t *testing.T) {
 	}
 }
 
+// TestNonReservedKeywordAsTableAliasWithoutAs asserts that a non-reserved
+// keyword names a table without AS, as it does on the server (`FROM t ip`),
+// while the keywords that can follow a table keep their meaning there.
+func TestNonReservedKeywordAsTableAliasWithoutAs(t *testing.T) {
+	cases := []struct {
+		sql     string
+		aliases []string
+	}{
+		{"SELECT ip.name FROM t ip WHERE ip.x = 1", []string{"ip"}},
+		{"SELECT * FROM t key", []string{"key"}},
+		{"SELECT * FROM t outer", []string{"outer"}},
+		{"SELECT * FROM t comment WHERE comment.a = 1", []string{"comment"}},
+		{"SELECT * FROM db.t ip FINAL", []string{"ip"}},
+		{"SELECT * FROM t ip SAMPLE 0.1", []string{"ip"}},
+		{"SELECT * FROM (SELECT 1) ip", []string{"ip"}},
+		{"SELECT * FROM numbers(3) ip", []string{"ip"}},
+		{"SELECT * FROM t ip LEFT JOIN u key ON ip.a = key.a", []string{"ip", "key"}},
+		{"SELECT * FROM t FINAL", nil},
+		{"SELECT * FROM t SAMPLE 0.1", nil},
+		{"SELECT * FROM t JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t LEFT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t RIGHT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t FULL JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ANY LEFT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ALL INNER JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t SEMI LEFT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ASOF JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ARRAY JOIN arr", nil},
+		{"SELECT * FROM t GLOBAL JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t LOCAL JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t INTERSECT SELECT * FROM u", nil},
+		{"CREATE MATERIALIZED VIEW v TO dst AS SELECT * FROM t COMMENT 'text'", nil},
+	}
+	for _, tc := range cases {
+		t.Run(tc.sql, func(t *testing.T) {
+			stmt := parseOneStmt(t, tc.sql)
+			var aliases []string
+			Walk(stmt, func(node Expr) bool {
+				if table, ok := node.(*TableExpr); ok {
+					if alias, ok := table.Expr.(*AliasExpr); ok {
+						aliases = append(aliases, alias.Alias.(*Ident).Name)
+					}
+				}
+				return true
+			})
+			require.Equal(t, tc.aliases, aliases)
+
+			// the formatted query has to parse back to the same query
+			formatted := Format(stmt)
+			require.Equal(t, formatted, Format(parseOneStmt(t, formatted)))
+		})
+	}
+}
+
 // TestCaseExprRequiresEnd asserts that END, which is non-reserved so that
 // columns can be named `end`, still terminates a CASE expression: a CASE
 // without it must fail instead of running into the next clause.

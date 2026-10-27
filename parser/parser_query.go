@@ -437,6 +437,35 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 	}, nil
 }
 
+// tableAliasRestrictedKeywords are the non-reserved keywords that can follow a
+// table expression, so they never name the table without AS: in `FROM t FINAL`
+// or `FROM t LEFT JOIN u` the keyword keeps its meaning. It mirrors the
+// non-reserved part of ClickHouse's ParserAlias::restricted_keywords, plus
+// LOCAL, which starts a LOCAL JOIN here.
+var tableAliasRestrictedKeywords = NewSet(
+	KeywordAll, KeywordAnti, KeywordAny, KeywordArray, KeywordAsof,
+	KeywordFinal, KeywordFull, KeywordGlobal, KeywordIntersect, KeywordJoin,
+	KeywordLeft, KeywordLocal, KeywordRight, KeywordSample, KeywordSemi,
+)
+
+// matchTableAliasWithoutAs reports whether the current token names the table
+// before it without AS: an identifier, or a non-reserved keyword that cannot
+// continue the table expression (e.g. `FROM t ip`).
+func (p *Parser) matchTableAliasWithoutAs() bool {
+	if !p.matchTokenKind(TokenKindIdent) {
+		return false
+	}
+	if p.currentTokenKind() != TokenKindKeyword {
+		return true
+	}
+	keyword := strings.ToUpper(p.current().String)
+	if keyword == KeywordComment {
+		// `... FROM t COMMENT 'text'` ends a view with its comment, as on the server
+		return !p.peekTokenKind(TokenKindString)
+	}
+	return !tableAliasRestrictedKeywords.Contains(keyword)
+}
+
 func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	var expr Expr
 	var err error
@@ -484,7 +513,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			Alias:    alias,
 		}
 		tableEnd = expr.End()
-	} else if p.matchTokenKind(TokenKindIdent) && p.currentTokenKind() != TokenKindKeyword {
+	} else if p.matchTableAliasWithoutAs() {
 		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
