@@ -1,7 +1,7 @@
 [
   {
     "SelectPos": 0,
-    "StatementEnd": 85,
+    "StatementEnd": 63,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -17,10 +17,10 @@
               "NameEnd": 9
             },
             {
-              "Name": "name",
+              "Name": "address",
               "QuoteType": 1,
               "NamePos": 10,
-              "NameEnd": 14
+              "NameEnd": 17
             }
           ]
         },
@@ -29,33 +29,33 @@
       }
     ],
     "From": {
-      "FromPos": 15,
+      "FromPos": 18,
       "Expr": {
         "Table": {
-          "TablePos": 20,
-          "TableEnd": 56,
+          "TablePos": 23,
+          "TableEnd": 36,
           "Alias": null,
           "Expr": {
             "Expr": {
               "Database": null,
               "Table": {
-                "Name": "azure_network_public_ip_addresses",
+                "Name": "public_ips",
                 "QuoteType": 1,
-                "NamePos": 20,
-                "NameEnd": 53
+                "NamePos": 23,
+                "NameEnd": 33
               }
             },
-            "AliasPos": 54,
+            "AliasPos": 34,
             "Alias": {
               "Name": "ip",
               "QuoteType": 1,
-              "NamePos": 54,
-              "NameEnd": 56
+              "NamePos": 34,
+              "NameEnd": 36
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 56,
+        "StatementEnd": 36,
         "SampleRatio": null,
         "HasFinal": false
       }
@@ -63,28 +63,28 @@
     "Window": null,
     "Prewhere": null,
     "Where": {
-      "WherePos": 57,
+      "WherePos": 37,
       "Expr": {
         "LeftExpr": {
           "Fields": [
             {
               "Name": "ip",
               "QuoteType": 1,
-              "NamePos": 63,
-              "NameEnd": 65
+              "NamePos": 43,
+              "NameEnd": 45
             },
             {
-              "Name": "location",
+              "Name": "region",
               "QuoteType": 1,
-              "NamePos": 66,
-              "NameEnd": 74
+              "NamePos": 46,
+              "NameEnd": 52
             }
           ]
         },
         "Operation": "=",
         "RightExpr": {
-          "LiteralPos": 77,
-          "LiteralEnd": 85,
+          "LiteralPos": 55,
+          "LiteralEnd": 63,
           "Literal": "eastus"
         },
         "HasGlobal": false,
@@ -105,8 +105,8 @@
     "Intersect": null
   },
   {
-    "SelectPos": 87,
-    "StatementEnd": 145,
+    "SelectPos": 65,
+    "StatementEnd": 123,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -116,21 +116,21 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 94,
-          "NameEnd": 95
+          "NamePos": 72,
+          "NameEnd": 73
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 96,
+      "FromPos": 74,
       "Expr": {
-        "JoinPos": 101,
+        "JoinPos": 79,
         "Left": {
           "Table": {
-            "TablePos": 101,
-            "TableEnd": 106,
+            "TablePos": 79,
+            "TableEnd": 84,
             "Alias": null,
             "Expr": {
               "Expr": {
@@ -138,30 +138,30 @@
                 "Table": {
                   "Name": "t1",
                   "QuoteType": 1,
-                  "NamePos": 101,
-                  "NameEnd": 103
+                  "NamePos": 79,
+                  "NameEnd": 81
                 }
               },
-              "AliasPos": 104,
+              "AliasPos": 82,
               "Alias": {
                 "Name": "ip",
                 "QuoteType": 1,
-                "NamePos": 104,
-                "NameEnd": 106
+                "NamePos": 82,
+                "NameEnd": 84
               }
             },
             "HasFinal": true
           },
-          "StatementEnd": 106,
+          "StatementEnd": 84,
           "SampleRatio": null,
           "HasFinal": false
         },
         "Right": {
-          "JoinPos": 113,
+          "JoinPos": 91,
           "Left": {
             "Table": {
-              "TablePos": 123,
-              "TableEnd": 129,
+              "TablePos": 101,
+              "TableEnd": 107,
               "Alias": null,
               "Expr": {
                 "Expr": {
@@ -169,21 +169,21 @@
                   "Table": {
                     "Name": "t2",
                     "QuoteType": 1,
-                    "NamePos": 123,
-                    "NameEnd": 125
+                    "NamePos": 101,
+                    "NameEnd": 103
                   }
                 },
-                "AliasPos": 126,
+                "AliasPos": 104,
                 "Alias": {
                   "Name": "key",
                   "QuoteType": 1,
-                  "NamePos": 126,
-                  "NameEnd": 129
+                  "NamePos": 104,
+                  "NameEnd": 107
                 }
               },
               "HasFinal": false
             },
-            "StatementEnd": 129,
+            "StatementEnd": 107,
             "SampleRatio": null,
             "HasFinal": false
           },
@@ -193,10 +193,10 @@
             "JOIN"
           ],
           "Constraints": {
-            "OnPos": 130,
+            "OnPos": 108,
             "On": {
-              "ListPos": 133,
-              "ListEnd": 145,
+              "ListPos": 111,
+              "ListEnd": 123,
               "HasDistinct": false,
               "Items": [
                 {
@@ -206,14 +206,14 @@
                         {
                           "Name": "ip",
                           "QuoteType": 1,
-                          "NamePos": 133,
-                          "NameEnd": 135
+                          "NamePos": 111,
+                          "NameEnd": 113
                         },
                         {
                           "Name": "a",
                           "QuoteType": 1,
-                          "NamePos": 136,
-                          "NameEnd": 137
+                          "NamePos": 114,
+                          "NameEnd": 115
                         }
                       ]
                     },
@@ -223,14 +223,14 @@
                         {
                           "Name": "key",
                           "QuoteType": 1,
-                          "NamePos": 140,
-                          "NameEnd": 143
+                          "NamePos": 118,
+                          "NameEnd": 121
                         },
                         {
                           "Name": "a",
                           "QuoteType": 1,
-                          "NamePos": 144,
-                          "NameEnd": 145
+                          "NamePos": 122,
+                          "NameEnd": 123
                         }
                       ]
                     },
@@ -264,8 +264,8 @@
     "Intersect": null
   },
   {
-    "SelectPos": 147,
-    "StatementEnd": 174,
+    "SelectPos": 125,
+    "StatementEnd": 152,
     "With": null,
     "Top": null,
     "HasDistinct": false,
@@ -275,52 +275,52 @@
         "Expr": {
           "Name": "*",
           "QuoteType": 0,
-          "NamePos": 154,
-          "NameEnd": 155
+          "NamePos": 132,
+          "NameEnd": 133
         },
         "Modifiers": [],
         "Alias": null
       }
     ],
     "From": {
-      "FromPos": 156,
+      "FromPos": 134,
       "Expr": {
         "Table": {
-          "TablePos": 161,
-          "TableEnd": 174,
+          "TablePos": 139,
+          "TableEnd": 152,
           "Alias": null,
           "Expr": {
             "Expr": {
               "Name": {
                 "Name": "numbers",
                 "QuoteType": 1,
-                "NamePos": 161,
-                "NameEnd": 168
+                "NamePos": 139,
+                "NameEnd": 146
               },
               "Args": {
-                "LeftParenPos": 168,
-                "RightParenPos": 170,
+                "LeftParenPos": 146,
+                "RightParenPos": 148,
                 "Args": [
                   {
-                    "NumPos": 169,
-                    "NumEnd": 170,
+                    "NumPos": 147,
+                    "NumEnd": 148,
                     "Literal": "3",
                     "Base": 10
                   }
                 ]
               }
             },
-            "AliasPos": 172,
+            "AliasPos": 150,
             "Alias": {
               "Name": "ip",
               "QuoteType": 1,
-              "NamePos": 172,
-              "NameEnd": 174
+              "NamePos": 150,
+              "NameEnd": 152
             }
           },
           "HasFinal": false
         },
-        "StatementEnd": 174,
+        "StatementEnd": 152,
         "SampleRatio": null,
         "HasFinal": false
       }

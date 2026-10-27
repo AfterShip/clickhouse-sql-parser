@@ -438,32 +438,35 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 }
 
 // tableAliasRestrictedKeywords are the non-reserved keywords that can follow a
-// table expression, so they never name the table without AS: in `FROM t FINAL`
-// or `FROM t LEFT JOIN u` the keyword keeps its meaning. It mirrors the
-// non-reserved part of ClickHouse's ParserAlias::restricted_keywords, plus
-// LOCAL, which starts a LOCAL JOIN here.
+// table, so they never name it without AS (`FROM t FINAL`, `FROM t LEFT JOIN u`):
+// the non-reserved part of ClickHouse's ParserAlias::restricted_keywords, plus
+// LOCAL, which this parser reads only as a join locality.
 var tableAliasRestrictedKeywords = NewSet(
 	KeywordAll, KeywordAnti, KeywordAny, KeywordArray, KeywordAsof,
 	KeywordFinal, KeywordFull, KeywordGlobal, KeywordIntersect, KeywordJoin,
 	KeywordLeft, KeywordLocal, KeywordRight, KeywordSample, KeywordSemi,
 )
 
-// matchTableAliasWithoutAs reports whether the current token names the table
-// before it without AS: an identifier, or a non-reserved keyword that cannot
-// continue the table expression (e.g. `FROM t ip`).
-func (p *Parser) matchTableAliasWithoutAs() bool {
+// matchTableAliasWithoutAs reports whether the current token aliases table
+// without AS, as in `FROM t ip`.
+func (p *Parser) matchTableAliasWithoutAs(table Expr) bool {
 	if !p.matchTokenKind(TokenKindIdent) {
 		return false
 	}
 	if p.currentTokenKind() != TokenKindKeyword {
 		return true
 	}
-	keyword := strings.ToUpper(p.current().String)
-	if keyword == KeywordComment {
-		// `... FROM t COMMENT 'text'` ends a view with its comment, as on the server
+	switch keyword := strings.ToUpper(p.current().String); keyword {
+	case KeywordComment:
+		// COMMENT before a string ends the query of a view or table, as on the server
 		return !p.peekTokenKind(TokenKindString)
+	case KeywordUuid:
+		// the server reads UUID after a table name as `t UUID 'uuid'`, never as an alias
+		_, isTableName := table.(*TableIdentifier)
+		return !isTableName
+	default:
+		return !tableAliasRestrictedKeywords.Contains(keyword)
 	}
-	return !tableAliasRestrictedKeywords.Contains(keyword)
 }
 
 func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
@@ -513,7 +516,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			Alias:    alias,
 		}
 		tableEnd = expr.End()
-	} else if p.matchTableAliasWithoutAs() {
+	} else if p.matchTableAliasWithoutAs(expr) {
 		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
