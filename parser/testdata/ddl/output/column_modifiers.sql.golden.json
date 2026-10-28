@@ -1,0 +1,964 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 706,
+    "OrReplace": false,
+    "Name": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 15
+      },
+      "Table": {
+        "Name": "example",
+        "QuoteType": 1,
+        "NamePos": 16,
+        "NameEnd": 23
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 24,
+      "SchemaEnd": 666,
+      "Columns": [
+        {
+          "NamePos": 30,
+          "ColumnEnd": 49,
+          "Name": {
+            "Ident": {
+              "Name": "event_time",
+              "QuoteType": 1,
+              "NamePos": 30,
+              "NameEnd": 40
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "QuoteType": 1,
+              "NamePos": 41,
+              "NameEnd": 49
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 55,
+          "ColumnEnd": 134,
+          "Name": {
+            "Ident": {
+              "Name": "value_a",
+              "QuoteType": 1,
+              "NamePos": 55,
+              "NameEnd": 62
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 63,
+              "NameEnd": 69
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 88,
+            "RightParenPos": 102,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 94,
+              "NameEnd": 98
+            },
+            "Level": {
+              "NumPos": 98,
+              "NumEnd": 100,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": {
+            "TTLPos": 103,
+            "ListEnd": 134,
+            "Items": [
+              {
+                "TTLPos": 103,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 107,
+                    "NameEnd": 117
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 120,
+                    "Expr": {
+                      "NumPos": 129,
+                      "NumEnd": 130,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 131,
+                      "NameEnd": 134
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 70,
+            "LiteralEnd": 87,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 140,
+          "ColumnEnd": 219,
+          "Name": {
+            "Ident": {
+              "Name": "value_b",
+              "QuoteType": 1,
+              "NamePos": 140,
+              "NameEnd": 147
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 148,
+              "NameEnd": 154
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 205,
+            "RightParenPos": 219,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 211,
+              "NameEnd": 215
+            },
+            "Level": {
+              "NumPos": 215,
+              "NumEnd": 217,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": {
+            "TTLPos": 173,
+            "ListEnd": 204,
+            "Items": [
+              {
+                "TTLPos": 173,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 177,
+                    "NameEnd": 187
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 190,
+                    "Expr": {
+                      "NumPos": 199,
+                      "NumEnd": 200,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 201,
+                      "NameEnd": 204
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 155,
+            "LiteralEnd": 172,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 225,
+          "ColumnEnd": 304,
+          "Name": {
+            "Ident": {
+              "Name": "value_c",
+              "QuoteType": 1,
+              "NamePos": 225,
+              "NameEnd": 232
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 233,
+              "NameEnd": 239
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 240,
+            "RightParenPos": 254,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 246,
+              "NameEnd": 250
+            },
+            "Level": {
+              "NumPos": 250,
+              "NumEnd": 252,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": {
+            "TTLPos": 273,
+            "ListEnd": 304,
+            "Items": [
+              {
+                "TTLPos": 273,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 277,
+                    "NameEnd": 287
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 290,
+                    "Expr": {
+                      "NumPos": 299,
+                      "NumEnd": 300,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 301,
+                      "NameEnd": 304
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 255,
+            "LiteralEnd": 272,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 310,
+          "ColumnEnd": 389,
+          "Name": {
+            "Ident": {
+              "Name": "value_d",
+              "QuoteType": 1,
+              "NamePos": 310,
+              "NameEnd": 317
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 318,
+              "NameEnd": 324
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 325,
+            "RightParenPos": 339,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 331,
+              "NameEnd": 335
+            },
+            "Level": {
+              "NumPos": 335,
+              "NumEnd": 337,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": {
+            "TTLPos": 340,
+            "ListEnd": 371,
+            "Items": [
+              {
+                "TTLPos": 340,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 344,
+                    "NameEnd": 354
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 357,
+                    "Expr": {
+                      "NumPos": 366,
+                      "NumEnd": 367,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 368,
+                      "NameEnd": 371
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 372,
+            "LiteralEnd": 389,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 395,
+          "ColumnEnd": 474,
+          "Name": {
+            "Ident": {
+              "Name": "value_e",
+              "QuoteType": 1,
+              "NamePos": 395,
+              "NameEnd": 402
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 403,
+              "NameEnd": 409
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 460,
+            "RightParenPos": 474,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 466,
+              "NameEnd": 470
+            },
+            "Level": {
+              "NumPos": 470,
+              "NumEnd": 472,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": {
+            "TTLPos": 410,
+            "ListEnd": 441,
+            "Items": [
+              {
+                "TTLPos": 410,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 414,
+                    "NameEnd": 424
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 427,
+                    "Expr": {
+                      "NumPos": 436,
+                      "NumEnd": 437,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 438,
+                      "NameEnd": 441
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 442,
+            "LiteralEnd": 459,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 480,
+          "ColumnEnd": 559,
+          "Name": {
+            "Ident": {
+              "Name": "value_f",
+              "QuoteType": 1,
+              "NamePos": 480,
+              "NameEnd": 487
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 488,
+              "NameEnd": 494
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 527,
+            "RightParenPos": 541,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 533,
+              "NameEnd": 537
+            },
+            "Level": {
+              "NumPos": 537,
+              "NumEnd": 539,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": {
+            "TTLPos": 495,
+            "ListEnd": 526,
+            "Items": [
+              {
+                "TTLPos": 495,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 499,
+                    "NameEnd": 509
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 512,
+                    "Expr": {
+                      "NumPos": 521,
+                      "NumEnd": 522,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 523,
+                      "NameEnd": 526
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 542,
+            "LiteralEnd": 559,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 565,
+          "ColumnEnd": 612,
+          "Name": {
+            "Ident": {
+              "Name": "value_g",
+              "QuoteType": 1,
+              "NamePos": 565,
+              "NameEnd": 572
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 573,
+              "NameEnd": 579
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 598,
+            "RightParenPos": 612,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 604,
+              "NameEnd": 608
+            },
+            "Level": {
+              "NumPos": 608,
+              "NumEnd": 610,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": {
+            "LiteralPos": 580,
+            "LiteralEnd": 597,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 618,
+          "ColumnEnd": 665,
+          "Name": {
+            "Ident": {
+              "Name": "value_h",
+              "QuoteType": 1,
+              "NamePos": 618,
+              "NameEnd": 625
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 626,
+              "NameEnd": 632
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 633,
+            "RightParenPos": 647,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "ZSTD",
+              "QuoteType": 1,
+              "NamePos": 639,
+              "NameEnd": 643
+            },
+            "Level": {
+              "NumPos": 643,
+              "NumEnd": 645,
+              "Literal": "1",
+              "Base": 10
+            }
+          },
+          "TTL": null,
+          "Comment": {
+            "LiteralPos": 648,
+            "LiteralEnd": 665,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 668,
+      "EngineEnd": 706,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 687,
+        "ListEnd": 706,
+        "Items": [
+          {
+            "OrderPos": 687,
+            "Expr": {
+              "Name": "event_time",
+              "QuoteType": 1,
+              "NamePos": 696,
+              "NameEnd": 706
+            },
+            "Alias": null,
+            "Direction": "",
+            "Fill": null
+          }
+        ],
+        "Interpolate": null
+      }
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  },
+  {
+    "AlterPos": 709,
+    "StatementEnd": 832,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 721,
+        "NameEnd": 723
+      },
+      "Table": {
+        "Name": "example",
+        "QuoteType": 1,
+        "NamePos": 724,
+        "NameEnd": 731
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AddPos": 732,
+        "StatementEnd": 832,
+        "Column": {
+          "NamePos": 743,
+          "ColumnEnd": 832,
+          "Name": {
+            "Ident": {
+              "Name": "extra",
+              "QuoteType": 1,
+              "NamePos": 743,
+              "NameEnd": 748
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 749,
+              "NameEnd": 755
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": {
+            "LiteralPos": 764,
+            "LiteralEnd": 771,
+            "Literal": "value"
+          },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 804,
+            "RightParenPos": 814,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 810,
+              "NameEnd": 813
+            },
+            "Level": null
+          },
+          "TTL": {
+            "TTLPos": 772,
+            "ListEnd": 803,
+            "Items": [
+              {
+                "TTLPos": 772,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 776,
+                    "NameEnd": 786
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 789,
+                    "Expr": {
+                      "NumPos": 798,
+                      "NumEnd": 799,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 800,
+                      "NameEnd": 803
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 815,
+            "LiteralEnd": 832,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        "IfNotExists": false,
+        "After": null
+      }
+    ],
+    "Settings": null
+  },
+  {
+    "AlterPos": 834,
+    "StatementEnd": 978,
+    "TableIdentifier": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 846,
+        "NameEnd": 848
+      },
+      "Table": {
+        "Name": "example",
+        "QuoteType": 1,
+        "NamePos": 849,
+        "NameEnd": 856
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 857,
+        "StatementEnd": 978,
+        "IfExists": false,
+        "Column": {
+          "NamePos": 871,
+          "ColumnEnd": 978,
+          "Name": {
+            "Ident": {
+              "Name": "extra",
+              "QuoteType": 1,
+              "NamePos": 871,
+              "NameEnd": 876
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "String",
+              "QuoteType": 1,
+              "NamePos": 877,
+              "NameEnd": 883
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": {
+            "Name": {
+              "Name": "toString",
+              "QuoteType": 1,
+              "NamePos": 897,
+              "NameEnd": 905
+            },
+            "Params": {
+              "LeftParenPos": 905,
+              "RightParenPos": 916,
+              "Items": {
+                "ListPos": 906,
+                "ListEnd": 916,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "event_time",
+                      "QuoteType": 1,
+                      "NamePos": 906,
+                      "NameEnd": 916
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 918,
+            "RightParenPos": 928,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 924,
+              "NameEnd": 927
+            },
+            "Level": null
+          },
+          "TTL": {
+            "TTLPos": 947,
+            "ListEnd": 978,
+            "Items": [
+              {
+                "TTLPos": 947,
+                "Expr": {
+                  "LeftExpr": {
+                    "Name": "event_time",
+                    "QuoteType": 1,
+                    "NamePos": 951,
+                    "NameEnd": 961
+                  },
+                  "Operation": "+",
+                  "RightExpr": {
+                    "IntervalPos": 964,
+                    "Expr": {
+                      "NumPos": 973,
+                      "NumEnd": 974,
+                      "Literal": "1",
+                      "Base": 10
+                    },
+                    "Unit": {
+                      "Name": "DAY",
+                      "QuoteType": 1,
+                      "NamePos": 975,
+                      "NameEnd": 978
+                    }
+                  },
+                  "HasGlobal": false,
+                  "HasNot": false
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 929,
+            "LiteralEnd": 946,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        "RemovePropertyType": null
+      }
+    ],
+    "Settings": null
+  }
+]
