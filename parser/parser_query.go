@@ -437,6 +437,42 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 	}, nil
 }
 
+// tableAliasRestrictedKeywords are the non-reserved keywords that can follow a
+// table, so they never name it without AS (`FROM t FINAL`, `FROM t LEFT JOIN u`):
+// the non-reserved part of ClickHouse's ParserAlias::restricted_keywords, plus
+// LOCAL, which this parser reads only as a join locality.
+var tableAliasRestrictedKeywords = NewSet(
+	KeywordAll, KeywordAnti, KeywordAny, KeywordArray, KeywordAsof,
+	KeywordFinal, KeywordFull, KeywordGlobal, KeywordIntersect, KeywordJoin,
+	KeywordLeft, KeywordLocal, KeywordRight, KeywordSample, KeywordSemi,
+)
+
+// matchTableAliasWithoutAs reports whether the current token aliases table
+// without AS, as in `FROM t ip`.
+func (p *Parser) matchTableAliasWithoutAs(table Expr) bool {
+	if !p.matchTokenKind(TokenKindIdent) {
+		return false
+	}
+	if p.currentTokenKind() != TokenKindKeyword {
+		return true
+	}
+	switch keyword := strings.ToUpper(p.current().String); keyword {
+	case KeywordComment:
+		// COMMENT before a string ends the query of a view or table, as on the server
+		return !p.peekTokenKind(TokenKindString)
+	case KeywordUuid:
+		// the server reads UUID after a table name as `t UUID 'uuid'`, never as an alias
+		_, isTableName := table.(*TableIdentifier)
+		return !isTableName
+	case KeywordOver:
+		// the server reads OVER after a table function as its window clause, never as an alias
+		_, isTableFunction := table.(*TableFunctionExpr)
+		return !isTableFunction
+	default:
+		return !tableAliasRestrictedKeywords.Contains(keyword)
+	}
+}
+
 func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 	var expr Expr
 	var err error
@@ -484,7 +520,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			Alias:    alias,
 		}
 		tableEnd = expr.End()
-	} else if p.matchTokenKind(TokenKindIdent) && p.currentTokenKind() != TokenKindKeyword {
+	} else if p.matchTableAliasWithoutAs(expr) {
 		alias, err := p.parseIdent()
 		if err != nil {
 			return nil, err
