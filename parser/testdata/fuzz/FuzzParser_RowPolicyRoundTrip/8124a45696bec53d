@@ -1,0 +1,2 @@
+go test fuzz v1
+string("ALTER POLICY A ON A USING 0 .A")

@@ -1,0 +1,818 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 82,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 18,
+          "NameEnd": 32
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 36,
+            "NameEnd": 38
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 39,
+            "NameEnd": 52
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 53,
+        "FilterEnd": 66,
+        "Using": {
+          "ConditionPos": 59,
+          "ConditionEnd": 66,
+          "None": false,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 59,
+              "NameEnd": 61
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "NumPos": 64,
+              "NumEnd": 66,
+              "Literal": "42",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 67,
+      "ToEnd": 82,
+      "All": false,
+      "Principals": [
+        {
+          "PrincipalPos": 70,
+          "PrincipalEnd": 82,
+          "Name": {
+            "Name": "example_role",
+            "QuoteType": 1,
+            "NamePos": 70,
+            "NameEnd": 82
+          },
+          "Host": null,
+          "CurrentUser": false
+        }
+      ],
+      "Except": null
+    }
+  },
+  {
+    "CreatePos": 84,
+    "StatementEnd": 231,
+    "IfNotExists": true,
+    "OrReplace": false,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 112,
+          "NameEnd": 126
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 130,
+            "NameEnd": 132
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 133,
+            "NameEnd": 146
+          }
+        }
+      },
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 112,
+          "NameEnd": 126
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 148,
+            "NameEnd": 150
+          },
+          "Table": {
+            "Name": "example_table_local",
+            "QuoteType": 1,
+            "NamePos": 151,
+            "NameEnd": 170
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 171,
+        "FilterEnd": 215,
+        "Using": {
+          "ConditionPos": 177,
+          "ConditionEnd": 215,
+          "None": false,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 177,
+              "NameEnd": 179
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "Name": {
+                "Name": "toUInt64",
+                "QuoteType": 1,
+                "NamePos": 182,
+                "NameEnd": 190
+              },
+              "Params": {
+                "LeftParenPos": 190,
+                "RightParenPos": 214,
+                "Items": {
+                  "ListPos": 191,
+                  "ListEnd": 214,
+                  "HasDistinct": false,
+                  "Items": [
+                    {
+                      "Expr": {
+                        "Name": {
+                          "Name": "getSetting",
+                          "QuoteType": 1,
+                          "NamePos": 191,
+                          "NameEnd": 201
+                        },
+                        "Params": {
+                          "LeftParenPos": 201,
+                          "RightParenPos": 213,
+                          "Items": {
+                            "ListPos": 202,
+                            "ListEnd": 213,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "LiteralPos": 202,
+                                  "LiteralEnd": 213,
+                                  "Literal": "filter_id"
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          },
+                          "ColumnArgList": null
+                        }
+                      },
+                      "Alias": null
+                    }
+                  ]
+                },
+                "ColumnArgList": null
+              }
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 216,
+      "ToEnd": 231,
+      "All": false,
+      "Principals": [
+        {
+          "PrincipalPos": 219,
+          "PrincipalEnd": 231,
+          "Name": {
+            "Name": "example_role",
+            "QuoteType": 1,
+            "NamePos": 219,
+            "NameEnd": 231
+          },
+          "Host": null,
+          "CurrentUser": false
+        }
+      ],
+      "Except": null
+    }
+  },
+  {
+    "CreatePos": 233,
+    "StatementEnd": 407,
+    "IfNotExists": false,
+    "OrReplace": true,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "p1",
+          "QuoteType": 1,
+          "NamePos": 262,
+          "NameEnd": 264
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 272,
+            "NameEnd": 274
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 275,
+            "NameEnd": 288
+          }
+        }
+      },
+      {
+        "PolicyName": {
+          "Name": "p2",
+          "QuoteType": 1,
+          "NamePos": 266,
+          "NameEnd": 268
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 272,
+            "NameEnd": 274
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 275,
+            "NameEnd": 288
+          }
+        }
+      }
+    ],
+    "OnCluster": {
+      "OnPos": 308,
+      "Expr": {
+        "LiteralPos": 319,
+        "LiteralEnd": 336,
+        "Literal": "example-cluster"
+      }
+    },
+    "AccessStorageType": {
+      "Name": "local_directory",
+      "QuoteType": 1,
+      "NamePos": 292,
+      "NameEnd": 307
+    },
+    "Mode": "RESTRICTIVE",
+    "Filters": [
+      {
+        "FilterPos": 352,
+        "FilterEnd": 373,
+        "Using": {
+          "ConditionPos": 358,
+          "ConditionEnd": 373,
+          "None": false,
+          "Expr": {
+            "Name": {
+              "Name": "has",
+              "QuoteType": 1,
+              "NamePos": 358,
+              "NameEnd": 361
+            },
+            "Params": {
+              "LeftParenPos": 361,
+              "RightParenPos": 372,
+              "Items": {
+                "ListPos": 362,
+                "ListEnd": 372,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "LeftBracketPos": 362,
+                      "RightBracketPos": 367,
+                      "Items": {
+                        "ListPos": 363,
+                        "ListEnd": 367,
+                        "HasDistinct": false,
+                        "Items": [
+                          {
+                            "Expr": {
+                              "NumPos": 363,
+                              "NumEnd": 364,
+                              "Literal": "1",
+                              "Base": 10
+                            },
+                            "Alias": null
+                          },
+                          {
+                            "Expr": {
+                              "NumPos": 366,
+                              "NumEnd": 367,
+                              "Literal": "2",
+                              "Base": 10
+                            },
+                            "Alias": null
+                          }
+                        ]
+                      }
+                    },
+                    "Alias": null
+                  },
+                  {
+                    "Expr": {
+                      "Name": "id",
+                      "QuoteType": 1,
+                      "NamePos": 370,
+                      "NameEnd": 372
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 374,
+      "ToEnd": 407,
+      "All": true,
+      "Principals": null,
+      "Except": [
+        {
+          "PrincipalPos": 388,
+          "PrincipalEnd": 393,
+          "Name": {
+            "Name": "admin",
+            "QuoteType": 1,
+            "NamePos": 388,
+            "NameEnd": 393
+          },
+          "Host": null,
+          "CurrentUser": false
+        },
+        {
+          "PrincipalPos": 395,
+          "PrincipalEnd": 407,
+          "Name": null,
+          "Host": null,
+          "CurrentUser": true
+        }
+      ]
+    }
+  },
+  {
+    "CreatePos": 409,
+    "StatementEnd": 484,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "all_tables",
+          "QuoteType": 1,
+          "NamePos": 423,
+          "NameEnd": 433
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 437,
+            "NameEnd": 439
+          },
+          "Table": {
+            "Name": "*",
+            "QuoteType": 0,
+            "NamePos": 440,
+            "NameEnd": 441
+          }
+        }
+      },
+      {
+        "PolicyName": {
+          "Name": "literal_table",
+          "QuoteType": 1,
+          "NamePos": 443,
+          "NameEnd": 456
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 460,
+            "NameEnd": 462
+          },
+          "Table": {
+            "Name": "*",
+            "QuoteType": 3,
+            "NamePos": 464,
+            "NameEnd": 465
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 467,
+        "FilterEnd": 474,
+        "Using": {
+          "ConditionPos": 473,
+          "ConditionEnd": 474,
+          "None": false,
+          "Expr": {
+            "NumPos": 473,
+            "NumEnd": 474,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 475,
+      "ToEnd": 484,
+      "All": false,
+      "Principals": [
+        {
+          "PrincipalPos": 478,
+          "PrincipalEnd": 484,
+          "Name": {
+            "Name": "reader",
+            "QuoteType": 1,
+            "NamePos": 478,
+            "NameEnd": 484
+          },
+          "Host": null,
+          "CurrentUser": false
+        }
+      ],
+      "Except": null
+    }
+  },
+  {
+    "AlterPos": 486,
+    "StatementEnd": 617,
+    "IfExists": true,
+    "RenameTo": null,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 513,
+          "NameEnd": 527
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 531,
+            "NameEnd": 533
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 534,
+            "NameEnd": 547
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 548,
+        "FilterEnd": 579,
+        "Using": {
+          "ConditionPos": 554,
+          "ConditionEnd": 561,
+          "None": false,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 554,
+              "NameEnd": 556
+            },
+            "Operation": "=",
+            "RightExpr": {
+              "NumPos": 559,
+              "NumEnd": 561,
+              "Literal": "99",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "WithCheck": {
+          "ConditionPos": 573,
+          "ConditionEnd": 579,
+          "None": false,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 573,
+              "NameEnd": 575
+            },
+            "Operation": "\u003e",
+            "RightExpr": {
+              "NumPos": 578,
+              "NumEnd": 579,
+              "Literal": "0",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        }
+      }
+    ],
+    "To": {
+      "ToPos": 580,
+      "ToEnd": 617,
+      "All": false,
+      "Principals": [
+        {
+          "PrincipalPos": 583,
+          "PrincipalEnd": 589,
+          "Name": {
+            "Name": "reader",
+            "QuoteType": 1,
+            "NamePos": 583,
+            "NameEnd": 589
+          },
+          "Host": null,
+          "CurrentUser": false
+        },
+        {
+          "PrincipalPos": 592,
+          "PrincipalEnd": 617,
+          "Name": {
+            "Name": "service-user",
+            "QuoteType": 3,
+            "NamePos": 592,
+            "NameEnd": 604
+          },
+          "Host": {
+            "Name": "localhost",
+            "QuoteType": 4,
+            "NamePos": 606,
+            "NameEnd": 617
+          },
+          "CurrentUser": false
+        }
+      ],
+      "Except": null
+    }
+  },
+  {
+    "AlterPos": 619,
+    "StatementEnd": 717,
+    "IfExists": false,
+    "RenameTo": {
+      "Name": "renamed",
+      "QuoteType": 1,
+      "NamePos": 677,
+      "NameEnd": 684
+    },
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 632,
+          "NameEnd": 646
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 650,
+            "NameEnd": 652
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 653,
+            "NameEnd": 666
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "PERMISSIVE",
+    "Filters": [
+      {
+        "FilterPos": 699,
+        "FilterEnd": 709,
+        "Using": {
+          "ConditionPos": 705,
+          "ConditionEnd": 709,
+          "None": true,
+          "Expr": null
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 710,
+      "ToEnd": 717,
+      "All": false,
+      "Principals": null,
+      "Except": null
+    }
+  },
+  {
+    "DropPos": 719,
+    "StatementEnd": 821,
+    "IfExists": true,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "p1",
+          "QuoteType": 1,
+          "NamePos": 745,
+          "NameEnd": 747
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 755,
+            "NameEnd": 757
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 758,
+            "NameEnd": 771
+          }
+        }
+      },
+      {
+        "PolicyName": {
+          "Name": "p2",
+          "QuoteType": 1,
+          "NamePos": 749,
+          "NameEnd": 751
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 755,
+            "NameEnd": 757
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 758,
+            "NameEnd": 771
+          }
+        }
+      }
+    ],
+    "OnCluster": {
+      "OnPos": 793,
+      "Expr": {
+        "LiteralPos": 804,
+        "LiteralEnd": 821,
+        "Literal": "example-cluster"
+      }
+    },
+    "AccessStorageType": {
+      "Name": "local_directory",
+      "QuoteType": 1,
+      "NamePos": 777,
+      "NameEnd": 792
+    }
+  },
+  {
+    "ShowPos": 823,
+    "StatementEnd": 922,
+    "Create": true,
+    "Name": null,
+    "Table": null,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 846,
+          "NameEnd": 860
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 864,
+            "NameEnd": 866
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 867,
+            "NameEnd": 880
+          }
+        }
+      },
+      {
+        "PolicyName": {
+          "Name": "example_policy",
+          "QuoteType": 1,
+          "NamePos": 882,
+          "NameEnd": 896
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 900,
+            "NameEnd": 902
+          },
+          "Table": {
+            "Name": "example_table_local",
+            "QuoteType": 1,
+            "NamePos": 903,
+            "NameEnd": 922
+          }
+        }
+      }
+    ]
+  },
+  {
+    "ShowPos": 924,
+    "StatementEnd": 956,
+    "Create": true,
+    "Name": null,
+    "Table": {
+      "Database": {
+        "Name": "db",
+        "QuoteType": 1,
+        "NamePos": 952,
+        "NameEnd": 954
+      },
+      "Table": {
+        "Name": "*",
+        "QuoteType": 0,
+        "NamePos": 955,
+        "NameEnd": 956
+      }
+    },
+    "Targets": null
+  },
+  {
+    "ShowPos": 958,
+    "StatementEnd": 975,
+    "Create": false,
+    "Name": null,
+    "Table": null,
+    "Targets": null
+  }
+]

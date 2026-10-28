@@ -48,6 +48,15 @@ type ASTVisitor interface {
 	VisitRoleName(expr *RoleName) error
 	VisitSettingPair(expr *SettingPair) error
 	VisitRoleSetting(expr *RoleSetting) error
+	VisitRowPolicyTarget(expr *RowPolicyTarget) error
+	VisitRowPolicyCondition(expr *RowPolicyCondition) error
+	VisitRowPolicyFilter(expr *RowPolicyFilter) error
+	VisitRowPolicyPrincipal(expr *RowPolicyPrincipal) error
+	VisitRowPolicySubjects(expr *RowPolicySubjects) error
+	VisitCreateRowPolicy(expr *CreateRowPolicy) error
+	VisitAlterRowPolicy(expr *AlterRowPolicy) error
+	VisitDropRowPolicy(expr *DropRowPolicy) error
+	VisitShowRowPolicies(expr *ShowRowPolicies) error
 	VisitCreateRole(expr *CreateRole) error
 	VisitCreateUser(expr *CreateUser) error
 	VisitAuthenticationClause(expr *AuthenticationClause) error
@@ -539,6 +548,69 @@ func (v *DefaultASTVisitor) VisitSettingPair(expr *SettingPair) error {
 }
 
 func (v *DefaultASTVisitor) VisitRoleSetting(expr *RoleSetting) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitRowPolicyTarget(expr *RowPolicyTarget) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitRowPolicyCondition(expr *RowPolicyCondition) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitRowPolicyFilter(expr *RowPolicyFilter) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitRowPolicyPrincipal(expr *RowPolicyPrincipal) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitRowPolicySubjects(expr *RowPolicySubjects) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitCreateRowPolicy(expr *CreateRowPolicy) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitAlterRowPolicy(expr *AlterRowPolicy) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitDropRowPolicy(expr *DropRowPolicy) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitShowRowPolicies(expr *ShowRowPolicies) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}
