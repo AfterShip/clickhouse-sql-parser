@@ -464,6 +464,10 @@ func (p *Parser) matchTableAliasWithoutAs(table Expr) bool {
 		// the server reads UUID after a table name as `t UUID 'uuid'`, never as an alias
 		_, isTableName := table.(*TableIdentifier)
 		return !isTableName
+	case KeywordOver:
+		// the server reads OVER after a table function as its window clause, never as an alias
+		_, isTableFunction := table.(*TableFunctionExpr)
+		return !isTableFunction
 	default:
 		return !tableAliasRestrictedKeywords.Contains(keyword)
 	}

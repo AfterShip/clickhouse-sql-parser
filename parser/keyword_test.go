@@ -87,6 +87,7 @@ func TestNonReservedKeywordAsTableAliasWithoutAs(t *testing.T) {
 		{"SELECT * FROM t ip SAMPLE 0.1", []string{"ip"}},
 		{"SELECT * FROM (SELECT 1) uuid", []string{"uuid"}},
 		{"SELECT * FROM numbers(3) uuid", []string{"uuid"}},
+		{"SELECT * FROM (SELECT 1) over", []string{"over"}},
 		{"SELECT * FROM t ip LEFT JOIN u key ON ip.a = key.a", []string{"ip", "key"}},
 		{"SELECT * FROM t1 ip, t2 key", []string{"ip", "key"}},
 		{"SELECT * FROM t FINAL", nil},
@@ -135,6 +136,14 @@ func TestTableAliasWithoutAsForEveryKeyword(t *testing.T) {
 		require.NoError(t, err, sql)
 		require.Equal(t, []string{strings.ToLower(kw)}, tableAliases(stmts[0]), sql)
 	}
+}
+
+// TestOverAfterTableFunctionIsNotAnAlias asserts that OVER after a table
+// function fails, as on the server, which reads it as the function's window
+// clause: `FROM numbers(3) over` must not be formatted as `AS over`.
+func TestOverAfterTableFunctionIsNotAnAlias(t *testing.T) {
+	_, err := NewParser("SELECT * FROM numbers(3) over").ParseStmts()
+	require.Error(t, err)
 }
 
 func TestTableAliasRestrictedKeywordsMatchClickHouse(t *testing.T) {
