@@ -693,7 +693,7 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	column.Name = name
 	columnEnd := name.End()
 
-	if p.matchTokenKind(TokenKindIdent) && !p.matchKeyword(KeywordRemove) {
+	if p.matchTokenKind(TokenKindIdent) && !p.matchOneOfKeywords(KeywordRemove, KeywordComment, KeywordCodec, KeywordTtl) {
 		columnType, err := p.parseColumnType(p.Pos())
 		if err != nil {
 			return nil, err

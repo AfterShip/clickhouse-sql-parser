@@ -1,0 +1,233 @@
+[
+  {
+    "AlterPos": 0,
+    "StatementEnd": 65,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 12,
+        "NameEnd": 13
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 14,
+        "StatementEnd": 65,
+        "IfExists": false,
+        "Column": {
+          "NamePos": 28,
+          "ColumnEnd": 65,
+          "Name": {
+            "Ident": {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 28,
+              "NameEnd": 29
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 30,
+            "RightParenPos": 40,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 36,
+              "NameEnd": 39
+            },
+            "Level": null
+          },
+          "TTL": {
+            "TTLPos": 59,
+            "ListEnd": 65,
+            "Items": [
+              {
+                "TTLPos": 59,
+                "Expr": {
+                  "Name": "ts",
+                  "QuoteType": 1,
+                  "NamePos": 63,
+                  "NameEnd": 65
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 41,
+            "LiteralEnd": 58,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        "RemovePropertyType": null
+      }
+    ],
+    "Settings": null
+  },
+  {
+    "AlterPos": 67,
+    "StatementEnd": 132,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 79,
+        "NameEnd": 80
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 81,
+        "StatementEnd": 132,
+        "IfExists": false,
+        "Column": {
+          "NamePos": 95,
+          "ColumnEnd": 132,
+          "Name": {
+            "Ident": {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 95,
+              "NameEnd": 96
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 115,
+            "RightParenPos": 125,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 121,
+              "NameEnd": 124
+            },
+            "Level": null
+          },
+          "TTL": {
+            "TTLPos": 126,
+            "ListEnd": 132,
+            "Items": [
+              {
+                "TTLPos": 126,
+                "Expr": {
+                  "Name": "ts",
+                  "QuoteType": 1,
+                  "NamePos": 130,
+                  "NameEnd": 132
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 97,
+            "LiteralEnd": 114,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        "RemovePropertyType": null
+      }
+    ],
+    "Settings": null
+  },
+  {
+    "AlterPos": 134,
+    "StatementEnd": 199,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 146,
+        "NameEnd": 147
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 148,
+        "StatementEnd": 199,
+        "IfExists": false,
+        "Column": {
+          "NamePos": 162,
+          "ColumnEnd": 199,
+          "Name": {
+            "Ident": {
+              "Name": "x",
+              "QuoteType": 1,
+              "NamePos": 162,
+              "NameEnd": 163
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": {
+            "CodecPos": 164,
+            "RightParenPos": 174,
+            "Type": null,
+            "TypeLevel": null,
+            "Name": {
+              "Name": "LZ4",
+              "QuoteType": 1,
+              "NamePos": 170,
+              "NameEnd": 173
+            },
+            "Level": null
+          },
+          "TTL": {
+            "TTLPos": 175,
+            "ListEnd": 181,
+            "Items": [
+              {
+                "TTLPos": 175,
+                "Expr": {
+                  "Name": "ts",
+                  "QuoteType": 1,
+                  "NamePos": 179,
+                  "NameEnd": 181
+                },
+                "Policy": null
+              }
+            ]
+          },
+          "Comment": {
+            "LiteralPos": 182,
+            "LiteralEnd": 199,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        "RemovePropertyType": null
+      }
+    ],
+    "Settings": null
+  }
+]

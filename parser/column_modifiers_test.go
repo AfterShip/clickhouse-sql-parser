@@ -22,10 +22,11 @@ func TestParser_ColumnModifierOrder(t *testing.T) {
 		{"ttl", "comment", "codec"},
 		{"ttl", "codec", "comment"},
 	}
-	forms := []struct{ name, query string }{
-		{"create", "CREATE TABLE db.example (event_time DateTime, %s) ENGINE = MergeTree ORDER BY event_time"},
-		{"add", "ALTER TABLE db.example ADD COLUMN %s"},
-		{"modify", "ALTER TABLE db.example MODIFY COLUMN %s"},
+	forms := []struct{ name, query, columnType string }{
+		{"create", "CREATE TABLE db.example (event_time DateTime, %s) ENGINE = MergeTree ORDER BY event_time", "String"},
+		{"add", "ALTER TABLE db.example ADD COLUMN %s", "String"},
+		{"modify", "ALTER TABLE db.example MODIFY COLUMN %s", "String"},
+		{"modify without type", "ALTER TABLE db.example MODIFY COLUMN %s", ""},
 	}
 	for _, form := range forms {
 		for _, order := range orders {
@@ -34,17 +35,22 @@ func TestParser_ColumnModifierOrder(t *testing.T) {
 				for _, name := range order {
 					clauses = append(clauses, modifiers[name])
 				}
-				declaration := "value String " + strings.Join(clauses, " ")
+				nameAndType := strings.TrimSpace("value " + form.columnType)
+				declaration := nameAndType + " " + strings.Join(clauses, " ")
 				query := fmt.Sprintf(form.query, declaration)
 				statements, err := NewParser(query).ParseStmts()
 				require.NoError(t, err)
 				require.Len(t, statements, 1)
 				column := modifierTestColumn(t, statements[0])
+				require.Equal(t, form.columnType, Format(column.Type))
+				if form.columnType == "" {
+					require.Nil(t, column.Type)
+				}
 				require.NotNil(t, column.Comment)
 				require.NotNil(t, column.Codec)
 				require.NotNil(t, column.TTL)
 				require.Equal(t, Pos(strings.Index(query, declaration)+len(declaration)), column.End())
-				canonical := "value String COMMENT 'example' CODEC(ZSTD(1)) TTL event_time + INTERVAL 1 DAY"
+				canonical := nameAndType + " COMMENT 'example' CODEC(ZSTD(1)) TTL event_time + INTERVAL 1 DAY"
 				require.Equal(t, canonical, Format(column))
 				for _, beautify := range []bool{false, true} {
 					formatter := NewFormatter()
@@ -55,7 +61,13 @@ func TestParser_ColumnModifierOrder(t *testing.T) {
 					reparsed, err := NewParser(formatter.String()).ParseStmts()
 					require.NoError(t, err)
 					require.Len(t, reparsed, 1)
-					require.Equal(t, canonical, Format(modifierTestColumn(t, reparsed[0])))
+					reparsedColumn := modifierTestColumn(t, reparsed[0])
+					require.Equal(t, column.Type == nil, reparsedColumn.Type == nil)
+					require.Equal(t, form.columnType, Format(reparsedColumn.Type))
+					require.NotNil(t, reparsedColumn.Comment)
+					require.NotNil(t, reparsedColumn.Codec)
+					require.NotNil(t, reparsedColumn.TTL)
+					require.Equal(t, canonical, Format(reparsedColumn))
 				}
 				validFormatSQL(t, Format(statements[0])+";\n")
 			})
@@ -76,11 +88,15 @@ func TestParser_InvalidColumnModifiers(t *testing.T) {
 		{"missing ttl", "TTL", ""},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			query := "CREATE TABLE db.example (event_time DateTime, value String " + tc.modifiers + ") ENGINE = MergeTree ORDER BY event_time"
-			_, err := NewParser(query).ParseStmts()
-			require.Error(t, err)
-			if tc.errorText != "" {
-				require.ErrorContains(t, err, tc.errorText)
+			for _, query := range []string{
+				"CREATE TABLE db.example (event_time DateTime, value String " + tc.modifiers + ") ENGINE = MergeTree ORDER BY event_time",
+				"ALTER TABLE db.example MODIFY COLUMN value " + tc.modifiers,
+			} {
+				_, err := NewParser(query).ParseStmts()
+				require.Error(t, err, query)
+				if tc.errorText != "" {
+					require.ErrorContains(t, err, tc.errorText, query)
+				}
 			}
 		})
 	}
