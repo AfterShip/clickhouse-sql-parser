@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -57,6 +58,110 @@ func TestNonReservedKeywordAsIdentifier(t *testing.T) {
 			require.NoError(t, err)
 		})
 	}
+}
+
+func tableAliases(stmt Expr) []string {
+	var aliases []string
+	Walk(stmt, func(node Expr) bool {
+		if table, ok := node.(*TableExpr); ok {
+			if alias, ok := table.Expr.(*AliasExpr); ok {
+				aliases = append(aliases, Format(alias.Alias))
+			}
+		}
+		return true
+	})
+	return aliases
+}
+
+// TestNonReservedKeywordAsTableAliasWithoutAs asserts that a non-reserved
+// keyword names a table without AS, as on the server (`FROM t ip`), while each
+// keyword that can follow a table keeps its meaning there.
+func TestNonReservedKeywordAsTableAliasWithoutAs(t *testing.T) {
+	cases := []struct {
+		sql     string
+		aliases []string
+	}{
+		{"SELECT ip.name FROM t ip WHERE ip.x = 1", []string{"ip"}},
+		{"SELECT * FROM t comment WHERE comment.a = 1", []string{"comment"}},
+		{"SELECT * FROM db.t ip FINAL", []string{"ip"}},
+		{"SELECT * FROM t ip SAMPLE 0.1", []string{"ip"}},
+		{"SELECT * FROM (SELECT 1) uuid", []string{"uuid"}},
+		{"SELECT * FROM numbers(3) uuid", []string{"uuid"}},
+		{"SELECT * FROM (SELECT 1) over", []string{"over"}},
+		{"SELECT * FROM t ip LEFT JOIN u key ON ip.a = key.a", []string{"ip", "key"}},
+		{"SELECT * FROM t1 ip, t2 key", []string{"ip", "key"}},
+		{"SELECT * FROM t FINAL", nil},
+		{"SELECT * FROM t SAMPLE 0.1", nil},
+		{"SELECT * FROM t JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t LEFT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t RIGHT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t FULL JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ANY LEFT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ALL INNER JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t SEMI LEFT JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ASOF JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t ARRAY JOIN arr", nil},
+		{"SELECT * FROM t GLOBAL JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t LOCAL JOIN u ON t.a = u.a", nil},
+		{"SELECT * FROM t INTERSECT SELECT * FROM u", nil},
+		{"CREATE MATERIALIZED VIEW v TO dst AS SELECT * FROM t COMMENT 'text'", nil},
+		{"CREATE TABLE t2 ENGINE = Memory AS SELECT * FROM t COMMENT 'text'", nil},
+	}
+	for _, tc := range cases {
+		t.Run(tc.sql, func(t *testing.T) {
+			stmt := parseOneStmt(t, tc.sql)
+			require.Equal(t, tc.aliases, tableAliases(stmt))
+
+			formatted := Format(stmt)
+			require.Equal(t, formatted, Format(parseOneStmt(t, formatted)))
+		})
+	}
+}
+
+// TestTableAliasWithoutAsForEveryKeyword asserts that every non-reserved
+// keyword names a table without AS except those that can follow a table name.
+func TestTableAliasWithoutAsForEveryKeyword(t *testing.T) {
+	for _, kw := range keywords.Members() {
+		if reservedKeywords.Contains(kw) {
+			continue
+		}
+		sql := "SELECT * FROM t " + strings.ToLower(kw)
+		stmts, err := NewParser(sql).ParseStmts()
+		if tableAliasRestrictedKeywords.Contains(kw) || kw == KeywordUuid {
+			if err == nil {
+				require.Empty(t, tableAliases(stmts[0]), sql)
+			}
+			continue
+		}
+		require.NoError(t, err, sql)
+		require.Equal(t, []string{strings.ToLower(kw)}, tableAliases(stmts[0]), sql)
+	}
+}
+
+// TestOverAfterTableFunctionIsNotAnAlias asserts that OVER after a table
+// function fails, as on the server, which reads it as the function's window
+// clause: `FROM numbers(3) over` must not be formatted as `AS over`.
+func TestOverAfterTableFunctionIsNotAnAlias(t *testing.T) {
+	_, err := NewParser("SELECT * FROM numbers(3) over").ParseStmts()
+	require.Error(t, err)
+}
+
+func TestTableAliasRestrictedKeywordsMatchClickHouse(t *testing.T) {
+	// ParserAlias::restricted_keywords in ClickHouse's src/Parsers/ExpressionElementParsers.cpp
+	clickHouseRestricted := NewSet(
+		"ALL", "ANTI", "ANY", "ARRAY", "ASOF", "BETWEEN", "CROSS", "PASTE", "FINAL",
+		"FORMAT", "FROM", "FULL", "GLOBAL", "GROUP", "HAVING", "ILIKE", "INNER", "INTO",
+		"JOIN", "LEFT", "LIKE", "LIMIT", "NATURAL", "NOT", "OFFSET", "ON", "ONLY", "ORDER",
+		"PARALLEL", "PREWHERE", "RIGHT", "SAMPLE", "SEMI", "SETTINGS", "SIMILAR", "STREAM",
+		"UNION", "USING", "WHERE", "WINDOW", "QUALIFY", "WITH", "INTERSECT", "EXCEPT", "ELSE",
+	)
+	expected := []string{KeywordLocal}
+	for _, kw := range keywords.Members() {
+		if clickHouseRestricted.Contains(kw) && !reservedKeywords.Contains(kw) {
+			expected = append(expected, kw)
+		}
+	}
+	require.ElementsMatch(t, expected, tableAliasRestrictedKeywords.Members())
 }
 
 // TestCaseExprRequiresEnd asserts that END, which is non-reserved so that

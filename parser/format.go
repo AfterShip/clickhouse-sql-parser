@@ -673,6 +673,10 @@ func (c *ColumnDef) FormatSQL(formatter *Formatter) {
 		formatter.WriteString(" ALIAS ")
 		formatter.WriteExpr(c.AliasExpr)
 	}
+	if c.Comment != nil {
+		formatter.WriteString(" COMMENT ")
+		formatter.WriteExpr(c.Comment)
+	}
 	if c.Codec != nil {
 		formatter.WriteByte(whitespace)
 		formatter.WriteExpr(c.Codec)
@@ -680,10 +684,6 @@ func (c *ColumnDef) FormatSQL(formatter *Formatter) {
 	if c.TTL != nil {
 		formatter.WriteByte(whitespace)
 		formatter.WriteExpr(c.TTL)
-	}
-	if c.Comment != nil {
-		formatter.WriteString(" COMMENT ")
-		formatter.WriteExpr(c.Comment)
 	}
 }
 

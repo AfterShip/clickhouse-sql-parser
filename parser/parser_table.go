@@ -706,7 +706,7 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 	column.Name = name
 	columnEnd := name.End()
 
-	if p.matchTokenKind(TokenKindIdent) && !p.matchKeyword(KeywordRemove) {
+	if p.matchTokenKind(TokenKindIdent) && !p.matchOneOfKeywords(KeywordRemove, KeywordComment, KeywordCodec, KeywordTtl) {
 		columnType, err := p.parseColumnType(p.Pos())
 		if err != nil {
 			return nil, err
@@ -746,36 +746,46 @@ func (p *Parser) parseTableColumnExpr(pos Pos) (*ColumnDef, error) {
 		columnEnd = valueExpr.End()
 	}
 
-	comment, err := p.tryParseColumnComment(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if comment != nil {
-		columnEnd = comment.End()
-	}
-
-	codec, err := p.tryParseCompressionCodecs(p.Pos())
-	if err != nil {
-		return nil, err
-	}
-	if codec != nil {
-		columnEnd = codec.End()
-	}
-	ttl, err := p.tryParseTTLClause(p.Pos(), false)
-	if err != nil {
-		return nil, err
-	}
-	if ttl != nil {
-		columnEnd = ttl.End()
-	}
-	column.TTL = ttl
-
 	column.ColumnEnd = columnEnd
-	column.Comment = comment
-	column.Codec = codec
 	column.Nullable = nullable
 	column.NotNull = notNull
+	if err := p.parseColumnModifiers(column); err != nil {
+		return nil, err
+	}
 	return column, nil
+}
+
+func (p *Parser) parseColumnModifiers(column *ColumnDef) error {
+	for {
+		var modifier Expr
+		var err error
+		switch {
+		case p.matchKeyword(KeywordComment):
+			if column.Comment != nil {
+				return fmt.Errorf("duplicate COMMENT clause")
+			}
+			column.Comment, err = p.tryParseColumnComment(p.Pos())
+			modifier = column.Comment
+		case p.matchKeyword(KeywordCodec):
+			if column.Codec != nil {
+				return fmt.Errorf("duplicate CODEC clause")
+			}
+			column.Codec, err = p.tryParseCompressionCodecs(p.Pos())
+			modifier = column.Codec
+		case p.matchKeyword(KeywordTtl):
+			if column.TTL != nil {
+				return fmt.Errorf("duplicate TTL clause")
+			}
+			column.TTL, err = p.tryParseTTLClause(p.Pos(), false)
+			modifier = column.TTL
+		default:
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		column.ColumnEnd = modifier.End()
+	}
 }
 
 func (p *Parser) parseTableArgExpr(pos Pos) (Expr, error) {

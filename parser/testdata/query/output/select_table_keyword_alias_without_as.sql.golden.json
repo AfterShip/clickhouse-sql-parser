@@ -1,0 +1,344 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 63,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Fields": [
+            {
+              "Name": "ip",
+              "QuoteType": 1,
+              "NamePos": 7,
+              "NameEnd": 9
+            },
+            {
+              "Name": "address",
+              "QuoteType": 1,
+              "NamePos": 10,
+              "NameEnd": 17
+            }
+          ]
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 18,
+      "Expr": {
+        "Table": {
+          "TablePos": 23,
+          "TableEnd": 36,
+          "Alias": null,
+          "Expr": {
+            "Expr": {
+              "Database": null,
+              "Table": {
+                "Name": "public_ips",
+                "QuoteType": 1,
+                "NamePos": 23,
+                "NameEnd": 33
+              }
+            },
+            "AliasPos": 34,
+            "Alias": {
+              "Name": "ip",
+              "QuoteType": 1,
+              "NamePos": 34,
+              "NameEnd": 36
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 36,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 37,
+      "Expr": {
+        "LeftExpr": {
+          "Fields": [
+            {
+              "Name": "ip",
+              "QuoteType": 1,
+              "NamePos": 43,
+              "NameEnd": 45
+            },
+            {
+              "Name": "region",
+              "QuoteType": 1,
+              "NamePos": 46,
+              "NameEnd": 52
+            }
+          ]
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "LiteralPos": 55,
+          "LiteralEnd": 63,
+          "Literal": "eastus"
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 65,
+    "StatementEnd": 123,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 72,
+          "NameEnd": 73
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 74,
+      "Expr": {
+        "JoinPos": 79,
+        "Left": {
+          "Table": {
+            "TablePos": 79,
+            "TableEnd": 84,
+            "Alias": null,
+            "Expr": {
+              "Expr": {
+                "Database": null,
+                "Table": {
+                  "Name": "t1",
+                  "QuoteType": 1,
+                  "NamePos": 79,
+                  "NameEnd": 81
+                }
+              },
+              "AliasPos": 82,
+              "Alias": {
+                "Name": "ip",
+                "QuoteType": 1,
+                "NamePos": 82,
+                "NameEnd": 84
+              }
+            },
+            "HasFinal": true
+          },
+          "StatementEnd": 84,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 91,
+          "Left": {
+            "Table": {
+              "TablePos": 101,
+              "TableEnd": 107,
+              "Alias": null,
+              "Expr": {
+                "Expr": {
+                  "Database": null,
+                  "Table": {
+                    "Name": "t2",
+                    "QuoteType": 1,
+                    "NamePos": 101,
+                    "NameEnd": 103
+                  }
+                },
+                "AliasPos": 104,
+                "Alias": {
+                  "Name": "key",
+                  "QuoteType": 1,
+                  "NamePos": 104,
+                  "NameEnd": 107
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 107,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "LEFT",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 108,
+            "On": {
+              "ListPos": 111,
+              "ListEnd": 123,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "ip",
+                          "QuoteType": 1,
+                          "NamePos": 111,
+                          "NameEnd": 113
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 114,
+                          "NameEnd": 115
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "key",
+                          "QuoteType": 1,
+                          "NamePos": 118,
+                          "NameEnd": 121
+                        },
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 122,
+                          "NameEnd": 123
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 125,
+    "StatementEnd": 152,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "*",
+          "QuoteType": 0,
+          "NamePos": 132,
+          "NameEnd": 133
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 134,
+      "Expr": {
+        "Table": {
+          "TablePos": 139,
+          "TableEnd": 152,
+          "Alias": null,
+          "Expr": {
+            "Expr": {
+              "Name": {
+                "Name": "numbers",
+                "QuoteType": 1,
+                "NamePos": 139,
+                "NameEnd": 146
+              },
+              "Args": {
+                "LeftParenPos": 146,
+                "RightParenPos": 148,
+                "Args": [
+                  {
+                    "NumPos": 147,
+                    "NumEnd": 148,
+                    "Literal": "3",
+                    "Base": 10
+                  }
+                ]
+              }
+            },
+            "AliasPos": 150,
+            "Alias": {
+              "Name": "ip",
+              "QuoteType": 1,
+              "NamePos": 150,
+              "NameEnd": 152
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 152,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]
