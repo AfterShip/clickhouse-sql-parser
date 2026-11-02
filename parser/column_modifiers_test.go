@@ -114,3 +114,43 @@ func modifierTestColumn(t *testing.T, expression Expr) *ColumnDef {
 	require.Len(t, columns, 1)
 	return columns[0]
 }
+
+func TestParser_ColumnValueExprWithoutType(t *testing.T) {
+	forms := []struct{ name, query string }{
+		{"create", "CREATE TABLE db.example (event_time DateTime, %s) ENGINE = MergeTree ORDER BY event_time"},
+		{"add", "ALTER TABLE db.example ADD COLUMN %s"},
+		{"modify", "ALTER TABLE db.example MODIFY COLUMN %s"},
+	}
+	for _, tc := range []struct{ name, declaration, columnType, canonical string }{
+		{"default", "value DEFAULT event_time + 1", "", "value DEFAULT event_time + 1"},
+		{"materialized", "value mAtErIaLiZeD toDate(event_time)", "", "value MATERIALIZED toDate(event_time)"},
+		{"alias", "value ALIAS event_time", "", "value ALIAS event_time"},
+		{"parenthesized default", "value DEFAULT (1) COMMENT 'example'", "", "value DEFAULT (1) COMMENT 'example'"},
+		{"keyword type", "value Date DEFAULT today()", "Date", "value Date DEFAULT today()"},
+		{"parametric type", "value Nullable(String) ALIAS 'x'", "Nullable(String)", "value Nullable(String) ALIAS 'x'"},
+	} {
+		for _, form := range forms {
+			query := fmt.Sprintf(form.query, tc.declaration)
+			t.Run(form.name+"/"+tc.name, func(t *testing.T) {
+				statements, err := NewParser(query).ParseStmts()
+				require.NoError(t, err)
+				require.Len(t, statements, 1)
+				column := modifierTestColumn(t, statements[0])
+				require.Equal(t, tc.columnType, Format(column.Type))
+				if tc.columnType == "" {
+					require.Nil(t, column.Type)
+				}
+				require.Equal(t, tc.canonical, Format(column))
+				require.Equal(t, Pos(strings.Index(query, tc.declaration)+len(tc.declaration)), column.End())
+				validFormatSQL(t, Format(statements[0])+";\n")
+			})
+		}
+	}
+	for _, declaration := range []string{"value DEFAULT", "value MATERIALIZED", "value ALIAS"} {
+		for _, form := range forms {
+			query := fmt.Sprintf(form.query, declaration)
+			_, err := NewParser(query).ParseStmts()
+			require.Error(t, err, query)
+		}
+	}
+}

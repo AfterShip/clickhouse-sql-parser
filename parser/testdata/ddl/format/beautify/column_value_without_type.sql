@@ -1,0 +1,21 @@
+-- Origin SQL:
+CREATE TABLE t (ts DateTime, d DEFAULT ts + 1, m MATERIALIZED toDate(ts), a ALIAS ts) ENGINE = MergeTree ORDER BY ts;
+ALTER TABLE t ADD COLUMN d DEFAULT (1) COMMENT 'example';
+ALTER TABLE t MODIFY COLUMN m MATERIALIZED toDate(ts);
+
+
+-- Beautify SQL:
+CREATE TABLE t
+(
+  ts DateTime,
+  d DEFAULT ts + 1,
+  m MATERIALIZED toDate(ts),
+  a ALIAS ts
+)
+ENGINE = MergeTree
+ORDER BY
+  ts;
+ALTER TABLE t
+ADD COLUMN d DEFAULT (1) COMMENT 'example';
+ALTER TABLE t
+MODIFY COLUMN m MATERIALIZED toDate(ts);
