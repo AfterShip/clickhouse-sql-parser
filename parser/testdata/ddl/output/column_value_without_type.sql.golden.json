@@ -1,0 +1,353 @@
+[
+  {
+    "CreatePos": 0,
+    "StatementEnd": 116,
+    "OrReplace": false,
+    "Name": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 13,
+        "NameEnd": 14
+      }
+    },
+    "IfNotExists": false,
+    "UUID": null,
+    "OnCluster": null,
+    "TableSchema": {
+      "SchemaPos": 15,
+      "SchemaEnd": 84,
+      "Columns": [
+        {
+          "NamePos": 16,
+          "ColumnEnd": 27,
+          "Name": {
+            "Ident": {
+              "Name": "ts",
+              "QuoteType": 1,
+              "NamePos": 16,
+              "NameEnd": 18
+            },
+            "DotIdent": null
+          },
+          "Type": {
+            "Name": {
+              "Name": "DateTime",
+              "QuoteType": 1,
+              "NamePos": 19,
+              "NameEnd": 27
+            }
+          },
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 29,
+          "ColumnEnd": 45,
+          "Name": {
+            "Ident": {
+              "Name": "d",
+              "QuoteType": 1,
+              "NamePos": 29,
+              "NameEnd": 30
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": {
+            "LeftExpr": {
+              "Name": "ts",
+              "QuoteType": 1,
+              "NamePos": 39,
+              "NameEnd": 41
+            },
+            "Operation": "+",
+            "RightExpr": {
+              "NumPos": 44,
+              "NumEnd": 45,
+              "Literal": "1",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 47,
+          "ColumnEnd": 72,
+          "Name": {
+            "Ident": {
+              "Name": "m",
+              "QuoteType": 1,
+              "NamePos": 47,
+              "NameEnd": 48
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": {
+            "Name": {
+              "Name": "toDate",
+              "QuoteType": 1,
+              "NamePos": 62,
+              "NameEnd": 68
+            },
+            "Params": {
+              "LeftParenPos": 68,
+              "RightParenPos": 71,
+              "Items": {
+                "ListPos": 69,
+                "ListEnd": 71,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "ts",
+                      "QuoteType": 1,
+                      "NamePos": 69,
+                      "NameEnd": 71
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        {
+          "NamePos": 74,
+          "ColumnEnd": 84,
+          "Name": {
+            "Ident": {
+              "Name": "a",
+              "QuoteType": 1,
+              "NamePos": 74,
+              "NameEnd": 75
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": null,
+          "AliasExpr": {
+            "Name": "ts",
+            "QuoteType": 1,
+            "NamePos": 82,
+            "NameEnd": 84
+          },
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        }
+      ],
+      "AliasTable": null,
+      "TableFunction": null
+    },
+    "Engine": {
+      "EnginePos": 86,
+      "EngineEnd": 116,
+      "Name": "MergeTree",
+      "Params": null,
+      "PrimaryKey": null,
+      "PartitionBy": null,
+      "SampleBy": null,
+      "TTL": null,
+      "Settings": null,
+      "OrderBy": {
+        "OrderPos": 105,
+        "ListEnd": 116,
+        "Items": [
+          {
+            "OrderPos": 105,
+            "Expr": {
+              "Name": "ts",
+              "QuoteType": 1,
+              "NamePos": 114,
+              "NameEnd": 116
+            },
+            "Alias": null,
+            "Direction": "",
+            "Fill": null
+          }
+        ],
+        "Interpolate": null
+      }
+    },
+    "SubQuery": null,
+    "TableFunction": null,
+    "HasTemporary": false,
+    "Comment": null
+  },
+  {
+    "AlterPos": 118,
+    "StatementEnd": 174,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 130,
+        "NameEnd": 131
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "AddPos": 132,
+        "StatementEnd": 174,
+        "Column": {
+          "NamePos": 143,
+          "ColumnEnd": 174,
+          "Name": {
+            "Ident": {
+              "Name": "d",
+              "QuoteType": 1,
+              "NamePos": 143,
+              "NameEnd": 144
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": {
+            "LeftParenPos": 153,
+            "RightParenPos": 155,
+            "Items": {
+              "ListPos": 154,
+              "ListEnd": 155,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "NumPos": 154,
+                    "NumEnd": 155,
+                    "Literal": "1",
+                    "Base": 10
+                  },
+                  "Alias": null
+                }
+              ]
+            },
+            "ColumnArgList": null
+          },
+          "MaterializedExpr": null,
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": {
+            "LiteralPos": 157,
+            "LiteralEnd": 174,
+            "Literal": "example"
+          },
+          "CompressionCodec": null
+        },
+        "IfNotExists": false,
+        "After": null
+      }
+    ],
+    "Settings": null
+  },
+  {
+    "AlterPos": 176,
+    "StatementEnd": 229,
+    "TableIdentifier": {
+      "Database": null,
+      "Table": {
+        "Name": "t",
+        "QuoteType": 1,
+        "NamePos": 188,
+        "NameEnd": 189
+      }
+    },
+    "OnCluster": null,
+    "AlterExprs": [
+      {
+        "ModifyPos": 190,
+        "StatementEnd": 229,
+        "IfExists": false,
+        "Column": {
+          "NamePos": 204,
+          "ColumnEnd": 229,
+          "Name": {
+            "Ident": {
+              "Name": "m",
+              "QuoteType": 1,
+              "NamePos": 204,
+              "NameEnd": 205
+            },
+            "DotIdent": null
+          },
+          "Type": null,
+          "NotNull": null,
+          "Nullable": null,
+          "DefaultExpr": null,
+          "MaterializedExpr": {
+            "Name": {
+              "Name": "toDate",
+              "QuoteType": 1,
+              "NamePos": 219,
+              "NameEnd": 225
+            },
+            "Params": {
+              "LeftParenPos": 225,
+              "RightParenPos": 228,
+              "Items": {
+                "ListPos": 226,
+                "ListEnd": 228,
+                "HasDistinct": false,
+                "Items": [
+                  {
+                    "Expr": {
+                      "Name": "ts",
+                      "QuoteType": 1,
+                      "NamePos": 226,
+                      "NameEnd": 228
+                    },
+                    "Alias": null
+                  }
+                ]
+              },
+              "ColumnArgList": null
+            }
+          },
+          "AliasExpr": null,
+          "Codec": null,
+          "TTL": null,
+          "Comment": null,
+          "CompressionCodec": null
+        },
+        "RemovePropertyType": null
+      }
+    ],
+    "Settings": null
+  }
+]
