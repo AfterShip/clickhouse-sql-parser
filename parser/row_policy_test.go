@@ -33,6 +33,39 @@ func TestParser_RowPolicyStatements(t *testing.T) {
 	}
 }
 
+func TestParser_RowPolicyPreservesForClause(t *testing.T) {
+	for _, prefix := range []string{
+		"CREATE ROW POLICY p ON db.t ",
+		"ALTER ROW POLICY p ON db.t ",
+	} {
+		for _, clause := range []string{
+			"USING id = 42 TO r",
+			"WITH CHECK id > 0 TO r",
+			"USING id = 42 WITH CHECK id > 0 TO r",
+			"FOR SELECT USING id = 42 TO r",
+			"FOR ALL USING id = 42 TO r",
+			"FOR SELECT, ALL USING id = 42 TO r",
+			"FOR ALL USING id = 42, USING id = 43 TO r",
+		} {
+			query := prefix + clause
+			t.Run(query, func(t *testing.T) {
+				statements, err := NewParser(query).ParseStmts()
+				require.NoError(t, err)
+				require.Len(t, statements, 1)
+				require.Equal(t, query, Format(statements[0]))
+				beautifier := NewFormatter().WithBeautify()
+				beautifier.WriteExpr(statements[0])
+				for _, sql := range []string{Format(statements[0]), beautifier.String()} {
+					again, err := NewParser(sql).ParseStmts()
+					require.NoError(t, err)
+					require.Len(t, again, 1)
+					require.Equal(t, query, Format(again[0]))
+				}
+			})
+		}
+	}
+}
+
 func TestParser_RowPolicyMixedStatements(t *testing.T) {
 	query := "CREATE TABLE db.t (id UInt64) ENGINE = MergeTree ORDER BY id; CREATE ROW POLICY p ON db.t USING id = 42 TO r; SELECT id FROM db.t"
 	statements, err := NewParser(query).ParseStmts()

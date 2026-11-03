@@ -35,6 +35,7 @@
       {
         "FilterPos": 53,
         "FilterEnd": 66,
+        "Commands": null,
         "Using": {
           "ConditionPos": 59,
           "ConditionEnd": 66,
@@ -139,6 +140,7 @@
       {
         "FilterPos": 171,
         "FilterEnd": 215,
+        "Commands": null,
         "Using": {
           "ConditionPos": 177,
           "ConditionEnd": 215,
@@ -300,6 +302,7 @@
       {
         "FilterPos": 352,
         "FilterEnd": 373,
+        "Commands": null,
         "Using": {
           "ConditionPos": 358,
           "ConditionEnd": 373,
@@ -455,6 +458,7 @@
       {
         "FilterPos": 467,
         "FilterEnd": 474,
+        "Commands": null,
         "Using": {
           "ConditionPos": 473,
           "ConditionEnd": 474,
@@ -526,6 +530,7 @@
       {
         "FilterPos": 548,
         "FilterEnd": 579,
+        "Commands": null,
         "Using": {
           "ConditionPos": 554,
           "ConditionEnd": 561,
@@ -651,6 +656,7 @@
       {
         "FilterPos": 699,
         "FilterEnd": 709,
+        "Commands": null,
         "Using": {
           "ConditionPos": 705,
           "ConditionEnd": 709,
@@ -814,5 +820,175 @@
     "Name": null,
     "Table": null,
     "Targets": null
+  },
+  {
+    "CreatePos": 977,
+    "StatementEnd": 1068,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "selected_rows",
+          "QuoteType": 1,
+          "NamePos": 995,
+          "NameEnd": 1008
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 1012,
+            "NameEnd": 1014
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 1015,
+            "NameEnd": 1028
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 1029,
+        "FilterEnd": 1052,
+        "Commands": [
+          "SELECT"
+        ],
+        "Using": {
+          "ConditionPos": 1046,
+          "ConditionEnd": 1052,
+          "None": false,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 1046,
+              "NameEnd": 1048
+            },
+            "Operation": "\u003e",
+            "RightExpr": {
+              "NumPos": 1051,
+              "NumEnd": 1052,
+              "Literal": "0",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 1053,
+      "ToEnd": 1068,
+      "All": false,
+      "Principals": [
+        {
+          "PrincipalPos": 1056,
+          "PrincipalEnd": 1068,
+          "Name": {
+            "Name": "example_role",
+            "QuoteType": 1,
+            "NamePos": 1056,
+            "NameEnd": 1068
+          },
+          "Host": null,
+          "CurrentUser": false
+        }
+      ],
+      "Except": null
+    }
+  },
+  {
+    "CreatePos": 1070,
+    "StatementEnd": 1157,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "all_commands",
+          "QuoteType": 1,
+          "NamePos": 1088,
+          "NameEnd": 1100
+        },
+        "Table": {
+          "Database": {
+            "Name": "db",
+            "QuoteType": 1,
+            "NamePos": 1104,
+            "NameEnd": 1106
+          },
+          "Table": {
+            "Name": "example_table",
+            "QuoteType": 1,
+            "NamePos": 1107,
+            "NameEnd": 1120
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 1121,
+        "FilterEnd": 1141,
+        "Commands": [
+          "ALL"
+        ],
+        "Using": {
+          "ConditionPos": 1135,
+          "ConditionEnd": 1141,
+          "None": false,
+          "Expr": {
+            "LeftExpr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 1135,
+              "NameEnd": 1137
+            },
+            "Operation": "\u003e",
+            "RightExpr": {
+              "NumPos": 1140,
+              "NumEnd": 1141,
+              "Literal": "0",
+              "Base": 10
+            },
+            "HasGlobal": false,
+            "HasNot": false
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": {
+      "ToPos": 1142,
+      "ToEnd": 1157,
+      "All": false,
+      "Principals": [
+        {
+          "PrincipalPos": 1145,
+          "PrincipalEnd": 1157,
+          "Name": {
+            "Name": "example_role",
+            "QuoteType": 1,
+            "NamePos": 1145,
+            "NameEnd": 1157
+          },
+          "Host": null,
+          "CurrentUser": false
+        }
+      ],
+      "Except": null
+    }
   }
 ]

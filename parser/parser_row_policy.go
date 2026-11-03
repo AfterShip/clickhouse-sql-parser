@@ -226,6 +226,11 @@ func (p *Parser) parseRowPolicyFilter() (*RowPolicyFilter, error) {
 			if !p.matchOneOfKeywords(KeywordSelect, KeywordAll) {
 				return nil, fmt.Errorf("row policy supports FOR SELECT or ALL, got %q", p.currentTokenString())
 			}
+			command := KeywordSelect
+			if p.matchKeyword(KeywordAll) {
+				command = KeywordAll
+			}
+			filter.Commands = append(filter.Commands, command)
 			if err := p.lexer.consumeToken(); err != nil {
 				return nil, err
 			}

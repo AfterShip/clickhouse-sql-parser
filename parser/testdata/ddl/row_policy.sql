@@ -8,3 +8,5 @@ DROP ROW POLICY IF EXISTS p1, p2 ON db.example_table FROM local_directory ON CLU
 SHOW CREATE ROW POLICY example_policy ON db.example_table, example_policy ON db.example_table_local;
 SHOW CREATE ROW POLICIES ON db.*;
 SHOW ROW POLICIES;
+CREATE ROW POLICY selected_rows ON db.example_table FOR SELECT USING id > 0 TO example_role;
+CREATE ROW POLICY all_commands ON db.example_table FOR ALL USING id > 0 TO example_role;

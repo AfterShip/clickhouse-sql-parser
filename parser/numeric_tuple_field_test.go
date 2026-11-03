@@ -11,6 +11,7 @@ func TestFormatter_NumericTupleFieldBoundary(t *testing.T) {
 		"SELECT 0 .A",
 		"SELECT -1 .A",
 		"ALTER POLICY p ON db.t USING 0 .A",
+		"ALTER POLICY A ON A USING 0 .A",
 	} {
 		t.Run(query, func(t *testing.T) {
 			statements, err := NewParser(query).ParseStmts()

@@ -42,7 +42,7 @@ Database policies use `db.*`, or `*` for the current database. A quoted table na
 `CreateRowPolicy` and `AlterRowPolicy` embed `RowPolicyOptions`. The options retain omitted fields because omission on ALTER means keeping the existing value.
 
 - `Mode == ""` means omitted. `RowPolicyPermissive` and `RowPolicyRestrictive` are explicit modes.
-- No `Filters` means no filter update. Each `RowPolicyFilter` has optional `Using` and `WithCheck` conditions. A condition with `None == true` clears that condition; an expression containing zero is still an expression.
+- No `Filters` means no filter update. Each `RowPolicyFilter` preserves the explicit `FOR` command list in `Commands`; an empty list means the clause was omitted. `Using` and `WithCheck` conditions are optional. A condition with `None == true` clears that condition; an expression containing zero is still an expression.
 - `To == nil` means omitted. A non-nil `RowPolicySubjects` with no principals and `All == false` represents `TO NONE`.
 - `RenameTo` is only available on ALTER and requires exactly one target.
 
@@ -58,7 +58,7 @@ A `RowPolicyPrincipal` contains either `Name` and an optional `Host`, or `Curren
 
 ## Filtering scope and traversal
 
-ClickHouse currently implements SELECT row filtering. `FOR ALL` normalizes to SELECT. `FOR INSERT`, `FOR UPDATE`, and `FOR DELETE` are rejected.
+ClickHouse currently implements SELECT row filtering. The parser preserves an omitted `FOR` clause, explicit `FOR SELECT`, and explicit `FOR ALL` rather than adding or replacing the clause during formatting. `FOR INSERT`, `FOR UPDATE`, and `FOR DELETE` are rejected.
 
 The parser retains `WITH CHECK` syntax as a separate condition when present. That does not imply that ClickHouse enforces write-row checks. Consumers should validate the enforcement capabilities of their target server.
 
