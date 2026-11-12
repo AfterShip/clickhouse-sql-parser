@@ -1079,7 +1079,7 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 	var alias *Ident
 	if p.matchKeyword(KeywordAs) {
 		// It should be a subquery instead of an order by alias if the `AS` is followed by `SELECT` keyword.
-		if nextToken, err := p.lexer.peekToken(); err == nil && nextToken.ToString() == KeywordSelect {
+		if nextToken, err := p.lexer.peekToken(); err == nil && nextToken != nil && nextToken.ToString() == KeywordSelect {
 			return &OrderExpr{
 				OrderPos: pos,
 				Expr:     columnExpr,

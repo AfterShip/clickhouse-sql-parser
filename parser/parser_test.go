@@ -288,6 +288,8 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// ClickHouse rejects a set operator once SETTINGS is bound to a
 		// parenthesized group
 		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
+		// AS at the very end of an ORDER BY item leaves no token to check for SELECT
+		"SELECT * FROM t ORDER BY a AS",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
