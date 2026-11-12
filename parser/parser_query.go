@@ -688,12 +688,16 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 	var limit Expr
 	var offset Expr
 	var err error
+	var withTies bool
+	var withTiesEnd Pos
 	if p.tryConsumeKeywords(KeywordLimit) {
 		limit, err = p.parseExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 
+		// ClickHouse accepts WITH TIES after LIMIT n and LIMIT m, n, but not
+		// after LIMIT n OFFSET m.
 		if p.tryConsumeKeywords(KeywordOffset) {
 			offset, err = p.parseExpr(p.Pos())
 		} else if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
@@ -701,6 +705,11 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 		} else if token != nil {
 			offset = limit
 			limit, err = p.parseExpr(p.Pos())
+			if err == nil {
+				withTiesEnd, withTies = p.tryConsumeWithTies()
+			}
+		} else {
+			withTiesEnd, withTies = p.tryConsumeWithTies()
 		}
 	} else if p.tryConsumeKeywords(KeywordOffset) {
 		offset, err = p.parseExpr(p.Pos())
@@ -710,32 +719,30 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 		return nil, err
 	}
 
-	withTies := false
-	if limit != nil {
-		withTies = p.tryConsumeWithTies()
-	}
-
 	return &LimitClause{
-		LimitPos: pos,
-		Limit:    limit,
-		Offset:   offset,
-		WithTies: withTies,
+		LimitPos:    pos,
+		Limit:       limit,
+		Offset:      offset,
+		WithTies:    withTies,
+		WithTiesEnd: withTiesEnd,
 	}, nil
 }
 
-// tryConsumeWithTies consumes WITH TIES after a LIMIT clause. WITH also starts
-// other clauses, so the lexer is rewound unless TIES follows.
-func (p *Parser) tryConsumeWithTies() bool {
+// tryConsumeWithTies consumes WITH TIES and returns the end of TIES. WITH also
+// starts other clauses, so the lexer is rewound unless TIES follows.
+func (p *Parser) tryConsumeWithTies() (Pos, bool) {
 	if !p.matchKeyword(KeywordWith) {
-		return false
+		return 0, false
 	}
 	savedState := p.lexer.saveState()
 	_ = p.lexer.consumeToken()
-	if !p.tryConsumeKeywords(KeywordTies) {
+	if !p.matchKeyword(KeywordTies) {
 		p.lexer.restoreState(savedState)
-		return false
+		return 0, false
 	}
-	return true
+	withTiesEnd := p.End()
+	_ = p.lexer.consumeToken()
+	return withTiesEnd, true
 }
 
 func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {
@@ -781,9 +788,13 @@ func (p *Parser) parseLimitByClause(pos Pos) (Expr, error) {
 	}
 
 	var by *ColumnExprList
-	if !p.tryConsumeKeywords(KeywordBy) {
+	if !p.matchKeyword(KeywordBy) {
 		return limit, nil
 	}
+	if limit.WithTies {
+		return nil, fmt.Errorf("WITH TIES cannot be combined with LIMIT BY")
+	}
+	_ = p.lexer.consumeToken()
 	if by, err = p.parseColumnExprListWithLParen(p.Pos()); err != nil {
 		return nil, err
 	}

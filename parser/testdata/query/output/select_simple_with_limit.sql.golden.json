@@ -36,7 +36,8 @@
         "Base": 10
       },
       "Offset": null,
-      "WithTies": false
+      "WithTies": false,
+      "WithTiesEnd": 0
     },
     "Settings": null,
     "Format": null,
@@ -87,7 +88,8 @@
         "Literal": "0",
         "Base": 10
       },
-      "WithTies": false
+      "WithTies": false,
+      "WithTiesEnd": 0
     },
     "Settings": null,
     "Format": null,
@@ -133,7 +135,8 @@
         "Literal": "0",
         "Base": 10
       },
-      "WithTies": false
+      "WithTies": false,
+      "WithTiesEnd": 0
     },
     "Settings": null,
     "Format": null,
