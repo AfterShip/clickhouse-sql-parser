@@ -54,6 +54,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Having, fn) {
 			return false
 		}
+		if !Walk(n.Qualify, fn) {
+			return false
+		}
 		if !Walk(n.OrderBy, fn) {
 			return false
 		}
@@ -243,6 +246,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *HavingClause:
+		if !Walk(n.Expr, fn) {
+			return false
+		}
+	case *QualifyClause:
 		if !Walk(n.Expr, fn) {
 			return false
 		}

@@ -416,7 +416,7 @@ func (p *Parser) peekKeyword(keyword string) bool {
 // (current-token) and the lookahead check (peek), so they cannot drift.
 var clauseStarterKeywords = []string{
 	KeywordFrom, KeywordWhere, KeywordPrewhere, KeywordGroup,
-	KeywordHaving, KeywordWindow, KeywordOrder, KeywordLimit,
+	KeywordHaving, KeywordWindow, KeywordQualify, KeywordOrder, KeywordLimit,
 	KeywordOffset, KeywordSettings, KeywordFormat, KeywordUnion,
 	KeywordExcept, KeywordIntersect,
 }

@@ -290,6 +290,14 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
 		// AS at the very end of an ORDER BY item leaves no token to check for SELECT
 		"SELECT * FROM t ORDER BY a AS",
+		// QUALIFY takes one expression and sits between WINDOW and ORDER BY
+		"SELECT a FROM t QUALIFY",
+		"SELECT a FROM t QUALIFY a = 1, a = 2",
+		"SELECT a FROM t QUALIFY a = 1 QUALIFY a = 2",
+		"SELECT a FROM t ORDER BY a QUALIFY a = 1",
+		"SELECT a FROM t QUALIFY a = 1 HAVING a = 1",
+		"SELECT a FROM t QUALIFY a = 1 WINDOW w AS (PARTITION BY a)",
+		"SELECT a FROM t qualify", // not a table alias
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
