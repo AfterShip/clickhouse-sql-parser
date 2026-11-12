@@ -484,7 +484,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			return nil, err
 		}
 		// it's a table name
-		if tableIdentifier.Database != nil || !p.matchTokenKind(TokenKindLParen) { // database.table
+		if !p.matchTokenKind(TokenKindLParen) { // database.table
 			expr = tableIdentifier
 		} else {
 			// table function expr
@@ -492,8 +492,14 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			if err != nil {
 				return nil, err
 			}
+			// A parameterized view is called like a table function and can
+			// be qualified with its database: db.view(name = value).
+			var name Expr = tableIdentifier.Table
+			if tableIdentifier.Database != nil {
+				name = tableIdentifier
+			}
 			expr = &TableFunctionExpr{
-				Name: tableIdentifier.Table,
+				Name: name,
 				Args: tableArgs,
 			}
 		}

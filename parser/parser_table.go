@@ -845,6 +845,11 @@ func (p *Parser) parseTableArgPrimaryExpr(pos Pos) (Expr, error) {
 	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat),
 		p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
 		return p.parseLiteral(p.Pos())
+	case p.matchTokenKind(TokenKindLBracket):
+		return p.parseArrayParams(p.Pos())
+	case p.matchTokenKind(TokenKindLBrace):
+		// a query parameter such as {id:UInt64}
+		return p.parseQueryParam(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <Name>, <literal>", p.currentTokenString())
 	}
