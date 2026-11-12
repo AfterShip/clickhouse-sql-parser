@@ -290,6 +290,8 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
 		// AS at the very end of an ORDER BY item leaves no token to check for SELECT
 		"SELECT * FROM t ORDER BY a AS",
+		// a tuple element index ends a qualified column
+		"SELECT t.a.1.:Int64 FROM t",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)

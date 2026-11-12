@@ -1,0 +1,214 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 72,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Object": {
+            "Fields": [
+              {
+                "Name": "t",
+                "QuoteType": 1,
+                "NamePos": 7,
+                "NameEnd": 8
+              },
+              {
+                "Name": "a",
+                "QuoteType": 1,
+                "NamePos": 9,
+                "NameEnd": 10
+              }
+            ]
+          },
+          "Operation": ".",
+          "Index": {
+            "NumPos": 11,
+            "NumEnd": 12,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "Modifiers": [],
+        "Alias": null
+      },
+      {
+        "Expr": {
+          "LeftExpr": {
+            "Object": {
+              "Fields": [
+                {
+                  "Name": "db",
+                  "QuoteType": 1,
+                  "NamePos": 14,
+                  "NameEnd": 16
+                },
+                {
+                  "Name": "t",
+                  "QuoteType": 1,
+                  "NamePos": 17,
+                  "NameEnd": 18
+                },
+                {
+                  "Name": "a",
+                  "QuoteType": 1,
+                  "NamePos": 19,
+                  "NameEnd": 20
+                }
+              ]
+            },
+            "Operation": ".",
+            "Index": {
+              "NumPos": 21,
+              "NumEnd": 22,
+              "Literal": "2",
+              "Base": 10
+            }
+          },
+          "Operation": "+",
+          "RightExpr": {
+            "NumPos": 25,
+            "NumEnd": 26,
+            "Literal": "1",
+            "Base": 10
+          },
+          "HasGlobal": false,
+          "HasNot": false
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 27,
+      "Expr": {
+        "Table": {
+          "TablePos": 32,
+          "TableEnd": 41,
+          "Alias": null,
+          "Expr": {
+            "Expr": {
+              "Database": {
+                "Name": "db",
+                "QuoteType": 1,
+                "NamePos": 32,
+                "NameEnd": 34
+              },
+              "Table": {
+                "Name": "t",
+                "QuoteType": 1,
+                "NamePos": 35,
+                "NameEnd": 36
+              }
+            },
+            "AliasPos": 40,
+            "Alias": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 40,
+              "NameEnd": 41
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 41,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": {
+      "WherePos": 42,
+      "Expr": {
+        "LeftExpr": {
+          "Object": {
+            "Fields": [
+              {
+                "Name": "t",
+                "QuoteType": 1,
+                "NamePos": 48,
+                "NameEnd": 49
+              },
+              {
+                "Name": "a",
+                "QuoteType": 1,
+                "NamePos": 50,
+                "NameEnd": 51
+              }
+            ]
+          },
+          "Operation": ".",
+          "Index": {
+            "NumPos": 52,
+            "NumEnd": 53,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "Operation": "=",
+        "RightExpr": {
+          "NumPos": 56,
+          "NumEnd": 57,
+          "Literal": "1",
+          "Base": 10
+        },
+        "HasGlobal": false,
+        "HasNot": false
+      }
+    },
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 58,
+      "ListEnd": 72,
+      "Items": [
+        {
+          "OrderPos": 58,
+          "Expr": {
+            "Object": {
+              "Fields": [
+                {
+                  "Name": "t",
+                  "QuoteType": 1,
+                  "NamePos": 67,
+                  "NameEnd": 68
+                },
+                {
+                  "Name": "a",
+                  "QuoteType": 1,
+                  "NamePos": 69,
+                  "NameEnd": 70
+                }
+              ]
+            },
+            "Operation": ".",
+            "Index": {
+              "NumPos": 71,
+              "NumEnd": 72,
+              "Literal": "2",
+              "Base": 10
+            }
+          },
+          "Alias": null,
+          "Direction": "",
+          "Fill": null
+        }
+      ],
+      "Interpolate": null
+    },
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]
