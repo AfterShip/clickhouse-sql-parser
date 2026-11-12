@@ -1932,6 +1932,9 @@ func (l *LimitClause) FormatSQL(formatter *Formatter) {
 		formatter.WriteString("OFFSET ")
 		formatter.WriteExpr(l.Offset)
 	}
+	if l.WithTies {
+		formatter.WriteString(" WITH TIES")
+	}
 }
 
 func (m *MapLiteral) FormatSQL(formatter *Formatter) {

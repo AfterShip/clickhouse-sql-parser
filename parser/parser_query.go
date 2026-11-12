@@ -196,7 +196,9 @@ func (p *Parser) parseJoinType(_ Pos) []string {
 			modifiers = append(modifiers, p.current().String)
 			_ = p.lexer.consumeToken()
 		}
-	case p.matchKeyword(KeywordSemi), p.matchKeyword(KeywordAsof):
+	case p.matchKeyword(KeywordSemi), p.matchKeyword(KeywordAnti), p.matchKeyword(KeywordAsof):
+		// Strictness may come first, as in ANTI LEFT JOIN. ClickHouse prints
+		// joins in this order, so stored view definitions use it.
 		modifiers = append(modifiers, p.current().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordLeft) || p.matchKeyword(KeywordRight) {
@@ -708,11 +710,32 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 		return nil, err
 	}
 
+	withTies := false
+	if limit != nil {
+		withTies = p.tryConsumeWithTies()
+	}
+
 	return &LimitClause{
 		LimitPos: pos,
 		Limit:    limit,
 		Offset:   offset,
+		WithTies: withTies,
 	}, nil
+}
+
+// tryConsumeWithTies consumes WITH TIES after a LIMIT clause. WITH also starts
+// other clauses, so the lexer is rewound unless TIES follows.
+func (p *Parser) tryConsumeWithTies() bool {
+	if !p.matchKeyword(KeywordWith) {
+		return false
+	}
+	savedState := p.lexer.saveState()
+	_ = p.lexer.consumeToken()
+	if !p.tryConsumeKeywords(KeywordTies) {
+		p.lexer.restoreState(savedState)
+		return false
+	}
+	return true
 }
 
 func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {

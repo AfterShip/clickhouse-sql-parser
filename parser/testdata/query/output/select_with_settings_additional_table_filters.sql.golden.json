@@ -481,7 +481,8 @@
                       "Literal": "5",
                       "Base": 10
                     },
-                    "Offset": null
+                    "Offset": null,
+                    "WithTies": false
                   },
                   "Settings": null,
                   "Format": null,

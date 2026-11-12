@@ -4955,6 +4955,8 @@ type LimitClause struct {
 	LimitPos Pos
 	Limit    Expr
 	Offset   Expr
+	// WithTies is set for LIMIT n [OFFSET m] WITH TIES.
+	WithTies bool
 }
 
 func (l *LimitClause) Pos() Pos {

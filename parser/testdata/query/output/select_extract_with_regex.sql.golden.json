@@ -442,7 +442,8 @@
         "Literal": "10000",
         "Base": 10
       },
-      "Offset": null
+      "Offset": null,
+      "WithTies": false
     },
     "Settings": null,
     "Format": null,
