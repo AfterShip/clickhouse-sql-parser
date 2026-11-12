@@ -20,7 +20,7 @@ After editing code, use `goimports` and `gofmt` to maintain code style, and run 
 
 ## Project Structure & Module Organization
 - `main.go` is the CLI entry point (`clickhouse-sql-parser`) for AST output and SQL formatting.
-- `parser/` contains core parser code: lexer (`lexer.go`), AST definitions (`ast.go`), traversal helpers (`walk.go`), and grammar-specific parser files (`parser_query.go`, `parser_table.go`, `parser_alter.go`, etc.).
+- `parser/` contains core parser code: lexer (`lexer.go`), AST interfaces (`ast.go`) and domain-specific AST definitions (`ast_*.go`), traversal helpers (`walk.go`), and grammar-specific parser files (`parser_query.go`, `parser_table.go`, `parser_alter.go`, etc.).
 - Tests live next to source as `*_test.go` files, with fixtures under `parser/testdata/`.
 - Fixture groups are organized by SQL type (`basic/`, `query/`, `dml/`, `ddl/`), with generated expectations in `output/` (AST JSON) and `format/` (formatted SQL).
 
