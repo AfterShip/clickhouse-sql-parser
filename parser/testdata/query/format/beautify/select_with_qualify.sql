@@ -10,6 +10,11 @@ ORDER BY id
 LIMIT 5;
 SELECT id FROM t WINDOW w AS (PARTITION BY id) QUALIFY row_number() OVER w = 1;
 SELECT qualify FROM t AS qualify QUALIFY qualify = 1
+;
+SELECT row_number() OVER () QUALIFY NOT 0;
+SELECT 1 QUALIFY -1;
+SELECT qualify, a QUALIFY qualify = 1;
+SELECT a, qualify
 
 
 -- Beautify SQL:
@@ -45,3 +50,16 @@ SELECT
 FROM
   t AS qualify
 QUALIFY qualify = 1;
+SELECT
+  row_number() OVER ()
+QUALIFY NOT 0;
+SELECT
+  1
+QUALIFY -1;
+SELECT
+  qualify,
+  a
+QUALIFY qualify = 1;
+SELECT
+  a,
+  qualify;

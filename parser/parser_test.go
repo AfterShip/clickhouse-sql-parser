@@ -307,6 +307,8 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT a FROM t QUALIFY a = 1 HAVING a = 1",
 		"SELECT a FROM t QUALIFY a = 1 WINDOW w AS (PARTITION BY a)",
 		"SELECT a FROM t qualify", // not a table alias
+		"SELECT a qualify",        // not a column alias
+		"SELECT a qualify FROM t", // not a column alias
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
