@@ -179,6 +179,7 @@ const (
 	KeywordPrewhere     = "PREWHERE"
 	KeywordPrimary      = "PRIMARY"
 	KeywordProjection   = "PROJECTION"
+	KeywordQualify      = "QUALIFY"
 	KeywordQuarter      = "QUARTER"
 	KeywordQuery        = "QUERY"
 	KeywordQueues       = "QUEUES"
@@ -515,6 +516,7 @@ var keywords = NewSet(
 	KeywordPrewhere,
 	KeywordPrimary,
 	KeywordProjection,
+	KeywordQualify,
 	KeywordQuarter,
 	KeywordQuery,
 	KeywordQueues,

@@ -180,6 +180,7 @@
               "GroupBy": null,
               "WithTotal": false,
               "Having": null,
+              "Qualify": null,
               "OrderBy": null,
               "LimitBy": null,
               "Limit": null,
@@ -204,6 +205,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": {
       "OrderPos": 121,
       "ListEnd": 173,

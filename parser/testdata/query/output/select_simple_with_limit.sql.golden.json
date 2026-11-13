@@ -25,6 +25,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": null,
     "Limit": {
@@ -72,6 +73,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": null,
     "Limit": {
@@ -124,6 +126,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": null,
     "Limit": {

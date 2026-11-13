@@ -65,6 +65,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": null,
     "Limit": null,

@@ -446,7 +446,8 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 var tableAliasRestrictedKeywords = NewSet(
 	KeywordAll, KeywordAnti, KeywordAny, KeywordArray, KeywordAsof,
 	KeywordFinal, KeywordFull, KeywordGlobal, KeywordIntersect, KeywordJoin,
-	KeywordLeft, KeywordLocal, KeywordRight, KeywordSample, KeywordSemi,
+	KeywordLeft, KeywordLocal, KeywordQualify, KeywordRight, KeywordSample,
+	KeywordSemi,
 )
 
 // matchTableAliasWithoutAs reports whether the current token aliases table
@@ -1119,6 +1120,29 @@ func (p *Parser) parseHavingClause(pos Pos) (*HavingClause, error) {
 	}, nil
 }
 
+func (p *Parser) tryParseQualifyClause(pos Pos) (*QualifyClause, error) {
+	if !p.matchKeyword(KeywordQualify) {
+		return nil, nil
+	}
+	return p.parseQualifyClause(pos)
+}
+
+func (p *Parser) parseQualifyClause(pos Pos) (*QualifyClause, error) {
+	if err := p.expectKeyword(KeywordQualify); err != nil {
+		return nil, err
+	}
+
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &QualifyClause{
+		QualifyPos: pos,
+		Expr:       expr,
+	}, nil
+}
+
 func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 
 	lparen, consumeErr := p.tryConsumeTokenKind(TokenKindLParen)
@@ -1332,6 +1356,13 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if window != nil {
 		statementEnd = window.End()
 	}
+	qualify, err := p.tryParseQualifyClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if qualify != nil {
+		statementEnd = qualify.End()
+	}
 	orderBy, err := p.tryParseOrderByClause(p.Pos())
 	if err != nil {
 		return nil, err
@@ -1401,6 +1432,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		Where:        where,
 		GroupBy:      groupBy,
 		Having:       having,
+		Qualify:      qualify,
 		OrderBy:      orderBy,
 		LimitBy:      limitBy,
 		Limit:        limit,

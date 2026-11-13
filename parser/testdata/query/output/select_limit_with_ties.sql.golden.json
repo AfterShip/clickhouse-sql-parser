@@ -47,6 +47,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": {
       "OrderPos": 17,
       "ListEnd": 28,
@@ -134,6 +135,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": {
       "OrderPos": 66,
       "ListEnd": 77,
@@ -226,6 +228,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": {
       "OrderPos": 118,
       "ListEnd": 129,
@@ -380,6 +383,7 @@
               "GroupBy": null,
               "WithTotal": false,
               "Having": null,
+              "Qualify": null,
               "OrderBy": {
                 "OrderPos": 201,
                 "ListEnd": 212,
@@ -456,6 +460,7 @@
     },
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": null,
     "Limit": null,

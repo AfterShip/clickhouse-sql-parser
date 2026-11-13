@@ -416,7 +416,7 @@ func (p *Parser) peekKeyword(keyword string) bool {
 // (current-token) and the lookahead check (peek), so they cannot drift.
 var clauseStarterKeywords = []string{
 	KeywordFrom, KeywordWhere, KeywordPrewhere, KeywordGroup,
-	KeywordHaving, KeywordWindow, KeywordOrder, KeywordLimit,
+	KeywordHaving, KeywordWindow, KeywordQualify, KeywordOrder, KeywordLimit,
 	KeywordOffset, KeywordSettings, KeywordFormat, KeywordUnion,
 	KeywordExcept, KeywordIntersect,
 }
@@ -523,6 +523,11 @@ func (p *Parser) isSelectItemTerminatorKeyword() bool {
 		return false
 	}
 	if p.keywordIsSelectItemIdentifier() {
+		return false
+	}
+	// The QUALIFY clause needs an expression, so a qualify that ends the
+	// statement is a column of that name: `SELECT a, qualify`.
+	if p.matchKeyword(KeywordQualify) && p.peekIsEndOfStatement() {
 		return false
 	}
 	return p.matchClauseStarterKeyword()
@@ -1198,6 +1203,11 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 		if err != nil {
 			return nil, err
 		}
+	case p.matchKeyword(KeywordQualify):
+		// QUALIFY after a complete item always starts the clause. The server
+		// never reads it as an alias without AS, so the identifier lookahead
+		// must not turn `SELECT 1 QUALIFY NOT 0` into an item named qualify.
+		alias = nil
 	case p.matchTokenKind(TokenKindIdent) && !p.isSelectItemTerminatorKeyword():
 		// A bare alias can be a normal identifier or non-reserved keyword; a
 		// reserved keyword here starts the next clause (e.g. `SELECT a FROM ...`).

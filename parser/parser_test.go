@@ -299,6 +299,16 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// a leading SEMI or ANTI takes LEFT or RIGHT only
 		"SELECT * FROM t1 ANTI INNER JOIN t2 ON t1.a = t2.a",
 		"SELECT * FROM t1 ANTI ANY LEFT JOIN t2 ON t1.a = t2.a",
+		// QUALIFY takes one expression and sits between WINDOW and ORDER BY
+		"SELECT a FROM t QUALIFY",
+		"SELECT a FROM t QUALIFY a = 1, a = 2",
+		"SELECT a FROM t QUALIFY a = 1 QUALIFY a = 2",
+		"SELECT a FROM t ORDER BY a QUALIFY a = 1",
+		"SELECT a FROM t QUALIFY a = 1 HAVING a = 1",
+		"SELECT a FROM t QUALIFY a = 1 WINDOW w AS (PARTITION BY a)",
+		"SELECT a FROM t qualify", // not a table alias
+		"SELECT a qualify",        // not a column alias
+		"SELECT a qualify FROM t", // not a column alias
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)

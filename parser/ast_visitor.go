@@ -155,6 +155,7 @@ type ASTVisitor interface {
 	VisitPrewhereExpr(expr *PrewhereClause) error
 	VisitGroupByExpr(expr *GroupByClause) error
 	VisitHavingExpr(expr *HavingClause) error
+	VisitQualifyExpr(expr *QualifyClause) error
 	VisitLimitExpr(expr *LimitClause) error
 	VisitLimitByExpr(expr *LimitByClause) error
 	VisitWindowConditionExpr(expr *WindowExpr) error
@@ -1290,6 +1291,13 @@ func (v *DefaultASTVisitor) VisitGroupByExpr(expr *GroupByClause) error {
 }
 
 func (v *DefaultASTVisitor) VisitHavingExpr(expr *HavingClause) error {
+	if v.Visit != nil {
+		return v.Visit(expr)
+	}
+	return nil
+}
+
+func (v *DefaultASTVisitor) VisitQualifyExpr(expr *QualifyClause) error {
 	if v.Visit != nil {
 		return v.Visit(expr)
 	}

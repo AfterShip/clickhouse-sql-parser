@@ -1642,6 +1642,11 @@ func (h *HavingClause) FormatSQL(formatter *Formatter) {
 	formatter.WriteExpr(h.Expr)
 }
 
+func (q *QualifyClause) FormatSQL(formatter *Formatter) {
+	formatter.WriteString("QUALIFY ")
+	formatter.WriteExpr(q.Expr)
+}
+
 func (h *HostClause) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("HOST ")
 	formatter.WriteString(h.HostType)
@@ -2376,6 +2381,10 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 	if s.Having != nil {
 		formatter.Break()
 		formatter.WriteExpr(s.Having)
+	}
+	if s.Qualify != nil {
+		formatter.Break()
+		formatter.WriteExpr(s.Qualify)
 	}
 	if s.OrderBy != nil {
 		formatter.Break()
