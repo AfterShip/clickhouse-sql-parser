@@ -4955,6 +4955,10 @@ type LimitClause struct {
 	LimitPos Pos
 	Limit    Expr
 	Offset   Expr
+	// WithTies is set for LIMIT n WITH TIES and LIMIT m, n WITH TIES.
+	WithTies bool
+	// WithTiesEnd is the end of the TIES keyword when WithTies is set.
+	WithTiesEnd Pos
 }
 
 func (l *LimitClause) Pos() Pos {
@@ -4962,6 +4966,9 @@ func (l *LimitClause) Pos() Pos {
 }
 
 func (l *LimitClause) End() Pos {
+	if l.WithTies {
+		return l.WithTiesEnd
+	}
 	if l.Offset != nil {
 		return l.Offset.End()
 	}
