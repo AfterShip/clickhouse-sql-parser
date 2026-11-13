@@ -299,6 +299,12 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// a leading SEMI or ANTI takes LEFT or RIGHT only
 		"SELECT * FROM t1 ANTI INNER JOIN t2 ON t1.a = t2.a",
 		"SELECT * FROM t1 ANTI ANY LEFT JOIN t2 ON t1.a = t2.a",
+		// arguments of a parameterized view call
+		"SELECT * FROM db.v(a = {x})",      // query parameter without a type
+		"SELECT * FROM db.v(a = {'k': 1})", // not a query parameter
+		"SELECT * FROM db.v(a = [1, )",     // unterminated array
+		"SELECT * FROM db.v(a = 1)(b = 2)", // a call takes one argument list
+		"SELECT * FROM db.t (SELECT 1)",    // a subquery cannot follow a table name
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)

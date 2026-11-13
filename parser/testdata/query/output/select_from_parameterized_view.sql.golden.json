@@ -1,0 +1,369 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 191,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 9
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 10,
+      "Expr": {
+        "JoinPos": 15,
+        "Left": {
+          "Table": {
+            "TablePos": 15,
+            "TableEnd": 112,
+            "Alias": null,
+            "Expr": {
+              "Expr": {
+                "Name": {
+                  "Database": {
+                    "Name": "db",
+                    "QuoteType": 1,
+                    "NamePos": 15,
+                    "NameEnd": 17
+                  },
+                  "Table": {
+                    "Name": "v",
+                    "QuoteType": 1,
+                    "NamePos": 18,
+                    "NameEnd": 19
+                  }
+                },
+                "Args": {
+                  "LeftParenPos": 19,
+                  "RightParenPos": 106,
+                  "Args": [
+                    {
+                      "NamePos": 20,
+                      "Name": {
+                        "Name": "min_id",
+                        "QuoteType": 0,
+                        "NamePos": 20,
+                        "NameEnd": 26
+                      },
+                      "Value": {
+                        "LBracePos": 29,
+                        "RBracePos": 43,
+                        "Name": {
+                          "Name": "min_id",
+                          "QuoteType": 1,
+                          "NamePos": 30,
+                          "NameEnd": 36
+                        },
+                        "Type": {
+                          "Name": {
+                            "Name": "UInt64",
+                            "QuoteType": 1,
+                            "NamePos": 37,
+                            "NameEnd": 43
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "NamePos": 46,
+                      "Name": {
+                        "Name": "ids",
+                        "QuoteType": 0,
+                        "NamePos": 46,
+                        "NameEnd": 49
+                      },
+                      "Value": {
+                        "LeftBracketPos": 52,
+                        "RightBracketPos": 64,
+                        "Items": {
+                          "ListPos": 53,
+                          "ListEnd": 64,
+                          "HasDistinct": false,
+                          "Items": [
+                            {
+                              "Expr": {
+                                "LBracePos": 53,
+                                "RBracePos": 63,
+                                "Name": {
+                                  "Name": "id",
+                                  "QuoteType": 1,
+                                  "NamePos": 54,
+                                  "NameEnd": 56
+                                },
+                                "Type": {
+                                  "Name": {
+                                    "Name": "UInt64",
+                                    "QuoteType": 1,
+                                    "NamePos": 57,
+                                    "NameEnd": 63
+                                  }
+                                }
+                              },
+                              "Alias": null
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "NamePos": 67,
+                      "Name": {
+                        "Name": "since",
+                        "QuoteType": 0,
+                        "NamePos": 67,
+                        "NameEnd": 72
+                      },
+                      "Value": {
+                        "Name": {
+                          "Name": "toDateTime64",
+                          "QuoteType": 1,
+                          "NamePos": 75,
+                          "NameEnd": 87
+                        },
+                        "Args": {
+                          "LeftParenPos": 75,
+                          "RightParenPos": 105,
+                          "Args": [
+                            {
+                              "LBracePos": 88,
+                              "RBracePos": 101,
+                              "Name": {
+                                "Name": "since",
+                                "QuoteType": 1,
+                                "NamePos": 89,
+                                "NameEnd": 94
+                              },
+                              "Type": {
+                                "Name": {
+                                  "Name": "String",
+                                  "QuoteType": 1,
+                                  "NamePos": 95,
+                                  "NameEnd": 101
+                                }
+                              }
+                            },
+                            {
+                              "NumPos": 104,
+                              "NumEnd": 105,
+                              "Literal": "3",
+                              "Base": 10
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "AliasPos": 111,
+              "Alias": {
+                "Name": "a",
+                "QuoteType": 1,
+                "NamePos": 111,
+                "NameEnd": 112
+              }
+            },
+            "HasFinal": false
+          },
+          "StatementEnd": 112,
+          "SampleRatio": null,
+          "HasFinal": false
+        },
+        "Right": {
+          "JoinPos": 113,
+          "Left": {
+            "Table": {
+              "TablePos": 125,
+              "TableEnd": 176,
+              "Alias": null,
+              "Expr": {
+                "Expr": {
+                  "Name": {
+                    "Name": "db.v",
+                    "QuoteType": 3,
+                    "NamePos": 125,
+                    "NameEnd": 129
+                  },
+                  "Args": {
+                    "LeftParenPos": 130,
+                    "RightParenPos": 170,
+                    "Args": [
+                      {
+                        "NamePos": 131,
+                        "Name": {
+                          "Name": "min_id",
+                          "QuoteType": 0,
+                          "NamePos": 131,
+                          "NameEnd": 137
+                        },
+                        "Value": {
+                          "NumPos": 140,
+                          "NumEnd": 141,
+                          "Literal": "1",
+                          "Base": 10
+                        }
+                      },
+                      {
+                        "NamePos": 143,
+                        "Name": {
+                          "Name": "ids",
+                          "QuoteType": 0,
+                          "NamePos": 143,
+                          "NameEnd": 146
+                        },
+                        "Value": {
+                          "LeftBracketPos": 149,
+                          "RightBracketPos": 154,
+                          "Items": {
+                            "ListPos": 150,
+                            "ListEnd": 154,
+                            "HasDistinct": false,
+                            "Items": [
+                              {
+                                "Expr": {
+                                  "NumPos": 150,
+                                  "NumEnd": 151,
+                                  "Literal": "1",
+                                  "Base": 10
+                                },
+                                "Alias": null
+                              },
+                              {
+                                "Expr": {
+                                  "NumPos": 153,
+                                  "NumEnd": 154,
+                                  "Literal": "2",
+                                  "Base": 10
+                                },
+                                "Alias": null
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "NamePos": 157,
+                        "Name": {
+                          "Name": "since",
+                          "QuoteType": 0,
+                          "NamePos": 157,
+                          "NameEnd": 162
+                        },
+                        "Value": {
+                          "Name": {
+                            "Name": "now",
+                            "QuoteType": 1,
+                            "NamePos": 165,
+                            "NameEnd": 168
+                          },
+                          "Args": {
+                            "LeftParenPos": 165,
+                            "RightParenPos": 169,
+                            "Args": []
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "AliasPos": 175,
+                "Alias": {
+                  "Name": "b",
+                  "QuoteType": 1,
+                  "NamePos": 175,
+                  "NameEnd": 176
+                }
+              },
+              "HasFinal": false
+            },
+            "StatementEnd": 176,
+            "SampleRatio": null,
+            "HasFinal": false
+          },
+          "Right": null,
+          "Modifiers": [
+            "INNER",
+            "JOIN"
+          ],
+          "Constraints": {
+            "OnPos": 177,
+            "On": {
+              "ListPos": 180,
+              "ListEnd": 191,
+              "HasDistinct": false,
+              "Items": [
+                {
+                  "Expr": {
+                    "LeftExpr": {
+                      "Fields": [
+                        {
+                          "Name": "a",
+                          "QuoteType": 1,
+                          "NamePos": 180,
+                          "NameEnd": 181
+                        },
+                        {
+                          "Name": "id",
+                          "QuoteType": 1,
+                          "NamePos": 182,
+                          "NameEnd": 184
+                        }
+                      ]
+                    },
+                    "Operation": "=",
+                    "RightExpr": {
+                      "Fields": [
+                        {
+                          "Name": "b",
+                          "QuoteType": 1,
+                          "NamePos": 187,
+                          "NameEnd": 188
+                        },
+                        {
+                          "Name": "id",
+                          "QuoteType": 1,
+                          "NamePos": 189,
+                          "NameEnd": 191
+                        }
+                      ]
+                    },
+                    "HasGlobal": false,
+                    "HasNot": false
+                  },
+                  "Alias": null
+                }
+              ]
+            }
+          }
+        },
+        "Modifiers": null,
+        "Constraints": null
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]
