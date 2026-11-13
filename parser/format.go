@@ -1926,6 +1926,17 @@ func (l *LimitByClause) FormatSQL(formatter *Formatter) {
 }
 
 func (l *LimitClause) FormatSQL(formatter *Formatter) {
+	if l.WithTies {
+		// WITH TIES is not valid after OFFSET, so keep the comma form.
+		formatter.WriteString("LIMIT ")
+		if l.Offset != nil {
+			formatter.WriteExpr(l.Offset)
+			formatter.WriteString(", ")
+		}
+		formatter.WriteExpr(l.Limit)
+		formatter.WriteString(" WITH TIES")
+		return
+	}
 	if l.Limit != nil {
 		formatter.WriteString("LIMIT ")
 		formatter.WriteExpr(l.Limit)
