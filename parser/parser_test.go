@@ -290,6 +290,15 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
 		// AS at the very end of an ORDER BY item leaves no token to check for SELECT
 		"SELECT * FROM t ORDER BY a AS",
+		// WITH TIES follows LIMIT n or LIMIT m, n only
+		"SELECT a FROM t ORDER BY a LIMIT 2 OFFSET 1 WITH TIES",
+		"SELECT a FROM t ORDER BY a LIMIT 2 WITH TIES OFFSET 1",
+		"SELECT a FROM t ORDER BY a OFFSET 1 WITH TIES",
+		"SELECT a FROM t ORDER BY a LIMIT 2 WITH",
+		"SELECT a FROM t ORDER BY a LIMIT 1 WITH TIES BY a",
+		// a leading SEMI or ANTI takes LEFT or RIGHT only
+		"SELECT * FROM t1 ANTI INNER JOIN t2 ON t1.a = t2.a",
+		"SELECT * FROM t1 ANTI ANY LEFT JOIN t2 ON t1.a = t2.a",
 		// arguments of a parameterized view call
 		"SELECT * FROM db.v(a = {x})",      // query parameter without a type
 		"SELECT * FROM db.v(a = {'k': 1})", // not a query parameter

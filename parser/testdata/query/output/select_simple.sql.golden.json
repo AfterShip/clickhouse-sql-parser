@@ -409,7 +409,9 @@
           "NumEnd": 267,
           "Literal": "100",
           "Base": 10
-        }
+        },
+        "WithTies": false,
+        "WithTiesEnd": 0
       },
       "ByExpr": {
         "ListPos": 275,

@@ -1,0 +1,469 @@
+[
+  {
+    "SelectPos": 0,
+    "StatementEnd": 47,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 7,
+          "NameEnd": 9
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 10,
+      "Expr": {
+        "Table": {
+          "TablePos": 15,
+          "TableEnd": 16,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 15,
+              "NameEnd": 16
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 16,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 17,
+      "ListEnd": 28,
+      "Items": [
+        {
+          "OrderPos": 17,
+          "Expr": {
+            "Name": "ts",
+            "QuoteType": 1,
+            "NamePos": 26,
+            "NameEnd": 28
+          },
+          "Alias": null,
+          "Direction": "",
+          "Fill": null
+        }
+      ],
+      "Interpolate": null
+    },
+    "LimitBy": null,
+    "Limit": {
+      "LimitPos": 29,
+      "Limit": {
+        "NumPos": 35,
+        "NumEnd": 37,
+        "Literal": "10",
+        "Base": 10
+      },
+      "Offset": null,
+      "WithTies": true,
+      "WithTiesEnd": 47
+    },
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 49,
+    "StatementEnd": 99,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 56,
+          "NameEnd": 58
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 59,
+      "Expr": {
+        "Table": {
+          "TablePos": 64,
+          "TableEnd": 65,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 64,
+              "NameEnd": 65
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 65,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 66,
+      "ListEnd": 77,
+      "Items": [
+        {
+          "OrderPos": 66,
+          "Expr": {
+            "Name": "ts",
+            "QuoteType": 1,
+            "NamePos": 75,
+            "NameEnd": 77
+          },
+          "Alias": null,
+          "Direction": "",
+          "Fill": null
+        }
+      ],
+      "Interpolate": null
+    },
+    "LimitBy": null,
+    "Limit": {
+      "LimitPos": 78,
+      "Limit": {
+        "NumPos": 87,
+        "NumEnd": 89,
+        "Literal": "10",
+        "Base": 10
+      },
+      "Offset": {
+        "NumPos": 84,
+        "NumEnd": 85,
+        "Literal": "5",
+        "Base": 10
+      },
+      "WithTies": true,
+      "WithTiesEnd": 99
+    },
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 101,
+    "StatementEnd": 162,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 108,
+          "NameEnd": 110
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 111,
+      "Expr": {
+        "Table": {
+          "TablePos": 116,
+          "TableEnd": 117,
+          "Alias": null,
+          "Expr": {
+            "Database": null,
+            "Table": {
+              "Name": "t",
+              "QuoteType": 1,
+              "NamePos": 116,
+              "NameEnd": 117
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 117,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": null,
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": {
+      "OrderPos": 118,
+      "ListEnd": 129,
+      "Items": [
+        {
+          "OrderPos": 118,
+          "Expr": {
+            "Name": "ts",
+            "QuoteType": 1,
+            "NamePos": 127,
+            "NameEnd": 129
+          },
+          "Alias": null,
+          "Direction": "",
+          "Fill": null
+        }
+      ],
+      "Interpolate": null
+    },
+    "LimitBy": {
+      "Limit": {
+        "LimitPos": 130,
+        "Limit": {
+          "NumPos": 136,
+          "NumEnd": 137,
+          "Literal": "1",
+          "Base": 10
+        },
+        "Offset": null,
+        "WithTies": false,
+        "WithTiesEnd": 0
+      },
+      "ByExpr": {
+        "ListPos": 141,
+        "ListEnd": 143,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Expr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 141,
+              "NameEnd": 143
+            },
+            "Alias": null
+          }
+        ]
+      }
+    },
+    "Limit": {
+      "LimitPos": 144,
+      "Limit": {
+        "NumPos": 150,
+        "NumEnd": 152,
+        "Literal": "10",
+        "Base": 10
+      },
+      "Offset": null,
+      "WithTies": true,
+      "WithTiesEnd": 162
+    },
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  },
+  {
+    "SelectPos": 164,
+    "StatementEnd": 244,
+    "With": null,
+    "Top": null,
+    "HasDistinct": false,
+    "DistinctOn": null,
+    "SelectItems": [
+      {
+        "Expr": {
+          "Name": "id",
+          "QuoteType": 1,
+          "NamePos": 171,
+          "NameEnd": 173
+        },
+        "Modifiers": [],
+        "Alias": null
+      }
+    ],
+    "From": {
+      "FromPos": 174,
+      "Expr": {
+        "Table": {
+          "TablePos": 179,
+          "TableEnd": 231,
+          "Alias": null,
+          "Expr": {
+            "HasParen": true,
+            "Select": {
+              "SelectPos": 180,
+              "StatementEnd": 231,
+              "With": null,
+              "Top": null,
+              "HasDistinct": false,
+              "DistinctOn": null,
+              "SelectItems": [
+                {
+                  "Expr": {
+                    "Name": "id",
+                    "QuoteType": 1,
+                    "NamePos": 187,
+                    "NameEnd": 189
+                  },
+                  "Modifiers": [],
+                  "Alias": null
+                },
+                {
+                  "Expr": {
+                    "Name": "ts",
+                    "QuoteType": 1,
+                    "NamePos": 191,
+                    "NameEnd": 193
+                  },
+                  "Modifiers": [],
+                  "Alias": null
+                }
+              ],
+              "From": {
+                "FromPos": 194,
+                "Expr": {
+                  "Table": {
+                    "TablePos": 199,
+                    "TableEnd": 200,
+                    "Alias": null,
+                    "Expr": {
+                      "Database": null,
+                      "Table": {
+                        "Name": "t",
+                        "QuoteType": 1,
+                        "NamePos": 199,
+                        "NameEnd": 200
+                      }
+                    },
+                    "HasFinal": false
+                  },
+                  "StatementEnd": 200,
+                  "SampleRatio": null,
+                  "HasFinal": false
+                }
+              },
+              "Window": null,
+              "Prewhere": null,
+              "Where": null,
+              "GroupBy": null,
+              "WithTotal": false,
+              "Having": null,
+              "OrderBy": {
+                "OrderPos": 201,
+                "ListEnd": 212,
+                "Items": [
+                  {
+                    "OrderPos": 201,
+                    "Expr": {
+                      "Name": "ts",
+                      "QuoteType": 1,
+                      "NamePos": 210,
+                      "NameEnd": 212
+                    },
+                    "Alias": null,
+                    "Direction": "",
+                    "Fill": null
+                  }
+                ],
+                "Interpolate": null
+              },
+              "LimitBy": null,
+              "Limit": {
+                "LimitPos": 213,
+                "Limit": {
+                  "NumPos": 219,
+                  "NumEnd": 221,
+                  "Literal": "10",
+                  "Base": 10
+                },
+                "Offset": null,
+                "WithTies": true,
+                "WithTiesEnd": 231
+              },
+              "Settings": null,
+              "Format": null,
+              "UnionAll": null,
+              "UnionDistinct": null,
+              "Except": null,
+              "Intersect": null
+            }
+          },
+          "HasFinal": false
+        },
+        "StatementEnd": 231,
+        "SampleRatio": null,
+        "HasFinal": false
+      }
+    },
+    "Window": null,
+    "Prewhere": null,
+    "Where": null,
+    "GroupBy": {
+      "GroupByPos": 233,
+      "GroupByEnd": 244,
+      "AggregateType": "",
+      "Expr": {
+        "ListPos": 242,
+        "ListEnd": 244,
+        "HasDistinct": false,
+        "Items": [
+          {
+            "Expr": {
+              "Name": "id",
+              "QuoteType": 1,
+              "NamePos": 242,
+              "NameEnd": 244
+            },
+            "Alias": null
+          }
+        ]
+      },
+      "WithCube": false,
+      "WithRollup": false,
+      "WithTotals": false
+    },
+    "WithTotal": false,
+    "Having": null,
+    "OrderBy": null,
+    "LimitBy": null,
+    "Limit": null,
+    "Settings": null,
+    "Format": null,
+    "UnionAll": null,
+    "UnionDistinct": null,
+    "Except": null,
+    "Intersect": null
+  }
+]

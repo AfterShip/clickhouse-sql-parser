@@ -62,7 +62,9 @@
         "Literal": "1",
         "Base": 10
       },
-      "Offset": null
+      "Offset": null,
+      "WithTies": false,
+      "WithTiesEnd": 0
     },
     "Settings": null,
     "Format": null,
