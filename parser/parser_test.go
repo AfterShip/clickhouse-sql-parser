@@ -305,6 +305,16 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT * FROM db.v(a = [1, )",     // unterminated array
 		"SELECT * FROM db.v(a = 1)(b = 2)", // a call takes one argument list
 		"SELECT * FROM db.t (SELECT 1)",    // a subquery cannot follow a table name
+		// QUALIFY takes one expression and sits between WINDOW and ORDER BY
+		"SELECT a FROM t QUALIFY",
+		"SELECT a FROM t QUALIFY a = 1, a = 2",
+		"SELECT a FROM t QUALIFY a = 1 QUALIFY a = 2",
+		"SELECT a FROM t ORDER BY a QUALIFY a = 1",
+		"SELECT a FROM t QUALIFY a = 1 HAVING a = 1",
+		"SELECT a FROM t QUALIFY a = 1 WINDOW w AS (PARTITION BY a)",
+		"SELECT a FROM t qualify", // not a table alias
+		"SELECT a qualify",        // not a column alias
+		"SELECT a qualify FROM t", // not a column alias
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)

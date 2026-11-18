@@ -394,6 +394,7 @@
     },
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": {
       "Limit": {

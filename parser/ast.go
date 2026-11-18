@@ -4951,6 +4951,28 @@ func (h *HavingClause) Accept(visitor ASTVisitor) error {
 	return visitor.VisitHavingExpr(h)
 }
 
+type QualifyClause struct {
+	QualifyPos Pos
+	Expr       Expr
+}
+
+func (q *QualifyClause) Pos() Pos {
+	return q.QualifyPos
+}
+
+func (q *QualifyClause) End() Pos {
+	return q.Expr.End()
+}
+
+func (q *QualifyClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(q)
+	defer visitor.Leave(q)
+	if err := q.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitQualifyExpr(q)
+}
+
 type LimitClause struct {
 	LimitPos Pos
 	Limit    Expr
@@ -5321,6 +5343,7 @@ type SelectQuery struct {
 	GroupBy       *GroupByClause
 	WithTotal     bool
 	Having        *HavingClause
+	Qualify       *QualifyClause
 	OrderBy       *OrderByClause
 	LimitBy       *LimitByClause
 	Limit         *LimitClause
@@ -5397,6 +5420,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error {
 	}
 	if s.Having != nil {
 		if err := s.Having.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Qualify != nil {
+		if err := s.Qualify.Accept(visitor); err != nil {
 			return err
 		}
 	}
