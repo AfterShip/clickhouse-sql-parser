@@ -504,7 +504,9 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 					return nil, err
 				}
 				fields = append(fields, child)
-				if !p.matchTokenKind(TokenKindDot) || p.peekTokenKind(TokenKindColon) {
+				// A number after the dot is a tuple element index, as in
+				// t.col.1, which the caller reads as an index operation.
+				if !p.matchTokenKind(TokenKindDot) || p.peekTokenKind(TokenKindColon) || p.peekTokenKind(TokenKindInt) {
 					break
 				}
 				_ = p.lexer.consumeToken()

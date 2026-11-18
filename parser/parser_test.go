@@ -315,6 +315,8 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		"SELECT a FROM t qualify", // not a table alias
 		"SELECT a qualify",        // not a column alias
 		"SELECT a qualify FROM t", // not a column alias
+		// a tuple element index ends a qualified column
+		"SELECT t.a.1.:Int64 FROM t",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)
