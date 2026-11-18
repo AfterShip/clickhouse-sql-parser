@@ -196,7 +196,9 @@ func (p *Parser) parseJoinType(_ Pos) []string {
 			modifiers = append(modifiers, p.current().String)
 			_ = p.lexer.consumeToken()
 		}
-	case p.matchKeyword(KeywordSemi), p.matchKeyword(KeywordAsof):
+	case p.matchKeyword(KeywordSemi), p.matchKeyword(KeywordAnti), p.matchKeyword(KeywordAsof):
+		// Strictness may come first, as in ANTI LEFT JOIN. ClickHouse prints
+		// joins in this order, so stored view definitions use it.
 		modifiers = append(modifiers, p.current().String)
 		_ = p.lexer.consumeToken()
 		if p.matchKeyword(KeywordLeft) || p.matchKeyword(KeywordRight) {
@@ -444,7 +446,8 @@ func (p *Parser) parseJoinExpr(pos Pos) (expr Expr, err error) {
 var tableAliasRestrictedKeywords = NewSet(
 	KeywordAll, KeywordAnti, KeywordAny, KeywordArray, KeywordAsof,
 	KeywordFinal, KeywordFull, KeywordGlobal, KeywordIntersect, KeywordJoin,
-	KeywordLeft, KeywordLocal, KeywordRight, KeywordSample, KeywordSemi,
+	KeywordLeft, KeywordLocal, KeywordQualify, KeywordRight, KeywordSample,
+	KeywordSemi,
 )
 
 // matchTableAliasWithoutAs reports whether the current token aliases table
@@ -484,7 +487,7 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			return nil, err
 		}
 		// it's a table name
-		if tableIdentifier.Database != nil || !p.matchTokenKind(TokenKindLParen) { // database.table
+		if !p.matchTokenKind(TokenKindLParen) { // database.table
 			expr = tableIdentifier
 		} else {
 			// table function expr
@@ -492,8 +495,14 @@ func (p *Parser) parseTableExpr(pos Pos) (*TableExpr, error) {
 			if err != nil {
 				return nil, err
 			}
+			// A parameterized view is called like a table function and can
+			// be qualified with its database: db.view(name = value).
+			var name Expr = tableIdentifier.Table
+			if tableIdentifier.Database != nil {
+				name = tableIdentifier
+			}
 			expr = &TableFunctionExpr{
-				Name: tableIdentifier.Table,
+				Name: name,
 				Args: tableArgs,
 			}
 		}
@@ -686,12 +695,16 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 	var limit Expr
 	var offset Expr
 	var err error
+	var withTies bool
+	var withTiesEnd Pos
 	if p.tryConsumeKeywords(KeywordLimit) {
 		limit, err = p.parseExpr(p.Pos())
 		if err != nil {
 			return nil, err
 		}
 
+		// ClickHouse accepts WITH TIES after LIMIT n and LIMIT m, n, but not
+		// after LIMIT n OFFSET m.
 		if p.tryConsumeKeywords(KeywordOffset) {
 			offset, err = p.parseExpr(p.Pos())
 		} else if token, consumeErr := p.tryConsumeTokenKind(TokenKindComma); consumeErr != nil {
@@ -699,6 +712,11 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 		} else if token != nil {
 			offset = limit
 			limit, err = p.parseExpr(p.Pos())
+			if err == nil {
+				withTiesEnd, withTies = p.tryConsumeWithTies()
+			}
+		} else {
+			withTiesEnd, withTies = p.tryConsumeWithTies()
 		}
 	} else if p.tryConsumeKeywords(KeywordOffset) {
 		offset, err = p.parseExpr(p.Pos())
@@ -709,10 +727,29 @@ func (p *Parser) parseLimitClause(pos Pos) (*LimitClause, error) {
 	}
 
 	return &LimitClause{
-		LimitPos: pos,
-		Limit:    limit,
-		Offset:   offset,
+		LimitPos:    pos,
+		Limit:       limit,
+		Offset:      offset,
+		WithTies:    withTies,
+		WithTiesEnd: withTiesEnd,
 	}, nil
+}
+
+// tryConsumeWithTies consumes WITH TIES and returns the end of TIES. WITH also
+// starts other clauses, so the lexer is rewound unless TIES follows.
+func (p *Parser) tryConsumeWithTies() (Pos, bool) {
+	if !p.matchKeyword(KeywordWith) {
+		return 0, false
+	}
+	savedState := p.lexer.saveState()
+	_ = p.lexer.consumeToken()
+	if !p.matchKeyword(KeywordTies) {
+		p.lexer.restoreState(savedState)
+		return 0, false
+	}
+	withTiesEnd := p.End()
+	_ = p.lexer.consumeToken()
+	return withTiesEnd, true
 }
 
 func (p *Parser) tryParseLimitByClause(pos Pos) (Expr, error) {
@@ -758,9 +795,13 @@ func (p *Parser) parseLimitByClause(pos Pos) (Expr, error) {
 	}
 
 	var by *ColumnExprList
-	if !p.tryConsumeKeywords(KeywordBy) {
+	if !p.matchKeyword(KeywordBy) {
 		return limit, nil
 	}
+	if limit.WithTies {
+		return nil, fmt.Errorf("WITH TIES cannot be combined with LIMIT BY")
+	}
+	_ = p.lexer.consumeToken()
 	if by, err = p.parseColumnExprListWithLParen(p.Pos()); err != nil {
 		return nil, err
 	}
@@ -1085,6 +1126,29 @@ func (p *Parser) parseHavingClause(pos Pos) (*HavingClause, error) {
 	}, nil
 }
 
+func (p *Parser) tryParseQualifyClause(pos Pos) (*QualifyClause, error) {
+	if !p.matchKeyword(KeywordQualify) {
+		return nil, nil
+	}
+	return p.parseQualifyClause(pos)
+}
+
+func (p *Parser) parseQualifyClause(pos Pos) (*QualifyClause, error) {
+	if err := p.expectKeyword(KeywordQualify); err != nil {
+		return nil, err
+	}
+
+	expr, err := p.parseExpr(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+
+	return &QualifyClause{
+		QualifyPos: pos,
+		Expr:       expr,
+	}, nil
+}
+
 func (p *Parser) parseSubQuery(_ Pos) (*SubQuery, error) {
 
 	lparen, consumeErr := p.tryConsumeTokenKind(TokenKindLParen)
@@ -1298,6 +1362,13 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 	if window != nil {
 		statementEnd = window.End()
 	}
+	qualify, err := p.tryParseQualifyClause(p.Pos())
+	if err != nil {
+		return nil, err
+	}
+	if qualify != nil {
+		statementEnd = qualify.End()
+	}
 	orderBy, err := p.tryParseOrderByClause(p.Pos())
 	if err != nil {
 		return nil, err
@@ -1367,6 +1438,7 @@ func (p *Parser) parseSelectStmt(pos Pos) (*SelectQuery, error) { // nolint: fun
 		Where:        where,
 		GroupBy:      groupBy,
 		Having:       having,
+		Qualify:      qualify,
 		OrderBy:      orderBy,
 		LimitBy:      limitBy,
 		Limit:        limit,

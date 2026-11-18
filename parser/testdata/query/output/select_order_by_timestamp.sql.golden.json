@@ -47,6 +47,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": {
       "OrderPos": 29,
       "ListEnd": 47,

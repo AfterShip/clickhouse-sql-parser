@@ -164,6 +164,7 @@
     "GroupBy": null,
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": {
       "OrderPos": 58,
       "ListEnd": 72,
