@@ -54,6 +54,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.Having, fn) {
 			return false
 		}
+		if !Walk(n.Qualify, fn) {
+			return false
+		}
 		if !Walk(n.OrderBy, fn) {
 			return false
 		}
@@ -243,6 +246,10 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 	case *HavingClause:
+		if !Walk(n.Expr, fn) {
+			return false
+		}
+	case *QualifyClause:
 		if !Walk(n.Expr, fn) {
 			return false
 		}
@@ -784,6 +791,59 @@ func Walk(node Expr, fn WalkFunc) bool {
 		}
 		if !Walk(n.Value, fn) {
 			return false
+		}
+	case *RowPolicyTarget:
+		if !Walk(n.PolicyName, fn) || !Walk(n.Table, fn) {
+			return false
+		}
+	case *RowPolicyCondition:
+		if !Walk(n.Expr, fn) {
+			return false
+		}
+	case *RowPolicyFilter:
+		if !Walk(n.Using, fn) || !Walk(n.WithCheck, fn) {
+			return false
+		}
+	case *RowPolicyPrincipal:
+		if !Walk(n.Name, fn) || !Walk(n.Host, fn) {
+			return false
+		}
+	case *RowPolicySubjects:
+		for _, principal := range n.Principals {
+			if !Walk(principal, fn) {
+				return false
+			}
+		}
+		for _, principal := range n.Except {
+			if !Walk(principal, fn) {
+				return false
+			}
+		}
+	case *CreateRowPolicy:
+		if !walkRowPolicyOptions(&n.RowPolicyOptions, nil, fn) {
+			return false
+		}
+	case *AlterRowPolicy:
+		if !walkRowPolicyOptions(&n.RowPolicyOptions, n.RenameTo, fn) {
+			return false
+		}
+	case *DropRowPolicy:
+		for _, target := range n.Targets {
+			if !Walk(target, fn) {
+				return false
+			}
+		}
+		if !Walk(n.AccessStorageType, fn) || !Walk(n.OnCluster, fn) {
+			return false
+		}
+	case *ShowRowPolicies:
+		if !Walk(n.Name, fn) || !Walk(n.Table, fn) {
+			return false
+		}
+		for _, target := range n.Targets {
+			if !Walk(target, fn) {
+				return false
+			}
 		}
 	case *CreateRole:
 		for _, name := range n.RoleNames {

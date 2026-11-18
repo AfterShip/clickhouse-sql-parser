@@ -25,6 +25,11 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 			}
 		}
 		switch {
+		case p.matchKeyword(KeywordRow), p.matchKeyword(KeywordPolicy):
+			if isAttach {
+				return nil, fmt.Errorf("ATTACH ROW POLICY is an internal access-storage format")
+			}
+			return p.parseCreateRowPolicy(pos)
 		case p.matchKeyword(KeywordNamed):
 			return p.parseCreateNamedCollection(pos)
 		case p.matchKeyword(KeywordDatabase):
@@ -53,6 +58,8 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 	case p.matchKeyword(KeywordAlter):
 		_ = p.lexer.consumeToken()
 		switch {
+		case p.matchKeyword(KeywordRow), p.matchKeyword(KeywordPolicy):
+			return p.parseAlterRowPolicy(pos)
 		case p.matchKeyword(KeywordRole):
 			return p.parseAlterRole(pos)
 		case p.matchKeyword(KeywordTable):
@@ -62,8 +69,14 @@ func (p *Parser) parseDDL(pos Pos) (DDL, error) {
 		}
 	case p.matchKeyword(KeywordDrop),
 		p.matchKeyword(KeywordDetach):
+		isDrop := p.matchKeyword(KeywordDrop)
 		_ = p.lexer.consumeToken()
 		switch {
+		case p.matchKeyword(KeywordRow), p.matchKeyword(KeywordPolicy):
+			if !isDrop {
+				return nil, fmt.Errorf("DETACH ROW POLICY is not supported")
+			}
+			return p.parseDropRowPolicy(pos)
 		case p.matchKeyword(KeywordDatabase):
 			return p.parseDropDatabase(pos)
 		case p.matchKeyword(KeywordTemporary),
@@ -491,7 +504,9 @@ func (p *Parser) parseIdentOrFunction(_ Pos) (Expr, error) {
 					return nil, err
 				}
 				fields = append(fields, child)
-				if !p.matchTokenKind(TokenKindDot) || p.peekTokenKind(TokenKindColon) {
+				// A number after the dot is a tuple element index, as in
+				// t.col.1, which the caller reads as an index operation.
+				if !p.matchTokenKind(TokenKindDot) || p.peekTokenKind(TokenKindColon) || p.peekTokenKind(TokenKindInt) {
 					break
 				}
 				_ = p.lexer.consumeToken()
@@ -832,6 +847,11 @@ func (p *Parser) parseTableArgPrimaryExpr(pos Pos) (Expr, error) {
 	case p.matchTokenKind(TokenKindInt), p.matchTokenKind(TokenKindFloat),
 		p.matchTokenKind(TokenKindString), p.matchKeyword(KeywordNull):
 		return p.parseLiteral(p.Pos())
+	case p.matchTokenKind(TokenKindLBracket):
+		return p.parseArrayParams(p.Pos())
+	case p.matchTokenKind(TokenKindLBrace):
+		// a query parameter such as {id:UInt64}
+		return p.parseQueryParam(p.Pos())
 	default:
 		return nil, fmt.Errorf("unexpected token: %q, expected <Name>, <literal>", p.currentTokenString())
 	}
@@ -1066,7 +1086,7 @@ func (p *Parser) parseOrderExpr(pos Pos) (*OrderExpr, error) {
 	var alias *Ident
 	if p.matchKeyword(KeywordAs) {
 		// It should be a subquery instead of an order by alias if the `AS` is followed by `SELECT` keyword.
-		if nextToken, err := p.lexer.peekToken(); err == nil && nextToken.ToString() == KeywordSelect {
+		if nextToken, err := p.lexer.peekToken(); err == nil && nextToken != nil && nextToken.ToString() == KeywordSelect {
 			return &OrderExpr{
 				OrderPos: pos,
 				Expr:     columnExpr,
@@ -1692,7 +1712,7 @@ func (p *Parser) parseStmt(pos Pos) (Expr, error) {
 	case p.matchKeyword(KeywordGrant):
 		expr, err = p.parseGrantPrivilegeStmt(pos)
 	case p.matchKeyword(KeywordShow):
-		expr, err = p.parseShowStmt(pos)
+		expr, err = p.parseShowWithPolicies(pos)
 	case p.matchKeyword(KeywordDesc), p.matchKeyword(KeywordDescribe):
 		expr, err = p.parseDescribeStmt(pos)
 	default:

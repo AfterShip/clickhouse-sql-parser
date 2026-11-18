@@ -42,6 +42,7 @@ const (
 	KeywordCross        = "CROSS"
 	KeywordCube         = "CUBE"
 	KeywordCurrent      = "CURRENT"
+	KeywordCurrentUser  = "CURRENT_USER"
 	KeywordDatabase     = "DATABASE"
 	KeywordDatabases    = "DATABASES"
 	KeywordDate         = "DATE"
@@ -170,11 +171,15 @@ const (
 	KeywordPlacing      = "PLACING"
 	KeywordPipeline     = "PIPELINE"
 	KeywordPolicy       = "POLICY"
+	KeywordPolicies     = "POLICIES"
+	KeywordPermissive   = "PERMISSIVE"
+	KeywordRestrictive  = "RESTRICTIVE"
 	KeywordPopulate     = "POPULATE"
 	KeywordPreceding    = "PRECEDING"
 	KeywordPrewhere     = "PREWHERE"
 	KeywordPrimary      = "PRIMARY"
 	KeywordProjection   = "PROJECTION"
+	KeywordQualify      = "QUALIFY"
 	KeywordQuarter      = "QUARTER"
 	KeywordQuery        = "QUERY"
 	KeywordQueues       = "QUEUES"
@@ -262,6 +267,9 @@ const (
 	KeywordSQL          = "SQL"
 	KeywordSecurity     = "SECURITY"
 )
+
+// KeywordCurrentUserAlt is ClickHouse's CURRENTUSER spelling of CURRENT_USER.
+const KeywordCurrentUserAlt = "CURRENTUSER"
 
 // reservedKeywords are the structural keywords — statement starters, clause
 // starters and expression operators — that cannot be used as bare identifiers:
@@ -370,6 +378,8 @@ var keywords = NewSet(
 	KeywordCross,
 	KeywordCube,
 	KeywordCurrent,
+	KeywordCurrentUser,
+	KeywordCurrentUserAlt,
 	KeywordDatabase,
 	KeywordDatabases,
 	KeywordDate,
@@ -498,11 +508,15 @@ var keywords = NewSet(
 	KeywordPipeline,
 	KeywordPlacing,
 	KeywordPolicy,
+	KeywordPolicies,
+	KeywordPermissive,
+	KeywordRestrictive,
 	KeywordPopulate,
 	KeywordPreceding,
 	KeywordPrewhere,
 	KeywordPrimary,
 	KeywordProjection,
+	KeywordQualify,
 	KeywordQuarter,
 	KeywordQuery,
 	KeywordQueues,

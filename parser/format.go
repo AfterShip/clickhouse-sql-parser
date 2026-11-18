@@ -1642,6 +1642,11 @@ func (h *HavingClause) FormatSQL(formatter *Formatter) {
 	formatter.WriteExpr(h.Expr)
 }
 
+func (q *QualifyClause) FormatSQL(formatter *Formatter) {
+	formatter.WriteString("QUALIFY ")
+	formatter.WriteExpr(q.Expr)
+}
+
 func (h *HostClause) FormatSQL(formatter *Formatter) {
 	formatter.WriteString("HOST ")
 	formatter.WriteString(h.HostType)
@@ -1672,6 +1677,9 @@ func (i *Ident) FormatSQL(formatter *Formatter) {
 
 func (i *IndexOperation) FormatSQL(formatter *Formatter) {
 	formatter.WriteExpr(i.Object)
+	if _, numeric := i.Object.(*NumberLiteral); numeric && i.Operation == TokenKindDot {
+		formatter.WriteByte(whitespace)
+	}
 	formatter.WriteString(string(i.Operation))
 	formatter.WriteExpr(i.Index)
 }
@@ -1918,6 +1926,17 @@ func (l *LimitByClause) FormatSQL(formatter *Formatter) {
 }
 
 func (l *LimitClause) FormatSQL(formatter *Formatter) {
+	if l.WithTies {
+		// WITH TIES is not valid after OFFSET, so keep the comma form.
+		formatter.WriteString("LIMIT ")
+		if l.Offset != nil {
+			formatter.WriteExpr(l.Offset)
+			formatter.WriteString(", ")
+		}
+		formatter.WriteExpr(l.Limit)
+		formatter.WriteString(" WITH TIES")
+		return
+	}
 	if l.Limit != nil {
 		formatter.WriteString("LIMIT ")
 		formatter.WriteExpr(l.Limit)
@@ -2362,6 +2381,10 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 	if s.Having != nil {
 		formatter.Break()
 		formatter.WriteExpr(s.Having)
+	}
+	if s.Qualify != nil {
+		formatter.Break()
+		formatter.WriteExpr(s.Qualify)
 	}
 	if s.OrderBy != nil {
 		formatter.Break()

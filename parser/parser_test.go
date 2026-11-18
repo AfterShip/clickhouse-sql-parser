@@ -288,6 +288,35 @@ func TestParser_InvalidSyntax(t *testing.T) {
 		// ClickHouse rejects a set operator once SETTINGS is bound to a
 		// parenthesized group
 		"(SELECT 1) SETTINGS max_threads=1 UNION ALL SELECT 2",
+		// AS at the very end of an ORDER BY item leaves no token to check for SELECT
+		"SELECT * FROM t ORDER BY a AS",
+		// WITH TIES follows LIMIT n or LIMIT m, n only
+		"SELECT a FROM t ORDER BY a LIMIT 2 OFFSET 1 WITH TIES",
+		"SELECT a FROM t ORDER BY a LIMIT 2 WITH TIES OFFSET 1",
+		"SELECT a FROM t ORDER BY a OFFSET 1 WITH TIES",
+		"SELECT a FROM t ORDER BY a LIMIT 2 WITH",
+		"SELECT a FROM t ORDER BY a LIMIT 1 WITH TIES BY a",
+		// a leading SEMI or ANTI takes LEFT or RIGHT only
+		"SELECT * FROM t1 ANTI INNER JOIN t2 ON t1.a = t2.a",
+		"SELECT * FROM t1 ANTI ANY LEFT JOIN t2 ON t1.a = t2.a",
+		// arguments of a parameterized view call
+		"SELECT * FROM db.v(a = {x})",      // query parameter without a type
+		"SELECT * FROM db.v(a = {'k': 1})", // not a query parameter
+		"SELECT * FROM db.v(a = [1, )",     // unterminated array
+		"SELECT * FROM db.v(a = 1)(b = 2)", // a call takes one argument list
+		"SELECT * FROM db.t (SELECT 1)",    // a subquery cannot follow a table name
+		// QUALIFY takes one expression and sits between WINDOW and ORDER BY
+		"SELECT a FROM t QUALIFY",
+		"SELECT a FROM t QUALIFY a = 1, a = 2",
+		"SELECT a FROM t QUALIFY a = 1 QUALIFY a = 2",
+		"SELECT a FROM t ORDER BY a QUALIFY a = 1",
+		"SELECT a FROM t QUALIFY a = 1 HAVING a = 1",
+		"SELECT a FROM t QUALIFY a = 1 WINDOW w AS (PARTITION BY a)",
+		"SELECT a FROM t qualify", // not a table alias
+		"SELECT a qualify",        // not a column alias
+		"SELECT a qualify FROM t", // not a column alias
+		// a tuple element index ends a qualified column
+		"SELECT t.a.1.:Int64 FROM t",
 	}
 	for _, sql := range invalidSQLs {
 		parser := NewParser(sql)

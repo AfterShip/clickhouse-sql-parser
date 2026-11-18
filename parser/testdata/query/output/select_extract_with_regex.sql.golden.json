@@ -432,6 +432,7 @@
     },
     "WithTotal": false,
     "Having": null,
+    "Qualify": null,
     "OrderBy": null,
     "LimitBy": null,
     "Limit": {
@@ -442,7 +443,9 @@
         "Literal": "10000",
         "Base": 10
       },
-      "Offset": null
+      "Offset": null,
+      "WithTies": false,
+      "WithTiesEnd": 0
     },
     "Settings": null,
     "Format": null,

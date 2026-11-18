@@ -703,10 +703,36 @@ func (h *HavingClause) Accept(visitor ASTVisitor) error {
 	return visitor.VisitHavingExpr(h)
 }
 
+type QualifyClause struct {
+	QualifyPos Pos
+	Expr       Expr
+}
+
+func (q *QualifyClause) Pos() Pos {
+	return q.QualifyPos
+}
+
+func (q *QualifyClause) End() Pos {
+	return q.Expr.End()
+}
+
+func (q *QualifyClause) Accept(visitor ASTVisitor) error {
+	visitor.Enter(q)
+	defer visitor.Leave(q)
+	if err := q.Expr.Accept(visitor); err != nil {
+		return err
+	}
+	return visitor.VisitQualifyExpr(q)
+}
+
 type LimitClause struct {
 	LimitPos Pos
 	Limit    Expr
 	Offset   Expr
+	// WithTies is set for LIMIT n WITH TIES and LIMIT m, n WITH TIES.
+	WithTies bool
+	// WithTiesEnd is the end of the TIES keyword when WithTies is set.
+	WithTiesEnd Pos
 }
 
 func (l *LimitClause) Pos() Pos {
@@ -714,6 +740,9 @@ func (l *LimitClause) Pos() Pos {
 }
 
 func (l *LimitClause) End() Pos {
+	if l.WithTies {
+		return l.WithTiesEnd
+	}
 	if l.Offset != nil {
 		return l.Offset.End()
 	}
@@ -1030,6 +1059,7 @@ type SelectQuery struct {
 	GroupBy       *GroupByClause
 	WithTotal     bool
 	Having        *HavingClause
+	Qualify       *QualifyClause
 	OrderBy       *OrderByClause
 	LimitBy       *LimitByClause
 	Limit         *LimitClause
@@ -1106,6 +1136,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error { // nolint:funlen
 	}
 	if s.Having != nil {
 		if err := s.Having.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Qualify != nil {
+		if err := s.Qualify.Accept(visitor); err != nil {
 			return err
 		}
 	}
