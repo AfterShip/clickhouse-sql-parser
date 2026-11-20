@@ -990,5 +990,54 @@
       ],
       "Except": null
     }
+  },
+  {
+    "CreatePos": 1159,
+    "StatementEnd": 1203,
+    "IfNotExists": false,
+    "OrReplace": false,
+    "Targets": [
+      {
+        "PolicyName": {
+          "Name": "example",
+          "QuoteType": 5,
+          "NamePos": 1177,
+          "NameEnd": 1190,
+          "HeredocDelimiter": "$p$"
+        },
+        "Table": {
+          "Database": null,
+          "Table": {
+            "Name": "t",
+            "QuoteType": 1,
+            "NamePos": 1194,
+            "NameEnd": 1195
+          }
+        }
+      }
+    ],
+    "OnCluster": null,
+    "AccessStorageType": null,
+    "Mode": "",
+    "Filters": [
+      {
+        "FilterPos": 1196,
+        "FilterEnd": 1203,
+        "Commands": null,
+        "Using": {
+          "ConditionPos": 1202,
+          "ConditionEnd": 1203,
+          "None": false,
+          "Expr": {
+            "NumPos": 1202,
+            "NumEnd": 1203,
+            "Literal": "1",
+            "Base": 10
+          }
+        },
+        "WithCheck": null
+      }
+    ],
+    "To": null
   }
 ]

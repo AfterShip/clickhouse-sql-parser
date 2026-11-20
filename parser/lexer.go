@@ -52,6 +52,7 @@ const (
 	DoubleQuote
 	BackTicks
 	SingleQuote
+	HeredocQuote
 )
 
 type Pos int
@@ -61,10 +62,11 @@ type Token struct {
 	Pos Pos
 	End Pos
 
-	Kind      TokenKind
-	String    string
-	Base      int // 10 or 16 on TokenKindInt
-	QuoteType int
+	Kind             TokenKind
+	String           string
+	Base             int // 10 or 16 on TokenKindInt
+	QuoteType        int
+	heredocDelimiter string
 }
 
 func (t *Token) ToString() string {
@@ -271,6 +273,38 @@ func (l *Lexer) consumeMultiLineComment() error {
 	return &lexerError{pos: pos, err: errors.New("unclosed multi-line comment")}
 }
 
+// tryConsumeHeredoc reads a string between matching dollar-quoted delimiters.
+// For example, SELECT $tag$FROM t$tag$ returns the string 'FROM t'.
+func (l *Lexer) tryConsumeHeredoc() bool {
+	i := 1
+	for l.peekOk(i) && (IsIdentStart(l.peekN(i)) || IsDigit(l.peekN(i))) {
+		i++
+	}
+	if !l.peekOk(i) || l.peekN(i) != '$' {
+		return false
+	}
+
+	delimiter := l.slice(0, i+1)
+	bodyStart := l.offset + len(delimiter)
+	bodyLength := strings.Index(l.input[bodyStart:], delimiter)
+	if bodyLength < 0 {
+		return false
+	}
+
+	bodyEnd := bodyStart + bodyLength
+	end := bodyEnd + len(delimiter)
+	l.currentToken = &Token{
+		Kind:             TokenKindString,
+		String:           l.input[bodyStart:bodyEnd],
+		QuoteType:        HeredocQuote,
+		heredocDelimiter: delimiter,
+		Pos:              Pos(l.offset),
+		End:              Pos(end),
+	}
+	l.offset = end
+	return true
+}
+
 func (l *Lexer) consumeString() error {
 	i := 1
 	endChar := byte('\'')
@@ -299,10 +333,11 @@ func (l *Lexer) consumeString() error {
 		return errors.New("invalid string")
 	}
 	l.currentToken = &Token{
-		Kind:   TokenKindString,
-		String: l.slice(1, i),
-		Pos:    Pos(l.offset),
-		End:    Pos(l.offset + i + 1),
+		Kind:      TokenKindString,
+		QuoteType: SingleQuote,
+		String:    l.slice(1, i),
+		Pos:       Pos(l.offset),
+		End:       Pos(l.offset + i + 1),
 	}
 	l.skipN(i + 1)
 	return nil
@@ -417,7 +452,12 @@ func (l *Lexer) consumeToken() (err error) {
 		}
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		return l.consumeNumber()
-	case '`', '$', '"':
+	case '$':
+		if l.tryConsumeHeredoc() {
+			return nil
+		}
+		fallthrough
+	case '`', '"':
 		return l.consumeIdent(Pos(l.offset))
 	case '\'':
 		return l.consumeString()
