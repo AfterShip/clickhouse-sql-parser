@@ -275,6 +275,8 @@ func (l *Lexer) consumeMultiLineComment() error {
 // Heredoc bodies are raw, so escape them once when creating the token.
 var heredocEscaper = strings.NewReplacer("\\", "\\\\", "'", "''")
 
+// tryConsumeHeredoc reads a string between matching dollar-quoted delimiters.
+// For example, SELECT $tag$FROM t$tag$ returns the string 'FROM t'.
 func (l *Lexer) tryConsumeHeredoc() bool {
 	i := 1
 	for l.peekOk(i) && (IsIdentStart(l.peekN(i)) || IsDigit(l.peekN(i))) {
