@@ -30,6 +30,7 @@ After editing code, use `goimports` and `gofmt` to maintain code style, and run 
 - Place parsing logic in the matching module by statement family (for example, query parsing in `parser/parser_query.go`).
 - Follow existing parser naming patterns such as `parseXxx` helpers and explicit AST type names.
 - Keep AST `FormatSQL()` output deterministic; formatting changes must be reflected in golden files.
+- Preserve each literal exactly as the author wrote it in both compact and beautified SQL. For example, keep `$tag$hello$tag$` in that form, including the original tag. Preserve escape sequences, line breaks, and whitespace inside literals.
 - You must go through the repository before adding new code to ensure consistency with existing patterns and styles. If you are unsure about where to place new code or how to format it, please refer to the existing codebase or ask for guidance.
 - Reusing existing code and patterns is encouraged to maintain consistency and reduce redundancy. If you find a similar function or pattern in the codebase, consider adapting it for your needs instead of creating something new from scratch.
 
