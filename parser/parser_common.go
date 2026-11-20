@@ -238,10 +238,11 @@ func (p *Parser) parseIdentOrString() (*Ident, error) {
 		curToken := p.current()
 		_ = p.lexer.consumeToken()
 		return &Ident{
-			NamePos:   curToken.Pos,
-			NameEnd:   curToken.End,
-			Name:      curToken.String,
-			QuoteType: SingleQuote, // Treat string literals as single-quoted identifiers
+			NamePos:          curToken.Pos,
+			NameEnd:          curToken.End,
+			Name:             curToken.String,
+			QuoteType:        curToken.QuoteType,
+			HeredocDelimiter: curToken.heredocDelimiter,
 		}, nil
 	default:
 		return nil, fmt.Errorf("expected <ident> or <string>, but got %q", p.currentTokenKind())
@@ -401,9 +402,10 @@ func (p *Parser) parseString(pos Pos) (*StringLiteral, error) {
 	}
 
 	str := &StringLiteral{
-		LiteralPos: pos,
-		LiteralEnd: curToken.End,
-		Literal:    curToken.String,
+		LiteralPos:       pos,
+		LiteralEnd:       curToken.End,
+		Literal:          curToken.String,
+		HeredocDelimiter: curToken.heredocDelimiter,
 	}
 	return str, nil
 }

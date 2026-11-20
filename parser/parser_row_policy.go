@@ -300,7 +300,7 @@ func (p *Parser) parseRowPolicyPrincipal() (*RowPolicyPrincipal, error) {
 		return nil, err
 	}
 	principal.PrincipalEnd = rowPolicyIdentEnd(principal.Name)
-	if principal.Name.QuoteType != SingleQuote && p.matchTokenKind(TokenKindAtSign) {
+	if principal.Name.QuoteType != SingleQuote && principal.Name.QuoteType != HeredocQuote && p.matchTokenKind(TokenKindAtSign) {
 		if _, err := p.tryConsumeTokenKind(TokenKindAtSign); err != nil {
 			return nil, err
 		}

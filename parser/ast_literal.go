@@ -1,10 +1,11 @@
 package parser
 
 type Ident struct {
-	Name      string
-	QuoteType int
-	NamePos   Pos
-	NameEnd   Pos
+	Name             string
+	QuoteType        int
+	NamePos          Pos
+	NameEnd          Pos
+	HeredocDelimiter string `json:",omitempty"`
 }
 
 func (i *Ident) Pos() Pos {
@@ -286,9 +287,10 @@ func (n *NumberLiteral) Accept(visitor ASTVisitor) error {
 }
 
 type StringLiteral struct {
-	LiteralPos Pos
-	LiteralEnd Pos
-	Literal    string
+	LiteralPos       Pos
+	LiteralEnd       Pos
+	Literal          string
+	HeredocDelimiter string `json:",omitempty"`
 }
 
 func (s *StringLiteral) Pos() Pos {

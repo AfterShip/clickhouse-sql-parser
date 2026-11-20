@@ -1666,6 +1666,8 @@ func (i *Ident) FormatSQL(formatter *Formatter) {
 		formatter.WriteByte('"')
 		formatter.WriteString(i.Name)
 		formatter.WriteByte('"')
+	case HeredocQuote:
+		formatter.writeHeredoc(i.HeredocDelimiter, i.Name)
 	case SingleQuote:
 		formatter.WriteByte('\'')
 		formatter.WriteString(i.Name)
@@ -2513,7 +2515,18 @@ func (s *ShowStmt) FormatSQL(formatter *Formatter) {
 
 }
 
+func (f *Formatter) writeHeredoc(delimiter, body string) {
+	f.WriteString(delimiter)
+	// Indentation inside the body would change the string value.
+	f.builder.WriteString(body)
+	f.WriteString(delimiter)
+}
+
 func (s *StringLiteral) FormatSQL(formatter *Formatter) {
+	if s.HeredocDelimiter != "" {
+		formatter.writeHeredoc(s.HeredocDelimiter, s.Literal)
+		return
+	}
 	formatter.WriteByte('\'')
 	formatter.WriteString(s.Literal)
 	formatter.WriteByte('\'')

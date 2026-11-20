@@ -52,6 +52,7 @@ const (
 	DoubleQuote
 	BackTicks
 	SingleQuote
+	HeredocQuote
 )
 
 type Pos int
@@ -61,10 +62,11 @@ type Token struct {
 	Pos Pos
 	End Pos
 
-	Kind      TokenKind
-	String    string
-	Base      int // 10 or 16 on TokenKindInt
-	QuoteType int
+	Kind             TokenKind
+	String           string
+	Base             int // 10 or 16 on TokenKindInt
+	QuoteType        int
+	heredocDelimiter string
 }
 
 func (t *Token) ToString() string {
@@ -271,10 +273,6 @@ func (l *Lexer) consumeMultiLineComment() error {
 	return &lexerError{pos: pos, err: errors.New("unclosed multi-line comment")}
 }
 
-// String tokens store the escaped contents of a single-quoted SQL literal.
-// Heredoc bodies are raw, so escape them once when creating the token.
-var heredocEscaper = strings.NewReplacer("\\", "\\\\", "'", "''")
-
 // tryConsumeHeredoc reads a string between matching dollar-quoted delimiters.
 // For example, SELECT $tag$FROM t$tag$ returns the string 'FROM t'.
 func (l *Lexer) tryConsumeHeredoc() bool {
@@ -296,10 +294,12 @@ func (l *Lexer) tryConsumeHeredoc() bool {
 	bodyEnd := bodyStart + bodyLength
 	end := bodyEnd + len(delimiter)
 	l.currentToken = &Token{
-		Kind:   TokenKindString,
-		String: heredocEscaper.Replace(l.input[bodyStart:bodyEnd]),
-		Pos:    Pos(l.offset),
-		End:    Pos(end),
+		Kind:             TokenKindString,
+		String:           l.input[bodyStart:bodyEnd],
+		QuoteType:        HeredocQuote,
+		heredocDelimiter: delimiter,
+		Pos:              Pos(l.offset),
+		End:              Pos(end),
 	}
 	l.offset = end
 	return true
@@ -333,10 +333,11 @@ func (l *Lexer) consumeString() error {
 		return errors.New("invalid string")
 	}
 	l.currentToken = &Token{
-		Kind:   TokenKindString,
-		String: l.slice(1, i),
-		Pos:    Pos(l.offset),
-		End:    Pos(l.offset + i + 1),
+		Kind:      TokenKindString,
+		QuoteType: SingleQuote,
+		String:    l.slice(1, i),
+		Pos:       Pos(l.offset),
+		End:       Pos(l.offset + i + 1),
 	}
 	l.skipN(i + 1)
 	return nil

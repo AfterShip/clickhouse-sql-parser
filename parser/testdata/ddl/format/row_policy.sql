@@ -11,6 +11,7 @@ SHOW CREATE ROW POLICIES ON db.*;
 SHOW ROW POLICIES;
 CREATE ROW POLICY selected_rows ON db.example_table FOR SELECT USING id > 0 TO example_role;
 CREATE ROW POLICY all_commands ON db.example_table FOR ALL USING id > 0 TO example_role;
+CREATE ROW POLICY $p$example$p$ ON t USING 1;
 
 
 -- Format SQL:
@@ -26,3 +27,4 @@ SHOW CREATE ROW POLICIES ON db.*;
 SHOW ROW POLICIES;
 CREATE ROW POLICY selected_rows ON db.example_table FOR SELECT USING id > 0 TO example_role;
 CREATE ROW POLICY all_commands ON db.example_table FOR ALL USING id > 0 TO example_role;
+CREATE ROW POLICY $p$example$p$ ON t USING 1;
