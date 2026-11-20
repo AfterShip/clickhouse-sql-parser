@@ -271,6 +271,38 @@ func (l *Lexer) consumeMultiLineComment() error {
 	return &lexerError{pos: pos, err: errors.New("unclosed multi-line comment")}
 }
 
+// String tokens store the escaped contents of a single-quoted SQL literal.
+// Heredoc bodies are raw, so escape them once when creating the token.
+var heredocEscaper = strings.NewReplacer("\\", "\\\\", "'", "''")
+
+func (l *Lexer) tryConsumeHeredoc() bool {
+	i := 1
+	for l.peekOk(i) && (IsIdentStart(l.peekN(i)) || IsDigit(l.peekN(i))) {
+		i++
+	}
+	if !l.peekOk(i) || l.peekN(i) != '$' {
+		return false
+	}
+
+	delimiter := l.slice(0, i+1)
+	bodyStart := l.offset + len(delimiter)
+	bodyLength := strings.Index(l.input[bodyStart:], delimiter)
+	if bodyLength < 0 {
+		return false
+	}
+
+	bodyEnd := bodyStart + bodyLength
+	end := bodyEnd + len(delimiter)
+	l.currentToken = &Token{
+		Kind:   TokenKindString,
+		String: heredocEscaper.Replace(l.input[bodyStart:bodyEnd]),
+		Pos:    Pos(l.offset),
+		End:    Pos(end),
+	}
+	l.offset = end
+	return true
+}
+
 func (l *Lexer) consumeString() error {
 	i := 1
 	endChar := byte('\'')
@@ -417,7 +449,12 @@ func (l *Lexer) consumeToken() (err error) {
 		}
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
 		return l.consumeNumber()
-	case '`', '$', '"':
+	case '$':
+		if l.tryConsumeHeredoc() {
+			return nil
+		}
+		fallthrough
+	case '`', '"':
 		return l.consumeIdent(Pos(l.offset))
 	case '\'':
 		return l.consumeString()
