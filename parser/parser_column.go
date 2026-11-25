@@ -1183,7 +1183,14 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 
 	modifiers := make([]*FunctionExpr, 0)
 	for {
-		if p.matchKeyword(KeywordExcept) || p.matchKeyword(KeywordApply) || p.matchKeyword(KeywordReplace) {
+		if p.matchKeyword(KeywordExcept) && !p.peekTokenKind(TokenKindLParen) {
+			// ClickHouse also accepts a single column without brackets: `* EXCEPT col`.
+			modifier, err := p.parseExceptColumn()
+			if err != nil {
+				return nil, err
+			}
+			modifiers = append(modifiers, modifier)
+		} else if p.matchKeyword(KeywordExcept) || p.matchKeyword(KeywordApply) || p.matchKeyword(KeywordReplace) {
 			modifier, err := p.parseFunctionExpr(p.Pos())
 			if err != nil {
 				return nil, err
@@ -1223,6 +1230,30 @@ func (p *Parser) parseSelectItem() (*SelectItem, error) {
 		Expr:      expr,
 		Modifiers: modifiers,
 		Alias:     alias,
+	}, nil
+}
+
+// parseExceptColumn parses `EXCEPT col` into the same modifier as `EXCEPT (col)`.
+func (p *Parser) parseExceptColumn() (*FunctionExpr, error) {
+	name, err := p.parseAnyKeyword()
+	if err != nil {
+		return nil, err
+	}
+	column, err := p.parseIdent()
+	if err != nil {
+		return nil, err
+	}
+	return &FunctionExpr{
+		Name: name,
+		Params: &ParamExprList{
+			LeftParenPos:  column.Pos(),
+			RightParenPos: column.End(),
+			Items: &ColumnExprList{
+				ListPos: column.Pos(),
+				ListEnd: column.End(),
+				Items:   []Expr{column},
+			},
+		},
 	}, nil
 }
 
