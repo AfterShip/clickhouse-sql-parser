@@ -135,6 +135,8 @@ func TestSourceSpansCoverReportedNodes(t *testing.T) {
 		{"SELECT ?", "?", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
 		{"SELECT 'abc'", "'abc'", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
 		{"SELECT f(1)", "f(1)", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Expr }},
+		{"SELECT t.* EXCEPT b, c FROM t", "EXCEPT b", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Modifiers[0] }},
+		{"SELECT t.* EXCEPT (b), c FROM t", "EXCEPT (b)", func(e Expr) Expr { return e.(*SelectQuery).SelectItems[0].Modifiers[0] }},
 	} {
 		t.Run(tc.sql, func(t *testing.T) {
 			stmt := parseOneStmt(t, tc.sql)
