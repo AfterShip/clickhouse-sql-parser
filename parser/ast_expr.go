@@ -215,7 +215,13 @@ func (f *FunctionExpr) Pos() Pos {
 }
 
 func (f *FunctionExpr) End() Pos {
-	return f.Params.RightParenPos + 1
+	params := f.Params
+	// Bare EXCEPT col uses the column's bounds as its synthetic paren
+	// positions, so the right position is already exclusive.
+	if items := params.Items; items != nil && params.LeftParenPos == items.Pos() && params.RightParenPos == items.End() {
+		return params.RightParenPos
+	}
+	return params.RightParenPos + 1
 }
 
 func (f *FunctionExpr) Accept(visitor ASTVisitor) error {
