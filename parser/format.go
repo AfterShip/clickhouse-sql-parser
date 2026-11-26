@@ -2364,10 +2364,6 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 		formatter.Break()
 		formatter.WriteExpr(s.From)
 	}
-	if s.Window != nil {
-		formatter.Break()
-		formatter.WriteExpr(s.Window)
-	}
 	if s.Prewhere != nil {
 		formatter.Break()
 		formatter.WriteExpr(s.Prewhere)
@@ -2383,6 +2379,10 @@ func (s *SelectQuery) FormatSQL(formatter *Formatter) {
 	if s.Having != nil {
 		formatter.Break()
 		formatter.WriteExpr(s.Having)
+	}
+	if s.Window != nil {
+		formatter.Break()
+		formatter.WriteExpr(s.Window)
 	}
 	if s.Qualify != nil {
 		formatter.Break()

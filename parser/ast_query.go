@@ -1114,11 +1114,6 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error { // nolint:funlen
 			return err
 		}
 	}
-	if s.Window != nil {
-		if err := s.Window.Accept(visitor); err != nil {
-			return err
-		}
-	}
 	if s.Prewhere != nil {
 		if err := s.Prewhere.Accept(visitor); err != nil {
 			return err
@@ -1136,6 +1131,11 @@ func (s *SelectQuery) Accept(visitor ASTVisitor) error { // nolint:funlen
 	}
 	if s.Having != nil {
 		if err := s.Having.Accept(visitor); err != nil {
+			return err
+		}
+	}
+	if s.Window != nil {
+		if err := s.Window.Accept(visitor); err != nil {
 			return err
 		}
 	}

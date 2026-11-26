@@ -294,3 +294,43 @@ func TestWalk_KeywordArgFunction(t *testing.T) {
 	// s, a, b, c, d plus the two function names.
 	require.Equal(t, 7, idents)
 }
+
+func TestTraversal_SelectClauseOrder(t *testing.T) {
+	sql := `SELECT a FROM t WHERE b > 0 GROUP BY a HAVING count() > 1 WINDOW w AS (PARTITION BY a) QUALIFY a > 1 ORDER BY a`
+	stmts, err := NewParser(sql).ParseStmts()
+	require.NoError(t, err)
+	require.Len(t, stmts, 1)
+
+	var clauses []string
+	collect := func(node Expr) {
+		switch node.(type) {
+		case *WhereClause:
+			clauses = append(clauses, "WHERE")
+		case *GroupByClause:
+			clauses = append(clauses, "GROUP BY")
+		case *HavingClause:
+			clauses = append(clauses, "HAVING")
+		case *WindowClause:
+			clauses = append(clauses, "WINDOW")
+		case *QualifyClause:
+			clauses = append(clauses, "QUALIFY")
+		case *OrderByClause:
+			clauses = append(clauses, "ORDER BY")
+		}
+	}
+	expected := []string{"WHERE", "GROUP BY", "HAVING", "WINDOW", "QUALIFY", "ORDER BY"}
+
+	Walk(stmts[0], func(node Expr) bool {
+		collect(node)
+		return true
+	})
+	require.Equal(t, expected, clauses)
+
+	clauses = nil
+	visitor := &DefaultASTVisitor{Visit: func(node Expr) error {
+		collect(node)
+		return nil
+	}}
+	require.NoError(t, stmts[0].Accept(visitor))
+	require.Equal(t, expected, clauses)
+}

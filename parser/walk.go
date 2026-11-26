@@ -39,9 +39,6 @@ func Walk(node Expr, fn WalkFunc) bool {
 		if !Walk(n.From, fn) {
 			return false
 		}
-		if !Walk(n.Window, fn) {
-			return false
-		}
 		if !Walk(n.Prewhere, fn) {
 			return false
 		}
@@ -52,6 +49,9 @@ func Walk(node Expr, fn WalkFunc) bool {
 			return false
 		}
 		if !Walk(n.Having, fn) {
+			return false
+		}
+		if !Walk(n.Window, fn) {
 			return false
 		}
 		if !Walk(n.Qualify, fn) {
